@@ -28,7 +28,7 @@
    "lab": "Aizanoi sample",
    "color": "#2dd4bf",
    "file": "bots/sample-equity.js",
-   "bytes": 1534,
+   "bytes": 1439,
    "note": "House sample; not an AI-model entry. Monte Carlo equity, pot odds, value raises and occasional river bluffs."
   }
  ]

@@ -4,13 +4,12 @@ module.exports = function act(state) {
   const opponents = state.seats.filter(seat => seat.id !== state.you.id && !seat.out && !seat.folded).length;
   if (!opponents) return { type: state.canCheck ? 'check' : 'call' };
   // A fixed sample cap usually finishes well below the worker deadline.
-  const deadline = Date.now() + Math.min(240, state.timeLimitMs / 4);
   let sum = 0;
   let batches = 0;
   do {
     sum += PokerEngine.equity(state.you.cards, state.board, opponents, 32, Math.random);
     batches++;
-  } while (batches < 12 && Date.now() < deadline);
+  } while (batches < 12);
   const equity = sum / batches;
   const pot = state.pots.reduce((total, entry) => total + entry.amount, 0);
   const odds = state.toCall / Math.max(1, pot + state.toCall);

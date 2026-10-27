@@ -4,11 +4,7 @@
   const $ = id => document.getElementById(id);
   const format = value => Number(value || 0).toLocaleString('en-US');
   const renderer = HoldemTable.create($('ph-table'));
-  const defaults = [
-    'human', 'sample-equity', 'sample-tight',
-    'sample-caller', 'sample-equity', 'sample-tight',
-  ];
-
+  const defaults = ['human', 'sample-equity', 'sample-tight', 'sample-caller', 'sample-equity', 'sample-tight'];
   let bots = [];
   let byId = Object.create(null);
   let ready = false;
@@ -22,7 +18,11 @@
   let standings = [];
   let logs = [];
   let delayCancel = null;
-  let previousFocus = null;
+  let savedErrors = {};
+  const lockedNodes = new Map();
+
+  // Keep controls adjacent to the arena, including in mobile document flow.
+  $('ph-table').after($('ph-actions'));
 
   function element(tag, className, text) {
     const node = document.createElement(tag);
@@ -37,18 +37,17 @@
 
   function selectedSeats() {
     let humans = 0;
-    const picks = selects().map(select => select.value), copies = {};
-    // The same bot may sit twice; number the copies so the log and standings stay readable.
-    const label = id => picks.filter(value => value === id).length > 1 ? ` #${copies[id] = (copies[id] || 0) + 1}` : '';
+    const picks = selects().map(select => select.value);
+    const copies = Object.create(null);
+    const label = id => picks.filter(value => value === id).length > 1
+      ? ` #${copies[id] = (copies[id] || 0) + 1}` : '';
     return selects().map((select, index) => {
       const human = select.value === 'human';
       const bot = byId[select.value];
       return {
-        id: `s${index + 1}`,
-        kind: human ? 'human' : 'bot',
-        human,
+        id: `s${index + 1}`, kind: human ? 'human' : 'bot', human,
         botId: human ? null : bot.id,
-        name: human ? `Player ${++humans}` : bot.name + label(bot.id),
+        name: human ? `Player ${++humans}` : bot.name + label(bot.id)
       };
     });
   }
@@ -57,16 +56,29 @@
     return (activeSeats || []).filter(seat => seat.human);
   }
 
+  function lockBackground(locked) {
+    if (!locked) {
+      lockedNodes.forEach((value, node) => { node.inert = value; });
+      lockedNodes.clear();
+      return;
+    }
+    const pass = $('ph-pass');
+    document.querySelectorAll('body > header, body > .hero, body > footer, .ph > :not(#ph-pass), #ph-table, #ph-form')
+      .forEach(node => {
+        if (node === pass || node.contains(pass)) return;
+        if (!lockedNodes.has(node)) lockedNodes.set(node, node.inert);
+        node.inert = true;
+      });
+  }
+
   function setControls() {
     $('ph-start').disabled = !ready || running;
     $('ph-start').textContent = running ? 'Playing…' : 'Start';
     $('ph-random').disabled = !ready || running;
     $('ph-add').disabled = !ready || running || selects().length >= 9;
-
     $('ph-form').querySelectorAll('select, .ph-remove').forEach(node => {
       node.disabled = running;
     });
-
     $('ph-seats').querySelectorAll('.ph-remove').forEach(node => {
       node.disabled = running || selects().length <= 2;
     });
@@ -74,19 +86,15 @@
 
   function addSeat(value = 'human') {
     if (selects().length >= 9) return;
-
     const row = element('div', 'ph-seat-row');
     const label = element('label');
     const select = element('select');
     label.appendChild(element('span', null, 'Seat'));
     select.appendChild(new Option('Human', 'human'));
-    bots.forEach(bot => {
-      select.appendChild(new Option(`${bot.name} · ${bot.lab}`, bot.id));
-    });
+    bots.forEach(bot => select.appendChild(new Option(`${bot.name} · ${bot.lab}`, bot.id)));
     select.value = value === 'human' || byId[value] ? value : 'human';
     select.addEventListener('change', preview);
     label.appendChild(select);
-
     const remove = element('button', 'ph-remove', 'Remove');
     remove.type = 'button';
     remove.addEventListener('click', () => {
@@ -99,29 +107,17 @@
     setControls();
   }
 
-  function readBlinds(state) {
-    const blinds = state.blinds;
-    if (Array.isArray(blinds)) return { small: blinds[0], big: blinds[1] };
-    return {
-      small: blinds.small ?? blinds.sb ?? blinds.smallBlind ?? 50,
-      big: blinds.big ?? blinds.bb ?? blinds.bigBlind ?? 100,
-    };
-  }
-
   function updateStandings(state) {
     const ranked = state.seats.slice().sort((a, b) => {
       if (a.out !== b.out) return a.out ? 1 : -1;
       return b.stack - a.stack || (a.place || 0) - (b.place || 0);
     });
-
     standings = ranked.map(seat => ({ name: seat.name, chips: seat.stack }));
     $('ph-standings').replaceChildren(...ranked.map(seat => {
       const row = element('li');
       row.append(
         element('span', null, seat.name),
-        element('b', null, seat.out
-          ? `Out · #${seat.place || '—'}`
-          : format(seat.stack)),
+        element('b', null, seat.out ? `Out · #${seat.place || '—'}` : format(seat.stack))
       );
       return row;
     }));
@@ -132,9 +128,7 @@
     const game = activeRun.game;
     const state = game.publicState();
     const humans = humanSeats();
-
     if (humans.length === 1) revealFor = humans[0].id;
-
     if (revealFor && !game.handOver() && game.handNumber > 0) {
       const seat = state.seats.find(entry => entry.id === revealFor);
       if (seat && !seat.out && !seat.cards) {
@@ -142,11 +136,9 @@
         seat.private = true;
       }
     }
-
     renderer.update(state, { revealFor, lastAction });
     $('ph-hand').textContent = `HAND ${state.handNumber}`;
-    const blinds = readBlinds(state);
-    $('ph-blinds').textContent = `BLINDS ${format(blinds.small)}/${format(blinds.big)}`;
+    $('ph-blinds').textContent = `BLINDS ${format(state.blinds[0])}/${format(state.blinds[1])}`;
     $('ph-street').textContent = String(state.street || 'Ready').toUpperCase();
     updateStandings(state);
   }
@@ -154,12 +146,8 @@
   function preview() {
     if (!ready || running) return;
     setControls();
-
-    const seats = selectedSeats();
-    const game = PokerEngine.create(seats.map(({ id, name }) => ({ id, name })), {
-      seed: 1,
-      stack: Number($('ph-stack').value),
-      maxHands: Number($('ph-hands').value),
+    const game = PokerEngine.create(selectedSeats().map(({ id, name }) => ({ id, name })), {
+      seed: 1, stack: Number($('ph-stack').value), maxHands: Number($('ph-hands').value)
     });
     const state = game.publicState();
     renderer.update(state, { revealFor: null, highlight: null });
@@ -182,17 +170,14 @@
 
   function logAction(event, before) {
     const name = nameFor(event.id);
-    const amount = event.action.amount;
     let text;
-
     switch (event.action.type) {
       case 'fold': text = `${name} folds`; break;
       case 'check': text = `${name} checks`; break;
       case 'call': text = `${name} calls ${format(before.callAmount)}`; break;
-      case 'raise': text = `${name} raises to ${format(amount)}`; break;
+      case 'raise': text = `${name} raises to ${format(event.action.amount)}`; break;
       default: text = `${name} goes all-in`;
     }
-
     if (event.error) text += ' (bot error: safe fallback)';
     log(text);
   }
@@ -200,9 +185,7 @@
   function logWinners(result) {
     if (!result) return;
     result.winners.forEach(winner => {
-      const hand = typeof winner.hand === 'string'
-        ? winner.hand
-        : winner.hand && winner.hand.name;
+      const hand = typeof winner.hand === 'string' ? winner.hand : winner.hand && winner.hand.name;
       log(`${nameFor(winner.id)} wins ${format(winner.amount)}${hand ? ` with ${hand.toLowerCase()}` : ''}`);
     });
   }
@@ -211,21 +194,18 @@
     waitingId = null;
     $('ph-actions').hidden = true;
     $('ph-pass').hidden = true;
+    lockBackground(false);
     if (humanSeats().length > 1) revealFor = null;
   }
 
   function limits() {
-    if (!activeRun || !waitingId) return null;
-    return activeRun.game.legalActions(waitingId);
+    return activeRun && waitingId ? activeRun.game.legalActions(waitingId) : null;
   }
 
   function setAmount(value) {
     const legal = limits();
     if (!legal) return;
-
-    const minimum = legal.minRaiseTo == null
-      ? legal.maxRaiseTo
-      : Math.min(legal.minRaiseTo, legal.maxRaiseTo);
+    const minimum = legal.minRaiseTo == null ? legal.maxRaiseTo : Math.min(legal.minRaiseTo, legal.maxRaiseTo);
     const amount = Math.max(minimum, Math.min(legal.maxRaiseTo, Math.round(Number(value))));
     if (!Number.isFinite(amount)) return;
     $('ph-amount').value = String(amount);
@@ -235,51 +215,41 @@
   function configureActions() {
     const legal = limits();
     if (!legal) return;
-
-    const state = activeRun.game.publicState();
-    const blinds = readBlinds(state);
-    const minimum = legal.minRaiseTo == null
-      ? legal.maxRaiseTo
-      : Math.min(legal.minRaiseTo, legal.maxRaiseTo);
-    const canRaise = legal.maxRaiseTo > 0 && (
-      legal.minRaiseTo != null || legal.maxRaiseTo < legal.callAmount
-    );
-
+    const minimum = legal.minRaiseTo == null ? legal.maxRaiseTo : Math.min(legal.minRaiseTo, legal.maxRaiseTo);
+    const canRaise = legal.minRaiseTo !== null;
     $('ph-fold').disabled = !legal.canFold;
+    $('ph-check').disabled = false;
     $('ph-check').textContent = legal.canCheck ? 'Check' : `Call ${format(legal.callAmount)}`;
-
     for (const id of ['ph-amount', 'ph-slider']) {
       const input = $(id);
       input.min = String(minimum);
       input.max = String(legal.maxRaiseTo);
-      input.step = id === 'ph-slider' ? String(blinds.big) : '1';
+      input.step = '1';
       input.disabled = !canRaise;
     }
-
     $('ph-raise').disabled = !canRaise;
     $('ph-half').disabled = !canRaise;
     $('ph-pot').disabled = !canRaise;
-    $('ph-allin').disabled = legal.maxRaiseTo <= 0;
+    $('ph-allin').disabled = !legal.canAllIn;
     setAmount(minimum);
   }
 
   function prepareHuman(id) {
     waitingId = id;
     configureActions();
-
     if (humanSeats().length > 1) {
       revealFor = null;
       $('ph-actions').hidden = true;
       $('ph-pass-name').textContent = `Pass the device to ${nameFor(id)}`;
-      previousFocus = document.activeElement;
       $('ph-pass').hidden = false;
+      lockBackground(true);
       $('ph-show').focus();
     } else {
       revealFor = id;
       $('ph-pass').hidden = true;
       $('ph-actions').hidden = false;
+      $('ph-check').focus({ preventScroll: true });
     }
-
     render();
   }
 
@@ -287,6 +257,7 @@
     if (!waitingId || !activeRun) return;
     revealFor = waitingId;
     $('ph-pass').hidden = true;
+    lockBackground(false);
     $('ph-actions').hidden = false;
     render();
     $('ph-check').focus();
@@ -299,7 +270,6 @@
       $('ph-ticker').textContent = result.error || 'Choose a legal action.';
       return;
     }
-
     hideActions();
     render();
   }
@@ -308,9 +278,7 @@
     const legal = limits();
     if (!legal) return;
     const amount = Number($('ph-amount').value);
-    submit(amount === legal.maxRaiseTo
-      ? { type: 'allin' }
-      : { type: 'raise', amount });
+    submit(amount === legal.maxRaiseTo ? { type: 'allin' } : { type: 'raise', amount });
   }
 
   function potAmount(multiplier) {
@@ -324,7 +292,6 @@
 
   function delay(ms) {
     if (ms <= 0) return Promise.resolve();
-
     return new Promise(resolve => {
       const timer = setTimeout(finish, ms);
       function finish() {
@@ -338,7 +305,10 @@
 
   function cleanup() {
     if (delayCancel) delayCancel();
-    if (activeRun) activeRun.stop();
+    if (activeRun) {
+      savedErrors = { ...activeRun.errors };
+      activeRun.stop();
+    }
     hideActions();
     activeRun = null;
     activeSeats = null;
@@ -362,9 +332,9 @@
     if (!ready || running) return;
     const my = ++generation;
     const seats = selectedSeats();
-
     logs = [];
     lastAction = '';
+    savedErrors = {};
     $('ph-log').replaceChildren();
     $('ph-result').hidden = true;
     $('ph-result').textContent = '';
@@ -373,50 +343,39 @@
     activeSeats = seats;
     running = true;
     setControls();
-
     try {
       const run = HoldemRunner.start(seats, {
         seed: crypto.getRandomValues(new Uint32Array(1))[0],
         stack: Number($('ph-stack').value),
-        maxHands: Number($('ph-hands').value),
+        maxHands: Number($('ph-hands').value)
       });
       activeRun = run;
       await run.loaded;
       if (my !== generation) return;
-
       const game = run.game;
       const speed = Number($('ph-speed').value);
       render();
-
       while (!game.finished() && my === generation) {
         const id = game.toAct();
         const actor = seats.find(seat => seat.id === id);
         const isDecision = id != null && !game.handOver();
         const before = isDecision ? game.legalActions(id) : null;
         const started = performance.now();
-
-        // Establish the pending decision before exposing its controls.
         const pending = run.next();
         if (isDecision && actor && actor.human) prepareHuman(id);
-
         const event = await pending;
         if (my !== generation || event.type === 'stopped') return;
         hideActions();
-
-        if (event.type === 'hand') {
-          log(`Hand ${game.handNumber}`);
-        } else if (event.type === 'action') {
-          logAction(event, before);
-        }
-
+        if (event.type === 'hand') log(`Hand ${game.handNumber}`);
+        else if (event.type === 'action') logAction(event, before);
         logWinners(event.handResult);
         render();
-
-        if (isDecision && actor && !actor.human) {
+        if (event.handResult && speed > 0) {
+          await delay(Math.max(900, speed));
+        } else if (isDecision && actor && !actor.human) {
           await delay(Math.max(0, speed - (performance.now() - started)));
         }
       }
-
       if (my === generation) verdict(game);
     } catch (error) {
       if (my === generation) {
@@ -435,20 +394,17 @@
       item.append(
         element('b', null, bot.name),
         element('small', null, `${bot.lab} · ${bot.botName || bot.id}`),
-        element('small', null, bot.note),
+        element('small', null, bot.note)
       );
       return item;
     }));
   }
 
   function validBot(bot) {
-    return bot &&
-      typeof bot.id === 'string' &&
-      /^[a-z0-9][a-z0-9.-]*$/.test(bot.id) &&
-      !bot.id.includes('..') &&
+    return bot && typeof bot.id === 'string' &&
+      /^[a-z0-9][a-z0-9.-]*$/.test(bot.id) && !bot.id.includes('..') &&
       bot.file === `bots/${bot.id}.js` &&
-      typeof bot.name === 'string' &&
-      typeof bot.lab === 'string' &&
+      typeof bot.name === 'string' && typeof bot.lab === 'string' &&
       /^#[0-9a-f]{6}$/i.test(bot.color);
   }
 
@@ -457,28 +413,18 @@
       const response = await fetch('bots.json', { cache: 'no-cache' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const payload = await response.json();
-
-      if (
-        payload.version !== 1 ||
-        !Array.isArray(payload.bots) ||
-        !payload.bots.length ||
-        !payload.bots.every(validBot) ||
-        new Set(payload.bots.map(bot => bot.id)).size !== payload.bots.length
-      ) {
+      if (payload.version !== 1 || !Array.isArray(payload.bots) ||
+          !payload.bots.length || !payload.bots.every(validBot) ||
+          new Set(payload.bots.map(bot => bot.id)).size !== payload.bots.length) {
         throw new Error('Invalid bot roster');
       }
-
       bots = payload.bots;
       byId = Object.fromEntries(bots.map(bot => [bot.id, bot]));
       roster();
-
       const query = new URLSearchParams(location.search);
       const requested = (query.get('seats') || '').split(',');
       const values = requested.length >= 2 && requested.length <= 9 &&
-        requested.every(value => value === 'human' || byId[value])
-        ? requested
-        : defaults;
-
+        requested.every(value => value === 'human' || byId[value]) ? requested : defaults;
       ready = true;
       values.forEach(addSeat);
       preview();
@@ -492,10 +438,7 @@
     }
   }
 
-  $('ph-form').addEventListener('submit', event => {
-    event.preventDefault();
-    play();
-  });
+  $('ph-form').addEventListener('submit', event => { event.preventDefault(); play(); });
   $('ph-add').addEventListener('click', () => {
     if (running) return;
     addSeat(bots[0].id);
@@ -530,14 +473,10 @@
       }
       return;
     }
-
     if (!waitingId || $('ph-actions').hidden || event.repeat) return;
-    const target = event.target;
-    if (target instanceof Element && target.closest('input, select, textarea, [contenteditable]')) {
-      return;
-    }
+    if (event.target instanceof Element &&
+        event.target.closest('input, select, textarea, [contenteditable]')) return;
     if (event.altKey || event.ctrlKey || event.metaKey) return;
-
     const button = { f: 'ph-fold', c: 'ph-check', r: 'ph-raise' }[event.key.toLowerCase()];
     if (!button || $(button).disabled) return;
     event.preventDefault();
@@ -553,11 +492,9 @@
   window.__HOLDEM__ = () => {
     const state = activeRun ? activeRun.game.publicState() : null;
     return {
-      bots: bots.length,
-      running,
+      bots: bots.length, running,
       seats: (activeSeats || (ready ? selectedSeats() : [])).map(seat => ({
-        kind: seat.kind,
-        id: seat.human ? 'human' : seat.botId,
+        kind: seat.kind, id: seat.human ? 'human' : seat.botId
       })),
       hand: state ? state.handNumber : Number($('ph-hand').textContent.replace(/\D/g, '')) || 0,
       street: state ? state.street : $('ph-street').textContent.toLowerCase(),
@@ -565,6 +502,7 @@
       result: $('ph-result').hidden ? null : $('ph-result').textContent,
       standings: standings.map(seat => ({ ...seat })),
       humanToAct: Boolean(waitingId && running),
+      errors: { ...(activeRun ? activeRun.errors : savedErrors) }
     };
   };
 

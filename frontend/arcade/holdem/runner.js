@@ -7,12 +7,10 @@
   function normalize(action) {
     const value = typeof action === 'string' ? { type: action } : action;
     if (!value || !TYPES.has(value.type)) return null;
-
     if (value.type === 'raise') {
       if (!Number.isSafeInteger(value.amount) || value.amount < 0) return null;
       return { type: 'raise', amount: value.amount };
     }
-
     return { type: value.type };
   }
 
@@ -20,30 +18,34 @@
     if (!Array.isArray(seats) || seats.length < 2 || seats.length > 9) {
       throw new Error('Choose between 2 and 9 seats');
     }
-
     const entries = seats.map((seat, index) => ({
       ...seat,
       id: `s${index + 1}`,
       human: seat.kind === 'human' || seat.human === true,
-      botId: seat.botId || (seat.kind === 'bot' ? seat.bot : null),
+      botId: seat.botId || (seat.kind === 'bot' ? seat.bot : null)
     }));
-
     for (const entry of entries) {
       if (!entry.human && (
         typeof entry.botId !== 'string' ||
         !/^[a-z0-9][a-z0-9.-]*$/.test(entry.botId) ||
         entry.botId.includes('..')
-      )) {
-        throw new Error('Invalid bot id');
-      }
+      )) throw new Error('Invalid bot id');
     }
 
     const seed = Number.isFinite(options.seed) ? options.seed >>> 0 : 1;
+    if (options.botSeed !== undefined &&
+        (!Number.isSafeInteger(options.botSeed) || options.botSeed < 0 || options.botSeed > 0xffffffff)) {
+      throw new Error('botSeed must be an unsigned 32-bit integer');
+    }
+    // Never derive worker randomness from the private deck seed.
+    const botSeed = options.botSeed === undefined
+      ? crypto.getRandomValues(new Uint32Array(1))[0]
+      : options.botSeed;
+    const botRandom = PokerEngine.rng(botSeed);
     const game = PokerEngine.create(
       entries.map(({ id, name }) => ({ id, name })),
-      { ...options, seed },
+      { ...options, seed }
     );
-
     const pending = new Set();
     const workers = [];
     const errors = Object.fromEntries(entries.map(entry => [entry.id, 0]));
@@ -73,12 +75,11 @@
 
     function exchange(worker, message, accept) {
       if (stopped || !worker.ok || !worker.w) return Promise.resolve(null);
-
       return new Promise(resolve => {
         const w = worker.w;
+        const started = performance.now();
         let settled = false;
         let timer;
-
         function settle(value, failed = false) {
           if (settled) return;
           settled = true;
@@ -90,20 +91,21 @@
           if (failed) disable(worker);
           resolve(value);
         }
-
         const cancel = () => settle(null);
         pending.add(cancel);
         timer = setTimeout(() => settle(null, true), TIMEOUT_MS);
-
         w.onmessage = event => {
-          if (accept(event.data)) settle(event.data);
+          if (performance.now() - started >= TIMEOUT_MS) {
+            settle(null, true);
+          } else if (accept(event.data)) {
+            settle(event.data);
+          }
         };
         w.onerror = event => {
           event.preventDefault();
           settle(null, true);
         };
         w.onmessageerror = () => settle(null, true);
-
         try {
           w.postMessage(message);
         } catch (error) {
@@ -113,30 +115,25 @@
     }
 
     let loaded;
-
     try {
-      const readiness = entries.map((entry, index) => {
+      const readiness = entries.map(entry => {
         if (entry.human) {
           workers.push({ human: true, ok: true, w: null });
           return Promise.resolve();
         }
-
         const worker = {
-          human: false,
-          ok: true,
-          w: new Worker('/arcade/holdem/bot-worker.js'),
+          human: false, ok: true,
+          w: new Worker('/arcade/holdem/bot-worker.js')
         };
         workers.push(worker);
-
         return exchange(
           worker,
-          { type: 'init', id: entry.botId, seed: (Math.imul(seed, 31) + index) >>> 0 },
-          message => message && (message.type === 'ready' || message.type === 'fail'),
+          { type: 'init', id: entry.botId, seed: Math.floor(botRandom() * 4294967296) },
+          message => message && (message.type === 'ready' || message.type === 'fail')
         ).then(message => {
           if (!message || message.type !== 'ready') disable(worker);
         });
       });
-
       loaded = Promise.all(readiness);
     } catch (error) {
       stop();
@@ -149,14 +146,9 @@
 
     function actionEvent(id, action, result, failed) {
       return {
-        type: 'action',
-        id,
-        action,
-        events: result.events || [],
-        error: failed,
-        errors: errors[id],
-        handNumber: game.handNumber,
-        handResult: game.handOver() ? game.handResult() : null,
+        type: 'action', id, action, events: result.events || [],
+        error: failed, errors: errors[id], handNumber: game.handNumber,
+        handResult: game.handOver() ? game.handResult() : null
       };
     }
 
@@ -167,7 +159,6 @@
           humanPending = null;
           resolve({ type: 'stopped', events: [] });
         };
-
         pending.add(cancel);
         humanPending = {
           id,
@@ -175,7 +166,7 @@
             pending.delete(cancel);
             humanPending = null;
             resolve(actionEvent(id, action, result, false));
-          },
+          }
         };
       });
     }
@@ -184,10 +175,8 @@
       if (stopped || !humanPending || game.toAct() !== humanPending.id) {
         return { ok: false, error: 'No human decision is pending' };
       }
-
       const action = normalize(input);
       if (!action) return { ok: false, error: 'Invalid action' };
-
       const waiting = humanPending;
       const result = game.act(waiting.id, action);
       if (result.ok) waiting.complete(action, result);
@@ -198,62 +187,43 @@
       await loaded;
       if (stopped) return { type: 'stopped', events: [] };
       if (game.finished()) return { type: 'finished', events: [], result: game.result() };
-
       if (!begun || game.handOver()) {
         begun = true;
         const events = game.startHand() || [];
         return {
-          type: 'hand',
-          events,
-          handNumber: game.handNumber,
-          handResult: game.handOver() ? game.handResult() : null,
+          type: 'hand', events, handNumber: game.handNumber,
+          handResult: game.handOver() ? game.handResult() : null
         };
       }
-
       const id = game.toAct();
       const index = entries.findIndex(entry => entry.id === id);
       if (index < 0) throw new Error('Engine has no acting seat in an active hand');
-
       const worker = workers[index];
       if (worker.human) return waitForHuman(id);
-
       const currentDecision = ++decisionId;
       const handNumber = game.handNumber;
       const message = await exchange(
         worker,
-        {
-          type: 'act',
-          handNumber,
-          decisionId: currentDecision,
-          state: game.botState(id),
-        },
-        reply => reply &&
-          reply.type === 'act' &&
-          reply.handNumber === handNumber &&
-          reply.decisionId === currentDecision,
+        { type: 'act', handNumber, decisionId: currentDecision, state: game.botState(id) },
+        reply => reply && reply.type === 'act' &&
+          reply.handNumber === handNumber && reply.decisionId === currentDecision
       );
-
       if (stopped) return { type: 'stopped', events: [] };
-
       let action = normalize(message && message.action);
       let result = action ? game.act(id, action) : null;
       const failed = !result || !result.ok;
-
       if (failed) {
         errors[id]++;
         action = fallback(id);
         result = game.act(id, action);
       }
-
       if (!result.ok) throw new Error('Engine rejected its safe fallback');
       return actionEvent(id, action, result, failed);
     }
 
     function next() {
       if (inFlight) return inFlight;
-      inFlight = advance().finally(() => {
-        inFlight = null;
-      });
+      inFlight = advance().finally(() => { inFlight = null; });
       return inFlight;
     }
 

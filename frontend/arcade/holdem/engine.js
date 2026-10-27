@@ -165,23 +165,16 @@
     const maxHands = options.maxHands ?? 300;
     const positive = number => Number.isSafeInteger(number) && number > 0;
     if (!positive(stack) || !Number.isSafeInteger(stack * inputSeats.length) || !positive(handsPerLevel) || !positive(maxHands) || !Array.isArray(schedule) || !schedule.length || schedule.some(pair => !Array.isArray(pair) || pair.length !== 2 || !pair.every(positive) || pair[0] > pair[1] || !Number.isSafeInteger(pair[1] * 2))) throw new TypeError('Invalid options');
-    const seed = options.seed ?? 1;
+    const seed = seedValue(options.seed ?? 1);
     const seats = inputSeats.map((seat, index) => ({
-      id: seat.id,
-      name: seat.name,
-      seat: index,
-      stack,
-      bet: 0,
-      total: 0,
-      folded: false,
-      allIn: false,
-      out: false,
-      place: null,
-      cards: [],
-      startStack: stack
+      id: seat.id, name: seat.name, seat: index, stack, bet: 0, total: 0,
+      folded: false, allIn: false, out: false, place: null, cards: [], startStack: stack
     }));
     let handNumber = 0;
     let button = -1;
+    let smallBlindSeat = null;
+    let bigBlindSeat = null;
+    let previousActiveCount = 0;
     let street = 'idle';
     let board = [];
     let deck = [];
@@ -233,10 +226,11 @@
         previous = cap;
         return pot;
       });
-      // Layers that differ only by folded contributions are one pot; a real side pot needs a different set of contenders.
       return layers.reduce((merged, pot) => {
         const last = merged[merged.length - 1];
-        if (last && last.eligible.join() === pot.eligible.join()) last.amount += pot.amount;
+        const same = last && last.eligible.length === pot.eligible.length &&
+          last.eligible.every((id, index) => id === pot.eligible[index]);
+        if (same) last.amount += pot.amount;
         else merged.push(pot);
         return merged;
       }, []);
@@ -246,13 +240,20 @@
       const survivors = seats.filter(seat => !seat.out).sort((a, b) => b.stack - a.stack || a.seat - b.seat);
       if (survivors.length === 1 || handNumber >= maxHands) {
         done = true;
-        survivors.forEach((seat, index) => { seat.place = index + 1; });
+        let place = 1;
+        survivors.forEach((seat, index) => {
+          if (index && seat.stack !== survivors[index - 1].stack) place = index + 1;
+          seat.place = place;
+        });
         emit('finished', { placements: placements() });
       }
     }
 
     function placements() {
-      const ordered = seats.slice().sort((a, b) => Number(a.out) - Number(b.out) || (a.out ? a.place - b.place : b.stack - a.stack || a.seat - b.seat));
+      const ordered = seats.slice().sort((a, b) =>
+        done ? a.place - b.place || a.seat - b.seat :
+          Number(a.out) - Number(b.out) ||
+          (a.out ? a.place - b.place : b.stack - a.stack || a.seat - b.seat));
       return ordered.map((seat, index) => ({ id: seat.id, place: seat.place ?? index + 1, chips: seat.stack }));
     }
 
@@ -303,9 +304,7 @@
         emit('eliminated', { id: seat.id, place: seat.place });
       }
       history.push({
-        handNumber,
-        board: board.slice(),
-        showdown: copy(lastResult.showdown),
+        handNumber, board: board.slice(), showdown: copy(lastResult.showdown),
         winners: lastResult.winners.map(({ id, amount }) => ({ id, amount }))
       });
       history = history.slice(-20);
@@ -341,7 +340,6 @@
         for (const index of pending) {
           if (seats[index].folded || seats[index].allIn || seats[index].out) pending.delete(index);
         }
-        // A lone solvent seat only acts when it still owes chips.
         if (capable.length <= 1) {
           const opposingBet = Math.max(0, ...live().filter(seat => seat !== capable[0]).map(seat => seat.bet));
           currentBet = Math.min(currentBet, opposingBet);
@@ -360,7 +358,13 @@
       if (!over || done) return [];
       events = [];
       handNumber++;
-      button = next(button, seat => !seat.out);
+      const active = seats.filter(seat => !seat.out);
+      if (active.length === 2 && previousActiveCount > 2) {
+        const nextBig = next(bigBlindSeat, seat => !seat.out);
+        button = next(nextBig, seat => !seat.out);
+      } else {
+        button = next(button, seat => !seat.out);
+      }
       over = false;
       revealed = false;
       lastResult = null;
@@ -378,9 +382,9 @@
         seat.cards = [];
         seat.startStack = seat.stack;
       });
-      const active = seats.filter(seat => !seat.out);
-      const small = active.length === 2 ? button : next(button, seat => !seat.out);
-      const big = next(small, seat => !seat.out);
+      smallBlindSeat = active.length === 2 ? button : next(button, seat => !seat.out);
+      bigBlindSeat = next(smallBlindSeat, seat => !seat.out);
+      previousActiveCount = active.length;
       let dealSeat = next(button, seat => !seat.out);
       for (let round = 0; round < 2; round++) {
         for (let i = 0; i < active.length; i++) {
@@ -389,21 +393,23 @@
         }
       }
       const [sb, bb] = blinds();
-      pay(seats[small], Math.min(sb, seats[small].stack));
-      pay(seats[big], Math.min(bb, seats[big].stack));
+      pay(seats[smallBlindSeat], Math.min(sb, seats[smallBlindSeat].stack));
+      pay(seats[bigBlindSeat], Math.min(bb, seats[bigBlindSeat].stack));
       currentBet = bb;
       lastRaise = bb;
       pending = new Set(able().map(seat => seat.seat));
       emit('handStart', { handNumber, button: seats[button].id, blinds: blinds() });
-      emit('blind', { id: seats[small].id, amount: seats[small].bet });
-      emit('blind', { id: seats[big].id, amount: seats[big].bet });
-      progress(big);
+      emit('blind', { id: seats[smallBlindSeat].id, amount: seats[smallBlindSeat].bet });
+      emit('blind', { id: seats[bigBlindSeat].id, amount: seats[bigBlindSeat].bet });
+      progress(bigBlindSeat);
       return copy(events);
     }
 
     function legalActions(id) {
       const seat = seats.find(candidate => candidate.id === id);
-      if (over || !seat || seat.seat !== actor) return { canFold: false, canCheck: false, callAmount: 0, minRaiseTo: null, maxRaiseTo: 0 };
+      if (over || !seat || seat.seat !== actor) {
+        return { canFold: false, canCheck: false, callAmount: 0, minRaiseTo: null, maxRaiseTo: 0, canAllIn: false };
+      }
       const rights = !acted.has(actor) || currentBet - acted.get(actor) >= lastRaise;
       const maximum = seat.bet + seat.stack;
       const canRaise = rights && maximum > currentBet && able().some(other => other !== seat);
@@ -412,7 +418,8 @@
         canCheck: seat.bet >= currentBet,
         callAmount: Math.min(seat.stack, Math.max(0, currentBet - seat.bet)),
         minRaiseTo: canRaise ? (currentBet === 0 ? blinds()[1] : currentBet + lastRaise) : null,
-        maxRaiseTo: maximum
+        maxRaiseTo: maximum,
+        canAllIn: seat.stack > 0 && (maximum <= currentBet || canRaise)
       };
     }
 
@@ -422,21 +429,23 @@
       if (!action || typeof action !== 'object') return invalid('Invalid action');
       const seat = seats[actor];
       const legal = legalActions(id);
-      let type = action.type;
+      const type = action.type;
       let target = seat.bet;
       if (!['fold', 'check', 'call', 'raise', 'allin'].includes(type)) return invalid('Unknown action');
       if (type === 'check' && !legal.canCheck) return invalid('Cannot check');
       if (type === 'call' && legal.canCheck) return invalid('Nothing to call');
       if (type === 'call') target += legal.callAmount;
-      if (type === 'allin') target = legal.maxRaiseTo;
+      if (type === 'allin') {
+        if (!legal.canAllIn) return invalid('Betting is not reopened');
+        target = legal.maxRaiseTo;
+      }
       if (type === 'raise') {
         target = action.amount;
         if (!Number.isSafeInteger(target) || target <= currentBet || target > legal.maxRaiseTo) return invalid('Invalid raise amount');
       }
       if ((type === 'raise' || type === 'allin') && target > currentBet) {
-        const uncalled = type === 'allin' && !able().some(other => other !== seat);
-        if (legal.minRaiseTo === null && !uncalled) return invalid('Betting is not reopened');
-        if (legal.minRaiseTo !== null && target < legal.minRaiseTo && target !== legal.maxRaiseTo) return invalid('Raise below minimum');
+        if (legal.minRaiseTo === null) return invalid('Betting is not reopened');
+        if (target < legal.minRaiseTo && target !== legal.maxRaiseTo) return invalid('Raise below minimum');
       }
       events = [];
       const previousActor = actor;
@@ -456,7 +465,6 @@
         }
       }
       acted.set(previousActor, currentBet);
-      // Action amounts are chips committed, not raise-to totals.
       const record = { id, street, type, amount: seat.bet - previousBet };
       actions.push(record);
       emit('action', record);
@@ -467,22 +475,13 @@
     function publicState() {
       return {
         seats: seats.map(seat => ({
-          id: seat.id,
-          name: seat.name,
-          stack: seat.stack,
-          bet: seat.bet,
-          folded: seat.folded,
-          allIn: seat.allIn,
-          out: seat.out,
-          place: seat.place,
-          isButton: seat.seat === button,
+          id: seat.id, name: seat.name, stack: seat.stack, bet: seat.bet,
+          total: seat.total, folded: seat.folded, allIn: seat.allIn, out: seat.out,
+          place: seat.place, isButton: seat.seat === button,
           cards: revealed && lastResult.showdown.some(entry => entry.id === seat.id) ? seat.cards.slice() : null
         })),
-        board: board.slice(),
-        pots: pots(),
-        street,
-        handNumber,
-        blinds: blinds(),
+        board: board.slice(), pots: pots(), street, handNumber, blinds: blinds(),
+        smallBlindSeat, bigBlindSeat,
         toAct: actor === null ? null : seats[actor].id
       };
     }
@@ -492,29 +491,31 @@
       if (!seat) throw new TypeError('Unknown seat');
       const legal = legalActions(id);
       return {
-        handNumber,
-        street,
-        you: { id, seat: seat.seat, cards: seat.cards.slice(), stack: seat.stack, bet: seat.bet },
-        board: board.slice(),
-        pots: pots(),
+        handNumber, street,
+        you: { id, seat: seat.seat, cards: seat.cards.slice(), stack: seat.stack, bet: seat.bet, total: seat.total },
+        board: board.slice(), pots: pots(),
         toCall: legal.callAmount,
         minRaiseTo: legal.minRaiseTo,
         maxRaiseTo: legal.maxRaiseTo,
         canCheck: legal.canCheck,
+        canAllIn: legal.canAllIn,
+        currentBet,
+        lastFullRaise: lastRaise,
         blinds: blinds(),
         buttonSeat: button,
+        smallBlindSeat,
+        bigBlindSeat,
         seats: seats.map(other => ({
-          id: other.id,
-          name: other.name,
-          seat: other.seat,
-          stack: other.stack,
-          bet: other.bet,
-          folded: other.folded,
-          allIn: other.allIn,
-          out: other.out
+          id: other.id, name: other.name, seat: other.seat,
+          stack: other.stack, bet: other.bet, total: other.total,
+          folded: other.folded, allIn: other.allIn, out: other.out
         })),
         actions: copy(actions),
         history: copy(history),
+        tournament: {
+          startingStack: stack, maxHands, handsPerLevel,
+          level: level(), blindSchedule: copy(schedule)
+        },
         timeLimitMs: 1000
       };
     }

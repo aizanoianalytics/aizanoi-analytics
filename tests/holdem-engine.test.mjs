@@ -275,7 +275,7 @@ test('short opening all-in after a check does not reopen the checker', () => {
   assert.equal(game.handOver(), true);
 });
 
-test('three different all-in sizes create and settle side pots', () => {
+test('three different contribution sizes create and settle side pots', () => {
   const seed = findSeed((hole, board) => {
     const scores = hole.map(hand => referenceSeven([...hand, ...board]));
     return scores[0] > scores[1] && scores[0] > scores[2];
@@ -294,7 +294,11 @@ test('three different all-in sizes create and settle side pots', () => {
   const before = game.publicState();
   assert.deepEqual(before.pots.map(pot => pot.amount), [300, 1200, 250]);
   assert.deepEqual(before.pots.map(pot => pot.eligible), [['s0', 's1', 's2'], ['s1', 's2'], ['s1']]);
-  act(game, 'allin');
+  // Both opponents are all-in, so s0 must call to 950 rather than raise its unmatched 400.
+  assert.equal(game.legalActions('s0').canAllIn, false);
+  assert.equal(game.legalActions('s0').minRaiseTo, null);
+  assert.equal(game.legalActions('s0').callAmount, 850);
+  act(game, 'call');
   assert.equal(game.handOver(), true);
   assert.equal(total(game), 3000);
   const deck = E.dealHand(seed, 2);
