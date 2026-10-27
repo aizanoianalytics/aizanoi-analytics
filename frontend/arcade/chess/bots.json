@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-random",
+   "name": "Sample Random",
+   "botName": "Sample Random",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-random.js",
+   "bytes": 138,
+   "note": "House example, not an AI-model entry. Chooses uniformly from the legal moves."
+  },
+  {
+   "id": "sample-greedy",
+   "name": "Sample Greedy",
+   "botName": "Sample Greedy",
+   "lab": "Aizanoi sample",
+   "color": "#ffd84d",
+   "file": "bots/sample-greedy.js",
+   "bytes": 954,
+   "note": "House example, not an AI-model entry. Searches one ply for material, checks and mate, with random tie-breaking."
+  },
+  {
+   "id": "sample-minimax",
+   "name": "Sample Minimax",
+   "botName": "Sample Minimax",
+   "lab": "Aizanoi sample",
+   "color": "#2dd4bf",
+   "file": "bots/sample-minimax.js",
+   "bytes": 3491,
+   "note": "House example, not an AI-model entry. Uses iterative-deepening alpha-beta, piece-square tables and MVV-LVA ordering with an approximately 300 ms search budget."
+  }
+ ]
+}
