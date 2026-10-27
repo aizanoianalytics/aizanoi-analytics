@@ -58,6 +58,9 @@
     <p class="lede">Physics football with AI-written players. Build two teams of bots, or grab a keyboard and play against them.</p>
   </section>
   <main class="fb">
+    <template id="fb-custom-option">
+      <option value="custom">Your bot (upload…)</option>
+    </template>
     <form id="fb-form" class="fb-picker" aria-label="Build your teams">
       <div class="fb-teams">
         <fieldset class="fb-team fb-red">
@@ -156,6 +159,11 @@
       Live contact counters are provisional; final counters come from the engine.
       <a href="#fb-roster">Meet the players</a>.
     </p>
+    <p class="fb-note">Write your own bot: read the <a href="BOT_API.md">Bot API</a>.
+      Upload a .js file up to 256 KB; it stays in memory only.
+      Load only code you trust. Top-level bot code must not depend on Math.random;
+      seeded randomness is available inside decide(state).
+    </p>
     <section id="fb-roster" class="fb-roster" aria-label="Available bots">
       <h2>The players</h2>
       <ul id="fb-list"></ul>
@@ -170,6 +178,7 @@
     </nav>
   </footer>
   <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
   <script src="runner.js"></script>
   <script src="renderer.js"></script>
   <script src="game.js"></script>

@@ -44,7 +44,7 @@ test('HTML contains only external executable scripts and head JSON-LD', () => {
   assert.doesNotMatch(html, /\sstyle\s*=/i);
   assert.doesNotMatch(html, /\son[a-z]+\s*=/i);
   const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)];
-  assert.equal(scripts.length, 5);
+  assert.equal(scripts.length, 6);
   const executable = [];
   let metadata = 0;
   for (const match of scripts) {
@@ -64,7 +64,13 @@ test('HTML contains only external executable scripts and head JSON-LD', () => {
     executable.push(external[1]);
   }
   assert.equal(metadata, 1);
-  assert.deepEqual(executable, ['engine.js', 'runner.js', 'renderer.js', 'game.js']);
+  assert.deepEqual(executable, [
+    'engine.js',
+    '/arcade/shared/custom-bot.js',
+    'runner.js',
+    'renderer.js',
+    'game.js'
+  ]);
 });
 
 test('HTML provides the complete accessible page surface', () => {
@@ -174,6 +180,7 @@ test('manifest ids are unique, paths are canonical, and files exist', () => {
     assert.equal(bot.file, `bots/${bot.id}.js`);
     assert.ok(fs.statSync(new URL(bot.file, root)).isFile());
     assert.equal(bot.lab, 'Aizanoi sample');
+    assert.match(bot.note, /not an AI-model entry/);
     assert.match(bot.note, /not an AI-model entry/);
     assert.match(bot.color, /^#[0-9a-f]{6}$/i);
   }

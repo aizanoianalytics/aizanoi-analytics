@@ -17,6 +17,10 @@
     if (!Array.isArray(entries) || entries.length < 2 || entries.length > 12) {
       throw new RangeError('Choose between 2 and 12 fighters');
     }
+    entries = entries.map(entry => entry && ({
+      ...entry,
+      ...(entry.custom ? { custom: { ...entry.custom } } : {}),
+    }));
     const ids = new Set();
     for (const entry of entries) {
       if (!entry || typeof entry.id !== 'string' ||
@@ -59,45 +63,109 @@
       workers.forEach(retire);
     }
 
+    function initialize(x, entry, i) {
+      const w = x.w;
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+        const settle = data => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          w.onmessage = null;
+          w.onerror = null;
+          w.onmessageerror = null;
+          resolve(data);
+        };
+        const cancel = () => settle({ type: 'stopped' });
+        pending.add(cancel);
+        timer = setTimeout(() => {
+          retire(x);
+          settle({ type: 'fail' });
+        }, INIT_TIMEOUT_MS);
+        w.onmessage = event => {
+          const data = event.data;
+          if (data && (data.type === 'ready' || data.type === 'fail')) settle(data);
+        };
+        w.onerror = event => {
+          if (event.preventDefault) event.preventDefault();
+          settle({ type: 'fail' });
+        };
+        w.onmessageerror = () => settle({ type: 'fail' });
+        try {
+          // The regular worker alone resolves this validated id to bots/<id>.js.
+          w.postMessage({ type: 'init', id: entry.id, seed: seed * 31 + i });
+        } catch {
+          settle({ type: 'fail' });
+        }
+      });
+    }
+
+    function prepareCustom(x, entry, i) {
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+        const settle = result => {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          resolve(result);
+        };
+        const cancel = () => settle({ type: 'stopped' });
+        pending.add(cancel);
+        // Fetching and creating the worker is bounded independently of init.
+        timer = setTimeout(() => {
+          retire(x);
+          settle({ type: 'fail', detail: 'worker creation timed out (5000 ms)' });
+        }, INIT_TIMEOUT_MS);
+
+        let creation;
+        try {
+          creation = ArenaCustomBot.createWorker({
+            game: 'snake-royale',
+            workerUrl: '/arcade/snake-royale/bot-worker.js',
+            scripts: ['/arcade/snake-royale/engine.js'],
+            code: entry.custom.code,
+          });
+        } catch {
+          settle({ type: 'fail', detail: 'worker could not be created' });
+          return;
+        }
+
+        Promise.resolve(creation).then(worker => {
+          if (settled || stopped) {
+            worker.terminate();
+            settle({ type: 'stopped' });
+            return;
+          }
+          x.w = worker;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          settled = true;
+          // Hand cancellation and the normal init deadline to initialize().
+          resolve(initialize(x, entry, i));
+        }, () => {
+          settle({ type: 'fail', detail: 'worker could not be created' });
+        });
+      });
+    }
+
     try {
       entries.forEach((entry, i) => {
         if (entry.human) {
           workers.push({ human: true, input: entry.input, ok: true });
           return;
         }
-        const w = new Worker('/arcade/snake-royale/bot-worker.js');
-        const x = { w, ready: null, ok: true, terminated: false };
+        const x = { w: null, ready: null, ok: true, terminated: false };
         workers.push(x);
-        x.ready = new Promise(resolve => {
-          let settled = false;
-          let timer;
-          const settle = data => {
-            if (settled) return;
-            settled = true;
-            clearTimeout(timer);
-            pending.delete(cancel);
-            w.onmessage = null;
-            w.onerror = null;
-            resolve(data);
-          };
-          const cancel = () => settle({ type: 'stopped' });
-          pending.add(cancel);
-          timer = setTimeout(() => {
-            retire(x);
-            settle({ type: 'fail' });
-          }, INIT_TIMEOUT_MS);
-          w.onmessage = event => {
-            const data = event.data;
-            if (data && (data.type === 'ready' || data.type === 'fail')) settle(data);
-          };
-          w.onerror = () => settle({ type: 'fail' });
-          try {
-            // The worker alone resolves this validated id to bots/<id>.js.
-            w.postMessage({ type: 'init', id: entry.id, seed: seed * 31 + i });
-          } catch {
-            settle({ type: 'fail' });
-          }
-        });
+        if (entry.custom) {
+          x.ready = prepareCustom(x, entry, i);
+        } else {
+          x.w = new Worker('/arcade/snake-royale/bot-worker.js');
+          x.ready = initialize(x, entry, i);
+        }
       });
     } catch (error) {
       stop();
@@ -132,6 +200,7 @@
           pending.delete(cancel);
           x.w.onmessage = null;
           x.w.onerror = null;
+          x.w.onmessageerror = null;
           resolve(value);
         };
         const fail = () => {
@@ -146,7 +215,11 @@
           if (!data || data.type !== 'move' || data.turn !== state.turn) return;
           settle(typeof data.move === 'string' ? data.move : null);
         };
-        x.w.onerror = fail;
+        x.w.onerror = event => {
+          if (event.preventDefault) event.preventDefault();
+          fail();
+        };
+        x.w.onmessageerror = fail;
         try {
           x.w.postMessage({ type: 'move', state });
         } catch {

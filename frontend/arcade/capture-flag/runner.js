@@ -3,6 +3,7 @@
 
   const DIRECTIONS = new Set(['up', 'down', 'left', 'right']);
   const TIMEOUT_MS = 150;
+  const LOAD_TIMEOUT_MS = 5000;
 
   function humanControl(seat) {
     const input = seat.input;
@@ -94,6 +95,11 @@
   }
 
   function start(seats, options = {}) {
+    // Human enabled state is live; snapshot bot seats and uploaded source only.
+    seats = seats.map(seat => seat.human ? seat : ({
+      ...seat,
+      ...(seat.custom ? { custom: { ...seat.custom } } : {}),
+    }));
     const game = FlagEngine.create(
       seats.map(({ id, team, name }) => ({ id, team, name })),
       options,
@@ -155,6 +161,65 @@
       });
     }
 
+    function initialize(worker, seat, index) {
+      const seed = (
+        (Number(options.seed) || 0) + Math.imul(index + 1, 0x9e3779b9)
+      ) >>> 0;
+      return request(
+        worker,
+        { type: 'init', id: seat.botId, seed },
+        LOAD_TIMEOUT_MS,
+        data => data && data.type === 'ready',
+      );
+    }
+
+    function prepareCustom(workerSeat, entry, index) {
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+
+        function settle() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          workerSeat.ok = false;
+          resolve(null);
+        }
+
+        const cancel = () => settle();
+        pending.add(cancel);
+        // Bound script fetching separately from the unchanged init deadline.
+        timer = setTimeout(settle, LOAD_TIMEOUT_MS);
+
+        let creation;
+        try {
+          creation = ArenaCustomBot.createWorker({
+            game: 'capture-flag',
+            workerUrl: '/arcade/capture-flag/bot-worker.js',
+            scripts: ['/arcade/capture-flag/engine.js'],
+            code: entry.custom.code,
+          });
+        } catch (error) {
+          settle();
+          return;
+        }
+
+        Promise.resolve(creation).then(worker => {
+          if (settled || stopped) {
+            worker.terminate();
+            settle();
+            return;
+          }
+          workerSeat.w = worker;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          resolve(initialize(workerSeat, entry, index));
+        }, settle);
+      });
+    }
+
     let loaded;
     try {
       const loading = seats.map((seat, index) => {
@@ -164,20 +229,19 @@
           workers.push({ human: true, control, ok: true });
           return Promise.resolve();
         }
-        const worker = {
-          w: new Worker('/arcade/capture-flag/bot-worker.js'),
-          ok: true,
-        };
+        const worker = { w: null, ok: true };
         workers.push(worker);
-        const seed = (
-          (Number(options.seed) || 0) + Math.imul(index + 1, 0x9e3779b9)
-        ) >>> 0;
-        return request(
-          worker,
-          { type: 'init', id: seat.botId, seed },
-          5000,
-          data => data && data.type === 'ready',
-        );
+        const entry = seat;
+        if (entry.custom) return prepareCustom(worker, entry, index);
+
+        try {
+          worker.w = new Worker('/arcade/capture-flag/bot-worker.js');
+          return initialize(worker, seat, index);
+        } catch (error) {
+          worker.ok = false;
+          if (worker.w) worker.w.terminate();
+          return Promise.resolve(null);
+        }
       });
       loaded = Promise.all(loading);
     } catch (error) {

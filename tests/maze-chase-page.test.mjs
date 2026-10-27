@@ -34,7 +34,7 @@ test('page contains no inline executable script, inline style or event handler',
   assert.doesNotMatch(html, /javascript\s*:/i);
 
   const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)];
-  assert.equal(scripts.length, 6);
+  assert.equal(scripts.length, 7);
   let metadata = 0;
 
   scripts.forEach(match => {
@@ -61,6 +61,7 @@ test('scripts use same-origin files in dependency order', () => {
   assert.deepEqual(scripts, [
     '/arcade/shared/arena-input.js',
     'engine.js',
+    '/arcade/shared/custom-bot.js',
     'runner.js',
     'renderer.js',
     'game.js',

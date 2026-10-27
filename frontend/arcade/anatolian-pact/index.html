@@ -45,6 +45,10 @@
       <meta itemprop="name" content="Aizanoi Analytics">
       <link itemprop="url" href="https://aizanoianalytics.com/">
     </div>
+    <template id="ap-seat-options">
+      <option value="human">Human</option>
+      <option value="custom">Your bot (upload…)</option>
+    </template>
     <form id="ap-form" class="ap-picker" aria-label="Choose power controllers">
       <table>
         <caption>The six powers</caption>
@@ -103,6 +107,8 @@
       <p>Support adds strength to a hold or move. An attack cuts support unless it comes from the province the support is directed against; a dislodged attacker cannot cut the support that dislodged it.</p>
       <p>Spring and Autumn each begin with structured deals and secret orders. Accepted deals are promises, not constraints: betrayal is allowed and recorded in the public trust record. Supply centres change hands after Autumn. Build in empty owned home centres or disband excess units. Own 13 centres to win, or lead at the year limit; tied leaders share victory.</p>
       <p>Choose Human for hot-seat play. Multiple humans pass the device before every private phase. Select your unit, then a highlighted destination to move; select Support, another unit, and its destination to support it. Click that unit again to support a hold. Proposal province selectors also accept map clicks while focused. Bots run in separate workers with a 2-second limit per call; failures use safe defaults. <a href="#ap-roster">Meet the strategists</a>.</p>
+      <p>Write your own bot: <a href="BOT_API.md">read the Bot API</a>.</p>
+      <p>Your bot stays in this page's memory; nothing is uploaded. Load only code you trust. Export an object with orders(state). Seeded Math.random is available inside bot methods, not during top-level bot initialization.</p>
       <p>Coastlines and Tuz lake are generated from public-domain <a href="https://www.naturalearthdata.com/">Natural Earth</a> geography. Narrow straits are widened to one playable hex; smaller Aegean islands are represented as sea.</p>
     </section>
     <section id="ap-roster" class="ap-roster" aria-label="All strategists">
@@ -121,6 +127,7 @@
   </footer>
   <script src="map-data.js"></script>
   <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
   <script src="runner.js"></script>
   <script src="map.js"></script>
   <script src="game.js"></script>

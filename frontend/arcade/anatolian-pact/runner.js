@@ -48,7 +48,13 @@
     const seed = Number.isFinite(options.seed) ? options.seed >>> 0 : Date.now() >>> 0;
     const game = engine.create({ ...options, seed });
     const canonical = engine.MAP?.powers?.map(power => power.id) || [];
-    const entries = Object.entries(powers).sort(([a], [b]) => {
+    const entries = Object.entries(powers).map(([power, seat]) => [
+      power,
+      {
+        ...seat,
+        ...(seat.custom ? { custom: { ...seat.custom } } : {})
+      }
+    ]).sort(([a], [b]) => {
       const ai = canonical.indexOf(a), bi = canonical.indexOf(b);
       if (ai >= 0 && bi >= 0) return ai - bi;
       if (ai >= 0 || bi >= 0) return ai >= 0 ? -1 : 1;
@@ -105,18 +111,78 @@
       });
     }
 
-    const ready = entries.map(([power, seat], i) => {
-      if (seat.human) return Promise.resolve();
+    function initialize(x, entry, power, i) {
+      const index = canonical.indexOf(power);
+      return exchange(x, {
+        type: 'init',
+        id: entry.id,
+        seed: (Math.imul(seed, 31) + (index >= 0 ? index : i)) >>> 0
+      }, data => data && data.type === 'ready');
+    }
+
+    function prepareCustom(x, entry, power, i) {
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+
+        function settle(value) {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          resolve(value);
+        }
+
+        const cancel = () => {
+          disable(x);
+          settle(null);
+        };
+        pending.add(cancel);
+        timer = setTimeout(cancel, 2000);
+
+        let creation;
+        try {
+          creation = ArenaCustomBot.createWorker({
+            game: 'anatolian-pact',
+            workerUrl: '/arcade/anatolian-pact/bot-worker.js',
+            scripts: [
+              '/arcade/anatolian-pact/map-data.js',
+              '/arcade/anatolian-pact/engine.js'
+            ],
+            code: entry.custom.code
+          });
+        } catch {
+          cancel();
+          return;
+        }
+
+        Promise.resolve(creation).then(worker => {
+          if (settled || stopped || !x.ok) {
+            worker.terminate();
+            settle(null);
+            return;
+          }
+
+          x.w = worker;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          // The unchanged init exchange now owns cancellation and its deadline.
+          settled = true;
+          resolve(initialize(x, entry, power, i));
+        }, cancel);
+      });
+    }
+
+    const ready = entries.map(([power, entry], i) => {
+      if (entry.human) return Promise.resolve();
       const x = { w: null, ok: true };
       workers.set(power, x);
+
+      if (entry.custom) return prepareCustom(x, entry, power, i);
+
       try {
         x.w = new Worker('/arcade/anatolian-pact/bot-worker.js');
-        const index = canonical.indexOf(power);
-        return exchange(x, {
-          type: 'init',
-          id: seat.id,
-          seed: (Math.imul(seed, 31) + (index >= 0 ? index : i)) >>> 0
-        }, data => data && data.type === 'ready');
+        return initialize(x, entry, power, i);
       } catch {
         disable(x);
         return Promise.resolve(null);

@@ -1,5 +1,10 @@
 'use strict';
-importScripts('map-data.js', 'engine.js');
+
+if (!self.__ARENA_INLINE__) {
+  importScripts('map-data.js');
+  importScripts('engine.js');
+}
+
 self.module = { exports: {} };
 self.exports = self.module.exports;
 self.window = self;
@@ -16,13 +21,24 @@ self.onmessage = event => {
   if (m.type === 'init' && !initialized) {
     initialized = true;
     try {
+      // Inline bot top-level code has already run. It must not depend on
+      // Math.random; seeded randomness is available inside bot methods.
       Math.random = PactEngine.rng(m.seed ^ 0x9e3779b9);
-      const id = String(m.id || '');
-      if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) {
-        throw new Error('Invalid bot id.');
+
+      if (self.__ARENA_INLINE__) {
+        if (self.__ARENA_LOAD_ERROR__ !== undefined) {
+          throw new Error(self.__ARENA_LOAD_ERROR__);
+        }
+        bot = self.__ARENA_BOT__;
+      } else {
+        const id = String(m.id || '');
+        if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) {
+          throw new Error('Invalid bot id.');
+        }
+        importScripts(`bots/${id}.js`);
+        bot = self.module.exports;
       }
-      importScripts(`bots/${id}.js`);
-      bot = self.module.exports;
+
       if (!bot || typeof bot.orders !== 'function') {
         throw new Error('Bot must export orders(state).');
       }
@@ -31,7 +47,7 @@ self.onmessage = event => {
       bot = null;
       postMessage({
         type: 'fail',
-        detail: String(error.message || error).slice(0, 120)
+        detail: String((error && error.message) || error).slice(0, 120)
       });
     }
     return;

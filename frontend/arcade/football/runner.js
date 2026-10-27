@@ -31,6 +31,10 @@
 
   function start(seats, options = {}) {
     if (!Array.isArray(seats) || !seats.length) throw new Error('Choose two teams');
+    seats = seats.map(seat => ({
+      ...seat,
+      ...(seat.custom ? { custom: { ...seat.custom } } : {})
+    }));
     const ids = new Set();
     for (const seat of seats) {
       if (!/^(r|b)[1-4]$/.test(seat.id) || ids.has(seat.id) ||
@@ -111,8 +115,8 @@
 
     function createWorker(seat, index) {
       const entry = {
-        seat, worker: null, ok: false, disabled: false, input: EMPTY,
-        pending: null, deadline: null, settle: null
+        seat, custom: seat.custom, worker: null, ok: false, disabled: false,
+        input: EMPTY, pending: null, deadline: null, settle: null
       };
       workers.push(entry);
       return new Promise(resolve => {
@@ -125,8 +129,13 @@
           resolve(success);
         };
 
-        try {
-          entry.worker = new Worker('/arcade/football/bot-worker.js');
+        function initialize(worker) {
+          // Async creation can finish after stop() or the creation deadline.
+          if (stopped || entry.disabled || settled) {
+            worker.terminate();
+            return;
+          }
+          entry.worker = worker;
           entry.worker.onmessage = event => {
             const message = event.data;
             if (!message || stopped || entry.disabled) return;
@@ -156,15 +165,39 @@
             }
           };
           entry.worker.onerror = event => {
-            event.preventDefault();
+            if (event.preventDefault) event.preventDefault();
             disableWorker(entry);
           };
+          entry.worker.onmessageerror = () => disableWorker(entry);
+          // Give init the same deadline as a regular worker, independently
+          // of the bounded asynchronous custom-worker creation phase.
+          clearTimeout(startup);
           startup = setTimeout(() => disableWorker(entry), 5000);
           entry.worker.postMessage({
             type: 'init',
             id: seat.botId,
             seed: ((Number(options.seed) || 1) + Math.imul(index + 1, 0x9e3779b9)) >>> 0
           });
+        }
+
+        try {
+          if (entry.custom) {
+            startup = setTimeout(() => disableWorker(entry), 5000);
+            Promise.resolve(ArenaCustomBot.createWorker({
+              game: 'football',
+              workerUrl: '/arcade/football/bot-worker.js',
+              scripts: ['/arcade/football/engine.js'],
+              code: entry.custom.code
+            })).then(worker => {
+              try {
+                initialize(worker);
+              } catch {
+                disableWorker(entry);
+              }
+            }, () => disableWorker(entry));
+          } else {
+            initialize(new Worker('/arcade/football/bot-worker.js'));
+          }
         } catch {
           disableWorker(entry);
         }

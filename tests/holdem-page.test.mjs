@@ -75,7 +75,10 @@ test('HTML uses external scripts and styles except head structured data', () => 
   }
 
   assert.equal(metadata, 1);
-  assert.deepEqual(external, ['engine.js', 'runner.js', 'table.js', 'game.js']);
+  assert.deepEqual(external, [
+    'engine.js', '/arcade/shared/custom-bot.js',
+    'runner.js', 'table.js', 'game.js'
+  ]);
   assert.match(html, /href="holdem\.css"/);
 });
 

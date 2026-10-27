@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 
-const ARENAS = ['chess'];
+const ARENAS = ['chess', 'snake-royale', 'maze-chase', 'capture-flag', 'holdem', 'football', 'anatolian-pact'];
 const frontend = new URL('../frontend/', import.meta.url);
 const read = relative => readFile(new URL(relative, frontend), 'utf8');
 const sharedSource = await read('arcade/shared/custom-bot.js');
@@ -46,7 +46,7 @@ for (const arena of ARENAS) {
     assert.match(runner, /ArenaCustomBot\.createWorker/);
     assert.match(runner, /workerUrl:/);
     assert.match(runner, /scripts:/);
-    assert.match(runner, /worker\.terminate\(\)/);
+    assert.match(runner, /\.terminate\(\)/); // any worker handle name; behaviour is covered by the chess late-worker test
     assert.match(page, /<option\s+value="custom">Your bot \(upload…\)<\/option>/);
     assert.match(game, /ArenaCustomBot\.pick\(\{\s*game:/);
     assert.match(game, /lab:\s*'You'/);

@@ -3,9 +3,13 @@
 
   const DIRECTIONS = new Set(['up', 'down', 'left', 'right']);
   const TIMEOUT_MS = 150;
+  const LOAD_TIMEOUT_MS = 5000;
 
   function start(seats, options = {}) {
-    const entries = seats.slice();
+    const entries = seats.map(entry => ({
+      ...entry,
+      ...(entry.custom ? { custom: { ...entry.custom } } : {}),
+    }));
     const seed = Number(options.seed ?? 1) >>> 0;
     const game = MazeEngine.create(entries.map(({ id, role, name }) => ({ id, role, name })), {
       ...options, seed,
@@ -17,6 +21,7 @@
 
     function retire(x) {
       x.ok = false;
+      if (!x.w) return;
       x.w.onmessage = null;
       x.w.onerror = null;
       x.w.onmessageerror = null;
@@ -27,7 +32,7 @@
       if (stopped) return;
       stopped = true;
       [...pending].forEach(cancel => cancel());
-      workers.forEach(x => { if (x.w) retire(x); });
+      workers.forEach(x => { if (!x.human) retire(x); });
     }
 
     function exchange(x, message, timeout, accept) {
@@ -68,6 +73,63 @@
       });
     }
 
+    function initialize(x, entry, index) {
+      return exchange(x, {
+        type: 'init', id: entry.botId, seed: (Math.imul(seed, 31) + index) >>> 0,
+      }, LOAD_TIMEOUT_MS, data => data && (data.type === 'ready' || data.type === 'fail'))
+        .then(data => {
+          if (data?.type !== 'ready' && x.ok) retire(x);
+        });
+    }
+
+    function prepareCustom(x, entry, index) {
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+
+        function settle() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          retire(x);
+          resolve();
+        }
+
+        const cancel = () => settle();
+        pending.add(cancel);
+        // Bound asynchronous script fetching as well as worker initialization.
+        timer = setTimeout(settle, LOAD_TIMEOUT_MS);
+
+        let creation;
+        try {
+          creation = ArenaCustomBot.createWorker({
+            game: 'maze-chase',
+            workerUrl: '/arcade/maze-chase/bot-worker.js',
+            scripts: ['/arcade/maze-chase/engine.js'],
+            code: entry.custom.code,
+          });
+        } catch {
+          settle();
+          return;
+        }
+
+        Promise.resolve(creation).then(worker => {
+          if (settled || stopped) {
+            worker.terminate();
+            settle();
+            return;
+          }
+          x.w = worker;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          // Initialization installs its own cancellation and response deadline.
+          settled = true;
+          resolve(initialize(x, entry, index));
+        }, settle);
+      });
+    }
+
     let loaded;
     try {
       const agents = game.agents();
@@ -78,14 +140,14 @@
           workers.push({ human: true, input: entry.input, ok: true });
           return;
         }
-        const x = { w: new Worker('/arcade/maze-chase/bot-worker.js'), ok: true };
+        const x = { w: null, ok: true };
         workers.push(x);
-        x.ready = exchange(x, {
-          type: 'init', id: entry.botId, seed: (Math.imul(seed, 31) + index) >>> 0,
-        }, 5000, data => data && (data.type === 'ready' || data.type === 'fail'))
-          .then(data => {
-            if (data?.type !== 'ready' && x.ok) retire(x);
-          });
+        if (entry.custom) {
+          x.ready = prepareCustom(x, entry, index);
+          return;
+        }
+        x.w = new Worker('/arcade/maze-chase/bot-worker.js');
+        x.ready = initialize(x, entry, index);
       });
       loaded = Promise.all(workers.map(x => x.ready));
     } catch (error) {

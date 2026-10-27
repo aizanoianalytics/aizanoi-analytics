@@ -39,6 +39,7 @@
     <meta itemprop="name" content="Aizanoi Analytics">
     <link itemprop="url" href="https://aizanoianalytics.com/">
   </div>
+  <template id="sr-custom-option"><option value="custom">Your bot (upload…)</option></template>
   <form id="sr-form" class="sr-picker" aria-label="Choose fighters">
     <label class="sr-side sr-a"><span>Fighter A</span><select id="sr-a" name="a"></select></label>
     <span class="sr-vs" aria-hidden="true">VS</span>
@@ -52,6 +53,7 @@
       <button type="submit" id="sr-fight" class="button" disabled>Fight</button>
       <button type="button" id="sr-random" class="button secondary" disabled>Random pair</button>
       <button type="button" id="sr-add" class="button secondary" disabled>+ Add bot</button>
+      <button type="button" id="sr-custom" class="button secondary" disabled>Load your bot</button>
     </div>
   </form>
   <div class="sr-telemetry" aria-label="Arena status">
@@ -80,12 +82,14 @@
     <p id="sr-play-help"><strong>Play locally:</strong> enable Player 1 or 2, choose different WASD/arrow controls, then press Fight. Player 1 also has a direction pad on touch devices. Humans keep their direction and cannot reverse into their neck. Play starts after a countdown; human ticks are at least 120 ms, or Normal speed when Instant is selected. Restart fight starts a new match with the current selections.</p>
     <p><strong>Benchmark rules:</strong> 11×11 duel or 19×19 royale for more than two fighters, up to 12 total. Food adds one length and restores health to 100. Moves resolve simultaneously; the longer head wins and equal longest heads both die. Storm rings expand after turn 150, then every 20 turns, and become lethal on subsequent moves. These are the original benchmark rules, not official Battlesnake Royale rules.</p>
     <p>Bots have 400 ms per move in their own worker and 5 seconds to initialize. A move timeout ends that worker for the game; its snake keeps the engine fallback direction. Series require a majority of wins, with at most four extra games for draws, including Single fight. <a href="BOT_API.md">Full rules and bot API</a> · <a href="#sr-roster">See all fighters</a></p>
+    <p>Write your own bot: <a href="BOT_API.md">read the Bot API</a>. Load a trusted .js file, up to 256 KB, with “Load your bot” or an extra seat’s “Your bot” option. Files stay in memory on this page and are not uploaded. Top-level bot code must not depend on Math.random; seeded randomness is available inside move(state).</p>
   </div>
   <section id="sr-roster" class="sr-roster" aria-label="All fighters"><h2>The fighters</h2><ul id="sr-list"></ul></section>
 </main>
 <footer><p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p><nav class="public-identity-links" aria-label="Social and contact"><a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a><a href="mailto:aizanoianalytics@protonmail.com">Email</a></nav></footer>
 <script src="engine.js"></script>
 <script src="/arcade/shared/arena-input.js"></script>
+<script src="/arcade/shared/custom-bot.js"></script>
 <script src="runner.js"></script>
 <script src="renderer.js"></script>
 <script src="game.js"></script>

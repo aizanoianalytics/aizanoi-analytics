@@ -15,11 +15,14 @@
     p2: { name: 'Player 2', label: 'Player 2 (arrows)', scheme: 'arrows' },
   };
   const waits = new Set();
+  const previousChoices = new WeakMap();
   const tally = { runners: 0, ghosts: 0 };
   let bots = [];
   let byId = Object.create(null);
   let ready = false;
   let running = false;
+  let picking = false;
+  let customBot = null;
   let token = 0;
   let activeRun = null;
   let activeSeats = null;
@@ -41,19 +44,28 @@
     return [...$(LISTS[role]).querySelectorAll('select')];
   }
 
+  function allSeatSelects() {
+    return ['runner', 'ghost'].flatMap(selects);
+  }
+
   function selectedSeats() {
     return ['runner', 'ghost'].flatMap(role => selects(role).map((select, index) => {
       const player = PLAYERS[select.value];
+      const custom = select.value === 'custom' && customBot;
       const bot = byId[select.value];
       return {
         id: `${role === 'runner' ? 'r' : 'g'}${index + 1}`,
         role,
-        name: player ? player.name : (bot ? bot.name : 'Unknown bot'),
+        name: player ? player.name : custom ? custom.name : (bot ? bot.name : 'Unknown bot'),
         color: PALETTES[role][index],
         human: Boolean(player),
         playerId: player ? select.value : null,
         scheme: player ? player.scheme : null,
-        botId: bot ? bot.id : null,
+        botId: custom ? 'custom' : (bot ? bot.id : null),
+        ...(custom ? {
+          lab: 'You',
+          custom: { name: custom.name, code: custom.code },
+        } : {}),
       };
     }));
   }
@@ -89,19 +101,74 @@
       const rows = [...$(LISTS[role]).children];
       rows.forEach((row, index) => {
         row.style.setProperty('--seat-color', PALETTES[role][index]);
-        row.querySelector('select').disabled = running;
+        row.querySelector('select').disabled = !ready || running || picking;
         row.querySelector('select').setAttribute('aria-label',
           `${role === 'runner' ? 'Runner' : 'Ghost'} ${index + 1}`);
-        row.querySelector('button').disabled = running || rows.length <= 1;
+        row.querySelector('button').disabled = !ready || running || picking || rows.length <= 1;
         row.querySelector('button').setAttribute('aria-label', `Remove ${role} ${index + 1}`);
       });
-      $(`mc-add-${role}`).disabled = !ready || running || rows.length >= LIMITS[role];
+      $(`mc-add-${role}`).disabled = !ready || running || picking || rows.length >= LIMITS[role];
     });
-    ['mc-layout', 'mc-speed', 'mc-series'].forEach(id => { $(id).disabled = running; });
-    $('mc-random').disabled = !ready || running;
-    $('mc-start').disabled = !ready || running;
+    ['mc-layout', 'mc-speed', 'mc-series'].forEach(id => {
+      $(id).disabled = running || picking;
+    });
+    $('mc-random').disabled = !ready || running || picking;
+    $('mc-start').disabled = !ready || running || picking;
     $('mc-start').textContent = running ? 'Playing…' : 'Start';
     syncPad();
+  }
+
+  function updateCustomOptions() {
+    allSeatSelects().forEach(select => {
+      const option = [...select.options].find(entry => entry.value === 'custom');
+      if (option) {
+        option.textContent = customBot
+          ? `Your bot: ${customBot.name}`
+          : 'Your bot (upload…)';
+      }
+    });
+  }
+
+  async function chooseSeat(event) {
+    const select = event.currentTarget;
+    const previous = previousChoices.get(select) || bots[0].id;
+    if (running || picking || pageGone) {
+      select.value = previous;
+      return;
+    }
+    if (select.value !== 'custom') {
+      previousChoices.set(select, select.value);
+      selectionChanged();
+      return;
+    }
+
+    picking = true;
+    syncControls();
+    let errorMessage = '';
+    try {
+      // Call before the first await to preserve the selecting user gesture.
+      const chosen = await ArenaCustomBot.pick({ game: 'maze-chase' });
+      if (pageGone) {
+        select.value = previous;
+        return;
+      }
+      if (chosen) {
+        customBot = chosen;
+        previousChoices.set(select, 'custom');
+        updateCustomOptions();
+      } else {
+        select.value = previous;
+      }
+    } catch (error) {
+      select.value = previous;
+      errorMessage = String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      if (!pageGone) {
+        selectionChanged();
+        if (errorMessage) $('mc-ticker').textContent = errorMessage;
+      }
+    }
   }
 
   function addSeat(role, value) {
@@ -111,18 +178,23 @@
     Object.entries(PLAYERS).forEach(([id, player]) => {
       select.appendChild(new Option(player.label, id));
     });
+    const custom = $('mc-custom-option').content.firstElementChild.cloneNode(true);
+    if (customBot) custom.textContent = `Your bot: ${customBot.name}`;
+    select.appendChild(custom);
     bots.forEach(bot => {
       select.appendChild(new Option(`${bot.name} · ${bot.lab}`, bot.id));
     });
-    select.value = value && (PLAYERS[value] || byId[value]) ? value : bots[0].id;
+    select.value = value && (PLAYERS[value] || byId[value] ||
+      (value === 'custom' && customBot)) ? value : bots[0].id;
+    previousChoices.set(select, select.value);
     const remove = element('button', 'mc-remove', '×');
     remove.type = 'button';
     remove.addEventListener('click', () => {
-      if (running || selects(role).length <= 1) return;
+      if (running || picking || selects(role).length <= 1) return;
       row.remove();
       selectionChanged();
     });
-    select.addEventListener('change', selectionChanged);
+    select.addEventListener('change', chooseSeat);
     row.append(select, remove);
     $(LISTS[role]).appendChild(row);
   }
@@ -142,6 +214,7 @@
       card.dataset.seat = agent.id;
       card.appendChild(element('span', 'mc-badge', `${agent.id.toUpperCase()} · ${agent.role.toUpperCase()}`));
       card.appendChild(element('b', null, entry ? entry.name : agent.name));
+      if (entry && entry.custom) card.appendChild(element('small', null, entry.lab));
       card.appendChild(element('span', 'mc-score', `Score ${agent.score}`));
       if (agent.role === 'runner') {
         const lives = Math.max(0, Math.min(3, agent.lives));
@@ -184,7 +257,7 @@
   }
 
   function selectionChanged() {
-    if (running) return;
+    if (running || picking || pageGone) return;
     const duplicate = duplicatePlayer(selectedSeats());
     $('mc-ticker').textContent = duplicate
       ? `${duplicate} may occupy only one seat.` : 'Choose your teams, then press Start.';
@@ -194,10 +267,11 @@
   }
 
   function randomBots() {
-    if (running || !bots.length) return;
+    if (running || picking || !bots.length) return;
     ['runner', 'ghost'].forEach(role => {
       selects(role).forEach(select => {
         if (!PLAYERS[select.value]) select.value = bots[Math.floor(Math.random() * bots.length)].id;
+        previousChoices.set(select, select.value);
       });
     });
     selectionChanged();
@@ -320,7 +394,11 @@
   }
 
   async function start() {
-    if (!ready || running || pageGone) return;
+    if (!ready || running || picking || pageGone) return;
+    if (allSeatSelects().some(select => select.value === 'custom') && !customBot) {
+      $('mc-ticker').textContent = 'Choose Your bot (upload…) and load a JavaScript bot first.';
+      return;
+    }
     const entries = selectedSeats();
     const duplicate = duplicatePlayer(entries);
     if (duplicate) {
@@ -329,7 +407,7 @@
     }
     if (!entries.some(entry => entry.role === 'runner') ||
         !entries.some(entry => entry.role === 'ghost') ||
-        entries.some(entry => !entry.human && !entry.botId)) {
+        entries.some(entry => !entry.human && !entry.botId && !entry.custom)) {
       $('mc-ticker').textContent = 'Choose at least one runner and one ghost.';
       return;
     }
@@ -393,14 +471,16 @@
   function queryTeam(query, role, fallback) {
     const key = role === 'runner' ? 'runners' : 'ghosts';
     if (!query.has(key)) return fallback;
-    const ids = query.get(key).split(',').filter(id => PLAYERS[id] || byId[id]);
+    // A URL cannot provide bot code or open a picker without a user gesture.
+    const ids = query.get(key).split(',').filter(id =>
+      PLAYERS[id] || byId[id] || (id === 'custom' && customBot));
     return ids.length ? ids.slice(0, LIMITS[role]) : fallback;
   }
 
   function validBot(bot) {
     return bot && typeof bot.id === 'string' &&
       /^[a-z0-9][a-z0-9.-]*$/.test(bot.id) && !bot.id.includes('..') &&
-      !PLAYERS[bot.id] && typeof bot.name === 'string' &&
+      !PLAYERS[bot.id] && bot.id !== 'custom' && typeof bot.name === 'string' &&
       typeof bot.lab === 'string' && /^#[a-f0-9]{6}$/i.test(bot.color) &&
       bot.file === `bots/${bot.id}.js` &&
       Number.isFinite(bot.bytes) && bot.bytes >= 0;
@@ -415,7 +495,7 @@
     });
     ['runner', 'ghost'].forEach(role => {
       $(`mc-add-${role}`).addEventListener('click', () => {
-        if (!ready || running) return;
+        if (!ready || running || picking) return;
         addSeat(role, byId['sample-hunter'] ? 'sample-hunter' : bots[0].id);
         selectionChanged();
       });
@@ -441,6 +521,7 @@
       }
       bots = payload.bots.map(bot => ({ ...bot }));
       byId = Object.fromEntries(bots.map(bot => [bot.id, bot]));
+      customBot = ArenaCustomBot.get('maze-chase');
       const query = new URLSearchParams(location.search);
       const fallbackGhosts = ['sample-hunter', 'sample-tactician',
         'sample-wanderer', 'sample-hunter'].map(id => byId[id] ? id : bots[0].id);

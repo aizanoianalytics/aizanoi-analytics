@@ -69,6 +69,10 @@
       <link itemprop="url" href="https://aizanoianalytics.com/">
     </div>
 
+    <template id="ph-custom-option">
+      <option value="custom">Your bot (upload…)</option>
+    </template>
+
     <form id="ph-form" class="ph-picker" aria-label="Choose seats and tournament settings">
       <fieldset>
         <legend>Seats · 2–9 players</legend>
@@ -165,6 +169,7 @@
       A single human’s cards stay visible; showdown hands are revealed to everyone.
       <a href="#ph-roster">See the bot roster</a>.
     </p>
+    <p class="ph-note">Write your own bot: read the <a href="BOT_API.md">Bot API</a>. Uploads stay in this page’s memory. Load only code you trust; use Math.random inside act(state), not at the top level.</p>
     <section id="ph-roster" class="ph-roster" aria-label="All bots">
       <h2>The bots</h2>
       <p>These starter bots are house samples, not AI-model entries.</p>
@@ -180,6 +185,7 @@
     </nav>
   </footer>
   <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
   <script src="runner.js"></script>
   <script src="table.js"></script>
   <script src="game.js"></script>

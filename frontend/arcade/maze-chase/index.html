@@ -71,6 +71,10 @@
       <link itemprop="url" href="https://aizanoianalytics.com/">
     </div>
 
+    <template id="mc-custom-option">
+      <option value="custom">Your bot (upload…)</option>
+    </template>
+
     <form id="mc-form" class="mc-picker" aria-label="Choose teams and match settings">
       <div class="mc-teams">
         <fieldset>
@@ -157,6 +161,7 @@
       Series play every selected round, with a fresh seed each round.
       <a href="#mc-roster">See the bot roster</a>.
     </p>
+    <p class="mc-help">Write your own bot: <a href="BOT_API.md">read the Bot API</a>. Upload a .js file up to 256 KB; it stays in memory on this page and is not uploaded. Load only code you trust. Top-level bot code must not depend on Math.random; seeded randomness is available inside move(state).</p>
 
     <section id="mc-roster" class="mc-roster" aria-label="Bot roster">
       <h2>The bots</h2>
@@ -178,6 +183,7 @@
 
   <script src="/arcade/shared/arena-input.js"></script>
   <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
   <script src="runner.js"></script>
   <script src="renderer.js"></script>
   <script src="game.js"></script>

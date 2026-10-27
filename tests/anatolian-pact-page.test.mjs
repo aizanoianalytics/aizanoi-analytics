@@ -53,7 +53,16 @@ test('HTML loads generated data before engine and has only external executable s
     }
   }
   assert.equal(jsonLd, 1);
-  assert.deepEqual(executable, ['map-data.js', 'engine.js', 'runner.js', 'map.js', 'game.js']);
+  // Preserve the original game-script order with the required shared dependency
+  // inserted immediately before runner.js.
+  assert.deepEqual(executable, [
+    'map-data.js',
+    'engine.js',
+    '/arcade/shared/custom-bot.js',
+    'runner.js',
+    'map.js',
+    'game.js'
+  ]);
   assert.match(html, /https:\/\/aizanoianalytics\.com\/arcade\/anatolian-pact\//);
   assert.match(html, /armies cannot cross the straits/i);
 });

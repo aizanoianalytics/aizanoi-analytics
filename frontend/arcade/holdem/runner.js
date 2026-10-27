@@ -20,12 +20,18 @@
     }
     const entries = seats.map((seat, index) => ({
       ...seat,
+      ...(seat.custom ? { custom: { ...seat.custom } } : {}),
       id: `s${index + 1}`,
       human: seat.kind === 'human' || seat.human === true,
       botId: seat.botId || (seat.kind === 'bot' ? seat.bot : null)
     }));
     for (const entry of entries) {
-      if (!entry.human && (
+      if (!entry.human && entry.custom) {
+        if (typeof entry.custom.name !== 'string' ||
+            typeof entry.custom.code !== 'string') {
+          throw new Error('Invalid custom bot');
+        }
+      } else if (!entry.human && (
         typeof entry.botId !== 'string' ||
         !/^[a-z0-9][a-z0-9.-]*$/.test(entry.botId) ||
         entry.botId.includes('..')
@@ -102,7 +108,7 @@
           }
         };
         w.onerror = event => {
-          event.preventDefault();
+          if (event.preventDefault) event.preventDefault();
           settle(null, true);
         };
         w.onmessageerror = () => settle(null, true);
@@ -114,6 +120,62 @@
       });
     }
 
+    function initialize(worker, entry, workerSeed) {
+      return exchange(
+        worker,
+        { type: 'init', id: entry.botId, seed: workerSeed },
+        message => message && (message.type === 'ready' || message.type === 'fail')
+      ).then(message => {
+        if (!message || message.type !== 'ready') disable(worker);
+      });
+    }
+
+    function prepareCustom(worker, entry, workerSeed) {
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+
+        function settle() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          disable(worker);
+          resolve();
+        }
+
+        const cancel = () => settle();
+        pending.add(cancel);
+        timer = setTimeout(settle, TIMEOUT_MS);
+
+        let creation;
+        try {
+          creation = ArenaCustomBot.createWorker({
+            game: 'holdem',
+            workerUrl: '/arcade/holdem/bot-worker.js',
+            scripts: ['/arcade/holdem/engine.js'],
+            code: entry.custom.code
+          });
+        } catch (error) {
+          settle();
+          return;
+        }
+
+        Promise.resolve(creation).then(created => {
+          if (settled || stopped) {
+            created.terminate();
+            settle();
+            return;
+          }
+          worker.w = created;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          settled = true;
+          resolve(initialize(worker, entry, workerSeed));
+        }, settle);
+      });
+    }
+
     let loaded;
     try {
       const readiness = entries.map(entry => {
@@ -121,18 +183,15 @@
           workers.push({ human: true, ok: true, w: null });
           return Promise.resolve();
         }
-        const worker = {
-          human: false, ok: true,
-          w: new Worker('/arcade/holdem/bot-worker.js')
-        };
+        const worker = { human: false, ok: true, w: null };
         workers.push(worker);
-        return exchange(
-          worker,
-          { type: 'init', id: entry.botId, seed: Math.floor(botRandom() * 4294967296) },
-          message => message && (message.type === 'ready' || message.type === 'fail')
-        ).then(message => {
-          if (!message || message.type !== 'ready') disable(worker);
-        });
+        // Allocate in seat order, not asynchronous worker-completion order.
+        const workerSeed = Math.floor(botRandom() * 4294967296);
+        if (entry.custom) {
+          return prepareCustom(worker, entry, workerSeed);
+        }
+        worker.w = new Worker('/arcade/holdem/bot-worker.js');
+        return initialize(worker, entry, workerSeed);
       });
       loaded = Promise.all(readiness);
     } catch (error) {

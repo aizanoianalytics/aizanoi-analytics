@@ -60,7 +60,7 @@ test('HTML contains no inline executable scripts, styles, or handlers', () => {
   }
 
   assert.equal(metadata, 1);
-  assert.equal(scripts.length, 6);
+  assert.equal(scripts.length, 7);
   assert.match(
     html,
     /<link\s+rel="canonical"\s+href="https:\/\/aizanoianalytics\.com\/arcade\/capture-flag\/">/,
@@ -73,6 +73,7 @@ test('HTML contains no inline executable scripts, styles, or handlers', () => {
   assert.deepEqual(sources, [
     '/arcade/shared/arena-input.js',
     'engine.js',
+    '/arcade/shared/custom-bot.js',
     'runner.js',
     'renderer.js',
     'game.js',
@@ -88,7 +89,8 @@ test('worker validates ids before constructing a local bot path', () => {
   assert.ok(text.indexOf('.test(id)') < text.indexOf('importScripts(`bots/'));
   assert.doesNotMatch(text, /importScripts\s*\(\s*(?:message|m)\./);
   assert.match(text, /Math\.random\s*=\s*FlagEngine\.rng/);
-  assert.match(text, /tick:\s*message\.state\.tick/);
+  assert.match(text, /const tick = message\.state\.tick/);
+  assert.match(text, /type:\s*'move',\s*tick,/);
 });
 
 test('worker rejects invalid ids and emits seeded tick-addressed moves', () => {

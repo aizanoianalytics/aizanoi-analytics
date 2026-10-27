@@ -23,7 +23,9 @@
   let bots = [], match = null, running = false, seats = {}, active = null;
   let draft = [], selected = null, support = null, picker = null, inspected = null;
   let replay = [], sleepTimer = null, wake = null, generation = 0;
+  let picking = false, customBot = null;
   const selects = new Map();
+  const previousChoices = new Map();
   let unitInput = null, actionInput = null;
   const renderer = PactMap.create($('ap-canvas'), { onProvince: pickProvince });
 
@@ -143,10 +145,13 @@
       const row = node('li');
       row.style.setProperty('--power-color', powers.find(p => p.id === power).color);
       const record = t[power];
+      const seat = seats[power];
+      const controller = seat.human ? 'Human' :
+        seat.custom ? `${seat.name} · ${seat.lab}` : seat.name;
       row.append(
         node('strong', power),
         node('span', `${c[power]} / 13 centres · ${units.filter(u => u.power === power).length} units`),
-        node('span', seats[power].human ? 'Human' : seats[power].name),
+        node('span', controller),
         node('small', `kept ${record.kept} · broken ${record.broken} · made ${record.promisesMade}`)
       );
       $('ap-standings').append(row);
@@ -518,24 +523,87 @@
   function lock(value) {
     selects.forEach(input => { input.disabled = value; });
     for (const id of ['ap-years', 'ap-random', 'ap-start']) $(id).disabled = value;
-    $('ap-start').textContent = value ? 'Playing…' : 'Start';
+    $('ap-start').textContent = running ? 'Playing…' : 'Start';
+  }
+
+  function seatFor(id) {
+    if (id === 'human') return { human: true };
+    if (id === 'custom' && customBot) {
+      return {
+        id: 'custom',
+        name: customBot.name,
+        human: false,
+        lab: 'You',
+        custom: { name: customBot.name, code: customBot.code }
+      };
+    }
+    const bot = bots.find(b => b.id === id);
+    if (!bot) throw new Error('Choose an available strategist for every power.');
+    return { id: bot.id, name: bot.name };
+  }
+
+  function updateCustomOptions() {
+    selects.forEach(input => {
+      const option = [...input.options].find(entry => entry.value === 'custom');
+      if (option) {
+        option.textContent = customBot ?
+          `Your bot: ${customBot.name}` : 'Your bot (upload…)';
+      }
+    });
+  }
+
+  async function chooseSeat(event) {
+    const input = event.currentTarget;
+    const previous = previousChoices.get(input) || 'human';
+    if (running || picking) {
+      input.value = previous;
+      return;
+    }
+    if (input.value !== 'custom') {
+      previousChoices.set(input, input.value);
+      return;
+    }
+
+    picking = true;
+    lock(true);
+    let errorMessage = '';
+    try {
+      // Open the picker before the first await, while handling the user gesture.
+      const chosen = await ArenaCustomBot.pick({ game: 'anatolian-pact' });
+      if (chosen) {
+        customBot = chosen;
+        previousChoices.set(input, 'custom');
+        updateCustomOptions();
+      } else {
+        input.value = previous;
+      }
+    } catch (error) {
+      input.value = previous;
+      errorMessage = String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      lock(running);
+      ticker(errorMessage || 'Choose who controls each power, then press Start.');
+    }
   }
 
   async function start() {
-    if (running) return;
+    if (running || picking) return;
+    if ([...selects.values()].some(input => input.value === 'custom') && !customBot) {
+      ticker('Choose Your bot (upload…) and load a JavaScript bot first.');
+      return;
+    }
     const token = ++generation;
     running = true;
     lock(true);
     match?.stop();
-    seats = Object.fromEntries(names.map(power => {
-      const id = selects.get(power).value;
-      return [power, id === 'human' ? { human: true } :
-        { id, name: bots.find(b => b.id === id).name }];
-    }));
     $('ap-log').replaceChildren();
     $('ap-result').hidden = true;
     replay = [];
     try {
+      seats = Object.fromEntries(names.map(power => [
+        power, seatFor(selects.get(power).value)
+      ]));
       match = PactRunner.start(seats, {
         seed: crypto.getRandomValues(new Uint32Array(1))[0],
         maxYears: Number($('ap-years').value)
@@ -596,15 +664,20 @@
       label.append(swatch, document.createTextNode(power.id));
       const input = node('select');
       input.setAttribute('aria-label', `${power.id} controller`);
-      input.add(new Option('Human', 'human'));
+      input.append($('ap-seat-options').content.cloneNode(true));
       bots.forEach(bot => input.add(new Option(`${bot.name} · ${bot.lab}`, bot.id)));
       const choice = requested[i] || defaults[i];
-      input.value = choice === 'human' || bots.some(b => b.id === choice) ? choice : defaults[i];
+      // URL parameters cannot upload code or open a file picker.
+      input.value = choice === 'human' || (choice === 'custom' && customBot) ||
+        bots.some(b => b.id === choice) ? choice : defaults[i];
+      previousChoices.set(input, input.value);
+      input.addEventListener('change', chooseSeat);
       cell.append(input);
       row.append(label, cell);
       $('ap-seats').append(row);
       selects.set(power.id, input);
     });
+    updateCustomOptions();
     if (['6', '9', '12'].includes(params.get('years'))) $('ap-years').value = params.get('years');
     if (params.get('speed') === '0') $('ap-speed').value = '0';
     bots.forEach(bot => {
@@ -623,8 +696,12 @@
     start();
   });
   $('ap-random').addEventListener('click', () => {
+    if (running || picking) return;
     const random = PactEngine.rng(crypto.getRandomValues(new Uint32Array(1))[0]);
-    selects.forEach(input => { input.value = bots[Math.floor(random() * bots.length)].id; });
+    selects.forEach(input => {
+      input.value = bots[Math.floor(random() * bots.length)].id;
+      previousChoices.set(input, input.value);
+    });
   });
   $('ap-hold').addEventListener('click', () => {
     if (selected) addOrder({ unit: selected, type: 'hold' });
@@ -679,11 +756,13 @@
   }).then(manifest => {
     const seen = new Set();
     bots = manifest.bots.filter(bot => {
-      if (!/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) || bot.id.includes('..') || seen.has(bot.id)) return false;
+      if (!/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) || bot.id.includes('..') ||
+          bot.id === 'human' || bot.id === 'custom' || seen.has(bot.id)) return false;
       seen.add(bot.id);
       return true;
     });
     if (!bots.length) throw new Error('No valid strategists are available.');
+    customBot = ArenaCustomBot.get('anatolian-pact');
     makeSeats();
   }).catch(error => ticker(error.message));
 })();

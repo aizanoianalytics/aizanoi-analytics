@@ -1,6 +1,8 @@
 'use strict';
 
-importScripts('engine.js');
+if (!self.__ARENA_INLINE__) {
+  importScripts('engine.js');
+}
 
 self.module = { exports: {} };
 self.exports = self.module.exports;
@@ -18,16 +20,27 @@ self.onmessage = (event) => {
     initialized = true;
 
     try {
+      // Inline top-level bot code has already run. Do not use Math.random
+      // there; seeded randomness is available inside act(state).
       Math.random = PokerEngine.rng(message.seed ^ 0x9e3779b9);
 
-      const id = String(message.id || '');
-      if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) {
-        throw new Error(`Invalid bot id: ${id}`);
+      let exported;
+      if (self.__ARENA_INLINE__) {
+        if (self.__ARENA_LOAD_ERROR__ !== undefined) {
+          throw new Error(self.__ARENA_LOAD_ERROR__);
+        }
+        exported = self.__ARENA_BOT__;
+      } else {
+        const id = String(message.id || '');
+        if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) {
+          throw new Error(`Invalid bot id: ${id}`);
+        }
+
+        importScripts(`bots/${id}.js`);
+
+        exported = self.module.exports;
       }
 
-      importScripts(`bots/${id}.js`);
-
-      const exported = self.module.exports;
       fn = typeof exported === 'function'
         ? exported
         : exported && typeof exported.act === 'function'
@@ -37,6 +50,7 @@ self.onmessage = (event) => {
       if (!fn) throw new Error('Bot does not export act(state)');
       postMessage({ type: 'ready' });
     } catch (error) {
+      fn = null;
       postMessage({
         type: 'fail',
         detail: String((error && error.message) || error).slice(0, 120),

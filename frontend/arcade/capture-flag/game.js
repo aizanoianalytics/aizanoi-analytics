@@ -11,11 +11,14 @@
   };
   const renderer = FlagRenderer.create($('cf-canvas'));
   const coarse = window.matchMedia('(pointer: coarse)');
+  const previousChoices = new WeakMap();
 
   let bots = [];
   let byId = Object.create(null);
   let ready = false;
   let running = false;
+  let picking = false;
+  let customBot = null;
   let token = 0;
   let activeRun = null;
   let activeHumans = [];
@@ -40,18 +43,30 @@
   function fallbackBot() {
     return byId['sample-squad'] ? 'sample-squad' : bots[0].id;
   }
+  function botFor(value) {
+    if (value === 'custom' && customBot) {
+      return {
+        id: 'custom', name: customBot.name, lab: 'You',
+        custom: { name: customBot.name, code: customBot.code },
+      };
+    }
+    return byId[value] || null;
+  }
   function firstBot(team) {
-    return values(team).find(value => byId[value]) || fallbackBot();
+    return values(team).find(value => botFor(value)) || fallbackBot();
   }
   function selectedSeats() {
     return TEAMS.flatMap(team => values(team).map((value, index) => {
       const player = PLAYERS[value];
+      const bot = player ? null : (botFor(value) || byId[fallbackBot()]);
       return {
         id: `${team === 'west' ? 'w' : 'e'}${index + 1}`,
         team, choice: value,
-        name: player ? player.name : byId[value].name,
+        name: player ? player.name : bot.name,
+        lab: player ? '' : bot.lab,
         human: Boolean(player), scheme: player ? player.scheme : null,
-        botId: player ? null : value, origin: team,
+        botId: player ? null : bot.id, origin: team,
+        ...(bot && bot.custom ? { custom: { ...bot.custom } } : {}),
       };
     }));
   }
@@ -59,27 +74,76 @@
     Object.entries(PLAYERS).forEach(([id, player]) => {
       select.appendChild(new Option(player.label, id));
     });
+    const custom = $('cf-custom-option').content.firstElementChild.cloneNode(true);
+    custom.textContent = customBot
+      ? `Your bot: ${customBot.name}` : 'Your bot (upload…)';
+    select.appendChild(custom);
     bots.forEach(bot => {
       select.appendChild(new Option(`${bot.name} · ${bot.lab}`, bot.id));
     });
   }
+  function updateCustomOptions() {
+    TEAMS.forEach(team => selects(team).forEach(select => {
+      const option = [...select.options].find(entry => entry.value === 'custom');
+      if (option) {
+        option.textContent = customBot
+          ? `Your bot: ${customBot.name}` : 'Your bot (upload…)';
+      }
+    }));
+  }
+  async function chooseSeat(event) {
+    const select = event.currentTarget;
+    const previous = previousChoices.get(select) || fallbackBot();
+    if (running || picking) {
+      select.value = previous;
+      return;
+    }
+    if (select.value !== 'custom') {
+      previousChoices.set(select, select.value);
+      syncControls(true);
+      return;
+    }
+
+    picking = true;
+    syncControls();
+    let errorMessage = '';
+    try {
+      // Invoke before the first await to preserve the user's activation.
+      const chosen = await ArenaCustomBot.pick({ game: 'capture-flag' });
+      if (chosen) {
+        customBot = chosen;
+        previousChoices.set(select, 'custom');
+        updateCustomOptions();
+      } else {
+        select.value = previous;
+      }
+    } catch (error) {
+      select.value = previous;
+      errorMessage = String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      syncControls(true);
+      if (errorMessage) $('cf-ticker').textContent = errorMessage;
+    }
+  }
   function addSeat(team, choice, refresh = true) {
-    if (selects(team).length >= 4) return;
+    if (running || picking || selects(team).length >= 4) return;
     const row = element('div', 'cf-seat');
     const label = element('label', 'cf-seat-label');
     const text = element('span', 'cf-seat-number');
     const select = element('select');
     fill(select);
-    select.value = PLAYERS[choice] || byId[choice] ? choice : fallbackBot();
+    select.value = PLAYERS[choice] || botFor(choice) ? choice : fallbackBot();
+    previousChoices.set(select, select.value);
     label.append(text, select);
     const remove = element('button', 'cf-remove', '×');
     remove.type = 'button';
     remove.addEventListener('click', () => {
-      if (running || selects(team).length <= 1) return;
+      if (running || picking || selects(team).length <= 1) return;
       row.remove();
       syncControls(true);
     });
-    select.addEventListener('change', () => syncControls(true));
+    select.addEventListener('change', chooseSeat);
     row.append(label, remove);
     $(`cf-${team}`).appendChild(row);
     if (refresh) syncControls(true);
@@ -89,6 +153,7 @@
     choices.slice(0, 4).forEach(choice => addSeat(team, choice, false));
   }
   function resizeTeams(size) {
+    if (running || picking) return;
     TEAMS.forEach(team => {
       const choice = firstBot(team);
       while (selects(team).length < size) addSeat(team, choice, false);
@@ -98,9 +163,9 @@
   }
   function teamTitle(team) {
     const choices = values(team);
-    const same = choices.length && byId[choices[0]] &&
-      choices.every(choice => choice === choices[0]);
-    return same ? `${TITLES[team]} · Team ${byId[choices[0]].name}` : TITLES[team];
+    const bot = choices.length ? botFor(choices[0]) : null;
+    const same = bot && choices.every(choice => choice === choices[0]);
+    return same ? `${TITLES[team]} · Team ${bot.name}` : TITLES[team];
   }
 
   function syncPad() {
@@ -142,24 +207,24 @@
       rows.forEach((row, index) => {
         row.querySelector('.cf-seat-number').textContent = `Seat ${index + 1}`;
         const select = row.querySelector('select');
-        select.disabled = running;
+        select.disabled = running || picking;
         select.setAttribute('aria-label', `${TITLES[team]} seat ${index + 1}`);
         [...select.options].forEach(option => {
           option.disabled = Boolean(PLAYERS[option.value] &&
             used.has(option.value) && select.value !== option.value);
         });
         const remove = row.querySelector('button');
-        remove.disabled = running || rows.length <= 1;
+        remove.disabled = running || picking || rows.length <= 1;
         remove.setAttribute('aria-label', `Remove ${TITLES[team]} seat ${index + 1}`);
       });
-      $(`cf-add-${team}`).disabled = running || rows.length >= 4;
+      $(`cf-add-${team}`).disabled = running || picking || rows.length >= 4;
       $(`cf-${team}-title`).textContent = teamTitle(team);
     });
     const westSize = selects('west').length;
     const eastSize = selects('east').length;
     $('cf-size').value = westSize === eastSize ? String(westSize) : '';
     ['cf-size', 'cf-speed', 'cf-series', 'cf-random', 'cf-start'].forEach(id => {
-      $(id).disabled = running;
+      $(id).disabled = running || picking;
     });
     $('cf-start').textContent = running ? 'Playing…' : 'Start';
     syncPad();
@@ -181,10 +246,14 @@
   function paintCards(game) {
     const cards = game.agents().map(agent => {
       const card = element('div', `cf-card cf-card-${agent.team}`);
+      const seat = displayedSeats.find(entry => entry.id === agent.id);
       card.dataset.agent = agent.id;
       card.style.setProperty('--team-color', COLORS[agent.team]);
+      card.append(element('b', null, `${agent.id.toUpperCase()} · ${agent.name}`));
+      if (seat && !seat.human) {
+        card.append(element('small', 'cf-card-lab', seat.lab));
+      }
       card.append(
-        element('b', null, `${agent.id.toUpperCase()} · ${agent.name}`),
         element('small', null, `${agent.tags} tags · ${agent.captures} captures`),
         element('span', 'cf-status', statusOf(agent)),
       );
@@ -215,9 +284,13 @@
     paint(game, seats, 0);
   }
   function randomTeams() {
+    if (running || picking) return;
     TEAMS.forEach(team => {
       const bot = bots[Math.floor(Math.random() * bots.length)];
-      selects(team).forEach(select => { select.value = bot.id; });
+      selects(team).forEach(select => {
+        select.value = bot.id;
+        previousChoices.set(select, select.value);
+      });
     });
     syncControls(true);
   }
@@ -358,7 +431,11 @@
       `${wins.east} East lineup · ${draws} ${draws === 1 ? 'draw' : 'draws'}`;
   }
   async function start() {
-    if (!ready || running) return;
+    if (!ready || running || picking) return;
+    if (TEAMS.some(team => values(team).includes('custom')) && !customBot) {
+      $('cf-ticker').textContent = 'Choose Your bot (upload…) and load a JavaScript bot first.';
+      return;
+    }
     const entries = selectedSeats();
     const humans = entries.filter(seat => seat.human);
     if (new Set(humans.map(seat => seat.choice)).size !== humans.length) {
@@ -427,7 +504,8 @@
     const raw = query.get(team);
     const choices = raw === null ? defaults : raw.split(',').slice(0, 4);
     return (choices.length ? choices : defaults).map(value => {
-      if (byId[value]) return value;
+      // URLs may reuse an existing in-memory upload, but cannot open a picker.
+      if (botFor(value)) return value;
       if (PLAYERS[value] && !claimed.has(value)) {
         claimed.add(value);
         return value;
@@ -446,8 +524,10 @@
       }
       const ids = new Set();
       payload.bots.forEach(bot => {
-        if (!bot || !/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) ||
+        if (!bot || typeof bot.id !== 'string' ||
+            !/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) ||
             bot.id.includes('..') || ids.has(bot.id) || PLAYERS[bot.id] ||
+            bot.id === 'custom' ||
             typeof bot.name !== 'string' || typeof bot.lab !== 'string' ||
             typeof bot.note !== 'string' || !/^#[a-f0-9]{6}$/i.test(bot.color) ||
             bot.file !== `bots/${bot.id}.js`) {
@@ -458,6 +538,7 @@
       bots = payload.bots;
       byId = Object.create(null);
       bots.forEach(bot => { byId[bot.id] = bot; });
+      customBot = ArenaCustomBot.get('capture-flag');
       const query = new URLSearchParams(location.search);
       const claimed = new Set();
       replaceTeam('west', queryTeam(query, 'west', ['p1', fallbackBot()], claimed));

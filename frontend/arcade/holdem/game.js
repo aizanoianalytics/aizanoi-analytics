@@ -9,6 +9,8 @@
   let byId = Object.create(null);
   let ready = false;
   let running = false;
+  let picking = false;
+  let customBot = null;
   let activeRun = null;
   let activeSeats = null;
   let generation = 0;
@@ -20,6 +22,7 @@
   let delayCancel = null;
   let savedErrors = {};
   const lockedNodes = new Map();
+  const previousChoices = new WeakMap();
 
   // Keep controls adjacent to the arena, including in mobile document flow.
   $('ph-table').after($('ph-actions'));
@@ -43,11 +46,21 @@
       ? ` #${copies[id] = (copies[id] || 0) + 1}` : '';
     return selects().map((select, index) => {
       const human = select.value === 'human';
+      if (select.value === 'custom' && customBot) {
+        return {
+          id: `s${index + 1}`, kind: 'bot', human: false,
+          botId: 'custom',
+          name: customBot.name + label('custom'),
+          lab: 'You', color: '#2dd4bf',
+          custom: { name: customBot.name, code: customBot.code }
+        };
+      }
       const bot = byId[select.value];
       return {
         id: `s${index + 1}`, kind: human ? 'human' : 'bot', human,
         botId: human ? null : bot.id,
-        name: human ? `Player ${++humans}` : bot.name + label(bot.id)
+        name: human ? `Player ${++humans}` : bot.name + label(bot.id),
+        ...(human ? {} : { lab: bot.lab, color: bot.color })
       };
     });
   }
@@ -72,16 +85,64 @@
   }
 
   function setControls() {
-    $('ph-start').disabled = !ready || running;
+    $('ph-start').disabled = !ready || running || picking;
     $('ph-start').textContent = running ? 'Playing…' : 'Start';
-    $('ph-random').disabled = !ready || running;
-    $('ph-add').disabled = !ready || running || selects().length >= 9;
+    $('ph-random').disabled = !ready || running || picking;
+    $('ph-add').disabled = !ready || running || picking || selects().length >= 9;
     $('ph-form').querySelectorAll('select, .ph-remove').forEach(node => {
-      node.disabled = running;
+      node.disabled = !ready || running || picking;
     });
     $('ph-seats').querySelectorAll('.ph-remove').forEach(node => {
-      node.disabled = running || selects().length <= 2;
+      node.disabled = !ready || running || picking || selects().length <= 2;
     });
+  }
+
+  function updateCustomOptions() {
+    for (const select of selects()) {
+      const option = [...select.options].find(entry => entry.value === 'custom');
+      if (option) {
+        option.textContent = customBot
+          ? `Your bot: ${customBot.name}`
+          : 'Your bot (upload…)';
+      }
+    }
+  }
+
+  async function chooseSeat(event) {
+    const select = event.currentTarget;
+    const previous = previousChoices.get(select) || 'human';
+    if (running || picking) {
+      select.value = previous;
+      return;
+    }
+    if (select.value !== 'custom') {
+      previousChoices.set(select, select.value);
+      preview();
+      return;
+    }
+
+    picking = true;
+    setControls();
+    let errorMessage = '';
+    try {
+      // Invoke before the first await, while the user gesture is active.
+      const chosen = await ArenaCustomBot.pick({ game: 'holdem' });
+      if (chosen) {
+        customBot = chosen;
+        previousChoices.set(select, 'custom');
+        updateCustomOptions();
+        roster();
+      } else {
+        select.value = previous;
+      }
+    } catch (error) {
+      select.value = previous;
+      errorMessage = String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      preview();
+      if (errorMessage) $('ph-ticker').textContent = errorMessage;
+    }
   }
 
   function addSeat(value = 'human') {
@@ -91,14 +152,20 @@
     const select = element('select');
     label.appendChild(element('span', null, 'Seat'));
     select.appendChild(new Option('Human', 'human'));
+    select.appendChild(new Option(
+      customBot ? `Your bot: ${customBot.name}` : 'Your bot (upload…)',
+      'custom'
+    ));
     bots.forEach(bot => select.appendChild(new Option(`${bot.name} · ${bot.lab}`, bot.id)));
-    select.value = value === 'human' || byId[value] ? value : 'human';
-    select.addEventListener('change', preview);
+    select.value = value === 'human' || byId[value] ||
+      (value === 'custom' && customBot) ? value : 'human';
+    previousChoices.set(select, select.value);
+    select.addEventListener('change', chooseSeat);
     label.appendChild(select);
     const remove = element('button', 'ph-remove', 'Remove');
     remove.type = 'button';
     remove.addEventListener('click', () => {
-      if (running || selects().length <= 2) return;
+      if (running || picking || selects().length <= 2) return;
       row.remove();
       preview();
     });
@@ -144,7 +211,7 @@
   }
 
   function preview() {
-    if (!ready || running) return;
+    if (!ready || running || picking) return;
     setControls();
     const game = PokerEngine.create(selectedSeats().map(({ id, name }) => ({ id, name })), {
       seed: 1, stack: Number($('ph-stack').value), maxHands: Number($('ph-hands').value)
@@ -329,7 +396,11 @@
   }
 
   async function play() {
-    if (!ready || running) return;
+    if (!ready || running || picking) return;
+    if (selects().some(select => select.value === 'custom') && !customBot) {
+      $('ph-ticker').textContent = 'Choose Your bot (upload…) and load a JavaScript bot first.';
+      return;
+    }
     const my = ++generation;
     const seats = selectedSeats();
     logs = [];
@@ -388,7 +459,12 @@
   }
 
   function roster() {
-    $('ph-list').replaceChildren(...bots.map(bot => {
+    const entries = customBot ? [...bots, {
+      id: 'custom', name: customBot.name, botName: customBot.name,
+      lab: 'You', color: '#2dd4bf',
+      note: 'Loaded locally in this page. Only load code you trust.'
+    }] : bots;
+    $('ph-list').replaceChildren(...entries.map(bot => {
       const item = element('li');
       item.style.setProperty('--bot-color', bot.color);
       item.append(
@@ -403,6 +479,7 @@
   function validBot(bot) {
     return bot && typeof bot.id === 'string' &&
       /^[a-z0-9][a-z0-9.-]*$/.test(bot.id) && !bot.id.includes('..') &&
+      bot.id !== 'human' && bot.id !== 'custom' &&
       bot.file === `bots/${bot.id}.js` &&
       typeof bot.name === 'string' && typeof bot.lab === 'string' &&
       /^#[0-9a-f]{6}$/i.test(bot.color);
@@ -420,11 +497,14 @@
       }
       bots = payload.bots;
       byId = Object.fromEntries(bots.map(bot => [bot.id, bot]));
+      customBot = ArenaCustomBot.get('holdem');
       roster();
       const query = new URLSearchParams(location.search);
       const requested = (query.get('seats') || '').split(',');
+      // A URL cannot supply an upload or open a picker without a gesture.
       const values = requested.length >= 2 && requested.length <= 9 &&
-        requested.every(value => value === 'human' || byId[value]) ? requested : defaults;
+        requested.every(value => value === 'human' || byId[value] ||
+          (value === 'custom' && customBot)) ? requested : defaults;
       ready = true;
       values.forEach(addSeat);
       preview();
@@ -440,14 +520,15 @@
 
   $('ph-form').addEventListener('submit', event => { event.preventDefault(); play(); });
   $('ph-add').addEventListener('click', () => {
-    if (running) return;
+    if (running || picking || !ready) return;
     addSeat(bots[0].id);
     preview();
   });
   $('ph-random').addEventListener('click', () => {
-    if (running || !ready) return;
+    if (running || picking || !ready) return;
     selects().forEach(select => {
       select.value = bots[Math.floor(Math.random() * bots.length)].id;
+      previousChoices.set(select, select.value);
     });
     preview();
   });

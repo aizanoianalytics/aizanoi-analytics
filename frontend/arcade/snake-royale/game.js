@@ -20,6 +20,8 @@
   };
   let BOTS = [], byId = Object.create(null), token = 0, running = false;
   let activeRun = null, activeHumans = [], activeSeats = null, ready = false;
+  let customBot = null, picking = false;
+  const previousChoices = new WeakMap();
 
   function el(tag, cls, text) {
     const element = document.createElement(tag);
@@ -32,15 +34,39 @@
     return [$('sr-a'), $('sr-b'), ...document.querySelectorAll('.sr-extra')];
   }
 
+  function customSeat(id) {
+    return {
+      id, name: customBot.name, lab: 'You', color: '#2dd4bf',
+      custom: { name: customBot.name, code: customBot.code },
+    };
+  }
+
   function selectedSeats() {
-    const bots = botSelects().map(select => byId[select.value]).filter(Boolean);
+    // Different custom seats share the upload, but retain unique engine ids.
+    // Avoid collisions with both roster ids and the reserved human ids.
+    let customIndex = 0;
+    const bots = botSelects().map(select => {
+      if (select.value !== 'custom') return byId[select.value];
+      if (!customBot) return null;
+      let id;
+      do {
+        customIndex++;
+        id = customIndex === 1 ? 'custom' : `custom-${customIndex}`;
+      } while (byId[id] || PLAYERS.some(player => player.id === id));
+      return customSeat(id);
+    }).filter(Boolean);
     const humans = PLAYERS.filter(p => $(p.control).value !== 'off').map(p => ({
       id: p.id, name: p.name, color: p.color, human: true, scheme: $(p.control).value,
     }));
     return [...bots, ...humans];
   }
 
-  function fill(select) {
+  function fill(select, extra = false) {
+    if (extra) {
+      select.appendChild($('sr-custom-option').content.cloneNode(true));
+      const option = select.querySelector('option[value="custom"]');
+      option.textContent = customBot ? `Your bot: ${customBot.name}` : 'Your bot (upload…)';
+    }
     BOTS.forEach(bot => select.appendChild(new Option(`${bot.name}  ·  ${bot.lab}`, bot.id)));
   }
 
@@ -49,7 +75,8 @@
     if (a) document.querySelector('.sr-a').style.setProperty('--sr-a', a.color);
     if (b) document.querySelector('.sr-b').style.setProperty('--sr-b', b.color);
     document.querySelectorAll('.sr-extra').forEach(select => {
-      const bot = byId[select.value];
+      const bot = select.value === 'custom' && customBot
+        ? { color: '#2dd4bf' } : byId[select.value];
       if (bot) select.style.setProperty('--c', bot.color);
     });
   }
@@ -78,12 +105,20 @@
 
   function syncControls() {
     const seats = selectedSeats();
-    $('sr-add').disabled = !ready || seats.length >= MAX_SEATS;
+    const full = seats.length >= MAX_SEATS;
+    $('sr-add').disabled = !ready || picking || full;
+    $('sr-custom').disabled = !ready || picking || full;
+    $('sr-fight').disabled = !ready || picking;
+    $('sr-random').disabled = !ready || picking;
+    botSelects().forEach(select => { select.disabled = !ready || picking; });
+    document.querySelectorAll('.sr-remove').forEach(button => {
+      button.disabled = picking;
+    });
     PLAYERS.forEach(player => {
       const select = $(player.control);
+      select.disabled = !ready || picking;
       [...select.options].forEach(option => {
-        option.disabled = option.value !== 'off' && select.value === 'off' &&
-          seats.length >= MAX_SEATS;
+        option.disabled = option.value !== 'off' && select.value === 'off' && full;
       });
     });
     tint();
@@ -92,7 +127,7 @@
   }
 
   function randomPair() {
-    if (!BOTS.length) return;
+    if (!BOTS.length || picking) return;
     const i = Math.floor(Math.random() * BOTS.length);
     const alternatives = BOTS.filter((bot, index) => index !== i);
     const b = alternatives[Math.floor(Math.random() * alternatives.length)] || BOTS[i];
@@ -101,33 +136,103 @@
     syncControls();
   }
 
+  function updateCustomOptions() {
+    document.querySelectorAll('.sr-extra option[value="custom"]').forEach(option => {
+      option.textContent = customBot ? `Your bot: ${customBot.name}` : 'Your bot (upload…)';
+    });
+  }
+
+  async function chooseSeat(event) {
+    const select = event.currentTarget;
+    const previous = previousChoices.get(select) || BOTS[0].id;
+    if (picking) {
+      select.value = previous;
+      return;
+    }
+    if (select.value !== 'custom') {
+      previousChoices.set(select, select.value);
+      syncControls();
+      return;
+    }
+
+    picking = true;
+    syncControls();
+    try {
+      // Call synchronously from the change gesture, before the first await.
+      const chosen = await ArenaCustomBot.pick({ game: 'snake-royale' });
+      if (chosen) {
+        customBot = chosen;
+        previousChoices.set(select, 'custom');
+        updateCustomOptions();
+        $('sr-ticker').textContent = `Loaded your bot: ${chosen.name}. Nothing was uploaded.`;
+      } else {
+        select.value = previous;
+      }
+    } catch (error) {
+      select.value = previous;
+      $('sr-ticker').textContent =
+        String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      syncControls();
+    }
+  }
+
+  function appendExtra(value) {
+    const row = el('div', 'sr-extra-row');
+    const label = el('label', 'sr-opt');
+    const select = el('select', 'sr-extra');
+    label.appendChild(el('span', null, 'Extra bot'));
+    fill(select, true);
+    select.value = value;
+    previousChoices.set(select, value);
+    label.appendChild(select);
+    const remove = el('button', 'sr-remove', '×');
+    remove.type = 'button';
+    remove.setAttribute('aria-label', 'Remove extra bot');
+    remove.addEventListener('click', () => {
+      if (picking) return;
+      row.remove();
+      syncControls();
+      $('sr-add').focus();
+    });
+    select.addEventListener('change', chooseSeat);
+    row.append(label, remove);
+    $('sr-extras').appendChild(row);
+    syncControls();
+  }
+
   function addBot() {
-    if (!ready || selectedSeats().length >= MAX_SEATS) return;
+    if (!ready || picking || selectedSeats().length >= MAX_SEATS) return;
     const used = new Set(botSelects().map(select => select.value));
     const available = BOTS.filter(bot => !used.has(bot.id));
     if (!available.length) {
       $('sr-ticker').textContent = 'Every available bot already has a seat.';
       return;
     }
-    const row = el('div', 'sr-extra-row');
-    const label = el('label', 'sr-opt');
-    const select = el('select', 'sr-extra');
-    label.appendChild(el('span', null, 'Extra bot'));
-    fill(select);
-    select.value = available[Math.floor(Math.random() * available.length)].id;
-    label.appendChild(select);
-    const remove = el('button', 'sr-remove', '×');
-    remove.type = 'button';
-    remove.setAttribute('aria-label', 'Remove extra bot');
-    remove.addEventListener('click', () => {
-      row.remove();
-      syncControls();
-      $('sr-add').focus();
-    });
-    select.addEventListener('change', syncControls);
-    row.append(label, remove);
-    $('sr-extras').appendChild(row);
+    appendExtra(available[Math.floor(Math.random() * available.length)].id);
+  }
+
+  async function loadCustom() {
+    if (!ready || picking || selectedSeats().length >= MAX_SEATS) return;
+    picking = true;
     syncControls();
+    try {
+      // Keep the picker call in the button's original user gesture.
+      const chosen = await ArenaCustomBot.pick({ game: 'snake-royale' });
+      if (chosen) {
+        customBot = chosen;
+        updateCustomOptions();
+        appendExtra('custom');
+        $('sr-ticker').textContent = `Loaded your bot: ${chosen.name}. Nothing was uploaded.`;
+      }
+    } catch (error) {
+      $('sr-ticker').textContent =
+        String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      syncControls();
+    }
   }
 
   function roster() {
@@ -173,6 +278,7 @@
       const card = el('div', 'sr-card' + (snake.alive ? '' : ' dead'));
       card.style.setProperty('--c', entry.color);
       card.appendChild(el('b', null, `${labelFor(id, series.fighters)} · ${entry.name}`));
+      if (entry.custom) card.appendChild(el('small', null, entry.lab));
       const stats = el('div', 'sr-stats');
       stats.appendChild(el('span', null, final ? `Place ${snake.place}` :
         snake.alive ? 'Alive' : 'Out'));
@@ -297,7 +403,11 @@
   }
 
   async function fight() {
-    if (!ready) return;
+    if (!ready || picking) return;
+    if (botSelects().some(select => select.value === 'custom') && !customBot) {
+      $('sr-ticker').textContent = 'Load a JavaScript bot first.';
+      return;
+    }
     const my = ++token;
     cleanup();
     activeSeats = null;
@@ -385,6 +495,7 @@
       for (const bot of payload.bots) {
         if (!bot || typeof bot.id !== 'string' ||
             !/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) || bot.id.includes('..') ||
+            bot.id === 'custom' ||
             ids.has(bot.id) || PLAYERS.some(player => player.id === bot.id) ||
             typeof bot.name !== 'string' || typeof bot.lab !== 'string' ||
             !/^#[0-9a-f]{6}$/i.test(bot.color) ||
@@ -397,13 +508,15 @@
     } catch (error) {
       $('sr-ticker').textContent =
         'The fighters could not be loaded. Check your connection and reload the page.';
-      ['sr-fight', 'sr-random', 'sr-add', 'sr-a', 'sr-b', 'sr-p1', 'sr-p2']
+      ['sr-fight', 'sr-random', 'sr-add', 'sr-custom', 'sr-a', 'sr-b', 'sr-p1', 'sr-p2']
         .forEach(id => { $(id).disabled = true; });
       console.error('snake-royale: bots.json failed to load', error);
       return;
     }
     BOTS = payload.bots;
     BOTS.forEach(bot => { byId[bot.id] = bot; });
+    customBot = ArenaCustomBot.get('snake-royale');
+    // Primary selects must contain exactly the roster, with no custom option.
     fill($('sr-a'));
     fill($('sr-b'));
     roster();
@@ -419,6 +532,7 @@
       select.addEventListener('change', syncControls);
     });
     $('sr-add').addEventListener('click', addBot);
+    $('sr-custom').addEventListener('click', loadCustom);
     $('sr-random').addEventListener('click', randomPair);
     $('sr-form').addEventListener('submit', event => {
       event.preventDefault();

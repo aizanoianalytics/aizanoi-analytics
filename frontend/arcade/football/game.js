@@ -11,6 +11,8 @@
   let byId = new Map();
   let ready = false;
   let running = false;
+  let picking = false;
+  let customBot = null;
   let paused = false;
   let activeRun = null;
   let activeSeats = null;
@@ -38,10 +40,20 @@
     return teams[team].find(value => byId.has(value)) || bots[0].id;
   }
 
+  function customSeat() {
+    return {
+      id: 'custom',
+      name: customBot.name,
+      lab: 'You',
+      color: '#2dd4bf',
+      custom: { name: customBot.name, code: customBot.code }
+    };
+  }
+
   function selectedSeats() {
     return ['red', 'blue'].flatMap(team => teams[team].map((value, index) => {
       const human = value === 'p1' || value === 'p2';
-      const bot = byId.get(value);
+      const bot = value === 'custom' && customBot ? customSeat() : byId.get(value);
       return {
         id: `${team === 'red' ? 'r' : 'b'}${index + 1}`,
         team,
@@ -51,6 +63,8 @@
         keys: human ? value : null,
         botId: human ? null : value,
         name: human ? value === 'p1' ? 'Player 1' : 'Player 2' : bot.name,
+        lab: human ? '' : bot.lab,
+        ...(bot && bot.custom ? { custom: { ...bot.custom } } : {}),
         shortName: human ? value.toUpperCase() : `${team === 'red' ? 'R' : 'B'}${index + 1}`,
         input: value === 'p1' ? () => ({ ...touch }) : null
       };
@@ -59,8 +73,9 @@
 
   function teamLabel(team) {
     const values = teams[team];
-    if (values.length && values.every(value => value === values[0]) && byId.has(values[0])) {
-      return `Team ${byId.get(values[0]).name}`;
+    if (values.length && values.every(value => value === values[0])) {
+      if (values[0] === 'custom' && customBot) return `Team ${customBot.name}`;
+      if (byId.has(values[0])) return `Team ${byId.get(values[0]).name}`;
     }
     return team === 'red' ? 'Red' : 'Blue';
   }
@@ -92,19 +107,75 @@
     for (const option of $('fb-speed').options) {
       option.disabled = human && option.value !== '1';
     }
-    for (const id of controls) $(id).disabled = !ready || running;
+    for (const id of controls) $(id).disabled = !ready || running || picking;
     for (const team of ['red', 'blue']) {
       $(`fb-${team}-label`).textContent = teamLabel(team);
-      $(`fb-add-${team}`).disabled = !ready || running || teams[team].length >= 4;
+      $(`fb-add-${team}`).disabled = !ready || running || picking || teams[team].length >= 4;
       $(`fb-${team}`).querySelectorAll('select, button').forEach(node => {
-        node.disabled = running || (node.tagName === 'BUTTON' && teams[team].length <= 1);
+        node.disabled = !ready || running || picking ||
+          (node.tagName === 'BUTTON' && teams[team].length <= 1);
       });
     }
-    $('fb-start').disabled = !ready || running;
+    $('fb-start').disabled = !ready || running || picking;
     $('fb-start').textContent = running ? 'Playing…' : 'Kick off';
     $('fb-pause').disabled = !running || !activeRun;
     $('fb-pause').textContent = paused ? 'Resume' : 'Pause';
     syncTouch();
+  }
+
+  function updateCustomOptions() {
+    for (const team of ['red', 'blue']) {
+      for (const select of $(`fb-${team}`).querySelectorAll('select')) {
+        const option = [...select.options].find(entry => entry.value === 'custom');
+        if (option) {
+          option.textContent = customBot
+            ? `Your bot: ${customBot.name}`
+            : 'Your bot (upload…)';
+        }
+      }
+    }
+  }
+
+  async function chooseSeat(event, team, index) {
+    const select = event.currentTarget;
+    const previous = teams[team][index];
+    if (!ready || running || picking) {
+      select.value = previous;
+      return;
+    }
+    if (select.value !== 'custom') {
+      teams[team][index] = select.value;
+      syncControls();
+      preview();
+      return;
+    }
+
+    picking = true;
+    syncControls();
+    let errorMessage = '';
+    try {
+      // Invoke before the first await so the picker retains the user gesture.
+      const chosen = await ArenaCustomBot.pick({ game: 'football' });
+      if (chosen) {
+        customBot = chosen;
+        teams[team][index] = 'custom';
+        updateCustomOptions();
+      } else {
+        select.value = previous;
+      }
+    } catch (error) {
+      select.value = previous;
+      errorMessage = String((error && error.message) || 'Could not read bot file');
+    } finally {
+      // The source is now in memory. Clear the retained file selection so
+      // choosing the same file again emits change instead of only cancel.
+      const fileInput = $('arena-custom-file');
+      if (fileInput && fileInput.type === 'file') fileInput.value = '';
+      picking = false;
+      syncControls();
+      preview();
+      if (errorMessage) $('fb-ticker').textContent = errorMessage;
+    }
   }
 
   function renderTeam(team) {
@@ -118,19 +189,18 @@
       select.setAttribute('aria-label', `${team === 'red' ? 'Red' : 'Blue'} seat ${index + 1}`);
       select.append(new Option('Player 1 (WASD + Space)', 'p1'));
       select.append(new Option('Player 2 (arrows + Enter)', 'p2'));
+      select.append($('fb-custom-option').content.cloneNode(true));
+      const customOption = select.querySelector('option[value="custom"]');
+      if (customBot) customOption.textContent = `Your bot: ${customBot.name}`;
       bots.forEach(bot => select.append(new Option(`${bot.name} · ${bot.lab}`, bot.id)));
       select.value = value;
-      select.addEventListener('change', () => {
-        teams[team][index] = select.value;
-        syncControls();
-        preview();
-      });
+      select.addEventListener('change', event => chooseSeat(event, team, index));
       label.append(select);
       const remove = element('button', 'fb-remove', 'Remove');
       remove.type = 'button';
       remove.setAttribute('aria-label', `Remove ${team} seat ${index + 1}`);
       remove.addEventListener('click', () => {
-        if (running || teams[team].length <= 1) return;
+        if (!ready || running || picking || teams[team].length <= 1) return;
         teams[team].splice(index, 1);
         renderTeam(team);
         syncControls();
@@ -142,6 +212,7 @@
   }
 
   function resizeTeams(size) {
+    if (!ready || running || picking) return;
     for (const team of ['red', 'blue']) {
       const fill = firstBot(team);
       teams[team] = teams[team].slice(0, size);
@@ -168,6 +239,7 @@
       id: seat.id,
       team: seat.team,
       name: seat.name,
+      lab: seat.lab,
       goals: 0,
       kicks: 0,
       touches: 0,
@@ -185,6 +257,7 @@
       const card = element('div', `fb-card fb-${player.team}`);
       card.dataset.id = player.id;
       card.append(element('b', null, player.name));
+      if (player.lab) card.append(element('small', null, player.lab));
       card.append(element('small', null,
         `Goals ${player.goals} · Kicks ${player.kicks} · Touches ${player.touches}`));
       if (player.ownGoals) {
@@ -349,7 +422,11 @@
   }
 
   async function kickOff() {
-    if (!ready || running) return;
+    if (!ready || running || picking) return;
+    if (['red', 'blue'].some(team => teams[team].includes('custom')) && !customBot) {
+      $('fb-ticker').textContent = 'Choose Your bot (upload…) and load a JavaScript bot first.';
+      return;
+    }
     const entries = selectedSeats();
     const schemes = entries.filter(seat => seat.human).map(seat => seat.keys);
     if (new Set(schemes).size !== schemes.length) {
@@ -492,8 +569,10 @@
   function applyQuery() {
     const query = new URLSearchParams(location.search);
     for (const team of ['red', 'blue']) {
+      // URLs cannot provide bot source or open an upload picker.
       const values = (query.get(team) || '').split(',').filter(value =>
-        value === 'p1' || value === 'p2' || byId.has(value)).slice(0, 4);
+        value === 'p1' || value === 'p2' || byId.has(value) ||
+        (value === 'custom' && customBot)).slice(0, 4);
       if (values.length) teams[team] = values;
     }
     for (const key of ['time', 'limit', 'series', 'speed']) {
@@ -535,12 +614,14 @@
       byId = new Map();
       for (const bot of bots) {
         if (!/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) || bot.id.includes('..') ||
+            ['custom', 'p1', 'p2'].includes(bot.id) ||
             byId.has(bot.id) || typeof bot.name !== 'string' ||
             typeof bot.lab !== 'string' || !/^#[0-9a-f]{6}$/i.test(bot.color)) {
           throw new Error('Invalid bot entry');
         }
         byId.set(bot.id, bot);
       }
+      customBot = ArenaCustomBot.get('football');
       teams.red = ['p1'];
       teams.blue = [byId.has('sample-striker') ? 'sample-striker' : bots[0].id];
       const autostart = applyQuery();
@@ -557,7 +638,7 @@
       renderTeam('blue');
       for (const team of ['red', 'blue']) {
         $(`fb-add-${team}`).addEventListener('click', () => {
-          if (running || teams[team].length >= 4) return;
+          if (!ready || running || picking || teams[team].length >= 4) return;
           teams[team].push(firstBot(team));
           renderTeam(team);
           syncControls();
@@ -568,6 +649,7 @@
       $('fb-time').addEventListener('change', preview);
       $('fb-limit').addEventListener('change', preview);
       $('fb-random').addEventListener('click', () => {
+        if (!ready || running || picking) return;
         for (const team of ['red', 'blue']) {
           teams[team] = teams[team].map(() => bots[Math.floor(Math.random() * bots.length)].id);
           renderTeam(team);
