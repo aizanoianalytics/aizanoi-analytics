@@ -61,8 +61,8 @@ export async function mount({ container }) {
     for (const entry of timers) { clearTimeout(entry.id); entry.resolve(); }
     timers.clear();
   }
-  function draw(game, colors, fighters = [a.value, b.value]) {
-    renderer.update(game, colors, { fighters, duration: Number(get('[name=speed]').value) });
+  function draw(game, colors, fighters = [a.value, b.value], duration = Number(get('[name=speed]').value)) {
+    renderer.update(game, colors, { fighters, duration });
     get('[data-turn]').textContent = `TURN ${game.turn}`;
     get('[data-storm]').textContent = `STORM IN ${Math.max(0, game.nextShrinkTurn - game.turn)} · RING ${game.hazard}`;
     const cards = get('[data-cards]'); cards.replaceChildren();
@@ -109,13 +109,13 @@ export async function mount({ container }) {
         await run.loaded;
         if (mine !== generation) break;
         const colors = Object.fromEntries(pair.map(bot => [bot.id, bot.color]));
-        draw(run.game, colors, [first.id, second.id]);
+        draw(run.game, colors, [first.id, second.id], delay);
         while (!run.game.finished() && mine === generation) {
           const start = performance.now();
           const events = await run.turn();
           if (mine !== generation) break;
           for (const item of events) if (item.type === 'death') ticker.textContent = `${bots.find(bot => bot.id === item.id)?.name || item.id} is out (${item.cause}).`;
-          draw(run.game, colors, [first.id, second.id]);
+          draw(run.game, colors, [first.id, second.id], delay);
           if (delay) await wait(Math.max(0, delay - (performance.now() - start)));
         }
         run.stop(); if (active === run) active = null;

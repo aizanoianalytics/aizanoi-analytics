@@ -82,6 +82,41 @@ test('the real arena paints animated neon artwork and honors reduced motion', as
   });
 });
 
+test('midmatch speed selection cannot desynchronize animation from the captured match cadence', async () => {
+  for (const shell of [false, true]) await withPage(async (page, errors) => {
+    await page.goto(`${base}/${shell ? '?app=snake-royale&cadence=' : 'arcade/snake-royale/?cadence='}${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    const root = shell ? page.locator('.az-window[data-app-id="snake-royale"]') : page.locator('body');
+    const speed = root.locator(shell ? '[name=speed]' : '#sr-speed');
+    await root.locator(shell ? '[name=a] option' : '#sr-a option').first().waitFor({ state: 'attached' });
+    await speed.selectOption('140');
+    await root.getByRole('button', { name: 'Fight', exact: true }).click();
+    await page.waitForFunction(() => window.__snakeDurations?.some(item => item.turn >= 2));
+    const turn = await page.evaluate(() => window.__snakeDurations.at(-1).turn);
+    await speed.selectOption('260');
+    await page.waitForFunction(t => window.__snakeDurations.some(item => item.turn >= t + 3), turn);
+    const durations = await page.evaluate(t => window.__snakeDurations.filter(item => item.turn > t).map(item => item.duration), turn);
+    assert.ok(durations.length >= 3 && durations.every(value => value === 140), `captured normal cadence must remain 140ms: ${durations}`);
+    assert.deepEqual(errors, []);
+  }, async page => {
+    await page.route('**/arcade/snake-royale/renderer.js', async route => {
+      const response = await route.fetch();
+      const source = await response.text();
+      await route.fulfill({ response, body: source + `\n(function () {
+        const create = window.SnakeArenaRenderer.create;
+        window.__snakeDurations = [];
+        window.SnakeArenaRenderer.create = function (...args) {
+          const renderer = create(...args), update = renderer.update;
+          renderer.update = function (game, colors, metadata) {
+            window.__snakeDurations.push({ turn: game.turn, duration: metadata.duration });
+            return update(game, colors, metadata);
+          };
+          return renderer;
+        };
+      })();` });
+    });
+  });
+});
+
 test('a failed fighter manifest states the problem instead of leaving an empty picker', async () => {
   await withPage(async (page) => {
     await page.goto(`${base}/arcade/snake-royale/?qa=${Date.now()}`, { waitUntil: 'domcontentloaded' });

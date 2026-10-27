@@ -33,8 +33,8 @@
   }
 
   // ---------- drawing ----------
-  function draw(game, colors, fighters = [$('sr-a').value, $('sr-b').value]) {
-    renderer.update(game, colors, { fighters, duration: Number($('sr-speed').value) });
+  function draw(game, colors, fighters = [$('sr-a').value, $('sr-b').value], duration = Number($('sr-speed').value)) {
+    renderer.update(game, colors, { fighters, duration });
     $('sr-turn').textContent = `TURN ${game.turn}`;
     $('sr-storm').textContent = `STORM IN ${Math.max(0, game.nextShrinkTurn - game.turn)} · RING ${game.hazard}`;
   }
@@ -60,7 +60,7 @@
     await run.loaded;
     const game = run.game;
     const names = Object.fromEntries(BOTS.map(x => [x.id, x.name]));
-    draw(game, colors, series.fighters); cards(view(game), series);
+    draw(game, colors, series.fighters, delay); cards(view(game), series);
     try {
       while (!game.finished() && my === token) {
         const t0 = performance.now();
@@ -69,7 +69,7 @@
           if (e.type === 'death') $('sr-ticker').textContent = (CAUSE[e.cause] || (() => e.cause))({ id: names[e.id], by: names[e.by] });
           if (e.type === 'shrink') $('sr-ticker').textContent = 'The storm closes in!';
         });
-        draw(game, colors, series.fighters); cards(view(game), series);
+        draw(game, colors, series.fighters, delay); cards(view(game), series);
         if (delay) await sleep(Math.max(0, delay - (performance.now() - t0)));
       }
     } finally { run.stop(); }
