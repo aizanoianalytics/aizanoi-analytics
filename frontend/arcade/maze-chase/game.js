@@ -16,7 +16,6 @@
   };
   const waits = new Set();
   const tally = { runners: 0, ghosts: 0 };
-
   let bots = [];
   let byId = Object.create(null);
   let ready = false;
@@ -69,12 +68,19 @@
     return null;
   }
 
+  function padOwner(entries) {
+    return entries.find(entry => entry.playerId === 'p1') ||
+      entries.find(entry => entry.playerId === 'p2') || null;
+  }
+
   function syncPad() {
     const entries = running && activeSeats ? activeSeats : selectedSeats();
-    const p1 = entries.some(entry => entry.playerId === 'p1');
-    $('mc-pad').hidden = !(coarse.matches && p1);
+    const owner = padOwner(entries);
+    $('mc-pad').hidden = !(coarse.matches && owner);
+    $('mc-pad').setAttribute('aria-label',
+      `${owner ? owner.name : 'Player'} direction controls`);
     $('mc-pad').querySelectorAll('button').forEach(button => {
-      button.disabled = !running || !inputEnabled || !p1;
+      button.disabled = !running || !inputEnabled || !owner;
     });
   }
 
@@ -87,14 +93,11 @@
         row.querySelector('select').setAttribute('aria-label',
           `${role === 'runner' ? 'Runner' : 'Ghost'} ${index + 1}`);
         row.querySelector('button').disabled = running || rows.length <= 1;
-        row.querySelector('button').setAttribute('aria-label',
-          `Remove ${role} ${index + 1}`);
+        row.querySelector('button').setAttribute('aria-label', `Remove ${role} ${index + 1}`);
       });
       $(`mc-add-${role}`).disabled = !ready || running || rows.length >= LIMITS[role];
     });
-    ['mc-layout', 'mc-speed', 'mc-series'].forEach(id => {
-      $(id).disabled = running;
-    });
+    ['mc-layout', 'mc-speed', 'mc-series'].forEach(id => { $(id).disabled = running; });
     $('mc-random').disabled = !ready || running;
     $('mc-start').disabled = !ready || running;
     $('mc-start').textContent = running ? 'Playing…' : 'Start';
@@ -111,9 +114,7 @@
     bots.forEach(bot => {
       select.appendChild(new Option(`${bot.name} · ${bot.lab}`, bot.id));
     });
-    select.value = value && (PLAYERS[value] || byId[value])
-      ? value : bots[0].id;
-
+    select.value = value && (PLAYERS[value] || byId[value]) ? value : bots[0].id;
     const remove = element('button', 'mc-remove', '×');
     remove.type = 'button';
     remove.addEventListener('click', () => {
@@ -132,7 +133,6 @@
   }
 
   function drawCards(game, entries) {
-    const box = $('mc-cards');
     const fragment = document.createDocumentFragment();
     game.agents().forEach(agent => {
       const entry = entries.find(seat => seat.id === agent.id);
@@ -140,37 +140,37 @@
       if (!agent.alive && agent.lives === 0) card.classList.add('mc-out');
       card.style.setProperty('--seat-color', entry ? entry.color : '#f4f6fb');
       card.dataset.seat = agent.id;
-      card.appendChild(element('span', 'mc-badge', agent.role.toUpperCase()));
+      card.appendChild(element('span', 'mc-badge', `${agent.id.toUpperCase()} · ${agent.role.toUpperCase()}`));
       card.appendChild(element('b', null, entry ? entry.name : agent.name));
-      card.appendChild(element('span', null, `Score ${agent.score}`));
-
+      card.appendChild(element('span', 'mc-score', `Score ${agent.score}`));
       if (agent.role === 'runner') {
         const lives = Math.max(0, Math.min(3, agent.lives));
         const status = agent.respawnIn > 0 ? ` · Respawn in ${agent.respawnIn}` :
-          (!agent.alive ? ' · Out' : '');
+          !agent.alive ? ' · Out' : agent.invulnerable ? ' · Protected' : '';
         const lifeLine = element('small', null,
           `Lives ${'♥'.repeat(lives)}${'♡'.repeat(3 - lives)}${status}`);
         lifeLine.setAttribute('aria-label', `${lives} lives remaining${status}`);
         card.appendChild(lifeLine);
       } else {
-        card.appendChild(element('small', null,
-          `Catches ${agent.catches}${agent.frightened ? ' · Frightened' : ''}`));
+        const status = agent.inPen
+          ? (agent.releaseIn > 0 ? ` · Release in ${agent.releaseIn}` : ' · In pen')
+          : agent.frightened ? ' · Frightened' : ' · Hunting';
+        card.appendChild(element('small', null, `Catches ${agent.catches}${status}`));
       }
       fragment.appendChild(card);
     });
-    box.replaceChildren(fragment);
+    $('mc-cards').replaceChildren(fragment);
   }
 
   function draw(game, entries, duration) {
     lastGame = game;
-    renderer.update(game, Object.fromEntries(entries.map(entry => [entry.id, entry.color])),
-      { duration });
+    renderer.update(game, Object.fromEntries(entries.map(entry => [entry.id, entry.color])), { duration });
     const state = stateFor(game);
-    $('mc-tick').textContent = `TICK ${game.tick} / 1500`;
+    $('mc-tick').textContent = `TICK ${game.tick} / ${state ? state.maxTicks : 1500}`;
     $('mc-pellets').textContent = `PELLETS ${state ? state.pellets : 0}`;
     const fright = state ? state.frightTicksLeft : 0;
     $('mc-fright').hidden = fright <= 0;
-    $('mc-fright').textContent = `FRIGHT ${(fright * 0.12).toFixed(1)}s`;
+    $('mc-fright').textContent = `FRIGHT ${fright}t · ${(fright * 0.12).toFixed(1)}s @ Normal`;
     drawCards(game, entries);
   }
 
@@ -197,9 +197,7 @@
     if (running || !bots.length) return;
     ['runner', 'ghost'].forEach(role => {
       selects(role).forEach(select => {
-        if (!PLAYERS[select.value]) {
-          select.value = bots[Math.floor(Math.random() * bots.length)].id;
-        }
+        if (!PLAYERS[select.value]) select.value = bots[Math.floor(Math.random() * bots.length)].id;
       });
     });
     selectionChanged();
@@ -262,52 +260,20 @@
     return true;
   }
 
-  function participant(event, role, agents) {
-    const candidates = [event[role], event[`${role}Id`], event.id, event.by];
-    for (const candidate of candidates) {
-      const id = candidate && typeof candidate === 'object' ? candidate.id : candidate;
-      const found = agents.find(agent => agent.id === id && agent.role === role);
-      if (found) return found;
-    }
-    return null;
-  }
-
-  function announce(events, before, oldGrid, game) {
+  function announce(events, game) {
     const agents = game.agents();
-    const old = new Map(before.map(agent => [agent.id, agent]));
+    const name = id => agents.find(agent => agent.id === id)?.name || id;
     const messages = [];
-
     events.forEach(event => {
-      if (event.type === 'power') messages.push('Power pellet!');
+      if (event.type === 'power') messages.push(`${name(event.id)}: power pellet!`);
       if (event.type === 'fright-end') messages.push('Ghosts are hunting again.');
-      if (event.type === 'catch') {
-        const ghost = participant(event, 'ghost', agents) ||
-          agents.find(agent => agent.role === 'ghost' &&
-            agent.catches > (old.get(agent.id)?.catches || 0));
-        const runner = participant(event, 'runner', agents) ||
-          agents.find(agent => agent.role === 'runner' &&
-            agent.lives < (old.get(agent.id)?.lives || 0));
-        if (ghost && runner) messages.push(`${ghost.name} caught ${runner.name}`);
-      }
-      if (event.type === 'out') {
-        const runner = participant(event, 'runner', agents);
-        if (runner) messages.push(`${runner.name} is out.`);
-      }
-      if (event.type === 'respawn') {
-        const runner = participant(event, 'runner', agents);
-        if (runner) messages.push(`${runner.name} is back.`);
+      if (event.type === 'catch') messages.push(`${name(event.by)} caught ${name(event.id)}`);
+      if (event.type === 'out') messages.push(`${name(event.id)} is out.`);
+      if (event.type === 'respawn') messages.push(`${name(event.id)} is back.`);
+      if (event.type === 'eaten') {
+        messages.push(`${name(event.by)} ate ${name(event.id)}: +${event.points}`);
       }
     });
-
-    agents.filter(agent => agent.role === 'runner').forEach(agent => {
-      const previous = old.get(agent.id);
-      if (!previous || agent.ghostsEaten <= previous.ghostsEaten) return;
-      const tile = oldGrid[agent.y]?.[agent.x];
-      const pickup = tile === 'o' ? 50 : (tile === '.' ? 10 : 0);
-      const points = Math.max(200, agent.score - previous.score - pickup);
-      messages.push(`${agent.name} ate a ghost: +${points}`);
-    });
-
     if (messages.length) $('mc-ticker').textContent = messages.join(' · ');
   }
 
@@ -324,29 +290,20 @@
 
   async function playRound(entries, seed, delay, my) {
     const run = MazeRunner.start(entries, {
-      seed,
-      layout: $('mc-layout').value,
-      maxTicks: 1500,
-      frightTicks: 60,
+      seed, layout: $('mc-layout').value, maxTicks: 1500, frightTicks: 60,
     });
     activeRun = run;
-
     try {
       await run.loaded;
       if (my !== token) return null;
       const game = run.game;
       draw(game, entries, 0);
-
       if (activeHumans.length && !await countdown(my)) return null;
-
       while (my === token && !game.finished()) {
         const started = performance.now();
-        const before = game.agents();
-        const oldGrid = game.grid();
         const events = await run.turn();
         if (my !== token) return null;
-
-        announce(events, before, oldGrid, game);
+        announce(events, game);
         draw(game, entries, delay);
         if (delay > 0) {
           if (!await sleep(Math.max(0, delay - (performance.now() - started)))) return null;
@@ -354,7 +311,6 @@
           if (!await sleep(0)) return null;
         }
       }
-
       return my === token ? game.result() : null;
     } finally {
       run.stop();
@@ -377,7 +333,6 @@
       $('mc-ticker').textContent = 'Choose at least one runner and one ghost.';
       return;
     }
-
     const my = ++token;
     cleanup();
     const humans = entries.filter(entry => entry.human);
@@ -387,7 +342,6 @@
     const seedData = new Uint32Array(1);
     crypto.getRandomValues(seedData);
     const baseSeed = seedData[0];
-
     tally.runners = 0;
     tally.ghosts = 0;
     $('mc-result').hidden = true;
@@ -395,14 +349,13 @@
     activeSeats = entries;
     running = true;
     syncControls();
-
     try {
+      const owner = padOwner(entries);
       humans.forEach(entry => {
         entry.input = ArenaInput.create(entry.scheme);
         activeHumans.push(entry);
-        if (entry.playerId === 'p1') entry.input.attachPad($('mc-pad'));
+        if (owner && entry.id === owner.id) entry.input.attachPad($('mc-pad'));
       });
-
       for (let round = 1; round <= rounds && my === token; round++) {
         drawTally(round, rounds);
         const result = await playRound(entries, (baseSeed + round - 1) >>> 0, delay, my);
@@ -411,14 +364,12 @@
         drawTally(round, rounds);
         $('mc-result').textContent = resultText(result);
         $('mc-result').hidden = false;
-
         if (round < rounds) {
           $('mc-ticker').textContent = `Round ${round} complete. Next round…`;
           if (!await sleep(delay ? 1000 : 0)) return;
           $('mc-result').hidden = true;
         }
       }
-
       if (my === token && rounds > 1) {
         const winner = tally.runners > tally.ghosts ? 'Runners' : 'Ghosts';
         $('mc-result').textContent +=
@@ -478,8 +429,7 @@
     loadController = new AbortController();
     try {
       const response = await fetch('bots.json', {
-        cache: 'no-cache',
-        signal: loadController.signal,
+        cache: 'no-cache', signal: loadController.signal,
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const payload = await response.json();
@@ -489,13 +439,11 @@
           new Set(payload.bots.map(bot => bot.id)).size !== payload.bots.length) {
         throw new Error('Invalid bot roster');
       }
-
       bots = payload.bots.map(bot => ({ ...bot }));
       byId = Object.fromEntries(bots.map(bot => [bot.id, bot]));
       const query = new URLSearchParams(location.search);
       const fallbackGhosts = ['sample-hunter', 'sample-tactician',
         'sample-wanderer', 'sample-hunter'].map(id => byId[id] ? id : bots[0].id);
-
       queryTeam(query, 'runner', ['p1']).forEach(id => addSeat('runner', id));
       queryTeam(query, 'ghost', fallbackGhosts).forEach(id => addSeat('ghost', id));
       roster();
@@ -518,8 +466,7 @@
     const entries = running && activeSeats ? activeSeats : selectedSeats();
     const state = lastGame ? stateFor(lastGame) : null;
     return {
-      bots: bots.length,
-      running,
+      bots: bots.length, running,
       seats: entries.map(entry => ({
         role: entry.role,
         kind: entry.human ? 'human' : 'bot',

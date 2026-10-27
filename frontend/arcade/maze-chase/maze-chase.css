@@ -59,7 +59,7 @@ body > footer nav {
 }
 
 .hero {
-  padding-block: 2.5rem 1.5rem;
+  padding-block: 1.8rem 1rem;
 }
 
 .hero .eyebrow {
@@ -88,7 +88,7 @@ body > footer nav {
 }
 
 .mc-picker {
-  padding: clamp(12px, 2.5vw, 24px);
+  padding: clamp(12px, 2vw, 22px);
   border: 1px solid #dce4ef;
   border-radius: 18px;
   background: #ffffff;
@@ -116,7 +116,7 @@ body > footer nav {
 
 .mc-seats {
   display: grid;
-  gap: 0.65rem;
+  gap: 0.55rem;
   margin: 0 0 0.8rem;
   padding: 0;
   list-style: none;
@@ -197,7 +197,7 @@ body > footer a:focus-visible {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 1.1rem;
 }
 
 .mc-options label {
@@ -212,7 +212,7 @@ body > footer a:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
-  margin-top: 1.2rem;
+  margin-top: 1rem;
 }
 
 .mc-help {
@@ -225,26 +225,41 @@ body > footer a:focus-visible {
 .mc-telemetry {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem 1.4rem;
+  align-items: center;
+  gap: 0.5rem;
   margin-block: 1.1rem 0.7rem;
   color: #334d72;
   font-size: 0.78rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.035em;
+}
+
+.mc-telemetry > span {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #d4dfed;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+#mc-fright {
+  border-color: #babfff;
+  background: #eeedff;
+  color: #303a9b;
 }
 
 .mc-stage {
   display: grid;
-  grid-template-columns: minmax(0, 756px) minmax(210px, 1fr);
+  grid-template-columns: minmax(0, 756px) minmax(230px, 1fr);
   gap: 1rem;
   align-items: start;
   min-width: 0;
   padding: 12px;
-  border: 1px solid #253550;
+  border: 1px solid #34496c;
   border-radius: 18px;
-  background: #0f1526;
+  background: linear-gradient(145deg, #101c32, #0b1222 65%);
   color: #f4f6fb;
+  box-shadow: 0 18px 45px #152b4920, inset 0 1px 0 #698ac038;
 }
 
 .mc-board {
@@ -256,8 +271,9 @@ body > footer a:focus-visible {
   width: 100%;
   height: auto;
   aspect-ratio: 1;
+  border: 1px solid #2d4770;
   border-radius: 10px;
-  background: #0f1526;
+  background: #081120;
 }
 
 .mc-side-panel {
@@ -267,27 +283,30 @@ body > footer a:focus-visible {
 
 .mc-tally {
   margin: 0 0 0.8rem;
-  color: #b8c8e4;
-  font-size: 0.72rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid #2b3e5c;
+  color: #d0ddf2;
+  font-size: 0.73rem;
   font-weight: 800;
   line-height: 1.7;
   font-variant-numeric: tabular-nums;
+  text-wrap: balance;
 }
 
 #mc-cards {
   display: grid;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .mc-card {
   display: grid;
   gap: 0.2rem;
   min-width: 0;
-  padding: 0.7rem 0.8rem;
-  border: 1px solid #2c3b55;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #30415e;
   border-left: 4px solid var(--seat-color, #ffd84d);
   border-radius: 9px;
-  background: #161f33;
+  background: #162239;
   overflow-wrap: anywhere;
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
@@ -295,22 +314,28 @@ body > footer a:focus-visible {
 
 .mc-card b {
   font-size: 0.94rem;
+  line-height: 1.3;
 }
 
 .mc-card small {
-  color: #b8c8e4;
+  color: #c5d3e9;
   line-height: 1.5;
+}
+
+.mc-score {
+  color: #ffffff;
+  font-weight: 750;
 }
 
 .mc-badge {
   color: var(--seat-color, #ffd84d);
-  font-size: 0.62rem;
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
 }
 
 .mc-out {
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 .mc-ticker,
@@ -322,15 +347,18 @@ body > footer a:focus-visible {
 
 .mc-ticker {
   min-height: 3em;
-  color: #c9d7ee;
-  font-size: 0.85rem;
+  padding: 0.65rem 0.7rem;
+  border-left: 2px solid #6d94ff;
+  background: #102039;
+  color: #d6e5ff;
+  font-size: 0.88rem;
 }
 
 .mc-result {
   padding: 0.85rem;
-  border: 1px solid #596b38;
+  border: 1px solid #8c783f;
   border-radius: 10px;
-  background: #242d24;
+  background: #302c1d;
   color: #ffe8b0;
   font-weight: 750;
 }
@@ -349,14 +377,19 @@ body > footer a:focus-visible {
   min-width: 56px;
   min-height: 56px;
   padding: 0;
-  border: 1px solid #526b9d;
+  border: 1px solid #6f8cbe;
   border-radius: 12px;
-  background: #1e2e4b;
-  color: #f4f6fb;
+  background: #1e3455;
+  color: #ffffff;
   font-size: 1.6rem;
   cursor: pointer;
   touch-action: manipulation;
   user-select: none;
+}
+
+#mc-pad button:active:not(:disabled) {
+  border-color: #ffe28a;
+  background: #355486;
 }
 
 #mc-pad [data-dir='up'] {
@@ -380,8 +413,9 @@ body > footer a:focus-visible {
 
 .mc-note {
   margin: 1.2rem 0 2rem;
-  color: #52647b;
-  font-size: 0.88rem;
+  max-width: 95ch;
+  color: #465b76;
+  font-size: 0.9rem;
   line-height: 1.85;
   overflow-wrap: anywhere;
 }
@@ -452,16 +486,31 @@ body > footer {
 
 @media (max-width: 560px) {
   .hero {
-    padding-top: 1.6rem;
+    padding-top: 1.2rem;
+  }
+
+  .hero .lede {
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   .mc-teams {
     grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
   }
 
   .mc-options {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .mc-options label {
+    font-size: 0.8rem;
+  }
+
+  .mc-options select {
+    padding-inline: 0.3rem;
+    font-size: 0.85rem;
   }
 
   .mc-stage {
@@ -474,7 +523,12 @@ body > footer {
   }
 
   .mc-telemetry {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
+    letter-spacing: 0;
+  }
+
+  .mc-telemetry > span {
+    padding: 0.4rem 0.5rem;
   }
 
   .site-head .brand {

@@ -28,7 +28,7 @@ self.onmessage = event => {
 
       const exported = self.module.exports;
       fn = (typeof exported === 'function' && exported) ||
-        (exported && typeof exported.move === 'function' && exported.move) ||
+        (exported && typeof exported.move === 'function' && exported.move.bind(exported)) ||
         (typeof self.move === 'function' && self.move);
 
       if (!fn) throw new Error('Bot does not export move(state)');
@@ -45,7 +45,8 @@ self.onmessage = event => {
   if (message.type === 'move' && message.state) {
     let move = null;
     try {
-      if (fn) move = fn(message.state);
+      // Keep transport correlation independent of mutations by an algorithm.
+      if (fn) move = fn(structuredClone(message.state));
     } catch {
       move = null;
     }

@@ -7,7 +7,6 @@
   function create(canvas) {
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('Canvas rendering is unavailable');
-
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     let destroyed = false;
     let frame = 0;
@@ -43,13 +42,11 @@
       const agents = game.agents();
       const state = agents.length ? game.botState(agents[0].id) : null;
       return {
-        tick: game.tick,
-        width: game.width,
-        height: game.height,
-        grid: game.grid(),
-        agents,
+        tick: game.tick, width: game.width, height: game.height,
+        grid: game.grid(), agents,
         fright: state ? state.frightTicksLeft : 0,
         power: state ? state.powerPellets.length > 0 : false,
+        finished: game.finished(),
       };
     }
 
@@ -87,7 +84,7 @@
         edges.push(segment);
       }
 
-      ctx.fillStyle = '#101a30';
+      ctx.fillStyle = '#111d35';
       current.grid.forEach((row, y) => {
         for (let x = 0; x < row.length; x++) {
           if (row[x] !== '#') continue;
@@ -98,15 +95,12 @@
           if (!wall(x - 1, y)) edge(x, y + 1, x, y, 3);
         }
       });
-
       ctx.save();
       ctx.beginPath();
-
       for (const first of edges) {
         if (first.used) continue;
         const vertices = [];
         let segment = first;
-
         while (segment && !segment.used) {
           segment.used = true;
           vertices.push([segment.x, segment.y]);
@@ -117,9 +111,7 @@
             !candidate.used && candidate.direction === (direction + turn) % 4
           )).find(Boolean);
         }
-
         if (vertices.length < 3) continue;
-
         const corners = vertices.map((vertex, index) => {
           const before = vertices[(index + vertices.length - 1) % vertices.length];
           const after = vertices[(index + 1) % vertices.length];
@@ -133,7 +125,6 @@
             exitY: offsetY + (vertex[1] + (after[1] - vertex[1]) * radius) * cell,
           };
         });
-
         ctx.moveTo(corners[0].entryX, corners[0].entryY);
         corners.forEach(corner => {
           ctx.lineTo(corner.entryX, corner.entryY);
@@ -141,18 +132,17 @@
         });
         ctx.closePath();
       }
-
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
-      ctx.strokeStyle = '#3b6cff';
-      ctx.lineWidth = Math.max(2, cell * 0.11);
-      ctx.shadowColor = '#3b6cff';
-      ctx.shadowBlur = cell * 0.32;
+      ctx.strokeStyle = '#4779ff';
+      ctx.lineWidth = Math.max(1.5, cell * 0.09);
+      ctx.shadowColor = '#3467ff';
+      ctx.shadowBlur = cell * 0.22;
       ctx.stroke();
       ctx.shadowBlur = 0;
-      ctx.strokeStyle = '#8fb0ff';
-      ctx.lineWidth = Math.max(0.75, cell * 0.035);
-      ctx.globalAlpha = 0.6;
+      ctx.strokeStyle = '#a6c3ff';
+      ctx.lineWidth = Math.max(0.6, cell * 0.025);
+      ctx.globalAlpha = 0.65;
       ctx.stroke();
       ctx.restore();
     }
@@ -165,15 +155,16 @@
           const px = offsetX + x * cell;
           const py = offsetY + y * cell;
           if (tile === '.') {
-            disc(px + cell / 2, py + cell / 2, cell * 0.075, '#ffe8b0');
+            disc(px + cell / 2, py + cell / 2, Math.max(1, cell * 0.075), '#ffe8b0');
           } else if (tile === 'o') {
-            const pulse = reduced.matches ? 1 : 0.87 + Math.sin(time / 180) * 0.13;
+            const pulse = reduced.matches || current.finished
+              ? 1 : 0.9 + Math.sin(time / 300) * 0.1;
             ctx.shadowColor = '#ffe8b0';
-            ctx.shadowBlur = cell * 0.4;
+            ctx.shadowBlur = cell * 0.35;
             disc(px + cell / 2, py + cell / 2, cell * 0.23 * pulse, '#ffe8b0');
             ctx.shadowBlur = 0;
           } else if (tile === '-') {
-            ctx.strokeStyle = '#f4a9df';
+            ctx.strokeStyle = '#ffade7';
             ctx.lineWidth = Math.max(1, cell * 0.12);
             ctx.beginPath();
             ctx.moveTo(px + cell * 0.1, py + cell * 0.5);
@@ -185,32 +176,33 @@
     }
 
     function runner(agent, cell, time, color) {
-      if (agent.invulnerable && !reduced.matches &&
-          Math.floor(time / 100) % 2 === 0) ctx.globalAlpha = 0.35;
-
-      const mouth = reduced.matches ? 0.2 : 0.12 + (1 + Math.sin(time / 75)) * 0.13;
+      if (agent.invulnerable) {
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = Math.max(1, cell * 0.055);
+        ctx.beginPath();
+        ctx.arc(0, 0, cell * 0.47, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      const mouth = reduced.matches || current.finished
+        ? 0.2 : 0.12 + (1 + Math.sin(time / 110)) * 0.13;
       const angle = ANGLES[agent.dir] ?? 0;
-      const radius = cell * 0.4;
-
       ctx.rotate(angle);
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.arc(0, 0, radius, mouth, Math.PI * 2 - mouth);
+      ctx.arc(0, 0, cell * 0.4, mouth, Math.PI * 2 - mouth);
       ctx.closePath();
       ctx.fillStyle = color;
       ctx.fill();
       ctx.shadowBlur = 0;
-      disc(cell * 0.035, -cell * 0.2, cell * 0.045, '#0f1526');
+      disc(cell * 0.035, -cell * 0.2, cell * 0.045, '#081120');
       ctx.rotate(-angle);
-      ctx.globalAlpha = 1;
     }
 
-    function ghost(agent, cell, time, color) {
+    function ghost(agent, cell, color) {
       const frightened = agent.frightened;
       const warning = frightened && current.fright > 0 && current.fright <= 15;
-      const white = warning && (reduced.matches || Math.floor(time / 120) % 2 === 0);
-      const body = frightened ? (white ? '#f4f6fb' : '#2a3cff') : color;
-      const face = frightened && white ? '#2a3cff' : '#ffffff';
+      const body = frightened ? '#4d66ff' : color;
       const radius = cell * 0.39;
       ctx.fillStyle = body;
       ctx.shadowColor = body;
@@ -224,21 +216,23 @@
       ctx.closePath();
       ctx.fill();
       ctx.shadowBlur = 0;
-
       if (frightened) {
-        disc(-cell * 0.13, -cell * 0.07, cell * 0.05, face);
-        disc(cell * 0.13, -cell * 0.07, cell * 0.05, face);
-        ctx.strokeStyle = face;
-        ctx.lineWidth = Math.max(1, cell * 0.045);
+        disc(-cell * 0.13, -cell * 0.07, cell * 0.05, '#ffffff');
+        disc(cell * 0.13, -cell * 0.07, cell * 0.05, '#ffffff');
+        ctx.strokeStyle = warning ? '#ffe28a' : '#ffffff';
+        ctx.lineWidth = Math.max(1, cell * 0.05);
         ctx.beginPath();
         ctx.moveTo(-cell * 0.2, cell * 0.17);
         for (let i = 0; i < 5; i++) {
           ctx.lineTo(cell * (-0.12 + i * 0.08), cell * (i % 2 ? 0.17 : 0.11));
         }
         ctx.stroke();
+        if (warning) {
+          ctx.fillStyle = '#ffe28a';
+          ctx.fillRect(-cell * 0.025, -cell * 0.3, cell * 0.05, cell * 0.1);
+        }
         return;
       }
-
       const look = EYES[agent.dir] || [0, 0];
       [-1, 1].forEach(side => {
         ctx.fillStyle = '#ffffff';
@@ -251,84 +245,63 @@
       });
     }
 
-    function human(agent) {
-      return agent.human === true || agent.isHuman === true ||
-        agent.type === 'human' || agent.kind === 'human' ||
-        agent.controller === 'human';
-    }
-
-    function agentLabel(agent, cell, x, y, boxes) {
-      const text = String(agent.name || agent.id).slice(0, 28);
-      ctx.font = `600 ${Math.max(7, cell * 0.3)}px system-ui, sans-serif`;
+    function marker(agent, cell, x, y, index) {
+      const number = /^[rg]\d+$/.test(agent.id)
+        ? agent.id.slice(1) : String(index + 1);
+      const text = `${agent.role === 'runner' ? 'R' : 'G'}${number}`;
+      const size = Math.max(8, cell * 0.29);
+      ctx.font = `800 ${size}px system-ui, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      const width = Math.min(cell * 3.8, ctx.measureText(text).width + cell * 0.25);
-      const box = {
-        left: x - width / 2,
-        right: x + width / 2,
-        top: y + cell * 0.4,
-        bottom: y + cell * 0.8,
-      };
-      if (!human(agent) && boxes.some(other =>
-        box.left < other.right && box.right > other.left &&
-        box.top < other.bottom && box.bottom > other.top
-      )) return;
-      boxes.push(box);
-      ctx.fillStyle = '#0f1526';
-      ctx.globalAlpha = 0.9;
-      ctx.fillRect(box.left, box.top, width, cell * 0.4);
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = '#f4f6fb';
-      ctx.fillText(text, x, y + cell * 0.61, width - cell * 0.12);
+      const width = ctx.measureText(text).width + 5;
+      const height = size + 3;
+      const px = Math.max(width / 2, Math.min(cssWidth - width / 2, x));
+      const py = Math.max(height / 2, Math.min(cssHeight - height / 2, y + cell * 0.58));
+      ctx.fillStyle = '#081120';
+      ctx.fillRect(px - width / 2, py - height / 2, width, height);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText(text, px, py);
     }
 
     function draw(time) {
       frame = 0;
       if (destroyed || !current || !cssWidth || !cssHeight) return;
-
       const nextRatio = Math.max(1, window.devicePixelRatio || 1);
       if (ratio !== nextRatio) resize();
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      ctx.fillStyle = '#0f1526';
+      ctx.fillStyle = '#081120';
       ctx.fillRect(0, 0, cssWidth, cssHeight);
-
       const cell = Math.min(cssWidth / current.width, cssHeight / current.height);
       const offsetX = (cssWidth - cell * current.width) / 2;
       const offsetY = (cssHeight - cell * current.height) / 2;
       const progress = duration ? Math.min(1, Math.max(0, (time - started) / duration)) : 1;
       maze(cell, offsetX, offsetY, time);
-
       const visible = [];
+      const indices = { runner: 0, ghost: 0 };
       current.agents.forEach(agent => {
+        const index = indices[agent.role]++;
         if (!agent.alive || agent.respawnIn > 0) return;
         const [x, y] = position(agent, progress);
         const px = offsetX + (x + 0.5) * cell;
         const py = offsetY + (y + 0.5) * cell;
         const color = colors[agent.id] || '#ffd84d';
-        visible.push({ agent, x: px, y: py });
+        visible.push({ agent, x: px, y: py, index });
         ctx.save();
         ctx.translate(px, py);
         ctx.shadowColor = color;
-        ctx.shadowBlur = cell * 0.4;
+        ctx.shadowBlur = cell * 0.25;
         if (agent.role === 'runner') runner(agent, cell, time, color);
-        else ghost(agent, cell, time, color);
+        else ghost(agent, cell, color);
         ctx.restore();
       });
-
-      const boxes = [];
       ctx.save();
       ctx.shadowBlur = 0;
-      visible.filter(item => human(item.agent)).forEach(item => {
-        agentLabel(item.agent, cell, item.x, item.y, boxes);
-      });
-      visible.filter(item => !human(item.agent)).forEach(item => {
-        agentLabel(item.agent, cell, item.x, item.y, boxes);
-      });
+      visible.forEach(item => marker(item.agent, cell, item.x, item.y, item.index));
       ctx.restore();
 
-      const moving = !reduced.matches &&
-        (progress < 1 || current.power || current.agents.some(agent =>
-          agent.alive && (agent.role === 'runner' || agent.frightened)));
+      const moving = !reduced.matches && (progress < 1 || (!current.finished &&
+        (current.power || current.agents.some(a =>
+          a.alive && !a.respawnIn && (a.role === 'runner' || a.frightened)))));
       if (moving) requestDraw();
     }
 
@@ -339,6 +312,10 @@
       colors = { ...nextColors };
       started = performance.now();
       duration = reduced.matches ? 0 : Math.max(0, Number(options.duration) || 0);
+      canvas.setAttribute('aria-label',
+        `Maze Chase, tick ${current.tick}. ` +
+        `${current.agents.filter(a => a.role === 'runner' && a.alive).length} runners remaining. ` +
+        'Seat markers R1–R4 and G1–G6 correspond to the score cards.');
       resize();
       requestDraw();
     }
@@ -347,7 +324,6 @@
       if (reduced.matches) duration = 0;
       requestDraw();
     }
-
     const observer = new ResizeObserver(resize);
     observer.observe(canvas);
     window.addEventListener('resize', resize);
@@ -365,7 +341,6 @@
       current = null;
       previous.clear();
     }
-
     return { update, destroy };
   }
 
