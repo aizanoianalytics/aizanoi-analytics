@@ -63,12 +63,13 @@ export async function play(match, ask, onFrame) {
 export function summarise(result) {
   const rows = baseSummary(result);
   const status = result.result;
-  if (status.over && status.winner === null) {
-    rows.forEach(row => {
-      row.wins = 0;
-      row.losses = 0;
-      row.draws = 1;
-    });
-  }
+  // Chess reports '1-0' / '0-1' / '1/2-1/2' rather than a winner id, so map it to colours here.
+  const winner = status.result === '1-0' ? 'w' : status.result === '0-1' ? 'b' : null;
+  rows.forEach((row, index) => {
+    const color = result.seats[index].color;
+    row.wins = winner && color === winner ? 1 : 0;
+    row.losses = winner && color !== winner ? 1 : 0;
+    row.draws = status.over && !winner ? 1 : 0;
+  });
   return rows;
 }

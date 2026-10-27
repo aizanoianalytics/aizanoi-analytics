@@ -149,8 +149,9 @@ export function summarise(result) {
   const rows = rowsOf(result);
   const winner = native.winner ?? result.winner ?? null;
   const winners = Array.isArray(winner) ? winner : winner === null ? [] : [winner];
+  // A finished game that reports winner: null (e.g. football 0-0, capture-flag tie) is a draw.
   const explicitlyDrawn = native.draw === true || native.result === '1/2-1/2' ||
-    native.reason === 'draw';
+    native.reason === 'draw' || (Object.hasOwn(native, 'winner') && native.winner === null && !winners.length);
   return result.seats.map((seat, index) => {
     const row = rows.find(item =>
       item && typeof item === 'object' &&
@@ -158,7 +159,8 @@ export function summarise(result) {
     );
     const place = row?.place ?? row?.rank ?? row?.placement ?? null;
     const token = seat.color || seat.team || seat.role || seat.id;
-    const won = winners.includes(seat.id) || winners.includes(token);
+    // Maze reports the winning side in the plural ('runners' / 'ghosts').
+    const won = winners.includes(seat.id) || winners.includes(token) || winners.includes(`${token}s`);
     const known = winners.length > 0;
     const points = row?.points ?? row?.score ?? row?.stack ?? row?.chips ?? null;
     return {
