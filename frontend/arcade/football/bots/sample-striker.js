@@ -41,9 +41,9 @@
     const dy = ball.y - you.y;
     const behind = dx * nx + dy * ny;
     const cross = dx * ny - dy * nx;
-    const close = Math.hypot(dx, dy) <= state.field.kickRange + 2;
-    if (behind > 0 && Math.abs(cross) < 12) {
-      return move(you, ball.x + nx * 12, ball.y + ny * 12, close);
+    const close = Math.hypot(dx, dy) <= 31 /* hold for repeats */;
+    if (behind > 0 && Math.abs(cross) < 18) {
+      return move(you, ball.x + nx * 24, ball.y + ny * 24, close);
     }
     // Pass around the ball instead of pushing it towards the own goal.
     const detour = behind < 8 && Math.abs(cross) < 42;

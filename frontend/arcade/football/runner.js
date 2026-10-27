@@ -9,10 +9,7 @@
   const SCHEMES = {
     p1: { left: 'KeyA', right: 'KeyD', up: 'KeyW', down: 'KeyS', kick: ['Space'] },
     p2: {
-      left: 'ArrowLeft',
-      right: 'ArrowRight',
-      up: 'ArrowUp',
-      down: 'ArrowDown',
+      left: 'ArrowLeft', right: 'ArrowRight', up: 'ArrowUp', down: 'ArrowDown',
       kick: ['Enter', 'Slash']
     }
   };
@@ -48,6 +45,10 @@
     }
 
     const humans = seats.filter(seat => seat.human);
+    const schemes = humans.map(seat => seat.keys).filter(value => typeof value === 'string');
+    if (new Set(schemes).size !== schemes.length) {
+      throw new Error('Each keyboard player can occupy only one seat.');
+    }
     const requested = options.speed === 'max' ? 'max' : Number(options.speed || 1);
     const speed = humans.length ? 1 : [1, 2, 4, 'max'].includes(requested) ? requested : 1;
     const game = FootballEngine.create(seats.map(({ id, team, name }) => ({
@@ -65,11 +66,18 @@
     let lastTime = null;
     let accumulator = 0;
     let askedAt = -1;
+    let serial = 0;
     let previous = game.state();
     let current = previous;
 
     function clearKeys() {
       held.clear();
+    }
+
+    function releaseButtonFocus() {
+      const target = document.activeElement;
+      if (target instanceof Element && target.closest('button') &&
+          typeof target.blur === 'function') target.blur();
     }
 
     function keydown(event) {
@@ -94,6 +102,7 @@
 
     function disableWorker(entry) {
       entry.ok = false;
+      entry.disabled = true;
       clearTimeout(entry.deadline);
       entry.pending = null;
       if (entry.worker) entry.worker.terminate();
@@ -102,13 +111,8 @@
 
     function createWorker(seat, index) {
       const entry = {
-        seat,
-        worker: null,
-        ok: false,
-        input: EMPTY,
-        pending: null,
-        deadline: null,
-        settle: null
+        seat, worker: null, ok: false, disabled: false, input: EMPTY,
+        pending: null, deadline: null, settle: null
       };
       workers.push(entry);
       return new Promise(resolve => {
@@ -125,8 +129,9 @@
           entry.worker = new Worker('/arcade/football/bot-worker.js');
           entry.worker.onmessage = event => {
             const message = event.data;
-            if (!message || stopped) return;
+            if (!message || stopped || entry.disabled) return;
             if (message.type === 'ready') {
+              if (settled) return;
               entry.ok = true;
               entry.settle(true);
               return;
@@ -136,13 +141,17 @@
               return;
             }
             const pending = entry.pending;
-            if (message.type !== 'decide' || !pending || message.step !== pending.step) return;
-            const onTime = performance.now() - pending.sent <= DECISION_MS;
-            const inWindow = game.steps < pending.step + DECISION_STEPS;
+            if (message.type !== 'decide' || !pending ||
+                message.step !== pending.step || message.request !== pending.request) return;
+            if (performance.now() - pending.sent > DECISION_MS) {
+              disableWorker(entry);
+              return;
+            }
             clearTimeout(entry.deadline);
             entry.pending = null;
+            const inWindow = game.steps < pending.step + DECISION_STEPS;
             const input = sanitize(message.input);
-            if (onTime && inWindow && !paused && input) {
+            if (inWindow && !paused && input) {
               entry.input = FootballEngine.mirrorInput(input, seat.team);
             }
           };
@@ -171,20 +180,33 @@
       askedAt = step;
       for (const entry of workers) {
         if (!entry.ok || entry.pending) continue;
-        entry.pending = { step, sent: performance.now() };
+        const request = ++serial;
+        entry.pending = { step, request, sent: performance.now() };
         entry.deadline = setTimeout(() => {
-          if (entry.pending && entry.pending.step === step) disableWorker(entry);
+          if (entry.pending && entry.pending.request === request) disableWorker(entry);
         }, DECISION_MS);
         try {
           entry.worker.postMessage({
             type: 'decide',
             step,
-            state: game.botState(entry.seat.id)
+            state: game.botState(entry.seat.id),
+            request
           });
         } catch {
           disableWorker(entry);
         }
       }
+    }
+
+    function boundaryReady() {
+      askBots();
+      const now = performance.now();
+      for (const entry of workers) {
+        if (entry.pending && now - entry.pending.sent > DECISION_MS) {
+          disableWorker(entry);
+        }
+      }
+      return !workers.some(entry => entry.ok && entry.pending);
     }
 
     function humanInput(seat) {
@@ -201,7 +223,6 @@
     }
 
     function advance() {
-      askBots();
       const inputs = {};
       for (const seat of humans) inputs[seat.id] = humanInput(seat);
       for (const entry of workers) inputs[entry.seat.id] = entry.input;
@@ -213,10 +234,7 @@
     function report(alpha) {
       if (!callback || stopped) return;
       callback({
-        previous,
-        state: current,
-        alpha,
-        events: events.splice(0),
+        previous, state: current, alpha, events: events.splice(0),
         result: game.finished() ? game.result() : null
       });
     }
@@ -232,10 +250,13 @@
       raf = null;
       if (stopped || paused) return;
       if (lastTime === null) lastTime = now;
-      accumulator += Math.max(0, now - lastTime) * speed;
+      // Do not simulate minutes of catch-up after a hidden/background tab.
+      accumulator = Math.min(250 * speed,
+        accumulator + Math.min(250, Math.max(0, now - lastTime)) * speed);
       lastTime = now;
       let batch = 0;
       while (accumulator >= STEP_MS && !game.finished() && batch < 240) {
+        if (!boundaryReady()) break;
         advance();
         accumulator -= STEP_MS;
         batch++;
@@ -249,10 +270,7 @@
       if (stopped || paused) return;
       const end = performance.now() + 16;
       do {
-        if (game.finished()) break;
-        askBots();
-        if (game.steps % DECISION_STEPS === 0 &&
-            workers.some(entry => entry.ok && entry.pending)) break;
+        if (game.finished() || !boundaryReady()) break;
         advance();
       } while (performance.now() < end);
       report(1);
@@ -273,6 +291,7 @@
         clearTimeout(entry.deadline);
         entry.pending = null;
       }
+      // Reissue a boundary request with a new serial after resume.
       askedAt = -1;
     }
 
@@ -280,6 +299,7 @@
       if (stopped || !paused || !begun || game.finished()) return;
       paused = false;
       lastTime = null;
+      releaseButtonFocus();
       schedule();
     }
 
@@ -306,12 +326,11 @@
         callback = onFrame;
         await loaded;
         if (stopped) return;
+        releaseButtonFocus();
         report(1);
         if (!paused && !game.finished()) schedule();
       },
-      pause,
-      resume,
-      stop
+      pause, resume, stop
     };
   }
 

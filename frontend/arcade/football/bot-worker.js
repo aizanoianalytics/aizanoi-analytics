@@ -69,5 +69,7 @@ self.onmessage = event => {
   } catch {
     input = null;
   }
-  postMessage({ type: 'decide', step: message.step, input });
+  const reply = { type: 'decide', step: message.step, input };
+  if (Number.isSafeInteger(message.request)) reply.request = message.request;
+  postMessage(reply);
 };

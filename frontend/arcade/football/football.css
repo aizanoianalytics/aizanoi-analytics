@@ -37,11 +37,11 @@
 }
 
 .fb-red {
-  --team-color: #ff4d4d;
+  --team-color: #ff596b;
 }
 
 .fb-blue {
-  --team-color: #3b82f6;
+  --team-color: #58a6ff;
 }
 
 .fb-team legend {
@@ -124,6 +124,11 @@
   outline-offset: 3px;
 }
 
+.fb .button:not(:disabled):hover {
+  background: #304e7e;
+  color: #ffffff;
+}
+
 .fb-remove {
   padding: 8px;
   border: 1px solid #dbe3ec;
@@ -153,36 +158,48 @@
   align-items: center;
   gap: 12px;
   margin-top: 24px;
-  padding: 16px 20px;
-  border: 1px solid #263248;
-  border-radius: 14px 14px 0 0;
-  background: #151e30;
+  padding: 18px 22px;
+  border: 1px solid #33445e;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(110deg, #201d32, #101f32 55%, #102c42);
   color: #f8fafc;
-  font-weight: 800;
+  font-weight: 850;
   font-variant-numeric: tabular-nums;
+  box-shadow: 0 10px 30px #0b142418;
+}
+
+#fb-score {
+  font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 #fb-red-score {
-  color: #ff7777;
+  color: #ff9ba7;
 }
 
 #fb-blue-score {
-  color: #79b1ff;
+  color: #9acaff;
 }
 
 #fb-clock {
-  font-size: 1.3rem;
+  padding: 5px 12px;
+  border: 1px solid #526279;
+  border-radius: 7px;
+  background: #071321;
+  font: 800 1.45rem ui-monospace, monospace;
 }
 
 .fb-stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 240px;
   overflow: hidden;
-  border: 1px solid #263248;
+  border: 1px solid #33445e;
   border-top: 0;
-  border-radius: 0 0 14px 14px;
-  background: #0f1526;
+  border-radius: 0 0 16px 16px;
+  background: #0b1424;
   color: #f8fafc;
+  box-shadow: 0 18px 35px #0b142418;
 }
 
 .fb-board {
@@ -196,7 +213,9 @@
   width: 100%;
   height: auto;
   aspect-ratio: 900 / 460;
-  background: #0f1526;
+  background: #0b1424;
+  scroll-margin-top: 24px;
+  scroll-margin-bottom: 180px;
 }
 
 .fb-countdown {
@@ -205,8 +224,8 @@
   display: grid;
   place-items: center;
   pointer-events: none;
-  background: #0f15264d;
-  color: #ffffff;
+  background: #0b142470;
+  color: #fff2ad;
   font-size: clamp(3rem, 12vw, 7rem);
   font-weight: 900;
   text-shadow: 0 3px 20px #000000;
@@ -215,7 +234,8 @@
 .fb-side-panel {
   min-width: 0;
   padding: 16px;
-  border-left: 1px solid #263248;
+  border-left: 1px solid #33445e;
+  background: linear-gradient(#142237, #0d1728);
 }
 
 #fb-cards {
@@ -225,11 +245,22 @@
 
 .fb-card {
   min-width: 0;
-  padding: 9px 10px;
+  padding: 10px 11px;
+  border: 1px solid #33445e;
   border-left: 3px solid var(--team-color);
-  border-radius: 5px;
-  background: #1b263b;
+  border-radius: 8px;
+  background: #1b2b41;
   overflow-wrap: anywhere;
+}
+
+.fb-card::before {
+  content: attr(data-id);
+  display: inline-block;
+  margin-bottom: 6px;
+  color: var(--team-color);
+  font: 850 0.78rem ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .fb-card b,
@@ -238,14 +269,14 @@
 }
 
 .fb-card b {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
 }
 
 .fb-card small {
   margin-top: 5px;
-  color: #cbd5e1;
-  font-size: 0.74rem;
-  line-height: 1.5;
+  color: #d0deed;
+  font-size: 0.78rem;
+  line-height: 1.6;
 }
 
 .fb-ticker,
@@ -258,25 +289,29 @@
 .fb-ticker {
   min-height: 1.5em;
   margin: 16px 0 0;
-  color: #dbeafe;
-  font-size: 0.9rem;
+  color: #e0efff;
+  font-size: 0.95rem;
 }
 
 .fb-result {
-  color: #fef08a;
+  padding: 10px;
+  border: 1px solid #8e7940;
+  border-radius: 8px;
+  background: #302c20;
+  color: #fff2ad;
   font-size: 1.15rem;
   font-weight: 800;
 }
 
 .fb-series-tally {
-  color: #cbd5e1;
-  font-size: 0.8rem;
+  color: #d0deed;
+  font-size: 0.85rem;
 }
 
 .fb-note {
   margin: 22px 0 32px;
-  color: #52627a;
-  font-size: 0.9rem;
+  color: #465973;
+  font-size: 0.95rem;
   line-height: 1.8;
 }
 
@@ -333,9 +368,9 @@
 #fb-stick,
 #fb-kick {
   flex: none;
-  border: 2px solid #ffffffba;
+  border: 2px solid #dceeffdb;
   border-radius: 50%;
-  background: #17233be8;
+  background: #14243bd6;
   color: #ffffff;
   box-shadow: 0 3px 16px #00000040;
   touch-action: none;
@@ -370,7 +405,7 @@
 }
 
 #fb-kick.is-down {
-  border-color: #fef08a;
+  border-color: #fff2ad;
   background: #7c3f16;
 }
 
@@ -380,7 +415,7 @@
   }
 
   .fb-side-panel {
-    border-top: 1px solid #263248;
+    border-top: 1px solid #33445e;
     border-left: 0;
   }
 
@@ -396,25 +431,34 @@
 @media (max-width: 620px) {
   .fb {
     width: calc(100% - 24px);
-    margin-bottom: 180px;
+    margin-bottom: calc(180px + env(safe-area-inset-bottom));
   }
 
   .fb-picker {
-    padding: 14px;
+    padding: 12px;
   }
 
   .fb-teams {
     grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
+    gap: 12px;
   }
 
   .fb-team {
-    padding: 12px;
+    padding: 10px;
+  }
+
+  .fb-seat {
+    margin-bottom: 8px;
   }
 
   .fb-options {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .fb-actions {
+    margin-top: 16px;
   }
 
   .fb-actions .button {
@@ -422,16 +466,24 @@
   }
 
   .fb-hud {
-    padding: 13px;
-    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  #fb-score {
+    font-size: 1.18rem;
   }
 
   #fb-clock {
-    font-size: 1.1rem;
+    padding: 5px 8px;
+    font-size: 1.15rem;
   }
 
   .fb-side-panel {
-    padding: 12px;
+    padding: 10px;
+  }
+
+  .fb-card {
+    padding: 8px;
   }
 
   #fb-list {
@@ -462,5 +514,6 @@
   .fb *::after {
     scroll-behavior: auto;
     transition: none;
+    animation: none;
   }
 }
