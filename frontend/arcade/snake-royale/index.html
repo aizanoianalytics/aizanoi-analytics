@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Snake Royale — Aizanoi Arcade</title>
-<meta name="description" content="Pick two AI-written snake bots and watch them fight. The bots were written by 23 different AI models in the Aizo TV benchmark and run live in your browser.">
+<meta name="description" content="Watch 23 AI-written snake bots fight, build a local royale, or join with keyboard and touch controls.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#f7fafc">
 <link rel="canonical" href="https://aizanoianalytics.com/arcade/snake-royale/">
@@ -29,11 +29,11 @@
 <section class="hero">
   <p class="eyebrow">Aizo TV · AI War</p>
   <h1>AI Snake Royale</h1>
-  <p class="lede">Every bot here was written by an AI model from the same prompt. Pick two and press Fight, add more bots, or join with your keyboard.</p>
+  <p class="lede">AI-written bots. One shrinking arena. Pick your fighters, add a royale roster, or join on the same device.</p>
 </section>
 <main class="sr" itemscope itemtype="https://schema.org/WebPage">
   <meta itemprop="name" content="AI Snake Royale">
-  <meta itemprop="description" content="Pick two AI-written snake bots and watch them fight, live in the browser.">
+  <meta itemprop="description" content="Pick AI-written snake bots and watch them fight, live in the browser.">
   <link itemprop="url" href="https://aizanoianalytics.com/arcade/snake-royale/">
   <div hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
     <meta itemprop="name" content="Aizanoi Analytics">
@@ -44,22 +44,8 @@
     <span class="sr-vs" aria-hidden="true">VS</span>
     <label class="sr-side sr-b"><span>Fighter B</span><select id="sr-b" name="b"></select></label>
     <div id="sr-extras" class="sr-extras"></div>
-    <label class="sr-opt">
-      <span>Player 1</span>
-      <select id="sr-p1">
-        <option value="off" selected>Off</option>
-        <option value="wasd">Keyboard WASD</option>
-        <option value="arrows">Keyboard arrows</option>
-      </select>
-    </label>
-    <label class="sr-opt">
-      <span>Player 2</span>
-      <select id="sr-p2">
-        <option value="off" selected>Off</option>
-        <option value="wasd">Keyboard WASD</option>
-        <option value="arrows">Keyboard arrows</option>
-      </select>
-    </label>
+    <label class="sr-opt"><span>Player 1</span><select id="sr-p1"><option value="off" selected>Off</option><option value="wasd">Keyboard WASD</option><option value="arrows">Keyboard arrows</option></select></label>
+    <label class="sr-opt"><span>Player 2</span><select id="sr-p2"><option value="off" selected>Off</option><option value="wasd">Keyboard WASD</option><option value="arrows">Keyboard arrows</option></select></label>
     <label class="sr-opt"><span>Series</span><select id="sr-series"><option value="1">Single fight</option><option value="3">Best of 3</option><option value="5">Best of 5</option></select></label>
     <label class="sr-opt"><span>Speed</span><select id="sr-speed"><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
     <div class="sr-actions">
@@ -75,7 +61,7 @@
   </div>
   <div class="sr-stage">
     <div class="sr-board">
-      <canvas id="sr-canvas" width="720" height="720" role="img" aria-label="Snake Royale arena"></canvas>
+      <canvas id="sr-canvas" width="720" height="720" role="img" aria-label="Snake Royale arena" aria-describedby="sr-play-help">The arena is drawn on canvas. Fighter cards below provide health, length and standings.</canvas>
       <div id="sr-pad" role="group" aria-label="Player 1 direction controls" hidden>
         <button type="button" data-dir="up" aria-label="Up" disabled>↑</button>
         <button type="button" data-dir="left" aria-label="Left" disabled>←</button>
@@ -83,13 +69,18 @@
         <button type="button" data-dir="right" aria-label="Right" disabled>→</button>
       </div>
     </div>
-    <aside class="sr-side-panel" aria-live="polite">
+    <aside class="sr-side-panel" aria-label="Fighter standings and match events">
+      <p class="sr-panel-title">Arena standings</p>
       <div id="sr-cards"></div>
-      <p id="sr-ticker" class="sr-ticker"></p>
-      <p id="sr-result" class="sr-result" hidden></p>
+      <p id="sr-ticker" class="sr-ticker" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p id="sr-result" class="sr-result" role="status" aria-live="polite" aria-atomic="true" hidden></p>
     </aside>
   </div>
-  <p class="sr-note">Rules: two snakes duel on an 11×11 board. Add bots or play yourself with the keyboard; more than two snakes creates a 19×19 royale, with up to 12 fighters total. Player 1 can also use the touch direction pad on touch devices. Each food adds 1 length, snakes start with 100 health, and a storm closes in from the edge after turn 150. Head-on: the longer snake wins. Bots get 400 ms per move and run in their own worker; the code is the original AI output, unedited. Human players keep their last direction, cannot reverse into their neck, and use Normal speed when Instant is selected. Series are first to the required wins, with at most four extra games for draws. <a href="#sr-roster">See all fighters</a>.</p>
+  <div class="sr-note">
+    <p id="sr-play-help"><strong>Play locally:</strong> enable Player 1 or 2, choose different WASD/arrow controls, then press Fight. Player 1 also has a direction pad on touch devices. Humans keep their direction and cannot reverse into their neck. Play starts after a countdown; human ticks are at least 120 ms, or Normal speed when Instant is selected. Restart fight starts a new match with the current selections.</p>
+    <p><strong>Benchmark rules:</strong> 11×11 duel or 19×19 royale for more than two fighters, up to 12 total. Food adds one length and restores health to 100. Moves resolve simultaneously; the longer head wins and equal longest heads both die. Storm rings expand after turn 150, then every 20 turns, and become lethal on subsequent moves. These are the original benchmark rules, not official Battlesnake Royale rules.</p>
+    <p>Bots have 400 ms per move in their own worker and 5 seconds to initialize. A move timeout ends that worker for the game; its snake keeps the engine fallback direction. Series require a majority of wins, with at most four extra games for draws, including Single fight. <a href="BOT_API.md">Full rules and bot API</a> · <a href="#sr-roster">See all fighters</a></p>
+  </div>
   <section id="sr-roster" class="sr-roster" aria-label="All fighters"><h2>The fighters</h2><ul id="sr-list"></ul></section>
 </main>
 <footer><p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p><nav class="public-identity-links" aria-label="Social and contact"><a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a><a href="mailto:aizanoianalytics@protonmail.com">Email</a></nav></footer>

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
@@ -98,10 +99,12 @@ test('midmatch speed selection cannot desynchronize animation from the captured 
     assert.ok(durations.length >= 3 && durations.every(value => value === 140), `captured normal cadence must remain 140ms: ${durations}`);
     assert.deepEqual(errors, []);
   }, async page => {
-    await page.route('**/arcade/snake-royale/renderer.js', async route => {
-      const response = await route.fetch();
-      const source = await response.text();
-      await route.fulfill({ response, body: source + `\n(function () {
+    // Instrument the real repository source without route.fetch's extra server connection, which failed with ECONNREFUSED.
+    const source = readFileSync(new URL('../../frontend/arcade/snake-royale/renderer.js', import.meta.url), 'utf8');
+    await page.route('**/arcade/snake-royale/renderer.js', route => route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: source + `\n(function () {
         const create = window.SnakeArenaRenderer.create;
         window.__snakeDurations = [];
         window.SnakeArenaRenderer.create = function (...args) {
@@ -112,8 +115,8 @@ test('midmatch speed selection cannot desynchronize animation from the captured 
           };
           return renderer;
         };
-      })();` });
-    });
+      })();`,
+    }));
   });
 });
 

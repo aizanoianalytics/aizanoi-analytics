@@ -1,40 +1,96 @@
 # AI Snake Royale
 
-Static page at `/arcade/snake-royale/`: visitor picks two AI-written snake bots and watches them fight, adds more bots for a 19×19 royale (up to 12 snakes), or joins as Player 1/2 from the keyboard (WASD / arrows, on-screen pad on touch). Local play only; no backend, all code runs in the browser.
+Static page at `/arcade/snake-royale/`: visitors select AI-written bots, add seats for a 19×19 royale, or join locally as Player 1/2 using WASD/arrows. Player 1 also has a touch direction pad. No backend or build step.
 
 ## Files
 
-- `engine.js` — pure deterministic rules (Battlesnake-style, 11×11 duel, storm after turn 150). UMD: page, worker, Node tests.
-- `bot-worker.js` — one worker per bot; loads `bots/<id>.js` with `importScripts` (CSP `script-src 'self'`, no eval).
-- `runner.js` — hosts the workers, 400 ms per move, a late/invalid move repeats the last direction. Human seats (`{ human: true, input }`, ids `player-1`/`player-2`) get no worker; their move is the shared input's current direction.
-- `../shared/arena-input.js` — `window.ArenaInput.create('wasd' | 'arrows')`: keyboard + touch pad direction input shared by the arcade arenas; ignores keys in form fields, prevents scrolling only while enabled.
-- `renderer.js` — shared public Canvas renderer, UMD `window.SnakeArenaRenderer` / Node export. Both this page and the shell use it; no dependencies, DOM styles or remote assets.
-- `game.js`, `snake-royale.css`, `index.html` — picker, extra bot seats, Player 1/2 controls, canvas, series (single / best of 3 / 5). More than two snakes = 19×19 royale; humans play at a tick of at least 120 ms after a 3-2-1 countdown. No inline script or style (CSP).
-- `bots.json` + `bots/*.js` — the contestants: original, unedited bot code written by each AI model in the Aizo TV benchmark (test 10, snake-royale). Add a fighter = drop `bots/<id>.js` and add a `bots.json` entry (id, name, lab, color, file).
+- `engine.js` — unchanged deterministic benchmark rules and RNG order. UMD for page, worker and Node.
+- `bot-worker.js` — one worker per bot; validates the fighter id and imports `bots/<id>.js`, never a URL supplied by a message.
+- `runner.js` — worker lifecycle, 5-second initialization deadline, 400 ms move deadline, serialized simultaneous turns, direct human input and cancellation.
+- `../shared/arena-input.js` — shared keyboard/touch adapter. Ignores typing in form controls and prevents scrolling only while enabled.
+- `renderer.js` — shared dependency-free Canvas renderer, also used by AizanoiOS.
+- `game.js`, `snake-royale.css`, `index.html` — picker, humans, series, standings, announcements and responsive presentation.
+- `bots.json` and `bots/*.js` — original, unedited benchmark contestants.
+- [BOT_API.md](BOT_API.md) — complete bot-author and AI-prompt contract, state JSON, rules, timing, helpers, determinism and example.
+- `review/snake-royale.md` at repository root — review findings and explicitly preserved benchmark limitations.
+
+## Match and series
+
+Two contestants use 11×11; more than two use 19×19, up to 12 total. Humans start after a countdown and use ticks of at least 120 ms, or 140 ms when Instant is selected. Their controls are disabled after elimination.
+
+Best-of series require a majority of wins and permit at most four extra games for draws. This also applies to Single fight: drawn games can be retried, at most five games total. A capped series is decided by highest accumulated wins; a tied lead is a draw.
+
+Selections can be edited during play; Restart fight uses those new selections. The current match retains its captured seats, speed and control schemes.
+
+URL parameters remain `a=<fighter-id>`, `b=<fighter-id>` and `autostart=1`. There is no seed parameter.
+
+## Bot integration
+
+See [the complete contract](BOT_API.md). In brief:
+
+    module.exports = function move(state) {
+      return 'up';
+    };
+
+State remains exactly:
+
+    { turn, width, height, you, snakes, food, hazards, nextShrinkTurn }
+
+No engine rules or state fields were changed. Notable benchmark semantics include food before collisions, instantly lethal active storm cells, storm expansion after collision checks, array-order kill attribution, and shared first place for all turn-limit survivors.
+
+## Worker failures and cancellation
+
+- Roster fetch, parsing or validation failure: standalone controls are disabled and the ticker explains the failure.
+- Initialization exception/error or no response within 5 seconds: terminate that worker and record turn-zero `load-error`.
+- Move exception or invalid return: repeat the engine's last valid direction, initially `up`, and increment errors.
+- Move deadline or worker/transport error: terminate the worker for that game; its snake continues receiving invalid-action fallback until eliminated or the match ends.
+- Stale or unrelated worker responses do not settle a move.
+- Stop settles pending initialization/move waits, clears deadlines and terminates workers.
+- Concurrent `turn()` calls share one in-flight operation. Finished matches do not advance again.
+
+Worker separation protects engine snapshots from bot mutation. It is not a hostile-code sandbox; bot files are trusted same-origin scripts.
 
 ## Shared presentation API
 
 `SnakeArenaRenderer.create(canvas, options?)` returns `{ update(game, colors, metadata?), destroy() }`.
-Call `update` after each engine turn; `colors` maps fighter ids to roster hex colors. Optional metadata: `fighters: [fighterAId, fighterBId]` keeps A/B identity across alternating spawns, and `duration` sets interpolation milliseconds (0 = instant; capped at 260). The renderer copies all visual state, never retains/mutates the engine or colors, and never executes bots.
 
-Rounded connected tubes, head/eyes with rear A/B badges, animated apples, a clipped storm hatch/boundary and bounded deterministic eat/death sparks are paint-only. Animation interpolates only valid consecutive one-cell body shifts; resets, skipped turns, disconnected topology and row wraps snap, never sweep across the board. Disconnected source runs are never bridged.
+`update` accepts:
+- The engine game.
+- Fighter-id-to-hex-color mapping.
+- Optional `fighters` array to preserve seat identity.
+- Optional `duration`, capped at 260 ms; 0 snaps immediately.
 
-`destroy()` is idempotent: cancels RAF, unregisters the motion-preference listener, releases snapshots and ignores later updates. Idle animation settles within 700 ms of the final update; reduced motion draws a stable still immediately without scheduling RAF and responds to preference changes. Hosts must call destroy on teardown. Options `duration`, `reducedMotion`, `now`, `requestAnimationFrame`, `cancelAnimationFrame`, `mediaQuery` provide explicit preferences and deterministic test scheduling. Pure `snapshot` and `interpolate` exports support numerical regression tests; consumers normally use only `create`.
+The renderer copies visual state, never retains/mutates engine inputs and never executes bots. Its `snapshot` and `interpolate` exports remain available for numerical tests.
 
-Standalone script order: engine → runner → renderer → game. The shell loads the same public scripts with its existing loader and owns its renderer lifecycle; no private cross-module imports.
+Connected neon tubes, eyes, rear seat badges, apples, storm hatch and bounded eat/death particles are paint-only. Disconnected runs, teleports, resets and skipped turns snap instead of sweeping across the board.
 
-## Contract for a bot
+`destroy()` is idempotent, cancels RAF and removes the motion listener. Idle animation settles within 700 ms. Reduced motion renders immediately without scheduling RAF and responds to live preference changes.
 
-`module.exports = function move(state)` (or `{ move }`, or a global `move`) returning `'up' | 'down' | 'left' | 'right'`.
-`state` = `{ turn, width, height, you, snakes[], food[], hazards[], nextShrinkTurn }`; snake = `{ id, name, head{x,y}, body[{x,y}], length, health }`. `Math.random` is seeded per match.
+Explicit `duration`, `reducedMotion`, `now`, `requestAnimationFrame`, `cancelAnimationFrame` and `mediaQuery` options support deterministic presentation tests.
 
-## Failure states
+Script order: engine → shared input → runner → renderer → game. The shell uses the same public engine/runner/renderer APIs and owns its renderer lifecycle.
 
-- `bots.json` unreachable or unparsable: the page says the fighters could not be loaded, disables **Fight**/**Random pair** and logs the reason. It never renders an empty picker as if it were a working page.
-- A bot that fails to load or answers in under 400 ms per move is marked `load-error` / keeps its last direction; the match still finishes and the ticker names the cause.
-- `window.__SNAKE_ROYALE__()` returns the live state (fighter count, running flag, selected pair, ticker, verdict, card text) so browser tests read state instead of timing canvas frames.
+## Accessibility and QA
 
-## Notes
+Cards keep stable seat order. Current length, health, wins and final placements are text, not color-only signals. Only the event ticker and result are live regions; card updates are not continuously announced.
 
-- Replays match the original benchmark engine exactly for the same seed, except bots that use a wall-clock search budget (Opus, Sonnet, Gemini 4 Argon, GPT-6.1 Sol, GPT-5.6 Sol, Kimi K3.1 Pro), which can differ run to run.
-- Tests: `tests/snake-royale.test.mjs`.
+`window.__SNAKE_ROYALE__()` preserves the existing fields: `bots`, `running`, `fighters`, `ticker`, `result`, `cards`, `seats` and `mode`.
+
+## Replay guarantees
+
+The unchanged engine reproduces results for identical ordered ids, options and actions. Seeded worker `Math.random` is independent of engine randomness. Wall-clock searches, browser deadlines, device scheduling and human input can change complete match outcomes. Do not claim universal video-identical results from a seed alone.
+
+## Tests
+
+Existing:
+- `tests/snake-royale.test.mjs`
+- `tests/snake-royale-runner-cleanup.test.mjs`
+- `tests/browser/snake-royale.test.mjs`
+- Shell module and browser tests.
+
+Additional regressions:
+- `tests/snake-royale-runner-lifecycle.test.mjs`
+- `tests/snake-royale-contract.test.mjs`
+- `tests/browser/snake-royale-accessibility.test.mjs`
+
+The review deliverable was produced without execution access; these tests require execution in the repository environment.

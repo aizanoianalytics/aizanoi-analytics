@@ -1,7 +1,9 @@
-// Drives a match: workers for bots, direct input for humans, engine core in the page.
+// Drives a match: isolated workers for bots, direct input for humans.
 (function () {
   'use strict';
   const TIMEOUT_MS = 400;
+  const INIT_TIMEOUT_MS = 5000;
+  const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 
   function centreDirection(snake, options) {
     const [x, y] = snake.body[0];
@@ -12,116 +14,170 @@
   }
 
   function start(entries, options) {
+    if (!Array.isArray(entries) || entries.length < 2 || entries.length > 12) {
+      throw new RangeError('Choose between 2 and 12 fighters');
+    }
+    const ids = new Set();
+    for (const entry of entries) {
+      if (!entry || typeof entry.id !== 'string' ||
+          !/^[a-z0-9][a-z0-9.-]*$/.test(entry.id) ||
+          entry.id.includes('..') || ids.has(entry.id)) {
+        throw new TypeError('Fighters require unique, valid ids');
+      }
+      if (entry.human && (!entry.input || typeof entry.input.reset !== 'function')) {
+        throw new TypeError('A human fighter requires input.reset(direction)');
+      }
+      ids.add(entry.id);
+    }
+
     const game = SnakeEngine.create(entries.map(e => e.id), options);
-    game.snakes.forEach((s, i) => {
-      s.name = entries[i].name;
-      if (entries[i].human) entries[i].input.reset(centreDirection(s, game.options));
+    game.snakes.forEach((snake, i) => {
+      snake.name = entries[i].name || snake.id;
+      if (entries[i].human) {
+        entries[i].input.reset(centreDirection(snake, game.options));
+      }
     });
 
     const seed = game.options.seed;
+    const pending = new Set();
+    const workers = [];
     let stopped = false;
-    const pending = new Set(), workers = [];
+    let inFlight = null;
+
+    function retire(x) {
+      x.ok = false;
+      if (x.w && !x.terminated) {
+        x.terminated = true;
+        x.w.terminate();
+      }
+    }
 
     function stop() {
       if (stopped) return;
       stopped = true;
       for (const cancel of [...pending]) cancel();
-      workers.forEach(x => { if (x.w) x.w.terminate(); });
+      workers.forEach(retire);
     }
 
     try {
-      entries.forEach((e, i) => {
-        if (e.human) {
-          workers.push({ human: true, input: e.input, ok: true });
+      entries.forEach((entry, i) => {
+        if (entry.human) {
+          workers.push({ human: true, input: entry.input, ok: true });
           return;
         }
-
         const w = new Worker('/arcade/snake-royale/bot-worker.js');
-        const x = { w, ready: null, ok: true };
+        const x = { w, ready: null, ok: true, terminated: false };
         workers.push(x);
-        x.ready = new Promise(res => {
+        x.ready = new Promise(resolve => {
           let settled = false;
+          let timer;
           const settle = data => {
             if (settled) return;
             settled = true;
+            clearTimeout(timer);
             pending.delete(cancel);
             w.onmessage = null;
             w.onerror = null;
-            res(data);
+            resolve(data);
           };
           const cancel = () => settle({ type: 'stopped' });
           pending.add(cancel);
-          w.onmessage = ev => settle(ev.data);
+          timer = setTimeout(() => {
+            retire(x);
+            settle({ type: 'fail' });
+          }, INIT_TIMEOUT_MS);
+          w.onmessage = event => {
+            const data = event.data;
+            if (data && (data.type === 'ready' || data.type === 'fail')) settle(data);
+          };
           w.onerror = () => settle({ type: 'fail' });
-          // Only the worker resolves a bot id to its script.
           try {
-            w.postMessage({ type: 'init', id: e.id, seed: seed * 31 + i });
-          } catch (err) {
+            // The worker alone resolves this validated id to bots/<id>.js.
+            w.postMessage({ type: 'init', id: entry.id, seed: seed * 31 + i });
+          } catch {
             settle({ type: 'fail' });
           }
         });
       });
-    } catch (err) {
+    } catch (error) {
       stop();
-      throw err;
+      throw error;
     }
 
     const loaded = Promise.all(workers.map(async (x, i) => {
       if (x.human) return;
-      const r = await x.ready;
-      if (!stopped && (!r || r.type !== 'ready')) {
-        x.ok = false;
+      const response = await x.ready;
+      if (!stopped && (!response || response.type !== 'ready')) {
+        retire(x);
         game.snakes[i].alive = false;
         game.snakes[i].death = { turn: 0, cause: 'load-error', by: null };
       }
     }));
 
-    function ask(x, i, state) {
+    function ask(x, state) {
       if (!x.ok || stopped) return Promise.resolve(null);
       if (x.human) {
-        const dir = x.input.dir;
-        // Commit once per turn, so multiple key presses cannot reverse into the neck.
-        x.input.reset(dir);
-        return Promise.resolve(dir);
+        const direction = x.input.dir;
+        // Commit once per turn: buffered key presses cannot reverse into the neck.
+        x.input.reset(direction);
+        return Promise.resolve(direction);
       }
-
-      return new Promise(res => {
+      return new Promise(resolve => {
         let settled = false;
+        let timer;
         const settle = value => {
           if (settled) return;
           settled = true;
-          clearTimeout(t);
+          clearTimeout(timer);
           pending.delete(cancel);
           x.w.onmessage = null;
           x.w.onerror = null;
-          res(value);
+          resolve(value);
+        };
+        const fail = () => {
+          retire(x);
+          settle(null);
         };
         const cancel = () => settle(null);
-        const t = setTimeout(() => settle(null), TIMEOUT_MS);
         pending.add(cancel);
-        x.w.onmessage = ev => {
-          if (!ev.data || ev.data.turn !== state.turn) return;
-          settle(ev.data.move);
+        timer = setTimeout(fail, TIMEOUT_MS);
+        x.w.onmessage = event => {
+          const data = event.data;
+          if (!data || data.type !== 'move' || data.turn !== state.turn) return;
+          settle(typeof data.move === 'string' ? data.move : null);
         };
-        x.w.onerror = () => settle(null);
+        x.w.onerror = fail;
         try {
           x.w.postMessage({ type: 'move', state });
-        } catch (err) {
-          settle(null);
+        } catch {
+          fail();
         }
       });
     }
 
-    async function turn() {
-      await loaded;
-      if (stopped) return [];
-      const moves = {};
-      await Promise.all(workers.map(async (x, i) => {
-        const s = game.snakes[i];
-        if (!s.alive) return;
-        moves[s.id] = await ask(x, i, game.botState(s.id));
-      }));
-      return stopped ? [] : game.step(moves);
+    function turn() {
+      if (inFlight) return inFlight;
+      const task = (async () => {
+        await loaded;
+        if (stopped || (typeof game.finished === 'function' && game.finished())) return [];
+        const moves = Object.create(null);
+        // Build every snapshot before asking any participant.
+        const requests = workers.map((x, i) => {
+          const snake = game.snakes[i];
+          return snake.alive ? { x, id: snake.id, state: game.botState(snake.id) } : null;
+        }).filter(Boolean);
+        await Promise.all(requests.map(async request => {
+          moves[request.id] = await ask(request.x, request.state);
+        }));
+        if (stopped) return [];
+        // Every living request contributes an explicit value, including null fallback.
+        for (const request of requests) {
+          if (!own(moves, request.id)) moves[request.id] = null;
+        }
+        return game.step(moves);
+      })();
+      inFlight = task.finally(() => { inFlight = null; });
+      return inFlight;
     }
 
     return { game, turn, stop, loaded };
