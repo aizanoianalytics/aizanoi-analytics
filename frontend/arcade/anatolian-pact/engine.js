@@ -1,46 +1,24 @@
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.PactEngine = factory();
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  if (typeof module === 'object' && module.exports) {
+    module.exports = factory(typeof PactMapData !== 'undefined' ? PactMapData : globalThis.PactMapData);
+  } else root.PactEngine = factory(root.PactMapData);
+})(typeof globalThis !== 'undefined' ? globalThis : this, function (mapData) {
   'use strict';
 
+  if (!mapData || !Array.isArray(mapData.rows) || !Array.isArray(mapData.provinces)) {
+    throw new Error('Load generated map-data.js before engine.js.');
+  }
   const copy = value => JSON.parse(JSON.stringify(value));
   const ids = value => Object.keys(value).sort();
-  const powers = [
-    { id: 'Phrygia', color: '#e8875b', homes: ['J', 'K', 'Q'], fleet: null },
-    { id: 'Lydia', color: '#ffd84d', homes: ['H', 'O', 'P'], fleet: 'H' },
-    { id: 'Caria', color: '#22d3ee', homes: ['U', 'V', 'W'], fleet: 'U' },
-    { id: 'Bithynia', color: '#c99bff', homes: ['A', 'B', 'C'], fleet: 'A' },
-    { id: 'Galatia', color: '#10c08e', homes: ['D', 'E', 'L'], fleet: 'D' },
-    { id: 'Cilicia', color: '#ff4d4d', homes: ['T', 'Y', 'Z'], fleet: 'Z' }
-  ];
-  const names = [
-    'Thrace', 'Kyzikos', 'Nikomedeia', 'Herakleia', 'Sinope', 'Amaseia', 'Trapezous',
-    'Sardis', 'Pergamon', 'Aizanoi', 'Kotiaion', 'Ankyra', 'Kaisareia', 'Melitene',
-    'Ephesos', 'Laodikeia', 'Synnada', 'Pessinous', 'Tyana', 'Tarsos',
-    'Halikarnassos', 'Patara', 'Xanthos', 'Attaleia', 'Side', 'Issos'
-  ];
-  const seaNames = ['Aegean North', 'Propontis', 'Pontus West', 'Pontus Central',
-    'Pontus East', 'Aegean Central', 'Aegean South', 'Colchian Sea', 'Levantine Sea',
-    'Cilician Sea', 'Carian Sea', 'Lycian Sea', 'Pamphylian Gulf', 'Southern Passage'];
-  const rows = [
-    '~~~~~aabbccccdddddeeeehhhh~~~~',
-    '~~~aaAAAbbbccDDEEEGGGGG~hh~~~~',
-    '~~~aaAACCCCDDDFE~~~GG~~~~~~~~~',
-    '~~~~aaaBBCCC~FFFF~~MMMMNNNNN~~',
-    '~~fffIIBBJJJKKFFLLLMMM~~NNN~~~',
-    '~~ffHIIPPJJJKKLLLLRRMM~~~~~~~~',
-    '~~ffHHHPP~JJKKQQQLRRR~~~~~~~~~',
-    '~ggOOH~PPP~~~KQQSSSRR~~~~~~~~~',
-    '~ggOO~~~P~~~~~QQSS~~~~~~~~~~~~',
-    '~gUUUWW~~~~Y~~~~S~~~~~~~~~~~~~',
-    '~kgUkWWXXXYYYTTTZZZ~~~~~~~~~~~',
-    '~kkkVVV~XmmmjjTTjZZ~ii~~~~~~~~',
-    '~~k~~V~llmmm~jjjjiiii~~~~~~~~~',
-    '~~~~llllnnnnn~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~n~n~~~~~~~~~~~~~~~~~~~'
-  ];
+  const rows = mapData.rows.slice();
   const hexSize = 16;
+  const powers = mapData.powers.map(power => ({
+    id: power.name,
+    color: power.colour,
+    homes: power.homes.slice(),
+    fleet: power.units.find(unit => unit.type === 'fleet')?.at || null
+  }));
+  const metadata = Object.fromEntries(mapData.provinces.map(p => [p.id, p]));
 
   function neighbours(col, row) {
     const side = row & 1 ? 1 : -1;
@@ -54,27 +32,19 @@
 
   const provinces = {};
   const adjacency = {};
-
   rows.forEach((row, y) => Array.from(row).forEach((id, x) => {
     if (id === '~' || id === ' ') return;
+    const data = metadata[id];
+    if (!data) throw new Error('Undefined map province: ' + id);
     if (!provinces[id]) {
-      const land = /^[A-Z]$/.test(id);
-      const home = powers.find(power => power.homes.includes(id));
       provinces[id] = {
-        id,
-        name: land ? names[id.charCodeAt(0) - 65] : seaNames[id.charCodeAt(0) - 97],
-        type: land ? 'land' : 'sea',
-        coastal: false,
-        sc: Boolean(home) || 'IFMRSX'.includes(id),
-        home: home ? home.id : null,
-        hexes: [],
-        centre: [0, 0]
+        id, name: data.name, type: data.type, coastal: false,
+        sc: Boolean(data.sc), home: data.home || null, hexes: [], centre: [0, 0]
       };
       adjacency[id] = [];
     }
     provinces[id].hexes.push([x, y]);
   }));
-
   Object.values(provinces).forEach(province => {
     const adjacent = new Set();
     province.hexes.forEach(([x, y]) => {
@@ -97,16 +67,11 @@
     });
     return Object.freeze(value);
   }
-
   const MAP = freeze({
-    rows,
-    provinces,
-    adjacency,
-    powers,
-    hexSize,
-    neighbours,
-    pixel,
-    rules: 'No convoys. Fleets cross adjoining coasts only when both touch the same sea province.'
+    rows, provinces, adjacency, powers, hexSize, neighbours, pixel,
+    rules: 'No convoys. Armies cannot cross the straits or reach Thrace or Cyprus from the mainland. ' +
+      'Fleets may sail between these land components through adjoining seas. ' +
+      'Fleets cross adjoining coasts only when both touch the same sea province.'
   });
 
   function rng(seed) {
@@ -145,9 +110,7 @@
           order.target : order.targetDest;
         if (canMove(unit, dest) && (dest === order.target || canMove(at[order.target], dest))) {
           normalized = {
-            unit: unit.at,
-            type: 'support',
-            target: order.target,
+            unit: unit.at, type: 'support', target: order.target,
             targetDest: dest === order.target ? 'hold' : dest
           };
         } else valid = false;
@@ -180,7 +143,6 @@
         1 + helpers(order).filter(support => support.power !== excluding).length;
       const incoming = dest => liveMoves.filter(move => move.dest === dest);
       const candidates = {};
-
       ids(provinces).forEach(dest => {
         const attacks = incoming(dest);
         if (!attacks.length) return;
@@ -188,14 +150,12 @@
         const winners = attacks.filter(move => strength(move) === best);
         if (winners.length === 1) candidates[winners[0].unit] = winners[0];
       });
-
       const success = {};
       const visiting = new Set();
 
       function succeeds(move) {
         if (Object.hasOwn(success, move.unit)) return success[move.unit];
         if (!candidates[move.unit]) return false;
-        // A dependency cycle of three or more departures vacates every origin.
         if (visiting.has(move.unit)) return true;
         visiting.add(move.unit);
         const defender = at[move.dest];
@@ -225,8 +185,7 @@
       return { success, dislodged, active, liveMoves, strength };
     }
 
-    let removed = {};
-    let solved;
+    let removed = {}, solved;
     const seen = new Set();
     for (;;) {
       solved = calculate(removed);
@@ -236,7 +195,6 @@
       seen.add(key);
       removed = solved.dislodged;
     }
-
     const standoffs = ids(provinces).filter(dest => {
       const attacks = solved.liveMoves.filter(move => move.dest === dest);
       if (attacks.length < 2) return false;
@@ -247,8 +205,7 @@
     const displaced = units.filter(unit => solved.dislodged[unit.at])
       .map(unit => ({ ...unit, attacker: solved.dislodged[unit.at] }));
     const survivors = units.filter(unit => !solved.dislodged[unit.at]).map(unit => ({
-      ...unit,
-      at: solved.success[unit.at] ? byUnit[unit.at].dest : unit.at
+      ...unit, at: solved.success[unit.at] ? byUnit[unit.at].dest : unit.at
     }));
     const resolution = orders.map(order => ({
       ...order,
@@ -263,7 +220,6 @@
     return adjacency[unit.at].filter(dest => canMove(unit, dest) && dest !== unit.attacker &&
       !standoffs.includes(dest) && !units.some(other => other.at === dest));
   }
-
   function resolveRetreats(units, dislodged, standoffs, choices) {
     const attempts = dislodged.map(unit => {
       const options = retreatOptions(unit, units, standoffs);
@@ -276,14 +232,10 @@
       attempts.filter(other => other.dest === attempt.dest).length === 1);
     return {
       units: units.concat(survivors.map(({ unit, dest }) => ({
-        power: unit.power,
-        type: unit.type,
-        at: dest
+        power: unit.power, type: unit.type, at: dest
       }))),
       events: attempts.map(({ unit, dest }) => ({
-        type: 'retreat',
-        power: unit.power,
-        from: unit.at,
+        type: 'retreat', power: unit.power, from: unit.at,
         to: survivors.some(attempt => attempt.unit === unit) ? dest : null
       }))
     };
@@ -292,46 +244,30 @@
   function create(options) {
     options = options || {};
     const maxYears = Number.isInteger(options.maxYears) && options.maxYears > 0 ? options.maxYears : 12;
-    // A detached setup position makes real-map adjudication fixtures reproducible.
     const setup = options.setup || {};
     let phase = setup.phase || 'negotiate-propose';
     let year = setup.year || 1;
     let season = setup.season || 'Spring';
     let units = copy(setup.units || powers.flatMap(power => power.homes.map(at => ({
-      power: power.id,
-      type: power.fleet === at ? 'fleet' : 'army',
-      at
+      power: power.id, type: power.fleet === at ? 'fleet' : 'army', at
     }))));
     let owners = Object.fromEntries(Object.values(provinces).filter(province => province.sc)
       .map(province => [province.id, province.home]));
     if (setup.owners) owners = { ...owners, ...copy(setup.owners) };
-    let proposals = [];
-    let promises = [];
-    let submissions = {};
-    let dislodged = [];
-    let standoffs = [];
-    let history = [];
-    let pending = null;
-    let final = null;
-    let serial = 0;
+    let proposals = [], promises = [], submissions = {}, dislodged = [], standoffs = [];
+    let history = [], pending = null, final = null, serial = 0;
     const eliminated = [];
     const trust = Object.fromEntries(powers.map(power => [power.id, {
-      promisesMade: 0,
-      kept: 0,
-      broken: 0,
-      brokenPromises: []
+      promisesMade: 0, kept: 0, broken: 0, brokenPromises: []
     }]));
     const known = power => powers.some(item => item.id === power);
     const centres = () => Object.fromEntries(powers.map(power => [
-      power.id,
-      Object.values(owners).filter(owner => owner === power.id).length
+      power.id, Object.values(owners).filter(owner => owner === power.id).length
     ]));
     const living = power => known(power) && !eliminated.includes(power);
-
     function allowed(power, expected) {
       return phase === expected && living(power);
     }
-
     function legalOrders(power) {
       return Object.fromEntries(units.filter(unit => unit.power === power).map(unit => {
         const legal = [{ unit: unit.at, type: 'hold' }];
@@ -343,26 +279,19 @@
           }
           adjacency[target.at].filter(dest => canMove(target, dest) && canMove(unit, dest))
             .forEach(dest => legal.push({
-              unit: unit.at,
-              type: 'support',
-              target: target.at,
-              targetDest: dest
+              unit: unit.at, type: 'support', target: target.at, targetDest: dest
             }));
         });
         return [unit.at, legal];
       }));
     }
-
     function validProposal(power, proposal) {
       if (!proposal || !living(proposal.to) || proposal.to === power) return false;
       const terms = proposal.terms;
       if (!terms || typeof terms !== 'object' || Array.isArray(terms)) return false;
       const fields = {
-        peace: [],
-        alliance: ['target'],
-        dmz: ['province'],
-        support: ['dest', 'unit'],
-        'request-support': ['dest', 'unit']
+        peace: [], alliance: ['target'], dmz: ['province'],
+        support: ['dest', 'unit'], 'request-support': ['dest', 'unit']
       };
       if (!Object.hasOwn(fields, proposal.type) || JSON.stringify(Object.keys(terms).sort()) !==
         JSON.stringify(fields[proposal.type])) return false;
@@ -379,7 +308,6 @@
       const dest = terms.dest === 'hold' ? terms.unit : terms.dest;
       return units.some(unit => unit.power === supporter && canMove(unit, dest) && unit.at !== terms.unit);
     }
-
     function submitProposals(power, list) {
       if (!allowed(power, 'negotiate-propose')) return { ok: false, errors: ['Wrong phase or power'] };
       if (!Array.isArray(list) || list.length > 6) {
@@ -391,7 +319,6 @@
       submissions[power] = list.map(({ to, type, terms }) => ({ to, type, terms: copy(terms) }));
       return { ok: true, errors: [] };
     }
-
     function submitAnswers(power, answers) {
       if (!allowed(power, 'negotiate-answer') || !answers ||
         typeof answers !== 'object' || Array.isArray(answers)) return { ok: false };
@@ -403,19 +330,16 @@
       submissions[power] = copy(answers);
       return { ok: true };
     }
-
     function submitOrders(power, list) {
       if (!allowed(power, 'orders') || !Array.isArray(list)) return { ok: false, normalized: [] };
       const own = units.filter(unit => unit.power === power);
       const normalized = normalize(own.concat(units.filter(unit => unit.power !== power)), list)
         .filter(order => order.power === power);
       submissions[power] = normalized.map(({ power: ignored, valid, ...order }) => ({
-        ...order,
-        _invalid: !valid
+        ...order, _invalid: !valid
       }));
       return { ok: true, normalized: copy(normalized) };
     }
-
     function submitRetreats(power, choices) {
       if (!allowed(power, 'retreats') || !choices ||
         typeof choices !== 'object' || Array.isArray(choices)) return { ok: false };
@@ -425,7 +349,6 @@
       submissions[power] = copy(choices);
       return { ok: true };
     }
-
     function submitBuilds(power, list) {
       if (!allowed(power, 'builds') || !Array.isArray(list)) return { ok: false };
       const delta = centres()[power] - units.filter(unit => unit.power === power).length;
@@ -445,23 +368,19 @@
       submissions[power] = copy(list);
       return { ok: true };
     }
-
     function accept(proposal) {
       let makers = [proposal.from, proposal.to];
       if (proposal.type === 'support') makers = [proposal.from];
       if (proposal.type === 'request-support') makers = [proposal.to];
       makers.forEach(power => {
         promises.push({
-          id: proposal.id,
-          power,
-          partner: power === proposal.from ? proposal.to : proposal.from,
+          id: proposal.id, power, partner: power === proposal.from ? proposal.to : proposal.from,
           type: proposal.type === 'request-support' ? 'support' : proposal.type,
           terms: copy(proposal.terms)
         });
         trust[power].promisesMade++;
       });
     }
-
     function evaluate(orders, before) {
       return promises.map(promise => {
         const own = orders.filter(order => order.power === promise.power);
@@ -484,7 +403,6 @@
         return outcome;
       });
     }
-
     function updateEliminated() {
       const counts = centres();
       powers.forEach(({ id }) => {
@@ -493,7 +411,6 @@
         }
       });
     }
-
     function endGame() {
       const counts = centres();
       updateEliminated();
@@ -503,16 +420,12 @@
       const winners = majority.length ? majority :
         powers.filter(power => counts[power.id] === best).map(power => power.id);
       const ranked = powers.map(power => power.id).sort((a, b) => {
-        const ea = eliminated.indexOf(a);
-        const eb = eliminated.indexOf(b);
+        const ea = eliminated.indexOf(a), eb = eliminated.indexOf(b);
         if (ea >= 0 || eb >= 0) return ea < 0 ? -1 : eb < 0 ? 1 : eb - ea;
         return counts[b] - counts[a] || a.localeCompare(b);
       });
       const placements = ranked.map((power, index) => ({
-        power,
-        rank: index + 1,
-        centres: counts[power],
-        eliminated: eliminated.includes(power)
+        power, rank: index + 1, centres: counts[power], eliminated: eliminated.includes(power)
       }));
       placements.forEach((entry, index) => {
         if (index && !entry.eliminated && !placements[index - 1].eliminated &&
@@ -521,20 +434,15 @@
       final = {
         winner: winners.length === 1 ? winners[0] : null,
         shared: winners.length > 1 ? winners : [],
-        reason: majority.length ? 'majority' : 'years',
-        year,
-        centres: counts,
+        reason: majority.length ? 'majority' : 'years', year, centres: counts,
         trust: Object.fromEntries(powers.map(({ id }) => [id, {
-          made: trust[id].promisesMade,
-          kept: trust[id].kept,
-          broken: trust[id].broken
+          made: trust[id].promisesMade, kept: trust[id].kept, broken: trust[id].broken
         }])),
         placements
       };
       phase = 'over';
       return true;
     }
-
     function nextSeason() {
       history.push(pending);
       history = history.slice(-6);
@@ -549,10 +457,8 @@
         });
         if (!endGame()) phase = 'builds';
       }
-      proposals = [];
-      promises = [];
+      proposals = []; promises = [];
     }
-
     function distance(at, power) {
       const queue = powers.find(item => item.id === power).homes.map(id => [id, 0]);
       const seen = new Set();
@@ -567,17 +473,13 @@
       }
       return Infinity;
     }
-
     function advance() {
       const events = [];
       let resolution = null;
       if (phase === 'over') return { events, resolution };
       if (phase === 'negotiate-propose') {
         powers.forEach(({ id }) => (submissions[id] || []).forEach(proposal => proposals.push({
-          ...proposal,
-          id: 'p' + (++serial),
-          from: id,
-          status: 'pending'
+          ...proposal, id: 'p' + (++serial), from: id, status: 'pending'
         })));
         phase = 'negotiate-answer';
       } else if (phase === 'negotiate-answer') {
@@ -593,29 +495,21 @@
         const battle = adjudicate(units, submitted);
         battle.resolution.forEach(order => {
           if (submitted.some(original => original.unit === order.unit && original._invalid)) {
-            order.valid = false;
-            order.outcome = 'invalid';
+            order.valid = false; order.outcome = 'invalid';
           }
         });
-        units = battle.units;
-        dislodged = battle.dislodged;
-        standoffs = battle.standoffs;
+        units = battle.units; dislodged = battle.dislodged; standoffs = battle.standoffs;
         resolution = battle.resolution;
         const outcomes = evaluate(resolution, before);
         events.push(...outcomes.map(outcome => ({
-          ...outcome,
-          promiseType: outcome.type,
-          type: 'promise'
+          ...outcome, promiseType: outcome.type, type: 'promise'
         })));
         pending = {
-          year,
-          season,
+          year, season,
           orders: Object.fromEntries(powers.map(({ id }) => [
-            id,
-            resolution.filter(order => order.power === id)
+            id, resolution.filter(order => order.power === id)
           ])),
-          resolution: copy(resolution),
-          promises: outcomes
+          resolution: copy(resolution), promises: outcomes
         };
         if (dislodged.length) phase = 'retreats';
         else nextSeason();
@@ -646,56 +540,35 @@
           }
         });
         updateEliminated();
-        year++;
-        season = 'Spring';
-        phase = 'negotiate-propose';
+        year++; season = 'Spring'; phase = 'negotiate-propose';
       }
       submissions = {};
       return { events: copy(events), resolution: copy(resolution) };
     }
-
     function botState(power) {
       return copy({
-        phase,
-        year,
-        season,
-        you: power,
+        phase, year, season, you: power,
         map: { provinces: Object.values(provinces), adjacency },
-        units,
-        owners,
-        centresByPower: centres(),
+        units, owners, centresByPower: centres(),
         inbox: proposals.filter(proposal => proposal.to === power && proposal.status === 'pending'),
         accepted: promises.filter(promise => promise.power === power || promise.partner === power),
-        trust,
-        history,
+        trust, history,
         retreats: dislodged.filter(unit => unit.power === power).map(unit => ({
-          ...unit,
-          options: retreatOptions(unit, units, standoffs)
+          ...unit, options: retreatOptions(unit, units, standoffs)
         })),
         legalOrders: legalOrders(power),
         limits: { maxProposals: 6, timeLimitMs: 2000 }
       });
     }
-
     return {
       get phase() { return phase; },
       get year() { return year; },
       get season() { return season; },
-      units: () => copy(units),
-      owners: () => copy(owners),
-      proposals: () => copy(proposals),
-      submitProposals,
-      submitAnswers,
-      submitOrders,
-      submitRetreats,
-      submitBuilds,
-      advance,
-      botState,
-      legalOrders,
-      finished: () => phase === 'over',
-      result: () => copy(final)
+      units: () => copy(units), owners: () => copy(owners), proposals: () => copy(proposals),
+      submitProposals, submitAnswers, submitOrders, submitRetreats, submitBuilds,
+      advance, botState, legalOrders,
+      finished: () => phase === 'over', result: () => copy(final)
     };
   }
-
   return { MAP, rng, create, canMove, adjudicate, retreatOptions, resolveRetreats };
 });

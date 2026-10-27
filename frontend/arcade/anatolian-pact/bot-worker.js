@@ -1,5 +1,5 @@
 'use strict';
-importScripts('engine.js');
+importScripts('map-data.js', 'engine.js');
 self.module = { exports: {} };
 self.exports = self.module.exports;
 self.window = self;
