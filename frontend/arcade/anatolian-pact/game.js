@@ -665,6 +665,7 @@
     });
     $('ap-start').disabled = false;
     $('ap-random').disabled = false;
+    ticker('Choose who controls each power, then press Start.');
     if (params.get('autostart') === '1') start();
   }
 

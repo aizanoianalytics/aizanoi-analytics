@@ -35,11 +35,12 @@
   map.rows.forEach((row, r) => [...row].forEach((id, c) => {
     if (id !== ' ') cells.push({ id, c, r, xy: point(c, r) });
   }));
+  const pad = size * 1.12;
   const bounds = {
-    left: Math.min(...cells.map(h => h.xy[0])) - size - 8,
-    top: Math.min(...cells.map(h => h.xy[1])) - size - 8,
-    right: Math.max(...cells.map(h => h.xy[0])) + size + 8,
-    bottom: Math.max(...cells.map(h => h.xy[1])) + size + 8
+    left: Math.min(...cells.map(h => h.xy[0])) - pad,
+    top: Math.min(...cells.map(h => h.xy[1])) - pad,
+    right: Math.max(...cells.map(h => h.xy[0])) + pad,
+    bottom: Math.max(...cells.map(h => h.xy[1])) + pad
   };
   bounds.width = bounds.right - bounds.left;
   bounds.height = bounds.bottom - bounds.top;
@@ -58,7 +59,9 @@
     let view = {};
     let transform = { scale: 1, x: 0, y: 0 };
     let destroyed = false;
-    canvas.style.setProperty('--ap-map-ratio', String(bounds.width / bounds.height));
+    const ratio = bounds.width / bounds.height;
+    canvas.style.setProperty('--ap-map-ratio', String(ratio));
+    canvas.style.aspectRatio = String(ratio);
 
     function polygon(x, y) {
       ctx.beginPath();

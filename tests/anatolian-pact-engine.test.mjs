@@ -53,8 +53,8 @@ function tripleWithExtra() {
 
 // These tests use immutable map data and an explicit, detached setup fixture.
 test('ASCII rows, named connected clusters, computed symmetric adjacency and coastlines', () => {
-  assert.equal(rows.length, 22);
-  assert.ok(rows.every(row => row.length === 30 && /^[\x20-\x7e]+$/.test(row)));
+  assert.ok(rows.length >= 12, 'the map needs real height');
+  assert.ok(rows.every(row => row.length === rows[0].length && /^[\x20-\x7e]+$/.test(row)), 'equal-length printable rows');
   for (const province of Object.values(provinces)) {
     assert.ok(province.name);
     assert.ok(province.hexes.length);
@@ -279,12 +279,17 @@ test('retreat options exclude origin of attacker, occupied provinces and standof
 });
 
 test('two retreats to one province are both destroyed; default is first valid id', () => {
-  const displaced = [{ ...unit(a), attacker: b }, { ...unit(c, p[1]), attacker: b }];
-  const target = land.find(id => id !== b && adjacent(a, id) && adjacent(c, id));
-  assert.ok(target);
+  // Find two displaced land units x, y sharing an attacker and one more common neighbour on the current map.
+  let x, y, attacker, target;
+  search: for (const one of land) for (const two of land) for (const by of land) for (const to of land) {
+    if (new Set([one, two, by, to]).size < 4) continue;
+    if (adjacent(one, by) && adjacent(two, by) && adjacent(one, to) && adjacent(two, to)) { [x, y, attacker, target] = [one, two, by, to]; break search; }
+  }
+  assert.ok(target, 'the map must allow two retreats into one province');
+  const displaced = [{ ...unit(x), attacker }, { ...unit(y, p[1]), attacker }];
   const collision = E.resolveRetreats([], displaced, [], {
-    [p[0]]: { [a]: target },
-    [p[1]]: { [c]: target }
+    [p[0]]: { [x]: target },
+    [p[1]]: { [y]: target }
   });
   assert.equal(collision.units.length, 0);
   assert.ok(collision.events.every(event => event.to === null));

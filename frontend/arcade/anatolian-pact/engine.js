@@ -15,37 +15,30 @@
     { id: 'Cilicia', color: '#ff4d4d', homes: ['T', 'Y', 'Z'], fleet: 'Z' }
   ];
   const names = [
-    'Troas', 'Kyzikos', 'Nikomedeia', 'Pontic Coast', 'Sinope', 'Amaseia', 'Trapezous',
+    'Thrace', 'Kyzikos', 'Nikomedeia', 'Herakleia', 'Sinope', 'Amaseia', 'Trapezous',
     'Sardis', 'Pergamon', 'Aizanoi', 'Kotiaion', 'Ankyra', 'Kaisareia', 'Melitene',
     'Ephesos', 'Laodikeia', 'Synnada', 'Pessinous', 'Tyana', 'Tarsos',
-    'Halikarnassos', 'Patara', 'Xanthos', 'Attaleia', 'Side', 'Commagene'
+    'Halikarnassos', 'Patara', 'Xanthos', 'Attaleia', 'Side', 'Issos'
   ];
   const seaNames = ['Aegean North', 'Propontis', 'Pontus West', 'Pontus Central',
-    'Pontus East', 'Ionian Passage', 'Aegean South', 'Colchian Sea', 'Eastern Passage',
+    'Pontus East', 'Aegean Central', 'Aegean South', 'Colchian Sea', 'Levantine Sea',
     'Cilician Sea', 'Carian Sea', 'Lycian Sea', 'Pamphylian Gulf', 'Southern Passage'];
   const rows = [
-    'aaaaaabbbbbbccccccddddddeeeeee',
-    'aaaaaabbbbbbccccccddddddeeeeee',
-    'aaaaaabbbbbbccccccddddddeeeeee',
-    'fffAAABBBCCCDDDEEEFFFGGGhhhhhh',
-    'fffAAABBBCCCDDDEEEFFFGGGhhhhhh',
-    'fffAAABBBCCCDDDEEEFFFGGGhhhhhh',
-    'fffHHHIIIJJJKKKLLLMMMNNNhhhhhh',
-    'fffHHHIIIJJJKKKLLLMMMNNNhhhhhh',
-    'fffHHHIIIJJJKKKLLLMMMNNNhhhhhh',
-    'gggOOOPPPQQQRRRSSSTTTiiiiiiiii',
-    'gggOOOPPPQQQRRRSSSTTTiiiiiiiii',
-    'gggOOOPPPQQQRRRSSSTTTiiiiiiiii',
-    'gggUUUVVVWWWXXXYYYZZZjjjjjjjjj',
-    'gggUUUVVVWWWXXXYYYZZZjjjjjjjjj',
-    'gggUUUVVVWWWXXXYYYZZZjjjjjjjjj',
-    '~~~kkkkkkllllllmmmmmmnnnnnn~~~',
-    '~~~kkkkkkllllllmmmmmmnnnnnn~~~',
-    '~~~kkkkkkllllllmmmmmmnnnnnn~~~',
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '                              '
+    '~~~~~aabbccccdddddeeeehhhh~~~~',
+    '~~~aaAAAbbbccDDEEEGGGGG~hh~~~~',
+    '~~~aaAACCCCDDDFE~~~GG~~~~~~~~~',
+    '~~~~aaaBBCCC~FFFF~~MMMMNNNNN~~',
+    '~~fffIIBBJJJKKFFLLLMMM~~NNN~~~',
+    '~~ffHIIPPJJJKKLLLLRRMM~~~~~~~~',
+    '~~ffHHHPP~JJKKQQQLRRR~~~~~~~~~',
+    '~ggOOH~PPP~~~KQQSSSRR~~~~~~~~~',
+    '~ggOO~~~P~~~~~QQSS~~~~~~~~~~~~',
+    '~gUUUWW~~~~Y~~~~S~~~~~~~~~~~~~',
+    '~kgUkWWXXXYYYTTTZZZ~~~~~~~~~~~',
+    '~kkkVVV~XmmmjjTTjZZ~ii~~~~~~~~',
+    '~~k~~V~llmmm~jjjjiiii~~~~~~~~~',
+    '~~~~llllnnnnn~~~~~~~~~~~~~~~~~',
+    '~~~~~~~~n~n~~~~~~~~~~~~~~~~~~~'
   ];
   const hexSize = 16;
 

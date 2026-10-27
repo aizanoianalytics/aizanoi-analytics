@@ -192,7 +192,7 @@ button:focus-visible, select:focus-visible, a:focus-visible {
 
 .ap-board {
   min-width: 0;
-  align-self: center;
+  align-self: start;
 }
 
 #ap-canvas {
@@ -207,7 +207,9 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   min-width: 0;
   padding: 16px;
   background: #182139;
-  align-self: stretch;
+  align-self: start;
+  max-height: min(80vh, 760px);
+  overflow-y: auto;
 }
 
 .ap-side h2 {
