@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-27-broadcom-anthropic-chip-financing",
+  "title": "Banks assemble $63bn to buy Broadcom chips and lease them to Anthropic",
+  "summary": "Bank of America, Citi and Morgan Stanley are arranging $63bn of financing to buy Broadcom accelerators and networking equipment that will be leased to Anthropic, with Blackstone providing the committed second-lien portion. The hardware sits in a special purpose vehicle, Broadcom is offering residual-value support to senior lenders, and deliveries are due to start in 2027. The structure turns chip supply into a leasing business backed by debt.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "broadcom",
+    "ai-financing"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via WHBL)",
+      "url": "https://whbl.com/2026/10/26/wall-street-banks-blackstone-line-up-63-billion-to-finance-broadcom-chips-for-anthropic",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Central Oregon Daily)",
+      "url": "https://centraloregondaily.com/news/consumer/wall-street-banks-blackstone-line-up-63-billion-to-finance-broadcom-ai-chips-for-anthropic/article_c7c89d30-112d-5cc6-96a0-27f85b7098be.html",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

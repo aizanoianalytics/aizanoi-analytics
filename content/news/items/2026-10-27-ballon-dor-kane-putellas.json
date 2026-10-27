@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-27-ballon-dor-kane-putellas",
+  "title": "Kane ends England's 25-year wait for a Ballon d'Or",
+  "summary": "Harry Kane won the 2026 Ballon d'Or at the London Palladium, becoming the first English winner since Michael Owen in 2001 and only the fifth Englishman to take the prize. The Bayern Munich striker scored 73 goals for club and country last season and finished ahead of Lamine Yamal and Kylian Mbappe. Alexia Putellas collected a third women's award, while Yamal took the Kopa Trophy for the third year running.",
+  "category": "football",
+  "priority": 88,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ballon-dor",
+    "kane",
+    "putellas"
+  ],
+  "sources": [
+    {
+      "publisher": "The Independent",
+      "url": "https://www.the-independent.com/sport/football/ballon-dor-2026-results-winner-live-ceremony-updates-b3073289.html",
+      "publishedAt": "2026-10-26T22:57:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/story/_/id/50289067/ballon-dor-2026-results-full-rankings-all-award-winners",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

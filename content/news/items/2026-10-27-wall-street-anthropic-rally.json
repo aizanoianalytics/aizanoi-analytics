@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-27-wall-street-anthropic-rally",
+  "title": "Wall Street starts earnings week higher as Anthropic filing lifts AI stocks",
+  "summary": "US equities opened the week higher as Anthropic's filing revived the AI trade. The S&P 500 added 0.70 per cent to 7,676.77, the Nasdaq Composite 0.83 per cent to 26,169.38 and the Dow 0.28 per cent to 52,361.58. Chip shares led the advance, though the Philadelphia semiconductor index is still down 12.2 per cent this month. More than a third of S&P 500 companies report this week and the Fed decides on Wednesday.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "equities",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Yahoo Finance)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-futures-edge-oil-100215774.html",
+      "publishedAt": "2026-10-26T20:24:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-27-apple-ipad-mini-a20-pro",
+  "title": "Apple puts a 2nm A20 Pro and an OLED screen into the iPad mini",
+  "summary": "Apple has given the iPad mini its first OLED display: 8.5 inches, 1,200 nits peak brightness and an optional nano-texture finish, inside a 5.4mm body rated IP67 for water and dust. The A20 Pro is built on a 2-nanometer process with neural accelerators in every GPU core, which Apple says lifts AI performance up to 4.5 times. Pre-orders open on 28 October, with units on sale from 6 November.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "ipad",
+    "silicon"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple Newsroom",
+      "url": "https://www.apple.com/newsroom/2026/10/apple-gives-ipad-mini-its-biggest-update-ever/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

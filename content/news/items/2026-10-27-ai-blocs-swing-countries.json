@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-27-ai-blocs-swing-countries",
+  "title": "Swing countries hedge as Washington and Beijing build rival AI blocs",
+  "summary": "The United States' Pax Silica and China's World AI Cooperation Organization are pulling smaller economies into competing technology stacks, the Associated Press reports. Kazakhstan joined both within weeks; Indonesia and Singapore are weighing similar hedges, and Saudi Arabia runs Chinese open models alongside Nvidia hardware. Analysts quoted in the piece say the room to stay neutral is narrowing and that very few countries can build frontier models themselves.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-policy",
+    "china",
+    "standards"
+  ],
+  "sources": [
+    {
+      "publisher": "The Associated Press (via The Asahi Shimbun)",
+      "url": "https://www.asahi.com/ajw/articles/16993758",
+      "publishedAt": "2026-10-26T02:52:00Z"
+    }
+  ],
+  "kind": "daily"
+}

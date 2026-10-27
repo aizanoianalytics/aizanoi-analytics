@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-27-microsoft-voluntary-exit-offer",
+  "title": "Microsoft offers voluntary exits to about 60,000 staff as AI spending climbs",
+  "summary": "Microsoft is offering a voluntary exit package to roughly 60,000 employees, more than a quarter of its workforce, in the United States, Canada, India and the United Kingdom, according to a memo from chief people officer Amy Coleman. Eligibility stops at level 70 and below, several organisations are not taking part, and reports say staff have until early December to decide. The company frames the move as flexibility while it funds heavy AI investment.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "workforce",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft",
+      "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/microsoft-is-offering-buyouts-around-60000-employees-business-insider-reports-2026-10-26/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/26/microsoft-offers-buyouts-to-around-60000-employees-reports-say/",
+      "publishedAt": "2026-10-26T15:58:00Z"
+    }
+  ],
+  "kind": "daily"
+}
