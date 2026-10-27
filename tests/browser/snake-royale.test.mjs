@@ -137,7 +137,7 @@ test('the arcade landing links to the arena and the arena boots from that link',
     await page.goto(`${base}/arcade/?qa=${Date.now()}`, { waitUntil: 'domcontentloaded' });
     const card = page.locator('.card', { hasText: 'AI Snake Royale' });
     await card.waitFor({ state: 'visible', timeout: 20000 });
-    assert.match(await card.textContent(), /Pick two AI-written snake bots/);
+    assert.match(await card.textContent(), /AI-written snake bots fight/);
     await card.locator('a.button', { hasText: 'Fight' }).click({ timeout: 30000 });
     await page.waitForURL('**/arcade/snake-royale/**', { timeout: 30000 });
     await page.waitForFunction(() => typeof window.__SNAKE_ROYALE__ === 'function' && window.__SNAKE_ROYALE__().bots > 0, null, { timeout: 30000 });
