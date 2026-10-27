@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-caller",
+   "name": "Sample Caller",
+   "botName": "Caller",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-caller.js",
+   "bytes": 256,
+   "note": "House sample; not an AI-model entry. Calls or checks and never raises."
+  },
+  {
+   "id": "sample-tight",
+   "name": "Sample Tight",
+   "botName": "Tight",
+   "lab": "Aizanoi sample",
+   "color": "#ffd84d",
+   "file": "bots/sample-tight.js",
+   "bytes": 1914,
+   "note": "House sample; not an AI-model entry. Position-aware preflop selection and made-hand value play."
+  },
+  {
+   "id": "sample-equity",
+   "name": "Sample Equity",
+   "botName": "Equity",
+   "lab": "Aizanoi sample",
+   "color": "#2dd4bf",
+   "file": "bots/sample-equity.js",
+   "bytes": 1534,
+   "note": "House sample; not an AI-model entry. Monte Carlo equity, pot odds, value raises and occasional river bluffs."
+  }
+ ]
+}

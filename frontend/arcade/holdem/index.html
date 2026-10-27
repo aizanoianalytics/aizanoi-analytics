@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Hold'em — Aizanoi Arcade</title>
+  <meta name="description" content="No-limit Texas Hold'em for play chips. Join poker bots written by AI models or watch a browser-only tournament.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f7fafc">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/holdem/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles/landing.css">
+  <link rel="stylesheet" href="holdem.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="AI Hold'em — Aizanoi Arcade">
+  <meta property="og:description" content="Play no-limit Texas Hold'em with AI-written bots, using play chips only.">
+  <meta property="og:url" content="https://aizanoianalytics.com/arcade/holdem/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="AI Hold'em — Aizanoi Arcade">
+  <meta name="twitter:description" content="Play no-limit Texas Hold'em with AI-written bots, using play chips only.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "AI Hold'em — Aizanoi Arcade",
+      "description": "No-limit Texas Hold'em for play chips, played locally with humans and AI-written bots.",
+      "url": "https://aizanoianalytics.com/arcade/holdem/",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "Aizanoi Analytics",
+        "url": "https://aizanoianalytics.com/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="/">
+      <img src="/assets/branding/aizanoi-logo-mark.svg" alt="">
+      <span>Aizanoi Analytics</span>
+    </a>
+    <nav aria-label="Products">
+      <a href="/news/">News</a>
+      <a href="/tv/">TV</a>
+      <a href="/analytics/">Analytics</a>
+      <a href="/worlds/">Aizanoi</a>
+      <a href="/forge/">Forge</a>
+      <a href="/journal/">Journal</a>
+      <a href="/labs/">Labs</a>
+      <a href="/arcade/">Arcade</a>
+    </nav>
+  </header>
+  <section class="hero">
+    <p class="eyebrow">Aizo TV · AI War</p>
+    <h1>AI Hold'em</h1>
+    <p class="lede">No-limit Texas Hold'em for play chips. Sit down with poker bots written by AI models, or let them play each other.</p>
+  </section>
+  <main class="ph" itemscope itemtype="https://schema.org/WebPage">
+    <meta itemprop="name" content="AI Hold'em">
+    <meta itemprop="description" content="Browser-only Texas Hold'em tournaments with play chips.">
+    <link itemprop="url" href="https://aizanoianalytics.com/arcade/holdem/">
+    <div hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+      <meta itemprop="name" content="Aizanoi Analytics">
+      <link itemprop="url" href="https://aizanoianalytics.com/">
+    </div>
+
+    <form id="ph-form" class="ph-picker" aria-label="Choose seats and tournament settings">
+      <fieldset>
+        <legend>Seats · 2–9 players</legend>
+        <div id="ph-seats"></div>
+        <button id="ph-add" type="button" disabled>+ Add seat</button>
+      </fieldset>
+      <div class="ph-options">
+        <label>
+          <span>Starting chips</span>
+          <select id="ph-stack">
+            <option value="5000">5,000</option>
+            <option value="10000" selected>10,000</option>
+            <option value="20000">20,000</option>
+          </select>
+        </label>
+        <label>
+          <span>Speed</span>
+          <select id="ph-speed">
+            <option value="1200">Slow</option>
+            <option value="600" selected>Normal</option>
+            <option value="200">Fast</option>
+            <option value="0">Instant</option>
+          </select>
+        </label>
+        <label>
+          <span>Max hands</span>
+          <select id="ph-hands">
+            <option value="100">100</option>
+            <option value="300" selected>300</option>
+            <option value="1000">1000</option>
+          </select>
+        </label>
+      </div>
+      <div class="ph-buttons">
+        <button id="ph-start" class="button" type="submit" disabled>Start</button>
+        <button id="ph-random" type="button" disabled>Random seats</button>
+      </div>
+    </form>
+
+    <div class="ph-hud" aria-label="Table status">
+      <span id="ph-hand">HAND 0</span>
+      <span id="ph-blinds">BLINDS 50/100</span>
+      <span id="ph-street">READY</span>
+    </div>
+
+    <div class="ph-stage">
+      <div id="ph-table"></div>
+      <aside class="ph-sidebar" aria-label="Tournament information">
+        <h2>Standings</h2>
+        <ol id="ph-standings"></ol>
+        <p id="ph-ticker" role="status" aria-live="polite">Loading bots…</p>
+        <p id="ph-result" role="status" hidden></p>
+        <h2>Table log</h2>
+        <ol id="ph-log" aria-label="Last 30 actions"></ol>
+      </aside>
+    </div>
+
+    <section id="ph-actions" class="ph-actions" aria-label="Your action" hidden>
+      <div class="ph-buttons">
+        <button id="ph-fold" type="button" aria-keyshortcuts="F">Fold</button>
+        <button id="ph-check" type="button" aria-keyshortcuts="C">Check</button>
+        <button id="ph-raise" type="button" aria-keyshortcuts="R">Raise to</button>
+        <label class="ph-amount-label">
+          <span>Total this street</span>
+          <input id="ph-amount" type="number" min="0" max="10000" step="1" value="200" inputmode="numeric">
+        </label>
+      </div>
+      <label class="ph-slider-label">
+        <span>Raise size</span>
+        <input id="ph-slider" type="range" min="200" max="10000" step="100" value="200">
+      </label>
+      <div class="ph-buttons">
+        <button id="ph-half" type="button">½ pot</button>
+        <button id="ph-pot" type="button">Pot</button>
+        <button id="ph-allin" type="button">All-in</button>
+        <small>Shortcuts: F fold · C check/call · R raise</small>
+      </div>
+    </section>
+
+    <div id="ph-pass" class="ph-pass" role="dialog" aria-modal="true" aria-labelledby="ph-pass-name" hidden>
+      <div class="ph-pass-card">
+        <h2 id="ph-pass-name">Pass the device</h2>
+        <p>Only the next player should view the screen. Cards stay hidden until you are ready.</p>
+        <button id="ph-show" type="button">Show my cards</button>
+      </div>
+    </div>
+
+    <p class="ph-note">
+      Play chips only. Two to nine seats; every seat can be human or a bot.
+      Blinds rise every 12 hands. Standard no-limit rules, side pots and split pots apply.
+      At the hand limit, remaining players are ranked by chips.
+      Bots get 1 s per decision; a late or invalid answer checks if possible, otherwise folds, and counts as an error.
+      Human seats share this device. With multiple humans, pass the device before revealing each hand.
+      A single human’s cards stay visible; showdown hands are revealed to everyone.
+      <a href="#ph-roster">See the bot roster</a>.
+    </p>
+    <section id="ph-roster" class="ph-roster" aria-label="All bots">
+      <h2>The bots</h2>
+      <p>These starter bots are house samples, not AI-model entries.</p>
+      <ul id="ph-list"></ul>
+    </section>
+  </main>
+  <footer>
+    <p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p>
+    <nav class="public-identity-links" aria-label="Social and contact">
+      <a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a>
+      <a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:aizanoianalytics@protonmail.com">Email</a>
+    </nav>
+  </footer>
+  <script src="engine.js"></script>
+  <script src="runner.js"></script>
+  <script src="table.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
