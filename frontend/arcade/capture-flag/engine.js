@@ -93,7 +93,6 @@
     for (const team of ['west', 'east']) {
       for (const p of zones[team].home.concat(zones[team].jail)) reserved.add(p.y * w + p.x);
     }
-    // Keep an open crossing and back-edge access; connectivity is checked on every addition.
     const protectedCell = (x, y) => x === 0 || x === w - 1 || y === 0 || y === h - 1 ||
       y === Math.floor(h / 2) || reserved.has(y * w + x);
     const target = Math.floor(w * h * 0.12);
@@ -110,7 +109,6 @@
         const mx = w - 1 - nx;
         const my = h - 1 - ny;
         if (nx >= w - 1 || ny >= h - 1 || protectedCell(nx, ny) || protectedCell(mx, my)) break;
-        // The neutral column has pillars, not wall segments.
         if ((nx === zones.border || mx === zones.border) && random() > 0.12) break;
         proposed.add(ny * w + nx);
         proposed.add(my * w + mx);
@@ -184,9 +182,11 @@
 
     function finish() {
       const tags = team => agents.filter(a => a.team === team).reduce((n, a) => n + a.tags, 0);
-      const decisive = score.west !== score.east ? score.west - score.east : tags('west') - tags('east');
-      const winner = decisive > 0 ? 'west' : decisive < 0 ? 'east' : null;
       const won = score.west >= capturesToWin || score.east >= capturesToWin;
+      const captureDifference = score.west - score.east;
+      // Tag totals are a time-limit tiebreaker, not a simultaneous-goal tiebreaker.
+      const decisive = captureDifference || (won ? 0 : tags('west') - tags('east'));
+      const winner = decisive > 0 ? 'west' : decisive < 0 ? 'east' : null;
       done = true;
       outcome = {
         winner, reason: winner === null ? 'draw' : won ? 'captures' : 'time', tick, score: { ...score },
@@ -199,7 +199,6 @@
       if (done) return [];
       tick++;
       const events = [];
-      // Only agents active at the start of this tick may move or interact this tick.
       const active = agents.filter(living);
       const previous = new Map(active.map(a => [a.id, { x: a.x, y: a.y }]));
       for (const a of agents) {
@@ -218,7 +217,6 @@
         const y = a.y + delta[1];
         if (x >= 0 && x < width && y >= 0 && y < height && grid[y][x] !== '#') Object.assign(a, { x, y });
       }
-      // Resolve tags from a single movement snapshot, never from jail destinations.
       const tagged = [];
       for (const victim of active) {
         if (victim.x === border || ownHalf(victim.team, victim.x)) continue;
@@ -290,7 +288,7 @@
         const you = agents.find(a => a.id === id);
         if (!you) throw new RangeError('Unknown agent id.');
         return clone({
-          tick, maxTicks, width, height, grid, border, you, team: you.team,
+          tick, maxTicks, capturesToWin, width, height, grid, border, you, team: you.team,
           teammates: agents.filter(a => a.team === you.team && a.id !== id),
           enemies: agents.filter(a => a.team !== you.team), flags, zones, score
         });

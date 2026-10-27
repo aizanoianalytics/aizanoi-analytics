@@ -29,7 +29,7 @@ self.onmessage = event => {
 
       const exported = self.module.exports;
       fn = (typeof exported === 'function' && exported) ||
-        (exported && typeof exported.move === 'function' && exported.move) ||
+        (exported && typeof exported.move === 'function' && exported.move.bind(exported)) ||
         (typeof self.move === 'function' && self.move);
 
       if (!fn) throw new Error('Bot does not export move(state)');
