@@ -1,14 +1,15 @@
 # AI Snake Royale
 
-Static page at `/arcade/snake-royale/`: visitor picks two AI-written snake bots and watches them fight. No backend; all code runs in the browser.
+Static page at `/arcade/snake-royale/`: visitor picks two AI-written snake bots and watches them fight, adds more bots for a 19×19 royale (up to 12 snakes), or joins as Player 1/2 from the keyboard (WASD / arrows, on-screen pad on touch). Local play only; no backend, all code runs in the browser.
 
 ## Files
 
 - `engine.js` — pure deterministic rules (Battlesnake-style, 11×11 duel, storm after turn 150). UMD: page, worker, Node tests.
 - `bot-worker.js` — one worker per bot; loads `bots/<id>.js` with `importScripts` (CSP `script-src 'self'`, no eval).
-- `runner.js` — hosts the workers, 400 ms per move, a late/invalid move repeats the last direction.
+- `runner.js` — hosts the workers, 400 ms per move, a late/invalid move repeats the last direction. Human seats (`{ human: true, input }`, ids `player-1`/`player-2`) get no worker; their move is the shared input's current direction.
+- `../shared/arena-input.js` — `window.ArenaInput.create('wasd' | 'arrows')`: keyboard + touch pad direction input shared by the arcade arenas; ignores keys in form fields, prevents scrolling only while enabled.
 - `renderer.js` — shared public Canvas renderer, UMD `window.SnakeArenaRenderer` / Node export. Both this page and the shell use it; no dependencies, DOM styles or remote assets.
-- `game.js`, `snake-royale.css`, `index.html` — picker, canvas, series (single / best of 3 / 5). No inline script or style (CSP).
+- `game.js`, `snake-royale.css`, `index.html` — picker, extra bot seats, Player 1/2 controls, canvas, series (single / best of 3 / 5). More than two snakes = 19×19 royale; humans play at a tick of at least 120 ms after a 3-2-1 countdown. No inline script or style (CSP).
 - `bots.json` + `bots/*.js` — the contestants: original, unedited bot code written by each AI model in the Aizo TV benchmark (test 10, snake-royale). Add a fighter = drop `bots/<id>.js` and add a `bots.json` entry (id, name, lab, color, file).
 
 ## Shared presentation API
