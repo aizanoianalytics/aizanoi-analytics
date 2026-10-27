@@ -19,6 +19,12 @@ const canonicalBase = [
   '/analytics/dashboards/new-hr-collection/recruitment-analytics/',
   '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
  '/arcade/snake-royale/',
+  '/arcade/chess/',
+  '/arcade/maze-chase/',
+  '/arcade/capture-flag/',
+  '/arcade/holdem/',
+  '/arcade/football/',
+  '/arcade/anatolian-pact/',
   '/worlds/aizanoi-225/'
 ];
 const canonical = [
