@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-turtle",
+   "name": "Turtle",
+   "botName": "sample-turtle",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-turtle.js",
+   "bytes": 1779,
+   "note": "Defends its centres and honours peace; not an AI-model entry."
+  },
+  {
+   "id": "sample-expander",
+   "name": "Expander",
+   "botName": "sample-expander",
+   "lab": "Aizanoi sample",
+   "color": "#ffd84d",
+   "file": "bots/sample-expander.js",
+   "bytes": 4381,
+   "note": "Pursues centres with supported attacks and opportunistic deals; not an AI-model entry."
+  },
+  {
+   "id": "sample-schemer",
+   "name": "Schemer",
+   "botName": "sample-schemer",
+   "lab": "Aizanoi sample",
+   "color": "#ff6fb5",
+   "file": "bots/sample-schemer.js",
+   "bytes": 5549,
+   "note": "Builds useful alliances, studies trust and may betray after year four; not an AI-model entry."
+  }
+ ]
+}
