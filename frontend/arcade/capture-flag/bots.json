@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-rusher",
+   "name": "Sample Rusher",
+   "botName": "Rusher",
+   "lab": "Aizanoi sample",
+   "color": "#ff6fb5",
+   "file": "bots/sample-rusher.js",
+   "bytes": 1089,
+   "note": "House sample, not an AI-model entry. Every agent follows a shortest path to the enemy flag, then returns home."
+  },
+  {
+   "id": "sample-guard",
+   "name": "Sample Guard",
+   "botName": "Guard",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-guard.js",
+   "bytes": 1840,
+   "note": "House sample, not an AI-model entry. The lowest-id agent defends the home flag and chases intruders; teammates raid."
+  },
+  {
+   "id": "sample-squad",
+   "name": "Sample Squad",
+   "botName": "Squad",
+   "lab": "Aizanoi sample",
+   "color": "#10c08e",
+   "file": "bots/sample-squad.js",
+   "bytes": 3624,
+   "note": "House sample, not an AI-model entry. Coordinated defense, risk-aware raids, jail rescues, and safer routes for flag carriers."
+  }
+ ]
+}
