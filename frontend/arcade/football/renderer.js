@@ -85,6 +85,60 @@
       };
     }
 
+    function human(item) {
+      return Boolean(item && (item.human === true || item.isHuman === true ||
+        item.type === 'human' || item.kind === 'human' ||
+        item.controller === 'human'));
+    }
+
+    function drawLabels(players, ball, scaleX, scaleY) {
+      const boxes = [];
+      const labels = players.map(({ player, seat, point }) => ({
+        player,
+        seat,
+        point,
+        human: human(seat) || human(player),
+        distance: (point.x - ball.x) ** 2 + (point.y - ball.y) ** 2,
+      }));
+      labels.sort((a, b) => Number(b.human) - Number(a.human) ||
+        a.distance - b.distance);
+
+      context.save();
+      context.font = '11px system-ui, sans-serif';
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+
+      labels.forEach(item => {
+        const { player, seat, point } = item;
+        const label = String(seat && seat.name || player.name || player.id).slice(0, 24);
+        const width = context.measureText(label).width + 12;
+        const height = 18;
+        const left = Math.max(-478, Math.min(478 - width, point.x - width / 2));
+        const top = Math.max(-244, Math.min(244 - height, point.y + 20));
+        const box = {
+          left,
+          right: left + width,
+          top,
+          bottom: top + height,
+        };
+
+        if (!item.human && boxes.some(other => {
+          const dx = Math.max(0, box.left - other.right, other.left - box.right) * scaleX;
+          const dy = Math.max(0, box.top - other.bottom, other.top - box.bottom) * scaleY;
+          return dx * dx + dy * dy <= 40 * 40;
+        })) return;
+
+        boxes.push(box);
+        context.fillStyle = '#0b1224ed';
+        context.beginPath();
+        context.roundRect(left, top, width, height, height / 2);
+        context.fill();
+        context.fillStyle = '#ffffff';
+        context.fillText(label, left + width / 2, top + height / 2);
+      });
+      context.restore();
+    }
+
     function paint() {
       if (!current || destroyed) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 3);
@@ -104,9 +158,11 @@
       const alpha = samePhase ? latestAlpha : 1;
       const oldPlayers = new Map((previous ? previous.players : []).map(player => [player.id, player]));
       const seats = new Map(latestSeats.map(seat => [seat.id, seat]));
+      const players = [];
       for (const player of current.players) {
         const point = position(player, oldPlayers.get(player.id), alpha);
         const seat = seats.get(player.id);
+        players.push({ player, seat, point });
         circle(point.x, point.y + 3, 16, '#00000030');
         circle(point.x, point.y, 15, player.team === 'red' ? RED : BLUE,
           player.kicking ? '#fffbd0' : '#ffffff', player.kicking ? 4 : 2);
@@ -115,16 +171,11 @@
         context.textAlign = 'center';
         context.textBaseline = 'middle';
         context.fillText(seat && seat.shortName || player.id.toUpperCase(), point.x, point.y);
-        context.font = '11px system-ui, sans-serif';
-        context.textBaseline = 'top';
-        context.lineWidth = 3;
-        context.strokeStyle = '#0f1526';
-        const label = String(seat && seat.name || player.name || player.id).slice(0, 24);
-        context.strokeText(label, point.x, point.y + 20);
-        context.fillText(label, point.x, point.y + 20);
       }
 
       const ball = position(current.ball, previous && previous.ball, alpha);
+      drawLabels(players, ball, width / 960, height / 492);
+
       context.save();
       context.shadowColor = '#00000070';
       context.shadowBlur = 7;

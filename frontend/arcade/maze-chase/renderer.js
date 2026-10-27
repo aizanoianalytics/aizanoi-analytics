@@ -74,25 +74,97 @@
       ctx.fill();
     }
 
+    function wallOutline(cell, offsetX, offsetY) {
+      const edges = [];
+      const outgoing = new Map();
+      const wall = (x, y) => Boolean(current.grid[y] && current.grid[y][x] === '#');
+
+      function edge(x, y, nextX, nextY, direction) {
+        const segment = { x, y, nextX, nextY, direction, used: false };
+        const key = `${x},${y}`;
+        if (!outgoing.has(key)) outgoing.set(key, []);
+        outgoing.get(key).push(segment);
+        edges.push(segment);
+      }
+
+      ctx.fillStyle = '#101a30';
+      current.grid.forEach((row, y) => {
+        for (let x = 0; x < row.length; x++) {
+          if (row[x] !== '#') continue;
+          ctx.fillRect(offsetX + x * cell, offsetY + y * cell, cell, cell);
+          if (!wall(x, y - 1)) edge(x, y, x + 1, y, 0);
+          if (!wall(x + 1, y)) edge(x + 1, y, x + 1, y + 1, 1);
+          if (!wall(x, y + 1)) edge(x + 1, y + 1, x, y + 1, 2);
+          if (!wall(x - 1, y)) edge(x, y + 1, x, y, 3);
+        }
+      });
+
+      ctx.save();
+      ctx.beginPath();
+
+      for (const first of edges) {
+        if (first.used) continue;
+        const vertices = [];
+        let segment = first;
+
+        while (segment && !segment.used) {
+          segment.used = true;
+          vertices.push([segment.x, segment.y]);
+          if (segment.nextX === first.x && segment.nextY === first.y) break;
+          const candidates = outgoing.get(`${segment.nextX},${segment.nextY}`) || [];
+          const direction = segment.direction;
+          segment = [1, 0, 3, 2].map(turn => candidates.find(candidate =>
+            !candidate.used && candidate.direction === (direction + turn) % 4
+          )).find(Boolean);
+        }
+
+        if (vertices.length < 3) continue;
+
+        const corners = vertices.map((vertex, index) => {
+          const before = vertices[(index + vertices.length - 1) % vertices.length];
+          const after = vertices[(index + 1) % vertices.length];
+          const radius = 0.16;
+          return {
+            x: offsetX + vertex[0] * cell,
+            y: offsetY + vertex[1] * cell,
+            entryX: offsetX + (vertex[0] + (before[0] - vertex[0]) * radius) * cell,
+            entryY: offsetY + (vertex[1] + (before[1] - vertex[1]) * radius) * cell,
+            exitX: offsetX + (vertex[0] + (after[0] - vertex[0]) * radius) * cell,
+            exitY: offsetY + (vertex[1] + (after[1] - vertex[1]) * radius) * cell,
+          };
+        });
+
+        ctx.moveTo(corners[0].entryX, corners[0].entryY);
+        corners.forEach(corner => {
+          ctx.lineTo(corner.entryX, corner.entryY);
+          ctx.quadraticCurveTo(corner.x, corner.y, corner.exitX, corner.exitY);
+        });
+        ctx.closePath();
+      }
+
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#3b6cff';
+      ctx.lineWidth = Math.max(2, cell * 0.11);
+      ctx.shadowColor = '#3b6cff';
+      ctx.shadowBlur = cell * 0.32;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = '#8fb0ff';
+      ctx.lineWidth = Math.max(0.75, cell * 0.035);
+      ctx.globalAlpha = 0.6;
+      ctx.stroke();
+      ctx.restore();
+    }
+
     function maze(cell, offsetX, offsetY, time) {
+      wallOutline(cell, offsetX, offsetY);
       current.grid.forEach((row, y) => {
         for (let x = 0; x < row.length; x++) {
           const tile = row[x];
           const px = offsetX + x * cell;
           const py = offsetY + y * cell;
-          if (tile === '#') {
-            ctx.strokeStyle = '#3b6cff';
-            ctx.fillStyle = '#111f40';
-            ctx.lineWidth = Math.max(1, cell * 0.065);
-            ctx.shadowColor = '#3b6cff';
-            ctx.shadowBlur = cell * 0.2;
-            ctx.beginPath();
-            ctx.roundRect(px + cell * 0.12, py + cell * 0.12,
-              cell * 0.76, cell * 0.76, cell * 0.2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-          } else if (tile === '.') {
+          if (tile === '.') {
             disc(px + cell / 2, py + cell / 2, cell * 0.075, '#ffe8b0');
           } else if (tile === 'o') {
             const pulse = reduced.matches ? 1 : 0.87 + Math.sin(time / 180) * 0.13;
@@ -179,18 +251,35 @@
       });
     }
 
-    function agentLabel(agent, cell) {
+    function human(agent) {
+      return agent.human === true || agent.isHuman === true ||
+        agent.type === 'human' || agent.kind === 'human' ||
+        agent.controller === 'human';
+    }
+
+    function agentLabel(agent, cell, x, y, boxes) {
       const text = String(agent.name || agent.id).slice(0, 28);
       ctx.font = `600 ${Math.max(7, cell * 0.3)}px system-ui, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       const width = Math.min(cell * 3.8, ctx.measureText(text).width + cell * 0.25);
+      const box = {
+        left: x - width / 2,
+        right: x + width / 2,
+        top: y + cell * 0.4,
+        bottom: y + cell * 0.8,
+      };
+      if (!human(agent) && boxes.some(other =>
+        box.left < other.right && box.right > other.left &&
+        box.top < other.bottom && box.bottom > other.top
+      )) return;
+      boxes.push(box);
       ctx.fillStyle = '#0f1526';
       ctx.globalAlpha = 0.9;
-      ctx.fillRect(-width / 2, cell * 0.4, width, cell * 0.4);
+      ctx.fillRect(box.left, box.top, width, cell * 0.4);
       ctx.globalAlpha = 1;
       ctx.fillStyle = '#f4f6fb';
-      ctx.fillText(text, 0, cell * 0.61, width - cell * 0.12);
+      ctx.fillText(text, x, y + cell * 0.61, width - cell * 0.12);
     }
 
     function draw(time) {
@@ -209,20 +298,33 @@
       const progress = duration ? Math.min(1, Math.max(0, (time - started) / duration)) : 1;
       maze(cell, offsetX, offsetY, time);
 
+      const visible = [];
       current.agents.forEach(agent => {
         if (!agent.alive || agent.respawnIn > 0) return;
         const [x, y] = position(agent, progress);
+        const px = offsetX + (x + 0.5) * cell;
+        const py = offsetY + (y + 0.5) * cell;
         const color = colors[agent.id] || '#ffd84d';
+        visible.push({ agent, x: px, y: py });
         ctx.save();
-        ctx.translate(offsetX + (x + 0.5) * cell, offsetY + (y + 0.5) * cell);
+        ctx.translate(px, py);
         ctx.shadowColor = color;
         ctx.shadowBlur = cell * 0.4;
         if (agent.role === 'runner') runner(agent, cell, time, color);
         else ghost(agent, cell, time, color);
-        ctx.shadowBlur = 0;
-        agentLabel(agent, cell);
         ctx.restore();
       });
+
+      const boxes = [];
+      ctx.save();
+      ctx.shadowBlur = 0;
+      visible.filter(item => human(item.agent)).forEach(item => {
+        agentLabel(item.agent, cell, item.x, item.y, boxes);
+      });
+      visible.filter(item => !human(item.agent)).forEach(item => {
+        agentLabel(item.agent, cell, item.x, item.y, boxes);
+      });
+      ctx.restore();
 
       const moving = !reduced.matches &&
         (progress < 1 || current.power || current.agents.some(agent =>

@@ -140,12 +140,24 @@
       context.fillStyle = '#0f1526';
       context.fillRect(0, 0, width, height);
 
-      context.globalAlpha = 0.1;
+      context.save();
+      context.globalAlpha = 0.16;
       context.fillStyle = color('west');
       context.fillRect(0, 0, border, height);
       context.fillStyle = color('east');
       context.fillRect(border + 1, 0, width - border - 1, height);
-      context.globalAlpha = 1;
+      context.restore();
+
+      context.save();
+      const shade = context.createLinearGradient(0, 0, 0, height);
+      shade.addColorStop(0, 'rgba(15, 21, 38, 0.48)');
+      shade.addColorStop(0.35, 'rgba(15, 21, 38, 0)');
+      shade.addColorStop(0.65, 'rgba(15, 21, 38, 0)');
+      shade.addColorStop(1, 'rgba(15, 21, 38, 0.48)');
+      context.fillStyle = shade;
+      context.fillRect(0, 0, border, height);
+      context.fillRect(border + 1, 0, width - border - 1, height);
+      context.restore();
 
       context.strokeStyle = '#243047';
       context.lineWidth = 0.015;
@@ -161,26 +173,37 @@
       }
       context.stroke();
 
-      context.strokeStyle = '#a6b2c9';
-      context.lineWidth = 0.045;
-      context.setLineDash([0.22, 0.24]);
+      context.save();
+      context.strokeStyle = '#c7d9ff';
+      context.lineWidth = 0.055;
+      context.lineCap = 'round';
+      context.shadowColor = '#8fb0ff';
+      context.shadowBlur = 9 * dpr;
+      context.setLineDash([0.28, 0.25]);
       context.beginPath();
       context.moveTo(border + 0.5, 0);
       context.lineTo(border + 0.5, height);
       context.stroke();
-      context.setLineDash([]);
+      context.restore();
 
-      context.fillStyle = '#2a3550';
-      context.shadowColor = '#536789';
-      context.shadowBlur = 5 * dpr;
-
+      context.save();
+      const pixelY = height / cssHeight;
       snapshot.grid.forEach((row, y) => {
         for (let x = 0; x < row.length; x++) {
-          if (row[x] === '#') context.fillRect(x + 0.07, y + 0.07, 0.86, 0.86);
+          if (row[x] !== '#') continue;
+          context.fillStyle = '#33415f';
+          context.shadowColor = '#00000080';
+          context.shadowBlur = 5 * dpr;
+          context.shadowOffsetY = 2 * dpr;
+          context.fillRect(x + 0.07, y + 0.07, 0.86, 0.86);
+          context.shadowBlur = 0;
+          context.shadowOffsetY = 0;
+          context.fillStyle = '#4a5c82';
+          context.fillRect(x + 0.07, y + 0.07, 0.86, pixelY);
         }
       });
+      context.restore();
 
-      context.shadowBlur = 0;
       drawZones();
     }
 
@@ -208,6 +231,25 @@
       context.restore();
     }
 
+    function drawFlagStands() {
+      for (const team of ['west', 'east']) {
+        const home = bounds(snapshot.zones[team].home);
+        if (!home) continue;
+        context.save();
+        context.strokeStyle = color(team);
+        context.fillStyle = '#0f1526';
+        context.shadowColor = color(team);
+        context.shadowBlur = 10 * dpr;
+        context.lineWidth = 0.06;
+        context.beginPath();
+        context.arc(home.x + home.width / 2, home.y + home.height / 2,
+          0.43, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+        context.restore();
+      }
+    }
+
     function drawFlags(agents) {
       for (const team of ['west', 'east']) {
         const flag = snapshot.flags[team];
@@ -224,32 +266,42 @@
     }
 
     function drawAgents(agents, now) {
+      const scaleX = cssWidth / snapshot.width;
+      const scaleY = cssHeight / snapshot.height;
+      const labels = [];
+
       agents.forEach(agent => {
         if (agent.respawnIn > 0 && !agent.jailed) return;
 
         const x = agent.x + 0.5;
         const y = agent.y + 0.5;
-        const tint = color(agent.team);
+        const tint = agent.jailed ? '#7b8599' : color(agent.team);
 
         context.save();
-        context.globalAlpha = agent.jailed ? 0.35 : 1;
         context.fillStyle = tint;
         context.shadowColor = tint;
         context.shadowBlur = agent.jailed ? 0 : 10 * dpr;
 
         context.beginPath();
-        context.arc(x, y, 0.31, 0, Math.PI * 2);
+        context.arc(x, y, 0.42, 0, Math.PI * 2);
         context.fill();
-        context.shadowBlur = 0;
+        context.restore();
 
-        context.strokeStyle = '#f4f7ff';
-        context.lineWidth = 0.035;
+        context.save();
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+        context.strokeStyle = agent.jailed ? '#bac2d0' : '#ffffff';
+        context.lineWidth = 2;
+        context.beginPath();
+        context.ellipse(x * scaleX, y * scaleY,
+          0.42 * scaleX, 0.42 * scaleY, 0, 0, Math.PI * 2);
         context.stroke();
+        context.restore();
 
+        context.save();
         if (agent.carrying) {
           const radius = reduced.matches
-            ? 0.43
-            : 0.43 + Math.sin(now / 180) * 0.055;
+            ? 0.54
+            : 0.54 + Math.sin(now / 180) * 0.055;
 
           context.strokeStyle = tint;
           context.lineWidth = 0.06;
@@ -258,13 +310,57 @@
           context.stroke();
         }
 
-        context.fillStyle = '#08111f';
-        context.font = 'bold 0.25px system-ui, sans-serif';
-        context.textAlign = 'center';
-        context.textBaseline = 'middle';
-        context.fillText(initials(agent.name, agent.id), x, y, 0.52);
+        if (agent.jailed) {
+          context.strokeStyle = '#e2e7ef';
+          context.lineWidth = 0.045;
+          context.lineCap = 'round';
+          context.beginPath();
+          context.arc(x, y - 0.065, 0.11, Math.PI, 0);
+          context.lineTo(x + 0.11, y + 0.025);
+          context.moveTo(x - 0.11, y - 0.065);
+          context.lineTo(x - 0.11, y + 0.025);
+          context.stroke();
+          context.fillStyle = '#263044';
+          context.beginPath();
+          context.roundRect(x - 0.17, y, 0.34, 0.24, 0.045);
+          context.fill();
+          context.fillStyle = '#e2e7ef';
+          context.fillRect(x - 0.02, y + 0.07, 0.04, 0.09);
+        } else {
+          context.fillStyle = '#08111f';
+          context.font = 'bold 0.25px system-ui, sans-serif';
+          context.textAlign = 'center';
+          context.textBaseline = 'middle';
+          context.fillText(initials(agent.name, agent.id), x, y, 0.6);
+        }
         context.restore();
+        labels.push({ agent, x, y });
       });
+
+      context.save();
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const fontSize = Math.max(8, Math.min(12, Math.min(scaleX, scaleY) * 0.3));
+      context.font = `600 ${fontSize}px system-ui, sans-serif`;
+      context.textAlign = 'center';
+      context.textBaseline = 'middle';
+
+      labels.forEach(({ agent, x, y }) => {
+        const text = String(agent.name || agent.id).slice(0, 28);
+        const maxWidth = Math.max(20, Math.min(cssWidth - 8, scaleX * 3.8));
+        const width = Math.min(maxWidth, context.measureText(text).width + 10);
+        const height = fontSize + 6;
+        const px = Math.max(width / 2 + 2,
+          Math.min(cssWidth - width / 2 - 2, x * scaleX));
+        const py = Math.max(2, Math.min(cssHeight - height - 2,
+          (y + 0.48) * scaleY + 2));
+        context.fillStyle = '#0b1224ed';
+        context.beginPath();
+        context.roundRect(px - width / 2, py, width, height, height / 2);
+        context.fill();
+        context.fillStyle = agent.jailed ? '#bcc5d4' : '#f4f7ff';
+        context.fillText(text, px, py + height / 2, width - 8);
+      });
+      context.restore();
     }
 
     function draw(now) {
@@ -285,6 +381,7 @@
 
       const agents = positions(now);
       drawField();
+      drawFlagStands();
       drawAgents(agents, now);
       drawFlags(agents);
 
