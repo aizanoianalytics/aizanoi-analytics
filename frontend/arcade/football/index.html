@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Football — Aizanoi Arcade</title>
+  <meta name="description" content="Physics football with AI-written players. Build two teams of bots, or grab a keyboard and play against them.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f7fafc">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/football/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles/landing.css">
+  <link rel="stylesheet" href="football.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="AI Football — Aizanoi Arcade">
+  <meta property="og:description" content="Build two teams of AI-written players, or play against them with your keyboard.">
+  <meta property="og:url" content="https://aizanoianalytics.com/arcade/football/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="AI Football — Aizanoi Arcade">
+  <meta name="twitter:description" content="Build two teams of AI-written players, or play against them with your keyboard.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AI Football",
+    "description": "Physics football with AI-written players. Build two teams of bots, or grab a keyboard and play against them.",
+    "url": "https://aizanoianalytics.com/arcade/football/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Aizanoi Analytics",
+      "url": "https://aizanoianalytics.com/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="/"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span>Aizanoi Analytics</span></a>
+    <nav aria-label="Products">
+      <a href="/news/">News</a>
+      <a href="/tv/">TV</a>
+      <a href="/analytics/">Analytics</a>
+      <a href="/worlds/">Aizanoi</a>
+      <a href="/forge/">Forge</a>
+      <a href="/journal/">Journal</a>
+      <a href="/labs/">Labs</a>
+      <a href="/arcade/">Arcade</a>
+    </nav>
+  </header>
+  <section class="hero">
+    <p class="eyebrow">Aizo TV · AI War</p>
+    <h1>AI Football</h1>
+    <p class="lede">Physics football with AI-written players. Build two teams of bots, or grab a keyboard and play against them.</p>
+  </section>
+  <main class="fb">
+    <form id="fb-form" class="fb-picker" aria-label="Build your teams">
+      <div class="fb-teams">
+        <fieldset class="fb-team fb-red">
+          <legend id="fb-red-label">Red</legend>
+          <div id="fb-red"></div>
+          <button type="button" id="fb-add-red" class="button secondary" disabled>+ Add Red player</button>
+        </fieldset>
+        <fieldset class="fb-team fb-blue">
+          <legend id="fb-blue-label">Blue</legend>
+          <div id="fb-blue"></div>
+          <button type="button" id="fb-add-blue" class="button secondary" disabled>+ Add Blue player</button>
+        </fieldset>
+      </div>
+      <div class="fb-options">
+        <label>
+          <span>Team size</span>
+          <select id="fb-size">
+            <option value="1">1v1</option>
+            <option value="2">2v2</option>
+            <option value="3">3v3</option>
+            <option value="4">4v4</option>
+          </select>
+        </label>
+        <label>
+          <span>Match time</span>
+          <select id="fb-time">
+            <option value="60">1 minute</option>
+            <option value="120" selected>2 minutes</option>
+            <option value="180">3 minutes</option>
+            <option value="300">5 minutes</option>
+          </select>
+        </label>
+        <label>
+          <span>Score limit</span>
+          <select id="fb-limit">
+            <option value="3">3 goals</option>
+            <option value="5">5 goals</option>
+            <option value="10">10 goals</option>
+            <option value="0">None</option>
+          </select>
+        </label>
+        <label>
+          <span>Speed</span>
+          <select id="fb-speed">
+            <option value="1">Real time</option>
+            <option value="2">2x</option>
+            <option value="4">4x</option>
+            <option value="max">Max</option>
+          </select>
+        </label>
+        <label>
+          <span>Series</span>
+          <select id="fb-series">
+            <option value="1">1 match</option>
+            <option value="3">3 matches · swap sides</option>
+            <option value="5">5 matches · swap sides</option>
+          </select>
+        </label>
+      </div>
+      <div class="fb-actions">
+        <button type="submit" id="fb-start" class="button" disabled>Kick off</button>
+        <button type="button" id="fb-pause" class="button secondary" disabled>Pause</button>
+        <button type="button" id="fb-random" class="button secondary" disabled>Random teams</button>
+      </div>
+    </form>
+    <div class="fb-hud" aria-label="Match status">
+      <div id="fb-score" aria-label="Score"><span id="fb-red-score">RED 0</span><span> – </span><span id="fb-blue-score">0 BLUE</span></div>
+      <time id="fb-clock" aria-label="Time remaining">2:00</time>
+    </div>
+    <div class="fb-stage">
+      <div class="fb-board">
+        <canvas id="fb-canvas" width="900" height="460" role="img" aria-label="Football pitch with Red and Blue players and a white ball">Your browser needs canvas support to display the match.</canvas>
+        <div id="fb-countdown" class="fb-countdown" aria-live="assertive" hidden></div>
+      </div>
+      <aside class="fb-side-panel" aria-label="Players and match updates">
+        <div id="fb-cards"></div>
+        <p id="fb-ticker" class="fb-ticker" role="status">Loading players…</p>
+        <p id="fb-result" class="fb-result" role="status" hidden></p>
+        <p id="fb-series-tally" class="fb-series-tally" role="status"></p>
+      </aside>
+    </div>
+    <div id="fb-touch" class="fb-touch" role="group" aria-label="Player 1 touch controls" hidden>
+      <button type="button" id="fb-stick" aria-label="Drag to move Player 1" disabled><span aria-hidden="true"></span></button>
+      <button type="button" id="fb-kick" disabled>Kick</button>
+    </div>
+    <p class="fb-note">
+      Rules: one to four players per team push and kick the ball into the opposing goal.
+      Player 1: WASD to move, Space to kick. Player 2: arrow keys to move, Enter or Slash to kick.
+      Hold two movement keys for diagonal movement. Press P to pause or resume.
+      Player 1 can use the joystick and Kick button on touch devices.
+      Hold kick to kick again after the cooldown; movement is slower while kicking.
+      The conceding team takes the next kickoff, after a short goal celebration.
+      Bots decide 20 times a second with 50 ms each, in separate workers.
+      Late or invalid decisions keep the previous action; an unresponsive worker is stopped.
+      Human matches always run in real time. Series play the selected number of matches and swap sides each match.
+      Live contact counters are provisional; final counters come from the engine.
+      <a href="#fb-roster">Meet the players</a>.
+    </p>
+    <section id="fb-roster" class="fb-roster" aria-label="Available bots">
+      <h2>The players</h2>
+      <ul id="fb-list"></ul>
+    </section>
+  </main>
+  <footer>
+    <p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p>
+    <nav class="public-identity-links" aria-label="Social and contact">
+      <a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a>
+      <a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:aizanoianalytics@protonmail.com">Email</a>
+    </nav>
+  </footer>
+  <script src="engine.js"></script>
+  <script src="runner.js"></script>
+  <script src="renderer.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

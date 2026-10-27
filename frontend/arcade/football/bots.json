@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-chaser",
+   "name": "Sample Chaser",
+   "botName": "Chaser",
+   "lab": "Aizanoi sample",
+   "color": "#ffd84d",
+   "file": "bots/sample-chaser.js",
+   "bytes": 569,
+   "note": "Reference chaser; not an AI-model entry."
+  },
+  {
+   "id": "sample-striker",
+   "name": "Sample Striker",
+   "botName": "Striker",
+   "lab": "Aizanoi sample",
+   "color": "#ff6fb5",
+   "file": "bots/sample-striker.js",
+   "bytes": 1887,
+   "note": "Reference team striker; not an AI-model entry."
+  },
+  {
+   "id": "sample-keeper",
+   "name": "Sample Keeper",
+   "botName": "Keeper",
+   "lab": "Aizanoi sample",
+   "color": "#22d3ee",
+   "file": "bots/sample-keeper.js",
+   "bytes": 2540,
+   "note": "Reference goalkeeper; not an AI-model entry."
+  }
+ ]
+}
