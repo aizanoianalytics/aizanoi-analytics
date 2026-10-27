@@ -9,7 +9,8 @@
     throw new Error('Load generated map-data.js before engine.js.');
   }
   const copy = value => JSON.parse(JSON.stringify(value));
-  const ids = value => Object.keys(value).sort();
+  const compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+  const ids = value => Object.keys(value).sort(compare);
   const rows = mapData.rows.slice();
   const hexSize = 16;
   const powers = mapData.powers.map(power => ({
@@ -56,7 +57,7 @@
         if (other && other !== province.id && provinces[other]) adjacent.add(other);
       });
     });
-    adjacency[province.id] = Array.from(adjacent).sort();
+    adjacency[province.id] = Array.from(adjacent).sort(compare);
     province.coastal = province.type === 'land' &&
       adjacency[province.id].some(id => provinces[id].type === 'sea');
   });
@@ -106,12 +107,12 @@
       if (order && order.type === 'move' && canMove(unit, order.dest)) {
         normalized = { unit: unit.at, type: 'move', dest: order.dest };
       } else if (order && order.type === 'support' && at[order.target] && order.target !== unit.at) {
-        const dest = order.targetDest === 'hold' || order.targetDest === undefined ?
-          order.target : order.targetDest;
-        if (canMove(unit, dest) && (dest === order.target || canMove(at[order.target], dest))) {
+        const holding = order.targetDest === 'hold' || order.targetDest === undefined;
+        const dest = holding ? order.target : order.targetDest;
+        if (canMove(unit, dest) && (holding || canMove(at[order.target], dest))) {
           normalized = {
             unit: unit.at, type: 'support', target: order.target,
-            targetDest: dest === order.target ? 'hold' : dest
+            targetDest: holding ? 'hold' : dest
           };
         } else valid = false;
       } else if (order && order.type !== 'hold') valid = false;
@@ -135,9 +136,10 @@
 
     function calculate(removed) {
       const liveMoves = moves.filter(move => !removed[move.unit] || removed[move.unit] !== move.dest);
-      const active = supports.filter(support => !removed[support.unit] && !liveMoves.some(move =>
+      const isCut = support => liveMoves.some(move =>
         move.power !== support.power && move.dest === support.unit &&
-        move.unit !== (support.targetDest === 'hold' ? support.target : support.targetDest)));
+        move.unit !== (support.targetDest === 'hold' ? support.target : support.targetDest));
+      const active = supports.filter(support => !removed[support.unit] && !isCut(support));
       const helpers = order => active.filter(support => support.target === order.unit);
       const strength = (order, excluding) =>
         1 + helpers(order).filter(support => support.power !== excluding).length;
@@ -182,7 +184,7 @@
       moves.filter(move => success[move.unit]).forEach(move => {
         if (at[move.dest] && !success[move.dest]) dislodged[move.dest] = move.unit;
       });
-      return { success, dislodged, active, liveMoves, strength };
+      return { success, dislodged, active, liveMoves, strength, isCut };
     }
 
     let removed = {}, solved;
@@ -209,9 +211,10 @@
     }));
     const resolution = orders.map(order => ({
       ...order,
+      ...(order.type === 'support' ? { effective: solved.active.includes(order) } : {}),
       outcome: !order.valid ? 'invalid' : solved.dislodged[order.unit] ? 'dislodged' :
         order.type === 'move' ? solved.success[order.unit] ? 'success' : 'bounce' :
-          order.type === 'support' && !solved.active.includes(order) ? 'cut' : 'success'
+          order.type === 'support' && solved.isCut(order) ? 'cut' : 'success'
     }));
     return { units: survivors, dislodged: displaced, standoffs, resolution };
   }
@@ -220,6 +223,7 @@
     return adjacency[unit.at].filter(dest => canMove(unit, dest) && dest !== unit.attacker &&
       !standoffs.includes(dest) && !units.some(other => other.at === dest));
   }
+
   function resolveRetreats(units, dislodged, standoffs, choices) {
     const attempts = dislodged.map(unit => {
       const options = retreatOptions(unit, units, standoffs);
@@ -243,6 +247,7 @@
 
   function create(options) {
     options = options || {};
+    const seed = Number(options.seed) >>> 0;
     const maxYears = Number.isInteger(options.maxYears) && options.maxYears > 0 ? options.maxYears : 12;
     const setup = options.setup || {};
     let phase = setup.phase || 'negotiate-propose';
@@ -257,6 +262,8 @@
     let proposals = [], promises = [], submissions = {}, dislodged = [], standoffs = [];
     let history = [], pending = null, final = null, serial = 0;
     const eliminated = [];
+    const eliminationCohort = {};
+    let cohort = 0;
     const trust = Object.fromEntries(powers.map(power => [power.id, {
       promisesMade: 0, kept: 0, broken: 0, brokenPromises: []
     }]));
@@ -265,9 +272,8 @@
       power.id, Object.values(owners).filter(owner => owner === power.id).length
     ]));
     const living = power => known(power) && !eliminated.includes(power);
-    function allowed(power, expected) {
-      return phase === expected && living(power);
-    }
+    const allowed = (power, expected) => phase === expected && living(power);
+
     function legalOrders(power) {
       return Object.fromEntries(units.filter(unit => unit.power === power).map(unit => {
         const legal = [{ unit: unit.at, type: 'hold' }];
@@ -285,6 +291,7 @@
         return [unit.at, legal];
       }));
     }
+
     function validProposal(power, proposal) {
       if (!proposal || !living(proposal.to) || proposal.to === power) return false;
       const terms = proposal.terms;
@@ -300,7 +307,6 @@
         return living(terms.target) && ![power, proposal.to].includes(terms.target);
       }
       if (proposal.type === 'dmz') return Object.hasOwn(provinces, terms.province);
-      if (!['support', 'request-support'].includes(proposal.type)) return false;
       const beneficiary = proposal.type === 'support' ? proposal.to : power;
       const supporter = proposal.type === 'support' ? power : proposal.to;
       const target = units.find(unit => unit.at === terms.unit && unit.power === beneficiary);
@@ -308,6 +314,7 @@
       const dest = terms.dest === 'hold' ? terms.unit : terms.dest;
       return units.some(unit => unit.power === supporter && canMove(unit, dest) && unit.at !== terms.unit);
     }
+
     function submitProposals(power, list) {
       if (!allowed(power, 'negotiate-propose')) return { ok: false, errors: ['Wrong phase or power'] };
       if (!Array.isArray(list) || list.length > 6) {
@@ -319,6 +326,7 @@
       submissions[power] = list.map(({ to, type, terms }) => ({ to, type, terms: copy(terms) }));
       return { ok: true, errors: [] };
     }
+
     function submitAnswers(power, answers) {
       if (!allowed(power, 'negotiate-answer') || !answers ||
         typeof answers !== 'object' || Array.isArray(answers)) return { ok: false };
@@ -330,6 +338,7 @@
       submissions[power] = copy(answers);
       return { ok: true };
     }
+
     function submitOrders(power, list) {
       if (!allowed(power, 'orders') || !Array.isArray(list)) return { ok: false, normalized: [] };
       const own = units.filter(unit => unit.power === power);
@@ -340,6 +349,7 @@
       }));
       return { ok: true, normalized: copy(normalized) };
     }
+
     function submitRetreats(power, choices) {
       if (!allowed(power, 'retreats') || !choices ||
         typeof choices !== 'object' || Array.isArray(choices)) return { ok: false };
@@ -349,6 +359,7 @@
       submissions[power] = copy(choices);
       return { ok: true };
     }
+
     function submitBuilds(power, list) {
       if (!allowed(power, 'builds') || !Array.isArray(list)) return { ok: false };
       const delta = centres()[power] - units.filter(unit => unit.power === power).length;
@@ -368,6 +379,7 @@
       submissions[power] = copy(list);
       return { ok: true };
     }
+
     function accept(proposal) {
       let makers = [proposal.from, proposal.to];
       if (proposal.type === 'support') makers = [proposal.from];
@@ -381,6 +393,7 @@
         trust[power].promisesMade++;
       });
     }
+
     function evaluate(orders, before) {
       return promises.map(promise => {
         const own = orders.filter(order => order.power === promise.power);
@@ -403,14 +416,19 @@
         return outcome;
       });
     }
+
     function updateEliminated() {
       const counts = centres();
-      powers.forEach(({ id }) => {
-        if (!counts[id] && !units.some(unit => unit.power === id) && !eliminated.includes(id)) {
-          eliminated.push(id);
-        }
+      const newly = powers.filter(({ id }) =>
+        !counts[id] && !units.some(unit => unit.power === id) && !eliminated.includes(id));
+      if (!newly.length) return;
+      cohort++;
+      newly.forEach(({ id }) => {
+        eliminated.push(id);
+        eliminationCohort[id] = cohort;
       });
     }
+
     function endGame() {
       const counts = centres();
       updateEliminated();
@@ -420,16 +438,20 @@
       const winners = majority.length ? majority :
         powers.filter(power => counts[power.id] === best).map(power => power.id);
       const ranked = powers.map(power => power.id).sort((a, b) => {
-        const ea = eliminated.indexOf(a), eb = eliminated.indexOf(b);
-        if (ea >= 0 || eb >= 0) return ea < 0 ? -1 : eb < 0 ? 1 : eb - ea;
-        return counts[b] - counts[a] || a.localeCompare(b);
+        const ea = eliminationCohort[a] || 0, eb = eliminationCohort[b] || 0;
+        if (ea || eb) return !ea ? -1 : !eb ? 1 : eb - ea || compare(a, b);
+        return counts[b] - counts[a] || compare(a, b);
       });
       const placements = ranked.map((power, index) => ({
         power, rank: index + 1, centres: counts[power], eliminated: eliminated.includes(power)
       }));
       placements.forEach((entry, index) => {
-        if (index && !entry.eliminated && !placements[index - 1].eliminated &&
-          entry.centres === placements[index - 1].centres) entry.rank = placements[index - 1].rank;
+        if (!index) return;
+        const previous = placements[index - 1];
+        const tied = entry.eliminated && previous.eliminated ?
+          eliminationCohort[entry.power] === eliminationCohort[previous.power] :
+          !entry.eliminated && !previous.eliminated && entry.centres === previous.centres;
+        if (tied) entry.rank = previous.rank;
       });
       final = {
         winner: winners.length === 1 ? winners[0] : null,
@@ -443,6 +465,7 @@
       phase = 'over';
       return true;
     }
+
     function nextSeason() {
       history.push(pending);
       history = history.slice(-6);
@@ -457,8 +480,10 @@
         });
         if (!endGame()) phase = 'builds';
       }
-      proposals = []; promises = [];
+      proposals = [];
+      promises = [];
     }
+
     function distance(at, power) {
       const queue = powers.find(item => item.id === power).homes.map(id => [id, 0]);
       const seen = new Set();
@@ -473,6 +498,7 @@
       }
       return Infinity;
     }
+
     function advance() {
       const events = [];
       let resolution = null;
@@ -495,10 +521,13 @@
         const battle = adjudicate(units, submitted);
         battle.resolution.forEach(order => {
           if (submitted.some(original => original.unit === order.unit && original._invalid)) {
-            order.valid = false; order.outcome = 'invalid';
+            order.valid = false;
+            order.outcome = 'invalid';
           }
         });
-        units = battle.units; dislodged = battle.dislodged; standoffs = battle.standoffs;
+        units = battle.units;
+        dislodged = battle.dislodged;
+        standoffs = battle.standoffs;
         resolution = battle.resolution;
         const outcomes = evaluate(resolution, before);
         events.push(...outcomes.map(outcome => ({
@@ -527,7 +556,10 @@
           const excess = own.length - counts[id];
           if (excess > 0) {
             const selected = (submissions[id] || []).map(order => order.disband);
-            own.sort((a, b) => distance(b.at, id) - distance(a.at, id) || a.at.localeCompare(b.at));
+            own.sort((a, b) => {
+              const da = distance(a.at, id), db = distance(b.at, id);
+              return (da === db ? 0 : db > da ? 1 : -1) || compare(a.at, b.at);
+            });
             const remove = selected.concat(own.map(unit => unit.at)
               .filter(at => !selected.includes(at))).slice(0, excess);
             units = units.filter(unit => unit.power !== id || !remove.includes(unit.at));
@@ -540,14 +572,17 @@
           }
         });
         updateEliminated();
-        year++; season = 'Spring'; phase = 'negotiate-propose';
+        year++;
+        season = 'Spring';
+        phase = 'negotiate-propose';
       }
       submissions = {};
       return { events: copy(events), resolution: copy(resolution) };
     }
+
     function botState(power) {
       return copy({
-        phase, year, season, you: power,
+        phase, year, season, seed, you: power,
         map: { provinces: Object.values(provinces), adjacency },
         units, owners, centresByPower: centres(),
         inbox: proposals.filter(proposal => proposal.to === power && proposal.status === 'pending'),
@@ -557,18 +592,23 @@
           ...unit, options: retreatOptions(unit, units, standoffs)
         })),
         legalOrders: legalOrders(power),
-        limits: { maxProposals: 6, timeLimitMs: 2000 }
+        limits: { maxProposals: 6, timeLimitMs: 2000, maxYears }
       });
     }
+
     return {
       get phase() { return phase; },
       get year() { return year; },
       get season() { return season; },
-      units: () => copy(units), owners: () => copy(owners), proposals: () => copy(proposals),
+      units: () => copy(units),
+      owners: () => copy(owners),
+      proposals: () => copy(proposals),
       submitProposals, submitAnswers, submitOrders, submitRetreats, submitBuilds,
       advance, botState, legalOrders,
-      finished: () => phase === 'over', result: () => copy(final)
+      finished: () => phase === 'over',
+      result: () => copy(final)
     };
   }
+
   return { MAP, rng, create, canMove, adjudicate, retreatOptions, resolveRetreats };
 });

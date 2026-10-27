@@ -3,11 +3,10 @@
 
   const $ = id => document.getElementById(id);
   const map = PactEngine.MAP;
-  const provinces = Array.isArray(map.provinces) ? map.provinces : Object.values(map.provinces);
-  const powers = Array.isArray(map.powers) ? map.powers :
-    Object.entries(map.powers).map(([id, p]) => ({ id, ...p }));
-  const names = powers.map(p => p.id || p.name);
-  const province = id => provinces.find(p => p.id === id);
+  const provinces = Object.values(map.provinces);
+  const powers = map.powers;
+  const names = powers.map(p => p.id);
+  const province = id => map.provinces[id];
   const place = id => province(id)?.name || id || 'unknown province';
   const defaults = [
     'human', 'sample-schemer', 'sample-expander',
@@ -21,23 +20,11 @@
     builds: 'Builds and disbands',
     over: 'Finished'
   };
-
-  let bots = [];
-  let match = null;
-  let running = false;
-  let seats = {};
-  let active = null;
-  let draft = [];
-  let selected = null;
-  let support = null;
-  let picker = null;
-  let replay = [];
-  let battle = [];
-  let beforeUnits = [];
-  let sleepTimer = null;
-  let wake = null;
-  let generation = 0;
+  let bots = [], match = null, running = false, seats = {}, active = null;
+  let draft = [], selected = null, support = null, picker = null, inspected = null;
+  let replay = [], sleepTimer = null, wake = null, generation = 0;
   const selects = new Map();
+  let unitInput = null, actionInput = null;
   const renderer = PactMap.create($('ap-canvas'), { onProvince: pickProvince });
 
   function node(tag, text, className) {
@@ -56,42 +43,84 @@
 
   function selectField(parent, label, choices) {
     const wrap = node('label', label);
-    const select = node('select');
-    choices.forEach(([value, text]) => select.add(new Option(text, value)));
-    wrap.append(select);
+    const input = node('select');
+    input.setAttribute('aria-label', label);
+    choices.forEach(([value, text]) => input.add(new Option(text, value)));
+    wrap.append(input);
     parent.append(wrap);
-    return select;
+    return input;
   }
 
   function provinceField(parent, label, choices = provinces) {
-    const select = selectField(parent, label, choices.map(p => [p.id, p.name]));
-    select.addEventListener('focus', () => { picker = select; });
-    return select;
+    const input = selectField(parent, label, choices.map(p => [p.id, `${p.id} · ${p.name}`]));
+    input.addEventListener('focus', () => { picker = input; });
+    return input;
   }
 
+  const legend = node('p',
+    '★ supply centre · ring = home · shield = army · sail = fleet · dashed arrow = support · × = failed order. Narrow maps use province codes.',
+    'ap-map-legend');
+  const inspectorWrap = node('div', undefined, 'ap-inspector');
+  const inspectInput = provinceField(inspectorWrap, 'Inspect province');
+  const inspectText = node('p', 'Choose a province here or on the map.');
+  inspectText.setAttribute('role', 'status');
+  inspectorWrap.append(inspectText);
+  $('ap-canvas').after(legend, inspectorWrap);
+  inspectInput.addEventListener('change', () => {
+    inspected = inspectInput.value;
+    describeProvince();
+    draw();
+  });
+  const editor = node('div', undefined, 'ap-fields');
+  $('ap-order-hint').after(editor);
+  const cancelSelection = button('Clear selection', () => {
+    selected = null;
+    support = null;
+    showOrders();
+  });
+  $('ap-support').after(cancelSelection);
+
   function counts() {
-    const centres = Object.fromEntries(names.map(p => [p, 0]));
-    if (match) {
-      Object.values(match.game.owners()).forEach(p => {
-        if (p in centres) centres[p]++;
-      });
-    }
-    return centres;
+    const result = Object.fromEntries(names.map(p => [p, 0]));
+    if (match) Object.values(match.game.owners()).forEach(p => {
+      if (Object.hasOwn(result, p)) result[p]++;
+    });
+    return result;
   }
 
   function trust() {
-    if (!match) return {};
-    return match.game.botState(names[0]).trust;
+    return match ? match.game.botState(names[0]).trust : {};
+  }
+
+  function describeProvince() {
+    if (!inspected) return;
+    const p = province(inspected);
+    const owner = match?.game.owners()[p.id];
+    const unit = match?.game.units().find(u => u.at === p.id);
+    inspectInput.value = p.id;
+    inspectText.textContent = [
+      `${p.id} · ${p.name}`,
+      p.type === 'sea' ? 'Sea' : p.coastal ? 'Coastal land' : 'Inland',
+      p.sc ? `Supply centre: ${owner || 'neutral'}${p.home ? `; home of ${p.home}` : ''}` : '',
+      unit ? `${unit.power} ${unit.type}` : 'No unit'
+    ].filter(Boolean).join(' · ');
+  }
+
+  function legal(power, at) {
+    return match?.game.legalOrders(power)[at] || [];
   }
 
   function draw(arrows = []) {
-    const highlight = selected ?
-      legal(active, selected).filter(o => o.type === 'move').map(o => o.dest) : [];
+    let highlight = [];
+    if (active && selected) {
+      const list = legal(active, selected);
+      highlight = support ?
+        list.filter(o => o.type === 'support' && (!support.target || o.target === support.target))
+          .map(o => support.target ? o.targetDest === 'hold' ? o.target : o.targetDest : o.target) :
+        list.filter(o => o.type === 'move').map(o => o.dest);
+    }
     renderer.update(match?.game || null, {
-      selected,
-      highlight,
-      arrows,
-      fog: $('ap-pass').open
+      selected, inspected, highlight, arrows, fog: $('ap-pass').open
     });
   }
 
@@ -100,131 +129,126 @@
   }
 
   function log(text, broken = false) {
-    const li = node('li', text, broken ? 'ap-betrayal' : '');
-    $('ap-log').prepend(li);
+    $('ap-log').prepend(node('li', text, broken ? 'ap-betrayal' : ''));
     while ($('ap-log').children.length > 180) $('ap-log').lastElementChild.remove();
   }
 
   function status() {
     if (!match) return;
-    const game = match.game;
+    const game = match.game, c = counts(), t = trust(), units = game.units();
     $('ap-season').textContent = `${game.season}, Year ${game.year}`;
-    $('ap-phase').textContent = phaseNames[game.phase] || game.phase;
-    const c = counts();
-    const t = trust();
-    const units = game.units();
+    $('ap-phase').textContent = phaseNames[game.phase];
     $('ap-standings').replaceChildren();
     [...names].sort((a, b) => c[b] - c[a] || names.indexOf(a) - names.indexOf(b)).forEach(power => {
       const row = node('li');
-      const record = t[power] || {};
+      row.style.setProperty('--power-color', powers.find(p => p.id === power).color);
+      const record = t[power];
       row.append(
         node('strong', power),
-        node('span', `${c[power]} centres · ${units.filter(u => u.power === power).length} units`),
+        node('span', `${c[power]} / 13 centres · ${units.filter(u => u.power === power).length} units`),
         node('span', seats[power].human ? 'Human' : seats[power].name),
-        node('small', `kept ${record.kept || 0} / broken ${record.broken || 0}`)
+        node('small', `kept ${record.kept} · broken ${record.broken} · made ${record.promisesMade}`)
       );
       $('ap-standings').append(row);
     });
-  }
-
-  function legal(power, at) {
-    const orders = match.game.legalOrders(power);
-    if (Array.isArray(orders)) {
-      if (orders.every(o => typeof o.type === 'string')) {
-        return orders.filter(o => o.unit === at);
-      }
-      const entry = orders.find(o => o.unit === at || o.at === at);
-      return entry ? entry.orders || entry.legal || [] : [];
-    }
-    return orders[at] || [];
+    describeProvince();
   }
 
   function orderText(o) {
     if (o.type === 'hold') return `${place(o.unit)} holds`;
     if (o.type === 'move') return `${place(o.unit)} → ${place(o.dest)}`;
-    const holding = !o.targetDest || o.targetDest === 'hold' || o.targetDest === o.target;
-    return `${place(o.unit)} supports ${place(o.target)} ${holding ? 'holding' : `→ ${place(o.targetDest)}`}`;
+    return `${place(o.unit)} supports ${place(o.target)} ${
+      o.targetDest === 'hold' ? 'holding' : `→ ${place(o.targetDest)}`}`;
   }
 
   function orderArrow(o, power, outcome) {
-    const hold = !o.targetDest || o.targetDest === 'hold' || o.targetDest === o.target;
     return {
       from: o.unit,
       to: o.type === 'move' ? o.dest :
-        o.type === 'support' ? hold ? o.target : o.targetDest : o.unit,
-      kind: o.type === 'support' ? hold ? 'support-hold' : 'support' : o.type,
-      power,
-      outcome
+        o.type === 'support' ? o.targetDest === 'hold' ? o.target : o.targetDest : o.unit,
+      kind: o.type === 'support' ? o.targetDest === 'hold' ? 'support-hold' : 'support' : o.type,
+      power, outcome
     };
   }
 
+  function syncEditor() {
+    if (!unitInput || !actionInput) return;
+    unitInput.value = selected || '';
+    actionInput.replaceChildren();
+    actionInput.add(new Option('Choose an order', ''));
+    legal(active, selected).forEach((o, i) => actionInput.add(new Option(orderText(o), String(i))));
+    actionInput.disabled = !selected;
+  }
+
   function showOrders() {
-    const list = $('ap-orders');
-    list.replaceChildren();
+    $('ap-orders').replaceChildren();
     draft.forEach((o, i) => {
       const row = node('li', orderText(o));
       row.append(button('Remove', () => {
         draft.splice(i, 1);
         showOrders();
       }));
-      list.append(row);
+      $('ap-orders').append(row);
     });
     $('ap-order-hint').textContent = support ?
-      support.target ?
-        'Choose the supported destination; click its origin to support a hold.' :
-        'Choose the unit to support.' :
-      selected ?
-        'Choose a highlighted destination, Hold, or Support.' :
-        'Select one of your units. Unordered units hold.';
+      support.target ? 'Choose a highlighted destination; choose the target again to support its hold.' :
+        'Choose a highlighted unit to support.' :
+      selected ? 'Choose a highlighted destination, Hold or Support; or use the order selector.' :
+        'Select your unit on the map or below. Unordered units hold.';
+    $('ap-hold').disabled = !selected;
+    $('ap-support').disabled = !selected || !legal(active, selected).some(o => o.type === 'support');
+    cancelSelection.disabled = !selected;
+    syncEditor();
     draw(draft.map(o => orderArrow(o, active)));
   }
 
   function addOrder(order) {
     draft = draft.filter(o => o.unit !== order.unit);
-    draft.push(order);
-    support = null;
+    draft.push({ ...order });
     selected = null;
+    support = null;
     showOrders();
   }
 
   function pickProvince(id) {
-    if (!active || $('ap-pass').open) return;
-    if (match.game.phase !== 'orders') {
-      if (picker && [...picker.options].some(o => o.value === id)) {
+    if ($('ap-pass').open) return;
+    inspected = id;
+    describeProvince();
+    if (!active || match.game.phase !== 'orders') {
+      if (active && picker?.isConnected && [...picker.options].some(o => o.value === id)) {
         picker.value = id;
         picker.dispatchEvent(new Event('change'));
       }
+      draw();
       return;
     }
-    const units = match.game.units();
+    const list = legal(active, selected);
     if (support && !support.target) {
-      if (id === selected || !units.some(u => u.at === id)) return;
+      if (!list.some(o => o.type === 'support' && o.target === id)) {
+        ticker('Choose one of the highlighted support targets, or clear the selection.');
+        draw(draft.map(o => orderArrow(o, active)));
+        return;
+      }
       support.target = id;
-      $('ap-order-hint').textContent =
-        'Choose a destination, or click this unit again to support its hold.';
+      showOrders();
       return;
     }
     if (support) {
-      const candidates = legal(active, selected)
-        .filter(o => o.type === 'support' && o.target === support.target);
-      const order = candidates.find(o => id === support.target ?
-        !o.targetDest || o.targetDest === 'hold' || o.targetDest === id :
-        o.targetDest === id);
+      const order = list.find(o => o.type === 'support' && o.target === support.target &&
+        (id === support.target ? o.targetDest === 'hold' : o.targetDest === id));
       if (order) addOrder(order);
-      else ticker('That support is not legal. Choose another destination or select Hold.');
+      else {
+        ticker('That support is not legal. Choose a highlighted destination or clear the selection.');
+        draw(draft.map(o => orderArrow(o, active)));
+      }
       return;
     }
     if (selected) {
-      const move = legal(active, selected).find(o => o.type === 'move' && o.dest === id);
-      if (move) {
-        addOrder(move);
-        return;
-      }
+      const move = list.find(o => o.type === 'move' && o.dest === id);
+      if (move) return addOrder(move);
     }
-    if (units.some(u => u.at === id && u.power === active)) {
-      selected = id;
-      showOrders();
-    }
+    if (match.game.units().some(u => u.at === id && u.power === active)) selected = id;
+    showOrders();
   }
 
   function clearPrivate() {
@@ -233,20 +257,18 @@
     selected = null;
     support = null;
     picker = null;
-    $('ap-negotiate').hidden = true;
-    $('ap-order-panel').hidden = true;
-    $('ap-adjust').hidden = true;
-    $('ap-neg-body').replaceChildren();
-    $('ap-adjust-body').replaceChildren();
-    $('ap-orders').replaceChildren();
-    $('ap-promises').replaceChildren();
+    unitInput = null;
+    actionInput = null;
+    editor.replaceChildren();
+    for (const id of ['ap-negotiate', 'ap-order-panel', 'ap-adjust']) $(id).hidden = true;
+    for (const id of ['ap-neg-body', 'ap-adjust-body', 'ap-orders', 'ap-promises']) $(id).replaceChildren();
     draw();
   }
 
   function commit(payload) {
     const result = match.submitHuman(active, payload);
     if (!result.ok) {
-      ticker(result.errors.join(' '));
+      ticker((result.errors || ['Invalid selection.']).join(' '));
       return;
     }
     clearPrivate();
@@ -254,19 +276,17 @@
   }
 
   function describeProposal(p) {
-    const terms = p.terms || {};
-    const detail = p.type === 'alliance' ? `against ${terms.target}` :
-      p.type === 'dmz' ? place(terms.province) :
+    const t = p.terms;
+    const detail = p.type === 'alliance' ? `against ${t.target}` :
+      p.type === 'dmz' ? place(t.province) :
         ['support', 'request-support'].includes(p.type) ?
-          `${place(terms.unit)} → ${terms.dest === 'hold' ? 'hold' : place(terms.dest)}` :
-          'no attacks this season';
+          `${place(t.unit)} → ${t.dest === 'hold' ? 'hold' : place(t.dest)}` : 'no attacks this season';
     return `${p.from || active} → ${p.to}: ${p.type} (${detail})`;
   }
 
   function negotiation() {
     $('ap-negotiate').hidden = false;
-    const body = $('ap-neg-body');
-    const state = match.game.botState(active);
+    const body = $('ap-neg-body'), state = match.game.botState(active);
     body.append(node('h3', `${active}: ${phaseNames[state.phase]}`));
     if (state.phase === 'negotiate-answer') {
       const answers = {};
@@ -274,9 +294,7 @@
       state.inbox.forEach(p => {
         const row = node('div', undefined, 'ap-deal');
         row.append(node('p', describeProposal(p)));
-        const input = selectField(row, 'Response', [
-          ['reject', 'Reject'], ['accept', 'Accept']
-        ]);
+        const input = selectField(row, 'Response', [['reject', 'Reject'], ['accept', 'Accept']]);
         answers[p.id] = 'reject';
         input.addEventListener('change', () => { answers[p.id] = input.value; });
         body.append(row);
@@ -284,59 +302,58 @@
       body.append(button('Done', () => commit(answers)));
       return;
     }
-
-    body.append(node('p',
-      'Send up to six structured proposals. Acceptance is answered in the next round.'));
+    body.append(node('p', 'Send up to six proposals. Accepted deals are promises, not enforced rules.'));
     const fields = node('div', undefined, 'ap-fields');
     body.append(fields);
     const type = selectField(fields, 'Deal type',
       ['peace', 'alliance', 'support', 'dmz', 'request-support'].map(t => [t, t]));
-    const partner = selectField(fields, 'Partner',
-      names.filter(p => p !== active).map(p => [p, p]));
+    const living = names.filter(p => p !== active &&
+      (state.centresByPower[p] || state.units.some(u => u.power === p)));
+    const partner = selectField(fields, 'Partner', living.map(p => [p, p]));
     const terms = node('div', undefined, 'ap-fields');
     body.append(terms);
     let readTerms = () => ({});
-
     function changeType() {
       terms.replaceChildren();
       picker = null;
       if (type.value === 'alliance') {
         const target = selectField(terms, 'Common enemy',
-          names.filter(p => p !== active && p !== partner.value).map(p => [p, p]));
+          living.filter(p => p !== partner.value).map(p => [p, p]));
         readTerms = () => ({ target: target.value });
       } else if (type.value === 'dmz') {
         const area = provinceField(terms, 'Demilitarized province');
         readTerms = () => ({ province: area.value });
       } else if (['support', 'request-support'].includes(type.value)) {
-        const unitPower = type.value === 'support' ? partner.value : active;
-        const locations = match.game.units()
-          .filter(u => u.power === unitPower).map(u => province(u.at));
-        const origin = provinceField(terms, 'Unit province', locations);
-        const dest = selectField(terms, 'Destination', [
-          ['hold', 'Hold'], ...provinces.map(p => [p.id, p.name])
-        ]);
+        const beneficiary = type.value === 'support' ? partner.value : active;
+        const origin = provinceField(terms, 'Unit province',
+          state.units.filter(u => u.power === beneficiary).map(u => province(u.at)));
+        const dest = selectField(terms, 'Destination', []);
+        function destinations() {
+          dest.replaceChildren();
+          dest.add(new Option('Hold', 'hold'));
+          const unit = state.units.find(u => u.at === origin.value);
+          if (unit) map.adjacency[unit.at].filter(id => PactEngine.canMove(unit, id))
+            .forEach(id => dest.add(new Option(`${id} · ${place(id)}`, id)));
+        }
+        origin.addEventListener('change', destinations);
+        destinations();
         dest.addEventListener('focus', () => { picker = dest; });
         readTerms = () => ({ unit: origin.value, dest: dest.value });
-      } else {
-        readTerms = () => ({});
-      }
+      } else readTerms = () => ({});
     }
-
     type.addEventListener('change', changeType);
     partner.addEventListener('change', changeType);
     changeType();
     const list = node('ol');
     const add = button('Add proposal', () => {
-      if (draft.length >= 6) return;
       const values = readTerms();
-      if (Object.values(values).some(v => !v)) {
-        ticker('Choose all required terms.');
+      if (draft.length >= 6 || !partner.value || Object.values(values).some(v => !v)) {
+        ticker('Choose a living partner and all required terms.');
         return;
       }
       draft.push({ to: partner.value, type: type.value, terms: values });
       show();
     });
-
     function show() {
       list.replaceChildren();
       draft.forEach((p, i) => {
@@ -349,82 +366,47 @@
       });
       add.disabled = draft.length >= 6;
     }
-
-    body.append(add, list, button('Done', () =>
-      commit(draft.map(p => ({ ...p, terms: { ...p.terms } })))));
-  }
-
-  function canEnter(unit, dest) {
-    const a = province(unit.at);
-    const b = province(dest);
-    if (!a || !b || !(map.adjacency[a.id] || []).includes(b.id)) return false;
-    if (unit.type === 'army') return b.type === 'land';
-    if (b.type === 'land' && !b.coastal) return false;
-    return a.type !== 'land' || b.type !== 'land' ||
-      map.adjacency[a.id].some(id =>
-        province(id).type === 'sea' && map.adjacency[b.id].includes(id));
+    body.append(add, list, button('Done', () => commit(structuredClone(draft))));
   }
 
   function adjustment() {
     $('ap-adjust').hidden = false;
-    const body = $('ap-adjust-body');
-    const game = match.game;
+    const body = $('ap-adjust-body'), game = match.game, state = game.botState(active);
     body.append(node('h3', `${active}: ${phaseNames[game.phase]}`));
     if (game.phase === 'retreats') {
       const payload = {};
-      const current = game.units();
-      const state = game.botState(active);
-      const inferred = beforeUnits.filter(u => u.power === active &&
-        current.some(v => v.at === u.at && v.power !== active) &&
-        !battle.some(r => r.unit === u.at && r.outcome === 'success' && r.type === 'move'));
-      const dislodged = state.retreats || inferred;
-      dislodged.forEach(u => {
-        const attack = battle.find(r =>
-          r.type === 'move' && r.dest === u.at && r.outcome === 'success');
-        const candidates = u.options ? u.options.map(province) :
-          provinces.filter(p => canEnter(u, p.id) &&
-            !current.some(v => v.at === p.id) && p.id !== attack?.unit &&
-            battle.filter(r =>
-              r.type === 'move' && r.dest === p.id && r.outcome === 'bounce').length < 2);
+      state.retreats.forEach(u => {
         const input = selectField(body, `Retreat from ${place(u.at)}`, [
-          ['', 'Disband'], ...candidates.map(p => [p.id, p.name])
+          ['', 'Disband'], ...u.options.map(id => [id, `${id} · ${place(id)}`])
         ]);
         payload[u.at] = null;
         input.addEventListener('change', () => { payload[u.at] = input.value || null; });
       });
-      if (!dislodged.length) {
-        body.append(node('p',
-          'No retreats to select. Unspecified retreats use the engine default.'));
-      }
+      if (!state.retreats.length) body.append(node('p', 'No retreats to select.'));
       body.append(button('Submit retreats', () => commit(payload)));
       return;
     }
-
-    const ownUnits = game.units().filter(u => u.power === active);
-    const delta = counts()[active] - ownUnits.length;
+    const own = state.units.filter(u => u.power === active);
+    const delta = state.centresByPower[active] - own.length;
     body.append(node('p', delta >= 0 ?
-      `You may build ${delta} units in empty owned home centres.` :
+      `You may build up to ${delta} units in empty owned home centres.` :
       `Disband ${-delta} units, or leave blank for the farthest-from-home rule.`));
     const inputs = [];
     if (delta > 0) {
-      provinces.filter(p => p.home === active && game.owners()[p.id] === active &&
-        !game.units().some(u => u.at === p.id)).forEach(p => {
+      provinces.filter(p => p.home === active && state.owners[p.id] === active &&
+        !state.units.some(u => u.at === p.id)).forEach(p => {
         const choices = [['', 'No build'], ['army', 'Army']];
         if (p.coastal) choices.push(['fleet', 'Fleet']);
         inputs.push({ at: p.id, input: selectField(body, p.name, choices) });
       });
     } else if (delta < 0) {
-      ownUnits.forEach(u => inputs.push({
-        at: u.at,
-        input: selectField(body, place(u.at), [['', 'Keep'], ['disband', 'Disband']])
+      own.forEach(u => inputs.push({
+        at: u.at, input: selectField(body, place(u.at), [['', 'Keep'], ['disband', 'Disband']])
       }));
     }
     body.append(button('Submit adjustments', () => {
       const chosen = inputs.filter(x => x.input.value);
-      if (delta >= 0 && chosen.length > delta || delta < 0 && chosen.length > -delta) {
-        ticker('Too many adjustments selected.');
-        return;
-      }
+      if (chosen.length > Math.abs(delta)) return ticker('Too many adjustments selected.');
       commit(chosen.map(x => delta >= 0 ?
         { at: x.at, type: x.input.value } : { disband: x.at }));
     }));
@@ -433,24 +415,39 @@
   function revealHuman(power) {
     active = power;
     ticker(`${power}: enter your private ${phaseNames[match.game.phase].toLowerCase()}.`);
-    if (match.game.phase.startsWith('negotiate')) {
-      negotiation();
-    } else if (match.game.phase === 'orders') {
+    if (match.game.phase.startsWith('negotiate')) negotiation();
+    else if (match.game.phase === 'orders') {
       $('ap-order-panel').hidden = false;
       $('ap-order-title').textContent = `${power}: Secret orders`;
       match.game.botState(power).accepted.forEach(p => {
-        const t = p.terms || {};
+        const t = p.terms;
         const detail = t.province ? place(t.province) :
           t.unit ? `${place(t.unit)} → ${t.dest === 'hold' ? 'hold' : place(t.dest)}` :
             t.target || 'no attacks';
-        $('ap-promises').append(node('li',
-          `${p.power || p.from} → ${p.partner || p.to}: ${p.type} (${detail})`));
+        $('ap-promises').append(node('li', `${p.power} → ${p.partner}: ${p.type} (${detail})`));
+      });
+      unitInput = selectField(editor, 'Your unit', [
+        ['', 'Choose a unit'],
+        ...match.game.units().filter(u => u.power === active)
+          .map(u => [u.at, `${u.at} · ${place(u.at)} · ${u.type}`])
+      ]);
+      actionInput = selectField(editor, 'Legal order', []);
+      unitInput.addEventListener('change', () => {
+        selected = unitInput.value || null;
+        support = null;
+        showOrders();
+      });
+      actionInput.addEventListener('change', () => {
+        if (actionInput.value === '') return;
+        const order = legal(active, selected)[Number(actionInput.value)];
+        if (order) addOrder(order);
       });
       showOrders();
-    } else {
-      adjustment();
-    }
-    draw();
+    } else adjustment();
+    draw(draft.map(o => orderArrow(o, active)));
+    const panel = match.game.phase.startsWith('negotiate') ? $('ap-neg-body') :
+      match.game.phase === 'orders' ? editor : $('ap-adjust-body');
+    panel.querySelector('select, button')?.focus({ preventScroll: true });
   }
 
   function presentHuman() {
@@ -466,56 +463,33 @@
         $('ap-pass').close();
         revealHuman(next);
       };
-      $('ap-pass').showModal();
+      if (!$('ap-pass').open) $('ap-pass').showModal();
       draw();
-    } else {
-      revealHuman(next);
-    }
-  }
-
-  function resolutionRows(value) {
-    const list = Array.isArray(value) ? value : value?.orders || [];
-    return list.map(r => ({
-      ...(r.order || r),
-      outcome: r.outcome,
-      power: r.power || r.order?.power ||
-        beforeUnits.find(u => u.at === (r.order?.unit || r.unit))?.power
-    }));
+    } else revealHuman(next);
   }
 
   function report(result, season, oldOwners) {
     for (const event of result.events || []) {
-      if (typeof event === 'string') {
-        log(event, /broke|betray|broken/i.test(event));
-      } else {
-        const message = event.message || event.text;
-        if (message) {
-          log(message, /broke|betray|broken/i.test(message));
-        } else if (event.type === 'promise') {
-          const broken = event.outcome === 'broken';
-          const attack = battle.find(o => o.power === event.power &&
-            (o.type === 'move' || o.type === 'support') &&
-            beforeUnits.some(u =>
-              u.at === (o.dest || o.targetDest) && u.power === event.partner));
-          const detail = attack ? ` (${place(attack.dest || attack.targetDest)} attack)` : '';
-          log(`${event.power} ${broken ? 'broke' : 'kept'} ${event.promiseType || 'a promise'} with ${event.partner}${broken ? detail : ''}.`, broken);
-        } else if (event.type) {
-          const broken = /broke|betray|broken/.test(event.type) || event.outcome === 'broken';
-          const detail = [
-            event.power,
-            event.type,
-            event.partner || event.to,
-            event.province ? place(event.province) : ''
-          ].filter(Boolean).join(' ');
-          log(`${season}: ${detail}`, broken);
-        }
+      if (event.type === 'promise') {
+        const broken = event.outcome === 'broken';
+        log(`${event.power} ${broken ? 'broke' : 'kept'} ${event.promiseType} with ${event.partner}.`, broken);
+      } else if (event.type === 'bot-fallback') {
+        log(`${event.power}: safe ${event.call} defaults (${event.reason}).`);
+      } else if (event.type === 'retreat') {
+        log(`${event.power}: ${place(event.from)} ${event.to ? `retreats to ${place(event.to)}` : 'is disbanded'}.`);
+      } else if (event.type === 'build' || event.type === 'disband') {
+        log(`${event.power}: ${event.type} at ${place(event.at)}.`);
+      }
+    }
+    for (const order of result.resolution || []) {
+      if (order.type === 'move' || order.outcome === 'dislodged' || order.outcome === 'cut' ||
+          order.outcome === 'invalid') {
+        log(`${season}: ${order.power} — ${orderText(order)} · ${order.outcome}.`);
       }
     }
     const owners = match.game.owners();
     Object.keys(owners).forEach(id => {
-      if (owners[id] !== oldOwners[id] && owners[id]) {
-        log(`${owners[id]} captures ${place(id)}.`);
-      }
+      if (owners[id] && owners[id] !== oldOwners[id]) log(`${owners[id]} captures ${place(id)}.`);
     });
   }
 
@@ -533,22 +507,17 @@
   function finish() {
     const result = match.game.result();
     if (!result) return;
-    const c = result.centres;
-    $('ap-result').textContent = result.shared?.length > 1 ?
-      `Shared victory: ${result.shared.join(', ')} after ${result.year} years` :
-      result.reason === 'majority' ?
-        `${result.winner} wins with ${c[result.winner]} centres` :
-        `${result.winner} wins with ${c[result.winner]} centres after ${result.year} years`;
+    $('ap-result').textContent = result.shared.length ?
+      `Shared victory: ${result.shared.join(', ')} · Year ${result.year}` :
+      `${result.winner} wins with ${result.centres[result.winner]} centres · Year ${result.year}`;
     $('ap-result').hidden = false;
     ticker('The pact is settled. Start another game to change history.');
     match.stop();
   }
 
   function lock(value) {
-    selects.forEach(s => { s.disabled = value; });
-    $('ap-years').disabled = value;
-    $('ap-random').disabled = value;
-    $('ap-start').disabled = value;
+    selects.forEach(input => { input.disabled = value; });
+    for (const id of ['ap-years', 'ap-random', 'ap-start']) $(id).disabled = value;
     $('ap-start').textContent = value ? 'Playing…' : 'Start';
   }
 
@@ -557,16 +526,15 @@
     const token = ++generation;
     running = true;
     lock(true);
-    if (match) match.stop();
+    match?.stop();
     seats = Object.fromEntries(names.map(power => {
       const id = selects.get(power).value;
-      const bot = bots.find(b => b.id === id);
-      return [power, id === 'human' ? { human: true } : { id, name: bot.name }];
+      return [power, id === 'human' ? { human: true } :
+        { id, name: bots.find(b => b.id === id).name }];
     }));
     $('ap-log').replaceChildren();
     $('ap-result').hidden = true;
     replay = [];
-    battle = [];
     try {
       match = PactRunner.start(seats, {
         seed: crypto.getRandomValues(new Uint32Array(1))[0],
@@ -579,29 +547,20 @@
         status();
         const oldPhase = match.game.phase;
         const season = `${match.game.season}, Year ${match.game.year}`;
-        const oldOwners = { ...match.game.owners() };
-        const proposed = structuredClone(match.game.proposals());
-        if (oldPhase === 'orders') {
-          beforeUnits = match.game.units().map(u => ({ ...u }));
-        }
+        const oldOwners = match.game.owners();
         const next = match.next();
         presentHuman();
         const result = await next;
         if (!running || token !== generation) return;
         clearPrivate();
-        if (oldPhase === 'orders') battle = resolutionRows(result.resolution);
         report(result, season, oldOwners);
         if (oldPhase === 'negotiate-answer') {
-          const accepted = match.game.proposals()
-            .filter(p => p.status === 'accepted' || p.status === 'accept');
-          const fallback = proposed
-            .filter(p => p.status === 'accepted' || p.status === 'accept');
-          (accepted.length ? accepted : fallback).forEach(p =>
-            log(`Accepted: ${describeProposal(p)}`));
+          match.game.proposals().filter(p => p.status === 'accepted')
+            .forEach(p => log(`Accepted: ${describeProposal(p)}`));
         }
+        status();
         if (oldPhase === 'orders') {
-          battle = resolutionRows(result.resolution);
-          replay = battle.map(r => orderArrow(r, r.power, r.outcome));
+          replay = (result.resolution || []).map(o => orderArrow(o, o.power, o.outcome));
           draw(replay);
           ticker(`${season}: orders revealed.`);
           await pause(Number($('ap-speed').value));
@@ -615,7 +574,8 @@
         finish();
       }
     } catch (error) {
-      if (match) match.stop();
+      match?.stop();
+      clearPrivate();
       ticker(`Match stopped: ${error.message}`);
     } finally {
       if (token === generation) {
@@ -628,39 +588,28 @@
   function makeSeats() {
     const params = new URLSearchParams(location.search);
     const requested = (params.get('powers') || '').split(',');
-    const body = $('ap-seats');
     powers.forEach((power, i) => {
-      const id = power.id || power.name;
-      const row = node('tr');
-      const label = node('th');
+      const row = node('tr'), label = node('th'), cell = node('td');
       label.scope = 'row';
       const swatch = node('span', '', 'ap-swatch');
       swatch.style.setProperty('--power-color', power.color);
-      label.append(swatch, document.createTextNode(id));
-      const cell = node('td');
-      const select = node('select');
-      select.setAttribute('aria-label', `${id} controller`);
-      select.add(new Option('Human', 'human'));
-      bots.forEach(bot => select.add(new Option(`${bot.name} · ${bot.lab}`, bot.id)));
+      label.append(swatch, document.createTextNode(power.id));
+      const input = node('select');
+      input.setAttribute('aria-label', `${power.id} controller`);
+      input.add(new Option('Human', 'human'));
+      bots.forEach(bot => input.add(new Option(`${bot.name} · ${bot.lab}`, bot.id)));
       const choice = requested[i] || defaults[i];
-      select.value = choice === 'human' || bots.some(b => b.id === choice) ?
-        choice : defaults[i];
-      cell.append(select);
+      input.value = choice === 'human' || bots.some(b => b.id === choice) ? choice : defaults[i];
+      cell.append(input);
       row.append(label, cell);
-      body.append(row);
-      selects.set(id, select);
+      $('ap-seats').append(row);
+      selects.set(power.id, input);
     });
-    if (['6', '9', '12'].includes(params.get('years'))) {
-      $('ap-years').value = params.get('years');
-    }
+    if (['6', '9', '12'].includes(params.get('years'))) $('ap-years').value = params.get('years');
     if (params.get('speed') === '0') $('ap-speed').value = '0';
     bots.forEach(bot => {
       const li = node('li');
-      li.append(
-        node('strong', bot.name),
-        node('span', ` · ${bot.lab} · ${bot.botName}`),
-        node('p', bot.note)
-      );
+      li.append(node('strong', bot.name), node('span', ` · ${bot.lab} · ${bot.botName}`), node('p', bot.note));
       $('ap-list').append(li);
     });
     $('ap-start').disabled = false;
@@ -674,10 +623,8 @@
     start();
   });
   $('ap-random').addEventListener('click', () => {
-    const rng = PactEngine.rng(crypto.getRandomValues(new Uint32Array(1))[0]);
-    selects.forEach(select => {
-      select.value = bots[Math.floor(rng() * bots.length)].id;
-    });
+    const random = PactEngine.rng(crypto.getRandomValues(new Uint32Array(1))[0]);
+    selects.forEach(input => { input.value = bots[Math.floor(random() * bots.length)].id; });
   });
   $('ap-hold').addEventListener('click', () => {
     if (selected) addOrder({ unit: selected, type: 'hold' });
@@ -688,16 +635,22 @@
       showOrders();
     }
   });
-  $('ap-submit-orders').addEventListener('click', () =>
-    commit(draft.map(o => ({ ...o }))));
+  $('ap-submit-orders').addEventListener('click', () => commit(structuredClone(draft)));
   $('ap-pass').addEventListener('cancel', event => event.preventDefault());
+  $('ap-order-panel').addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      selected = null;
+      support = null;
+      showOrders();
+    }
+  });
 
   window.addEventListener('pagehide', () => {
     running = false;
     generation++;
-    if (match) match.stop();
+    match?.stop();
     clearTimeout(sleepTimer);
-    if (wake) wake();
+    wake?.();
     renderer.destroy();
   }, { once: true });
 
@@ -708,11 +661,7 @@
       const seat = seats[power];
       const id = seat ? seat.human ? 'human' : seat.id :
         selects.get(power)?.value || defaults[names.indexOf(power)];
-      return {
-        power,
-        kind: id === 'human' ? 'human' : 'bot',
-        id: id === 'human' ? null : id
-      };
+      return { power, kind: id === 'human' ? 'human' : 'bot', id: id === 'human' ? null : id };
     }),
     year: match?.game.year || 1,
     season: match?.game.season || 'Spring',
@@ -730,8 +679,7 @@
   }).then(manifest => {
     const seen = new Set();
     bots = manifest.bots.filter(bot => {
-      if (!/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) ||
-        bot.id.includes('..') || seen.has(bot.id)) return false;
+      if (!/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) || bot.id.includes('..') || seen.has(bot.id)) return false;
       seen.add(bot.id);
       return true;
     });

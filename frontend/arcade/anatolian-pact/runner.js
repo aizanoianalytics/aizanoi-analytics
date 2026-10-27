@@ -47,7 +47,13 @@
   function start(powers, options = {}) {
     const seed = Number.isFinite(options.seed) ? options.seed >>> 0 : Date.now() >>> 0;
     const game = engine.create({ ...options, seed });
-    const entries = Object.entries(powers);
+    const canonical = engine.MAP?.powers?.map(power => power.id) || [];
+    const entries = Object.entries(powers).sort(([a], [b]) => {
+      const ai = canonical.indexOf(a), bi = canonical.indexOf(b);
+      if (ai >= 0 && bi >= 0) return ai - bi;
+      if (ai >= 0 || bi >= 0) return ai >= 0 ? -1 : 1;
+      return a < b ? -1 : a > b ? 1 : 0;
+    });
     const workers = new Map();
     const pending = new Set();
     const humans = new Map();
@@ -61,7 +67,7 @@
     }
 
     function exchange(x, message, accepts) {
-      if (stopped || !x.ok) return Promise.resolve(null);
+      if (stopped || !x || !x.ok) return Promise.resolve(null);
       return new Promise(resolve => {
         let settled = false;
         let timer;
@@ -105,10 +111,11 @@
       workers.set(power, x);
       try {
         x.w = new Worker('/arcade/anatolian-pact/bot-worker.js');
+        const index = canonical.indexOf(power);
         return exchange(x, {
           type: 'init',
           id: seat.id,
-          seed: (seed * 31 + i) >>> 0
+          seed: (Math.imul(seed, 31) + (index >= 0 ? index : i)) >>> 0
         }, data => data && data.type === 'ready');
       } catch {
         disable(x);
@@ -129,13 +136,29 @@
         [unit.at, [...(unit.options || [])].sort()[0] || null]));
     }
 
+    function apply(call, power, payload) {
+      try {
+        return game[methods[call]](power, payload);
+      } catch {
+        return { ok: false };
+      }
+    }
+
     function submitHuman(power, payload) {
       const item = humans.get(power);
       if (!item || stopped) return { ok: false, errors: ['This seat is not waiting.'] };
       if (!valid(item.call, payload)) return { ok: false, errors: ['Invalid payload.'] };
+      const result = apply(item.call, power, payload);
+      if (!result || result.ok === false) {
+        return {
+          ok: false,
+          errors: result?.errors?.length ? result.errors :
+            ['That selection is not legal. Review the available choices and try again.']
+        };
+      }
       humans.delete(power);
-      item.resolve(payload);
-      return { ok: true };
+      item.resolve({ power, applied: true });
+      return { ok: true, ...(result.normalized ? { normalized: result.normalized } : {}) };
     }
 
     async function run() {
@@ -144,11 +167,10 @@
       if (!call) throw new Error('Unknown game phase.');
       const tasks = entries.filter(([power]) => living(power)).map(([power, seat]) => {
         if (seat.human) {
-          return new Promise(resolve => humans.set(power, { call, resolve }))
-            .then(payload => [power, payload]);
+          return new Promise(resolve => humans.set(power, { call, resolve }));
         }
         return loaded.then(async () => {
-          if (stopped) return [power, empty(call)];
+          if (stopped) return { power, payload: empty(call) };
           const key = ++serial;
           const answer = await exchange(workers.get(power), {
             type: 'call',
@@ -156,20 +178,30 @@
             key,
             state: game.botState(power)
           }, data => data && data.type === 'answer' && data.call === call && data.key === key);
-          return [power, answer && valid(call, answer.payload) ? answer.payload : fallback(call, power)];
+          const good = answer && valid(call, answer.payload);
+          return {
+            power,
+            payload: good ? answer.payload : fallback(call, power),
+            fallback: good ? null : answer ? 'invalid-payload' : 'worker-unavailable'
+          };
         });
       });
       const submissions = await Promise.all(tasks);
       if (stopped) return { events: [], resolution: [] };
-      for (const [power, payload] of submissions) {
-        try {
-          const result = game[methods[call]](power, payload);
-          if (result && result.ok === false) game[methods[call]](power, fallback(call, power));
-        } catch {
-          game[methods[call]](power, fallback(call, power));
+      const notices = [];
+      for (const item of submissions) {
+        if (item.applied) continue;
+        const result = apply(call, item.power, item.payload);
+        if (!result || result.ok === false) {
+          apply(call, item.power, fallback(call, item.power));
+          item.fallback = 'invalid-payload';
         }
+        if (item.fallback) notices.push({
+          type: 'bot-fallback', power: item.power, call, reason: item.fallback
+        });
       }
       const result = game.advance();
+      result.events = notices.concat(result.events || []);
       if (game.finished()) stop();
       return result;
     }
@@ -184,16 +216,12 @@
       stopped = true;
       for (const cancel of [...pending]) cancel();
       for (const x of workers.values()) disable(x);
-      for (const item of humans.values()) item.resolve(empty(item.call));
+      for (const [power, item] of humans) item.resolve({ power, applied: true });
       humans.clear();
     }
 
     return {
-      game,
-      loaded,
-      next,
-      submitHuman,
-      stop,
+      game, loaded, next, submitHuman, stop,
       phase: () => game.phase,
       waitingFor: () => [...humans.keys()]
     };
