@@ -46,7 +46,7 @@
   <section class="hero">
     <p class="eyebrow">Aizo TV · AI War</p>
     <h1>AI Chess Arena</h1>
-    <p class="lede">Play against chess bots written by AI models, or let two bots fight. Standard chess or Chess960.</p>
+    <p class="lede">Human intuition. Machine decisions. Play standard chess or Chess960, or put two bots head to head.</p>
   </section>
 
   <main class="ch" itemscope itemtype="https://schema.org/WebPage">
@@ -104,8 +104,10 @@
 
     <div class="ch-stage">
       <div class="ch-board">
-        <canvas id="ch-canvas" width="720" height="720" role="img" aria-label="Chess board">
-          Your browser needs canvas support to display this chess board.
+        <canvas id="ch-canvas" width="720" height="720" tabindex="0"
+          role="application" aria-roledescription="interactive chess board"
+          aria-label="Chess board" aria-describedby="ch-board-help">
+          Use the Move in UCI form to enter moves if the board is unavailable.
         </canvas>
       </div>
       <aside class="ch-side-panel" aria-label="Game information">
@@ -113,6 +115,18 @@
         <p id="ch-ticker" class="ch-ticker" role="status" aria-live="polite" aria-atomic="true">Loading players…</p>
         <p id="ch-result" class="ch-result" role="status" aria-live="polite" aria-atomic="true" hidden></p>
         <p id="ch-score" class="ch-score" aria-live="polite"></p>
+
+        <form id="ch-human-form" class="ch-human-form" aria-label="Enter a chess move">
+          <label for="ch-human-move">Move in UCI</label>
+          <div class="ch-human-entry">
+            <input id="ch-human-move" name="move" type="text" maxlength="5"
+              placeholder="e2e4" autocomplete="off" autocapitalize="none"
+              spellcheck="false" aria-describedby="ch-human-help" disabled>
+            <button id="ch-human-submit" type="submit" disabled>Play</button>
+          </div>
+          <p id="ch-human-help">From + to, such as e2e4. Promotion: e7e8q. Castle: king to its rook, such as e1h1.</p>
+        </form>
+
         <section class="ch-history" aria-label="Move history">
           <h2>Moves</h2>
           <ol id="ch-moves" aria-label="SAN move pairs" tabindex="0"></ol>
@@ -120,21 +134,23 @@
       </aside>
     </div>
 
-    <p class="ch-note">
-      Click a piece, then a highlighted square. To castle, select your king and
-      click its rook or its final g-file/c-file square. Choose a piece when a
-      pawn promotes. Two humans can play hot-seat on the same device. The board
-      automatically faces Black when only Black is human; Flip board changes
-      the view at any time.
+    <p id="ch-board-help" class="ch-note">
+      Touch or click a piece, then a highlighted square. Keyboard: focus the board,
+      use arrows to choose a square and Enter or Space to select; Escape clears
+      selection. To castle, select your king and then its rook. The final g/c
+      square also works unless it is a legal ordinary king move. Choose a piece
+      when a pawn promotes, or include q/r/b/n in UCI input. Two humans can play
+      hot-seat. Black-only human play faces Black; Flip board changes the view.
     </p>
     <p class="ch-note">
-      Bots get 1 s per move and forfeit on an illegal or late move, an exception,
-      or a loading failure. Bot pacing changes the minimum time between displayed
-      bot moves, not the thinking limit. Games also end on checkmate, stalemate,
-      threefold repetition, the fifty-move rule, insufficient material, or the
-      400-ply limit. Series play every selected game with alternating colours;
-      Chess960 uses the same starting position for each pair.
-      <a href="#ch-roster">See all players</a>.
+      Bots get 1 s per move and forfeit on illegal or late moves, exceptions or
+      loading failures. If both bots fail to load, the game is drawn. Pacing changes
+      display speed, not thinking time. Games also end on checkmate, stalemate,
+      automatic threefold repetition, the automatic fifty-move rule, insufficient
+      material or the 400-ply limit. Series alternate colours; each pair shares its
+      Chess960 position and participant random seeds.
+      <a href="#ch-roster">See all players</a> ·
+      <a href="BOT_API.md">Write a bot</a>.
     </p>
 
     <section id="ch-roster" class="ch-roster" aria-label="All chess bots">

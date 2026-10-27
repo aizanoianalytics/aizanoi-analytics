@@ -11,8 +11,18 @@
     });
     const pending = new Set();
     const workers = [];
-    const seed = new Uint32Array(1);
-    crypto.getRandomValues(seed);
+    let seed;
+    if (options.seed === undefined) {
+      const value = new Uint32Array(1);
+      crypto.getRandomValues(value);
+      seed = value[0];
+    } else {
+      if (!Number.isInteger(options.seed) ||
+          options.seed < 0 || options.seed > 0xffffffff) {
+        throw new RangeError('Invalid seed');
+      }
+      seed = options.seed;
+    }
 
     let stopped = false;
     let active = null;
@@ -31,7 +41,6 @@
       return new Promise(resolve => {
         let settled = false;
         let timer;
-
         const worker = seat.worker;
         const deadline = performance.now() + TIMEOUT_MS;
 
@@ -48,7 +57,6 @@
 
         const cancel = () => settle({ type: 'stopped' });
         pending.add(cancel);
-
         timer = setTimeout(() => {
           settle({ type: 'fail', detail: 'timed out (1000 ms)' });
         }, TIMEOUT_MS);
@@ -60,16 +68,13 @@
             settle(event.data);
           }
         };
-
         worker.onerror = event => {
           if (event.preventDefault) event.preventDefault();
           settle({ type: 'fail', detail: 'worker error' });
         };
-
         worker.onmessageerror = () => {
           settle({ type: 'fail', detail: 'unreadable worker response' });
         };
-
         try {
           worker.postMessage(message);
         } catch (error) {
@@ -80,28 +85,21 @@
 
     for (let index = 0; index < seats.length; index += 1) {
       const entry = seats[index];
-      const seat = {
-        human: Boolean(entry.human),
-        worker: null,
-        ready: null
-      };
+      const seat = { human: Boolean(entry.human), worker: null, ready: null };
       workers.push(seat);
-
       if (seat.human) continue;
-
       try {
         seat.worker = new Worker('/arcade/chess/bot-worker.js');
+        // Pair-series seed offsets follow participants, not board colours.
+        const participant = options.swapSeedSeats ? 1 - index : index;
         seat.ready = exchange(seat, {
           type: 'init',
           id: entry.id,
-          seed: (seed[0] ^ Math.imul(index + 1, 0x9e3779b9)) >>> 0
-        }, data => {
-          return data && (data.type === 'ready' || data.type === 'fail');
-        });
+          seed: (seed ^ Math.imul(participant + 1, 0x9e3779b9)) >>> 0
+        }, data => data && (data.type === 'ready' || data.type === 'fail'));
       } catch (error) {
         seat.ready = Promise.resolve({
-          type: 'fail',
-          detail: 'worker could not be created'
+          type: 'fail', detail: 'worker could not be created'
         });
       }
     }
@@ -114,16 +112,23 @@
 
     const loaded = Promise.all(workers.map(seat => seat.ready)).then(results => {
       if (stopped) return;
-
+      const failures = [];
       for (let index = 0; index < results.length; index += 1) {
         if (workers[index].human) continue;
         const result = results[index];
-
         if (!result || result.type !== 'ready') {
-          const detail = (result && result.detail) || 'invalid response';
-          forfeit(index === 0 ? 'w' : 'b', `load failed: ${detail}`);
-          break;
+          failures.push({
+            color: index === 0 ? 'w' : 'b',
+            detail: `load failed: ${(result && result.detail) || 'invalid response'}`
+          });
         }
+      }
+      if (failures.length === 2) {
+        game.forfeitBoth(failures.map(f =>
+          `${f.color === 'w' ? 'White' : 'Black'} ${f.detail}`).join('; '));
+        stop();
+      } else if (failures.length === 1) {
+        forfeit(failures[0].color, failures[0].detail);
       }
     });
 
@@ -136,17 +141,17 @@
 
     function waitForHuman() {
       return new Promise(resolve => {
+        let finished = false;
         function finish(event) {
+          if (finished) return;
+          finished = true;
           pending.delete(cancel);
           human = null;
           resolve(event);
         }
-
         const cancel = () => finish({
-          type: 'stopped',
-          status: game.status()
+          type: 'stopped', status: game.status()
         });
-
         human = { finish };
         pending.add(cancel);
       });
@@ -154,36 +159,24 @@
 
     async function advance() {
       await loaded;
-
-      if (game.status().over) {
-        return { type: 'over', status: game.status() };
-      }
-      if (stopped) {
-        return { type: 'stopped', status: game.status() };
-      }
-
+      if (game.status().over) return { type: 'over', status: game.status() };
+      if (stopped) return { type: 'stopped', status: game.status() };
       const color = game.turn;
       const seat = workers[color === 'w' ? 0 : 1];
       if (seat.human) return waitForHuman();
 
       const state = game.botState();
-      const reply = await exchange(seat, { type: 'move', state }, data => {
-        return data && (
-          data.type === 'fail' ||
-          (data.type === 'move' && data.ply === state.ply)
-        );
-      });
+      const reply = await exchange(seat, { type: 'move', state }, data =>
+        data && (data.type === 'fail' ||
+          (data.type === 'move' && data.ply === state.ply)));
 
-      if (stopped) {
-        return { type: 'stopped', status: game.status() };
-      }
+      if (stopped) return { type: 'stopped', status: game.status() };
       if (reply.type !== 'move') {
         return forfeit(color, reply.detail || 'bot failed');
       }
       if (typeof reply.move !== 'string' || !state.legalMoves.includes(reply.move)) {
         return forfeit(color, reply.detail || 'illegal move');
       }
-
       const event = commit(reply.move);
       if (!event.ok) return forfeit(color, 'illegal move');
       return event;
@@ -205,7 +198,6 @@
       if (typeof uci !== 'string') {
         return { ok: false, error: 'Move must be a UCI string' };
       }
-
       const event = commit(uci);
       if (event.ok) human.finish(event);
       return event;

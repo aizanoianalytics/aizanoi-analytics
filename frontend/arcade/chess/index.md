@@ -5,134 +5,156 @@ external fonts or third-party runtime assets.
 
 ## Files
 
-- `engine.js`: deterministic UMD chess engine, legal moves, SAN, FEN and results.
-- `bot-worker.js`: loads the engine and one validated local bot identifier.
-- `runner.js`: workers, loading deadlines, move deadlines, human input and cleanup.
-- `renderer.js`: responsive, DPR-aware canvas board and square pointer input.
-- `game.js`: roster, seats, human interaction, promotions, pacing and series.
-- `index.html`, `chess.css`: page, controls and responsive layout.
-- `bots.json`: roster metadata.
-- `bots/<id>.js`: sample bots and future reviewed AI-model entries.
+- `engine.js`: deterministic UMD engine, legal moves, SAN, FEN and results.
+- `bot-worker.js`: engine and one validated local bot identifier.
+- `runner.js`: workers, deadlines, input, adjudication and cleanup.
+- `renderer.js`: responsive DPR-aware board, pointer and keyboard input.
+- `game.js`: roster, human interaction, promotion, pacing and paired series.
+- `index.html`, `chess.css`: light page shell and dark neon arena.
+- `bots.json`: roster metadata; `bytes: 0` means unspecified.
+- `bots/<id>.js`: reviewed submissions and labelled house examples.
+- [BOT_API.md](BOT_API.md): complete external-author and AI-model contract.
 
-The engine and the three sample bot implementations are supplied by the engine/bot
-module. Sample bots are explicitly labelled `Aizanoi sample`, not model entries.
+Sample bots are explicitly attributed to `Aizanoi sample`, not AI-model entries.
 
-## CSP and structured metadata
+## CSP
 
-The page uses external scripts and styles only. It needs same-origin fetches,
-workers and worker script imports. It does not need inline script/style
-permission or dynamic JavaScript compilation.
+Scripts and styles are external. The only inline script is the
+`application/ld+json` metadata block. There are no inline handlers, style
+attributes, dynamic code compilers or remote runtime dependencies.
 
-Bot colours are validated hexadecimal values and applied using
-`style.setProperty('--c', value)`.
+Bot colours are validated hexadecimal values applied through
+`style.setProperty('--c', value)`. Canvas drawing needs no inline-style
+permission. Same-origin fetches, workers and worker imports must be allowed.
 
-The only inline `<script>` is the `application/ld+json` metadata block (data, not code), as on the other arcade pages.
+The worker validates identifiers and imports exactly `bots/${id}.js`, never
+a message-supplied URL. Workers isolate execution but are not a hostile-code
+security sandbox. Publish reviewed bot files only.
 
-## Bot contract
+## Bots and headless engine
 
-A bot exports a synchronous function:
+See [BOT_API.md](BOT_API.md) for the full state, rules, examples and timing.
 
-    module.exports = function move(state) {
-      return state.legalMoves[0];
-    };
+Bots export a synchronous function or `{ name, move }`; the legacy global
+`move` fallback remains supported. Return one canonical UCI string from
+`state.legalMoves`. Castling is king-to-friendly-rook, including standard chess.
 
-An object `{ name, move }` is also accepted, as is the house worker's legacy
-global `move` fallback. Asynchronous returns are invalid.
+`ChessEngine.fromBotState(state)` restores initial position, canonical history,
+repetition counts, clocks, match-relative ply, configured limit and forfeits.
+Recreating only `state.fen` intentionally loses history-dependent draw context.
 
-The engine is available as `self.ChessEngine`. Bots may construct an analysis
-position using `ChessEngine.create({ fen: state.fen, variant: state.variant })`.
+The engine is DOM-free and deterministic. Under this repository's ESM setup,
+Node tests retain the same-realm `vm.Script(...).runInThisContext()` UMD loader.
 
-`state` contains variant, FEN, board, side to move, legal UCI strings, UCI history,
-ply counters, check state and `timeLimitMs: 1000`. Return exactly one string from
-`state.legalMoves`. Castling uses king-takes-own-rook UCI, including in standard
-chess. Promotion suffixes are `q`, `r`, `b` or `n`.
+Threefold repetition and the fifty-move rule are automatic arena draws, not
+FIDE claim procedures. The normal match limit is 400 plies. All-bishop material
+on a single square colour is insufficient, including promoted bishops.
 
-Each seat gets its own worker and seeded `Math.random`. This makes random-number
-sequences reproducible for a given seed; wall-clock-budgeted searches can still
-vary by device and load.
-
-Only a lowercase identifier matching `/^[a-z0-9][a-z0-9.-]*$/`, without `..`,
-can select `bots/<id>.js`. Manifest file paths are informational; the runner
-never sends a script URL.
-
-Workers provide execution isolation and can be terminated. They are not a
-security sandbox for hostile same-origin JavaScript. Publish reviewed bot files
-only; do not add user-supplied code or arbitrary remote imports.
+`start960(518)` retains its existing `STANDARD_FEN` compatibility result.
+Chess960 `game.fen()` emits Shredder file-letter rights.
 
 ## Runner
 
-    const match = ChessRunner.start({
-      white: { human: true },
-      black: { id: 'sample-minimax', name: 'Sample Minimax' },
-      variant: 'standard'
-    });
+```js
+const match = ChessRunner.start({
+  white: { human: true },
+  black: { id: 'sample-minimax', name: 'Sample Minimax' },
+  variant: 'standard',
+  seed: 123
+});
 
-    await match.loaded;
-    const event = await match.next();
+await match.loaded;
+const event = await match.next();
+```
 
-For human turns, `next()` stays pending until a valid
-`submitHuman(uci)` call. Invalid human moves return `{ ok: false, error }`
-without consuming the turn. Concurrent `next()` calls share one promise.
+`seed` is optional; when present it must be an unsigned 32-bit integer.
+`position960` selects a Scharnagl start.
+`swapSeedSeats: true` follows original participant random streams when seats
+are reversed in a paired series.
 
-Events have `type` equal to `move`, `forfeit`, `over` or `stopped`.
-Move events include `ok`, `color`, `uci`, SAN/move metadata and current status.
-Forfeit events include the losing colour, detail and current status.
-`loaded` always settles, including after `stop()`.
+A human `next()` waits for valid `submitHuman(uci)`. Invalid human moves return
+`{ ok: false, error }` without consuming the turn. Concurrent `next()` calls
+share a promise.
 
-Both initialization and each bot move have a 1000 ms deadline. Loading failures,
-worker errors, unreadable responses, exceptions, non-string moves and illegal
-moves forfeit. A forfeit terminates both workers. `stop()` is idempotent,
-cancels pending requests, clears their deadlines, terminates workers and settles
-pending human input. It does not independently adjudicate a game.
+Events are `move`, `forfeit`, `over` or `stopped`. Move events include colour,
+UCI, SAN/move metadata and status. A single bot failure forfeits to its opponent.
+Two initialization failures draw with reason `forfeit`, retaining both details.
+`forfeitBoth(detail)` is also available on engine games.
+
+Initialization and moves each have independent 1000 ms deadlines. Loading,
+worker or communication errors, exceptions, non-string returns, illegal moves
+and late responses forfeit. There is no fallback move. `loaded` always settles,
+including after stopping.
+
+`stop()` is idempotent, terminates workers, clears deadlines and settles pending
+requests. It does not independently adjudicate a game.
 
 ## Page behaviour
 
-White defaults to Human; Black defaults to Sample Minimax. URL parameters:
+White defaults to Human, Black to Sample Minimax.
 
-    ?white=sample-greedy&black=sample-random&variant=standard&autostart=1
+Existing URL parameters remain:
 
-Unknown seat/variant values are ignored. Fetch or manifest validation failure
-disables Start and displays `The players could not be loaded…`.
+```text
+?white=sample-greedy&black=sample-random&variant=standard&autostart=1
+```
 
-Click a human piece, then a target. Castling can target the rook or the king's
-g/c destination; in Chess960, castling takes precedence when a normal king move
-shares that destination. Promotion opens the four-piece dialog. Escape or
-Cancel leaves the move uncommitted.
+Unknown seat and variant values are ignored. Fetch or manifest failure disables
+Start and displays the loading-error message.
 
-Resign acts only on the human whose turn it is. Black-only human play
-automatically flips the board. Two humans use hot-seat.
+Human input supports touch, mouse, keyboard and the labelled UCI form:
 
-Pacing is a minimum of 900/450/150/0 ms per bot turn, including worker response
-time, and never extends its thinking deadline. Speed remains adjustable while
-playing; other setup controls are locked.
+- Select a piece, then a highlighted square.
+- Focus the board; arrows move focus, Enter/Space activates, Escape clears.
+- Home/End move to a row edge; Shift+Home/End move to a board corner.
+- Castling always works by selecting the king then its rook.
+- A king's g/c destination is a convenience castling target only when it is not
+  also a legal ordinary king move. This avoids hiding legal Chess960 moves.
+- Promotion uses the native four-piece modal; Escape or Cancel commits nothing.
+- UCI input exposes every legal move unambiguously, including underpromotion.
+- Resign acts on the human whose turn it is.
+- Black-only human play automatically faces Black. Flip board remains available.
 
-Series contain exactly 1, 2 or 4 games. Colours alternate, points follow the
-original participants, draws award half a point, and each Chess960 pair shares
-one randomly selected Scharnagl position.
+Pacing is a minimum 900/450/150/0 ms per displayed bot turn, including response
+time; it never extends thinking time. Speed remains adjustable during play.
+
+Series contain 1, 2 or 4 games. Colours alternate, points follow original
+participants, draws award half a point, and each pair shares its starting
+position and participant random seeds. Chess960 positions use unbiased
+rejection sampling. Wall-clock-budgeted bots can still differ across devices.
 
 ## QA handle
 
-`window.__CHESS_ARENA__()` returns a fresh, deeply frozen snapshot:
+`window.__CHESS_ARENA__()` remains a fresh, deeply frozen snapshot:
 
-    { bots, running, seats: [white, black], variant, ticker, result, moves, fen }
+```js
+{ bots, running, seats: [white, black], variant, ticker, result, moves, fen }
+```
 
-`moves` contains SAN strings. The handle cannot mutate the runner or engine.
+`moves` contains SAN strings. It cannot mutate the engine or runner.
 
 ## Tests
 
-Requires Node 22 or newer:
+Node 22 or newer:
 
-    node --test tests/chess-page.test.mjs
+```sh
+node --test tests/chess-engine.test.mjs tests/chess-page.test.mjs tests/chess-review.test.mjs
+```
 
-After installing Playwright and its Chromium browser, serve `frontend/` as the
-web root at port 4173, then run:
+After installing Playwright and Chromium, serve `frontend/` on port 4173:
 
-    node --test tests/browser/chess.test.mjs
+```sh
+node --test tests/browser/chess.test.mjs tests/browser/chess-review.test.mjs
+```
 
-Override the base URL with `ANCIENT_WORLD_BASE_URL`. Browser contexts block
-service workers so cached responses cannot hide changes.
+Override the browser origin using `ANCIENT_WORLD_BASE_URL`. Browser contexts
+block service workers.
 
-Static tests inspect every chess JavaScript file, HTML CSP constraints, worker
-path construction, runner messages and manifest file existence. Browser tests
-cover a completed bot game, human e2-e4 followed by a bot reply, roster counts,
-page errors and a 390×844 layout.
+Existing perft, rule, manifest, CSP-source, bot and page regressions are retained.
+Additional tests cover history-aware reconstruction, draw context, promoted
+bishops, simultaneous load failures, request correlation, export receivers,
+timeouts, participant seeds, keyboard/UCI input and Chess960 destination
+ambiguity.
+
+The review deliverable was prepared without execution access. These commands
+must be run before treating it as verified.

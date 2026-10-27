@@ -43,16 +43,25 @@ function ordered(game, preferred) {
   return game.legalMoves().map(uci => {
     const attacker = at(board, uci.slice(0, 2));
     const target = at(board, uci.slice(2, 4));
-    const victim = target && target[0] !== attacker[0] ? VALUES[target[1]] : !target && attacker[1] === 'P' && uci[0] !== uci[2] ? VALUES.P : 0;
+    const victim = target && target[0] !== attacker[0]
+      ? VALUES[target[1]]
+      : !target && attacker[1] === 'P' && uci[0] !== uci[2] ? VALUES.P : 0;
     const promotion = uci[4] ? VALUES[uci[4].toUpperCase()] : 0;
-    return { uci, score: (uci === preferred ? MATE : 0) + (victim ? victim * 10 - VALUES[attacker[1]] : 0) + promotion, tie: Math.random() };
-  }).sort((a, b) => b.score - a.score || a.tie - b.tie).map(entry => entry.uci);
+    return {
+      uci,
+      score: (uci === preferred ? MATE : 0) +
+        (victim ? victim * 10 - VALUES[attacker[1]] : 0) + promotion,
+      tie: Math.random()
+    };
+  }).sort((a, b) => b.score - a.score || a.tie - b.tie)
+    .map(entry => entry.uci);
 }
 
 module.exports = function move(state) {
   if (!state.legalMoves.length) return undefined;
-  const deadline = Date.now() + Math.min(300, Math.max(1, (state.timeLimitMs || 1000) - 100));
-  const root = globalThis.ChessEngine.create({ fen: state.fen, variant: state.variant });
+  const deadline = Date.now() +
+    Math.min(300, Math.max(1, (state.timeLimitMs || 1000) - 100));
+  const root = globalThis.ChessEngine.fromBotState(state);
   let best = state.legalMoves[0];
 
   function checkTime() {

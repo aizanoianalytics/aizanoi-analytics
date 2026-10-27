@@ -13,18 +13,22 @@ function material(board, you) {
 }
 
 module.exports = function move(state) {
+  const root = globalThis.ChessEngine.fromBotState(state);
   let best = -Infinity;
   let choices = [];
   for (const uci of state.legalMoves) {
-    const game = globalThis.ChessEngine.create({ fen: state.fen, variant: state.variant });
+    const game = root.clone();
     const result = game.move(uci);
     if (!result.ok) continue;
     const status = game.status();
-    const score = result.mate ? 1000000 : status.over ? 0 : material(game.board(), state.you) + (result.check ? 25 : 0);
+    const score = result.mate ? 1000000 : status.over ? 0 :
+      material(game.board(), state.you) + (result.check ? 25 : 0);
     if (score > best) {
       best = score;
       choices = [uci];
     } else if (score === best) choices.push(uci);
   }
-  return choices.length ? choices[Math.floor(Math.random() * choices.length)] : state.legalMoves[0];
+  return choices.length
+    ? choices[Math.floor(Math.random() * choices.length)]
+    : state.legalMoves[0];
 };

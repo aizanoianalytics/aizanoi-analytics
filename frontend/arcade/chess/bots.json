@@ -18,8 +18,8 @@
    "lab": "Aizanoi sample",
    "color": "#ffd84d",
    "file": "bots/sample-greedy.js",
-   "bytes": 954,
-   "note": "House example, not an AI-model entry. Searches one ply for material, checks and mate, with random tie-breaking."
+   "bytes": 966,
+   "note": "House example, not an AI-model entry. Searches one ply for material, checks and mate, with random tie-breaking. Preserves repetition and move-limit context."
   },
   {
    "id": "sample-minimax",
@@ -28,8 +28,8 @@
    "lab": "Aizanoi sample",
    "color": "#2dd4bf",
    "file": "bots/sample-minimax.js",
-   "bytes": 3491,
-   "note": "House example, not an AI-model entry. Uses iterative-deepening alpha-beta, piece-square tables and MVV-LVA ordering with an approximately 300 ms search budget."
+   "bytes": 3511,
+   "note": "House example, not an AI-model entry. Uses iterative-deepening alpha-beta, piece-square tables and MVV-LVA ordering with an approximately 300 ms search budget. Clock-budgeted results may vary by device."
   }
  ]
 }
