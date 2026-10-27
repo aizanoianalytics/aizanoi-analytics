@@ -2,7 +2,8 @@
 (function () {
   'use strict';
   const $ = id => document.getElementById(id);
-  const cv = $('sr-canvas'), g = cv.getContext('2d');
+  const cv = $('sr-canvas'), renderer = SnakeArenaRenderer.create(cv);
+  window.addEventListener('pagehide', event => { if (!event.persisted) renderer.destroy(); });
   const CAUSE = {
     'head-on': d => `${d.by} won the head-on against ${d.id}`, body: d => `${d.id} crashed into ${d.by}`, self: d => `${d.id} bit its own tail`,
     wall: d => `${d.id} hit the wall`, storm: d => `${d.id} was swallowed by the storm`, starved: d => `${d.id} starved`, 'load-error': d => `${d.id} failed to start`,
@@ -32,41 +33,17 @@
   }
 
   // ---------- drawing ----------
-  function draw(game, colors) {
-    const W = game.options.width, H = game.options.height, S = cv.width / Math.max(W, H);
-    g.fillStyle = '#0f1526'; g.fillRect(0, 0, cv.width, cv.height);
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-      const storm = x < game.hazard || y < game.hazard || x >= W - game.hazard || y >= H - game.hazard;
-      g.fillStyle = storm ? '#4a1d2c' : ((x + y) & 1 ? '#18213a' : '#1b2644');
-      g.fillRect(x * S, y * S, S, S);
-    }
-    game.food.forEach(([x, y]) => { g.fillStyle = '#ff5a6e'; g.beginPath(); g.arc((x + .5) * S, (y + .5) * S, S * .26, 0, 7); g.fill(); });
-    game.snakes.forEach(s => {
-      if (!s.body.length) return;
-      const col = colors[s.id];
-      g.globalAlpha = s.alive ? 1 : 0.28;
-      s.body.forEach(([x, y], i) => {
-        const k = i === 0 ? .88 : .74, off = (1 - k) / 2;
-        g.fillStyle = col; g.beginPath(); g.roundRect((x + off) * S, (y + off) * S, k * S, k * S, S * .22); g.fill();
-      });
-      if (s.alive) {
-        const [hx, hy] = s.body[0];
-        g.fillStyle = '#fff'; [-.18, .18].forEach(dx => { g.beginPath(); g.arc((hx + .5 + dx) * S, (hy + .42) * S, S * .09, 0, 7); g.fill(); });
-        g.fillStyle = '#0b0f14'; [-.18, .18].forEach(dx => { g.beginPath(); g.arc((hx + .5 + dx) * S, (hy + .42) * S, S * .04, 0, 7); g.fill(); });
-      }
-      g.globalAlpha = 1;
-    });
-    g.fillStyle = 'rgba(255,255,255,.75)'; g.font = `700 ${S * .32}px system-ui,sans-serif`; g.textAlign = 'left';
-    g.fillText(`turn ${game.turn}`, 8, cv.height - 8);
-    const nx = game.nextShrinkTurn - game.turn;
-    if (game.turn < game.options.maxTurns) { g.textAlign = 'right'; g.fillText(`storm ${nx > 0 ? 'in ' + nx : 'now'}`, cv.width - 8, cv.height - 8); }
+  function draw(game, colors, fighters = [$('sr-a').value, $('sr-b').value]) {
+    renderer.update(game, colors, { fighters, duration: Number($('sr-speed').value) });
+    $('sr-turn').textContent = `TURN ${game.turn}`;
+    $('sr-storm').textContent = `STORM IN ${Math.max(0, game.nextShrinkTurn - game.turn)} · RING ${game.hazard}`;
   }
   function cards(snakes, series) {
     const box = $('sr-cards'); box.textContent = '';
     snakes.forEach(s => {
       const b = byId[s.id], c = el('div', 'sr-card' + (s.alive ? '' : ' dead')); c.style.setProperty('--c', b.color);
-      c.appendChild(el('b', null, b.name));
-      c.appendChild(el('small', null, `${s.alive ? 'length ' + s.length : 'out'} · wins ${series.wins[s.id]}`));
+      c.appendChild(el('b', null, `${s.id === (series.fighters || [$('sr-a').value])[0] ? 'A' : 'B'} · ${b.name}`));
+      c.appendChild(el('small', null, `${s.alive ? 'Length ' + s.length + ' · Health ' + s.health : 'Out'} · wins ${series.wins[s.id]}`));
       const bar = el('div', 'sr-bar'), i = el('i'); i.style.setProperty('--c', b.color); i.style.width = Math.max(0, s.health) + '%'; bar.appendChild(i); c.appendChild(bar);
       box.appendChild(c);
     });
@@ -83,7 +60,7 @@
     await run.loaded;
     const game = run.game;
     const names = Object.fromEntries(BOTS.map(x => [x.id, x.name]));
-    draw(game, colors); cards(view(game), series);
+    draw(game, colors, series.fighters); cards(view(game), series);
     try {
       while (!game.finished() && my === token) {
         const t0 = performance.now();
@@ -92,7 +69,7 @@
           if (e.type === 'death') $('sr-ticker').textContent = (CAUSE[e.cause] || (() => e.cause))({ id: names[e.id], by: names[e.by] });
           if (e.type === 'shrink') $('sr-ticker').textContent = 'The storm closes in!';
         });
-        draw(game, colors); cards(view(game), series);
+        draw(game, colors, series.fighters); cards(view(game), series);
         if (delay) await sleep(Math.max(0, delay - (performance.now() - t0)));
       }
     } finally { run.stop(); }
@@ -106,7 +83,7 @@
     if (a.id === b.id) { $('sr-ticker').textContent = 'Pick two different fighters.'; setRunning(false); return; }
     const bestOf = +$('sr-series').value, need = Math.floor(bestOf / 2) + 1, delay = +$('sr-speed').value;
     const base = Math.floor(Math.random() * 1e6);
-    const series = { n: 0, wins: { [a.id]: 0, [b.id]: 0 } };
+    const series = { n: 0, fighters: [a.id, b.id], wins: { [a.id]: 0, [b.id]: 0 } };
     while (series.wins[a.id] < need && series.wins[b.id] < need && series.n < bestOf + 4 && my === token) {
       const pl = await playOne(a, b, base + series.n, delay, series, my);
       if (!pl) break;

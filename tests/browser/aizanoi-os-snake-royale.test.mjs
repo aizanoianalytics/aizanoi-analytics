@@ -15,6 +15,12 @@ for (const [name, viewport, launcher] of [
     const context = await browser.newContext({ viewport, serviceWorkers: 'block' });
     await context.addInitScript(() => {
       const NativeWorker = window.Worker;
+      const nativeFill = CanvasRenderingContext2D.prototype.fillRect;
+      window.__snakePaints = new WeakMap();
+      CanvasRenderingContext2D.prototype.fillRect = function (...args) {
+        window.__snakePaints.set(this.canvas, (window.__snakePaints.get(this.canvas) || 0) + 1);
+        return nativeFill.apply(this, args);
+      };
       window.__snakeWorkers = [];
       window.Worker = class extends NativeWorker {
         constructor(...args) { super(...args); this.stopped = false; window.__snakeWorkers.push(this); }
@@ -39,10 +45,11 @@ for (const [name, viewport, launcher] of [
       assert.ok(await win.locator('[name=a] option').count() >= 20);
       const metrics = await win.evaluate(el => ({
         canvas: el.querySelector('canvas').getBoundingClientRect().width,
+        canvasHeight: el.querySelector('canvas').getBoundingClientRect().height,
         content: el.querySelector('.sr-app').getBoundingClientRect().width,
         overflow: el.querySelector('.sr-app').scrollWidth - el.querySelector('.sr-app').clientWidth,
       }));
-      assert.ok(metrics.canvas > 100 && metrics.content > 200, JSON.stringify(metrics));
+      assert.ok(Math.min(metrics.canvas, metrics.canvasHeight) >= 150 && metrics.content > 200, JSON.stringify(metrics));
       assert.ok(metrics.overflow <= 1, JSON.stringify(metrics));
       const geometry = await win.evaluate(el => {
         const bounds = el.querySelector('[data-app-body]').getBoundingClientRect();
@@ -67,7 +74,11 @@ for (const [name, viewport, launcher] of [
       await win.locator('[data-random]').click();
       await win.getByRole('button', { name: 'Fight', exact: true }).click();
       await page.waitForFunction(() => window.__snakeWorkers.length >= 4);
+      await win.locator('canvas').evaluate(canvas => { window.__closedSnakeCanvas = canvas; });
       await win.locator('[data-action="close"]').click();
+      const paintsAfterClose = await page.evaluate(() => window.__snakePaints.get(window.__closedSnakeCanvas));
+      await page.evaluate(() => new Promise(resolve => { requestAnimationFrame(() => requestAnimationFrame(resolve)); }));
+      assert.equal(await page.evaluate(() => window.__snakePaints.get(window.__closedSnakeCanvas)), paintsAfterClose, 'closed arena must stop painting');
       assert.ok(await page.evaluate(() => window.__snakeWorkers.every(worker => worker.stopped)), 'all workers terminated');
       assert.equal(await page.locator('link[href="/js/v3/apps/snake-royale/src/app.css"]').count(), 0);
       assert.deepEqual(errors, []);

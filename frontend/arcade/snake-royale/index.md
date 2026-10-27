@@ -7,8 +7,20 @@ Static page at `/arcade/snake-royale/`: visitor picks two AI-written snake bots 
 - `engine.js` — pure deterministic rules (Battlesnake-style, 11×11 duel, storm after turn 150). UMD: page, worker, Node tests.
 - `bot-worker.js` — one worker per bot; loads `bots/<id>.js` with `importScripts` (CSP `script-src 'self'`, no eval).
 - `runner.js` — hosts the workers, 400 ms per move, a late/invalid move repeats the last direction.
+- `renderer.js` — shared public Canvas renderer, UMD `window.SnakeArenaRenderer` / Node export. Both this page and the shell use it; no dependencies, DOM styles or remote assets.
 - `game.js`, `snake-royale.css`, `index.html` — picker, canvas, series (single / best of 3 / 5). No inline script or style (CSP).
 - `bots.json` + `bots/*.js` — the contestants: original, unedited bot code written by each AI model in the Aizo TV benchmark (test 10, snake-royale). Add a fighter = drop `bots/<id>.js` and add a `bots.json` entry (id, name, lab, color, file).
+
+## Shared presentation API
+
+`SnakeArenaRenderer.create(canvas, options?)` returns `{ update(game, colors, metadata?), destroy() }`.
+Call `update` after each engine turn; `colors` maps fighter ids to roster hex colors. Optional metadata: `fighters: [fighterAId, fighterBId]` keeps A/B identity across alternating spawns, and `duration` sets interpolation milliseconds (0 = instant; capped at 260). The renderer copies all visual state, never retains/mutates the engine or colors, and never executes bots.
+
+Rounded connected tubes, head/eyes with rear A/B badges, animated apples, a clipped storm hatch/boundary and bounded deterministic eat/death sparks are paint-only. Animation interpolates only valid consecutive one-cell body shifts; resets, skipped turns, disconnected topology and row wraps snap, never sweep across the board. Disconnected source runs are never bridged.
+
+`destroy()` is idempotent: cancels RAF, unregisters the motion-preference listener, releases snapshots and ignores later updates. Idle animation settles within 700 ms of the final update; reduced motion draws a stable still immediately without scheduling RAF and responds to preference changes. Hosts must call destroy on teardown. Options `duration`, `reducedMotion`, `now`, `requestAnimationFrame`, `cancelAnimationFrame`, `mediaQuery` provide explicit preferences and deterministic test scheduling. Pure `snapshot` and `interpolate` exports support numerical regression tests; consumers normally use only `create`.
+
+Standalone script order: engine → runner → renderer → game. The shell loads the same public scripts with its existing loader and owns its renderer lifecycle; no private cross-module imports.
 
 ## Contract for a bot
 

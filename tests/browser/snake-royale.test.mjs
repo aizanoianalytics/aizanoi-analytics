@@ -49,6 +49,39 @@ test('the arena loads every fighter and fights a real match', async () => {
   });
 });
 
+test('the real arena paints animated neon artwork and honors reduced motion', async () => {
+  await withPage(async (page, errors) => {
+    await page.goto(`${base}/arcade/snake-royale/?visual-test=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => window.__SNAKE_ROYALE__?.().bots > 0);
+    assert.equal(await page.evaluate(() => typeof window.SnakeArenaRenderer?.create), 'function');
+    const fingerprint = () => {
+      const canvas = document.querySelector('#sr-canvas');
+      const bytes = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      let hash = 0, bright = 0;
+      for (let i = 0; i < bytes.length; i += 4) {
+        if (Math.max(bytes[i], bytes[i + 1], bytes[i + 2]) > 145) bright++;
+        if (i % 212 === 0) hash = (Math.imul(hash, 31) + bytes[i] + bytes[i + 1] + bytes[i + 2]) | 0;
+      }
+      return { hash, bright };
+    };
+    const start = await page.evaluate(fingerprint);
+    assert.ok(start.bright > 1000, `arena must contain visible illuminated artwork: ${JSON.stringify(start)}`);
+    await page.waitForFunction(previous => {
+      const canvas = document.querySelector('#sr-canvas');
+      const bytes = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+      let hash = 0;
+      for (let i = 0; i < bytes.length; i += 212) hash = (Math.imul(hash, 31) + bytes[i] + bytes[i + 1] + bytes[i + 2]) | 0;
+      return hash !== previous;
+    }, start.hash, { polling: 'raf', timeout: 5000 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.evaluate(() => new Promise(resolve => { requestAnimationFrame(() => requestAnimationFrame(resolve)); }));
+    const reduced = await page.evaluate(fingerprint);
+    await page.waitForTimeout(160);
+    assert.deepEqual(await page.evaluate(fingerprint), reduced, 'reduced-motion idle artwork must stop pulsing');
+    assert.deepEqual(errors, []);
+  });
+});
+
 test('a failed fighter manifest states the problem instead of leaving an empty picker', async () => {
   await withPage(async (page) => {
     await page.goto(`${base}/arcade/snake-royale/?qa=${Date.now()}`, { waitUntil: 'domcontentloaded' });

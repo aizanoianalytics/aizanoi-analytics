@@ -1,6 +1,6 @@
 // First-party shell renderer; the standalone route remains an independent document.
 const BASE = '/arcade/snake-royale/';
-const PALETTE = { board: '#111b30', food: '#ff697c' };
+
 const scripts = new Map();
 function loadScript(file) {
   if (!scripts.has(file)) {
@@ -33,6 +33,7 @@ export async function mount({ container }) {
       <label>Speed <select name="speed"><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
       <div class="sr-app-actions"><button type="submit">Fight</button><button type="button" data-random>Random pair</button><button type="button" data-retry hidden>Retry</button></div>
     </form>
+    <div class="sr-app-telemetry" aria-label="Arena status"><span data-turn>TURN 0</span><span data-storm>STORM IN 150</span><span>11 × 11 · DUEL</span></div>
     <div class="sr-app-stage"><canvas width="660" height="660" role="img" aria-label="Snake Royale arena"></canvas>
       <aside aria-live="polite"><div data-cards></div><p data-ticker>Loading fighters…</p><strong data-result hidden></strong></aside></div>
     <p class="sr-app-rules">11×11 board · 100 health · shrinking storm after turn 150 · 400 ms per bot move.</p>`;
@@ -42,7 +43,8 @@ export async function mount({ container }) {
   document.head.append(cssLink);
   const get = selector => root.querySelector(selector);
   const a = get('[name=a]'), b = get('[name=b]'), ticker = get('[data-ticker]');
-  const result = get('[data-result]'), canvas = get('canvas'), ctx = canvas.getContext('2d');
+  const result = get('[data-result]'), canvas = get('canvas');
+  let renderer = null;
   const abort = new AbortController();
   let bots = [], active = null, generation = 0, closed = false;
   const timers = new Set();
@@ -60,33 +62,9 @@ export async function mount({ container }) {
     timers.clear();
   }
   function draw(game, colors, fighters = [a.value, b.value]) {
-    const size = canvas.width / game.options.width;
-    ctx.fillStyle = PALETTE.board; ctx.fillRect(0, 0, canvas.width, canvas.height);
-    for (let y = 0; y < game.options.height; y++) for (let x = 0; x < game.options.width; x++) {
-      ctx.fillStyle = (x < game.hazard || y < game.hazard || x >= game.options.width - game.hazard || y >= game.options.height - game.hazard)
-        ? '#563040' : ((x + y) % 2 ? '#233454' : '#1d2d4b');
-      ctx.fillRect(x * size, y * size, size, size);
-    }
-    for (const [x, y] of game.food) {
-      ctx.fillStyle = PALETTE.food; ctx.beginPath(); ctx.arc((x + .5) * size, (y + .5) * size, size * .27, 0, Math.PI * 2); ctx.fill();
-    }
-    for (const snake of game.snakes) {
-      ctx.globalAlpha = snake.alive ? 1 : .3;
-      ctx.fillStyle = colors[snake.id];
-      for (const [x, y] of snake.body) ctx.fillRect((x + .12) * size, (y + .12) * size, size * .76, size * .76);
-      const [x, y] = snake.body[0], [nx, ny] = snake.body[1] || snake.body[0];
-      const direction = x > nx ? '→' : x < nx ? '←' : y > ny ? '↓' : y < ny ? '↑' : '•';
-      const badge = colors[snake.id] || '#ffffff';
-      const channels = [1, 3, 5].map(index => parseInt(badge.slice(index, index + 2), 16));
-      const luminance = (0.299 * channels[0] + 0.587 * channels[1] + 0.114 * channels[2]) / 255;
-      const ink = luminance > 0.6 ? '#101b2c' : '#ffffff';
-      ctx.fillStyle = badge;
-      ctx.beginPath(); ctx.arc((x + .5) * size, (y + .5) * size, size * .39, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.stroke();
-      ctx.fillStyle = ink; ctx.font = `bold ${size * .32}px system-ui`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText(`${fighters.indexOf(snake.id) === 0 ? 'A' : 'B'}${direction}`, (x + .5) * size, (y + .5) * size);
-    }
-    ctx.globalAlpha = 1;
+    renderer.update(game, colors, { fighters, duration: Number(get('[name=speed]').value) });
+    get('[data-turn]').textContent = `TURN ${game.turn}`;
+    get('[data-storm]').textContent = `STORM IN ${Math.max(0, game.nextShrinkTurn - game.turn)} · RING ${game.hazard}`;
     const cards = get('[data-cards]'); cards.replaceChildren();
     for (const snake of game.snakes) {
       const card = node('div', 'sr-app-card');
@@ -94,6 +72,15 @@ export async function mount({ container }) {
       const label = fighters.indexOf(snake.id) === 0 ? 'A' : 'B';
       card.dataset.fighter = label;
       card.append(node('b', null, `${label} · ${name}`), node('small', null, `${snake.alive ? 'Length ' + snake.body.length + ' · Health ' + snake.health : 'Out'} · Turn ${game.turn}`));
+      const health = node('progress', 'sr-app-health');
+      health.max = 100; health.value = Math.max(0, snake.health);
+      health.setAttribute('aria-label', `${label} health ${snake.health} of 100`);
+      // HTML's SVG namespace transition needs no remote URL or inline CSS.
+      const stripe = node('span', 'sr-app-color');
+      stripe.setAttribute('aria-hidden', 'true');
+      stripe.innerHTML = '<svg viewBox="0 0 100 4" preserveAspectRatio="none"><rect width="100" height="4"/></svg>';
+      stripe.querySelector('rect').setAttribute('fill', colors[snake.id]);
+      card.prepend(stripe); card.append(health);
       cards.append(card);
     }
   }
@@ -156,6 +143,9 @@ export async function mount({ container }) {
     try {
       await loadScript('engine.js');
       await loadScript('runner.js');
+      await loadScript('renderer.js');
+      if (closed) return;
+      if (!renderer) renderer = window.SnakeArenaRenderer.create(canvas);
       const response = await fetch(BASE + 'bots.json', { signal: abort.signal });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const payload = await response.json();
@@ -184,6 +174,6 @@ export async function mount({ container }) {
   await load();
   return () => {
     closed = true;
-    cancel(); abort.abort(); cssLink.remove(); root.remove();
+    cancel(); renderer?.destroy(); abort.abort(); cssLink.remove(); root.remove();
   };
 }

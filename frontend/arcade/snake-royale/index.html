@@ -16,6 +16,7 @@
 <label class="sr-opt"><span>Speed</span><select id="sr-speed"><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
 <div class="sr-actions"><button type="submit" id="sr-fight" class="button">Fight</button><button type="button" id="sr-random" class="button secondary">Random pair</button></div>
 </form>
+<div class="sr-telemetry" aria-label="Arena status"><span id="sr-turn">TURN 0</span><span id="sr-storm">STORM IN 150</span><span>11 × 11 · DUEL</span></div>
 <div class="sr-stage">
 <canvas id="sr-canvas" width="720" height="720" role="img" aria-label="Snake Royale arena"></canvas>
 <aside class="sr-side-panel" aria-live="polite"><div id="sr-cards"></div><p id="sr-ticker" class="sr-ticker"></p><p id="sr-result" class="sr-result" hidden></p></aside>
@@ -24,5 +25,5 @@
 <section id="sr-roster" class="sr-roster" aria-label="All fighters"><h2>The fighters</h2><ul id="sr-list"></ul></section>
 </main>
 <footer><p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p><nav class="public-identity-links" aria-label="Social and contact"><a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a><a href="mailto:aizanoianalytics@protonmail.com">Email</a></nav></footer>
-<script src="engine.js"></script><script src="runner.js"></script><script src="game.js"></script>
+<script src="engine.js"></script><script src="runner.js"></script><script src="renderer.js"></script><script src="game.js"></script>
 </body></html>
