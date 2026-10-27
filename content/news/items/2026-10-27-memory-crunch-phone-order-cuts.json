@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-27-memory-crunch-phone-order-cuts",
+  "title": "Memory prices push Samsung and Apple to cut phone component orders",
+  "summary": "The memory shortage is now cutting handset volumes. Samsung's mobile division has asked suppliers to trim fourth-quarter component deliveries by 20 to 30 per cent, and Apple has reportedly cut October orders for some iPhone 18 Pro parts by 15 to 20 per cent. LPDDR5X prices rose 78 to 83 per cent in the second quarter as capacity shifted to server DRAM and high-bandwidth memory, squeezing display suppliers that depend on both phone makers.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "memory",
+    "smartphones",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "The Korea Herald",
+      "url": "https://www.koreaherald.com/article/10914960",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "MoneyToday",
+      "url": "https://www.mt.co.kr/en/industry/2026/10/15/2026101316114356741",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

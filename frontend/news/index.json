@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-26T05:00:00.000Z",
+  "generatedAt": "2026-10-27T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-27",
+      "path": "/news/2026-10-27/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-26",
       "path": "/news/2026-10-26/",
@@ -386,6 +391,520 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-27-anthropic-files-s1-nasdaq-listing",
+      "kind": "daily",
+      "title": "Anthropic files to list on Nasdaq with steep losses and fast revenue growth",
+      "summary": "Anthropic has filed a public S-1 for a Nasdaq listing under the ticker ANT, opening its books for the first time. The Claude developer reported about $16.3bn of revenue in the six months to June and a net loss of $80.7bn, most of it tied to fair-value changes on convertible instruments rather than cash burn. No share count or price range was set, and the document puts the cost of building frontier models on the public record.",
+      "category": "ai",
+      "priority": 90,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "ai-economics"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/s1-sec",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "U.S. Securities and Exchange Commission",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "InvestmentNews",
+          "url": "https://investmentnews.com/equities/anthropic-ipo-filing-pairs-explosive-growth-with-an-80b-loss/268746",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-ballon-dor-kane-putellas",
+      "kind": "daily",
+      "title": "Kane ends England's 25-year wait for a Ballon d'Or",
+      "summary": "Harry Kane won the 2026 Ballon d'Or at the London Palladium, becoming the first English winner since Michael Owen in 2001 and only the fifth Englishman to take the prize. The Bayern Munich striker scored 73 goals for club and country last season and finished ahead of Lamine Yamal and Kylian Mbappe. Alexia Putellas collected a third women's award, while Yamal took the Kopa Trophy for the third year running.",
+      "category": "football",
+      "priority": 88,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ballon-dor",
+        "kane",
+        "putellas"
+      ],
+      "sources": [
+        {
+          "publisher": "The Independent",
+          "url": "https://www.the-independent.com/sport/football/ballon-dor-2026-results-winner-live-ceremony-updates-b3073289.html",
+          "publishedAt": "2026-10-26T22:57:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.co.uk/football/story/_/id/50289067/ballon-dor-2026-results-full-rankings-all-award-winners",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-microsoft-voluntary-exit-offer",
+      "kind": "daily",
+      "title": "Microsoft offers voluntary exits to about 60,000 staff as AI spending climbs",
+      "summary": "Microsoft is offering a voluntary exit package to roughly 60,000 employees, more than a quarter of its workforce, in the United States, Canada, India and the United Kingdom, according to a memo from chief people officer Amy Coleman. Eligibility stops at level 70 and below, several organisations are not taking part, and reports say staff have until early December to decide. The company frames the move as flexibility while it funds heavy AI investment.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "workforce",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft",
+          "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/technology/microsoft-is-offering-buyouts-around-60000-employees-business-insider-reports-2026-10-26/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/26/microsoft-offers-buyouts-to-around-60000-employees-reports-say/",
+          "publishedAt": "2026-10-26T15:58:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-brent-slips-tehran-talks",
+      "kind": "daily",
+      "title": "Brent slips as Saudi, Pakistani and Turkish officials fly to Tehran",
+      "summary": "Brent for December fell 1.2 per cent to $115.37 a barrel as a Saudi delegation led by defence minister Khalid bin Salman arrived in Tehran, with Pakistani and Turkish officials due to join the talks. Prices had settled at $116.72 on Friday, the highest since April. Houthi claims of attacks on the kingdom's East-West pipeline added supply risk, although Riyadh confirmed only intercepted missiles and no damage to oil sites.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "iran",
+        "energy"
+      ],
+      "sources": [
+        {
+          "publisher": "PriceOfOil",
+          "url": "https://priceofoil.com/articles/brent-eases-as-saudi-pakistani-turkish-officials-go-to-tehran-october-2026",
+          "publishedAt": "2026-10-26T14:08:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/23/oil-price-brent-wti-iran-war-saudi-arabia.html",
+          "publishedAt": "2026-10-23T19:21:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-meta-record-equity-raise-ai",
+      "kind": "daily",
+      "title": "Meta turns to its largest-ever equity raise to pay for AI infrastructure",
+      "summary": "Meta is seeking up to $95bn of new equity to fund data centres, cloud capacity and other AI infrastructure. The first phase is about $35bn, split between $22.5bn of Class A common stock and roughly $12.5bn of mandatory convertible preferred shares sold through forward-sale agreements. The stock fell 1.9 per cent on the day. The offering moves part of a very large capital programme onto shareholders rather than debt or operating cash flow.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "ai-capex",
+        "equity"
+      ],
+      "sources": [
+        {
+          "publisher": "Meta Investor Relations",
+          "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Announces-Launch-of-Offering-of-Depositary-Shares-Representing-Series-A-Mandatory-Convertible-Preferred-Stock-and-Offering-of-Class-A-Common-Stock-in-Connection-with-Forward-Sale-Agreements/default.aspx",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/legal/transactional/meta-launches-35-billion-stock-offering-fund-ai-expansion-2026-10-26/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-apple-ipad-mini-a20-pro",
+      "kind": "daily",
+      "title": "Apple puts a 2nm A20 Pro and an OLED screen into the iPad mini",
+      "summary": "Apple has given the iPad mini its first OLED display: 8.5 inches, 1,200 nits peak brightness and an optional nano-texture finish, inside a 5.4mm body rated IP67 for water and dust. The A20 Pro is built on a 2-nanometer process with neural accelerators in every GPU core, which Apple says lifts AI performance up to 4.5 times. Pre-orders open on 28 October, with units on sale from 6 November.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "ipad",
+        "silicon"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/2026/10/apple-gives-ipad-mini-its-biggest-update-ever/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-wall-street-anthropic-rally",
+      "kind": "daily",
+      "title": "Wall Street starts earnings week higher as Anthropic filing lifts AI stocks",
+      "summary": "US equities opened the week higher as Anthropic's filing revived the AI trade. The S&P 500 added 0.70 per cent to 7,676.77, the Nasdaq Composite 0.83 per cent to 26,169.38 and the Dow 0.28 per cent to 52,361.58. Chip shares led the advance, though the Philadelphia semiconductor index is still down 12.2 per cent this month. More than a third of S&P 500 companies report this week and the Fed decides on Wednesday.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "equities",
+        "federal-reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Yahoo Finance)",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/us-stock-futures-edge-oil-100215774.html",
+          "publishedAt": "2026-10-26T20:24:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-korea-ai-hacking-ring",
+      "kind": "daily",
+      "title": "Seoul police arrest ring accused of using AI to breach 90 organisations",
+      "summary": "Police in Seoul have arrested seven people accused of using generative AI to break into about 90 organisations and steal 8.2 million records, the country's first large-scale AI-assisted hacking case. Investigators say 60 of the intrusions used AI tooling, including an autonomous penetration-testing system, and that 38 victims were then pressed for a combined 360 million won. The alleged ringleader was a self-taught hacker who had worked in simulated attacks.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cybersecurity",
+        "ai-misuse",
+        "korea"
+      ],
+      "sources": [
+        {
+          "publisher": "Yonhap News Agency",
+          "url": "https://en.yna.co.kr/view/AEN20261026005800315",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Korea JoongAng Daily",
+          "url": "https://www.koreajoongangdaily.com/korea/seven-arrested-for-using-generative-ai-to-hack-90-organizations/12938493",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Seoul Economic Daily",
+          "url": "https://en.sedaily.com/society/2026/10/26/self-taught-hacker-used-ai-to-steal-82-million-records",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-broadcom-anthropic-chip-financing",
+      "kind": "daily",
+      "title": "Banks assemble $63bn to buy Broadcom chips and lease them to Anthropic",
+      "summary": "Bank of America, Citi and Morgan Stanley are arranging $63bn of financing to buy Broadcom accelerators and networking equipment that will be leased to Anthropic, with Blackstone providing the committed second-lien portion. The hardware sits in a special purpose vehicle, Broadcom is offering residual-value support to senior lenders, and deliveries are due to start in 2027. The structure turns chip supply into a leasing business backed by debt.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "broadcom",
+        "ai-financing"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via WHBL)",
+          "url": "https://whbl.com/2026/10/26/wall-street-banks-blackstone-line-up-63-billion-to-finance-broadcom-chips-for-anthropic",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Central Oregon Daily)",
+          "url": "https://centraloregondaily.com/news/consumer/wall-street-banks-blackstone-line-up-63-billion-to-finance-broadcom-ai-chips-for-anthropic/article_c7c89d30-112d-5cc6-96a0-27f85b7098be.html",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-memory-crunch-phone-order-cuts",
+      "kind": "daily",
+      "title": "Memory prices push Samsung and Apple to cut phone component orders",
+      "summary": "The memory shortage is now cutting handset volumes. Samsung's mobile division has asked suppliers to trim fourth-quarter component deliveries by 20 to 30 per cent, and Apple has reportedly cut October orders for some iPhone 18 Pro parts by 15 to 20 per cent. LPDDR5X prices rose 78 to 83 per cent in the second quarter as capacity shifted to server DRAM and high-bandwidth memory, squeezing display suppliers that depend on both phone makers.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "memory",
+        "smartphones",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "The Korea Herald",
+          "url": "https://www.koreaherald.com/article/10914960",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "MoneyToday",
+          "url": "https://www.mt.co.kr/en/industry/2026/10/15/2026101316114356741",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-ai-blocs-swing-countries",
+      "kind": "daily",
+      "title": "Swing countries hedge as Washington and Beijing build rival AI blocs",
+      "summary": "The United States' Pax Silica and China's World AI Cooperation Organization are pulling smaller economies into competing technology stacks, the Associated Press reports. Kazakhstan joined both within weeks; Indonesia and Singapore are weighing similar hedges, and Saudi Arabia runs Chinese open models alongside Nvidia hardware. Analysts quoted in the piece say the room to stay neutral is narrowing and that very few countries can build frontier models themselves.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-policy",
+        "china",
+        "standards"
+      ],
+      "sources": [
+        {
+          "publisher": "The Associated Press (via The Asahi Shimbun)",
+          "url": "https://www.asahi.com/ajw/articles/16993758",
+          "publishedAt": "2026-10-26T02:52:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-dfb-pokal-second-round",
+      "kind": "daily",
+      "title": "Dortmund and Bremen headline a cup night of Bundesliga ties",
+      "summary": "The second round of the DFB-Pokal is decided across Tuesday and Wednesday, with 16 places in the last 16 at stake and four all-Bundesliga ties in the draw. Borussia Dortmund host Werder Bremen on Tuesday at 20:45, shown by ZDF, while Hamburger SV meet Eintracht Frankfurt and third-tier Rot-Weiss Essen welcome RB Leipzig at 18:00. Bayern Munich face Magdeburg on Wednesday, live on ARD.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "dfb-pokal",
+        "bundesliga"
+      ],
+      "sources": [
+        {
+          "publisher": "DFB",
+          "url": "https://www.dfb.de/dfb-pokal/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-samsung-electro-mechanics-substrates",
+      "kind": "daily",
+      "title": "Tesla and Nvidia fund $2.8bn of AI chip-substrate capacity in Korea",
+      "summary": "Tesla and Nvidia are putting a combined 3.7 trillion won, about $2.8bn, into Samsung Electro-Mechanics' chip-substrate capacity, according to Korean press reports. The money targets FC-BGA substrates that sit beneath AI accelerators, with Nvidia taking the larger share and Tesla tying its contribution to a long-term supply deal. Nvidia and the Korean supplier did confirm a joint investment in dedicated ABF substrate lines at an event this month.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "semiconductors",
+        "supply-chain",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via The Telegraph/Macon)",
+          "url": "https://www.macon.com/news/business/article317727212.html",
+          "publishedAt": "2026-10-22T00:00:00.000Z"
+        },
+        {
+          "publisher": "Crypto Briefing",
+          "url": "https://cryptobriefing.com/samsung-electro-mechanics-tesla-nvidia-investment",
+          "publishedAt": "2026-10-22T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-carabao-cup-fleetwood-arsenal",
+      "kind": "daily",
+      "title": "Fleetwood's first competitive meeting with Arsenal arrives at Highbury",
+      "summary": "Fleetwood Town host Premier League champions Arsenal on Tuesday in the fourth round of the Carabao Cup, the first competitive meeting between the clubs. The League Two side have won all three home ties without conceding, beating Chesterfield, Shrewsbury and Sheffield United at the 5,300-capacity Highbury Stadium. Liverpool against Chelsea at Anfield on Wednesday is the tie of the round, with a quarter-final place at stake.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "carabao-cup",
+        "arsenal",
+        "fleetwood"
+      ],
+      "sources": [
+        {
+          "publisher": "Arsenal",
+          "url": "https://www.arsenal.com/news/date-confirmed-for-carabao-cup-trip-to-fleetwood-azyR45T51D3Q",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Fleetwood Town",
+          "url": "https://www.fleetwoodtownfc.com/date-confirmed-for-arsenal-visit/",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-27-korea-chip-stocks-rebound",
+      "kind": "daily",
+      "title": "Korean chip stocks rebound as SK hynix and Samsung results approach",
+      "summary": "Korean chipmakers led an early rebound in Seoul, with Samsung Electronics up 2.82 per cent and SK hynix up 3.45 per cent after the Philadelphia semiconductor index gained 2.82 per cent in New York. The Kospi had closed 1.46 per cent lower at 5,469.47. SK hynix reports third-quarter results on 28 October and Samsung on 29 October, with the Fed decision the same week — the tests analysts say will decide whether the rebound holds.",
+      "category": "economy-markets",
+      "priority": 55,
+      "publishedAt": "2026-10-27T05:00:00.000Z",
+      "updatedAt": "2026-10-27T05:00:00.000Z",
+      "retrievedAt": "2026-10-27T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "korea",
+        "semiconductors",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Seoul Economic Daily",
+          "url": "https://en.sedaily.com/finance/2026/10/26/chip-stocks-rebound-on-anthropic-ipo-filing-samsung-sk",
+          "publishedAt": "2026-10-26T23:18:53.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-26-openai-training-without-live-internet",
       "kind": "daily",

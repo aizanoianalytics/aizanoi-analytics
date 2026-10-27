@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-27-korea-ai-hacking-ring",
+  "title": "Seoul police arrest ring accused of using AI to breach 90 organisations",
+  "summary": "Police in Seoul have arrested seven people accused of using generative AI to break into about 90 organisations and steal 8.2 million records, the country's first large-scale AI-assisted hacking case. Investigators say 60 of the intrusions used AI tooling, including an autonomous penetration-testing system, and that 38 victims were then pressed for a combined 360 million won. The alleged ringleader was a self-taught hacker who had worked in simulated attacks.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cybersecurity",
+    "ai-misuse",
+    "korea"
+  ],
+  "sources": [
+    {
+      "publisher": "Yonhap News Agency",
+      "url": "https://en.yna.co.kr/view/AEN20261026005800315",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Korea JoongAng Daily",
+      "url": "https://www.koreajoongangdaily.com/korea/seven-arrested-for-using-generative-ai-to-hack-90-organizations/12938493",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/society/2026/10/26/self-taught-hacker-used-ai-to-steal-82-million-records",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

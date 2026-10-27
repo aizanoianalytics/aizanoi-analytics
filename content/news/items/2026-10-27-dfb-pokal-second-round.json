@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-27-dfb-pokal-second-round",
+  "title": "Dortmund and Bremen headline a cup night of Bundesliga ties",
+  "summary": "The second round of the DFB-Pokal is decided across Tuesday and Wednesday, with 16 places in the last 16 at stake and four all-Bundesliga ties in the draw. Borussia Dortmund host Werder Bremen on Tuesday at 20:45, shown by ZDF, while Hamburger SV meet Eintracht Frankfurt and third-tier Rot-Weiss Essen welcome RB Leipzig at 18:00. Bayern Munich face Magdeburg on Wednesday, live on ARD.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "dfb-pokal",
+    "bundesliga"
+  ],
+  "sources": [
+    {
+      "publisher": "DFB",
+      "url": "https://www.dfb.de/dfb-pokal/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

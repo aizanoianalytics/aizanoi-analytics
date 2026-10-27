@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-27-samsung-electro-mechanics-substrates",
+  "title": "Tesla and Nvidia fund $2.8bn of AI chip-substrate capacity in Korea",
+  "summary": "Tesla and Nvidia are putting a combined 3.7 trillion won, about $2.8bn, into Samsung Electro-Mechanics' chip-substrate capacity, according to Korean press reports. The money targets FC-BGA substrates that sit beneath AI accelerators, with Nvidia taking the larger share and Tesla tying its contribution to a long-term supply deal. Nvidia and the Korean supplier did confirm a joint investment in dedicated ABF substrate lines at an event this month.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-27T05:00:00Z",
+  "updatedAt": "2026-10-27T05:00:00Z",
+  "retrievedAt": "2026-10-27T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "semiconductors",
+    "supply-chain",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via The Telegraph/Macon)",
+      "url": "https://www.macon.com/news/business/article317727212.html",
+      "publishedAt": "2026-10-22T00:00:00Z"
+    },
+    {
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/samsung-electro-mechanics-tesla-nvidia-investment",
+      "publishedAt": "2026-10-22T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
