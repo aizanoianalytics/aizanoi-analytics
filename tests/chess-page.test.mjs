@@ -45,7 +45,7 @@ test('HTML uses external scripts and styles with no inline handlers', async () =
   const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)]
     .filter(([, attributes]) => !/application\/ld\+json/.test(attributes));
 
-  assert.equal(scripts.length, 4);
+  assert.equal(scripts.length, 5);
   for (const [, attributes, content] of scripts) {
     assert.match(attributes, /\bsrc\s*=\s*["'][^"']+["']/i);
     assert.equal(content.trim(), '');
@@ -61,6 +61,7 @@ test('HTML uses external scripts and styles with no inline handlers', async () =
   });
   assert.deepEqual(sources, [
     'engine.js',
+    '/arcade/shared/custom-bot.js',
     'runner.js',
     'renderer.js',
     'game.js'
@@ -82,7 +83,7 @@ test('page includes required controls, metadata and linked JSON-LD', async () =>
 
   assert.match(html, /<title>AI Chess Arena — Aizanoi Arcade<\/title>/);
   assert.match(html, /https:\/\/aizanoianalytics\.com\/arcade\/chess\//);
-  // JSON-LD is data, not script, and stays inline like the other arcade pages.
+  // JSON-LD is data, not executable code.
   const metadata = JSON.parse(html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s)[1]);
   assert.equal(metadata['@context'], 'https://schema.org');
   assert.equal(metadata['@type'], 'WebPage');
@@ -150,12 +151,12 @@ test('worker validates identifiers before building its local import path', async
   assert.equal(valid.messages[1].move, 'e2e4');
 });
 
-test('runner posts identifiers and never accepts a worker script URL', async () => {
+test('runner posts identifiers and never accepts a worker script URL from a seat', async () => {
   const source = await read('runner.js');
   assert.match(source, /new Worker\('\/arcade\/chess\/bot-worker\.js'\)/);
   assert.match(source, /type:\s*'init',\s*id:\s*entry\.id/);
-  assert.doesNotMatch(source, /\burl\b/i);
-  assert.doesNotMatch(source, /entry\.file|options\.file|seat\.file/);
+  assert.match(source, /workerUrl:\s*'\/arcade\/chess\/bot-worker\.js'/);
+  assert.doesNotMatch(source, /entry\.(?:file|url|workerUrl)|options\.(?:file|url|workerUrl)|seat\.(?:file|url|workerUrl)/);
   assert.match(source, /const TIMEOUT_MS = 1000;/);
 });
 
@@ -177,6 +178,7 @@ test('manifest identifiers are unique and every bot file exists', async () => {
     assert.ok(!bot.id.includes('..'));
     assert.ok(!ids.has(bot.id));
     assert.notEqual(bot.id, 'human');
+    assert.notEqual(bot.id, 'custom');
     ids.add(bot.id);
 
     assert.equal(bot.file, `bots/${bot.id}.js`);

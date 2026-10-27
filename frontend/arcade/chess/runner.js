@@ -4,7 +4,10 @@
   const TIMEOUT_MS = 1000;
 
   function start(options) {
-    const seats = [options.white, options.black].map(seat => ({ ...seat }));
+    const seats = [options.white, options.black].map(seat => ({
+      ...seat,
+      ...(seat.custom ? { custom: { ...seat.custom } } : {})
+    }));
     const game = ChessEngine.create({
       variant: options.variant || 'standard',
       position960: options.position960
@@ -83,20 +86,80 @@
       });
     }
 
+    function initialize(seat, entry, index) {
+      // Pair-series seed offsets follow participants, not board colours.
+      const participant = options.swapSeedSeats ? 1 - index : index;
+      return exchange(seat, {
+        type: 'init',
+        id: entry.id,
+        seed: (seed ^ Math.imul(participant + 1, 0x9e3779b9)) >>> 0
+      }, data => data && (data.type === 'ready' || data.type === 'fail'));
+    }
+
+    function prepareCustom(seat, entry, index) {
+      return new Promise(resolve => {
+        let settled = false;
+        let timer;
+
+        function settle(result) {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          resolve(result);
+        }
+
+        const cancel = () => settle({ type: 'stopped' });
+        pending.add(cancel);
+        // Creation includes asynchronous fetches; it must also be bounded.
+        timer = setTimeout(() => {
+          settle({ type: 'fail', detail: 'worker creation timed out (1000 ms)' });
+        }, TIMEOUT_MS);
+
+        let creation;
+        try {
+          creation = ArenaCustomBot.createWorker({
+            game: 'chess',
+            workerUrl: '/arcade/chess/bot-worker.js',
+            scripts: ['/arcade/chess/engine.js'],
+            code: entry.custom.code
+          });
+        } catch (error) {
+          settle({ type: 'fail', detail: 'worker could not be created' });
+          return;
+        }
+
+        Promise.resolve(creation).then(worker => {
+          if (settled || stopped) {
+            worker.terminate();
+            settle({ type: 'stopped' });
+            return;
+          }
+          seat.worker = worker;
+          clearTimeout(timer);
+          pending.delete(cancel);
+          // Mark the creation phase complete before installing the exchange's
+          // own cancellation and the unchanged init-response deadline.
+          settled = true;
+          resolve(initialize(seat, entry, index));
+        }, () => {
+          settle({ type: 'fail', detail: 'worker could not be created' });
+        });
+      });
+    }
+
     for (let index = 0; index < seats.length; index += 1) {
       const entry = seats[index];
       const seat = { human: Boolean(entry.human), worker: null, ready: null };
       workers.push(seat);
       if (seat.human) continue;
+      if (entry.custom) {
+        seat.ready = prepareCustom(seat, entry, index);
+        continue;
+      }
       try {
         seat.worker = new Worker('/arcade/chess/bot-worker.js');
-        // Pair-series seed offsets follow participants, not board colours.
-        const participant = options.swapSeedSeats ? 1 - index : index;
-        seat.ready = exchange(seat, {
-          type: 'init',
-          id: entry.id,
-          seed: (seed ^ Math.imul(participant + 1, 0x9e3779b9)) >>> 0
-        }, data => data && (data.type === 'ready' || data.type === 'fail'));
+        seat.ready = initialize(seat, entry, index);
       } catch (error) {
         seat.ready = Promise.resolve({
           type: 'fail', detail: 'worker could not be created'

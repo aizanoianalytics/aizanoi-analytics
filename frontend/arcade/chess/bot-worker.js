@@ -1,6 +1,8 @@
 'use strict';
 
-importScripts('engine.js');
+if (!self.__ARENA_INLINE__) {
+  importScripts('engine.js');
+}
 
 self.module = { exports: {} };
 self.exports = self.module.exports;
@@ -22,16 +24,27 @@ self.onmessage = event => {
     try {
       if (initialized) throw new Error('bot is already initialized');
       initialized = true;
+      // Inline bot top-level code has already run. It must not use random
+      // numbers there; seeded randomness is available inside move(state).
       Math.random = ChessEngine.rng(message.seed ^ 0x9e3779b9);
 
-      // The page supplies an identifier, never a script location.
-      const id = String(message.id || '');
-      if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) {
-        throw new Error(`invalid fighter id: ${id}`);
-      }
-      importScripts(`bots/${id}.js`);
+      let exported;
+      if (self.__ARENA_INLINE__) {
+        if (self.__ARENA_LOAD_ERROR__ !== undefined) {
+          throw new Error(self.__ARENA_LOAD_ERROR__);
+        }
+        exported = self.__ARENA_BOT__;
+      } else {
+        // The page supplies an identifier, never a script location.
+        const id = String(message.id || '');
+        if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) {
+          throw new Error(`invalid fighter id: ${id}`);
+        }
+        importScripts(`bots/${id}.js`);
 
-      const exported = self.module.exports;
+        exported = self.module.exports;
+      }
+
       fn = (typeof exported === 'function' && exported) ||
         (exported && typeof exported.move === 'function' &&
           exported.move.bind(exported)) ||

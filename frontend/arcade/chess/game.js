@@ -14,10 +14,14 @@
   };
   const parameters = new URLSearchParams(location.search);
   const setupControls = [elements.white, elements.black, elements.variant, elements.series];
+  const previousChoices = new Map();
+  const seatSelects = [elements.white, elements.black];
 
   let bots = [];
   let ready = false;
   let running = false;
+  let picking = false;
+  let customBot = null;
   let runner = null;
   let game = ChessEngine.create();
   let seats = [humanSeat(), humanSeat()];
@@ -47,6 +51,13 @@
   }
   function seatFor(value) {
     if (value === 'human') return humanSeat();
+    if (value === 'custom' && customBot) {
+      return {
+        id: 'custom', name: customBot.name, human: false,
+        lab: 'You', color: '#2dd4bf',
+        custom: { name: customBot.name, code: customBot.code }
+      };
+    }
     const bot = bots.find(entry => entry.id === value);
     return bot ? { ...bot, human: false } : humanSeat();
   }
@@ -61,9 +72,11 @@
 
   function setControls() {
     const over = game.status().over;
-    elements.start.disabled = !ready || running;
+    elements.start.disabled = !ready || running || picking;
     elements.start.textContent = running ? 'Playing…' : 'Start';
-    for (const control of setupControls) control.disabled = !ready || running;
+    for (const control of setupControls) {
+      control.disabled = !ready || running || picking;
+    }
     elements.resign.disabled = !running || over || !activeSeat().human;
     const inputEnabled = running && humanReady && activeSeat().human && !over && !promotion;
     elements.humanMove.disabled = !inputEnabled;
@@ -308,7 +321,11 @@
 
   async function startSeries(event) {
     if (event) event.preventDefault();
-    if (!ready || running) return;
+    if (!ready || running || picking) return;
+    if (seatSelects.some(select => select.value === 'custom') && !customBot) {
+      setTicker('Choose Your bot (upload…) and load a JavaScript bot first.');
+      return;
+    }
     const token = ++generation;
     const base = [seatFor(elements.white.value), seatFor(elements.black.value)];
     const count = Number(elements.series.value);
@@ -415,12 +432,62 @@
     render();
   }
 
+  function updateCustomOptions() {
+    for (const select of seatSelects) {
+      const option = [...select.options].find(entry => entry.value === 'custom');
+      if (option) {
+        option.textContent = customBot
+          ? `Your bot: ${customBot.name}`
+          : 'Your bot (upload…)';
+      }
+    }
+  }
+
+  async function chooseSeat(event) {
+    const select = event.currentTarget;
+    const previous = previousChoices.get(select) || 'human';
+    if (running || picking) {
+      select.value = previous;
+      return;
+    }
+    if (select.value !== 'custom') {
+      previousChoices.set(select, select.value);
+      preview();
+      return;
+    }
+
+    picking = true;
+    setControls();
+    let errorMessage = '';
+    try {
+      // Keep this call before the first await: the picker needs a user gesture.
+      const chosen = await ArenaCustomBot.pick({ game: 'chess' });
+      if (chosen) {
+        customBot = chosen;
+        previousChoices.set(select, 'custom');
+        updateCustomOptions();
+      } else {
+        select.value = previous;
+      }
+    } catch (error) {
+      select.value = previous;
+      errorMessage = String((error && error.message) || 'Could not read bot file');
+    } finally {
+      picking = false;
+      preview();
+      if (errorMessage) setTicker(errorMessage);
+    }
+  }
+
   function buildSelect(select) {
     const fragment = document.createDocumentFragment();
     const human = document.createElement('option');
     human.value = 'human';
     human.textContent = 'Human (click to move)';
-    fragment.append(human);
+    const custom = document.createElement('option');
+    custom.value = 'custom';
+    custom.textContent = 'Your bot (upload…)';
+    fragment.append(human, custom);
     for (const bot of bots) {
       const option = document.createElement('option');
       option.value = bot.id;
@@ -456,7 +523,8 @@
     return manifest.bots.map(bot => {
       if (!bot || typeof bot.id !== 'string' ||
           !/^[a-z0-9][a-z0-9.-]*$/.test(bot.id) ||
-          bot.id.includes('..') || bot.id === 'human' || ids.has(bot.id)) {
+          bot.id.includes('..') || bot.id === 'human' ||
+          bot.id === 'custom' || ids.has(bot.id)) {
         throw new Error('Invalid or duplicate bot identifier');
       }
       if (bot.file !== `bots/${bot.id}.js` ||
@@ -476,6 +544,8 @@
   }
 
   function chooseParameter(select, value) {
+    // A URL cannot supply an in-memory bot or open a picker without a gesture.
+    if (value === 'custom' && !customBot) return;
     if (value !== null && [...select.options].some(option => option.value === value)) {
       select.value = value;
     }
@@ -489,8 +559,10 @@
       });
       if (!response.ok) throw new Error('Manifest request failed');
       bots = validateManifest(await response.json());
+      customBot = ArenaCustomBot.get('chess');
       buildSelect(elements.white);
       buildSelect(elements.black);
+      updateCustomOptions();
       buildRoster();
       elements.white.value = 'human';
       elements.black.value = bots.some(bot => bot.id === 'sample-minimax')
@@ -498,6 +570,9 @@
       chooseParameter(elements.white, parameters.get('white'));
       chooseParameter(elements.black, parameters.get('black'));
       chooseParameter(elements.variant, parameters.get('variant'));
+      for (const select of seatSelects) {
+        previousChoices.set(select, select.value);
+      }
       ready = true;
       preview();
       if (parameters.get('autostart') === '1') await startSeries();
@@ -520,7 +595,10 @@
     configurable: false, writable: false,
     value: Object.freeze(() => freeze({
       bots: bots.map(bot => ({ ...bot })), running,
-      seats: seats.map(seat => ({ ...seat })), variant,
+      seats: seats.map(seat => ({
+        ...seat,
+        ...(seat.custom ? { custom: { ...seat.custom } } : {})
+      })), variant,
       ticker: elements.ticker.textContent, result: elements.result.textContent,
       moves: game.history.map(entry => entry.san), fen: game.fen()
     }))
@@ -534,7 +612,10 @@
     if (promotion) return;
     submitMove(elements.humanMove.value);
   });
-  for (const control of setupControls) control.addEventListener('change', preview);
+  for (const select of seatSelects) select.addEventListener('change', chooseSeat);
+  for (const control of [elements.variant, elements.series]) {
+    control.addEventListener('change', preview);
+  }
   elements.promo.addEventListener('click', choosePromotion);
   elements.promo.addEventListener('cancel', () => { promotion = null; setControls(); });
   elements.promo.addEventListener('close', () => { promotion = null; setControls(); });

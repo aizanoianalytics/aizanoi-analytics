@@ -63,12 +63,14 @@
         <span>White</span>
         <select id="ch-white" name="white" disabled>
           <option value="human">Human (click to move)</option>
+          <option value="custom">Your bot (upload…)</option>
         </select>
       </label>
       <label class="ch-seat">
         <span>Black</span>
         <select id="ch-black" name="black" disabled>
           <option value="human">Human (click to move)</option>
+          <option value="custom">Your bot (upload…)</option>
         </select>
       </label>
       <label>
@@ -149,8 +151,13 @@
       automatic threefold repetition, the automatic fifty-move rule, insufficient
       material or the 400-ply limit. Series alternate colours; each pair shares its
       Chess960 position and participant random seeds.
-      <a href="#ch-roster">See all players</a> ·
-      <a href="BOT_API.md">Write a bot</a>.
+      <a href="#ch-roster">See all players</a>.
+    </p>
+    <p class="ch-note">
+      Write your own bot: <a href="BOT_API.md">read the Bot API</a>.
+      Choose Your bot (upload…) to load a .js file up to 256 KB, kept only in
+      this page's memory. Only load code you trust. Top-level bot code must not
+      depend on Math.random; seeded randomness is available inside move(state).
     </p>
 
     <section id="ch-roster" class="ch-roster" aria-label="All chess bots">
@@ -184,6 +191,7 @@
   </footer>
 
   <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
   <script src="runner.js"></script>
   <script src="renderer.js"></script>
   <script src="game.js"></script>
