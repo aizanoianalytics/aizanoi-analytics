@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-28-micron-3d-dram-pivot",
+  "title": "Micron abandons 4F² DRAM and puts its scaling bets on 3D",
+  "summary": "Micron has dropped 4F² DRAM after roughly two decades of research, arguing the cell offers no meaningful density advantage for the extra manufacturing complexity and cost. At its October technology webinar the company said it will extend 6F² through 1-delta, introduce wafer bonding at 1-epsilon and direct its scaling investment into 3D DRAM. Samsung, SK hynix and China's CXMT are still developing 4F² parts, so the industry's next memory node is now split between two architectures.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "semiconductors",
+    "dram",
+    "micron"
+  ],
+  "sources": [
+    {
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/pc-components/dram/micron-pulls-the-plug-on-future-4f2-dram-after-two-decades-of-research-in-dramatic-shift-company-says-architecture-offers-no-meaningful-density-advantages-increases-manufacturing-complexity-and-costs-and-has-fundamental-scaling-limitations",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Futurum Group",
+      "url": "https://futurumgroup.com/insights/micron-accelerates-3d-dram-from-a-fifth-consecutive-node-of-process-leadership/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Businesskorea",
+      "url": "https://www.businesskorea.co.kr/news/articleView.html?idxno=279691",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

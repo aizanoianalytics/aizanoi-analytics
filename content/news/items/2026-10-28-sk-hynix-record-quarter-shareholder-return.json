@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-28-sk-hynix-record-quarter-shareholder-return",
+  "title": "SK hynix turns the memory squeeze into a record quarter and a huge payout",
+  "summary": "SK hynix reported record third-quarter revenue of 104.6 trillion won and operating profit of 83.3 trillion won, up 327.9% and 632.1% from a year earlier, with an operating margin of 79.7%. Quarterly sales passed 100 trillion won for the first time. The memory maker announced roughly 100 trillion won of shareholder returns, including at least 30 trillion won in dividends and 60 trillion won of buybacks and cancellations, and said it expects the shortage of high-bandwidth memory to keep demand ahead of supply.",
+  "category": "technology",
+  "priority": 85,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "semiconductors",
+    "memory",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-q3-profit-jumps-more-than-7-fold-beats-forecasts-2026-10-27",
+      "publishedAt": "2026-10-27T22:00:00Z"
+    },
+    {
+      "publisher": "SBS News",
+      "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008818468",
+      "publishedAt": "2026-10-28T00:56:00Z"
+    },
+    {
+      "publisher": "Chosun Ilbo",
+      "url": "https://www.chosun.com/english/industry-en/2026/10/28/X2N33QIALNCNJCU6FTKMBGLQU4/",
+      "publishedAt": "2026-10-27T23:29:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-28-amd-meta-helios-epyc",
+  "title": "AMD says Helios racks and EPYC are now running inside Meta",
+  "summary": "AMD says its Helios rack-scale systems are running at Meta, that EPYC processors power Meta's Muse agent, and that its hardware has day-one support for Meta's open models. The two companies presented the arrangement at AMD's own newsroom as a deepening of years of co-design across EPYC, Instinct GPUs, Pensando networking and ROCm software. The notable claim is not another accelerator win but that AMD's CPUs sit inside a large customer's consumer-facing agent, the workload Intel has long owned.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "amd",
+    "meta",
+    "data-centre"
+  ],
+  "sources": [
+    {
+      "publisher": "AMD Newsroom",
+      "url": "https://newsroom.amd.com/news/amd-meta-advance-strategic-partnership-power-metas-ai-infrastructure/",
+      "publishedAt": "2026-10-27T13:15:00Z"
+    }
+  ],
+  "kind": "daily"
+}

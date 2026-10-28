@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-27T05:00:00.000Z",
+  "generatedAt": "2026-10-28T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-28",
+      "path": "/news/2026-10-28/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-27",
       "path": "/news/2026-10-27/",
@@ -391,6 +396,536 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-28-sk-hynix-record-quarter-shareholder-return",
+      "kind": "daily",
+      "title": "SK hynix turns the memory squeeze into a record quarter and a huge payout",
+      "summary": "SK hynix reported record third-quarter revenue of 104.6 trillion won and operating profit of 83.3 trillion won, up 327.9% and 632.1% from a year earlier, with an operating margin of 79.7%. Quarterly sales passed 100 trillion won for the first time. The memory maker announced roughly 100 trillion won of shareholder returns, including at least 30 trillion won in dividends and 60 trillion won of buybacks and cancellations, and said it expects the shortage of high-bandwidth memory to keep demand ahead of supply.",
+      "category": "technology",
+      "priority": 85,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "semiconductors",
+        "memory",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-q3-profit-jumps-more-than-7-fold-beats-forecasts-2026-10-27",
+          "publishedAt": "2026-10-27T22:00:00.000Z"
+        },
+        {
+          "publisher": "SBS News",
+          "url": "https://news.sbs.co.kr/english/article.do?news_id=N1008818468",
+          "publishedAt": "2026-10-28T00:56:00.000Z"
+        },
+        {
+          "publisher": "Chosun Ilbo",
+          "url": "https://www.chosun.com/english/industry-en/2026/10/28/X2N33QIALNCNJCU6FTKMBGLQU4/",
+          "publishedAt": "2026-10-27T23:29:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-axiom-lean-proof-finite-simple-groups",
+      "kind": "daily",
+      "title": "Axiom says AI agents computer-checked the largest proof in mathematics",
+      "summary": "Axiom Math says it has released the first complete computer-checked proof of the classification of finite simple groups, a result written by roughly 100 mathematicians across some 15,000 pages and more than 500 articles. Engineers directed swarms of AI agents that produced about 43.1 million lines of code in the Lean proof assistant over 24 days. Axiom describes the release as a formalisation of the first-generation proof in which every step is checked by Lean's kernel, and says the work surfaced substantive corrections to the literature.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-agents",
+        "mathematics",
+        "formal-verification"
+      ],
+      "sources": [
+        {
+          "publisher": "Axiom",
+          "url": "https://axiommath.ai/research/the-enormous-theorem-formalized/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/axiom-math-releases-43-1m-line-lean-proof-of-group-classification/",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-china-ai-stock-rout-star50",
+      "kind": "daily",
+      "title": "China's AI stock rally comes apart, $480bn lighter",
+      "summary": "China's AI trade has turned. The STAR50 index of chip and AI names is down about 40% in less than four months, erasing roughly $480bn in market value, while the CSI 300 has fallen about 20% from its June peak and entered a bear market. Traders cite stretched valuations, tax bills and the risk that Washington bars Chinese data-centre equipment. AI stocks account for 42% of Chinese market capitalisation and 57% of turnover, and the STAR50 still trades near 100 times earnings against about 30 for the Nasdaq 100.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "equities",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Business Day)",
+          "url": "https://www.businessday.co.za/world/international-companies/2026-10-26-global-tech-investors-should-take-heed-of-chinas-ai-meltdown/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Seoul Economic Daily",
+          "url": "https://en.sedaily.com/international/2026/10/27/chinas-ai-rally-unravels-as-unitree-halves-cxmt-slides-25",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-fleetwood-arsenal-carabao-cup-upset",
+      "kind": "daily",
+      "title": "Fleetwood knock the champions out of the Carabao Cup on penalties",
+      "summary": "Fleetwood Town, 84 places below Arsenal in the pyramid and in the bottom half of League Two, knocked the Premier League champions out of the Carabao Cup, winning 5-3 on penalties after a 1-1 draw at Highbury Stadium. Aaron Loupalo-Bi scored in the 21st minute, Viktor Gyokeres equalised after the break, and Arsenal's 16-year-old Max Dowman was sent off before Jay Lynch saved Bruno Guimaraes' kick and Conor Haughey converted the winner. Mikel Arteta called it a very sad day.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "carabao-cup",
+        "arsenal",
+        "fleetwood"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cwgkveyrgpndt",
+          "publishedAt": "2026-10-27T22:30:00.000Z"
+        },
+        {
+          "publisher": "bdnews24 (Reuters)",
+          "url": "https://bdnews24.com/sport/s1vvnxcv3n",
+          "publishedAt": "2026-10-27T22:00:00.000Z"
+        },
+        {
+          "publisher": "The Daily Star",
+          "url": "https://www.thedailystar.net/sports/football/news/very-sad-day-arteta-rues-arsenals-shock-defeat-fourth-tier-fleetwood-4309466",
+          "publishedAt": "2026-10-27T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-openai-gpt-61-terra-computer-use",
+      "kind": "daily",
+      "title": "OpenAI halves the price of computer use with GPT-6.1 Terra",
+      "summary": "OpenAI has replaced GPT-5.6 Terra with a faster, cheaper model built around computer use. GPT-6.1 Terra can read what is on a screen, click through applications and type into them, and it ships at $1 per million input tokens and $5 per million output tokens, half the standard price of the model it replaces. OpenAI says Terra matches its larger GPT-6 Astra at a tenth of the per-token cost and finishes tasks more than three times faster. It is rolling out in ChatGPT Work, Codex and the API.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "models",
+        "computer-use"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI Developer Community",
+          "url": "https://community.openai.com/t/gpt-6-1-terra-delivering-fast-and-capable-computer-use-at-a-lower-price/1409900",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/openai-gpt-6-1-terra-computer-use",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-amd-meta-helios-epyc",
+      "kind": "daily",
+      "title": "AMD says Helios racks and EPYC are now running inside Meta",
+      "summary": "AMD says its Helios rack-scale systems are running at Meta, that EPYC processors power Meta's Muse agent, and that its hardware has day-one support for Meta's open models. The two companies presented the arrangement at AMD's own newsroom as a deepening of years of co-design across EPYC, Instinct GPUs, Pensando networking and ROCm software. The notable claim is not another accelerator win but that AMD's CPUs sit inside a large customer's consumer-facing agent, the workload Intel has long owned.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "amd",
+        "meta",
+        "data-centre"
+      ],
+      "sources": [
+        {
+          "publisher": "AMD Newsroom",
+          "url": "https://newsroom.amd.com/news/amd-meta-advance-strategic-partnership-power-metas-ai-infrastructure/",
+          "publishedAt": "2026-10-27T13:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-anthropic-claude-drug-development-programmes",
+      "kind": "daily",
+      "title": "Anthropic puts Claude inside six drug programmes and starts its own",
+      "summary": "Anthropic says its life sciences team spent months working inside six drug programmes run by BigHat Biosciences, Bristol Myers Squibb, Divergence Labs, Enveda, Generate Biomedicines and The Column Group. The company has also begun discovery work of its own, including programmes for rare childhood forms of muscular dystrophy where Claude handles much of the scientific and operational work. Anthropic frames the effort as a way to find bottlenecks across real programmes, not as a single model launch, and says it plans to scale the work up substantially.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "life-sciences",
+        "drug-discovery"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/early-progress-drug-development",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        },
+        {
+          "publisher": "Enveda (via Rutland Herald)",
+          "url": "https://www.rutlandherald.com/news/business/enveda-collaborates-with-anthropic-to-accelerate-drug-development/article_a25c39cb-355a-5ecd-a0f0-8e31df5b69c6.html",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-oracle-openai-enterprise-applications",
+      "kind": "daily",
+      "title": "Oracle builds ChatGPT and Codex into its business applications",
+      "summary": "Oracle is folding OpenAI's models into its business software. At Oracle AI World the company announced Oracle AI Workspace, which exposes Fusion applications, NetSuite, its AI Database and OCI inside ChatGPT so staff can describe an outcome instead of hunting for screens, plus App Composer for building internal tools with Codex and an AI Security Mesh for finding and fixing vulnerabilities. Oracle will also resell API, Codex and ChatGPT Work access through its marketplace on existing procurement terms.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oracle",
+        "openai",
+        "enterprise-software"
+      ],
+      "sources": [
+        {
+          "publisher": "Oracle",
+          "url": "https://www.oracle.com/news/announcement/ai-world-oracle-reinvents-enterprise-computing-for-the-ai-era-with-openai-2026-10-27",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/oracle-apps-in-chatgpt",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-nvidia-oracle-vera-rubin-oci",
+      "kind": "daily",
+      "title": "NVIDIA and Oracle take Vera Rubin to multi-gigawatt scale on OCI",
+      "summary": "NVIDIA and Oracle said OCI will scale Vera Rubin NVL72 systems into multi-gigawatt Superclusters and that Vera CPUs are now generally available on the cloud. The pitch splits work between GPUs for training and inference and Arm-based CPUs for the tool calls, code tests and retrieval agents perform between model calls, so customers can size each side separately. Oracle also plans HGX Rubin NVL8 systems and is stacking Intel, AMD, Google TPU and Cerebras silicon onto the same platform.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "oracle",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-and-oracle-expand-nvidia-vera-rubin-to-multi-gigawatt-scale-and-bring-nvidia-vera-cpu-to-oracle-cloud-infrastructure",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        },
+        {
+          "publisher": "Oracle",
+          "url": "https://www.oracle.com/news/announcement/ai-world-nvidia-and-oracle-expand-nvidia-vera-rubin-to-multi-gigawatt-scale-2026-10-27/",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-wall-street-chips-boeing-fed-eve",
+      "kind": "daily",
+      "title": "Chips lift Wall Street again while Boeing drags the Dow flat",
+      "summary": "US stocks closed higher on Tuesday, with the S&P 500 up 0.60% to 7,722.60 and the Nasdaq Composite up 1.18% to 26,477.81, as chip shares extended a rebound on the eve of the Federal Reserve's rate decision. Boeing was the outlier, falling 10.69% to $168.18 after saying it will miss its target of delivering 500 737 Max jets this year and that monthly output will rise to 52 only in the second half of 2027. The Dow finished roughly flat at 52,377.57.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "boeing",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "The Motley Fool",
+          "url": "https://www.fool.com/coverage/stock-market-today/2026/10/27/stock-market-today-oct-27-boeing-plummets-11-on-lower-production-rates-and-missed-delivery-targets",
+          "publishedAt": "2026-10-27T20:00:00.000Z"
+        },
+        {
+          "publisher": "Market Briefer",
+          "url": "https://marketbriefer.com/the-global-close-october-27-2026-chips-lead-a-second-advance-on-the-eve-of-the-fed",
+          "publishedAt": "2026-10-27T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-micron-3d-dram-pivot",
+      "kind": "daily",
+      "title": "Micron abandons 4F² DRAM and puts its scaling bets on 3D",
+      "summary": "Micron has dropped 4F² DRAM after roughly two decades of research, arguing the cell offers no meaningful density advantage for the extra manufacturing complexity and cost. At its October technology webinar the company said it will extend 6F² through 1-delta, introduce wafer bonding at 1-epsilon and direct its scaling investment into 3D DRAM. Samsung, SK hynix and China's CXMT are still developing 4F² parts, so the industry's next memory node is now split between two architectures.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "semiconductors",
+        "dram",
+        "micron"
+      ],
+      "sources": [
+        {
+          "publisher": "Tom's Hardware",
+          "url": "https://www.tomshardware.com/pc-components/dram/micron-pulls-the-plug-on-future-4f2-dram-after-two-decades-of-research-in-dramatic-shift-company-says-architecture-offers-no-meaningful-density-advantages-increases-manufacturing-complexity-and-costs-and-has-fundamental-scaling-limitations",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Futurum Group",
+          "url": "https://futurumgroup.com/insights/micron-accelerates-3d-dram-from-a-fifth-consecutive-node-of-process-leadership/",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Businesskorea",
+          "url": "https://www.businesskorea.co.kr/news/articleView.html?idxno=279691",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-us-consumer-confidence-october",
+      "kind": "daily",
+      "title": "US consumer confidence jumps to 91.7 a day before the Fed decides",
+      "summary": "The Conference Board's consumer confidence index rose 7.5 points to 91.7 in October from an upwardly revised 84.2 in September, recovering to June levels and beating forecasts that clustered near 81. The present-situation measure gained 8.6 points to 120.4 and the expectations index 6.9 points to 72.6, still below the level historically associated with recession fears. The survey landed a day before the Federal Reserve's rate decision and as chip shares led another equity advance.",
+      "category": "economy-markets",
+      "priority": 54,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "consumer-confidence",
+        "united-states",
+        "federal-reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "The Conference Board (via PR Newswire)",
+          "url": "https://www.prnewswire.com/news-releases/us-consumer-confidence-increased-in-october-302920731.html",
+          "publishedAt": "2026-10-27T14:00:00.000Z"
+        },
+        {
+          "publisher": "Morningstar / Dow Jones",
+          "url": "https://www.morningstar.com/news/dow-jones/202610277205/us-consumer-confidence-improved-in-october-conference-board-says",
+          "publishedAt": "2026-10-27T14:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-man-utd-carrick-chelsea",
+      "kind": "daily",
+      "title": "Manchester United keep Carrick for Chelsea after eight games without a win",
+      "summary": "Manchester United will keep Michael Carrick in charge for Saturday's trip to Chelsea, BBC Sport reported, despite a run of eight matches without a win in all competitions and a 3-0 home defeat by Bournemouth that left the club 16th, one point above the relegation zone. United's hierarchy has looked at Eddie Howe and Julian Nagelsmann, but Carrick will be given the chance to turn the season around, with Roma in the Champions League and Aston Villa to follow.",
+      "category": "football",
+      "priority": 52,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "manchester-united",
+        "coaching"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/articles/crlykgeqzypyo",
+          "publishedAt": "2026-10-27T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-dfb-pokal-second-round-tuesday",
+      "kind": "daily",
+      "title": "Cologne run riot and Dortmund survive as the cup's second round thins out",
+      "summary": "Eight DFB-Pokal second-round ties were settled on Tuesday. Cologne beat Union Berlin 5-0, Borussia Dortmund edged Werder Bremen 3-2, Mainz won 2-0 at Bochum, Augsburg won 2-4 at Sonnenhof Grossaspach and RB Leipzig came from behind to beat Rot-Weiss Essen 1-2. Hamburg's run ended with a 1-3 home defeat by Eintracht Frankfurt, Darmstadt won 0-2 at Elversberg and Borussia Monchengladbach beat Karlsruhe 2-0. Bayern Munich, Leverkusen and Stuttgart play their ties on Wednesday.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "dfb-pokal",
+        "germany",
+        "cup"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga.com",
+          "url": "https://www.bundesliga.com/en/bundesliga/news/2026-27-dfb-cup-live-fixtures-results-draws-bayern-munich-dortmund-37709",
+          "publishedAt": "2026-10-27T20:00:00.000Z"
+        },
+        {
+          "publisher": "DFB",
+          "url": "https://www.dfb.de/en/men/mens-dfb-pokal",
+          "publishedAt": "2026-10-27T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-28-ibm-agent-identity-and-control",
+      "kind": "daily",
+      "title": "IBM moves to give every AI agent an identity and a kill switch",
+      "summary": "IBM used its TechXchange conference to sell governance rather than another model. HashiCorp Vault now issues a governed identity to each AI agent so a credential can be scoped to one agent and revoked in real time when it attempts something it should not, while watsonx Orchestrate is meant to unify discovery, containment and evaluation for agents running on Amazon Bedrock, Microsoft Foundry and Gemini. IBM cites a Gartner forecast of 150,000 agents per large enterprise by 2028 against survey findings that only 13% of organisations feel ready.",
+      "category": "ai",
+      "priority": 48,
+      "publishedAt": "2026-10-28T05:00:00.000Z",
+      "updatedAt": "2026-10-28T05:00:00.000Z",
+      "retrievedAt": "2026-10-28T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ibm",
+        "enterprise-ai",
+        "security"
+      ],
+      "sources": [
+        {
+          "publisher": "IBM Newsroom",
+          "url": "https://newsroom.ibm.com/2026-10-27-ibm-introduces-identity-and-control-for-ai-agents%2C-securing-frontier-intelligence-for-the-enterprise",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-27-anthropic-files-s1-nasdaq-listing",
       "kind": "daily",

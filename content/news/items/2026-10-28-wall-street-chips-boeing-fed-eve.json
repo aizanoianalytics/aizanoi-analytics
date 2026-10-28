@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-wall-street-chips-boeing-fed-eve",
+  "title": "Chips lift Wall Street again while Boeing drags the Dow flat",
+  "summary": "US stocks closed higher on Tuesday, with the S&P 500 up 0.60% to 7,722.60 and the Nasdaq Composite up 1.18% to 26,477.81, as chip shares extended a rebound on the eve of the Federal Reserve's rate decision. Boeing was the outlier, falling 10.69% to $168.18 after saying it will miss its target of delivering 500 737 Max jets this year and that monthly output will rise to 52 only in the second half of 2027. The Dow finished roughly flat at 52,377.57.",
+  "category": "economy-markets",
+  "priority": 58,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "boeing",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "The Motley Fool",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/10/27/stock-market-today-oct-27-boeing-plummets-11-on-lower-production-rates-and-missed-delivery-targets",
+      "publishedAt": "2026-10-27T20:00:00Z"
+    },
+    {
+      "publisher": "Market Briefer",
+      "url": "https://marketbriefer.com/the-global-close-october-27-2026-chips-lead-a-second-advance-on-the-eve-of-the-fed",
+      "publishedAt": "2026-10-27T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

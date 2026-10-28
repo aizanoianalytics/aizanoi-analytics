@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-nvidia-oracle-vera-rubin-oci",
+  "title": "NVIDIA and Oracle take Vera Rubin to multi-gigawatt scale on OCI",
+  "summary": "NVIDIA and Oracle said OCI will scale Vera Rubin NVL72 systems into multi-gigawatt Superclusters and that Vera CPUs are now generally available on the cloud. The pitch splits work between GPUs for training and inference and Arm-based CPUs for the tool calls, code tests and retrieval agents perform between model calls, so customers can size each side separately. Oracle also plans HGX Rubin NVL8 systems and is stacking Intel, AMD, Google TPU and Cerebras silicon onto the same platform.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "oracle",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-and-oracle-expand-nvidia-vera-rubin-to-multi-gigawatt-scale-and-bring-nvidia-vera-cpu-to-oracle-cloud-infrastructure",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    },
+    {
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/news/announcement/ai-world-nvidia-and-oracle-expand-nvidia-vera-rubin-to-multi-gigawatt-scale-2026-10-27/",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

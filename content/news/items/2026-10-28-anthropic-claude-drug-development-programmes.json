@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-anthropic-claude-drug-development-programmes",
+  "title": "Anthropic puts Claude inside six drug programmes and starts its own",
+  "summary": "Anthropic says its life sciences team spent months working inside six drug programmes run by BigHat Biosciences, Bristol Myers Squibb, Divergence Labs, Enveda, Generate Biomedicines and The Column Group. The company has also begun discovery work of its own, including programmes for rare childhood forms of muscular dystrophy where Claude handles much of the scientific and operational work. Anthropic frames the effort as a way to find bottlenecks across real programmes, not as a single model launch, and says it plans to scale the work up substantially.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "life-sciences",
+    "drug-discovery"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/research/early-progress-drug-development",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    },
+    {
+      "publisher": "Enveda (via Rutland Herald)",
+      "url": "https://www.rutlandherald.com/news/business/enveda-collaborates-with-anthropic-to-accelerate-drug-development/article_a25c39cb-355a-5ecd-a0f0-8e31df5b69c6.html",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

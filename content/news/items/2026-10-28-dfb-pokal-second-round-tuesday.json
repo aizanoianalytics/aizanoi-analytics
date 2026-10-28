@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-dfb-pokal-second-round-tuesday",
+  "title": "Cologne run riot and Dortmund survive as the cup's second round thins out",
+  "summary": "Eight DFB-Pokal second-round ties were settled on Tuesday. Cologne beat Union Berlin 5-0, Borussia Dortmund edged Werder Bremen 3-2, Mainz won 2-0 at Bochum, Augsburg won 2-4 at Sonnenhof Grossaspach and RB Leipzig came from behind to beat Rot-Weiss Essen 1-2. Hamburg's run ended with a 1-3 home defeat by Eintracht Frankfurt, Darmstadt won 0-2 at Elversberg and Borussia Monchengladbach beat Karlsruhe 2-0. Bayern Munich, Leverkusen and Stuttgart play their ties on Wednesday.",
+  "category": "football",
+  "priority": 50,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "dfb-pokal",
+    "germany",
+    "cup"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga.com",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/2026-27-dfb-cup-live-fixtures-results-draws-bayern-munich-dortmund-37709",
+      "publishedAt": "2026-10-27T20:00:00Z"
+    },
+    {
+      "publisher": "DFB",
+      "url": "https://www.dfb.de/en/men/mens-dfb-pokal",
+      "publishedAt": "2026-10-27T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-28-openai-gpt-61-terra-computer-use",
+  "title": "OpenAI halves the price of computer use with GPT-6.1 Terra",
+  "summary": "OpenAI has replaced GPT-5.6 Terra with a faster, cheaper model built around computer use. GPT-6.1 Terra can read what is on a screen, click through applications and type into them, and it ships at $1 per million input tokens and $5 per million output tokens, half the standard price of the model it replaces. OpenAI says Terra matches its larger GPT-6 Astra at a tenth of the per-token cost and finishes tasks more than three times faster. It is rolling out in ChatGPT Work, Codex and the API.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "models",
+    "computer-use"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI Developer Community",
+      "url": "https://community.openai.com/t/gpt-6-1-terra-delivering-fast-and-capable-computer-use-at-a-lower-price/1409900",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/openai-launches-gpt-61-terra-with-3x-faster-ai-agents-50-percent-lower-pricing/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/openai-gpt-6-1-terra-computer-use",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
