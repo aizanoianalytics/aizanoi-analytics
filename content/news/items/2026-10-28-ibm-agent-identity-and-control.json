@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-28-ibm-agent-identity-and-control",
+  "title": "IBM moves to give every AI agent an identity and a kill switch",
+  "summary": "IBM used its TechXchange conference to sell governance rather than another model. HashiCorp Vault now issues a governed identity to each AI agent so a credential can be scoped to one agent and revoked in real time when it attempts something it should not, while watsonx Orchestrate is meant to unify discovery, containment and evaluation for agents running on Amazon Bedrock, Microsoft Foundry and Gemini. IBM cites a Gartner forecast of 150,000 agents per large enterprise by 2028 against survey findings that only 13% of organisations feel ready.",
+  "category": "ai",
+  "priority": 48,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ibm",
+    "enterprise-ai",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "IBM Newsroom",
+      "url": "https://newsroom.ibm.com/2026-10-27-ibm-introduces-identity-and-control-for-ai-agents%2C-securing-frontier-intelligence-for-the-enterprise",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

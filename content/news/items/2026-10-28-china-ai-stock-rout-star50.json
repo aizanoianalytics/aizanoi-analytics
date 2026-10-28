@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-china-ai-stock-rout-star50",
+  "title": "China's AI stock rally comes apart, $480bn lighter",
+  "summary": "China's AI trade has turned. The STAR50 index of chip and AI names is down about 40% in less than four months, erasing roughly $480bn in market value, while the CSI 300 has fallen about 20% from its June peak and entered a bear market. Traders cite stretched valuations, tax bills and the risk that Washington bars Chinese data-centre equipment. AI stocks account for 42% of Chinese market capitalisation and 57% of turnover, and the STAR50 still trades near 100 times earnings against about 30 for the Nasdaq 100.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "china",
+    "equities",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Business Day)",
+      "url": "https://www.businessday.co.za/world/international-companies/2026-10-26-global-tech-investors-should-take-heed-of-chinas-ai-meltdown/",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/international/2026/10/27/chinas-ai-rally-unravels-as-unitree-halves-cxmt-slides-25",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

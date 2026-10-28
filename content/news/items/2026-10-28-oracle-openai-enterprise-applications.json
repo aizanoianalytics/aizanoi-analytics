@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-oracle-openai-enterprise-applications",
+  "title": "Oracle builds ChatGPT and Codex into its business applications",
+  "summary": "Oracle is folding OpenAI's models into its business software. At Oracle AI World the company announced Oracle AI Workspace, which exposes Fusion applications, NetSuite, its AI Database and OCI inside ChatGPT so staff can describe an outcome instead of hunting for screens, plus App Composer for building internal tools with Codex and an AI Security Mesh for finding and fixing vulnerabilities. Oracle will also resell API, Codex and ChatGPT Work access through its marketplace on existing procurement terms.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oracle",
+    "openai",
+    "enterprise-software"
+  ],
+  "sources": [
+    {
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/news/announcement/ai-world-oracle-reinvents-enterprise-computing-for-the-ai-era-with-openai-2026-10-27",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/oracle-apps-in-chatgpt",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

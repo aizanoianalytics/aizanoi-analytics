@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-28-us-consumer-confidence-october",
+  "title": "US consumer confidence jumps to 91.7 a day before the Fed decides",
+  "summary": "The Conference Board's consumer confidence index rose 7.5 points to 91.7 in October from an upwardly revised 84.2 in September, recovering to June levels and beating forecasts that clustered near 81. The present-situation measure gained 8.6 points to 120.4 and the expectations index 6.9 points to 72.6, still below the level historically associated with recession fears. The survey landed a day before the Federal Reserve's rate decision and as chip shares led another equity advance.",
+  "category": "economy-markets",
+  "priority": 54,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "consumer-confidence",
+    "united-states",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "The Conference Board (via PR Newswire)",
+      "url": "https://www.prnewswire.com/news-releases/us-consumer-confidence-increased-in-october-302920731.html",
+      "publishedAt": "2026-10-27T14:00:00Z"
+    },
+    {
+      "publisher": "Morningstar / Dow Jones",
+      "url": "https://www.morningstar.com/news/dow-jones/202610277205/us-consumer-confidence-improved-in-october-conference-board-says",
+      "publishedAt": "2026-10-27T14:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

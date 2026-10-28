@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-28-fleetwood-arsenal-carabao-cup-upset",
+  "title": "Fleetwood knock the champions out of the Carabao Cup on penalties",
+  "summary": "Fleetwood Town, 84 places below Arsenal in the pyramid and in the bottom half of League Two, knocked the Premier League champions out of the Carabao Cup, winning 5-3 on penalties after a 1-1 draw at Highbury Stadium. Aaron Loupalo-Bi scored in the 21st minute, Viktor Gyokeres equalised after the break, and Arsenal's 16-year-old Max Dowman was sent off before Jay Lynch saved Bruno Guimaraes' kick and Conor Haughey converted the winner. Mikel Arteta called it a very sad day.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-10-28T05:00:00Z",
+  "updatedAt": "2026-10-28T05:00:00Z",
+  "retrievedAt": "2026-10-28T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "carabao-cup",
+    "arsenal",
+    "fleetwood"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cwgkveyrgpndt",
+      "publishedAt": "2026-10-27T22:30:00Z"
+    },
+    {
+      "publisher": "bdnews24 (Reuters)",
+      "url": "https://bdnews24.com/sport/s1vvnxcv3n",
+      "publishedAt": "2026-10-27T22:00:00Z"
+    },
+    {
+      "publisher": "The Daily Star",
+      "url": "https://www.thedailystar.net/sports/football/news/very-sad-day-arteta-rues-arsenals-shock-defeat-fourth-tier-fleetwood-4309466",
+      "publishedAt": "2026-10-27T23:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
