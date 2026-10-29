@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-wall-street-alphabet-futures-slide",
+  "title": "Alphabet's miss cools the AI trade and drags Nasdaq futures lower",
+  "summary": "US equity futures fell before Thursday's open after Alphabet dropped about 10% in extended trading on weaker-than-expected revenue across most core businesses, reviving doubts about the returns on AI spending. Nasdaq 100 futures lost more than 1% and S&P 500 futures 0.5%, while Microsoft rose nearly 3%. Wednesday's cash session had closed higher, with the Dow up 0.19%, the S&P 500 0.28% and the Nasdaq Composite 0.27%.",
+  "category": "economy-markets",
+  "priority": 62,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "alphabet",
+    "futures",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/united-states/stock-market/news/595997",
+      "publishedAt": "2026-10-29T02:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-nasdaq-futures-dip-001028850.html",
+      "publishedAt": "2026-10-29T00:10:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-google-gemini-4-carbon-cyber",
+  "title": "Google puts Gemini 4 Carbon behind the cyber-defender door first",
+  "summary": "Google released Gemini 4 Carbon, which it says ranks first on the v5.0 Artificial Analysis Intelligence Index at 59 and leads SEC-bench Pro at 88.2% for finding vulnerabilities, ExploitGym at 54.8% and CWE-bench at 71.0% for patching. Instead of a general launch, access starts with a subset of cyber defenders and widens through the Fairwind Program, at Argon's introductory $2 and $10 per million tokens before a $4 and $20 standard rate.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "gemini",
+    "frontier-models",
+    "cybersecurity"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+      "publishedAt": "2026-10-28T16:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/google-launches-gemini-4-carbon-ai-model-with-cybersecurity-focus-2026-10-28/",
+      "publishedAt": "2026-10-28T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

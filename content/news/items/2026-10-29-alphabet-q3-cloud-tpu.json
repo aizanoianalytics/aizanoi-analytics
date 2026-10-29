@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-29-alphabet-q3-cloud-tpu",
+  "title": "Alphabet's cloud revenue doubles as TPU sales become a real business",
+  "summary": "Alphabet reported third-quarter revenue of $127.6bn, up 25%, with Google Cloud up 103% to $30.7bn and consolidated operating income of $40.6bn. Capital spending reached $51.4bn in the quarter and the company kept its 2026 guidance at $195-205bn. Sundar Pichai said first-party model APIs now process nearly 32 billion tokens a minute and the Gemini app has passed one billion users.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "alphabet",
+    "google-cloud",
+    "earnings",
+    "tpu",
+    "capital-spending"
+  ],
+  "sources": [
+    {
+      "publisher": "Alphabet (SEC filing)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+      "publishedAt": "2026-10-28T20:05:00Z"
+    },
+    {
+      "publisher": "Alphabet Investor Relations",
+      "url": "https://abc.xyz/investor/news/news-details/2026/Alphabet-Announces-Third-Quarter-2026-Results-2026-FCcqxfIfmh/default.aspx",
+      "publishedAt": "2026-10-28T20:05:00Z"
+    }
+  ],
+  "kind": "daily"
+}

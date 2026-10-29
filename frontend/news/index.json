@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-28T05:00:00.000Z",
+  "generatedAt": "2026-10-29T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-29",
+      "path": "/news/2026-10-29/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-28",
       "path": "/news/2026-10-28/",
@@ -396,6 +401,545 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-29-fed-holds-rates-two-dissent",
+      "kind": "daily",
+      "title": "Fed holds at 3.75-4% as two officials vote to raise rates",
+      "summary": "The FOMC left the federal funds target range at 3.75%-4% on a 10-2 vote, with Lisa Cook and Beth Hammack preferring a quarter-point increase. The statement said inflation “remains elevated” and that more information is needed before the next move, while describing activity as expanding at a strong pace and capital investment as robust. Chair Kevin Warsh also set out a structural change to how often the committee meets.",
+      "category": "economy-markets",
+      "priority": 84,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "interest-rates",
+        "united-states",
+        "inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "Federal Reserve Board",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+          "publishedAt": "2026-10-28T18:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-nasdaq-futures-dip-001028850.html",
+          "publishedAt": "2026-10-29T00:10:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-samsung-q3-record-operating-profit",
+      "kind": "daily",
+      "title": "Samsung becomes the first tech company to earn $80bn in a quarter",
+      "summary": "Samsung Electronics reported third-quarter revenue of KRW 195.3tn and operating profit of KRW 107.4tn, up 783% from a year earlier and the first time any technology company has cleared KRW 100tn in a single quarter. The chip division supplied KRW 106.5tn of that profit on HBM4 and server SSD demand while handsets and consumer devices lost money. The board declared a KRW 4,601 dividend per share, KRW 30tn in total.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "memory-chips",
+        "earnings",
+        "hbm4",
+        "south-korea"
+      ],
+      "sources": [
+        {
+          "publisher": "Samsung Electronics",
+          "url": "https://news.samsung.com/global/samsung-electronics-announces-third-quarter-2026-results",
+          "publishedAt": "2026-10-29T00:30:00.000Z"
+        },
+        {
+          "publisher": "Yonhap News Agency",
+          "url": "https://en.yna.co.kr/view/AEN20261029002653320",
+          "publishedAt": "2026-10-29T01:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-google-gemini-4-carbon-cyber",
+      "kind": "daily",
+      "title": "Google puts Gemini 4 Carbon behind the cyber-defender door first",
+      "summary": "Google released Gemini 4 Carbon, which it says ranks first on the v5.0 Artificial Analysis Intelligence Index at 59 and leads SEC-bench Pro at 88.2% for finding vulnerabilities, ExploitGym at 54.8% and CWE-bench at 71.0% for patching. Instead of a general launch, access starts with a subset of cyber defenders and widens through the Fairwind Program, at Argon's introductory $2 and $10 per million tokens before a $4 and $20 standard rate.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "frontier-models",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "publishedAt": "2026-10-28T16:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/technology/google-launches-gemini-4-carbon-ai-model-with-cybersecurity-focus-2026-10-28/",
+          "publishedAt": "2026-10-28T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-anthropic-exploit-chains-research",
+      "kind": "daily",
+      "title": "Anthropic's red team lets an unreleased Claude write five exploit chains",
+      "summary": "Anthropic's Frontier Red Team published five attack chains built by an unreleased internal research model against Chrome, Safari, an Android Pixel 9, Windows and the Linux kernel, including a one-click escape from the browser sandbox and a zero-click root chain that took 48 minutes to leak a kernel pointer. Every flaw went through coordinated disclosure and was patched before publication; Anthropic argues the point is that frontier models can now prove a bug by producing a working exploit.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "vulnerability-research",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/discovering-vulnerabilities-with-claude",
+          "publishedAt": "2026-10-27T16:00:00.000Z"
+        },
+        {
+          "publisher": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/anthropics-unreleased-ai-model-chains.html",
+          "publishedAt": "2026-10-28T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-openai-devday-dots-pro-500",
+      "kind": "daily",
+      "title": "OpenAI trims Pro usage and adds a $500 tier as DevDay turns to always-on agents",
+      "summary": "At DevDay in San Francisco OpenAI introduced dots, persistent agents with their own cloud machines that work through Slack and Teams, alongside ChatGPT Space, @ChatGPT mentions and a $500 Pro plan whose Ultrafast mode reaches up to 300 tokens per second in Codex. From 30 October the $200 Pro allowance in Work and Codex falls from 20 to 10 times Plus, and weekly GPT-6 Pro messages drop from 200 to 100.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "chatgpt",
+        "agents",
+        "pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/openai-devday-pro-200-usage-cut-pro-500-plan",
+          "publishedAt": "2026-10-28T14:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/devday-2026-recap/",
+          "publishedAt": "2026-10-27T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-apple-macbook-pro-touch-oled",
+      "kind": "daily",
+      "title": "Apple puts touch and a tandem-OLED display on the MacBook Pro",
+      "summary": "Apple announced a redesigned MacBook Pro with a PROLED XDR tandem-OLED display, 2,000-nit peak brightness and touch input built into the panel rather than layered on top, a first for the Mac. The 14-inch M5 Pro model starts at $2,899 and the 16-inch at $3,399, with M5 Max versions from $4,499; pre-orders opened on 28 October and deliveries begin on 6 November.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "macbook-pro",
+        "hardware",
+        "oled"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple",
+          "url": "https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/",
+          "publishedAt": "2026-10-28T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-alphabet-q3-cloud-tpu",
+      "kind": "daily",
+      "title": "Alphabet's cloud revenue doubles as TPU sales become a real business",
+      "summary": "Alphabet reported third-quarter revenue of $127.6bn, up 25%, with Google Cloud up 103% to $30.7bn and consolidated operating income of $40.6bn. Capital spending reached $51.4bn in the quarter and the company kept its 2026 guidance at $195-205bn. Sundar Pichai said first-party model APIs now process nearly 32 billion tokens a minute and the Gemini app has passed one billion users.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "alphabet",
+        "google-cloud",
+        "earnings",
+        "tpu",
+        "capital-spending"
+      ],
+      "sources": [
+        {
+          "publisher": "Alphabet (SEC filing)",
+          "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+          "publishedAt": "2026-10-28T20:05:00.000Z"
+        },
+        {
+          "publisher": "Alphabet Investor Relations",
+          "url": "https://abc.xyz/investor/news/news-details/2026/Alphabet-Announces-Third-Quarter-2026-Results-2026-FCcqxfIfmh/default.aspx",
+          "publishedAt": "2026-10-28T20:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-cipher-epics-zero-days",
+      "kind": "daily",
+      "title": "An autonomous agent found four zero-days in particle-accelerator software",
+      "summary": "Causal Security's Cipher agent spent 3 hours 49 minutes on EPICS Base, the open-source control toolkit used at roughly 90 facilities including Argonne's Advanced Photon Source and ITER, and returned four previously unknown memory-safety bugs. CISA published the advisory on 27 October; the worst, CVE-2026-114595 at CVSS 9.8, is an integer overflow that produces an attacker-controlled heap write. Fixes shipped in EPICS Base 7.0.11.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-security",
+        "vulnerability-research",
+        "epics",
+        "cisa"
+      ],
+      "sources": [
+        {
+          "publisher": "Causal Security",
+          "url": "https://causalsecurity.com/research/epics-base-security-research",
+          "publishedAt": "2026-10-27T15:00:00.000Z"
+        },
+        {
+          "publisher": "CISA",
+          "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+          "publishedAt": "2026-10-27T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-microsoft-fy27-q1-azure",
+      "kind": "daily",
+      "title": "Azure grows 48% as Microsoft opens its fiscal year with $92.3bn in revenue",
+      "summary": "Microsoft reported fiscal first-quarter revenue of $92.3bn, up 19%, with operating income of $45.9bn and net income of $36.6bn. Microsoft Cloud brought in $63.9bn and Azure grew 48%, and chief financial officer Amy Hood said results exceeded expectations on revenue, operating income and earnings per share. OpenAI investments added $207m to net income this quarter, against a $3.1bn drag a year earlier.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "azure",
+        "earnings",
+        "cloud"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft",
+          "url": "https://news.microsoft.com/source/2026/10/28/microsoft-announces-first-quarter-results-2",
+          "publishedAt": "2026-10-28T20:05:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/28/microsoft-msft-q1-earnings-report-2027.html",
+          "publishedAt": "2026-10-28T20:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-wall-street-alphabet-futures-slide",
+      "kind": "daily",
+      "title": "Alphabet's miss cools the AI trade and drags Nasdaq futures lower",
+      "summary": "US equity futures fell before Thursday's open after Alphabet dropped about 10% in extended trading on weaker-than-expected revenue across most core businesses, reviving doubts about the returns on AI spending. Nasdaq 100 futures lost more than 1% and S&P 500 futures 0.5%, while Microsoft rose nearly 3%. Wednesday's cash session had closed higher, with the Dow up 0.19%, the S&P 500 0.28% and the Nasdaq Composite 0.27%.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "alphabet",
+        "futures",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/united-states/stock-market/news/595997",
+          "publishedAt": "2026-10-29T02:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-nasdaq-futures-dip-001028850.html",
+          "publishedAt": "2026-10-29T00:10:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-nvidia-hugging-face-doj-inquiry",
+      "kind": "daily",
+      "title": "US Justice Department asks what Nvidia's Hugging Face deal would do to AI competition",
+      "summary": "Reuters reported that the Department of Justice has made inquiries about how Nvidia's $12.93bn agreement to buy Hugging Face would affect competition in artificial intelligence, alongside its long-running investigation into the chipmaker's conduct. The review also examined Nvidia's SchedMD acquisition. Nvidia, which expects the Hugging Face deal to close in the first half of 2027, argues the platform will stay neutral across competing chips and clouds.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "hugging-face",
+        "antitrust",
+        "mergers"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/us-doj-is-inquiring-about-nvidias-purchase-hugging-face-sources-say-2026-10-28/",
+          "publishedAt": "2026-10-28T22:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance (Bloomberg)",
+          "url": "https://uk.finance.yahoo.com/news/doj-inquires-nvidia-hugging-face-193103860.html",
+          "publishedAt": "2026-10-28T19:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-marvell-lumentum-optics-talks",
+      "kind": "daily",
+      "title": "Marvell moves on Lumentum to own the optics inside AI clusters",
+      "summary": "Marvell is in advanced talks to acquire Lumentum, the data-centre optics supplier valued at about $83bn against Marvell's $221bn, with an announcement possible as soon as next week, according to Bloomberg. Lumentum makes lasers, photonic integrated circuits and transceivers that have become a bottleneck in AI clusters, and Nvidia bought $2bn of its preferred stock in March. Lumentum rose after hours while Marvell fell.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "marvell",
+        "lumentum",
+        "semiconductors",
+        "mergers",
+        "optical-networking"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg Law",
+          "url": "https://news.bloomberglaw.com/mergers-and-acquisitions/marvell-is-said-to-near-megadeal-for-lumentum-in-ai-push-2",
+          "publishedAt": "2026-10-28T22:55:00.000Z"
+        },
+        {
+          "publisher": "TrendForce",
+          "url": "https://www.trendforce.com/news/2026/10/29/news-marvell-eyes-lumentum-acquisition-in-what-could-be-one-of-the-10-largest-tech-and-telecom-deals-ever/",
+          "publishedAt": "2026-10-29T03:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-carabao-cup-quarter-final-draw",
+      "kind": "daily",
+      "title": "Liverpool survive Chelsea on penalties as the Carabao Cup last eight takes shape",
+      "summary": "Liverpool beat Chelsea 6-5 on penalties after a 1-1 draw at Anfield, Bournemouth thrashed Aston Villa 3-0, Sunderland scored three times in ten minutes to beat Brentford 3-2 and Crystal Palace won 1-0 at Fulham. The quarter-final draw gave Liverpool a home tie with Bournemouth, Palace with Sunderland and Manchester City with Bradford City, while Fleetwood Town host the winners of Thursday's Everton-Newcastle match.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "carabao-cup",
+        "liverpool",
+        "chelsea",
+        "bournemouth",
+        "efl"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/oct/28/carabao-cup-fouth-round-bournemouth-aston-villa-sunderland-brentford",
+          "publishedAt": "2026-10-28T22:30:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Sports",
+          "url": "https://sports.yahoo.com/articles/full-carabao-cup-quarter-final-224734508.html",
+          "publishedAt": "2026-10-28T22:47:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-dfb-pokal-second-round-complete",
+      "kind": "daily",
+      "title": "Bayern hit six and Dresden dump Schalke out of the DFB-Pokal",
+      "summary": "Bayern Munich beat Magdeburg 6-1 and Bayer Leverkusen survived Nürnberg 5-2 as the DFB-Pokal's second round closed, but Schalke lost 2-0 at Dynamo Dresden and Hoffenheim went out on penalties at Holstein Kiel. VfB Stuttgart needed Deniz Undav's goal in stoppage time to win 1-0 at Paderborn and Freiburg turned Wolfsburg over 3-2. Four lower-division clubs reached the last 16.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "dfb-pokal",
+        "bayern-munich",
+        "schalke",
+        "germany"
+      ],
+      "sources": [
+        {
+          "publisher": "DFB",
+          "url": "https://www.dfb.de/news/dresden-ueberrascht-gegen-schalke",
+          "publishedAt": "2026-10-28T21:30:00.000Z"
+        },
+        {
+          "publisher": "Deutschlandfunk",
+          "url": "https://www.deutschlandfunk.de/zweite-runde-bochum-wirft-mainz-aus-dfb-pokal-siege-fuer-dortmund-koeln-und-frankfurt-106.html",
+          "publishedAt": "2026-10-28T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-29-premier-league-matchweek-nine-preview",
+      "kind": "daily",
+      "title": "Liverpool host Arsenal with Chelsea and Manchester United opening the weekend",
+      "summary": "The Premier League returns with Chelsea v Manchester United at 12:30 on Saturday, then Manchester City v Brighton, Spurs v Crystal Palace and Aston Villa v Fulham later the same day, before Liverpool v Arsenal at 16:30 on Sunday. Newcastle v Everton closes the round on Monday night, four days after the same pair meet in the Carabao Cup.",
+      "category": "football",
+      "priority": 52,
+      "publishedAt": "2026-10-29T05:00:00.000Z",
+      "updatedAt": "2026-10-29T05:00:00.000Z",
+      "retrievedAt": "2026-10-29T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "liverpool",
+        "arsenal",
+        "fixtures"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4688862/fixture-amendments-for-premier-league-matches-in-october-and-november",
+          "publishedAt": "2026-10-01T10:00:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/premierleague/fixtures/2026/Oct/31",
+          "publishedAt": "2026-10-28T12:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-28-sk-hynix-record-quarter-shareholder-return",
       "kind": "daily",

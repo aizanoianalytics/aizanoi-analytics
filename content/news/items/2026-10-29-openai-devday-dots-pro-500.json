@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-openai-devday-dots-pro-500",
+  "title": "OpenAI trims Pro usage and adds a $500 tier as DevDay turns to always-on agents",
+  "summary": "At DevDay in San Francisco OpenAI introduced dots, persistent agents with their own cloud machines that work through Slack and Teams, alongside ChatGPT Space, @ChatGPT mentions and a $500 Pro plan whose Ultrafast mode reaches up to 300 tokens per second in Codex. From 30 October the $200 Pro allowance in Work and Codex falls from 20 to 10 times Plus, and weekly GPT-6 Pro messages drop from 200 to 100.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "chatgpt",
+    "agents",
+    "pricing"
+  ],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/openai-devday-pro-200-usage-cut-pro-500-plan",
+      "publishedAt": "2026-10-28T14:00:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/devday-2026-recap/",
+      "publishedAt": "2026-10-27T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
