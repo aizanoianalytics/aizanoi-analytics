@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-microsoft-fy27-q1-azure",
+  "title": "Azure grows 48% as Microsoft opens its fiscal year with $92.3bn in revenue",
+  "summary": "Microsoft reported fiscal first-quarter revenue of $92.3bn, up 19%, with operating income of $45.9bn and net income of $36.6bn. Microsoft Cloud brought in $63.9bn and Azure grew 48%, and chief financial officer Amy Hood said results exceeded expectations on revenue, operating income and earnings per share. OpenAI investments added $207m to net income this quarter, against a $3.1bn drag a year earlier.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "azure",
+    "earnings",
+    "cloud"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft",
+      "url": "https://news.microsoft.com/source/2026/10/28/microsoft-announces-first-quarter-results-2",
+      "publishedAt": "2026-10-28T20:05:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/28/microsoft-msft-q1-earnings-report-2027.html",
+      "publishedAt": "2026-10-28T20:15:00Z"
+    }
+  ],
+  "kind": "daily"
+}

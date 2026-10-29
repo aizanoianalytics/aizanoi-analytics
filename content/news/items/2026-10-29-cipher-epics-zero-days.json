@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-cipher-epics-zero-days",
+  "title": "An autonomous agent found four zero-days in particle-accelerator software",
+  "summary": "Causal Security's Cipher agent spent 3 hours 49 minutes on EPICS Base, the open-source control toolkit used at roughly 90 facilities including Argonne's Advanced Photon Source and ITER, and returned four previously unknown memory-safety bugs. CISA published the advisory on 27 October; the worst, CVE-2026-114595 at CVSS 9.8, is an integer overflow that produces an attacker-controlled heap write. Fixes shipped in EPICS Base 7.0.11.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-security",
+    "vulnerability-research",
+    "epics",
+    "cisa"
+  ],
+  "sources": [
+    {
+      "publisher": "Causal Security",
+      "url": "https://causalsecurity.com/research/epics-base-security-research",
+      "publishedAt": "2026-10-27T15:00:00Z"
+    },
+    {
+      "publisher": "CISA",
+      "url": "https://www.cisa.gov/news-events/ics-advisories/icsa-26-300-01",
+      "publishedAt": "2026-10-27T14:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

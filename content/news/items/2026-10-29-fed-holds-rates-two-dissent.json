@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-fed-holds-rates-two-dissent",
+  "title": "Fed holds at 3.75-4% as two officials vote to raise rates",
+  "summary": "The FOMC left the federal funds target range at 3.75%-4% on a 10-2 vote, with Lisa Cook and Beth Hammack preferring a quarter-point increase. The statement said inflation “remains elevated” and that more information is needed before the next move, while describing activity as expanding at a strong pace and capital investment as robust. Chair Kevin Warsh also set out a structural change to how often the committee meets.",
+  "category": "economy-markets",
+  "priority": 84,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "federal-reserve",
+    "interest-rates",
+    "united-states",
+    "inflation"
+  ],
+  "sources": [
+    {
+      "publisher": "Federal Reserve Board",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
+      "publishedAt": "2026-10-28T18:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-nasdaq-futures-dip-001028850.html",
+      "publishedAt": "2026-10-29T00:10:00Z"
+    }
+  ],
+  "kind": "daily"
+}

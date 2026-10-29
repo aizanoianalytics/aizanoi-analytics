@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-29-apple-macbook-pro-touch-oled",
+  "title": "Apple puts touch and a tandem-OLED display on the MacBook Pro",
+  "summary": "Apple announced a redesigned MacBook Pro with a PROLED XDR tandem-OLED display, 2,000-nit peak brightness and touch input built into the panel rather than layered on top, a first for the Mac. The 14-inch M5 Pro model starts at $2,899 and the 16-inch at $3,399, with M5 Max versions from $4,499; pre-orders opened on 28 October and deliveries begin on 6 November.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "macbook-pro",
+    "hardware",
+    "oled"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple",
+      "url": "https://www.apple.com/newsroom/2026/10/apple-unveils-groundbreaking-macbook-pro-with-proled-xdr-display/",
+      "publishedAt": "2026-10-28T17:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

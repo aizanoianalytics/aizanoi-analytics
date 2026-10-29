@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-dfb-pokal-second-round-complete",
+  "title": "Bayern hit six and Dresden dump Schalke out of the DFB-Pokal",
+  "summary": "Bayern Munich beat Magdeburg 6-1 and Bayer Leverkusen survived Nürnberg 5-2 as the DFB-Pokal's second round closed, but Schalke lost 2-0 at Dynamo Dresden and Hoffenheim went out on penalties at Holstein Kiel. VfB Stuttgart needed Deniz Undav's goal in stoppage time to win 1-0 at Paderborn and Freiburg turned Wolfsburg over 3-2. Four lower-division clubs reached the last 16.",
+  "category": "football",
+  "priority": 54,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "dfb-pokal",
+    "bayern-munich",
+    "schalke",
+    "germany"
+  ],
+  "sources": [
+    {
+      "publisher": "DFB",
+      "url": "https://www.dfb.de/news/dresden-ueberrascht-gegen-schalke",
+      "publishedAt": "2026-10-28T21:30:00Z"
+    },
+    {
+      "publisher": "Deutschlandfunk",
+      "url": "https://www.deutschlandfunk.de/zweite-runde-bochum-wirft-mainz-aus-dfb-pokal-siege-fuer-dortmund-koeln-und-frankfurt-106.html",
+      "publishedAt": "2026-10-28T21:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

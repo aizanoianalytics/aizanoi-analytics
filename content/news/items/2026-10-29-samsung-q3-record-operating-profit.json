@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-29-samsung-q3-record-operating-profit",
+  "title": "Samsung becomes the first tech company to earn $80bn in a quarter",
+  "summary": "Samsung Electronics reported third-quarter revenue of KRW 195.3tn and operating profit of KRW 107.4tn, up 783% from a year earlier and the first time any technology company has cleared KRW 100tn in a single quarter. The chip division supplied KRW 106.5tn of that profit on HBM4 and server SSD demand while handsets and consumer devices lost money. The board declared a KRW 4,601 dividend per share, KRW 30tn in total.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "samsung",
+    "memory-chips",
+    "earnings",
+    "hbm4",
+    "south-korea"
+  ],
+  "sources": [
+    {
+      "publisher": "Samsung Electronics",
+      "url": "https://news.samsung.com/global/samsung-electronics-announces-third-quarter-2026-results",
+      "publishedAt": "2026-10-29T00:30:00Z"
+    },
+    {
+      "publisher": "Yonhap News Agency",
+      "url": "https://en.yna.co.kr/view/AEN20261029002653320",
+      "publishedAt": "2026-10-29T01:20:00Z"
+    }
+  ],
+  "kind": "daily"
+}

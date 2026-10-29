@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-29-marvell-lumentum-optics-talks",
+  "title": "Marvell moves on Lumentum to own the optics inside AI clusters",
+  "summary": "Marvell is in advanced talks to acquire Lumentum, the data-centre optics supplier valued at about $83bn against Marvell's $221bn, with an announcement possible as soon as next week, according to Bloomberg. Lumentum makes lasers, photonic integrated circuits and transceivers that have become a bottleneck in AI clusters, and Nvidia bought $2bn of its preferred stock in March. Lumentum rose after hours while Marvell fell.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "marvell",
+    "lumentum",
+    "semiconductors",
+    "mergers",
+    "optical-networking"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg Law",
+      "url": "https://news.bloomberglaw.com/mergers-and-acquisitions/marvell-is-said-to-near-megadeal-for-lumentum-in-ai-push-2",
+      "publishedAt": "2026-10-28T22:55:00Z"
+    },
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/10/29/news-marvell-eyes-lumentum-acquisition-in-what-could-be-one-of-the-10-largest-tech-and-telecom-deals-ever/",
+      "publishedAt": "2026-10-29T03:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-29-carabao-cup-quarter-final-draw",
+  "title": "Liverpool survive Chelsea on penalties as the Carabao Cup last eight takes shape",
+  "summary": "Liverpool beat Chelsea 6-5 on penalties after a 1-1 draw at Anfield, Bournemouth thrashed Aston Villa 3-0, Sunderland scored three times in ten minutes to beat Brentford 3-2 and Crystal Palace won 1-0 at Fulham. The quarter-final draw gave Liverpool a home tie with Bournemouth, Palace with Sunderland and Manchester City with Bradford City, while Fleetwood Town host the winners of Thursday's Everton-Newcastle match.",
+  "category": "football",
+  "priority": 56,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "carabao-cup",
+    "liverpool",
+    "chelsea",
+    "bournemouth",
+    "efl"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/oct/28/carabao-cup-fouth-round-bournemouth-aston-villa-sunderland-brentford",
+      "publishedAt": "2026-10-28T22:30:00Z"
+    },
+    {
+      "publisher": "Yahoo Sports",
+      "url": "https://sports.yahoo.com/articles/full-carabao-cup-quarter-final-224734508.html",
+      "publishedAt": "2026-10-28T22:47:00Z"
+    }
+  ],
+  "kind": "daily"
+}

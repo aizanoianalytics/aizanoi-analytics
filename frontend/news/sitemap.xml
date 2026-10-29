@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/fed-holds-rates-two-dissent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Fed holds at 3.75-4% as two officials vote to raise rates</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/samsung-q3-record-operating-profit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Samsung becomes the first tech company to earn $80bn in a quarter</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/google-gemini-4-carbon-cyber/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Google puts Gemini 4 Carbon behind the cyber-defender door first</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/anthropic-exploit-chains-research/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s red team lets an unreleased Claude write five exploit chains</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/openai-devday-dots-pro-500/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI trims Pro usage and adds a $500 tier as DevDay turns to always-on agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/apple-macbook-pro-touch-oled/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Apple puts touch and a tandem-OLED display on the MacBook Pro</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/alphabet-q3-cloud-tpu/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Alphabet&#39;s cloud revenue doubles as TPU sales become a real business</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/cipher-epics-zero-days/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>An autonomous agent found four zero-days in particle-accelerator software</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/microsoft-fy27-q1-azure/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Azure grows 48% as Microsoft opens its fiscal year with $92.3bn in revenue</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/wall-street-alphabet-futures-slide/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Alphabet&#39;s miss cools the AI trade and drags Nasdaq futures lower</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/nvidia-hugging-face-doj-inquiry/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>US Justice Department asks what Nvidia&#39;s Hugging Face deal would do to AI competition</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/marvell-lumentum-optics-talks/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Marvell moves on Lumentum to own the optics inside AI clusters</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/carabao-cup-quarter-final-draw/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Liverpool survive Chelsea on penalties as the Carabao Cup last eight takes shape</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/dfb-pokal-second-round-complete/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Bayern hit six and Dresden dump Schalke out of the DFB-Pokal</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-29/premier-league-matchweek-nine-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
+      <news:title>Liverpool host Arsenal with Chelsea and Manchester United opening the weekend</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-28/sk-hynix-record-quarter-shareholder-return/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,158 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-27T05:00:00.000Z</news:publication_date>
       <news:title>Korean chip stocks rebound as SK hynix and Samsung results approach</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/openai-training-without-live-internet/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI returns to training without a live internet feed</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/brazil-lula-economic-challenges/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Brazil’s re-elected Lula faces a demanding economic agenda</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/mbappe-double-real-madrid-barcelona/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Mbappe double lifts Real Madrid over Barcelona</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/hofffenheim-leverkusen-three-nil/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Hoffenheim beat Leverkusen 3–0 as Kramaric stars</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/asia-stocks-brent-cautious/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Asian stocks trade cautiously as Brent retreats from its high</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/anthropic-elvis-training-lawsuit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic faces a copyright claim over music used in AI training</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/ukraine-jef-military-technology/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Ukraine and JEF countries deepen cooperation on military technology</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/fileai-aws-bfsi-agents/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>fileAI and AWS announce a banking-focused agent collaboration</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/yangling-agri-tech-fair/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>China opens its 33rd Yangling agricultural technology fair</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/fabregas-como-manchester-united/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Fabregas and Como prepare for a historic Manchester United tie</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/un-military-ai-warning/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>UN discussion puts military AI use back in the spotlight</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/philippine-peso-record-low/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Philippine peso reaches a record low against the dollar</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/ai-billionaires-youngest/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>AI founders take a larger share of the youngest-billionaire list</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-26/weekly-ai-control-copyright-and-deployment/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>AI’s next phase is about control as much as capability</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-26/weekly-football-big-games-and-sharp-margins/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Football’s weekend was defined by decisive individual moments</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-26/weekly-markets-election-oil-and-currency/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Markets are pricing politics through oil and currencies</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-26/weekly-technology-from-fields-to-frontlines/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Technology stories are moving from demos into physical systems</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/redwire-phased-array-bet/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>Redwire makes a phased-array bet in defence technology</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-26/soueast-technology-day/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-26T05:00:00.000Z</news:publication_date>
-      <news:title>SOUEAST showcases its 2026 technology programme</news:title>
     </news:news>
   </url>
 </urlset>

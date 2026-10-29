@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-premier-league-matchweek-nine-preview",
+  "title": "Liverpool host Arsenal with Chelsea and Manchester United opening the weekend",
+  "summary": "The Premier League returns with Chelsea v Manchester United at 12:30 on Saturday, then Manchester City v Brighton, Spurs v Crystal Palace and Aston Villa v Fulham later the same day, before Liverpool v Arsenal at 16:30 on Sunday. Newcastle v Everton closes the round on Monday night, four days after the same pair meet in the Carabao Cup.",
+  "category": "football",
+  "priority": 52,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "liverpool",
+    "arsenal",
+    "fixtures"
+  ],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/news/4688862/fixture-amendments-for-premier-league-matches-in-october-and-november",
+      "publishedAt": "2026-10-01T10:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/premierleague/fixtures/2026/Oct/31",
+      "publishedAt": "2026-10-28T12:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

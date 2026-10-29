@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-29-nvidia-hugging-face-doj-inquiry",
+  "title": "US Justice Department asks what Nvidia's Hugging Face deal would do to AI competition",
+  "summary": "Reuters reported that the Department of Justice has made inquiries about how Nvidia's $12.93bn agreement to buy Hugging Face would affect competition in artificial intelligence, alongside its long-running investigation into the chipmaker's conduct. The review also examined Nvidia's SchedMD acquisition. Nvidia, which expects the Hugging Face deal to close in the first half of 2027, argues the platform will stay neutral across competing chips and clouds.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-29T05:00:00Z",
+  "updatedAt": "2026-10-29T05:00:00Z",
+  "retrievedAt": "2026-10-29T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "hugging-face",
+    "antitrust",
+    "mergers"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/us-doj-is-inquiring-about-nvidias-purchase-hugging-face-sources-say-2026-10-28/",
+      "publishedAt": "2026-10-28T22:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance (Bloomberg)",
+      "url": "https://uk.finance.yahoo.com/news/doj-inquires-nvidia-hugging-face-193103860.html",
+      "publishedAt": "2026-10-28T19:31:00Z"
+    }
+  ],
+  "kind": "daily"
+}
