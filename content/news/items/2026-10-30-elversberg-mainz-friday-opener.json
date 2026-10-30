@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-30-elversberg-mainz-friday-opener",
+  "title": "Elversberg and Mainz open matchday eight after twin cup humiliations",
+  "summary": "Promoted Elversberg host Mainz on Friday night level on 10 points, both clubs having exited the DFB-Pokal to second-division opponents on Tuesday. Elversberg lost 0-2 to Darmstadt despite a 26-7 shot count and were beaten 4-0 at RB Leipzig in their previous league game. Mainz were beaten 0-2 at Bochum, have won all three away league matches this season, and are uncertain whether captain Nadiem Amiri will recover from a knee problem in time.",
+  "category": "football",
+  "priority": 44,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "elversberg",
+    "mainz",
+    "dfb-pokal"
+  ],
+  "sources": [
+    {
+      "publisher": "dpa via n-tv",
+      "url": "https://n-tv.de/regionales/rheinland-pfalz-und-saarland/Nach-Pokal-Enttaeuschung-Mainz-und-Elversberg-kaempferisch-id31472089.html",
+      "publishedAt": "2026-10-29T12:36:00Z"
+    },
+    {
+      "publisher": "Focus",
+      "url": "https://focus.de/sport/fussball/mainz-und-elversberg-treffen-nach-pokal-pleiten-aufeinander_72d457b6-08d9-47af-a1ec-ac645d1eff45.html",
+      "publishedAt": "2026-10-29T14:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

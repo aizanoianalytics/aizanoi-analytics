@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-30-anthropic-s1-knowledge-work-40-trillion",
+  "title": "Anthropic's IPO filing sells a $40 trillion prize and $80.7bn of red ink",
+  "summary": "Anthropic's S-1 reports revenue of $16.3bn for the six months to June 2026, up from $1.2bn a year earlier, and an operating loss of $693m after a $1.0bn operating profit in the second quarter. The filing puts the economic value of knowledge work at more than $40 trillion globally in 2025 and cites an IDC estimate of $22.5 trillion in cumulative AI impact by 2031. A net loss of $80.7bn was driven mainly by convertible-note fair-value changes; the company plans to list on Nasdaq under the symbol ANT.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "claude",
+    "sec-filing",
+    "revenue"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic (SEC Form S-1)",
+      "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+      "publishedAt": "2026-10-26T21:10:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/transactional/anthropic-opens-books-ais-explosive-growth-staggering-costs-2026-10-26/",
+      "publishedAt": "2026-10-26T22:00:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/s1-sec",
+      "publishedAt": "2026-10-26T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

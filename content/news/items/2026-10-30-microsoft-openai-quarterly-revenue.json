@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-30-microsoft-openai-quarterly-revenue",
+  "title": "OpenAI supplied almost 11% of Microsoft's quarterly revenue",
+  "summary": "Microsoft disclosed $10bn of revenue from commercial arrangements with OpenAI, including revenue-sharing payments, in the quarter to 30 September - nearly 11% of its $92.3bn total. OpenAI-linked revenue reached $24.1bn in the fiscal year that ended in June, and outstanding receivables from the lab rose to $7.2bn from $6bn in June. Microsoft's stake slipped to about 24% from 25%, and the two companies now compete for customers while remaining each other's largest commercial counterparties.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "openai",
+    "revenue",
+    "partnership",
+    "receivables"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/",
+      "publishedAt": "2026-10-28T21:34:00Z"
+    }
+  ],
+  "kind": "daily"
+}

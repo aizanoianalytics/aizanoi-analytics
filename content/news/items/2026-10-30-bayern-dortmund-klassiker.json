@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-30-bayern-dortmund-klassiker",
+  "title": "Bayern and Dortmund meet unbeaten and level in the season's first Klassiker",
+  "summary": "Bayern Munich host Borussia Dortmund on Saturday with both sides unbeaten on 17 points after seven matchdays. Bayern lead only on goal difference after scoring 25 goals, 18 of them at home, while Dortmund have conceded four and kept five clean sheets, underpinned by Gregor Kobel's 82% save rate. Harry Kane arrives as Ballon d'Or winner with four league goals, Michael Olise has six, and Serhou Guirassy has two. Bayern are again without coach Vincent Kompany, so Aaron Danks takes the bench.",
+  "category": "football",
+  "priority": 56,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "bayern-munich",
+    "borussia-dortmund",
+    "klassiker"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga.com",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/bayern-munich-borussia-dortmund-klassiker-evenly-matched-kane-olise-guirassy-39750",
+      "publishedAt": "2026-10-29T09:00:00Z"
+    },
+    {
+      "publisher": "Bundesliga matchday 8 fixtures",
+      "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8",
+      "publishedAt": "2026-10-29T09:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

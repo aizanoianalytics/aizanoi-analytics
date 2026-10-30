@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-serie-a-derby-weekend",
+  "title": "Serie A's midweek upsets hand the derby weekend extra weight",
+  "summary": "Milan lost 4-2 at home to Bologna and Juventus went down 2-0 at Genoa as Serie A's ninth round scrambled the table, leaving Inter and Lazio level on 25 points, with Roma third on 21 and Como fourth on 20. Milan sit fifth on 18 and meet Inter at San Siro on Saturday, while Juventus host Napoli on Sunday. Napoli's 4-1 win at Monza and Como's 3-1 win at Torino were the round's other away statements.",
+  "category": "football",
+  "priority": 52,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "serie-a",
+    "ac-milan",
+    "inter",
+    "juventus",
+    "napoli"
+  ],
+  "sources": [
+    {
+      "publisher": "Lega Serie A",
+      "url": "https://en.legaseriea.it/",
+      "publishedAt": "2026-10-29T22:00:00Z"
+    },
+    {
+      "publisher": "AC Milan (Serie A standings)",
+      "url": "https://www.acmilan.com/en/season/2026/standings/serie-a",
+      "publishedAt": "2026-10-29T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

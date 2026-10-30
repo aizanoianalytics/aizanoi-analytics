@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-29T05:00:00.000Z",
+  "generatedAt": "2026-10-30T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-30",
+      "path": "/news/2026-10-30/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-29",
       "path": "/news/2026-10-29/",
@@ -401,6 +406,553 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-30-amazon-q3-aws-accelerates",
+      "kind": "daily",
+      "title": "Amazon's AWS growth hits 39% but holiday guidance trails forecasts",
+      "summary": "Amazon reported third-quarter net sales of $201.9bn, up 12%, with AWS up 39.3% to $46.0bn - its fastest growth in nearly five years - and operating income of $28.1bn, a record 13.9% margin. Net income fell to $20.7bn against last year's Anthropic investment gain, advertising growth of 12% missed expectations, and trailing twelve-month free cash flow was an outflow of $42.4bn after $75.9bn of quarterly capital spending. Fourth-quarter sales guidance of $240-247bn bracketed consensus but sat below it at the midpoint.",
+      "category": "technology",
+      "priority": 86,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "amazon",
+        "aws",
+        "earnings",
+        "capital-spending",
+        "cloud"
+      ],
+      "sources": [
+        {
+          "publisher": "Amazon Investor Relations",
+          "url": "https://press.aboutamazon.com/2026/10/amazon-com-announces-third-quarter-results",
+          "publishedAt": "2026-10-29T20:01:00.000Z"
+        },
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/2026/10/29/amazon-shares-sink-as-spending-on-ai-overshadows-growth-in-cloud-unit/",
+          "publishedAt": "2026-10-29T21:40:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-anthropic-s1-knowledge-work-40-trillion",
+      "kind": "daily",
+      "title": "Anthropic's IPO filing sells a $40 trillion prize and $80.7bn of red ink",
+      "summary": "Anthropic's S-1 reports revenue of $16.3bn for the six months to June 2026, up from $1.2bn a year earlier, and an operating loss of $693m after a $1.0bn operating profit in the second quarter. The filing puts the economic value of knowledge work at more than $40 trillion globally in 2025 and cites an IDC estimate of $22.5 trillion in cumulative AI impact by 2031. A net loss of $80.7bn was driven mainly by convertible-note fair-value changes; the company plans to list on Nasdaq under the symbol ANT.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "claude",
+        "sec-filing",
+        "revenue"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic (SEC Form S-1)",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+          "publishedAt": "2026-10-26T21:10:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/legal/transactional/anthropic-opens-books-ais-explosive-growth-staggering-costs-2026-10-26/",
+          "publishedAt": "2026-10-26T22:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/s1-sec",
+          "publishedAt": "2026-10-26T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-intel-q3-outlook-pc-slump",
+      "kind": "daily",
+      "title": "Intel's data-centre CPUs outperform, but a PC slump sinks the outlook",
+      "summary": "Intel's third-quarter revenue rose 21% to $16.5bn and adjusted earnings of $0.52 a share beat forecasts, yet the stock fell more than 20% after hours when the company guided fourth-quarter revenue to $15-16bn against roughly $17bn expected and gross margin down to 38%. PC chip sales of $8.1bn missed an $8.8bn target as device demand weakened, while data-centre sales topped $7.3bn and foundry revenue rose 58% to $6.7bn. An explosion at an Israeli plant is expected to cost about $300m of fourth-quarter sales.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "intel",
+        "semiconductors",
+        "earnings",
+        "pc-market",
+        "foundry"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/technology/article/intel-tops-q3-earnings-estimates-but-falls-short-of-q4-outlook-on-sluggish-pc-sales-as-stock-plunges-20-200949548.html",
+          "publishedAt": "2026-10-29T20:01:00.000Z"
+        },
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/intel-stock-falls-revenue-forecast-pc-demand-102926",
+          "publishedAt": "2026-10-29T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-wall-street-ai-cash-burn",
+      "kind": "daily",
+      "title": "Alphabet's worst session drags the Nasdaq as investors audit AI spending",
+      "summary": "The S&P 500 lost 0.31% to 7,721.02 and the Nasdaq Composite 1.36% to 26,188.08 on Thursday, while the Russell 2000 advanced - a split that concentrated the damage in megacap technology. Alphabet fell 12.6% after a revenue miss and negative free cash flow, and the Philadelphia semiconductor index ended a four-day winning run. With 253 S&P 500 companies reported, 81% have beaten estimates and LSEG expects 31% aggregate earnings growth for the quarter.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "nasdaq",
+        "alphabet",
+        "earnings-season",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Virginia Business)",
+          "url": "https://virginiabusiness.com/wall-street-falls-alphabet-revenue-miss-ai-spending/",
+          "publishedAt": "2026-10-29T21:10:00.000Z"
+        },
+        {
+          "publisher": "Centrien",
+          "url": "https://centrien.com/markethawk-market-close-2026-10-29",
+          "publishedAt": "2026-10-29T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-microsoft-25bn-bonds-ai-capex",
+      "kind": "daily",
+      "title": "Microsoft prices $25bn of bonds as AI spending outruns internal cash",
+      "summary": "Microsoft sold $25bn of senior unsecured notes in ten tranches maturing between 2028 and 2066, its first US investment-grade bond sale since 2017, and drew orders reported at more than four times the deal size. Coupons run from 4.85% on the 2028 notes to 6.35% on 2066 paper, and the company said proceeds may fund capital expenditure, working capital or share repurchases. The sale follows a quarter in which the company's cloud growth accelerated while its infrastructure bill kept climbing.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "bonds",
+        "debt",
+        "ai-infrastructure",
+        "capital-spending"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft Source",
+          "url": "https://news.microsoft.com/source/2026/10/29/microsoft-announces-debt-offerings-7/",
+          "publishedAt": "2026-10-29T13:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via CNA)",
+          "url": "https://www.channelnewsasia.com/business/microsoft-expects-raise-25-billion-in-us-bond-sale-sources-say-6504501",
+          "publishedAt": "2026-10-29T14:01:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-us-gdp-q3-3-4-pce",
+      "kind": "daily",
+      "title": "US growth accelerated to 3.4% in the third quarter as inflation stayed warm",
+      "summary": "Real GDP rose at a 3.4% annual rate in the third quarter, the BEA's advance estimate showed, up from 2.2% in the second, on stronger investment, consumer spending and government outlays partly offset by lower exports. The GDP price index cooled to 3.0% from 5.6%. September's monthly PCE index rose 0.5% and was 3.6% higher year on year, with the core measure at 3.1%. Personal income grew 0.2% and the saving rate slipped to 3.8%.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-economy",
+        "gdp",
+        "inflation",
+        "pce",
+        "bea"
+      ],
+      "sources": [
+        {
+          "publisher": "US Bureau of Economic Analysis (GDP)",
+          "url": "https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026",
+          "publishedAt": "2026-10-29T12:30:00.000Z"
+        },
+        {
+          "publisher": "US Bureau of Economic Analysis (Personal Income and Outlays)",
+          "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+          "publishedAt": "2026-10-29T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-nvidia-nscale-anthropic-credit-support",
+      "kind": "daily",
+      "title": "Nvidia weighs credit guarantees for the Nscale campus Anthropic will rent",
+      "summary": "Nvidia is in talks to provide billions of dollars of credit guarantees backing debt for an Nscale data centre in West Virginia that Anthropic plans to use, according to The Information, with the support covering power infrastructure and construction. Nothing has been signed and terms could change. Anthropic agreed in August to spend $45bn renting capacity at the campus, and Nscale is discussing a second deal worth about $45bn for roughly 460 megawatts of computing power.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "nscale",
+        "anthropic",
+        "data-centres",
+        "ai-financing"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via SRN News)",
+          "url": "https://srnnews.com/nvidia-in-talks-to-give-credit-support-for-nscales-deal-with-anthropic-the-information-reports",
+          "publishedAt": "2026-10-29T21:26:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-29/nvidia-in-talks-to-offer-credit-support-for-nscale-project",
+          "publishedAt": "2026-10-29T23:59:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-openai-model-spec-five-values",
+      "kind": "daily",
+      "title": "OpenAI rebuilds its Model Spec around five values and retires style rules",
+      "summary": "OpenAI published a new Model Spec that organises model behaviour around faithfulness to human intent, harm minimisation, honesty and transparency, human agency, and care. The revision adds guidance on reading context, supporting agency and following social norms, updates the chain of command for conflicting instructions, and retires most detailed style guidance. The document now calls the model GPT rather than the assistant, and OpenAI says it is testing training methods that teach why the principles matter, not just what they require.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "model-spec",
+        "ai-safety",
+        "alignment",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/updated-model-spec/",
+          "publishedAt": "2026-10-29T18:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI Model Spec (2026-10-29)",
+          "url": "https://model-spec.openai.com/2026-10-29.html",
+          "publishedAt": "2026-10-29T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-microsoft-openai-quarterly-revenue",
+      "kind": "daily",
+      "title": "OpenAI supplied almost 11% of Microsoft's quarterly revenue",
+      "summary": "Microsoft disclosed $10bn of revenue from commercial arrangements with OpenAI, including revenue-sharing payments, in the quarter to 30 September - nearly 11% of its $92.3bn total. OpenAI-linked revenue reached $24.1bn in the fiscal year that ended in June, and outstanding receivables from the lab rose to $7.2bn from $6bn in June. Microsoft's stake slipped to about 24% from 25%, and the two companies now compete for customers while remaining each other's largest commercial counterparties.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "openai",
+        "revenue",
+        "partnership",
+        "receivables"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/",
+          "publishedAt": "2026-10-28T21:34:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-memory-costs-pc-pricing",
+      "kind": "daily",
+      "title": "Memory is the binding constraint as DRAM costs bleed into device prices",
+      "summary": "The PC industry's weak quarter has a component story underneath it. AI data-centre demand has absorbed spare DRAM and NAND output, and Gartner expects combined DRAM and solid-state drive prices to rise 130% by the end of 2026, lifting average PC prices 17% and smartphone prices 13% against 2025 levels. Intel's PC revenue miss and its 38% fourth-quarter gross-margin guidance show how quickly those input costs reach earnings, with Reuters reporting that the memory shortage has raised Intel's own costs.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "memory",
+        "dram",
+        "pc-market",
+        "supply-chain",
+        "gartner"
+      ],
+      "sources": [
+        {
+          "publisher": "Gartner",
+          "url": "https://www.gartner.com/en/newsroom/press-releases/2026-02-26-gartner-says-surging-memory-costs-will-reduce-global-pc-and-smartphone-shipments-in-2026",
+          "publishedAt": "2026-02-26T09:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Yahoo Finance)",
+          "url": "https://finance.yahoo.com/technology/articles/amazon-burns-cash-intel-flags-012823625.html",
+          "publishedAt": "2026-10-29T01:28:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-jobless-claims-194000",
+      "kind": "daily",
+      "title": "US jobless claims fall to 194,000, near the lowest since the late 1960s",
+      "summary": "Initial claims for unemployment benefits fell 1,000 to a seasonally adjusted 194,000 in the week to 24 October, below the 199,000 forecast and close to July's 189,000 reading, the lowest since 1969. Continuing claims dropped 21,000 to 1.701 million in the week to 17 October, the period covering the household survey behind October's unemployment rate. Economists describe a labour market stuck in a low-hire, low-fire state, with layoffs near historic lows.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-economy",
+        "jobless-claims",
+        "labour-market",
+        "employment"
+      ],
+      "sources": [
+        {
+          "publisher": "US Department of Labor",
+          "url": "https://www.dol.gov/ui/data.pdf",
+          "publishedAt": "2026-10-29T12:30:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Investing.com)",
+          "url": "https://www.investing.com/news/economic-indicators/us-weekly-jobless-claims-hover-near-57year-lows-4983709",
+          "publishedAt": "2026-10-29T12:56:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-bayern-dortmund-klassiker",
+      "kind": "daily",
+      "title": "Bayern and Dortmund meet unbeaten and level in the season's first Klassiker",
+      "summary": "Bayern Munich host Borussia Dortmund on Saturday with both sides unbeaten on 17 points after seven matchdays. Bayern lead only on goal difference after scoring 25 goals, 18 of them at home, while Dortmund have conceded four and kept five clean sheets, underpinned by Gregor Kobel's 82% save rate. Harry Kane arrives as Ballon d'Or winner with four league goals, Michael Olise has six, and Serhou Guirassy has two. Bayern are again without coach Vincent Kompany, so Aaron Danks takes the bench.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "bayern-munich",
+        "borussia-dortmund",
+        "klassiker"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga.com",
+          "url": "https://www.bundesliga.com/en/bundesliga/news/bayern-munich-borussia-dortmund-klassiker-evenly-matched-kane-olise-guirassy-39750",
+          "publishedAt": "2026-10-29T09:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga matchday 8 fixtures",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8",
+          "publishedAt": "2026-10-29T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-serie-a-derby-weekend",
+      "kind": "daily",
+      "title": "Serie A's midweek upsets hand the derby weekend extra weight",
+      "summary": "Milan lost 4-2 at home to Bologna and Juventus went down 2-0 at Genoa as Serie A's ninth round scrambled the table, leaving Inter and Lazio level on 25 points, with Roma third on 21 and Como fourth on 20. Milan sit fifth on 18 and meet Inter at San Siro on Saturday, while Juventus host Napoli on Sunday. Napoli's 4-1 win at Monza and Como's 3-1 win at Torino were the round's other away statements.",
+      "category": "football",
+      "priority": 52,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "serie-a",
+        "ac-milan",
+        "inter",
+        "juventus",
+        "napoli"
+      ],
+      "sources": [
+        {
+          "publisher": "Lega Serie A",
+          "url": "https://en.legaseriea.it/",
+          "publishedAt": "2026-10-29T22:00:00.000Z"
+        },
+        {
+          "publisher": "AC Milan (Serie A standings)",
+          "url": "https://www.acmilan.com/en/season/2026/standings/serie-a",
+          "publishedAt": "2026-10-29T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-dream-construction-world-model",
+      "kind": "daily",
+      "title": "Ex-Palantir founders raise $17m to teach AI the physics of buildings",
+      "summary": "Dream, founded by former Palantir executives Andy Elder and Arjun Mathur, left stealth with $17m in seed funding led by Andreessen Horowitz, with SV Angel, XYZ and Zigg Capital joining. The startup is building a world model trained on more than 100 million square feet of US building data drawn from permit archives, aiming to generate structurally sound designs rather than pictures. It says ten projects in Texas and California already use the tool, which targets incumbents such as AutoCAD and Revit.",
+      "category": "ai",
+      "priority": 46,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "startups",
+        "funding",
+        "world-models",
+        "construction",
+        "andreessen-horowitz"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/29/ex-palantir-execs-launch-dream-with-17m-from-a16z-to-build-ai-world-models-for-construction/",
+          "publishedAt": "2026-10-29T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-30-elversberg-mainz-friday-opener",
+      "kind": "daily",
+      "title": "Elversberg and Mainz open matchday eight after twin cup humiliations",
+      "summary": "Promoted Elversberg host Mainz on Friday night level on 10 points, both clubs having exited the DFB-Pokal to second-division opponents on Tuesday. Elversberg lost 0-2 to Darmstadt despite a 26-7 shot count and were beaten 4-0 at RB Leipzig in their previous league game. Mainz were beaten 0-2 at Bochum, have won all three away league matches this season, and are uncertain whether captain Nadiem Amiri will recover from a knee problem in time.",
+      "category": "football",
+      "priority": 44,
+      "publishedAt": "2026-10-30T05:00:00.000Z",
+      "updatedAt": "2026-10-30T05:00:00.000Z",
+      "retrievedAt": "2026-10-30T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "elversberg",
+        "mainz",
+        "dfb-pokal"
+      ],
+      "sources": [
+        {
+          "publisher": "dpa via n-tv",
+          "url": "https://n-tv.de/regionales/rheinland-pfalz-und-saarland/Nach-Pokal-Enttaeuschung-Mainz-und-Elversberg-kaempferisch-id31472089.html",
+          "publishedAt": "2026-10-29T12:36:00.000Z"
+        },
+        {
+          "publisher": "Focus",
+          "url": "https://focus.de/sport/fussball/mainz-und-elversberg-treffen-nach-pokal-pleiten-aufeinander_72d457b6-08d9-47af-a1ec-ac645d1eff45.html",
+          "publishedAt": "2026-10-29T14:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-29-fed-holds-rates-two-dissent",
       "kind": "daily",

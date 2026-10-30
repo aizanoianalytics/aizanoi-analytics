@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-intel-q3-outlook-pc-slump",
+  "title": "Intel's data-centre CPUs outperform, but a PC slump sinks the outlook",
+  "summary": "Intel's third-quarter revenue rose 21% to $16.5bn and adjusted earnings of $0.52 a share beat forecasts, yet the stock fell more than 20% after hours when the company guided fourth-quarter revenue to $15-16bn against roughly $17bn expected and gross margin down to 38%. PC chip sales of $8.1bn missed an $8.8bn target as device demand weakened, while data-centre sales topped $7.3bn and foundry revenue rose 58% to $6.7bn. An explosion at an Israeli plant is expected to cost about $300m of fourth-quarter sales.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "intel",
+    "semiconductors",
+    "earnings",
+    "pc-market",
+    "foundry"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/article/intel-tops-q3-earnings-estimates-but-falls-short-of-q4-outlook-on-sluggish-pc-sales-as-stock-plunges-20-200949548.html",
+      "publishedAt": "2026-10-29T20:01:00Z"
+    },
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/intel-stock-falls-revenue-forecast-pc-demand-102926",
+      "publishedAt": "2026-10-29T21:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

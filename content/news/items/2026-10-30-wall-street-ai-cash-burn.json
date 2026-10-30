@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-wall-street-ai-cash-burn",
+  "title": "Alphabet's worst session drags the Nasdaq as investors audit AI spending",
+  "summary": "The S&P 500 lost 0.31% to 7,721.02 and the Nasdaq Composite 1.36% to 26,188.08 on Thursday, while the Russell 2000 advanced - a split that concentrated the damage in megacap technology. Alphabet fell 12.6% after a revenue miss and negative free cash flow, and the Philadelphia semiconductor index ended a four-day winning run. With 253 S&P 500 companies reported, 81% have beaten estimates and LSEG expects 31% aggregate earnings growth for the quarter.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nasdaq",
+    "alphabet",
+    "earnings-season",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Virginia Business)",
+      "url": "https://virginiabusiness.com/wall-street-falls-alphabet-revenue-miss-ai-spending/",
+      "publishedAt": "2026-10-29T21:10:00Z"
+    },
+    {
+      "publisher": "Centrien",
+      "url": "https://centrien.com/markethawk-market-close-2026-10-29",
+      "publishedAt": "2026-10-29T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

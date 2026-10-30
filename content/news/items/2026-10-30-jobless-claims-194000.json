@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-30-jobless-claims-194000",
+  "title": "US jobless claims fall to 194,000, near the lowest since the late 1960s",
+  "summary": "Initial claims for unemployment benefits fell 1,000 to a seasonally adjusted 194,000 in the week to 24 October, below the 199,000 forecast and close to July's 189,000 reading, the lowest since 1969. Continuing claims dropped 21,000 to 1.701 million in the week to 17 October, the period covering the household survey behind October's unemployment rate. Economists describe a labour market stuck in a low-hire, low-fire state, with layoffs near historic lows.",
+  "category": "economy-markets",
+  "priority": 58,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-economy",
+    "jobless-claims",
+    "labour-market",
+    "employment"
+  ],
+  "sources": [
+    {
+      "publisher": "US Department of Labor",
+      "url": "https://www.dol.gov/ui/data.pdf",
+      "publishedAt": "2026-10-29T12:30:00Z"
+    },
+    {
+      "publisher": "Reuters (via Investing.com)",
+      "url": "https://www.investing.com/news/economic-indicators/us-weekly-jobless-claims-hover-near-57year-lows-4983709",
+      "publishedAt": "2026-10-29T12:56:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-openai-model-spec-five-values",
+  "title": "OpenAI rebuilds its Model Spec around five values and retires style rules",
+  "summary": "OpenAI published a new Model Spec that organises model behaviour around faithfulness to human intent, harm minimisation, honesty and transparency, human agency, and care. The revision adds guidance on reading context, supporting agency and following social norms, updates the chain of command for conflicting instructions, and retires most detailed style guidance. The document now calls the model GPT rather than the assistant, and OpenAI says it is testing training methods that teach why the principles matter, not just what they require.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "model-spec",
+    "ai-safety",
+    "alignment",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/updated-model-spec/",
+      "publishedAt": "2026-10-29T18:00:00Z"
+    },
+    {
+      "publisher": "OpenAI Model Spec (2026-10-29)",
+      "url": "https://model-spec.openai.com/2026-10-29.html",
+      "publishedAt": "2026-10-29T18:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

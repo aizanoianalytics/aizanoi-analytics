@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-microsoft-25bn-bonds-ai-capex",
+  "title": "Microsoft prices $25bn of bonds as AI spending outruns internal cash",
+  "summary": "Microsoft sold $25bn of senior unsecured notes in ten tranches maturing between 2028 and 2066, its first US investment-grade bond sale since 2017, and drew orders reported at more than four times the deal size. Coupons run from 4.85% on the 2028 notes to 6.35% on 2066 paper, and the company said proceeds may fund capital expenditure, working capital or share repurchases. The sale follows a quarter in which the company's cloud growth accelerated while its infrastructure bill kept climbing.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "bonds",
+    "debt",
+    "ai-infrastructure",
+    "capital-spending"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft Source",
+      "url": "https://news.microsoft.com/source/2026/10/29/microsoft-announces-debt-offerings-7/",
+      "publishedAt": "2026-10-29T13:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via CNA)",
+      "url": "https://www.channelnewsasia.com/business/microsoft-expects-raise-25-billion-in-us-bond-sale-sources-say-6504501",
+      "publishedAt": "2026-10-29T14:01:00Z"
+    }
+  ],
+  "kind": "daily"
+}
