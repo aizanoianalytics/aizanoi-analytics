@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-us-gdp-q3-3-4-pce",
+  "title": "US growth accelerated to 3.4% in the third quarter as inflation stayed warm",
+  "summary": "Real GDP rose at a 3.4% annual rate in the third quarter, the BEA's advance estimate showed, up from 2.2% in the second, on stronger investment, consumer spending and government outlays partly offset by lower exports. The GDP price index cooled to 3.0% from 5.6%. September's monthly PCE index rose 0.5% and was 3.6% higher year on year, with the core measure at 3.1%. Personal income grew 0.2% and the saving rate slipped to 3.8%.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-economy",
+    "gdp",
+    "inflation",
+    "pce",
+    "bea"
+  ],
+  "sources": [
+    {
+      "publisher": "US Bureau of Economic Analysis (GDP)",
+      "url": "https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026",
+      "publishedAt": "2026-10-29T12:30:00Z"
+    },
+    {
+      "publisher": "US Bureau of Economic Analysis (Personal Income and Outlays)",
+      "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+      "publishedAt": "2026-10-29T12:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

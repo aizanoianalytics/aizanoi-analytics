@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-amazon-q3-aws-accelerates",
+  "title": "Amazon's AWS growth hits 39% but holiday guidance trails forecasts",
+  "summary": "Amazon reported third-quarter net sales of $201.9bn, up 12%, with AWS up 39.3% to $46.0bn - its fastest growth in nearly five years - and operating income of $28.1bn, a record 13.9% margin. Net income fell to $20.7bn against last year's Anthropic investment gain, advertising growth of 12% missed expectations, and trailing twelve-month free cash flow was an outflow of $42.4bn after $75.9bn of quarterly capital spending. Fourth-quarter sales guidance of $240-247bn bracketed consensus but sat below it at the midpoint.",
+  "category": "technology",
+  "priority": 86,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "amazon",
+    "aws",
+    "earnings",
+    "capital-spending",
+    "cloud"
+  ],
+  "sources": [
+    {
+      "publisher": "Amazon Investor Relations",
+      "url": "https://press.aboutamazon.com/2026/10/amazon-com-announces-third-quarter-results",
+      "publishedAt": "2026-10-29T20:01:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/29/amazon-shares-sink-as-spending-on-ai-overshadows-growth-in-cloud-unit/",
+      "publishedAt": "2026-10-29T21:40:00Z"
+    }
+  ],
+  "kind": "daily"
+}

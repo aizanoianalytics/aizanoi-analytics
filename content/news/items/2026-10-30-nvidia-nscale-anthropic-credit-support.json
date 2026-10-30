@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-30-nvidia-nscale-anthropic-credit-support",
+  "title": "Nvidia weighs credit guarantees for the Nscale campus Anthropic will rent",
+  "summary": "Nvidia is in talks to provide billions of dollars of credit guarantees backing debt for an Nscale data centre in West Virginia that Anthropic plans to use, according to The Information, with the support covering power infrastructure and construction. Nothing has been signed and terms could change. Anthropic agreed in August to spend $45bn renting capacity at the campus, and Nscale is discussing a second deal worth about $45bn for roughly 460 megawatts of computing power.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-30T05:00:00Z",
+  "updatedAt": "2026-10-30T05:00:00Z",
+  "retrievedAt": "2026-10-30T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "nscale",
+    "anthropic",
+    "data-centres",
+    "ai-financing"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via SRN News)",
+      "url": "https://srnnews.com/nvidia-in-talks-to-give-credit-support-for-nscales-deal-with-anthropic-the-information-reports",
+      "publishedAt": "2026-10-29T21:26:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-29/nvidia-in-talks-to-offer-credit-support-for-nscale-project",
+      "publishedAt": "2026-10-29T23:59:00Z"
+    }
+  ],
+  "kind": "daily"
+}
