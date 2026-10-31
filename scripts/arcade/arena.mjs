@@ -233,7 +233,8 @@ export async function runArena(argv) {
     let result;
     try {
       for (let seat = 0; seat < match.seats.length; seat++) {
-        const initTimeout = ['chess', 'holdem'].includes(config.game) ? 1000 :
+        // Hold'em bots may precompute on load, so only chess keeps the 1000 ms load deadline
+        const initTimeout = config.game === 'chess' ? 1000 :
           config.game === 'anatolian-pact' ? 2000 : 5000;
         hosts.push(new BotHost(
           config.game, match.seats[seat], match.workerSeeds[seat],

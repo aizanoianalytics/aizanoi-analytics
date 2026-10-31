@@ -106,7 +106,8 @@ Decision deadlines match the browser:
 | Football | 50 |
 | Anatolian Pact | 2000 |
 
-Startup deadlines also match the supplied runners. A missed deadline immediately
+Startup deadlines also match the supplied runners: 1000 ms for Chess, 2000 ms
+for Anatolian Pact and 5000 ms for the other games. A missed deadline immediately
 terminates that worker and disables its seat for the rest of the game. This is
 stricter than a five-second hang watchdog and follows the browser's retirement
 policy. Later requests use the game's fallback without re-running that bot.

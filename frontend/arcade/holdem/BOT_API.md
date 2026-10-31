@@ -300,7 +300,8 @@ Strings `'fold'`, `'check'`, `'call'` and `'allin'` are also accepted.
 Each seat gets a separate classic Web Worker, even if the same bot sits
 multiple times. The engine helper loads before the bot script.
 
-Initialization and each decision have a 1000 ms runner deadline. Decision
+Initialization (import and top-level execution) has a 5000 ms deadline and each
+decision has a 1000 ms runner deadline. Decision
 time includes worker message delivery, computation and response delivery;
 it is not a promise of 1000 ms CPU time.
 

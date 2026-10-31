@@ -2,6 +2,8 @@
   'use strict';
 
   const TIMEOUT_MS = 1000;
+  // Loading may precompute tables, so it gets the 5 s budget the other arenas use
+  const INIT_TIMEOUT_MS = 5000;
   const TYPES = new Set(['fold', 'check', 'call', 'raise', 'allin']);
 
   function normalize(action) {
@@ -79,7 +81,7 @@
       humanPending = null;
     }
 
-    function exchange(worker, message, accept) {
+    function exchange(worker, message, accept, limit = TIMEOUT_MS) {
       if (stopped || !worker.ok || !worker.w) return Promise.resolve(null);
       return new Promise(resolve => {
         const w = worker.w;
@@ -99,9 +101,9 @@
         }
         const cancel = () => settle(null);
         pending.add(cancel);
-        timer = setTimeout(() => settle(null, true), TIMEOUT_MS);
+        timer = setTimeout(() => settle(null, true), limit);
         w.onmessage = event => {
-          if (performance.now() - started >= TIMEOUT_MS) {
+          if (performance.now() - started >= limit) {
             settle(null, true);
           } else if (accept(event.data)) {
             settle(event.data);
@@ -124,7 +126,8 @@
       return exchange(
         worker,
         { type: 'init', id: entry.botId, seed: workerSeed },
-        message => message && (message.type === 'ready' || message.type === 'fail')
+        message => message && (message.type === 'ready' || message.type === 'fail'),
+        INIT_TIMEOUT_MS
       ).then(message => {
         if (!message || message.type !== 'ready') disable(worker);
       });
@@ -146,7 +149,7 @@
 
         const cancel = () => settle();
         pending.add(cancel);
-        timer = setTimeout(settle, TIMEOUT_MS);
+        timer = setTimeout(settle, INIT_TIMEOUT_MS);
 
         let creation;
         try {
