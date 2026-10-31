@@ -304,8 +304,8 @@
       turnTicker();
       render();
       const event = await request;
-      humanReady = false;
       if (token !== generation) return;
+      humanReady = false;
       if (event.type === 'stopped' && !game.status().over) return;
       if (botTurn && event.type === 'move') {
         const minimum = Number(elements.speed.value);
@@ -620,15 +620,19 @@
   elements.promo.addEventListener('cancel', () => { promotion = null; setControls(); });
   elements.promo.addEventListener('close', () => { promotion = null; setControls(); });
 
-  window.addEventListener('pagehide', () => {
+  window.addEventListener('pagehide', event => {
     generation++;
     running = false;
     humanReady = false;
     if (runner) runner.stop();
     if (wake) wake();
+    clearSelection();
     closePromotion();
-    renderer.destroy();
-  }, { once: true });
+    elements.humanMove.value = '';
+    // Invalidating the generation bypasses startSeries' finally cleanup.
+    if (event.persisted) render();
+    else renderer.destroy();
+  });
 
   render();
   loadBots();

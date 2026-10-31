@@ -642,6 +642,7 @@
         finish();
       }
     } catch (error) {
+      if (token !== generation) return;
       match?.stop();
       clearPrivate();
       ticker(`Match stopped: ${error.message}`);
@@ -722,14 +723,21 @@
     }
   });
 
-  window.addEventListener('pagehide', () => {
+  window.addEventListener('pagehide', event => {
     running = false;
     generation++;
     match?.stop();
     clearTimeout(sleepTimer);
     wake?.();
-    renderer.destroy();
-  }, { once: true });
+    sleepTimer = null;
+    wake = null;
+    $('ap-pass').close();
+    $('ap-pass-confirm').onclick = null;
+    clearPrivate();
+    // The old generation's finally must not unlock a later match.
+    lock(picking);
+    if (!event.persisted) renderer.destroy();
+  });
 
   window.__ANATOLIAN_PACT__ = () => ({
     bots: bots.map(b => ({ ...b })),

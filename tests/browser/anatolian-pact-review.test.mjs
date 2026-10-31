@@ -112,6 +112,85 @@ test('keyboard order entry creates, removes and submits a real draft', { timeout
   });
 });
 
+test('persisted page transition simulation preserves a working Pact arena on next Start', { timeout: 60000 }, async () => {
+  await session({}, async page => {
+    await page.addInitScript(() => {
+      const NativeWorker = window.Worker;
+      window.__lifecycleWorkers = [];
+      window.Worker = class extends NativeWorker {
+        constructor(...args) { super(...args); window.__lifecycleWorkers.push(this); }
+        terminate() { this.stopped = true; return super.terminate(); }
+      };
+    });
+    await enterOrders(page);
+    await page.getByLabel('Your unit', { exact: true }).selectOption('M');
+    await page.getByLabel('Legal order', { exact: true }).selectOption('0');
+    for (let cycle = 0; cycle < 2; cycle++) {
+      assert.ok(await page.evaluate(() => window.__lifecycleWorkers.some(worker => !worker.stopped)));
+      // Simulation only: the browser is not navigating into its real BFCache.
+      await page.evaluate(() => {
+        dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));
+        dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));
+      });
+      assert.equal(await page.evaluate(() => window.__lifecycleWorkers.every(worker => worker.stopped)), true);
+      assert.equal(await page.locator('#ap-start').isEnabled(), true);
+      assert.equal(await page.locator('#ap-random').isEnabled(), true);
+      assert.equal(await page.locator('#ap-years').isEnabled(), true);
+      assert.equal(await page.locator('#ap-pass').isVisible(), false);
+      for (const id of ['ap-negotiate', 'ap-order-panel', 'ap-adjust']) {
+        assert.equal(await page.locator(`#${id}`).isVisible(), false);
+      }
+      assert.equal(await page.locator('#ap-orders li').count(), 0);
+      await page.getByLabel('Lydia controller', { exact: true }).selectOption('human');
+      await page.evaluate(() => { const c = document.getElementById('ap-canvas'); c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+      await page.click('#ap-start');
+      await page.locator('#ap-pass').waitFor({ state: 'visible' });
+      assert.equal(await page.evaluate(() => {
+        const c = document.getElementById('ap-canvas');
+        return c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0);
+      }), true, 'next Start must actually repaint the cleared map');
+      await page.click('#ap-pass-confirm');
+      // A trusted pointer click must still reach the retained map listener.
+      await page.getByLabel('Inspect province', { exact: true }).selectOption('A');
+      const canvas = page.locator('#ap-canvas');
+      await canvas.scrollIntoViewIfNeeded();
+      const point = await canvas.evaluate(canvas => {
+        const map = PactEngine.MAP, cells = [];
+        map.rows.forEach((row, r) => Array.from(row).forEach((id, c) => {
+          if (id !== ' ') cells.push({ id, xy: map.pixel(c, r) });
+        }));
+        const pad = map.hexSize * 1.12;
+        const left = Math.min(...cells.map(c => c.xy[0])) - pad;
+        const top = Math.min(...cells.map(c => c.xy[1])) - pad;
+        const width = Math.max(...cells.map(c => c.xy[0])) + pad - left;
+        const height = Math.max(...cells.map(c => c.xy[1])) + pad - top;
+        const rect = canvas.getBoundingClientRect();
+        const scale = Math.min(rect.width / width, rect.height / height);
+        const target = cells.find(c => c.id === 'M').xy;
+        return {
+          x: rect.left + (rect.width - width * scale) / 2 + (target[0] - left) * scale,
+          y: rect.top + (rect.height - height * scale) / 2 + (target[1] - top) * scale
+        };
+      });
+      await page.mouse.click(point.x, point.y);
+      assert.match(await page.locator('.ap-inspector p').textContent(), /M · Aizanoi/);
+      await page.getByLabel('Deal type', { exact: true }).selectOption('dmz');
+      await page.locator('#ap-negotiate button').filter({ hasText: /^Done$/ }).click();
+      await page.locator('#ap-pass').waitFor({ state: 'visible' });
+      assert.match(await page.locator('#ap-pass-title').textContent(), /Lydia/);
+    }
+    await page.evaluate(() => {
+      dispatchEvent(new PageTransitionEvent('pagehide', { persisted: false }));
+      const c = document.getElementById('ap-canvas'); c.getContext('2d').clearRect(0, 0, c.width, c.height);
+      dispatchEvent(new Event('resize'));
+    });
+    assert.equal(await page.evaluate(() => {
+      const c = document.getElementById('ap-canvas');
+      return c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some(v => v);
+    }), false, 'nonpersisted departure must destroy the map renderer');
+  });
+});
+
 test('phone offers full-name controls and inspector without horizontal overflow', { timeout: 60000 }, async () => {
   await session({
     viewport: { width: 390, height: 844 },

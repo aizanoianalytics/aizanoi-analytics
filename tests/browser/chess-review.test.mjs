@@ -169,6 +169,60 @@ test('promotion cancellation and explicit underpromotion remain available', asyn
   }
 });
 
+test('persisted page transition simulation preserves a working Chess arena on next Start', { timeout: 60000 }, async () => {
+  const { context, page, errors } = await open(undefined, context => context.addInitScript(() => {
+    const NativeWorker = window.Worker;
+    window.__lifecycleWorkers = [];
+    window.Worker = class extends NativeWorker {
+      constructor(...args) { super(...args); window.__lifecycleWorkers.push(this); }
+      terminate() { this.stopped = true; return super.terminate(); }
+    };
+  }));
+  try {
+    for (let cycle = 0; cycle < 2; cycle++) {
+      await page.selectOption('#ch-black', 'sample-minimax');
+      await page.click('#ch-start');
+      await page.waitForFunction(() => !document.getElementById('ch-human-move').disabled);
+      assert.ok(await page.evaluate(() => window.__lifecycleWorkers.some(worker => !worker.stopped)));
+      await page.fill('#ch-human-move', 'e2e4');
+      // Synthetic lifecycle events exercise production handlers, not actual browser BFCache.
+      await page.evaluate(() => {
+        dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true }));
+        dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));
+      });
+      assert.equal(await page.evaluate(() => window.__lifecycleWorkers.every(worker => worker.stopped)), true);
+      assert.equal(await page.locator('#ch-start').isEnabled(), true);
+      assert.equal(await page.locator('#ch-white').isEnabled(), true);
+      assert.equal(await page.locator('#ch-human-move').inputValue(), '');
+      assert.equal(await page.locator('#ch-human-move').isDisabled(), true);
+      assert.equal(await page.locator('#ch-promo').isVisible(), false);
+      await page.selectOption('#ch-black', 'human');
+      await page.evaluate(() => { const c = document.getElementById('ch-canvas'); c.getContext('2d').clearRect(0, 0, c.width, c.height); });
+      await page.click('#ch-start');
+      await page.waitForFunction(() => !document.getElementById('ch-human-move').disabled);
+      assert.equal(await page.evaluate(() => {
+        const c = document.getElementById('ch-canvas');
+        return c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some((v, i) => i % 4 === 3 && v > 0);
+      }), true, 'next Start must actually repaint the cleared canvas');
+      await clickSquare(page, 'e2');
+      await clickSquare(page, 'e4');
+      await page.waitForFunction(() => window.__CHESS_ARENA__().moves[0] === 'e4');
+      await page.click('#ch-resign');
+      await page.waitForFunction(() => !window.__CHESS_ARENA__().running);
+    }
+    await page.evaluate(() => {
+      dispatchEvent(new PageTransitionEvent('pagehide', { persisted: false }));
+      const c = document.getElementById('ch-canvas'); c.getContext('2d').clearRect(0, 0, c.width, c.height);
+      dispatchEvent(new Event('resize'));
+    });
+    assert.equal(await page.evaluate(() => {
+      const c = document.getElementById('ch-canvas');
+      return c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some(v => v);
+    }), false, 'nonpersisted departure must destroy the renderer');
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
+
 test('light shell, dark arena and phone input fit without horizontal overflow', async () => {
   const { context, page, errors } = await open({ width: 390, height: 844 });
   try {
