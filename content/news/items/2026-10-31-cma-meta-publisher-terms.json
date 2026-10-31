@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-31-cma-meta-publisher-terms",
+  "title": "UK competition watchdog opens a case on Meta's publisher content terms",
+  "summary": "The Competition and Markets Authority began an investigation on 30 October into whether Meta's revised commercial terms abuse a dominant position by letting it take content from publishers' websites and use it to develop its own products, including AI features, without businesses getting a choice. Meta had planned to apply the terms on 20 November and has paused them. Meta said there were no grounds for a probe and that it will not change its terms without consulting publishers.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "cma",
+    "regulation",
+    "publishers",
+    "ai-training"
+  ],
+  "sources": [
+    {
+      "publisher": "Competition and Markets Authority",
+      "url": "https://www.gov.uk/government/news/cma-opens-investigation-into-metas-commercial-terms",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via StreetInsider)",
+      "url": "https://www.streetinsider.com/Reuters/UKs+CMA+opens+investigation+into+Metas+terms+for+publishers+and+advertisers/27261743.html",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

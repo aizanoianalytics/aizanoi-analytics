@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-31-vapor-panda-artex-ai-agents",
+  "title": "CrowdStrike links a Chinese espionage group to AI agents run against more than 200 targets",
+  "summary": "CrowdStrike said VAPOR PANDA used the ARTEX agent framework, driven mainly by DeepSeek's model plus a second commercial LLM, against more than 200 organisations in at least 14 countries in an 11-day window from 17 October. Post-exploitation was confirmed at nine victims, where the adversary deployed the BLOODALCHEMY backdoor, and a single engagement consumed roughly 1.4 billion input tokens. Recovered transcripts show an operator steering planner and worker agents in Chinese while they ran parallel intrusions.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cybersecurity",
+    "crowdstrike",
+    "deepseek",
+    "espionage",
+    "agentic-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "CrowdStrike",
+      "url": "https://www.crowdstrike.com/en-us/blog/vapor-panda-uses-artex-to-scale-global-campaign/",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

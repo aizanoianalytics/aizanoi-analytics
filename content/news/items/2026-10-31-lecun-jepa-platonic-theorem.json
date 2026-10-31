@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-31-lecun-jepa-platonic-theorem",
+  "title": "LeCun and Balestriero turn the Platonic representation hypothesis into a theorem",
+  "summary": "In arXiv 2610.39302 the pair prove that jointly embedded predictive architectures trained separately on different modalities learn the same representation up to one rotation when their positive pairs are two views of one scene. They argue next-token prediction is a JEPA fed bad views, which explains why language models align with vision only through scale. A 109m-parameter text JEPA needed 42 times fewer samples and beat language models up to 72b parameters on the authors' alignment benchmark.",
+  "category": "ai",
+  "priority": 48,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "research",
+    "jepa",
+    "lecun",
+    "representation-learning",
+    "arxiv"
+  ],
+  "sources": [
+    {
+      "publisher": "arXiv (2610.39302)",
+      "url": "https://arxiv.org/abs/2610.39302",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

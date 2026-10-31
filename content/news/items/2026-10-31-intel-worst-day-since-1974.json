@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-31-intel-worst-day-since-1974",
+  "title": "Intel's 28.6% slide is its worst session since 1974 and drags chip stocks down",
+  "summary": "Intel closed down 28.6% at $65.76 on Friday, its steepest one-day fall since July 1974, after guiding fourth-quarter revenue to $15-16 billion against roughly $17 billion expected and earnings of 25 cents a share against 43 cents forecast. The company blamed a PC market squeezed by AI-driven memory costs and a fatal explosion at an Israeli fab. The Philadelphia semiconductor index fell 7.2% and the cost of insuring Intel debt hit a record.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "intel",
+    "semiconductors",
+    "earnings",
+    "pc-market",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via StreetInsider)",
+      "url": "https://www.streetinsider.com/Reuters/Intel+on+course+for+worst+day+ever%2C+triggers+global+chip+rout/27261808.html",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune / Associated Press",
+      "url": "https://fortune.com/2026/10/30/intel-worst-drop-since-1974-sp-500-worst-day-since-june-ai-selloff/",
+      "publishedAt": "2026-10-30T20:27:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/article/intel-stock-plunges-nearly-29-its-worst-day-since-1974-205955309.html",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

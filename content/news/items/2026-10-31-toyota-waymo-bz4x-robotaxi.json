@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-31-toyota-waymo-bz4x-robotaxi",
+  "title": "Toyota will build Waymo's next robotaxi at its Takaoka plant",
+  "summary": "Waymo and Toyota said the automaker will build 2027 bZ4X electric vehicles with Waymo's self-driving system integrated at the Takaoka factory in Japan. Testing begins in Japan next year, with the intent to deploy in right-hand-drive markets including the UK, where Waymo has been running Jaguar I-Pace cars in London while it awaits permits. The deal formalises a preliminary agreement signed 18 months ago, and the companies will also study putting Waymo's technology in privately owned Toyotas.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "waymo",
+    "toyota",
+    "robotaxi",
+    "autonomous-vehicles",
+    "japan"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/30/waymos-next-robotaxi-will-be-a-toyota-bz4x-destined-for-japan-and-the-uk/",
+      "publishedAt": "2026-10-30T07:01:00Z"
+    }
+  ],
+  "kind": "daily"
+}

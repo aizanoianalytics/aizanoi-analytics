@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-31-hyperscalers-three-trillion-commitments",
+  "title": "Five hyperscalers have now committed more than $3 trillion to the AI build-out",
+  "summary": "A Bloomberg tally of third-quarter filings puts combined future spending by Alphabet, Meta, Microsoft, Amazon and Oracle above $3 trillion, up from about $2.4 trillion for four of them in a similar count in July. Alphabet alone has more than $1 trillion lined up, nearly eight times its level a year earlier, and Meta more than $800 billion. Future leases account for $1.3 trillion, some running 30 years, and the spending has pushed Alphabet and Meta into negative free cash flow.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "big-tech",
+    "capex",
+    "data-centres",
+    "alphabet",
+    "meta"
+  ],
+  "sources": [
+    {
+      "publisher": "The Next Web (citing Bloomberg)",
+      "url": "https://thenextweb.com/news/big-tech-3-trillion-ai-spending-commitments",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

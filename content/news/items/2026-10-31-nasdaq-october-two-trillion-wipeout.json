@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-31-nasdaq-october-two-trillion-wipeout",
+  "title": "October erases more than $2 trillion from the Nasdaq 100 as doubts about AI spending bite",
+  "summary": "The Nasdaq Composite fell 2.86% to 25,437.00 on Friday, the S&P 500 lost 1.82% to 7,580.07 and the Dow dropped 1.09% to 51,770.31, leaving the S&P 500 with a third straight weekly loss. Reuters calculated that more than $2 trillion of Nasdaq 100 market value was set to disappear in October, slightly more than SpaceX's entire market value, while the index closed the month down 5.3%, its worst since March 2025.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nasdaq",
+    "ai-capex",
+    "october",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/media-telecom/nasdaq-faces-2-trillion-wipeout-october-ai-spending-fears-deepen-2026-10-30/",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune / Associated Press",
+      "url": "https://fortune.com/2026/10/30/intel-worst-drop-since-1974-sp-500-worst-day-since-june-ai-selloff/",
+      "publishedAt": "2026-10-30T20:27:00Z"
+    }
+  ],
+  "kind": "daily"
+}
