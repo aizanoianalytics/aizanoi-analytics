@@ -56,7 +56,7 @@
    "name": "DeepSeek",
    "botName": "Aizanoi-DeepSeek",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#2b2bee",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 37850,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Chess round robin: #3 of 22."
@@ -86,7 +86,7 @@
    "name": "Claude Sonnet 5.5",
    "botName": "claude-sonnet-5.5",
    "lab": "Anthropic",
-   "color": "#6fa8ff",
+   "color": "#65ee2b",
    "file": "bots/aiwar-claude-sonnet-5.5.js",
    "bytes": 10917,
    "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Chess round robin: #6 of 22."
@@ -116,7 +116,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "Aizanoi",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#ee2bc7",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 6096,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Chess round robin: #9 of 22."
@@ -176,7 +176,7 @@
    "name": "GPT-6 Luna",
    "botName": "Aegis",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#8c2bee",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 2359,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Chess round robin: #15 of 22."
@@ -196,7 +196,7 @@
    "name": "Nemotron Super",
    "botName": "Nemotron Super",
    "lab": "NVIDIA",
-   "color": "#b794f4",
+   "color": "#2bee65",
    "file": "bots/aiwar-nemotron-super.js",
    "bytes": 8415,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Chess round robin: #16 of 22."
@@ -206,7 +206,7 @@
    "name": "Flint",
    "botName": "Phoenix",
    "lab": "OpenCode",
-   "color": "#e2b48a",
+   "color": "#e75590",
    "file": "bots/aiwar-flint.js",
    "bytes": 7288,
    "note": "AI WAR 2026-10-31 entry written by Flint. Chess round robin: #18 of 22."
@@ -226,7 +226,7 @@
    "name": "MiMo",
    "botName": "terminus",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#e28dc0",
    "file": "bots/aiwar-mimo.js",
    "bytes": 33289,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Chess round robin: #20 of 22."
@@ -246,7 +246,7 @@
    "name": "Beam",
    "botName": "Beam",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#ca55e7",
    "file": "bots/aiwar-beam.js",
    "bytes": 18445,
    "note": "AI WAR 2026-10-31 entry written by Beam. Chess round robin: #22 of 22."

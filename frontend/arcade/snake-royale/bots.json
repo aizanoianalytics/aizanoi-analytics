@@ -236,7 +236,7 @@
    "name": "Claude Opus 5.5",
    "botName": "Opus Constrictor",
    "lab": "Anthropic",
-   "color": "#e8875b",
+   "color": "#2bee2b",
    "file": "bots/aiwar-claude-opus-5.5.js",
    "bytes": 13533,
    "note": "AI WAR 2026-10-31 entry written by Claude Opus 5.5. Snake Royale round robin: #1 of 22."
@@ -246,7 +246,7 @@
    "name": "Claude Sonnet 5.5",
    "botName": "Voronoi Viper",
    "lab": "Anthropic",
-   "color": "#6fa8ff",
+   "color": "#c72bee",
    "file": "bots/aiwar-claude-sonnet-5.5.js",
    "bytes": 12136,
    "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Snake Royale round robin: #2 of 22."
@@ -256,7 +256,7 @@
    "name": "GPT-6 Astra",
    "botName": "Aegis",
    "lab": "OpenAI",
-   "color": "#00c896",
+   "color": "#522bee",
    "file": "bots/aiwar-gpt-6-astra.js",
    "bytes": 9703,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Snake Royale round robin: #3 of 22."
@@ -266,7 +266,7 @@
    "name": "Gemini 3.8 Flash",
    "botName": "FlashRoyale",
    "lab": "Google",
-   "color": "#8b9cff",
+   "color": "#ee2b8c",
    "file": "bots/aiwar-gemini-3.8-flash.js",
    "bytes": 24427,
    "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Snake Royale round robin: #4 of 22."
@@ -276,7 +276,7 @@
    "name": "Gemini 4 Argon",
    "botName": "ArgonRoyale",
    "lab": "Google",
-   "color": "#c99bff",
+   "color": "#2bee79",
    "file": "bots/aiwar-gemini-4-argon.js",
    "bytes": 32728,
    "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Snake Royale round robin: #5 of 22."
@@ -286,7 +286,7 @@
    "name": "DeepSeek",
    "botName": "DeepSeekRoyale",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#79ee2b",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 25840,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Snake Royale round robin: #6 of 22."
@@ -296,7 +296,7 @@
    "name": "GPT-6.1 Sol",
    "botName": "Citadel",
    "lab": "OpenAI",
-   "color": "#ff4d4d",
+   "color": "#8c2bee",
    "file": "bots/aiwar-gpt-6.1-sol.js",
    "bytes": 8935,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Snake Royale round robin: #7 of 22."
@@ -306,7 +306,7 @@
    "name": "GPT-5.6 Sol",
    "botName": "Crown Serpent",
    "lab": "OpenAI",
-   "color": "#d6a77a",
+   "color": "#55e755",
    "file": "bots/aiwar-gpt-5.6-sol.js",
    "bytes": 11164,
    "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Sol. Snake Royale round robin: #8 of 22."
@@ -316,7 +316,7 @@
    "name": "Muse Spark 1.3",
    "botName": "ApexConstrictor",
    "lab": "Meta",
-   "color": "#f0abfc",
+   "color": "#ee2bc7",
    "file": "bots/aiwar-muse-spark-1.3.js",
    "bytes": 17855,
    "note": "AI WAR 2026-10-31 entry written by Muse Spark 1.3. Snake Royale round robin: #9 of 22."
@@ -326,7 +326,7 @@
    "name": "Nemotron Super",
    "botName": "Nemotron Super",
    "lab": "NVIDIA",
-   "color": "#b794f4",
+   "color": "#c0e28d",
    "file": "bots/aiwar-nemotron-super.js",
    "bytes": 6391,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Snake Royale round robin: #10 of 22."
@@ -336,7 +336,7 @@
    "name": "GPT-5.6 Terra",
    "botName": "ApexFlood",
    "lab": "OpenAI",
-   "color": "#b5f23d",
+   "color": "#e755e7",
    "file": "bots/aiwar-gpt-5.6-terra.js",
    "bytes": 6883,
    "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Snake Royale round robin: #11 of 22."
@@ -346,7 +346,7 @@
    "name": "Nemotron Lightning",
    "botName": "NemotronBot",
    "lab": "NVIDIA",
-   "color": "#fbd38d",
+   "color": "#2ba0ee",
    "file": "bots/aiwar-nemotron-lightning.js",
    "bytes": 5130,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Snake Royale round robin: #12 of 22."
@@ -356,7 +356,7 @@
    "name": "Flint",
    "botName": "FlintRoyale",
    "lab": "OpenCode",
-   "color": "#e2b48a",
+   "color": "#ee2b2b",
    "file": "bots/aiwar-flint.js",
    "bytes": 9823,
    "note": "AI WAR 2026-10-31 entry written by Flint. Snake Royale round robin: #13 of 22."
@@ -366,7 +366,7 @@
    "name": "Beam",
    "botName": "ApexViper",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#ee792b",
    "file": "bots/aiwar-beam.js",
    "bytes": 8810,
    "note": "AI WAR 2026-10-31 entry written by Beam. Snake Royale round robin: #14 of 22."
@@ -376,7 +376,7 @@
    "name": "Claude Haiku 5.5",
    "botName": "ClaudeHaiku",
    "lab": "Anthropic",
-   "color": "#7ee08a",
+   "color": "#e28dd1",
    "file": "bots/aiwar-claude-haiku-5.5.js",
    "bytes": 6267,
    "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Snake Royale round robin: #14 of 22."
@@ -386,7 +386,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "Citadel",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#ad55e7",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 4479,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Snake Royale round robin: #16 of 22."
@@ -396,7 +396,7 @@
    "name": "MiMo",
    "botName": "MimoFang",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#e28d9e",
    "file": "bots/aiwar-mimo.js",
    "bytes": 14330,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Snake Royale round robin: #17 of 22."
@@ -406,7 +406,7 @@
    "name": "GLM",
    "botName": "GLM",
    "lab": "Z.ai",
-   "color": "#22d3ee",
+   "color": "#8d95e2",
    "file": "bots/aiwar-glm.js",
    "bytes": 12046,
    "note": "AI WAR 2026-10-31 entry written by GLM. Snake Royale round robin: #18 of 22."
@@ -416,7 +416,7 @@
    "name": "GPT-6 Sol",
    "botName": "Aegis",
    "lab": "OpenAI",
-   "color": "#2f6bff",
+   "color": "#90e755",
    "file": "bots/aiwar-gpt-6-sol.js",
    "bytes": 5890,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Snake Royale round robin: #19 of 22."
@@ -426,7 +426,7 @@
    "name": "Iceman",
    "botName": "Iceman",
    "lab": "OpenCode",
-   "color": "#93c5fd",
+   "color": "#5581e7",
    "file": "bots/aiwar-iceman.js",
    "bytes": 5646,
    "note": "AI WAR 2026-10-31 entry written by Iceman. Snake Royale round robin: #20 of 22."
@@ -436,7 +436,7 @@
    "name": "GPT-5.6 Luna",
    "botName": "Serpent Prime",
    "lab": "OpenAI",
-   "color": "#7c6cf0",
+   "color": "#55e79e",
    "file": "bots/aiwar-gpt-5.6-luna.js",
    "bytes": 6720,
    "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Luna. Snake Royale round robin: #21 of 22."
@@ -446,7 +446,7 @@
    "name": "GPT-6 Luna",
    "botName": "GPT-6 Luna",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#e75572",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 3174,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Snake Royale round robin: #22 of 22."

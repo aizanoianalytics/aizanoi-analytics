@@ -66,7 +66,7 @@
    "name": "DeepSeek",
    "botName": "Anatolian Fox",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#65ee2b",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 27796,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Anatolian Pact round robin: #4 of 22."
@@ -116,7 +116,7 @@
    "name": "MiMo",
    "botName": "Anatolian Thunder",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#ee2b2b",
    "file": "bots/aiwar-mimo.js",
    "bytes": 34142,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Anatolian Pact round robin: #9 of 22."
@@ -126,7 +126,7 @@
    "name": "Claude Sonnet 5.5",
    "botName": "Claude Sonnet 5.5 Pact",
    "lab": "Anthropic",
-   "color": "#6fa8ff",
+   "color": "#2b2bee",
    "file": "bots/aiwar-claude-sonnet-5.5.js",
    "bytes": 11199,
    "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Anatolian Pact round robin: #10 of 22."
@@ -146,7 +146,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "Anatolian Hammer",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#c72bee",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 21351,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Anatolian Pact round robin: #12 of 22."
@@ -156,7 +156,7 @@
    "name": "GPT-6 Luna",
    "botName": "Pact Fox",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#ade755",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 33319,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Anatolian Pact round robin: #13 of 22."
@@ -176,7 +176,7 @@
    "name": "Beam",
    "botName": "Anatolian Apex",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#2b79ee",
    "file": "bots/aiwar-beam.js",
    "bytes": 10300,
    "note": "AI WAR 2026-10-31 entry written by Beam. Anatolian Pact round robin: #15 of 22."
@@ -186,7 +186,7 @@
    "name": "GPT-6 Sol",
    "botName": "Anatolian Fox",
    "lab": "OpenAI",
-   "color": "#2f6bff",
+   "color": "#55e781",
    "file": "bots/aiwar-gpt-6-sol.js",
    "bytes": 16181,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Anatolian Pact round robin: #16 of 22."
@@ -196,7 +196,7 @@
    "name": "Flint",
    "botName": "Pactan",
    "lab": "OpenCode",
-   "color": "#e2b48a",
+   "color": "#ee2b8c",
    "file": "bots/aiwar-flint.js",
    "bytes": 14897,
    "note": "AI WAR 2026-10-31 entry written by Flint. Anatolian Pact round robin: #17 of 22."
@@ -206,7 +206,7 @@
    "name": "GPT-5.6 Terra",
    "botName": "Anatolian Grinder",
    "lab": "OpenAI",
-   "color": "#b5f23d",
+   "color": "#8de2a6",
    "file": "bots/aiwar-gpt-5.6-terra.js",
    "bytes": 19051,
    "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Anatolian Pact round robin: #18 of 22."
@@ -216,7 +216,7 @@
    "name": "Claude Haiku 5.5",
    "botName": "Haiku Sentinel",
    "lab": "Anthropic",
-   "color": "#7ee08a",
+   "color": "#792bee",
    "file": "bots/aiwar-claude-haiku-5.5.js",
    "bytes": 11824,
    "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Anatolian Pact round robin: #19 of 22."
@@ -226,7 +226,7 @@
    "name": "Nemotron Super",
    "botName": "Anatolian Vanguard",
    "lab": "NVIDIA",
-   "color": "#b794f4",
+   "color": "#2bee52",
    "file": "bots/aiwar-nemotron-super.js",
    "bytes": 10610,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Anatolian Pact round robin: #20 of 22."

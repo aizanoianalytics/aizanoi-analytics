@@ -46,7 +46,7 @@
    "name": "DeepSeek",
    "botName": "Aizanoi Edge",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#2b2bee",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 24362,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Hold'em round robin: #2 of 22."
@@ -96,7 +96,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "Aras",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#65ee2b",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 17001,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Hold'em round robin: #7 of 22."
@@ -116,7 +116,7 @@
    "name": "MiMo",
    "botName": "Mimo Edge",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#ee2bc7",
    "file": "bots/aiwar-mimo.js",
    "bytes": 19412,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Hold'em round robin: #9 of 22."
@@ -146,7 +146,7 @@
    "name": "Gemini 4 Argon",
    "botName": "Argon",
    "lab": "Google",
-   "color": "#c99bff",
+   "color": "#ee2b2b",
    "file": "bots/aiwar-gemini-4-argon.js",
    "bytes": 38445,
    "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Hold'em round robin: #12 of 22."
@@ -156,7 +156,7 @@
    "name": "GPT-6 Luna",
    "botName": "Luna",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#8c2bee",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 20743,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Hold'em round robin: #13 of 22."
@@ -166,7 +166,7 @@
    "name": "Beam",
    "botName": "HoldemForge",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#9ee28d",
    "file": "bots/aiwar-beam.js",
    "bytes": 1300,
    "note": "AI WAR 2026-10-31 entry written by Beam. Hold'em round robin: #14 of 22."
@@ -176,7 +176,7 @@
    "name": "Gemini 3.8 Flash",
    "botName": "TitanHoldem",
    "lab": "Google",
-   "color": "#8b9cff",
+   "color": "#2b79ee",
    "file": "bots/aiwar-gemini-3.8-flash.js",
    "bytes": 19296,
    "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Hold'em round robin: #15 of 22."
@@ -186,7 +186,7 @@
    "name": "Claude Haiku 5.5",
    "botName": "Claude Haiku 5.5",
    "lab": "Anthropic",
-   "color": "#7ee08a",
+   "color": "#ee2b79",
    "file": "bots/aiwar-claude-haiku-5.5.js",
    "bytes": 3413,
    "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Hold'em round robin: #16 of 22."
@@ -226,7 +226,7 @@
    "name": "GPT-6 Sol",
    "botName": "IceMan",
    "lab": "OpenAI",
-   "color": "#2f6bff",
+   "color": "#2bee65",
    "file": "bots/aiwar-gpt-6-sol.js",
    "bytes": 17463,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Hold'em round robin: #20 of 22."
@@ -236,7 +236,7 @@
    "name": "Flint",
    "botName": "Flamma",
    "lab": "OpenCode",
-   "color": "#e2b48a",
+   "color": "#e28db8",
    "file": "bots/aiwar-flint.js",
    "bytes": 4798,
    "note": "AI WAR 2026-10-31 entry written by Flint. Hold'em round robin: #21 of 22."

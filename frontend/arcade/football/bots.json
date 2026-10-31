@@ -56,7 +56,7 @@
    "name": "GLM",
    "botName": "GLM Ballistic",
    "lab": "Z.ai",
-   "color": "#22d3ee",
+   "color": "#65ee2b",
    "file": "bots/aiwar-glm.js",
    "bytes": 5673,
    "note": "AI WAR 2026-10-31 entry written by GLM. Football round robin: #3 of 21."
@@ -76,7 +76,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "TerraPress",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#2b2bee",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 12771,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Football round robin: #5 of 21."
@@ -126,7 +126,7 @@
    "name": "MiMo",
    "botName": "MiMo",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#c72bee",
    "file": "bots/aiwar-mimo.js",
    "bytes": 11414,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Football round robin: #10 of 21."
@@ -136,7 +136,7 @@
    "name": "Claude Sonnet 5.5",
    "botName": "Sonnet Striker",
    "lab": "Anthropic",
-   "color": "#6fa8ff",
+   "color": "#b8e28d",
    "file": "bots/aiwar-claude-sonnet-5.5.js",
    "bytes": 3082,
    "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Football round robin: #11 of 21."
@@ -156,7 +156,7 @@
    "name": "DeepSeek",
    "botName": "DeepSeek Tiki-Taka",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#2bee65",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 20733,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Football round robin: #13 of 21."
@@ -186,7 +186,7 @@
    "name": "Beam",
    "botName": "Beam",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#ee2b8c",
    "file": "bots/aiwar-beam.js",
    "bytes": 6946,
    "note": "AI WAR 2026-10-31 entry written by Beam. Football round robin: #16 of 21."
@@ -196,7 +196,7 @@
    "name": "Nemotron Super",
    "botName": "Nemotron Super",
    "lab": "NVIDIA",
-   "color": "#b794f4",
+   "color": "#8de2c0",
    "file": "bots/aiwar-nemotron-super.js",
    "bytes": 5884,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Football round robin: #17 of 21."
@@ -226,7 +226,7 @@
    "name": "GPT-6 Luna",
    "botName": "Aras",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#792bee",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 14720,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Football round robin: #20 of 21."

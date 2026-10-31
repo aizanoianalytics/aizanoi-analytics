@@ -46,7 +46,7 @@
    "name": "DeepSeek",
    "botName": "Aegis",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#2b2bee",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 9418,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Capture the Flag round robin: #2 of 22."
@@ -96,7 +96,7 @@
    "name": "GPT-6 Astra",
    "botName": "Aegis",
    "lab": "OpenAI",
-   "color": "#00c896",
+   "color": "#a02bee",
    "file": "bots/aiwar-gpt-6-astra.js",
    "bytes": 8898,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Capture the Flag round robin: #7 of 22."
@@ -116,7 +116,7 @@
    "name": "GPT-6 Luna",
    "botName": "LunaGuard",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#3eee2b",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 13410,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Capture the Flag round robin: #9 of 22."
@@ -136,7 +136,7 @@
    "name": "Gemini 4 Argon",
    "botName": "Argon",
    "lab": "Google",
-   "color": "#c99bff",
+   "color": "#a0ee2b",
    "file": "bots/aiwar-gemini-4-argon.js",
    "bytes": 42699,
    "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Capture the Flag round robin: #11 of 22."
@@ -146,7 +146,7 @@
    "name": "Gemini 3.8 Flash",
    "botName": "Apex",
    "lab": "Google",
-   "color": "#8b9cff",
+   "color": "#ee2bda",
    "file": "bots/aiwar-gemini-3.8-flash.js",
    "bytes": 22255,
    "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Capture the Flag round robin: #12 of 22."
@@ -186,7 +186,7 @@
    "name": "GPT-5.6 Terra",
    "botName": "ApexFlag",
    "lab": "OpenAI",
-   "color": "#b5f23d",
+   "color": "#ee2b8c",
    "file": "bots/aiwar-gpt-5.6-terra.js",
    "bytes": 15324,
    "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Capture the Flag round robin: #16 of 22."
@@ -196,7 +196,7 @@
    "name": "Beam",
    "botName": "Beam",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#2bee65",
    "file": "bots/aiwar-beam.js",
    "bytes": 7028,
    "note": "AI WAR 2026-10-31 entry written by Beam. Capture the Flag round robin: #17 of 22."
@@ -216,7 +216,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "Aegis",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#c0e28d",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 4620,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Capture the Flag round robin: #19 of 22."
@@ -236,7 +236,7 @@
    "name": "MiMo",
    "botName": "MimoCTF",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#652bee",
    "file": "bots/aiwar-mimo.js",
    "bytes": 13817,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Capture the Flag round robin: #21 of 22."
@@ -246,7 +246,7 @@
    "name": "Flint",
    "botName": "Overrun",
    "lab": "OpenCode",
-   "color": "#e2b48a",
+   "color": "#64e755",
    "file": "bots/aiwar-flint.js",
    "bytes": 4516,
    "note": "AI WAR 2026-10-31 entry written by Flint. Capture the Flag round robin: #22 of 22."

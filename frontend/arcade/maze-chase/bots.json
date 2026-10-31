@@ -46,7 +46,7 @@
    "name": "DeepSeek",
    "botName": "Chimera",
    "lab": "DeepSeek",
-   "color": "#4fd1c5",
+   "color": "#2b2bee",
    "file": "bots/aiwar-deepseek.js",
    "bytes": 24369,
    "note": "AI WAR 2026-10-31 entry written by DeepSeek. Maze Chase round robin: #2 of 22."
@@ -96,7 +96,7 @@
    "name": "MiMo",
    "botName": "Apex",
    "lab": "Xiaomi",
-   "color": "#ff7a45",
+   "color": "#ee2bc7",
    "file": "bots/aiwar-mimo.js",
    "bytes": 18327,
    "note": "AI WAR 2026-10-31 entry written by MiMo. Maze Chase round robin: #7 of 22."
@@ -126,7 +126,7 @@
    "name": "Claude Sonnet 5.5",
    "botName": "SonnetHunter",
    "lab": "Anthropic",
-   "color": "#6fa8ff",
+   "color": "#2bee2b",
    "file": "bots/aiwar-claude-sonnet-5.5.js",
    "bytes": 8077,
    "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Maze Chase round robin: #10 of 22."
@@ -146,7 +146,7 @@
    "name": "Flint",
    "botName": "MazeMind",
    "lab": "OpenCode",
-   "color": "#e2b48a",
+   "color": "#8c2bee",
    "file": "bots/aiwar-flint.js",
    "bytes": 8095,
    "note": "AI WAR 2026-10-31 entry written by Flint. Maze Chase round robin: #12 of 22."
@@ -156,7 +156,7 @@
    "name": "GPT-6 Luna",
    "botName": "Ariadne",
    "lab": "OpenAI",
-   "color": "#a0aec0",
+   "color": "#2b79ee",
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 3225,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Maze Chase round robin: #13 of 22."
@@ -176,7 +176,7 @@
    "name": "GPT-6 Sol",
    "botName": "Labyrinth Strategist",
    "lab": "OpenAI",
-   "color": "#2f6bff",
+   "color": "#e75590",
    "file": "bots/aiwar-gpt-6-sol.js",
    "bytes": 8255,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Maze Chase round robin: #15 of 22."
@@ -196,7 +196,7 @@
    "name": "GPT-6.1 Sol",
    "botName": "Ariadne",
    "lab": "OpenAI",
-   "color": "#ff4d4d",
+   "color": "#e28dc0",
    "file": "bots/aiwar-gpt-6.1-sol.js",
    "bytes": 14670,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Maze Chase round robin: #17 of 22."
@@ -206,7 +206,7 @@
    "name": "Beam",
    "botName": "MazeChaser",
    "lab": "OpenCode",
-   "color": "#f6c35b",
+   "color": "#c0e28d",
    "file": "bots/aiwar-beam.js",
    "bytes": 11575,
    "note": "AI WAR 2026-10-31 entry written by Beam. Maze Chase round robin: #18 of 22."
@@ -216,7 +216,7 @@
    "name": "GPT-6.1 Terra",
    "botName": "Cartographer",
    "lab": "OpenAI",
-   "color": "#ff9e57",
+   "color": "#2bee79",
    "file": "bots/aiwar-gpt-6.1-terra.js",
    "bytes": 4138,
    "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Maze Chase round robin: #19 of 22."
@@ -226,7 +226,7 @@
    "name": "Nemotron Super",
    "botName": "Nemotron Super",
    "lab": "NVIDIA",
-   "color": "#b794f4",
+   "color": "#ca55e7",
    "file": "bots/aiwar-nemotron-super.js",
    "bytes": 5177,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Maze Chase round robin: #20 of 22."
