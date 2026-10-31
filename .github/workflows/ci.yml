@@ -112,6 +112,9 @@ jobs:
             suites: >-
               tests/browser/football.test.mjs
               tests/browser/football-custom-bot.test.mjs
+          - arena: trade-arena
+            suites: >-
+              tests/browser/trade-arena.test.mjs
           - arena: anatolian-pact
             suites: >-
               tests/browser/anatolian-pact.test.mjs

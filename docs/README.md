@@ -17,6 +17,7 @@ Start at the repository root:
 
 ## Supporting documentation
 
+- [`TRADE_ARENA_IMPORT.md`](TRADE_ARENA_IMPORT.md) — Trade Arena runtime import, data/model provenance limits and byte inventory;
 - [`FIELD_SYSTEM.md`](FIELD_SYSTEM.md) — current AizanoiOS shell/app/responsive contract; the legacy filename is retained to avoid needless link churn;
 - [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — automated and manual accessibility release checks;
 - [`HERMES_OPERATIONS.md`](HERMES_OPERATIONS.md) — private operator/deployment contract for Hermes;

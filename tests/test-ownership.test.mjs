@@ -168,12 +168,12 @@ test('arcade browser matrix executes every arena suite and gates the existing re
   assert.match(arcadeJob, /fail-fast: false/);
   const arenas = [...arcadeJob.matchAll(/^\s+- arena: ([a-z-]+)$/gm)].map((match) => match[1]);
   assert.deepEqual(arenas.sort(), [
-    'anatolian-pact', 'capture-flag', 'chess', 'football', 'holdem', 'maze-chase', 'snake-royale',
+    'anatolian-pact', 'capture-flag', 'chess', 'football', 'holdem', 'maze-chase', 'snake-royale', 'trade-arena',
   ]);
   const declared = [...arcadeJob.matchAll(/tests\/browser\/[a-z-]+\.test\.mjs/g)].map((match) => match[0]);
   assert.equal(new Set(declared).size, declared.length, 'each arena suite runs once');
   const expected = browserSuites('tests/browser').filter((suite) =>
-    /\/(?:anatolian-pact|arcade-custom-bot|capture-flag|chess|football|holdem|maze-chase|snake-royale)(?:[.-])/.test(suite));
+    /\/(?:anatolian-pact|arcade-custom-bot|capture-flag|chess|football|holdem|maze-chase|snake-royale|trade-arena)(?:[.-])/.test(suite));
   assert.deepEqual([...declared].sort(), expected, 'every arena browser suite must be in the executing matrix');
   for (const suite of declared) {
     assert.match(read(suite), /\bassert\./, `${suite} must assert a regression, not only capture evidence`);

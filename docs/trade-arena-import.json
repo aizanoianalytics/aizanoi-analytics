@@ -1,0 +1,1192 @@
+{
+  "archiveSha256": "527ccaa1dc00247cc35f1896185b47375e103434b41b9bc9ba201a07b881a5ec",
+  "files": [
+    {
+      "path": "BOT_API.md",
+      "sha256": "3b7da2a88c21197afeaea17795be149c23af6acc1a48e3cfcb1c440cb6752fde",
+      "sourceSha256": "3b7da2a88c21197afeaea17795be149c23af6acc1a48e3cfcb1c440cb6752fde"
+    },
+    {
+      "path": "bots/ai/haiku-5-5.js",
+      "sha256": "74b3df9ee7f81c2aaf7db8f030ae53fede1ae8fdc83f0a87f2a740916b319da5",
+      "sourceSha256": "74b3df9ee7f81c2aaf7db8f030ae53fede1ae8fdc83f0a87f2a740916b319da5"
+    },
+    {
+      "path": "bots/ai/sonnet-5-5.js",
+      "sha256": "a7a48e962b3d19aee9840c9e7c0c7e020c915a5e341775d4b4e8f0cf5bfa455f",
+      "sourceSha256": "a7a48e962b3d19aee9840c9e7c0c7e020c915a5e341775d4b4e8f0cf5bfa455f"
+    },
+    {
+      "path": "bots/house/hodl.js",
+      "sha256": "9bebef3b7de03380b0dea0fb2e8055b3ba0ddaaac2a51301db59f6d74d17f319",
+      "sourceSha256": "9bebef3b7de03380b0dea0fb2e8055b3ba0ddaaac2a51301db59f6d74d17f319"
+    },
+    {
+      "path": "bots/house/momentum.js",
+      "sha256": "729c411a98efff024795098e05bd274defea5a95f16c36f96ef83d55e5e62e2a",
+      "sourceSha256": "729c411a98efff024795098e05bd274defea5a95f16c36f96ef83d55e5e62e2a"
+    },
+    {
+      "path": "bots/house/monkey.js",
+      "sha256": "6e5e371687c76ac83113c760b85c730dfa3347e1b6a31002c18d06acc387003c",
+      "sourceSha256": "6e5e371687c76ac83113c760b85c730dfa3347e1b6a31002c18d06acc387003c"
+    },
+    {
+      "path": "bots/roster.json",
+      "sha256": "61789485783ddbf78f938717631828df900a5e9cc8cccc20f507a4e8721f219a",
+      "sourceSha256": "61789485783ddbf78f938717631828df900a5e9cc8cccc20f507a4e8721f219a"
+    },
+    {
+      "path": "data/catalog.json",
+      "sha256": "3ce6ddf57d7bf9b6108c75e6779338b6e91f0f912274c2e13f4644c8fec3944e",
+      "sourceSha256": "3ce6ddf57d7bf9b6108c75e6779338b6e91f0f912274c2e13f4644c8fec3944e"
+    },
+    {
+      "path": "data/league.json",
+      "sha256": "e38c452a937f0b831937c0f4693c7808f19c4759032f9622cda73b2a99c1cd11",
+      "sourceSha256": "e38c452a937f0b831937c0f4693c7808f19c4759032f9622cda73b2a99c1cd11"
+    },
+    {
+      "path": "data/raw/context/1d/DXY.json",
+      "sha256": "6cb3fc4bfdd211796a8977691d45de05bd1df7cac05c3c2bed17286d26a2fa78",
+      "sourceSha256": "6cb3fc4bfdd211796a8977691d45de05bd1df7cac05c3c2bed17286d26a2fa78"
+    },
+    {
+      "path": "data/raw/context/1d/GLD.json",
+      "sha256": "520f17a3afc7e1ebe216454bb554f9c25abb68d7f3dc7987ade0b3c9514fb044",
+      "sourceSha256": "520f17a3afc7e1ebe216454bb554f9c25abb68d7f3dc7987ade0b3c9514fb044"
+    },
+    {
+      "path": "data/raw/context/1d/QQQ.json",
+      "sha256": "9edb57e78726ffa97e083c1cbba4583f2a825227ba9a501f16375e86a6024257",
+      "sourceSha256": "9edb57e78726ffa97e083c1cbba4583f2a825227ba9a501f16375e86a6024257"
+    },
+    {
+      "path": "data/raw/context/1d/SPY.json",
+      "sha256": "e6fd6873416720994980737a446af19ddf1b2fa7d33544cce7864c8dbb762d2c",
+      "sourceSha256": "e6fd6873416720994980737a446af19ddf1b2fa7d33544cce7864c8dbb762d2c"
+    },
+    {
+      "path": "data/raw/context/1d/TLT.json",
+      "sha256": "173b5420cd5fae34c285b45470262d7e2c9b4a5499a8eef3efbf495fe0d75bb9",
+      "sourceSha256": "173b5420cd5fae34c285b45470262d7e2c9b4a5499a8eef3efbf495fe0d75bb9"
+    },
+    {
+      "path": "data/raw/context/1d/TNX.json",
+      "sha256": "7e4c8ad65e94b7c749f021c07f750071b7187df7d416181419d84b55fdea306b",
+      "sourceSha256": "7e4c8ad65e94b7c749f021c07f750071b7187df7d416181419d84b55fdea306b"
+    },
+    {
+      "path": "data/raw/context/1d/VIX.json",
+      "sha256": "622c94c096d08621079f42640b5244a21017728449076273d351f847c80d5fce",
+      "sourceSha256": "622c94c096d08621079f42640b5244a21017728449076273d351f847c80d5fce"
+    },
+    {
+      "path": "data/raw/crypto/1d/AAVE.json",
+      "sha256": "32c7b67801d72708a8c85c2f1a730bfa451cea355a77bb61b39d71750acfbde1",
+      "sourceSha256": "32c7b67801d72708a8c85c2f1a730bfa451cea355a77bb61b39d71750acfbde1"
+    },
+    {
+      "path": "data/raw/crypto/1d/ADA.json",
+      "sha256": "c5c239ed730c7eb975e41ab351ededc4cc4dfab2e3a8470122d025ab2d6b429e",
+      "sourceSha256": "c5c239ed730c7eb975e41ab351ededc4cc4dfab2e3a8470122d025ab2d6b429e"
+    },
+    {
+      "path": "data/raw/crypto/1d/APT.json",
+      "sha256": "a99bcc04dff58a71c93c719218bc00050616f9e0fc08ffb3cb982969beffc780",
+      "sourceSha256": "a99bcc04dff58a71c93c719218bc00050616f9e0fc08ffb3cb982969beffc780"
+    },
+    {
+      "path": "data/raw/crypto/1d/ARB.json",
+      "sha256": "e8072af46fc07ba7784a1dbcd866731dedb6c3a2dc95ec3cd2dc7be33eb15573",
+      "sourceSha256": "e8072af46fc07ba7784a1dbcd866731dedb6c3a2dc95ec3cd2dc7be33eb15573"
+    },
+    {
+      "path": "data/raw/crypto/1d/ATOM.json",
+      "sha256": "596df262bd67c4a6088a061627cee433ce3cf325fca7404db3e56f150f6862dd",
+      "sourceSha256": "596df262bd67c4a6088a061627cee433ce3cf325fca7404db3e56f150f6862dd"
+    },
+    {
+      "path": "data/raw/crypto/1d/AVAX.json",
+      "sha256": "ba6f9f90f33596a07fc723ca579e4d7de06b055f61023d415b2ce0a45c4a3b33",
+      "sourceSha256": "ba6f9f90f33596a07fc723ca579e4d7de06b055f61023d415b2ce0a45c4a3b33"
+    },
+    {
+      "path": "data/raw/crypto/1d/BCH.json",
+      "sha256": "ba8fe70124d6c3a0c2026824cde8ee302436b9f917a9eb3415b7b1dd5490a371",
+      "sourceSha256": "ba8fe70124d6c3a0c2026824cde8ee302436b9f917a9eb3415b7b1dd5490a371"
+    },
+    {
+      "path": "data/raw/crypto/1d/BTC.json",
+      "sha256": "9f9606c721ddca9bb8d4ddf2289a1245cd0868dc33b28f2a2e36c984a9a393f8",
+      "sourceSha256": "9f9606c721ddca9bb8d4ddf2289a1245cd0868dc33b28f2a2e36c984a9a393f8"
+    },
+    {
+      "path": "data/raw/crypto/1d/DOGE.json",
+      "sha256": "c54da02ae11b862a13848ec7a808a68458df0b3d566d8103f5a88716348f9366",
+      "sourceSha256": "c54da02ae11b862a13848ec7a808a68458df0b3d566d8103f5a88716348f9366"
+    },
+    {
+      "path": "data/raw/crypto/1d/DOT.json",
+      "sha256": "cf52c18adc13c2cc2c17daa7d1541e39c03fb20246cd25fa962f5a017dd5e137",
+      "sourceSha256": "cf52c18adc13c2cc2c17daa7d1541e39c03fb20246cd25fa962f5a017dd5e137"
+    },
+    {
+      "path": "data/raw/crypto/1d/ETC.json",
+      "sha256": "a24bbc5deb824d2a68b3c3f8c1599361e65fa5d1b83d4855356dfa1066004e4b",
+      "sourceSha256": "a24bbc5deb824d2a68b3c3f8c1599361e65fa5d1b83d4855356dfa1066004e4b"
+    },
+    {
+      "path": "data/raw/crypto/1d/ETH.json",
+      "sha256": "19720c07f6bed6766ca33e7215b721a4aac2b237b589959005dffd75265edf60",
+      "sourceSha256": "19720c07f6bed6766ca33e7215b721a4aac2b237b589959005dffd75265edf60"
+    },
+    {
+      "path": "data/raw/crypto/1d/FIL.json",
+      "sha256": "ed975a6cb40879f0419eb660f8ed306a4ffff2ded42472b84b5a5abbaa1c6be3",
+      "sourceSha256": "ed975a6cb40879f0419eb660f8ed306a4ffff2ded42472b84b5a5abbaa1c6be3"
+    },
+    {
+      "path": "data/raw/crypto/1d/GRAM.json",
+      "sha256": "4b226ec47f71c456105fab208801b0d2218c0c9eba888cc9b1ea1dbe888276db",
+      "sourceSha256": "4b226ec47f71c456105fab208801b0d2218c0c9eba888cc9b1ea1dbe888276db"
+    },
+    {
+      "path": "data/raw/crypto/1d/HBAR.json",
+      "sha256": "66fd667d0c7b912c50138dc2d222dc445ab3c2c27885071ff51f012639369e12",
+      "sourceSha256": "66fd667d0c7b912c50138dc2d222dc445ab3c2c27885071ff51f012639369e12"
+    },
+    {
+      "path": "data/raw/crypto/1d/INJ.json",
+      "sha256": "2b0bbc69443c44e378d90ac044450557d3de4dbff533360b42e2353c1897152f",
+      "sourceSha256": "2b0bbc69443c44e378d90ac044450557d3de4dbff533360b42e2353c1897152f"
+    },
+    {
+      "path": "data/raw/crypto/1d/LINK.json",
+      "sha256": "f57b9c72f06922c6aa170b06763cb762806ff7d8064a8299ac41ecce5ac4fc66",
+      "sourceSha256": "f57b9c72f06922c6aa170b06763cb762806ff7d8064a8299ac41ecce5ac4fc66"
+    },
+    {
+      "path": "data/raw/crypto/1d/LTC.json",
+      "sha256": "d60d05e3d3f906393d668e5d05e7582dc1cd43020fbfd7c80d5e7635e703752a",
+      "sourceSha256": "d60d05e3d3f906393d668e5d05e7582dc1cd43020fbfd7c80d5e7635e703752a"
+    },
+    {
+      "path": "data/raw/crypto/1d/NEAR.json",
+      "sha256": "5a2f0898c16f0336a48d149624d2197e01f0bf34760a283996608dbe69ebd9a2",
+      "sourceSha256": "5a2f0898c16f0336a48d149624d2197e01f0bf34760a283996608dbe69ebd9a2"
+    },
+    {
+      "path": "data/raw/crypto/1d/ONDO.json",
+      "sha256": "38f21510a20a4f11059b1b0ad7b16de9ebe0144e831739e0afbe9ad685210c8b",
+      "sourceSha256": "38f21510a20a4f11059b1b0ad7b16de9ebe0144e831739e0afbe9ad685210c8b"
+    },
+    {
+      "path": "data/raw/crypto/1d/OP.json",
+      "sha256": "2c33672ff79ff4e0d49579199e2b81a779f246682952b8b39b36be8890cb827e",
+      "sourceSha256": "2c33672ff79ff4e0d49579199e2b81a779f246682952b8b39b36be8890cb827e"
+    },
+    {
+      "path": "data/raw/crypto/1d/POL.json",
+      "sha256": "cf64d42059f1bd2e65d45a7146d9272915fb9d67dbd1bc23b346bdeb72cd647f",
+      "sourceSha256": "cf64d42059f1bd2e65d45a7146d9272915fb9d67dbd1bc23b346bdeb72cd647f"
+    },
+    {
+      "path": "data/raw/crypto/1d/RENDER.json",
+      "sha256": "12b32b03b80b51a65d69821108b0f19fe510668fb149e9fe1e55e5d03232171b",
+      "sourceSha256": "12b32b03b80b51a65d69821108b0f19fe510668fb149e9fe1e55e5d03232171b"
+    },
+    {
+      "path": "data/raw/crypto/1d/RUNE.json",
+      "sha256": "dd619a4a209e8c961d7c5c58ddec8c403b42b6169ee2a59b0911f435ba34b45d",
+      "sourceSha256": "dd619a4a209e8c961d7c5c58ddec8c403b42b6169ee2a59b0911f435ba34b45d"
+    },
+    {
+      "path": "data/raw/crypto/1d/S.json",
+      "sha256": "8ed8fce48fbc7d0c798925c1bf793d249c1c2ba4af579a9f052c91a0b608b56a",
+      "sourceSha256": "8ed8fce48fbc7d0c798925c1bf793d249c1c2ba4af579a9f052c91a0b608b56a"
+    },
+    {
+      "path": "data/raw/crypto/1d/SAND.json",
+      "sha256": "ce82c088a26cc07d5ab70a407f68a3e524d8f83000c781bb5ef48d4e9a2feb7b",
+      "sourceSha256": "ce82c088a26cc07d5ab70a407f68a3e524d8f83000c781bb5ef48d4e9a2feb7b"
+    },
+    {
+      "path": "data/raw/crypto/1d/SOL.json",
+      "sha256": "02ca2e25209be073118355128ade073e7fd63be7595060bbcda98a25e54d41a1",
+      "sourceSha256": "02ca2e25209be073118355128ade073e7fd63be7595060bbcda98a25e54d41a1"
+    },
+    {
+      "path": "data/raw/crypto/1d/SUI.json",
+      "sha256": "5817322c74a75b0dcf962ce0690581f9de5492bdc18782d139d305544d4a75ae",
+      "sourceSha256": "5817322c74a75b0dcf962ce0690581f9de5492bdc18782d139d305544d4a75ae"
+    },
+    {
+      "path": "data/raw/crypto/1d/TAO.json",
+      "sha256": "07955eb7145676f6b55c4febb2ee533ebd362b8205f7da613e5d7e94d1df871a",
+      "sourceSha256": "07955eb7145676f6b55c4febb2ee533ebd362b8205f7da613e5d7e94d1df871a"
+    },
+    {
+      "path": "data/raw/crypto/1d/THETA.json",
+      "sha256": "c8b8f59f44a7ebf2947db7617882479e058a848cd047ae941a901e633efa9957",
+      "sourceSha256": "c8b8f59f44a7ebf2947db7617882479e058a848cd047ae941a901e633efa9957"
+    },
+    {
+      "path": "data/raw/crypto/1d/UNI.json",
+      "sha256": "b3dd70cf68800bda926cb7c7f1b3cec3b70940c958ee39f0760d7ba428eea64d",
+      "sourceSha256": "b3dd70cf68800bda926cb7c7f1b3cec3b70940c958ee39f0760d7ba428eea64d"
+    },
+    {
+      "path": "data/raw/crypto/1d/VIRTUAL.json",
+      "sha256": "28c3ade02ccd070fe7b134aef2ba80c9e7b8da2b11206b81426b7ea97aff887f",
+      "sourceSha256": "28c3ade02ccd070fe7b134aef2ba80c9e7b8da2b11206b81426b7ea97aff887f"
+    },
+    {
+      "path": "data/raw/crypto/1d/XLM.json",
+      "sha256": "7efd4235d8d8a256a7f4b6540abe3cba10f1c5224fa83a75af2696cde5114f3a",
+      "sourceSha256": "7efd4235d8d8a256a7f4b6540abe3cba10f1c5224fa83a75af2696cde5114f3a"
+    },
+    {
+      "path": "data/raw/crypto/1d/XRP.json",
+      "sha256": "2237194039e298f5b4dffaa57383fc59663c241a67baf248b5994bede7ab0c63",
+      "sourceSha256": "2237194039e298f5b4dffaa57383fc59663c241a67baf248b5994bede7ab0c63"
+    },
+    {
+      "path": "data/raw/crypto/1d/ZEC.json",
+      "sha256": "51af6a541d92a2c9c7de38bad24c8753208c183e2d4f55ae03a46a67a4b69247",
+      "sourceSha256": "51af6a541d92a2c9c7de38bad24c8753208c183e2d4f55ae03a46a67a4b69247"
+    },
+    {
+      "path": "data/raw/crypto/1h/AAVE.json",
+      "sha256": "7b000143db54427411a31b5737040b9b624818375849c14901fe98efe8bb7de6",
+      "sourceSha256": "7b000143db54427411a31b5737040b9b624818375849c14901fe98efe8bb7de6"
+    },
+    {
+      "path": "data/raw/crypto/1h/ADA.json",
+      "sha256": "9fa074df6785138e83abb00c26e7f9d8f1b200244237915b23ce0690aa4a1389",
+      "sourceSha256": "9fa074df6785138e83abb00c26e7f9d8f1b200244237915b23ce0690aa4a1389"
+    },
+    {
+      "path": "data/raw/crypto/1h/APT.json",
+      "sha256": "dc44f17e65beb54daf131dd62e259a4ca00cda40e6b4be3a2546e71f103d98a3",
+      "sourceSha256": "dc44f17e65beb54daf131dd62e259a4ca00cda40e6b4be3a2546e71f103d98a3"
+    },
+    {
+      "path": "data/raw/crypto/1h/ARB.json",
+      "sha256": "96f2587158b624ddc084b0d74629ae1b84a375d919eed2808612f81cb16a5f72",
+      "sourceSha256": "96f2587158b624ddc084b0d74629ae1b84a375d919eed2808612f81cb16a5f72"
+    },
+    {
+      "path": "data/raw/crypto/1h/ATOM.json",
+      "sha256": "acee67672c35490182fb9bc015443dda2fa68674d81eee903a03d0224d3c8dc8",
+      "sourceSha256": "acee67672c35490182fb9bc015443dda2fa68674d81eee903a03d0224d3c8dc8"
+    },
+    {
+      "path": "data/raw/crypto/1h/AVAX.json",
+      "sha256": "cec388b010410af9c523f81d5fe59bbde47ded784c5a1ada95f5a5f249cbc7c6",
+      "sourceSha256": "cec388b010410af9c523f81d5fe59bbde47ded784c5a1ada95f5a5f249cbc7c6"
+    },
+    {
+      "path": "data/raw/crypto/1h/BCH.json",
+      "sha256": "42cd6e90ab7dae223e15a236bb20d4c0d076c56f40a23ab83333e9a9df38958e",
+      "sourceSha256": "42cd6e90ab7dae223e15a236bb20d4c0d076c56f40a23ab83333e9a9df38958e"
+    },
+    {
+      "path": "data/raw/crypto/1h/BTC.json",
+      "sha256": "4b070687e9e69d6e8cda0eebea02de598da91843a5153892d748c39881cfc243",
+      "sourceSha256": "4b070687e9e69d6e8cda0eebea02de598da91843a5153892d748c39881cfc243"
+    },
+    {
+      "path": "data/raw/crypto/1h/DOGE.json",
+      "sha256": "67b567d4824b1b83274f86faa71aaf8f184d18d1165279351aeaeec9f76d5207",
+      "sourceSha256": "67b567d4824b1b83274f86faa71aaf8f184d18d1165279351aeaeec9f76d5207"
+    },
+    {
+      "path": "data/raw/crypto/1h/DOT.json",
+      "sha256": "516d46f1e515ea35fb07843957aacda755e27586d3ba239ea73ee520afc8e08c",
+      "sourceSha256": "516d46f1e515ea35fb07843957aacda755e27586d3ba239ea73ee520afc8e08c"
+    },
+    {
+      "path": "data/raw/crypto/1h/ETC.json",
+      "sha256": "97de2b4f6f5cd01d9a8f3e170410726fea69c964733fab71ac71e3d50852720f",
+      "sourceSha256": "97de2b4f6f5cd01d9a8f3e170410726fea69c964733fab71ac71e3d50852720f"
+    },
+    {
+      "path": "data/raw/crypto/1h/ETH.json",
+      "sha256": "5114131ed0b1d14daa27d27371837c656e72b7dd6aa2152d2aaab383ee082701",
+      "sourceSha256": "5114131ed0b1d14daa27d27371837c656e72b7dd6aa2152d2aaab383ee082701"
+    },
+    {
+      "path": "data/raw/crypto/1h/FIL.json",
+      "sha256": "d1dc32714cec802c7832f5c4006d3dc7e5a5d0f18534683057f71ff8b6cec425",
+      "sourceSha256": "d1dc32714cec802c7832f5c4006d3dc7e5a5d0f18534683057f71ff8b6cec425"
+    },
+    {
+      "path": "data/raw/crypto/1h/GRAM.json",
+      "sha256": "895fa8438bb51c7ff83799602190626a64adeee2a926dae9bace4fbf6a44b63e",
+      "sourceSha256": "895fa8438bb51c7ff83799602190626a64adeee2a926dae9bace4fbf6a44b63e"
+    },
+    {
+      "path": "data/raw/crypto/1h/HBAR.json",
+      "sha256": "9a5fc3f8d6164f9cd487e513848a9a9ab292cc5281bcf9add5626aa183ffe7bf",
+      "sourceSha256": "9a5fc3f8d6164f9cd487e513848a9a9ab292cc5281bcf9add5626aa183ffe7bf"
+    },
+    {
+      "path": "data/raw/crypto/1h/INJ.json",
+      "sha256": "de2418a6c96a177d30c53d721ced5acf834ae83877a7786832928bd12da63ce8",
+      "sourceSha256": "de2418a6c96a177d30c53d721ced5acf834ae83877a7786832928bd12da63ce8"
+    },
+    {
+      "path": "data/raw/crypto/1h/LINK.json",
+      "sha256": "bca842d25a409abcdfd8bfe7061e061b100ee8ec58538e7934f74f913bbf4315",
+      "sourceSha256": "bca842d25a409abcdfd8bfe7061e061b100ee8ec58538e7934f74f913bbf4315"
+    },
+    {
+      "path": "data/raw/crypto/1h/LTC.json",
+      "sha256": "4a703197f719a6504aec107337a44dec93bcc4a9cd0c2a9af9e3450106b31325",
+      "sourceSha256": "4a703197f719a6504aec107337a44dec93bcc4a9cd0c2a9af9e3450106b31325"
+    },
+    {
+      "path": "data/raw/crypto/1h/NEAR.json",
+      "sha256": "12f7f1d85e57e4de8eee2933b9a27b893e70866042e454b15d40f212deaa90b4",
+      "sourceSha256": "12f7f1d85e57e4de8eee2933b9a27b893e70866042e454b15d40f212deaa90b4"
+    },
+    {
+      "path": "data/raw/crypto/1h/ONDO.json",
+      "sha256": "61144ee9a0ff99a8081f837f12eaafc146fdb4b6695d2007c79728a21fb835e9",
+      "sourceSha256": "61144ee9a0ff99a8081f837f12eaafc146fdb4b6695d2007c79728a21fb835e9"
+    },
+    {
+      "path": "data/raw/crypto/1h/OP.json",
+      "sha256": "6a692df588e4ffb2a314d6d4470874d836e0704e9a8a8b1fc173bb58c274fffe",
+      "sourceSha256": "6a692df588e4ffb2a314d6d4470874d836e0704e9a8a8b1fc173bb58c274fffe"
+    },
+    {
+      "path": "data/raw/crypto/1h/POL.json",
+      "sha256": "6e52a35bfb39448411e2f13a1713da39a6b79688f7dea9a510379e763f3026fb",
+      "sourceSha256": "6e52a35bfb39448411e2f13a1713da39a6b79688f7dea9a510379e763f3026fb"
+    },
+    {
+      "path": "data/raw/crypto/1h/RENDER.json",
+      "sha256": "cbb6473255b456f571d6c41ab7d1a73cb0ee97ed5b37d166fb0a5bd72d78e6ef",
+      "sourceSha256": "cbb6473255b456f571d6c41ab7d1a73cb0ee97ed5b37d166fb0a5bd72d78e6ef"
+    },
+    {
+      "path": "data/raw/crypto/1h/RUNE.json",
+      "sha256": "4329c94961e783aa03cae517488b348b4d3afb0c17b219952576a95a025a75a9",
+      "sourceSha256": "4329c94961e783aa03cae517488b348b4d3afb0c17b219952576a95a025a75a9"
+    },
+    {
+      "path": "data/raw/crypto/1h/S.json",
+      "sha256": "03a9b1c11a3473ff28136cc120ec1b3d71a0bd7997d5bf99155dd18b08dae244",
+      "sourceSha256": "03a9b1c11a3473ff28136cc120ec1b3d71a0bd7997d5bf99155dd18b08dae244"
+    },
+    {
+      "path": "data/raw/crypto/1h/SAND.json",
+      "sha256": "50bdd1e29d4aae1d31981f6b2f50af10ea8f7d2428787b9110835b6f22a4cbf4",
+      "sourceSha256": "50bdd1e29d4aae1d31981f6b2f50af10ea8f7d2428787b9110835b6f22a4cbf4"
+    },
+    {
+      "path": "data/raw/crypto/1h/SOL.json",
+      "sha256": "00a9c962b2b02dcf688f23b97507d8777038151d5fd368d13158666d66b90d00",
+      "sourceSha256": "00a9c962b2b02dcf688f23b97507d8777038151d5fd368d13158666d66b90d00"
+    },
+    {
+      "path": "data/raw/crypto/1h/SUI.json",
+      "sha256": "1f2ea6b4cc3c1de56438b5678ca783f2e2301b597560e57c19351ee51828ba69",
+      "sourceSha256": "1f2ea6b4cc3c1de56438b5678ca783f2e2301b597560e57c19351ee51828ba69"
+    },
+    {
+      "path": "data/raw/crypto/1h/TAO.json",
+      "sha256": "d76f2e8794c2d05a8353885f477f1a7182d221d83313c4d159917b5d366b2635",
+      "sourceSha256": "d76f2e8794c2d05a8353885f477f1a7182d221d83313c4d159917b5d366b2635"
+    },
+    {
+      "path": "data/raw/crypto/1h/THETA.json",
+      "sha256": "07870f6ad2d115e0b0f21974d2efc62c3edcd45ec2f26286a2b770501d7444bd",
+      "sourceSha256": "07870f6ad2d115e0b0f21974d2efc62c3edcd45ec2f26286a2b770501d7444bd"
+    },
+    {
+      "path": "data/raw/crypto/1h/UNI.json",
+      "sha256": "f7be1c5b4e513b5bfb2e0e128c85e3ac8029bf90ff6db17cd849caa49e0dc4da",
+      "sourceSha256": "f7be1c5b4e513b5bfb2e0e128c85e3ac8029bf90ff6db17cd849caa49e0dc4da"
+    },
+    {
+      "path": "data/raw/crypto/1h/VIRTUAL.json",
+      "sha256": "36327b67aa6b875f192ab927ef319006f2d59b2a3add4cfed997077b2a761617",
+      "sourceSha256": "36327b67aa6b875f192ab927ef319006f2d59b2a3add4cfed997077b2a761617"
+    },
+    {
+      "path": "data/raw/crypto/1h/XLM.json",
+      "sha256": "a1f8379e8849f8b3032de7d1175ef8db9d162d5f19bf1a65398097da988ab7a4",
+      "sourceSha256": "a1f8379e8849f8b3032de7d1175ef8db9d162d5f19bf1a65398097da988ab7a4"
+    },
+    {
+      "path": "data/raw/crypto/1h/XRP.json",
+      "sha256": "b7198cfa45296fc7ee15d3f21d9de820a9842415f8c06c1d9147bb5020a2e4a9",
+      "sourceSha256": "b7198cfa45296fc7ee15d3f21d9de820a9842415f8c06c1d9147bb5020a2e4a9"
+    },
+    {
+      "path": "data/raw/crypto/1h/ZEC.json",
+      "sha256": "79dd815042d71b72192ce9478962358b8e044093d2e79e1ff4db88c109d55938",
+      "sourceSha256": "79dd815042d71b72192ce9478962358b8e044093d2e79e1ff4db88c109d55938"
+    },
+    {
+      "path": "data/raw/crypto/4h/AAVE.json",
+      "sha256": "8bc556593eead14d613eb7dea6b36f730dfc80e3c225fd0686d5cc6f18c5995f",
+      "sourceSha256": "8bc556593eead14d613eb7dea6b36f730dfc80e3c225fd0686d5cc6f18c5995f"
+    },
+    {
+      "path": "data/raw/crypto/4h/ADA.json",
+      "sha256": "0b9b56b58e3ac3d6c6546aa3595196a234b6c4c8d84d8937090a7f2bd31639e3",
+      "sourceSha256": "0b9b56b58e3ac3d6c6546aa3595196a234b6c4c8d84d8937090a7f2bd31639e3"
+    },
+    {
+      "path": "data/raw/crypto/4h/APT.json",
+      "sha256": "476a95af92eebfedcb88c6937b717b11acee4b139d1125344a57bdbcf49a565c",
+      "sourceSha256": "476a95af92eebfedcb88c6937b717b11acee4b139d1125344a57bdbcf49a565c"
+    },
+    {
+      "path": "data/raw/crypto/4h/ARB.json",
+      "sha256": "59a3e9593ac4b94458d6404aec6eea6ee8c4248217be507247faec130873aba7",
+      "sourceSha256": "59a3e9593ac4b94458d6404aec6eea6ee8c4248217be507247faec130873aba7"
+    },
+    {
+      "path": "data/raw/crypto/4h/ATOM.json",
+      "sha256": "1b7112ebb66d2f462818b4fa396474eb697e409f121cb1af97de95fc6954c530",
+      "sourceSha256": "1b7112ebb66d2f462818b4fa396474eb697e409f121cb1af97de95fc6954c530"
+    },
+    {
+      "path": "data/raw/crypto/4h/AVAX.json",
+      "sha256": "a4eface4cb70bbf66dec2d65b74a98a4a59e8c445cd3f4133d44d19b414b4c5d",
+      "sourceSha256": "a4eface4cb70bbf66dec2d65b74a98a4a59e8c445cd3f4133d44d19b414b4c5d"
+    },
+    {
+      "path": "data/raw/crypto/4h/BCH.json",
+      "sha256": "d4f5ced67de0c6223f04fc67dd264a609b86355c0e2b2f9c6d9aad9aea1cf7a9",
+      "sourceSha256": "d4f5ced67de0c6223f04fc67dd264a609b86355c0e2b2f9c6d9aad9aea1cf7a9"
+    },
+    {
+      "path": "data/raw/crypto/4h/BTC.json",
+      "sha256": "f1679d8cb4a493e99aa03eb794bda73fbf9a00e881c8091addbbcf1f6de17a13",
+      "sourceSha256": "f1679d8cb4a493e99aa03eb794bda73fbf9a00e881c8091addbbcf1f6de17a13"
+    },
+    {
+      "path": "data/raw/crypto/4h/DOGE.json",
+      "sha256": "b78a2cc14033f4c97d86ee74eb42c5ae78a5db391b8846cf95723923e12cf1a3",
+      "sourceSha256": "b78a2cc14033f4c97d86ee74eb42c5ae78a5db391b8846cf95723923e12cf1a3"
+    },
+    {
+      "path": "data/raw/crypto/4h/DOT.json",
+      "sha256": "18d015a98295b55b079839cd7135ebf41bf1e87e108daf743a3c898ce3b22283",
+      "sourceSha256": "18d015a98295b55b079839cd7135ebf41bf1e87e108daf743a3c898ce3b22283"
+    },
+    {
+      "path": "data/raw/crypto/4h/ETC.json",
+      "sha256": "5fb2cc4277bc5d692fb5dea2eace048e7c3092a8c12b3a05833a231bb25b8c07",
+      "sourceSha256": "5fb2cc4277bc5d692fb5dea2eace048e7c3092a8c12b3a05833a231bb25b8c07"
+    },
+    {
+      "path": "data/raw/crypto/4h/ETH.json",
+      "sha256": "526453fb70628204506ac0011e42ff40c41f3a88d7f6c4122d830a7b63fea593",
+      "sourceSha256": "526453fb70628204506ac0011e42ff40c41f3a88d7f6c4122d830a7b63fea593"
+    },
+    {
+      "path": "data/raw/crypto/4h/FIL.json",
+      "sha256": "ec1769be3fd73a074a33362b0897f212b8350d2a0b7ef0e57475b5f2c8d95e90",
+      "sourceSha256": "ec1769be3fd73a074a33362b0897f212b8350d2a0b7ef0e57475b5f2c8d95e90"
+    },
+    {
+      "path": "data/raw/crypto/4h/GRAM.json",
+      "sha256": "f780af57d8a10091d89e786398ca2a59a2d40c11b31c4152c92f1077e99f541b",
+      "sourceSha256": "f780af57d8a10091d89e786398ca2a59a2d40c11b31c4152c92f1077e99f541b"
+    },
+    {
+      "path": "data/raw/crypto/4h/HBAR.json",
+      "sha256": "e1875354e9f799e6f770318f1988c2a9803a8743741411c6c17c23a16132fe45",
+      "sourceSha256": "e1875354e9f799e6f770318f1988c2a9803a8743741411c6c17c23a16132fe45"
+    },
+    {
+      "path": "data/raw/crypto/4h/INJ.json",
+      "sha256": "4bf8f4870784e626c9a04a6a47f3874ab0b6cc4bde5d857314b4da26ddb6d134",
+      "sourceSha256": "4bf8f4870784e626c9a04a6a47f3874ab0b6cc4bde5d857314b4da26ddb6d134"
+    },
+    {
+      "path": "data/raw/crypto/4h/LINK.json",
+      "sha256": "2d9d277a97cde4e4f07da6911b6e10986da65d58c13601d1d94e4d45ac2c8c30",
+      "sourceSha256": "2d9d277a97cde4e4f07da6911b6e10986da65d58c13601d1d94e4d45ac2c8c30"
+    },
+    {
+      "path": "data/raw/crypto/4h/LTC.json",
+      "sha256": "ac2e7468c78fe61a9e2eba53c4e4902e78c0bcc906e928971ac499edaab6d22c",
+      "sourceSha256": "ac2e7468c78fe61a9e2eba53c4e4902e78c0bcc906e928971ac499edaab6d22c"
+    },
+    {
+      "path": "data/raw/crypto/4h/NEAR.json",
+      "sha256": "5caa981f536e0570c9a39ff6c95108395ac16cc14dfd7346706962e7e6a5e8dd",
+      "sourceSha256": "5caa981f536e0570c9a39ff6c95108395ac16cc14dfd7346706962e7e6a5e8dd"
+    },
+    {
+      "path": "data/raw/crypto/4h/ONDO.json",
+      "sha256": "8059063cfe766429eddc022052d60e0a42f46256401328a9eec26f30ae96fc8e",
+      "sourceSha256": "8059063cfe766429eddc022052d60e0a42f46256401328a9eec26f30ae96fc8e"
+    },
+    {
+      "path": "data/raw/crypto/4h/OP.json",
+      "sha256": "0195d8a3691b2049c858110c8f81c79be1db3ce18d4d8b9da8840076b9477111",
+      "sourceSha256": "0195d8a3691b2049c858110c8f81c79be1db3ce18d4d8b9da8840076b9477111"
+    },
+    {
+      "path": "data/raw/crypto/4h/POL.json",
+      "sha256": "ca21f2dd38f884518c47a33fc8427a046901cac10712bca9da00bc736ebd793a",
+      "sourceSha256": "ca21f2dd38f884518c47a33fc8427a046901cac10712bca9da00bc736ebd793a"
+    },
+    {
+      "path": "data/raw/crypto/4h/RENDER.json",
+      "sha256": "8fa607b6d69650e8e0ceadc661cf761b10de69ace5a0c4bf9dd5c9add88ac48a",
+      "sourceSha256": "8fa607b6d69650e8e0ceadc661cf761b10de69ace5a0c4bf9dd5c9add88ac48a"
+    },
+    {
+      "path": "data/raw/crypto/4h/RUNE.json",
+      "sha256": "d81f83be23f214eeab2304968da422ec3aed076979fef9000eb8020d34d4d2ce",
+      "sourceSha256": "d81f83be23f214eeab2304968da422ec3aed076979fef9000eb8020d34d4d2ce"
+    },
+    {
+      "path": "data/raw/crypto/4h/S.json",
+      "sha256": "3ff06816fd3dbfd0ab6d39efcc05390967c0882a5faaef877d0cf90679a67e9b",
+      "sourceSha256": "3ff06816fd3dbfd0ab6d39efcc05390967c0882a5faaef877d0cf90679a67e9b"
+    },
+    {
+      "path": "data/raw/crypto/4h/SAND.json",
+      "sha256": "6eacfeeeb953280038afb0ea0111e3463eb65e68a0d919dd5825bf0085ce8dc3",
+      "sourceSha256": "6eacfeeeb953280038afb0ea0111e3463eb65e68a0d919dd5825bf0085ce8dc3"
+    },
+    {
+      "path": "data/raw/crypto/4h/SOL.json",
+      "sha256": "fb2b02504b119bd0cc9b3b3ebb98ff6e4bbb120c4f596e3fe064523e3eeb4916",
+      "sourceSha256": "fb2b02504b119bd0cc9b3b3ebb98ff6e4bbb120c4f596e3fe064523e3eeb4916"
+    },
+    {
+      "path": "data/raw/crypto/4h/SUI.json",
+      "sha256": "7611abac593901452461c1c92881e2dc2e0c1995621b9ad8ea1082e50b6da5d1",
+      "sourceSha256": "7611abac593901452461c1c92881e2dc2e0c1995621b9ad8ea1082e50b6da5d1"
+    },
+    {
+      "path": "data/raw/crypto/4h/TAO.json",
+      "sha256": "70522bca8a56e93ffb586fb71e38354911c0b9cabc3b7eacef1c55a4c5b73e56",
+      "sourceSha256": "70522bca8a56e93ffb586fb71e38354911c0b9cabc3b7eacef1c55a4c5b73e56"
+    },
+    {
+      "path": "data/raw/crypto/4h/THETA.json",
+      "sha256": "90206aefa5e415c791bbf4d48e1423cefb6b9280d3399610156870205900df2b",
+      "sourceSha256": "90206aefa5e415c791bbf4d48e1423cefb6b9280d3399610156870205900df2b"
+    },
+    {
+      "path": "data/raw/crypto/4h/UNI.json",
+      "sha256": "2b67b58fd78ce96ab1546b600f0be9c0d546bb96463a4bfdccb747cbaad59528",
+      "sourceSha256": "2b67b58fd78ce96ab1546b600f0be9c0d546bb96463a4bfdccb747cbaad59528"
+    },
+    {
+      "path": "data/raw/crypto/4h/VIRTUAL.json",
+      "sha256": "f5be00d8b1f1bae85816a0d63c6c89f9214fe36b249d6ddd5598d8a028631f69",
+      "sourceSha256": "f5be00d8b1f1bae85816a0d63c6c89f9214fe36b249d6ddd5598d8a028631f69"
+    },
+    {
+      "path": "data/raw/crypto/4h/XLM.json",
+      "sha256": "93ec8b1386b63a1a11e5f4d17a38628312a7b782d6063e36d920619b46524c3e",
+      "sourceSha256": "93ec8b1386b63a1a11e5f4d17a38628312a7b782d6063e36d920619b46524c3e"
+    },
+    {
+      "path": "data/raw/crypto/4h/XRP.json",
+      "sha256": "bbb3f8b94ff3cfc29c39ade10e753763c948a5bcf61d8b6abec31db1041bd9b9",
+      "sourceSha256": "bbb3f8b94ff3cfc29c39ade10e753763c948a5bcf61d8b6abec31db1041bd9b9"
+    },
+    {
+      "path": "data/raw/crypto/4h/ZEC.json",
+      "sha256": "b12a2e271ada21516fedf0576a01be10fbe64d909dcd705f18cf2bc8f29cfc45",
+      "sourceSha256": "b12a2e271ada21516fedf0576a01be10fbe64d909dcd705f18cf2bc8f29cfc45"
+    },
+    {
+      "path": "data/raw/crypto/funding/AAVE.json",
+      "sha256": "666c56719d80dcb3226c3d810edff683a358dcc51d0c0a192adcabb7c1ee14ac",
+      "sourceSha256": "666c56719d80dcb3226c3d810edff683a358dcc51d0c0a192adcabb7c1ee14ac"
+    },
+    {
+      "path": "data/raw/crypto/funding/ADA.json",
+      "sha256": "3f7627a70468bf50a061ee89a0ef433a066a95394fdd4b917031b31b8429986b",
+      "sourceSha256": "3f7627a70468bf50a061ee89a0ef433a066a95394fdd4b917031b31b8429986b"
+    },
+    {
+      "path": "data/raw/crypto/funding/APT.json",
+      "sha256": "683d115b5a0cddb9ec6cd36968a500057bf9da218096188eb88417652a053f1c",
+      "sourceSha256": "683d115b5a0cddb9ec6cd36968a500057bf9da218096188eb88417652a053f1c"
+    },
+    {
+      "path": "data/raw/crypto/funding/ARB.json",
+      "sha256": "844e9260d66590e610689c893aa9fd8aebbb68328f60c5ecad764dda1a8fc539",
+      "sourceSha256": "844e9260d66590e610689c893aa9fd8aebbb68328f60c5ecad764dda1a8fc539"
+    },
+    {
+      "path": "data/raw/crypto/funding/ATOM.json",
+      "sha256": "7308f64975db6289b8516681806d003f010d87d8a909f550e1b59ac66b7e8faf",
+      "sourceSha256": "7308f64975db6289b8516681806d003f010d87d8a909f550e1b59ac66b7e8faf"
+    },
+    {
+      "path": "data/raw/crypto/funding/AVAX.json",
+      "sha256": "421c1c7a5420fdf291c0add4f0b7a7fadec15353694e7b6bd8cd94f3786470ed",
+      "sourceSha256": "421c1c7a5420fdf291c0add4f0b7a7fadec15353694e7b6bd8cd94f3786470ed"
+    },
+    {
+      "path": "data/raw/crypto/funding/BCH.json",
+      "sha256": "f74c11d4269dbd74a0970f73d9326a5af65bccee141874f1108a7c0d4d4d3626",
+      "sourceSha256": "f74c11d4269dbd74a0970f73d9326a5af65bccee141874f1108a7c0d4d4d3626"
+    },
+    {
+      "path": "data/raw/crypto/funding/BTC.json",
+      "sha256": "b464acdd2cf1ab0aaa97952dc470d2aef9deac558d267d388c58c3789c493382",
+      "sourceSha256": "b464acdd2cf1ab0aaa97952dc470d2aef9deac558d267d388c58c3789c493382"
+    },
+    {
+      "path": "data/raw/crypto/funding/DOGE.json",
+      "sha256": "56985d4529ed15f43a5776f6d3affc4b19e7d709bb13b1902f26258f19706c45",
+      "sourceSha256": "56985d4529ed15f43a5776f6d3affc4b19e7d709bb13b1902f26258f19706c45"
+    },
+    {
+      "path": "data/raw/crypto/funding/DOT.json",
+      "sha256": "e023f84654ee782750e30022e2734b84b546889ca8fa932459627170d89dd430",
+      "sourceSha256": "e023f84654ee782750e30022e2734b84b546889ca8fa932459627170d89dd430"
+    },
+    {
+      "path": "data/raw/crypto/funding/ETC.json",
+      "sha256": "6b1325c0ec47f83b97727a28b6d3e488ccf19a65f0fb5e67391557bfbbc42d66",
+      "sourceSha256": "6b1325c0ec47f83b97727a28b6d3e488ccf19a65f0fb5e67391557bfbbc42d66"
+    },
+    {
+      "path": "data/raw/crypto/funding/ETH.json",
+      "sha256": "f388f5083fa7a6af01e470fbdfdbb27ac0f4bc8a60d2af67dcaeede83de7852b",
+      "sourceSha256": "f388f5083fa7a6af01e470fbdfdbb27ac0f4bc8a60d2af67dcaeede83de7852b"
+    },
+    {
+      "path": "data/raw/crypto/funding/FIL.json",
+      "sha256": "5343308f2b128b33dbee76684561c499c41ed73aac924a202b2edfec992ff832",
+      "sourceSha256": "5343308f2b128b33dbee76684561c499c41ed73aac924a202b2edfec992ff832"
+    },
+    {
+      "path": "data/raw/crypto/funding/GRAM.json",
+      "sha256": "cbb6ca62cc8ae38e854ba475cacb576467653073c1198b44ae2a4db022eaba46",
+      "sourceSha256": "cbb6ca62cc8ae38e854ba475cacb576467653073c1198b44ae2a4db022eaba46"
+    },
+    {
+      "path": "data/raw/crypto/funding/HBAR.json",
+      "sha256": "d67e1f0c0bcb932ae4c72a389330bd928f0d59da4eac651b9095c4f08de9c74c",
+      "sourceSha256": "d67e1f0c0bcb932ae4c72a389330bd928f0d59da4eac651b9095c4f08de9c74c"
+    },
+    {
+      "path": "data/raw/crypto/funding/INJ.json",
+      "sha256": "0d4b760f7dec62f674a641e22dd766254b8ea30b3f39fa5f5f857bc98d4aa2eb",
+      "sourceSha256": "0d4b760f7dec62f674a641e22dd766254b8ea30b3f39fa5f5f857bc98d4aa2eb"
+    },
+    {
+      "path": "data/raw/crypto/funding/LINK.json",
+      "sha256": "f3c1212baacf54cdb082dc2d12f7bf65c40b9812d34181349a6be1f602219910",
+      "sourceSha256": "f3c1212baacf54cdb082dc2d12f7bf65c40b9812d34181349a6be1f602219910"
+    },
+    {
+      "path": "data/raw/crypto/funding/LTC.json",
+      "sha256": "345c757f03d8411e72cb7d8196eaf5b2cdeb1ce3c600c7849e551e5584e8d109",
+      "sourceSha256": "345c757f03d8411e72cb7d8196eaf5b2cdeb1ce3c600c7849e551e5584e8d109"
+    },
+    {
+      "path": "data/raw/crypto/funding/NEAR.json",
+      "sha256": "0921855ed8a7e3763c8b18175ea622f9458d185bc7e73b0f3325d1aefa7dc2a5",
+      "sourceSha256": "0921855ed8a7e3763c8b18175ea622f9458d185bc7e73b0f3325d1aefa7dc2a5"
+    },
+    {
+      "path": "data/raw/crypto/funding/ONDO.json",
+      "sha256": "c370cc97485371326991fc466c8b4fe320a70c169cffe5b1a0ed5688fc00ee1d",
+      "sourceSha256": "c370cc97485371326991fc466c8b4fe320a70c169cffe5b1a0ed5688fc00ee1d"
+    },
+    {
+      "path": "data/raw/crypto/funding/OP.json",
+      "sha256": "ad2315e918c48d4d89028e5222aaed1e8bbaac7a4002a6d9df8f42556f581219",
+      "sourceSha256": "ad2315e918c48d4d89028e5222aaed1e8bbaac7a4002a6d9df8f42556f581219"
+    },
+    {
+      "path": "data/raw/crypto/funding/POL.json",
+      "sha256": "616d3b39938b0335c24be671f954570f86e146051d3f28eeeb44483340e3b204",
+      "sourceSha256": "616d3b39938b0335c24be671f954570f86e146051d3f28eeeb44483340e3b204"
+    },
+    {
+      "path": "data/raw/crypto/funding/RENDER.json",
+      "sha256": "49811a0266db848d7037d2cd12b305437709a508c03e047ab1e867f3d093caad",
+      "sourceSha256": "49811a0266db848d7037d2cd12b305437709a508c03e047ab1e867f3d093caad"
+    },
+    {
+      "path": "data/raw/crypto/funding/RUNE.json",
+      "sha256": "0cb032ca73c3b97de2b67c738db0382dd16507fbec98a32150f2b8698f949453",
+      "sourceSha256": "0cb032ca73c3b97de2b67c738db0382dd16507fbec98a32150f2b8698f949453"
+    },
+    {
+      "path": "data/raw/crypto/funding/S.json",
+      "sha256": "84a5d5402588d5a96e6f10c1d9cb644c31d49e588c1ebe8d11657b119e4b604a",
+      "sourceSha256": "84a5d5402588d5a96e6f10c1d9cb644c31d49e588c1ebe8d11657b119e4b604a"
+    },
+    {
+      "path": "data/raw/crypto/funding/SAND.json",
+      "sha256": "4f524070eae4d9b927e2dc506e31a024816f5443124cd3efa011a2d2a058e5ad",
+      "sourceSha256": "4f524070eae4d9b927e2dc506e31a024816f5443124cd3efa011a2d2a058e5ad"
+    },
+    {
+      "path": "data/raw/crypto/funding/SOL.json",
+      "sha256": "d92130835fd7b015862a23b120d541d3e64744da5ac42ea2609bd342fbf75ff0",
+      "sourceSha256": "d92130835fd7b015862a23b120d541d3e64744da5ac42ea2609bd342fbf75ff0"
+    },
+    {
+      "path": "data/raw/crypto/funding/SUI.json",
+      "sha256": "3f69ae5a76237b88c5255db3bbb721fad490099f7978f0214eeed302b734e643",
+      "sourceSha256": "3f69ae5a76237b88c5255db3bbb721fad490099f7978f0214eeed302b734e643"
+    },
+    {
+      "path": "data/raw/crypto/funding/TAO.json",
+      "sha256": "1b0c01426fd81c627f009631982c95a204109b6597936cfcd9e0156daea02b26",
+      "sourceSha256": "1b0c01426fd81c627f009631982c95a204109b6597936cfcd9e0156daea02b26"
+    },
+    {
+      "path": "data/raw/crypto/funding/THETA.json",
+      "sha256": "3ccf39abf00c872e41415364e52644cc297ebaa42a448e23c96fced360dead6e",
+      "sourceSha256": "3ccf39abf00c872e41415364e52644cc297ebaa42a448e23c96fced360dead6e"
+    },
+    {
+      "path": "data/raw/crypto/funding/UNI.json",
+      "sha256": "74794de71eace0fcc32f0a83bb9b1c401b76217894f0af841156a4d86722d7b9",
+      "sourceSha256": "74794de71eace0fcc32f0a83bb9b1c401b76217894f0af841156a4d86722d7b9"
+    },
+    {
+      "path": "data/raw/crypto/funding/VIRTUAL.json",
+      "sha256": "91edcf0baeae9a164baa211974daa3a7d23fa7cd030ced8522926310f24b3a74",
+      "sourceSha256": "91edcf0baeae9a164baa211974daa3a7d23fa7cd030ced8522926310f24b3a74"
+    },
+    {
+      "path": "data/raw/crypto/funding/XLM.json",
+      "sha256": "0c252be89f76704b89319e2725ad2c7464f60d5791d81891a4addd8c4cda214d",
+      "sourceSha256": "0c252be89f76704b89319e2725ad2c7464f60d5791d81891a4addd8c4cda214d"
+    },
+    {
+      "path": "data/raw/crypto/funding/XRP.json",
+      "sha256": "3f964373e588efb5e7cb6b258088bd0899117a55cff6bae50b5809730dff1137",
+      "sourceSha256": "3f964373e588efb5e7cb6b258088bd0899117a55cff6bae50b5809730dff1137"
+    },
+    {
+      "path": "data/raw/crypto/funding/ZEC.json",
+      "sha256": "5a655b0d5ce29124045092baee9a5d685ba020ececc8c82b60b35efd2b7729bd",
+      "sourceSha256": "5a655b0d5ce29124045092baee9a5d685ba020ececc8c82b60b35efd2b7729bd"
+    },
+    {
+      "path": "data/raw/stocks/1d/AAPL.json",
+      "sha256": "2323a28f26eee86a21543ae4a2fdf406baa804e83d124ec436504d705548b3c7",
+      "sourceSha256": "2323a28f26eee86a21543ae4a2fdf406baa804e83d124ec436504d705548b3c7"
+    },
+    {
+      "path": "data/raw/stocks/1d/AMD.json",
+      "sha256": "7b30eb1a599c409697456d1df6f94e989bfdd96d5efdb17d5a41ebc665ed252c",
+      "sourceSha256": "7b30eb1a599c409697456d1df6f94e989bfdd96d5efdb17d5a41ebc665ed252c"
+    },
+    {
+      "path": "data/raw/stocks/1d/AMZN.json",
+      "sha256": "cf998ab611e57a3a06b06de057e92348940b0f98e7faeef0f328cd34c35766dd",
+      "sourceSha256": "cf998ab611e57a3a06b06de057e92348940b0f98e7faeef0f328cd34c35766dd"
+    },
+    {
+      "path": "data/raw/stocks/1d/AVGO.json",
+      "sha256": "eb8855b717f46422fc43828f3d36d1f176bb106aec3eb1aa9c59841e730321cd",
+      "sourceSha256": "eb8855b717f46422fc43828f3d36d1f176bb106aec3eb1aa9c59841e730321cd"
+    },
+    {
+      "path": "data/raw/stocks/1d/BA.json",
+      "sha256": "9d8eeed6e8b6725423831bcedc67a44fa959e0a610a463f75017143a2fd32faa",
+      "sourceSha256": "9d8eeed6e8b6725423831bcedc67a44fa959e0a610a463f75017143a2fd32faa"
+    },
+    {
+      "path": "data/raw/stocks/1d/BRK.B.json",
+      "sha256": "545e2e30c3dc6fe99e6a752fc310546984a46ed64cdbd11b29b0ae8a9df92aa8",
+      "sourceSha256": "545e2e30c3dc6fe99e6a752fc310546984a46ed64cdbd11b29b0ae8a9df92aa8"
+    },
+    {
+      "path": "data/raw/stocks/1d/CAT.json",
+      "sha256": "c9ad457a003787ced47c9a884666a9403a074b2c561a01a5a70ee3259aaf53cd",
+      "sourceSha256": "c9ad457a003787ced47c9a884666a9403a074b2c561a01a5a70ee3259aaf53cd"
+    },
+    {
+      "path": "data/raw/stocks/1d/COIN.json",
+      "sha256": "8c635da033ccc98fe1e7380b08802ed476dc2d62d85143d4afa804a084441fd6",
+      "sourceSha256": "8c635da033ccc98fe1e7380b08802ed476dc2d62d85143d4afa804a084441fd6"
+    },
+    {
+      "path": "data/raw/stocks/1d/COST.json",
+      "sha256": "c7b14ee8b54dc6d46ed59b0e59124b8c4352eba3f833c6d252ce4de0da6dea4d",
+      "sourceSha256": "c7b14ee8b54dc6d46ed59b0e59124b8c4352eba3f833c6d252ce4de0da6dea4d"
+    },
+    {
+      "path": "data/raw/stocks/1d/CRM.json",
+      "sha256": "42569428bf1f1c53dba1a183ff5b3444c9fb963deb64f6b5ee35474b991367b3",
+      "sourceSha256": "42569428bf1f1c53dba1a183ff5b3444c9fb963deb64f6b5ee35474b991367b3"
+    },
+    {
+      "path": "data/raw/stocks/1d/DIS.json",
+      "sha256": "d73dc8894eb18bfb0ba7e9e5db39335973486682a062e62623c8f281d2cc35e0",
+      "sourceSha256": "d73dc8894eb18bfb0ba7e9e5db39335973486682a062e62623c8f281d2cc35e0"
+    },
+    {
+      "path": "data/raw/stocks/1d/GOOGL.json",
+      "sha256": "2a0898b903824fece8861bcb31884320308dbfb873dc784ffde300b65faefe1a",
+      "sourceSha256": "2a0898b903824fece8861bcb31884320308dbfb873dc784ffde300b65faefe1a"
+    },
+    {
+      "path": "data/raw/stocks/1d/GS.json",
+      "sha256": "001b3ec1635a109749c9d06da9a792dead72ce1e62e655df58e30ddfa784061d",
+      "sourceSha256": "001b3ec1635a109749c9d06da9a792dead72ce1e62e655df58e30ddfa784061d"
+    },
+    {
+      "path": "data/raw/stocks/1d/INTC.json",
+      "sha256": "fd571132dd27c2a7508d7a6700ce9490217923451d1be8b6b7b15e3587fad249",
+      "sourceSha256": "fd571132dd27c2a7508d7a6700ce9490217923451d1be8b6b7b15e3587fad249"
+    },
+    {
+      "path": "data/raw/stocks/1d/JPM.json",
+      "sha256": "e8d00fec393fbe5589745814b5c076b6599b561b16ff2a1839127b617c97ad96",
+      "sourceSha256": "e8d00fec393fbe5589745814b5c076b6599b561b16ff2a1839127b617c97ad96"
+    },
+    {
+      "path": "data/raw/stocks/1d/KO.json",
+      "sha256": "c9a1b43db7ee046bdd2d8d3975a5cf9a0e5394e3f22495ce206dcd7d0449aa14",
+      "sourceSha256": "c9a1b43db7ee046bdd2d8d3975a5cf9a0e5394e3f22495ce206dcd7d0449aa14"
+    },
+    {
+      "path": "data/raw/stocks/1d/LLY.json",
+      "sha256": "d2059a144afcddd84c42ad43488f8ae6edffe16099ece2beb3b515dc8410b10b",
+      "sourceSha256": "d2059a144afcddd84c42ad43488f8ae6edffe16099ece2beb3b515dc8410b10b"
+    },
+    {
+      "path": "data/raw/stocks/1d/META.json",
+      "sha256": "44ad676d036274a94604f653aefddd1151ba1d25be3772cf8e51e27dd27b7043",
+      "sourceSha256": "44ad676d036274a94604f653aefddd1151ba1d25be3772cf8e51e27dd27b7043"
+    },
+    {
+      "path": "data/raw/stocks/1d/MSFT.json",
+      "sha256": "cf1a863bdb6fdf393f838b7e290e40f32d1195735d759c707e7bf6108c061451",
+      "sourceSha256": "cf1a863bdb6fdf393f838b7e290e40f32d1195735d759c707e7bf6108c061451"
+    },
+    {
+      "path": "data/raw/stocks/1d/MSTR.json",
+      "sha256": "e9a968c038338dcb63fb7f67ab8afd8e3a19610f808142be2dfe02e7b234c245",
+      "sourceSha256": "e9a968c038338dcb63fb7f67ab8afd8e3a19610f808142be2dfe02e7b234c245"
+    },
+    {
+      "path": "data/raw/stocks/1d/NFLX.json",
+      "sha256": "b3833e9112aba37e52b8200202030b4439160638c3e163efb35eefb793496b67",
+      "sourceSha256": "b3833e9112aba37e52b8200202030b4439160638c3e163efb35eefb793496b67"
+    },
+    {
+      "path": "data/raw/stocks/1d/NVDA.json",
+      "sha256": "0e200db862efc24c1546e737b7394c94b859efba8990b9432e98935b3c46bab1",
+      "sourceSha256": "0e200db862efc24c1546e737b7394c94b859efba8990b9432e98935b3c46bab1"
+    },
+    {
+      "path": "data/raw/stocks/1d/ORCL.json",
+      "sha256": "729dd9528ab4335550c933d411440de76f36b431239c0ddb1c513be20ed8c759",
+      "sourceSha256": "729dd9528ab4335550c933d411440de76f36b431239c0ddb1c513be20ed8c759"
+    },
+    {
+      "path": "data/raw/stocks/1d/PLTR.json",
+      "sha256": "4f20ff968ce85c6066138ad9a8e16d88f6963857dd7602c1604418be2308323c",
+      "sourceSha256": "4f20ff968ce85c6066138ad9a8e16d88f6963857dd7602c1604418be2308323c"
+    },
+    {
+      "path": "data/raw/stocks/1d/TSLA.json",
+      "sha256": "3ad237a90a690f989ac9cd4cb05b26299bbadb96fb1cd4ddb62c67a17f97f46b",
+      "sourceSha256": "3ad237a90a690f989ac9cd4cb05b26299bbadb96fb1cd4ddb62c67a17f97f46b"
+    },
+    {
+      "path": "data/raw/stocks/1d/UBER.json",
+      "sha256": "9711ed876605316c1b3f253f3824e2723c321ca3e5cc04007060710186c04102",
+      "sourceSha256": "9711ed876605316c1b3f253f3824e2723c321ca3e5cc04007060710186c04102"
+    },
+    {
+      "path": "data/raw/stocks/1d/UNH.json",
+      "sha256": "948e623c110bfaa8354e059faabd126974ca1486b0a8476b90852519991cc26d",
+      "sourceSha256": "948e623c110bfaa8354e059faabd126974ca1486b0a8476b90852519991cc26d"
+    },
+    {
+      "path": "data/raw/stocks/1d/V.json",
+      "sha256": "f20d9f159ee82f2d90d9e262cb25abb6256feec3d6a1ad51bfe281b78efb237c",
+      "sourceSha256": "f20d9f159ee82f2d90d9e262cb25abb6256feec3d6a1ad51bfe281b78efb237c"
+    },
+    {
+      "path": "data/raw/stocks/1d/WMT.json",
+      "sha256": "1a833f2bba86f28fd411e161a32710b5cdf62e6fdc0a87ac6215e8bfff82169c",
+      "sourceSha256": "1a833f2bba86f28fd411e161a32710b5cdf62e6fdc0a87ac6215e8bfff82169c"
+    },
+    {
+      "path": "data/raw/stocks/1d/XOM.json",
+      "sha256": "ed361da4a977346c53fb51339e251e28fccc3df00fa41ce7a1a58ddeaadd4011",
+      "sourceSha256": "ed361da4a977346c53fb51339e251e28fccc3df00fa41ce7a1a58ddeaadd4011"
+    },
+    {
+      "path": "data/raw/stocks/1h/AAPL.json",
+      "sha256": "68cb08f950f1505329dabc4a24642a97b3757ef9bc66a861b54c9373c116175c",
+      "sourceSha256": "68cb08f950f1505329dabc4a24642a97b3757ef9bc66a861b54c9373c116175c"
+    },
+    {
+      "path": "data/raw/stocks/1h/AMD.json",
+      "sha256": "e695b4d17996cf84dd2b06a6b19ef7df060af1d2cc4efd9643889ca2031681cf",
+      "sourceSha256": "e695b4d17996cf84dd2b06a6b19ef7df060af1d2cc4efd9643889ca2031681cf"
+    },
+    {
+      "path": "data/raw/stocks/1h/AMZN.json",
+      "sha256": "3e566c45eaf3e73e248536030ba6358cff6793499dc02e3ba899dbba2836dba8",
+      "sourceSha256": "3e566c45eaf3e73e248536030ba6358cff6793499dc02e3ba899dbba2836dba8"
+    },
+    {
+      "path": "data/raw/stocks/1h/AVGO.json",
+      "sha256": "0cbaece851a00482841b066c7f639bb33ff34693e9a553478df34312af59bc4b",
+      "sourceSha256": "0cbaece851a00482841b066c7f639bb33ff34693e9a553478df34312af59bc4b"
+    },
+    {
+      "path": "data/raw/stocks/1h/BA.json",
+      "sha256": "410db8a9c57180be438bf3b995cd5a7d7a4a3754792e0b9e486da72f2db3f77e",
+      "sourceSha256": "410db8a9c57180be438bf3b995cd5a7d7a4a3754792e0b9e486da72f2db3f77e"
+    },
+    {
+      "path": "data/raw/stocks/1h/BRK.B.json",
+      "sha256": "40a8ebaaefef7d512ad2e55b86bf9e792e733a87eb80227452ab8b51b05a1c72",
+      "sourceSha256": "40a8ebaaefef7d512ad2e55b86bf9e792e733a87eb80227452ab8b51b05a1c72"
+    },
+    {
+      "path": "data/raw/stocks/1h/CAT.json",
+      "sha256": "ada126b9213f19462928d9c62b6e7c26c90b256e179148ccb806ec734b48524e",
+      "sourceSha256": "ada126b9213f19462928d9c62b6e7c26c90b256e179148ccb806ec734b48524e"
+    },
+    {
+      "path": "data/raw/stocks/1h/COIN.json",
+      "sha256": "3bbe74e0f0193bfa186783a05f1bc72ab7c433a8e4f7eac9f6917497657d4b04",
+      "sourceSha256": "3bbe74e0f0193bfa186783a05f1bc72ab7c433a8e4f7eac9f6917497657d4b04"
+    },
+    {
+      "path": "data/raw/stocks/1h/COST.json",
+      "sha256": "97e505e02e5b43b0e831c42213e646ff7e648c902ff83851794e0f02e33661cc",
+      "sourceSha256": "97e505e02e5b43b0e831c42213e646ff7e648c902ff83851794e0f02e33661cc"
+    },
+    {
+      "path": "data/raw/stocks/1h/CRM.json",
+      "sha256": "ea4aa5410455cd3959ca18ca3dda0e017e611cfbd5f4519ab4e7e7f839d32ad0",
+      "sourceSha256": "ea4aa5410455cd3959ca18ca3dda0e017e611cfbd5f4519ab4e7e7f839d32ad0"
+    },
+    {
+      "path": "data/raw/stocks/1h/DIS.json",
+      "sha256": "07983b0b4e2514aec8d22b41853c7e1859d358195ccecf78a384e838c55f8bd3",
+      "sourceSha256": "07983b0b4e2514aec8d22b41853c7e1859d358195ccecf78a384e838c55f8bd3"
+    },
+    {
+      "path": "data/raw/stocks/1h/GOOGL.json",
+      "sha256": "f3e6323bd705c345ade359def9f473be06a1dd466afd9ebf8724b64e11aaed8c",
+      "sourceSha256": "f3e6323bd705c345ade359def9f473be06a1dd466afd9ebf8724b64e11aaed8c"
+    },
+    {
+      "path": "data/raw/stocks/1h/GS.json",
+      "sha256": "d6ec79a9a305aa776dd1a72a4783e7c6a268a5f361dc1d0317d63302da97b529",
+      "sourceSha256": "d6ec79a9a305aa776dd1a72a4783e7c6a268a5f361dc1d0317d63302da97b529"
+    },
+    {
+      "path": "data/raw/stocks/1h/INTC.json",
+      "sha256": "9baf40bed4c4623be1bf43d0455fa4ddff50f9d71da17da4930b9596ba65dc78",
+      "sourceSha256": "9baf40bed4c4623be1bf43d0455fa4ddff50f9d71da17da4930b9596ba65dc78"
+    },
+    {
+      "path": "data/raw/stocks/1h/JPM.json",
+      "sha256": "f70848b30bd9c0347c70e01166c2e64b7ea445ccbe48796f628280d29b368f81",
+      "sourceSha256": "f70848b30bd9c0347c70e01166c2e64b7ea445ccbe48796f628280d29b368f81"
+    },
+    {
+      "path": "data/raw/stocks/1h/KO.json",
+      "sha256": "dfcd885dd3dd69051e18701c2bd6d07946bffbf9e83d97b01cfb01729f28689c",
+      "sourceSha256": "dfcd885dd3dd69051e18701c2bd6d07946bffbf9e83d97b01cfb01729f28689c"
+    },
+    {
+      "path": "data/raw/stocks/1h/LLY.json",
+      "sha256": "83045cb545bc67e2cd83f388957ff7cff3186c7210fee1a684ec76fe92938d50",
+      "sourceSha256": "83045cb545bc67e2cd83f388957ff7cff3186c7210fee1a684ec76fe92938d50"
+    },
+    {
+      "path": "data/raw/stocks/1h/META.json",
+      "sha256": "1e617a4c9b873d7895ec2e7218d00d4ebda635a06372f226df182d0378c6189e",
+      "sourceSha256": "1e617a4c9b873d7895ec2e7218d00d4ebda635a06372f226df182d0378c6189e"
+    },
+    {
+      "path": "data/raw/stocks/1h/MSFT.json",
+      "sha256": "3fe5915c2402430fa8a6be9f351814ecd5a6da685200d91e4e9ac9fb58af20b6",
+      "sourceSha256": "3fe5915c2402430fa8a6be9f351814ecd5a6da685200d91e4e9ac9fb58af20b6"
+    },
+    {
+      "path": "data/raw/stocks/1h/MSTR.json",
+      "sha256": "c8493f25a63e9d1d8dac39b9242ef848e1da2ba39a41a6ebce460406bb4cd1fd",
+      "sourceSha256": "c8493f25a63e9d1d8dac39b9242ef848e1da2ba39a41a6ebce460406bb4cd1fd"
+    },
+    {
+      "path": "data/raw/stocks/1h/NFLX.json",
+      "sha256": "9609e78a4a19a87b22729547f545e4ae1fecdcc9228762686c4e988eaa19ca5b",
+      "sourceSha256": "9609e78a4a19a87b22729547f545e4ae1fecdcc9228762686c4e988eaa19ca5b"
+    },
+    {
+      "path": "data/raw/stocks/1h/NVDA.json",
+      "sha256": "659015297b5ce08d60db6ba9216cc6bae43da7c85665c1e1e43fdd2ef9fc1ba0",
+      "sourceSha256": "659015297b5ce08d60db6ba9216cc6bae43da7c85665c1e1e43fdd2ef9fc1ba0"
+    },
+    {
+      "path": "data/raw/stocks/1h/ORCL.json",
+      "sha256": "89c36ece66dffa607a24faa878b8a45b1ac22ccfeffda8e74e129f64a644af07",
+      "sourceSha256": "89c36ece66dffa607a24faa878b8a45b1ac22ccfeffda8e74e129f64a644af07"
+    },
+    {
+      "path": "data/raw/stocks/1h/PLTR.json",
+      "sha256": "22b793648558738f067440245b62d4b71df879f6a1eb0b6c74e6b030b3320655",
+      "sourceSha256": "22b793648558738f067440245b62d4b71df879f6a1eb0b6c74e6b030b3320655"
+    },
+    {
+      "path": "data/raw/stocks/1h/TSLA.json",
+      "sha256": "95c76d6417aa810b098b39099b0c24da5629243e22556d8c99d9b93cc0d100df",
+      "sourceSha256": "95c76d6417aa810b098b39099b0c24da5629243e22556d8c99d9b93cc0d100df"
+    },
+    {
+      "path": "data/raw/stocks/1h/UBER.json",
+      "sha256": "dbf863a523464ef5ea5c0eec8cf809d68dfb2a8eca42d5cb3ae7f93df1e8f87a",
+      "sourceSha256": "dbf863a523464ef5ea5c0eec8cf809d68dfb2a8eca42d5cb3ae7f93df1e8f87a"
+    },
+    {
+      "path": "data/raw/stocks/1h/UNH.json",
+      "sha256": "921304f3afb6b2c3c4a4d7cf4330415efa58aeed0bec691c9c170e5348bf7165",
+      "sourceSha256": "921304f3afb6b2c3c4a4d7cf4330415efa58aeed0bec691c9c170e5348bf7165"
+    },
+    {
+      "path": "data/raw/stocks/1h/V.json",
+      "sha256": "f641c394d8b8fb073ad21315173e94217b016e811ec1b625b346efc5f865022a",
+      "sourceSha256": "f641c394d8b8fb073ad21315173e94217b016e811ec1b625b346efc5f865022a"
+    },
+    {
+      "path": "data/raw/stocks/1h/WMT.json",
+      "sha256": "836238eba72c25e332e997b6bfa84751bdd152bc4c8ce164a5f66ca858311e68",
+      "sourceSha256": "836238eba72c25e332e997b6bfa84751bdd152bc4c8ce164a5f66ca858311e68"
+    },
+    {
+      "path": "data/raw/stocks/1h/XOM.json",
+      "sha256": "6a06df2de180e8a45be4219e2c60d9665577fbfdfd72aa5a790e96c84840b720",
+      "sourceSha256": "6a06df2de180e8a45be4219e2c60d9665577fbfdfd72aa5a790e96c84840b720"
+    },
+    {
+      "path": "engine/bars.js",
+      "sha256": "842996b44be90b7052d5c5763b985f41b9669c5aa6c5b29d92a350192572b689",
+      "sourceSha256": "842996b44be90b7052d5c5763b985f41b9669c5aa6c5b29d92a350192572b689"
+    },
+    {
+      "path": "engine/features.js",
+      "sha256": "f314ee02b670568f774c8c78bdcb31321ee9d054574cd7e9af7c5ad0bbb51152",
+      "sourceSha256": "f314ee02b670568f774c8c78bdcb31321ee9d054574cd7e9af7c5ad0bbb51152"
+    },
+    {
+      "path": "engine/market.js",
+      "sha256": "a6b12c5f8e5fdec59d4d2c12cc459f84cc98593a2507674fe0c146045dde8874",
+      "sourceSha256": "20f6aa9c3018c832944e55a9badfc9e26028ebc8f5a48b15fb63573c76251428"
+    },
+    {
+      "path": "engine/sim.js",
+      "sha256": "fa67afc43bf5d8ffd573d467b92c222fc172c2af760747dc1b3a374ceb37d372",
+      "sourceSha256": "4844e6baefdaf190aa2b3d6eeadd93115b8e44c60f050bff3285e812abdb67b0"
+    },
+    {
+      "path": "engine/universe.js",
+      "sha256": "82ef0bb7a74e29d5c679c4d85b16086fb332f84ee225606196eb1659dbb55125",
+      "sourceSha256": "a88f4dc6bbf6526d4a2c5f4c92ebdace557576d2629ca1acb68ce70328e20d19"
+    },
+    {
+      "path": "index.html",
+      "sha256": "88f51582987719f6752a4ce878c52fb1912f5494a1770abfd28c9c7cffaf9403",
+      "sourceSha256": "902c9cf8eaa7f66bdbaa9359c02c6621444028e68e39499e560aae2f6deabd69"
+    },
+    {
+      "path": "index.md",
+      "sha256": "2860f68bae86e3d93fca46f9c7796a19e501ecc0a8ec03d78eaa713649b752c0",
+      "sourceSha256": null
+    },
+    {
+      "path": "ui/app.css",
+      "sha256": "529f53edec964a3a8118c1e029e573e74b08a9e9841e9796c1ec6ae4e71d7e28",
+      "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
+    },
+    {
+      "path": "ui/app.js",
+      "sha256": "bb94b0a7b60ace6935f340b36d1c1fc0abb97c7b4ca0b595658b46f1425427c7",
+      "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
+    },
+    {
+      "path": "ui/bot-worker.js",
+      "sha256": "2c94cf6d31c108258dd39591ac85baa471a4dc78a37a0567550bb7952558cf6f",
+      "sourceSha256": "8c17f093eaf15e8eecff258e1c085d2d60cbbed2f3de11e93d977af68e95975f"
+    },
+    {
+      "path": "ui/explorer.js",
+      "sha256": "466ee51ecde5dbfef4634f9f81cc8fc7539505579ad779b0fc906b8b18b36d31",
+      "sourceSha256": "a3022b212c2ad250d0ca82895f86b07f64f055b167408aa08ae1ad9537980fac"
+    },
+    {
+      "path": "ui/layout.js",
+      "sha256": "599315eb0c73167b38ce4cb8b48f5ab16e93e765e745e1fa753e91c89346ece1",
+      "sourceSha256": null
+    },
+    {
+      "path": "ui/race-chart.js",
+      "sha256": "65828a9d00a5c020edbb94bc458447455c8d51715b5291c6b9d4c2842fdd0789",
+      "sourceSha256": "4d0588d664bf7711cd25494130f4bf9f15609c3b9c64c6ec065e33d95c3b6454"
+    },
+    {
+      "path": "ui/race-view.js",
+      "sha256": "eaf2e05b450a4ec5f4ea270373a6ea55adfc61554735c5583444abb6b1440ec4",
+      "sourceSha256": "4f762ee58e9f977ea26a8bd0ee8ad143464777f170bb76a743a06f534778af64"
+    },
+    {
+      "path": "ui/race-worker.js",
+      "sha256": "12bb2663ffd2bac50cfa1c363792ca584009a135a3ea0329a34fd1072bf40e46",
+      "sourceSha256": "7855727a79da8d1e7992da9382bf1d3255d402fff1ae6c8e0e9adb210d9b0780"
+    },
+    {
+      "path": "ui/theme.js",
+      "sha256": "29e870742dd670a1c2a7acbfd967dadcda9de1b3f070b68c7ce426b1198eb5ca",
+      "sourceSha256": "9932d8545a5460e1b45849c0e5d6dcfe9b905f2be831ffdde70b635adaeff92a"
+    },
+    {
+      "path": "ui/util.js",
+      "sha256": "d53a668d1fd70b9759ba9d15a1b9eaf2f504b6687ce1e8a0687bcd0488c4a455",
+      "sourceSha256": "b2258e971ee051bbf7a421fe626cf18776f945523c8c0e8acd231d394060d26f"
+    },
+    {
+      "path": "ui/vendor/LICENSE",
+      "sha256": "70c9d5382506dd184465425c08a99ad9bd6d9ac1313c252968ba0b585e5ef823",
+      "sourceSha256": null,
+      "sourceUrl": "https://raw.githubusercontent.com/tradingview/lightweight-charts/v4.2.0/LICENSE"
+    },
+    {
+      "path": "ui/vendor/NOTICE",
+      "sha256": "a6e5f48204b03e2acd95e8ad98715d5cdeb3679bff4b73d62714859dd4f95984",
+      "sourceSha256": null,
+      "sourceUrl": "https://raw.githubusercontent.com/tradingview/lightweight-charts/v4.2.0/NOTICE"
+    },
+    {
+      "path": "ui/vendor/lightweight-charts.js",
+      "sha256": "46fc69534ec098f095bbcd1d9a26d693d39a8b9eeff7343536765b3dd28c2bdf",
+      "sourceSha256": "46fc69534ec098f095bbcd1d9a26d693d39a8b9eeff7343536765b3dd28c2bdf"
+    },
+    {
+      "path": "ui/web-host.js",
+      "sha256": "0aae583180d88845f2b505892b4dd0845f7700d5086ee55cd1e21cfe9ac6a1ac",
+      "sourceSha256": null
+    }
+  ]
+}

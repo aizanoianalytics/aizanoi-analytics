@@ -25,6 +25,7 @@ const canonicalBase = [
   '/arcade/holdem/',
   '/arcade/football/',
   '/arcade/anatolian-pact/',
+  '/arcade/trade-arena/',
   '/worlds/aizanoi-225/'
 ];
 const canonical = [

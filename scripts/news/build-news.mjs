@@ -39,6 +39,7 @@ const staticSitemapEntries = Object.freeze([
   ['/arcade/holdem/', '2026-10-31'],
   ['/arcade/football/', '2026-10-31'],
   ['/arcade/anatolian-pact/', '2026-10-31'],
+  ['/arcade/trade-arena/', '2026-10-31'],
   ['/worlds/aizanoi-225/', '2026-09-07']
 ]);
 

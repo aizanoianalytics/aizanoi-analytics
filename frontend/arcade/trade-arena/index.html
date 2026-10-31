@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Trade Arena</title>
+<meta name="description" content="AI-written trading bots compared on historical crypto and stock data with paper money.">
+<link rel="stylesheet" href="ui/app.css">
+<link rel="icon" href="/assets/icons/trade-arena.svg">
+<script src="ui/vendor/lightweight-charts.js"></script>
+<link rel="canonical" href="https://aizanoianalytics.com/arcade/trade-arena/">
+</head>
+<body>
+<a class="skip" href="#view">Skip to content</a>
+<header class="top">
+  <a class="logo" href="#/" aria-label="AI Trade Arena home">
+    <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-9"/><path d="M15 6h6v6"/></svg></span>
+    <span>AI TRADE ARENA<small>AIZANOI ANALYTICS · LAB</small></span>
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="#/" data-r="">Arena</a>
+    <a href="#/race" data-r="race">Race</a>
+    <a href="#/league" data-r="league">League</a>
+    <a href="#/bots" data-r="bots">Bots</a>
+    <a href="#/data" data-r="data">Market data</a>
+  </nav>
+  <div class="top-right">
+    <span class="pill" title="Bots trade on recorded market history. No real money, no live orders.">Historical simulation · paper money</span>
+    <div class="theme-switch" role="group" aria-label="Theme">
+      <button type="button" data-theme-set="light">Light</button>
+      <button type="button" data-theme-set="dark">Broadcast</button>
+    </div>
+  </div>
+</header>
+<p class="provenance-note">Owner-supplied historical snapshot and strategy/model labels; not independently verified. League is an imported result snapshot, not a live ranking; its stock intraday timing is unaudited. Paper money only, no investment advice. TradingView Lightweight Charts™ · Copyright (с) 2023 TradingView, Inc. Charts by <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a>.</p>
+<main id="view" tabindex="-1"></main>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+<script type="module" src="ui/app.js"></script>
+</body>
+</html>

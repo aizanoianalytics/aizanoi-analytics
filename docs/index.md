@@ -7,6 +7,7 @@ Scope: maintained documentation and operator runbooks.
 - Full maintained documentation map → [`README.md`](README.md)
 - Hermes / server / deployment operations → `HERMES_OPERATIONS.md`
 - Provider/server follow-up outside source-only changes → `OPERATIONS.md`
+- Trade Arena import scope and provenance → [TRADE_ARENA_IMPORT.md](TRADE_ARENA_IMPORT.md)
 - Accessibility release checks → `ACCESSIBILITY.md`
 - AizanoiOS field/system behavior → `FIELD_SYSTEM.md`
 - Tableau Dashboard Extensions (privacy/data policy, versioning) → `tableau-extensions/README.md`; planned IGA HR date-picker engineering specification → `igahranalytics_date_picker.md`

@@ -1,0 +1,1 @@
+{"manifestVersion": 1, "id": "trade-arena", "type": "desktop-app", "entry": "./src/index.js", "enabledByDefault": true, "requires": [], "provides": ["desktop-app"]}
