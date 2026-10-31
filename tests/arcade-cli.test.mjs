@@ -123,6 +123,29 @@ for (const game of games) {
   });
 }
 
+test('Snake CLI preserves authoritative invalid-decision errors in aggregates and replay placements', {
+  timeout: 30000
+}, async t => {
+  const directory = await temporary(t);
+  const bot = join(directory, 'invalid-snake.js');
+  const out = join(directory, 'result.json');
+  const replays = join(directory, 'replays');
+  await writeFile(bot, 'module.exports = function () { return null; };\n');
+  await run(['snake-royale', '--seat', bot, '--seat', bot, '--games', '1', '--quiet', '--out', out, '--replays', replays], 20000);
+  const result = await json(out);
+  validResult(result, 'snake-royale');
+  const game = result.games[0];
+  assert.ok(game.errors.every(value => value > 0), 'invalid successful returns are engine errors, not successful decisions');
+  for (const placement of game.placements) {
+    const index = game.seats.findIndex(seat => seat.id === placement.id);
+    assert.equal(placement.errors, game.errors[index]);
+    const row = result.table.find(item => item.participant === game.seats[index].participant);
+    assert.equal(row.errors, placement.errors);
+  }
+  const replay = await json(join(replays, 'snake-royale-0001.json'));
+  assert.deepEqual(replay.meta.placements, game.placements);
+});
+
 test('a bot that never returns times out and chess finishes by forfeit', {
   timeout: 30000
 }, async t => {

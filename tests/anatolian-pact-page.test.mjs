@@ -37,7 +37,7 @@ test('HTML loads generated data before engine and has only external executable s
   const html = src('index.html');
   assert.doesNotMatch(html, /<style\b|\sstyle\s*=|\son[a-z]+\s*=/i);
   const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)[1];
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)];
   const executable = [];
   let jsonLd = 0;
   for (const [, attributes, body] of scripts) {

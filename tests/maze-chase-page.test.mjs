@@ -33,7 +33,7 @@ test('page contains no inline executable script, inline style or event handler',
   assert.doesNotMatch(html, /\son[a-z]+\s*=/i);
   assert.doesNotMatch(html, /javascript\s*:/i);
 
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)];
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)];
   assert.equal(scripts.length, 7);
   let metadata = 0;
 

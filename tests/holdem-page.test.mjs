@@ -51,7 +51,7 @@ test('HTML uses external scripts and styles except head structured data', () => 
   assert.doesNotMatch(html, /\bjavascript\s*:/i);
 
   const headEnd = html.indexOf('</head>');
-  const blocks = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)];
+  const blocks = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)];
   const external = [];
   let metadata = 0;
 

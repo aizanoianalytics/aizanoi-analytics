@@ -43,7 +43,7 @@ test('HTML contains only external executable scripts and head JSON-LD', () => {
   assert.doesNotMatch(html, /<style\b/i);
   assert.doesNotMatch(html, /\sstyle\s*=/i);
   assert.doesNotMatch(html, /\son[a-z]+\s*=/i);
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)];
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)];
   assert.equal(scripts.length, 6);
   const executable = [];
   let metadata = 0;

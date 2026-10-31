@@ -44,7 +44,7 @@ test('HTML contains no inline executable scripts, styles, or handlers', () => {
   assert.doesNotMatch(html, /javascript\s*:/i);
 
   let metadata = 0;
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)];
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)];
 
   for (const [, attributes, body] of scripts) {
     if (/\btype\s*=\s*["']application\/ld\+json["']/i.test(attributes)) {

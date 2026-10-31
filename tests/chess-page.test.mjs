@@ -42,7 +42,7 @@ test('chess JavaScript does not compile strings as code', async () => {
 
 test('HTML uses external scripts and styles with no inline handlers', async () => {
   const html = await read('index.html');
-  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)]
+  const scripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)]
     .filter(([, attributes]) => !/application\/ld\+json/.test(attributes));
 
   assert.equal(scripts.length, 5);

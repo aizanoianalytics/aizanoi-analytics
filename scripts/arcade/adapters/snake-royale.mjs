@@ -75,6 +75,13 @@ export async function play(match, ask, onFrame) {
     await onFrame(frame(game, events));
   }
   const placements = plain(game.placements());
+  // The engine owns normalization/fallback errors, including successful worker
+  // responses that contain invalid moves. Preserve those before CLI accounting
+  // combines adapter and transport failures without double-counting a timeout.
+  for (const placement of placements) {
+    const index = match.seats.findIndex(seat => seat.id === placement.id);
+    match.errors[index] = Math.max(match.errors[index] || 0, placement.errors || 0);
+  }
   const winner = placements.find(item => (item.place ?? item.rank) === 1)?.id ??
     (placements.length ? placements[0].id : null);
   return finish(match, { winner }, {

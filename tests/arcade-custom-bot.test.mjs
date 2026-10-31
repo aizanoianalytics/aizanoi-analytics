@@ -56,7 +56,7 @@ for (const arena of ARENAS) {
     assert.ok(page.includes('src="/arcade/shared/custom-bot.js"'));
     assert.doesNotMatch(page, /<style\b|\sstyle\s*=|\son[a-z]+\s*=/i);
 
-    const scripts = [...page.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi)]
+    const scripts = [...page.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi)]
       .filter(([, attributes]) => !/application\/ld\+json/.test(attributes));
     for (const [, attributes, body] of scripts) {
       assert.match(attributes, /\bsrc\s*=/);

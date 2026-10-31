@@ -62,16 +62,16 @@ node scripts/arcade/arena.mjs chess --seat opus --seat ./challenger.js --swap
 node scripts/arcade/arena.mjs maze-chase \
   --seat ./runner.js@runner --seat ./ghost.js@ghost
 node scripts/arcade/arena.mjs capture-flag \
-  --seat ./a.js@red --seat ./b.js@blue
+  --seat ./a.js@west --seat ./b.js@east
 node scripts/arcade/arena.mjs football \
   --seat ./a.js@red --seat ./b.js@blue
 ```
 
 Role suffixes are part of each seat argument, not separate `--team` flags.
-Maze defaults to one runner followed by ghosts. Capture the Flag and Football
-default to alternating red and blue seats. Snake, Chess, Holdem, and Pact reject
-role suffixes. `west` and `east` are recognized suffix tokens but are not valid
-roles for these supplied runner contracts.
+Maze defaults to one runner followed by ghosts. Capture the Flag defaults to
+alternating west and east seats and accepts `@west`/`@east`; Football defaults to
+alternating red and blue seats and accepts `@red`/`@blue`. Snake, Chess, Holdem,
+and Pact reject role suffixes. Each game rejects the other game's team names.
 
 Pact requires one seat per `PactEngine.MAP.powers` entry, in canonical map order.
 Football accepts one to four players per team.
