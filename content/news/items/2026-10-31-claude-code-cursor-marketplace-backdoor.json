@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-31-claude-code-cursor-marketplace-backdoor",
+  "title": "Cursor pulls its extension marketplace after a trojanized Claude Code update planted SSH backdoors",
+  "summary": "Cursor shut its VS Code extension marketplace after a tampered build of Anthropic's official Claude Code extension, served as version 2.1.313 under the real publisher identity, was offered for about 11 hours on 29 October. A 66-line loader added an attacker-controlled SSH key labelled svc-telemetry to authorized_keys, tried to open a reverse tunnel, installed persistence as a scheduled task, crontab or LaunchAgent and beaconed host details over plain HTTP. Cursor puts exposure at no more than 5,000 users.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cybersecurity",
+    "supply-chain",
+    "cursor",
+    "anthropic",
+    "vs-code"
+  ],
+  "sources": [
+    {
+      "publisher": "Cursor (security notice)",
+      "url": "https://cursor.com/blog/claude-code-extension-security-notice",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/10/official-claude-code-vs-code-extension.html",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Microsoft Threat Intelligence",
+      "url": "https://microsoft.com/en-us/security/blog/2026/10/30/inside-malicious-claude-code-branded-cursor-extension-persistent-ssh-backdoor",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

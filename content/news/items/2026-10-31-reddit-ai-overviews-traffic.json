@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-31-reddit-ai-overviews-traffic",
+  "title": "Reddit warns AI Overviews are cutting its search traffic as revenue growth slows",
+  "summary": "Reddit's third-quarter revenue rose 53% to $895 million and net income reached $283 million, but it guided fourth-quarter revenue to $1.00-1.03 billion against roughly $1.05 billion expected. Chief executive Steve Huffman said search referrals fell meaningfully in the quarter and by more than a million a week on average in October, warning that daily active uniques could drop by a low-double-digit percentage from 130.3 million. Shares fell sharply on Friday.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "reddit",
+    "google",
+    "ai-overviews",
+    "search",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Investing.com (via Yahoo Finance)",
+      "url": "https://finance.yahoo.com/news/reddit-shares-tumble-weak-guidance-205854004.html",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Investing.com (earnings call transcript)",
+      "url": "https://in.investing.com/news/stock-market-news/earnings-call-transcript-reddit-beats-q3-2026-estimates-but-stock-sinks-93CH-5666104",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

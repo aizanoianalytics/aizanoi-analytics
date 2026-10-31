@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-31-openai-funding-target-cut",
+  "title": "OpenAI cuts its fundraising target to $20 billion at a $1.25 trillion valuation",
+  "summary": "OpenAI trimmed its latest round by $10 billion and is now seeking about $20 billion at a $1.25 trillion valuation rather than $30 billion at $1.4 trillion, the Financial Times reported on Friday and Reuters carried. The company had set a Friday deadline for investor commitments, but the first close is expected to raise less than the revised target after some backers cut their allocations. The cut lands as it races rival Anthropic's expected November listing.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "funding",
+    "valuation",
+    "anthropic",
+    "private-markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/openai-cuts-funding-target-by-10-billion-ft-reports-2026-10-31/",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Thomson Reuters (via KELO-AM)",
+      "url": "https://kelo.com/2026/10/30/openai-cuts-funding-target-by-10-billion-ft-reports/",
+      "publishedAt": "2026-10-30T19:17:00Z"
+    }
+  ],
+  "kind": "daily"
+}

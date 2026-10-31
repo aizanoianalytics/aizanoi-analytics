@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-31-bayern-klassiker-team-news",
+  "title": "Bayern face Dortmund without Neuer, with Kimmich and Musiala still doubtful",
+  "summary": "Bayern host Borussia Dortmund at 18:30 CET with Jonas Urbig expected in goal because Manuel Neuer is out with foot pain, while Luis Diaz and Ndiaye are also unavailable and Joshua Kimmich and Jamal Musiala are listed as doubtful. Aaron Danks again takes the bench for Vincent Kompany. Dortmund, level on 17 points after seven matchdays, are without Emre Can, Karetsas, Konstantelias and Lerma for the top-of-the-table meeting.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "bayern-munich",
+    "borussia-dortmund",
+    "klassiker",
+    "team-news"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga.com (probable teams)",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/team-news-line-ups-2026-27-bayern-dortmund-fantasy-20707",
+      "publishedAt": "2026-10-31T01:50:00Z"
+    },
+    {
+      "publisher": "FC Bayern (preview)",
+      "url": "https://fcbayern.com/en/news/matchpreviews/2026/10/preview-bayern-borussia-dortmund-bundesliga-matchday-8",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

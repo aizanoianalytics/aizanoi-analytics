@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-31-etsi-deepfake-lifecycle-spec",
+  "title": "ETSI publishes a lifecycle standard for limiting deepfake misuse",
+  "summary": "ETSI TS 104 275, written by the institute's Securing Artificial Intelligence committee, sets safeguards across five stages of an AI system's life: secure design, development, deployment, maintenance and end of life. It asks developers for risk assessments, content filtering, labelling, continuous monitoring and human oversight, and supplies test scenarios with pass/fail criteria so protections can be demonstrated rather than promised. The work builds on ETSI's EN 304 223 baseline and supports EU AI Act goals on impersonation.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "etsi",
+    "deepfakes",
+    "standards",
+    "eu-ai-act",
+    "governance"
+  ],
+  "sources": [
+    {
+      "publisher": "Biometric Update",
+      "url": "https://www.biometricupdate.com/202610/etsi-releases-specification-to-help-mitigate-ai-deepfake-risk",
+      "publishedAt": "2026-10-30T16:02:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-31-schalke-leipzig-first-meeting",
+  "title": "Schalke host Leipzig for the first league meeting since their 2023 relegation",
+  "summary": "Schalke meet RB Leipzig at the Veltins-Arena on Saturday at 15:30 CET, the clubs' first Bundesliga meeting since Leipzig won 4-2 on the final day of 2022-23 before Schalke went down. Schalke are without Bachmann, Gantenbein, Hojlund, Schallenberg, Siebeking, Sylla and Vozar, with Robin Gosens doubtful; Leipzig miss Gebel, Guiu and Ouedraogo and list Christopher Nkunku as doubtful.",
+  "category": "football",
+  "priority": 46,
+  "publishedAt": "2026-10-31T05:20:00Z",
+  "updatedAt": "2026-10-31T05:20:00Z",
+  "retrievedAt": "2026-10-31T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "schalke",
+    "rb-leipzig",
+    "matchday-8"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga.com (match centre)",
+      "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8/fc-schalke-04-vs-rb-leipzig/liveticker",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "Bundesliga.com (probable teams)",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/team-news-line-ups-2026-27-bayern-dortmund-fantasy-20707",
+      "publishedAt": "2026-10-31T01:50:00Z"
+    }
+  ],
+  "kind": "daily"
+}

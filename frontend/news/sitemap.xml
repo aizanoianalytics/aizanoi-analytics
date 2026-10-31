@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/nasdaq-october-two-trillion-wipeout/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>October erases more than $2 trillion from the Nasdaq 100 as doubts about AI spending bite</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/intel-worst-day-since-1974/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Intel&#39;s 28.6% slide is its worst session since 1974 and drags chip stocks down</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/openai-funding-target-cut/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>OpenAI cuts its fundraising target to $20 billion at a $1.25 trillion valuation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/claude-code-cursor-marketplace-backdoor/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Cursor pulls its extension marketplace after a trojanized Claude Code update planted SSH backdoors</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/cma-meta-publisher-terms/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>UK competition watchdog opens a case on Meta&#39;s publisher content terms</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/vapor-panda-artex-ai-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>CrowdStrike links a Chinese espionage group to AI agents run against more than 200 targets</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/hyperscalers-three-trillion-commitments/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Five hyperscalers have now committed more than $3 trillion to the AI build-out</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/bayern-klassiker-team-news/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Bayern face Dortmund without Neuer, with Kimmich and Musiala still doubtful</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/toyota-waymo-bz4x-robotaxi/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Toyota will build Waymo&#39;s next robotaxi at its Takaoka plant</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/reddit-ai-overviews-traffic/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Reddit warns AI Overviews are cutting its search traffic as revenue growth slows</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/etsi-deepfake-lifecycle-spec/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>ETSI publishes a lifecycle standard for limiting deepfake misuse</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/elversberg-mainz-four-one/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Elversberg thump Mainz 4-1 as Keidel and Campbell light up Friday night</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/lecun-jepa-platonic-theorem/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>LeCun and Balestriero turn the Platonic representation hypothesis into a theorem</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/schalke-leipzig-first-meeting/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>Schalke host Leipzig for the first league meeting since their 2023 relegation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-31/unified-training-single-algorithm/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-31T05:20:00.000Z</news:publication_date>
+      <news:title>A CMU-led team folds pretraining, fine-tuning and reinforcement learning into one algorithm</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-30/amazon-q3-aws-accelerates/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,246 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-30T05:00:00.000Z</news:publication_date>
       <news:title>Elversberg and Mainz open matchday eight after twin cup humiliations</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/fed-holds-rates-two-dissent/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Fed holds at 3.75-4% as two officials vote to raise rates</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/samsung-q3-record-operating-profit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Samsung becomes the first tech company to earn $80bn in a quarter</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/google-gemini-4-carbon-cyber/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Google puts Gemini 4 Carbon behind the cyber-defender door first</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/anthropic-exploit-chains-research/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic&#39;s red team lets an unreleased Claude write five exploit chains</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/openai-devday-dots-pro-500/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI trims Pro usage and adds a $500 tier as DevDay turns to always-on agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/apple-macbook-pro-touch-oled/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Apple puts touch and a tandem-OLED display on the MacBook Pro</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/alphabet-q3-cloud-tpu/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Alphabet&#39;s cloud revenue doubles as TPU sales become a real business</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/cipher-epics-zero-days/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>An autonomous agent found four zero-days in particle-accelerator software</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/microsoft-fy27-q1-azure/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Azure grows 48% as Microsoft opens its fiscal year with $92.3bn in revenue</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/wall-street-alphabet-futures-slide/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Alphabet&#39;s miss cools the AI trade and drags Nasdaq futures lower</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/nvidia-hugging-face-doj-inquiry/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>US Justice Department asks what Nvidia&#39;s Hugging Face deal would do to AI competition</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/marvell-lumentum-optics-talks/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Marvell moves on Lumentum to own the optics inside AI clusters</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/carabao-cup-quarter-final-draw/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Liverpool survive Chelsea on penalties as the Carabao Cup last eight takes shape</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/dfb-pokal-second-round-complete/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Bayern hit six and Dresden dump Schalke out of the DFB-Pokal</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-29/premier-league-matchweek-nine-preview/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-29T05:00:00.000Z</news:publication_date>
-      <news:title>Liverpool host Arsenal with Chelsea and Manchester United opening the weekend</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/sk-hynix-record-quarter-shareholder-return/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>SK hynix turns the memory squeeze into a record quarter and a huge payout</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/axiom-lean-proof-finite-simple-groups/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Axiom says AI agents computer-checked the largest proof in mathematics</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/china-ai-stock-rout-star50/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>China&#39;s AI stock rally comes apart, $480bn lighter</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/fleetwood-arsenal-carabao-cup-upset/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Fleetwood knock the champions out of the Carabao Cup on penalties</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/openai-gpt-61-terra-computer-use/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI halves the price of computer use with GPT-6.1 Terra</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/amd-meta-helios-epyc/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>AMD says Helios racks and EPYC are now running inside Meta</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/anthropic-claude-drug-development-programmes/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic puts Claude inside six drug programmes and starts its own</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/oracle-openai-enterprise-applications/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Oracle builds ChatGPT and Codex into its business applications</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/nvidia-oracle-vera-rubin-oci/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>NVIDIA and Oracle take Vera Rubin to multi-gigawatt scale on OCI</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/wall-street-chips-boeing-fed-eve/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Chips lift Wall Street again while Boeing drags the Dow flat</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/micron-3d-dram-pivot/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Micron abandons 4F² DRAM and puts its scaling bets on 3D</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/us-consumer-confidence-october/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>US consumer confidence jumps to 91.7 a day before the Fed decides</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/man-utd-carrick-chelsea/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Manchester United keep Carrick for Chelsea after eight games without a win</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/dfb-pokal-second-round-tuesday/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>Cologne run riot and Dortmund survive as the cup&#39;s second round thins out</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-28/ibm-agent-identity-and-control/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-28T05:00:00.000Z</news:publication_date>
-      <news:title>IBM moves to give every AI agent an identity and a kill switch</news:title>
     </news:news>
   </url>
 </urlset>
