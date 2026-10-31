@@ -170,7 +170,7 @@ test('runner creates a fixed local worker and posts ids rather than URLs', () =>
 test('manifest ids are unique, paths are canonical, and files exist', () => {
   const data = manifest();
   assert.equal(data.version, 1);
-  assert.equal(data.bots.length, 3);
+  assert.equal(data.bots.filter(bot => bot.id.startsWith('sample-')).length, 3);
   const ids = new Set();
   for (const bot of data.bots) {
     assert.match(bot.id, /^[a-z0-9][a-z0-9.-]*$/);
@@ -179,9 +179,10 @@ test('manifest ids are unique, paths are canonical, and files exist', () => {
     ids.add(bot.id);
     assert.equal(bot.file, `bots/${bot.id}.js`);
     assert.ok(fs.statSync(new URL(bot.file, root)).isFile());
-    assert.equal(bot.lab, 'Aizanoi sample');
-    assert.match(bot.note, /not an AI-model entry/);
-    assert.match(bot.note, /not an AI-model entry/);
+    if (bot.id.startsWith('sample-')) {
+      assert.equal(bot.lab, 'Aizanoi sample');
+      assert.match(bot.note, /not an AI-model entry/);
+    }
     assert.match(bot.color, /^#[0-9a-f]{6}$/i);
   }
 });

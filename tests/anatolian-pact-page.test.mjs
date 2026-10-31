@@ -79,7 +79,7 @@ test('generated data and engine load in the same realm without require', () => {
 });
 test('manifest IDs, paths and exact byte counts', () => {
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.bots.length, 3);
+  assert.equal(manifest.bots.filter(bot => bot.id.startsWith('sample-')).length, 3);
   const seen = new Set();
   for (const bot of manifest.bots) {
     assert.match(bot.id, /^[a-z0-9][a-z0-9.-]*$/);
@@ -87,8 +87,11 @@ test('manifest IDs, paths and exact byte counts', () => {
     assert.ok(!seen.has(bot.id));
     seen.add(bot.id);
     assert.equal(bot.file, `bots/${bot.id}.js`);
-    assert.equal(bot.lab, 'Aizanoi sample');
-    assert.ok(bot.note.includes('not an AI-model entry'));
+    // AI-model entries (aiwar-*) carry their own lab and note
+    if (bot.id.startsWith('sample-')) {
+      assert.equal(bot.lab, 'Aizanoi sample');
+      assert.ok(bot.note.includes('not an AI-model entry'));
+    }
     const file = new URL(bot.file, base);
     assert.ok(fs.existsSync(file), `Missing companion bot: ${bot.file}`);
     assert.equal(bot.bytes, fs.statSync(file).size,

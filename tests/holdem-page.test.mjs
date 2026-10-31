@@ -112,7 +112,7 @@ test('runner never posts a URL and uses only the fixed worker entry point', () =
 test('roster identifiers, local paths, files and byte counts are exact', () => {
   const manifest = JSON.parse(src('bots.json'));
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.bots.length, 3);
+  assert.equal(manifest.bots.filter(bot => bot.id.startsWith('sample-')).length, 3);
   assert.equal(new Set(manifest.bots.map(bot => bot.id)).size, manifest.bots.length);
 
   const colors = {
@@ -125,9 +125,13 @@ test('roster identifiers, local paths, files and byte counts are exact', () => {
     assert.match(bot.id, /^[a-z0-9][a-z0-9.-]*$/);
     assert.ok(!bot.id.includes('..'));
     assert.equal(bot.file, `bots/${bot.id}.js`);
-    assert.equal(bot.lab, 'Aizanoi sample');
-    assert.equal(bot.color, colors[bot.id]);
-    assert.match(bot.note, /not an AI-model entry/);
+    if (bot.id.startsWith('sample-')) {
+      assert.equal(bot.lab, 'Aizanoi sample');
+      assert.equal(bot.color, colors[bot.id]);
+      assert.match(bot.note, /not an AI-model entry/);
+    } else {
+      assert.match(bot.color, /^#[0-9a-f]{6}$/i); // AI-model entry
+    }
     assert.ok(Number.isSafeInteger(bot.bytes) && bot.bytes >= 0);
 
     const file = new URL(bot.file, root);

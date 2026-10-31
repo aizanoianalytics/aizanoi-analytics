@@ -164,7 +164,7 @@ test('manifest identifiers are unique and every bot file exists', async () => {
   const manifest = JSON.parse(await read('bots.json'));
   assert.equal(manifest.version, 1);
   assert.ok(Array.isArray(manifest.bots));
-  assert.equal(manifest.bots.length, 3);
+  assert.equal(manifest.bots.filter(bot => bot.id.startsWith('sample-')).length, 3);
 
   const ids = new Set();
   const expected = new Map([
@@ -182,13 +182,17 @@ test('manifest identifiers are unique and every bot file exists', async () => {
     ids.add(bot.id);
 
     assert.equal(bot.file, `bots/${bot.id}.js`);
-    assert.equal(bot.lab, 'Aizanoi sample');
-    assert.equal(bot.color, expected.get(bot.id));
+    if (bot.id.startsWith('sample-')) {
+      assert.equal(bot.lab, 'Aizanoi sample');
+      assert.equal(bot.color, expected.get(bot.id));
+    } else {
+      assert.match(bot.color, /^#[0-9a-f]{6}$/i); // AI-model entry
+    }
     assert.equal(typeof bot.name, 'string');
     assert.equal(typeof bot.botName, 'string');
     assert.ok(Number.isSafeInteger(bot.bytes) && bot.bytes >= 0);
     assert.ok((await stat(path.join(root, bot.file))).isFile());
   }
 
-  assert.deepEqual([...ids].sort(), [...expected.keys()].sort());
+  assert.deepEqual([...ids].filter(id => id.startsWith('sample-')).sort(), [...expected.keys()].sort());
 });

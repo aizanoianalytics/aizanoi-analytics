@@ -325,7 +325,7 @@ test('humans stay idle, move while held, stop on release, and reverse freely', a
 test('manifest ids are safe, unique, and resolve to actual sample bot files', () => {
   const manifest = JSON.parse(src('bots.json'));
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.bots.length, 3);
+  assert.equal(manifest.bots.filter(bot => bot.id.startsWith('sample-')).length, 3);
 
   const ids = new Set();
 
@@ -339,7 +339,7 @@ test('manifest ids are safe, unique, and resolve to actual sample bot files', ()
     assert.ok(fs.statSync(new URL(bot.file, root)).isFile());
     assert.equal(bot.bytes, fs.statSync(new URL(bot.file, root)).size, `${bot.id} bytes`);
     if (bot.id.startsWith('sample-')) assert.equal(bot.lab, 'Aizanoi sample'); // AI-model entries join later
-    assert.match(bot.note, /not an AI-model entry/);
+    if (bot.id.startsWith('sample-')) assert.match(bot.note, /not an AI-model entry/);
     assert.match(bot.color, /^#[a-f0-9]{6}$/i);
 
     const text = src(bot.file);

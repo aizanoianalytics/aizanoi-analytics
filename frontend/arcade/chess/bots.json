@@ -30,6 +30,226 @@
    "file": "bots/sample-minimax.js",
    "bytes": 3511,
    "note": "House example, not an AI-model entry. Uses iterative-deepening alpha-beta, piece-square tables and MVV-LVA ordering with an approximately 300 ms search budget. Clock-budgeted results may vary by device."
+  },
+  {
+   "id": "aiwar-claude-opus-5.5",
+   "name": "Claude Opus 5.5",
+   "botName": "Opus Gambit",
+   "lab": "Anthropic",
+   "color": "#e8875b",
+   "file": "bots/aiwar-claude-opus-5.5.js",
+   "bytes": 32497,
+   "note": "AI WAR 2026-10-31 entry written by Claude Opus 5.5. Chess round robin: #1 of 22."
+  },
+  {
+   "id": "aiwar-gemini-4-argon",
+   "name": "Gemini 4 Argon",
+   "botName": "Argon",
+   "lab": "Google",
+   "color": "#c99bff",
+   "file": "bots/aiwar-gemini-4-argon.js",
+   "bytes": 45392,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Chess round robin: #2 of 22."
+  },
+  {
+   "id": "aiwar-deepseek",
+   "name": "DeepSeek",
+   "botName": "Aizanoi-DeepSeek",
+   "lab": "DeepSeek",
+   "color": "#4fd1c5",
+   "file": "bots/aiwar-deepseek.js",
+   "bytes": 37850,
+   "note": "AI WAR 2026-10-31 entry written by DeepSeek. Chess round robin: #3 of 22."
+  },
+  {
+   "id": "aiwar-gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "botName": "Flash",
+   "lab": "Google",
+   "color": "#8b9cff",
+   "file": "bots/aiwar-gemini-3.8-flash.js",
+   "bytes": 50119,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Chess round robin: #4 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "botName": "Aras Sentinel",
+   "lab": "OpenAI",
+   "color": "#ff4d4d",
+   "file": "bots/aiwar-gpt-6.1-sol.js",
+   "bytes": 14035,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Chess round robin: #5 of 22."
+  },
+  {
+   "id": "aiwar-claude-sonnet-5.5",
+   "name": "Claude Sonnet 5.5",
+   "botName": "claude-sonnet-5.5",
+   "lab": "Anthropic",
+   "color": "#6fa8ff",
+   "file": "bots/aiwar-claude-sonnet-5.5.js",
+   "bytes": 10917,
+   "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Chess round robin: #6 of 22."
+  },
+  {
+   "id": "aiwar-muse-spark-1.3",
+   "name": "Muse Spark 1.3",
+   "botName": "SparkTactician",
+   "lab": "Meta",
+   "color": "#f0abfc",
+   "file": "bots/aiwar-muse-spark-1.3.js",
+   "bytes": 21801,
+   "note": "AI WAR 2026-10-31 entry written by Muse Spark 1.3. Chess round robin: #7 of 22."
+  },
+  {
+   "id": "aiwar-claude-haiku-5.5",
+   "name": "Claude Haiku 5.5",
+   "botName": "claude-haiku-5.5",
+   "lab": "Anthropic",
+   "color": "#7ee08a",
+   "file": "bots/aiwar-claude-haiku-5.5.js",
+   "bytes": 8888,
+   "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Chess round robin: #8 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-terra",
+   "name": "GPT-6.1 Terra",
+   "botName": "Aizanoi",
+   "lab": "OpenAI",
+   "color": "#ff9e57",
+   "file": "bots/aiwar-gpt-6.1-terra.js",
+   "bytes": 6096,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Chess round robin: #9 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "botName": "Aras",
+   "lab": "OpenAI",
+   "color": "#00c896",
+   "file": "bots/aiwar-gpt-6-astra.js",
+   "bytes": 8936,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Chess round robin: #10 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "botName": "Aegis",
+   "lab": "OpenAI",
+   "color": "#d6a77a",
+   "file": "bots/aiwar-gpt-5.6-sol.js",
+   "bytes": 15240,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Sol. Chess round robin: #11 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "botName": "Citadel",
+   "lab": "OpenAI",
+   "color": "#2f6bff",
+   "file": "bots/aiwar-gpt-6-sol.js",
+   "bytes": 6106,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Chess round robin: #12 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "botName": "GPT-5.6 Terra",
+   "lab": "OpenAI",
+   "color": "#b5f23d",
+   "file": "bots/aiwar-gpt-5.6-terra.js",
+   "bytes": 6788,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Chess round robin: #13 of 22."
+  },
+  {
+   "id": "aiwar-iceman",
+   "name": "Iceman",
+   "botName": "Iceman",
+   "lab": "OpenCode",
+   "color": "#93c5fd",
+   "file": "bots/aiwar-iceman.js",
+   "bytes": 8989,
+   "note": "AI WAR 2026-10-31 entry written by Iceman. Chess round robin: #14 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "botName": "Aegis",
+   "lab": "OpenAI",
+   "color": "#a0aec0",
+   "file": "bots/aiwar-gpt-6-luna.js",
+   "bytes": 2359,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Chess round robin: #15 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "botName": "GPT-5.6 Luna",
+   "lab": "OpenAI",
+   "color": "#7c6cf0",
+   "file": "bots/aiwar-gpt-5.6-luna.js",
+   "bytes": 4602,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Luna. Chess round robin: #16 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-super",
+   "name": "Nemotron Super",
+   "botName": "Nemotron Super",
+   "lab": "NVIDIA",
+   "color": "#b794f4",
+   "file": "bots/aiwar-nemotron-super.js",
+   "bytes": 8415,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Chess round robin: #16 of 22."
+  },
+  {
+   "id": "aiwar-flint",
+   "name": "Flint",
+   "botName": "Phoenix",
+   "lab": "OpenCode",
+   "color": "#e2b48a",
+   "file": "bots/aiwar-flint.js",
+   "bytes": 7288,
+   "note": "AI WAR 2026-10-31 entry written by Flint. Chess round robin: #18 of 22."
+  },
+  {
+   "id": "aiwar-glm",
+   "name": "GLM",
+   "botName": "GLM",
+   "lab": "Z.ai",
+   "color": "#22d3ee",
+   "file": "bots/aiwar-glm.js",
+   "bytes": 30409,
+   "note": "AI WAR 2026-10-31 entry written by GLM. Chess round robin: #19 of 22."
+  },
+  {
+   "id": "aiwar-mimo",
+   "name": "MiMo",
+   "botName": "terminus",
+   "lab": "Xiaomi",
+   "color": "#ff7a45",
+   "file": "bots/aiwar-mimo.js",
+   "bytes": 33289,
+   "note": "AI WAR 2026-10-31 entry written by MiMo. Chess round robin: #20 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-lightning",
+   "name": "Nemotron Lightning",
+   "botName": "Nemotron Lightning",
+   "lab": "NVIDIA",
+   "color": "#fbd38d",
+   "file": "bots/aiwar-nemotron-lightning.js",
+   "bytes": 6518,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Chess round robin: #21 of 22."
+  },
+  {
+   "id": "aiwar-beam",
+   "name": "Beam",
+   "botName": "Beam",
+   "lab": "OpenCode",
+   "color": "#f6c35b",
+   "file": "bots/aiwar-beam.js",
+   "bytes": 18445,
+   "note": "AI WAR 2026-10-31 entry written by Beam. Chess round robin: #22 of 22."
   }
  ]
 }

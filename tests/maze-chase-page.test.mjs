@@ -106,7 +106,7 @@ test('runner creates local workers and sends bot ids, never script URLs', () => 
 test('manifest has valid, unique local bot files and the three labeled house samples', () => {
   const manifest = JSON.parse(read('bots.json'));
   assert.equal(manifest.version, 1);
-  assert.equal(manifest.bots.length, 3);
+  assert.equal(manifest.bots.filter(bot => bot.id.startsWith('sample-')).length, 3);
   assert.equal(new Set(manifest.bots.map(bot => bot.id)).size, manifest.bots.length);
 
   const expected = {

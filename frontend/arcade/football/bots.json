@@ -30,6 +30,216 @@
    "file": "bots/sample-keeper.js",
    "bytes": 2540,
    "note": "Reference goalkeeper; not an AI-model entry."
+  },
+  {
+   "id": "aiwar-gemini-4-argon",
+   "name": "Gemini 4 Argon",
+   "botName": "Argon",
+   "lab": "Google",
+   "color": "#c99bff",
+   "file": "bots/aiwar-gemini-4-argon.js",
+   "bytes": 28011,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Football round robin: #1 of 21."
+  },
+  {
+   "id": "aiwar-gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "botName": "Titan",
+   "lab": "Google",
+   "color": "#8b9cff",
+   "file": "bots/aiwar-gemini-3.8-flash.js",
+   "bytes": 17418,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Football round robin: #2 of 21."
+  },
+  {
+   "id": "aiwar-glm",
+   "name": "GLM",
+   "botName": "GLM Ballistic",
+   "lab": "Z.ai",
+   "color": "#22d3ee",
+   "file": "bots/aiwar-glm.js",
+   "bytes": 5673,
+   "note": "AI WAR 2026-10-31 entry written by GLM. Football round robin: #3 of 21."
+  },
+  {
+   "id": "aiwar-claude-opus-5.5",
+   "name": "Claude Opus 5.5",
+   "botName": "Opus Striker",
+   "lab": "Anthropic",
+   "color": "#e8875b",
+   "file": "bots/aiwar-claude-opus-5.5.js",
+   "bytes": 11394,
+   "note": "AI WAR 2026-10-31 entry written by Claude Opus 5.5. Football round robin: #4 of 21."
+  },
+  {
+   "id": "aiwar-gpt-6.1-terra",
+   "name": "GPT-6.1 Terra",
+   "botName": "TerraPress",
+   "lab": "OpenAI",
+   "color": "#ff9e57",
+   "file": "bots/aiwar-gpt-6.1-terra.js",
+   "bytes": 12771,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Football round robin: #5 of 21."
+  },
+  {
+   "id": "aiwar-gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "botName": "Tactician",
+   "lab": "OpenAI",
+   "color": "#7c6cf0",
+   "file": "bots/aiwar-gpt-5.6-luna.js",
+   "bytes": 6605,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Luna. Football round robin: #6 of 21."
+  },
+  {
+   "id": "aiwar-gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "botName": "ArasPress",
+   "lab": "OpenAI",
+   "color": "#ff4d4d",
+   "file": "bots/aiwar-gpt-6.1-sol.js",
+   "bytes": 10669,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Football round robin: #7 of 21."
+  },
+  {
+   "id": "aiwar-muse-spark-1.3",
+   "name": "Muse Spark 1.3",
+   "botName": "SparkStrike",
+   "lab": "Meta",
+   "color": "#f0abfc",
+   "file": "bots/aiwar-muse-spark-1.3.js",
+   "bytes": 9653,
+   "note": "AI WAR 2026-10-31 entry written by Muse Spark 1.3. Football round robin: #8 of 21."
+  },
+  {
+   "id": "aiwar-gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "botName": "HexPress",
+   "lab": "OpenAI",
+   "color": "#2f6bff",
+   "file": "bots/aiwar-gpt-6-sol.js",
+   "bytes": 13088,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Football round robin: #9 of 21."
+  },
+  {
+   "id": "aiwar-mimo",
+   "name": "MiMo",
+   "botName": "MiMo",
+   "lab": "Xiaomi",
+   "color": "#ff7a45",
+   "file": "bots/aiwar-mimo.js",
+   "bytes": 11414,
+   "note": "AI WAR 2026-10-31 entry written by MiMo. Football round robin: #10 of 21."
+  },
+  {
+   "id": "aiwar-claude-sonnet-5.5",
+   "name": "Claude Sonnet 5.5",
+   "botName": "Sonnet Striker",
+   "lab": "Anthropic",
+   "color": "#6fa8ff",
+   "file": "bots/aiwar-claude-sonnet-5.5.js",
+   "bytes": 3082,
+   "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Football round robin: #11 of 21."
+  },
+  {
+   "id": "aiwar-gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "botName": "Aras",
+   "lab": "OpenAI",
+   "color": "#d6a77a",
+   "file": "bots/aiwar-gpt-5.6-sol.js",
+   "bytes": 13646,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Sol. Football round robin: #12 of 21."
+  },
+  {
+   "id": "aiwar-deepseek",
+   "name": "DeepSeek",
+   "botName": "DeepSeek Tiki-Taka",
+   "lab": "DeepSeek",
+   "color": "#4fd1c5",
+   "file": "bots/aiwar-deepseek.js",
+   "bytes": 20733,
+   "note": "AI WAR 2026-10-31 entry written by DeepSeek. Football round robin: #13 of 21."
+  },
+  {
+   "id": "aiwar-iceman",
+   "name": "Iceman",
+   "botName": "Iceman",
+   "lab": "OpenCode",
+   "color": "#93c5fd",
+   "file": "bots/aiwar-iceman.js",
+   "bytes": 3031,
+   "note": "AI WAR 2026-10-31 entry written by Iceman. Football round robin: #14 of 21."
+  },
+  {
+   "id": "aiwar-gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "botName": "Terra Blade",
+   "lab": "OpenAI",
+   "color": "#b5f23d",
+   "file": "bots/aiwar-gpt-5.6-terra.js",
+   "bytes": 9546,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Football round robin: #15 of 21."
+  },
+  {
+   "id": "aiwar-beam",
+   "name": "Beam",
+   "botName": "Beam",
+   "lab": "OpenCode",
+   "color": "#f6c35b",
+   "file": "bots/aiwar-beam.js",
+   "bytes": 6946,
+   "note": "AI WAR 2026-10-31 entry written by Beam. Football round robin: #16 of 21."
+  },
+  {
+   "id": "aiwar-nemotron-super",
+   "name": "Nemotron Super",
+   "botName": "Nemotron Super",
+   "lab": "NVIDIA",
+   "color": "#b794f4",
+   "file": "bots/aiwar-nemotron-super.js",
+   "bytes": 5884,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Football round robin: #17 of 21."
+  },
+  {
+   "id": "aiwar-gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "botName": "GPT-6 Astra",
+   "lab": "OpenAI",
+   "color": "#00c896",
+   "file": "bots/aiwar-gpt-6-astra.js",
+   "bytes": 13077,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Football round robin: #18 of 21."
+  },
+  {
+   "id": "aiwar-claude-haiku-5.5",
+   "name": "Claude Haiku 5.5",
+   "botName": "Claude Haiku 5.5",
+   "lab": "Anthropic",
+   "color": "#7ee08a",
+   "file": "bots/aiwar-claude-haiku-5.5.js",
+   "bytes": 3822,
+   "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Football round robin: #19 of 21."
+  },
+  {
+   "id": "aiwar-gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "botName": "Aras",
+   "lab": "OpenAI",
+   "color": "#a0aec0",
+   "file": "bots/aiwar-gpt-6-luna.js",
+   "bytes": 14720,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Football round robin: #20 of 21."
+  },
+  {
+   "id": "aiwar-nemotron-lightning",
+   "name": "Nemotron Lightning",
+   "botName": "Nemotron Lightning",
+   "lab": "NVIDIA",
+   "color": "#fbd38d",
+   "file": "bots/aiwar-nemotron-lightning.js",
+   "bytes": 3574,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Football round robin: #21 of 21."
   }
  ]
 }
