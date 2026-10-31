@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Anatolian Pact — Aizanoi Arcade</title>
+  <meta name="description" content="Six powers, one ancient peninsula. A simultaneous-order game of alliances and betrayal for humans and AI-written strategists.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f7fafc">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/anatolian-pact/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles/landing.css">
+  <link rel="stylesheet" href="anatolian-pact.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="Anatolian Pact — Aizanoi Arcade">
+  <meta property="og:description" content="Six powers, one ancient peninsula. Make deals, keep promises or break them.">
+  <meta property="og:url" content="https://aizanoianalytics.com/arcade/anatolian-pact/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="Anatolian Pact — Aizanoi Arcade">
+  <meta name="twitter:description" content="Six powers, one ancient peninsula. Make deals, keep promises or break them.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebPage","name":"Anatolian Pact","url":"https://aizanoianalytics.com/arcade/anatolian-pact/","description":"A game of alliances and betrayal for six powers, played entirely in your browser.","isPartOf":{"@type":"WebSite","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"}}
+  </script>
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="/"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span>Aizanoi Analytics</span></a>
+    <nav aria-label="Products"><a href="/news/">News</a><a href="/tv/">TV</a><a href="/analytics/">Analytics</a><a href="/worlds/">Aizanoi</a><a href="/forge/">Forge</a><a href="/journal/">Journal</a><a href="/labs/">Labs</a><a href="/arcade/">Arcade</a></nav>
+  </header>
+  <section class="hero">
+    <p class="eyebrow">Aizo TV · AI War</p>
+    <h1>Anatolian Pact</h1>
+    <p class="lede">Six powers, one ancient peninsula. Make deals, keep promises or break them. Play against AI-written strategists or watch them betray each other.</p>
+  </section>
+  <main class="ap" itemscope itemtype="https://schema.org/WebPage">
+    <meta itemprop="name" content="Anatolian Pact">
+    <meta itemprop="description" content="A game of alliances and betrayal for six powers.">
+    <link itemprop="url" href="https://aizanoianalytics.com/arcade/anatolian-pact/">
+    <div hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+      <meta itemprop="name" content="Aizanoi Analytics">
+      <link itemprop="url" href="https://aizanoianalytics.com/">
+    </div>
+    <template id="ap-seat-options">
+      <option value="human">Human</option>
+      <option value="custom">Your bot (upload…)</option>
+    </template>
+    <form id="ap-form" class="ap-picker" aria-label="Choose power controllers">
+      <table>
+        <caption>The six powers</caption>
+        <thead><tr><th scope="col">Power</th><th scope="col">Controller</th></tr></thead>
+        <tbody id="ap-seats"></tbody>
+      </table>
+      <div class="ap-options">
+        <label>Years<select id="ap-years"><option value="6">6</option><option value="9">9</option><option value="12" selected>12</option></select></label>
+        <label>Speed<select id="ap-speed"><option value="2500">Slow</option><option value="1200" selected>Normal</option><option value="400">Fast</option><option value="0">Instant</option></select></label>
+        <button type="submit" id="ap-start" disabled>Start</button>
+        <button type="button" id="ap-random" disabled>Random seats</button>
+      </div>
+    </form>
+    <div class="ap-hud" aria-label="Game status">
+      <span id="ap-season">Spring, Year 1</span>
+      <span id="ap-phase">Choose your powers</span>
+    </div>
+    <div class="ap-stage">
+      <div class="ap-board">
+        <canvas id="ap-canvas" width="1000" height="720" role="img" aria-label="Anatolian Pact real-geography hex map. Stars mark supply centres; rings mark home centres."></canvas>
+      </div>
+      <aside class="ap-side" aria-label="Public game information">
+        <h2>The powers</h2>
+        <ol id="ap-standings"></ol>
+        <p id="ap-ticker" role="status">Loading the strategist roster…</p>
+        <p id="ap-result" role="status" hidden></p>
+        <h2>Season log</h2>
+        <ol id="ap-log" aria-label="Public season history"></ol>
+      </aside>
+    </div>
+    <section id="ap-negotiate" class="ap-private" aria-label="Private negotiations" hidden>
+      <div id="ap-neg-body"></div>
+    </section>
+    <section id="ap-order-panel" class="ap-private" aria-label="Private orders" hidden>
+      <h2 id="ap-order-title">Secret orders</h2>
+      <p id="ap-order-hint"></p>
+      <ul id="ap-promises" aria-label="Your accepted promises"></ul>
+      <div class="ap-actions">
+        <button type="button" id="ap-hold">Hold</button>
+        <button type="button" id="ap-support">Support</button>
+      </div>
+      <ol id="ap-orders"></ol>
+      <button type="button" id="ap-submit-orders">Submit orders</button>
+    </section>
+    <section id="ap-adjust" class="ap-private" aria-label="Private retreats and adjustments" hidden>
+      <div id="ap-adjust-body"></div>
+    </section>
+    <dialog id="ap-pass" aria-labelledby="ap-pass-title" aria-describedby="ap-pass-note">
+      <h2 id="ap-pass-title">Pass the device</h2>
+      <p id="ap-pass-note">Only the named player should continue. Private plans are hidden until orders resolve.</p>
+      <button type="button" id="ap-pass-confirm">Continue</button>
+    </dialog>
+    <section class="ap-rules" aria-labelledby="ap-rules-title">
+      <h2 id="ap-rules-title">How the pact works</h2>
+      <p>Orders resolve simultaneously. Unordered units hold; equal attacks bounce. Armies stay on land; fleets use seas and coasts. No convoys. Thrace, mainland Anatolia and Cyprus are separate land components: armies cannot cross the straits or sail to Cyprus. Only fleets can travel between these components, through adjoining seas.</p>
+      <p>Support adds strength to a hold or move. An attack cuts support unless it comes from the province the support is directed against; a dislodged attacker cannot cut the support that dislodged it.</p>
+      <p>Spring and Autumn each begin with structured deals and secret orders. Accepted deals are promises, not constraints: betrayal is allowed and recorded in the public trust record. Supply centres change hands after Autumn. Build in empty owned home centres or disband excess units. Own 13 centres to win, or lead at the year limit; tied leaders share victory.</p>
+      <p>Choose Human for hot-seat play. Multiple humans pass the device before every private phase. Select your unit, then a highlighted destination to move; select Support, another unit, and its destination to support it. Click that unit again to support a hold. Proposal province selectors also accept map clicks while focused. Bots run in separate workers with a 2-second limit per call; failures use safe defaults. <a href="#ap-roster">Meet the strategists</a>.</p>
+      <p>Write your own bot: <a href="BOT_API.md">read the Bot API</a>.</p>
+      <p>Your bot stays in this page's memory; nothing is uploaded. Load only code you trust. Export an object with orders(state). Seeded Math.random is available inside bot methods, not during top-level bot initialization.</p>
+      <p>Coastlines and Tuz lake are generated from public-domain <a href="https://www.naturalearthdata.com/">Natural Earth</a> geography. Narrow straits are widened to one playable hex; smaller Aegean islands are represented as sea.</p>
+    </section>
+    <section id="ap-roster" class="ap-roster" aria-label="All strategists">
+      <h2>The strategists</h2>
+      <ul id="ap-list"></ul>
+    </section>
+    <noscript>This game needs JavaScript enabled. No account or server is required.</noscript>
+  </main>
+  <footer>
+    <p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p>
+    <nav class="public-identity-links" aria-label="Social and contact">
+      <a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a>
+      <a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:aizanoianalytics@protonmail.com">Email</a>
+    </nav>
+  </footer>
+  <script src="map-data.js"></script>
+  <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
+  <script src="runner.js"></script>
+  <script src="map.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

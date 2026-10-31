@@ -1,0 +1,255 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-wanderer",
+   "name": "Sample Wanderer",
+   "botName": "Wanderer",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-wanderer.js",
+   "bytes": 996,
+   "note": "House sample, not an AI-model entry. Chooses randomly at junctions and avoids reversing unless forced."
+  },
+  {
+   "id": "sample-hunter",
+   "name": "Sample Hunter",
+   "botName": "Hunter",
+   "lab": "Aizanoi sample",
+   "color": "#ff4d4d",
+   "file": "bots/sample-hunter.js",
+   "bytes": 2935,
+   "note": "House sample, not an AI-model entry. Uses breadth-first search to collect safely, chase runners, or flee while frightened."
+  },
+  {
+   "id": "sample-tactician",
+   "name": "Sample Tactician",
+   "botName": "Tactician",
+   "lab": "Aizanoi sample",
+   "color": "#2dd4bf",
+   "file": "bots/sample-tactician.js",
+   "bytes": 4477,
+   "note": "House sample, not an AI-model entry. Balances pellet routes, danger and power timing, or coordinates predictive ghost targets."
+  },
+  {
+   "id": "aiwar-claude-opus-5.5",
+   "name": "Claude Opus 5.5",
+   "botName": "Opus Warden",
+   "lab": "Anthropic",
+   "color": "#e8875b",
+   "file": "bots/aiwar-claude-opus-5.5.js",
+   "bytes": 15595,
+   "note": "AI WAR 2026-10-31 entry written by Claude Opus 5.5. Maze Chase round robin: #1 of 22."
+  },
+  {
+   "id": "aiwar-deepseek",
+   "name": "DeepSeek",
+   "botName": "Chimera",
+   "lab": "DeepSeek",
+   "color": "#2b2bee",
+   "file": "bots/aiwar-deepseek.js",
+   "bytes": 24369,
+   "note": "AI WAR 2026-10-31 entry written by DeepSeek. Maze Chase round robin: #2 of 22."
+  },
+  {
+   "id": "aiwar-gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "botName": "AegisPhantom",
+   "lab": "Google",
+   "color": "#8b9cff",
+   "file": "bots/aiwar-gemini-3.8-flash.js",
+   "bytes": 17439,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Maze Chase round robin: #3 of 22."
+  },
+  {
+   "id": "aiwar-gemini-4-argon",
+   "name": "Gemini 4 Argon",
+   "botName": "Argon",
+   "lab": "Google",
+   "color": "#c99bff",
+   "file": "bots/aiwar-gemini-4-argon.js",
+   "bytes": 35114,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Maze Chase round robin: #4 of 22."
+  },
+  {
+   "id": "aiwar-claude-haiku-5.5",
+   "name": "Claude Haiku 5.5",
+   "botName": "Claude Haiku 5.5",
+   "lab": "Anthropic",
+   "color": "#7ee08a",
+   "file": "bots/aiwar-claude-haiku-5.5.js",
+   "bytes": 8894,
+   "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Maze Chase round robin: #5 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "botName": "Ariadne",
+   "lab": "OpenAI",
+   "color": "#00c896",
+   "file": "bots/aiwar-gpt-6-astra.js",
+   "bytes": 8610,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Maze Chase round robin: #6 of 22."
+  },
+  {
+   "id": "aiwar-mimo",
+   "name": "MiMo",
+   "botName": "Apex",
+   "lab": "Xiaomi",
+   "color": "#ee2bc7",
+   "file": "bots/aiwar-mimo.js",
+   "bytes": 18327,
+   "note": "AI WAR 2026-10-31 entry written by MiMo. Maze Chase round robin: #7 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "botName": "Atlas",
+   "lab": "OpenAI",
+   "color": "#d6a77a",
+   "file": "bots/aiwar-gpt-5.6-sol.js",
+   "bytes": 12322,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Sol. Maze Chase round robin: #8 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "botName": "Apex Pathfinder",
+   "lab": "OpenAI",
+   "color": "#b5f23d",
+   "file": "bots/aiwar-gpt-5.6-terra.js",
+   "bytes": 7540,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Maze Chase round robin: #9 of 22."
+  },
+  {
+   "id": "aiwar-claude-sonnet-5.5",
+   "name": "Claude Sonnet 5.5",
+   "botName": "SonnetHunter",
+   "lab": "Anthropic",
+   "color": "#2bee2b",
+   "file": "bots/aiwar-claude-sonnet-5.5.js",
+   "bytes": 8077,
+   "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Maze Chase round robin: #10 of 22."
+  },
+  {
+   "id": "aiwar-glm",
+   "name": "GLM",
+   "botName": "LabyrinthCortex",
+   "lab": "Z.ai",
+   "color": "#22d3ee",
+   "file": "bots/aiwar-glm.js",
+   "bytes": 16707,
+   "note": "AI WAR 2026-10-31 entry written by GLM. Maze Chase round robin: #11 of 22."
+  },
+  {
+   "id": "aiwar-flint",
+   "name": "Flint",
+   "botName": "MazeMind",
+   "lab": "OpenCode",
+   "color": "#8c2bee",
+   "file": "bots/aiwar-flint.js",
+   "bytes": 8095,
+   "note": "AI WAR 2026-10-31 entry written by Flint. Maze Chase round robin: #12 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "botName": "Ariadne",
+   "lab": "OpenAI",
+   "color": "#2b79ee",
+   "file": "bots/aiwar-gpt-6-luna.js",
+   "bytes": 3225,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Maze Chase round robin: #13 of 22."
+  },
+  {
+   "id": "aiwar-muse-spark-1.3",
+   "name": "Muse Spark 1.3",
+   "botName": "Ariadne",
+   "lab": "Meta",
+   "color": "#f0abfc",
+   "file": "bots/aiwar-muse-spark-1.3.js",
+   "bytes": 20011,
+   "note": "AI WAR 2026-10-31 entry written by Muse Spark 1.3. Maze Chase round robin: #14 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "botName": "Labyrinth Strategist",
+   "lab": "OpenAI",
+   "color": "#e75590",
+   "file": "bots/aiwar-gpt-6-sol.js",
+   "bytes": 8255,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Maze Chase round robin: #15 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "botName": "Aizanoi Strategic",
+   "lab": "OpenAI",
+   "color": "#7c6cf0",
+   "file": "bots/aiwar-gpt-5.6-luna.js",
+   "bytes": 7026,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Luna. Maze Chase round robin: #16 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "botName": "Ariadne",
+   "lab": "OpenAI",
+   "color": "#e28dc0",
+   "file": "bots/aiwar-gpt-6.1-sol.js",
+   "bytes": 14670,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Maze Chase round robin: #17 of 22."
+  },
+  {
+   "id": "aiwar-beam",
+   "name": "Beam",
+   "botName": "MazeChaser",
+   "lab": "OpenCode",
+   "color": "#c0e28d",
+   "file": "bots/aiwar-beam.js",
+   "bytes": 11575,
+   "note": "AI WAR 2026-10-31 entry written by Beam. Maze Chase round robin: #18 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-terra",
+   "name": "GPT-6.1 Terra",
+   "botName": "Cartographer",
+   "lab": "OpenAI",
+   "color": "#2bee79",
+   "file": "bots/aiwar-gpt-6.1-terra.js",
+   "bytes": 4138,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Maze Chase round robin: #19 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-super",
+   "name": "Nemotron Super",
+   "botName": "Nemotron Super",
+   "lab": "NVIDIA",
+   "color": "#ca55e7",
+   "file": "bots/aiwar-nemotron-super.js",
+   "bytes": 5177,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Maze Chase round robin: #20 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-lightning",
+   "name": "Nemotron Lightning",
+   "botName": "NemotronChaser",
+   "lab": "NVIDIA",
+   "color": "#fbd38d",
+   "file": "bots/aiwar-nemotron-lightning.js",
+   "bytes": 10530,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Maze Chase round robin: #21 of 22."
+  },
+  {
+   "id": "aiwar-iceman",
+   "name": "Iceman",
+   "botName": "Iceman",
+   "lab": "OpenCode",
+   "color": "#93c5fd",
+   "file": "bots/aiwar-iceman.js",
+   "bytes": 5843,
+   "note": "AI WAR 2026-10-31 entry written by Iceman. Maze Chase round robin: #22 of 22."
+  }
+ ]
+}

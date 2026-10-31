@@ -92,9 +92,10 @@ test('secondary product placeholders state their current status honestly', () =>
 test('Arcade landing matches the four-game module catalog', () => {
   const html = read('frontend/arcade/index.html');
   for (const title of ['Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(title));
-  assert.match(html, /Six experiences that run locally in your browser/i);
+  assert.match(html, /Twelve experiences that run locally in your browser/i);
   assert.match(html, /AI Snake Royale/);
   assert.match(html, /href="\/arcade\/snake-royale\/"/);
+  for (const slug of ['chess', 'maze-chase', 'capture-flag', 'holdem', 'football', 'anatolian-pact']) assert.match(html, new RegExp(`href="/arcade/${slug}/"`));
   assert.doesNotMatch(html, /Three small playable|three small playable|Three-game/i);
 });
 

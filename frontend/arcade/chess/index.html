@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Chess Arena — Aizanoi Arcade</title>
+  <meta name="description" content="Play against chess bots written by AI models, or let two bots fight. Standard chess or Chess960, running entirely in your browser.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f7fafc">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/chess/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles/landing.css">
+  <link rel="stylesheet" href="chess.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"AI Chess Arena","description":"Play against chess bots written by AI models, or let two bots fight. Standard chess or Chess960.","url":"https://aizanoianalytics.com/arcade/chess/","isPartOf":{"@type":"WebSite","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"}}</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="AI Chess Arena — Aizanoi Arcade">
+  <meta property="og:description" content="Play against chess bots written by AI models, or let two bots fight. Standard chess or Chess960.">
+  <meta property="og:url" content="https://aizanoianalytics.com/arcade/chess/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="AI Chess Arena — Aizanoi Arcade">
+  <meta name="twitter:description" content="Play against chess bots written by AI models, or let two bots fight. Standard chess or Chess960.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="/">
+      <img src="/assets/branding/aizanoi-logo-mark.svg" alt="">
+      <span>Aizanoi Analytics</span>
+    </a>
+    <nav aria-label="Products">
+      <a href="/news/">News</a>
+      <a href="/tv/">TV</a>
+      <a href="/analytics/">Analytics</a>
+      <a href="/worlds/">Aizanoi</a>
+      <a href="/forge/">Forge</a>
+      <a href="/journal/">Journal</a>
+      <a href="/labs/">Labs</a>
+      <a href="/arcade/">Arcade</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Aizo TV · AI War</p>
+    <h1>AI Chess Arena</h1>
+    <p class="lede">Human intuition. Machine decisions. Play standard chess or Chess960, or put two bots head to head.</p>
+  </section>
+
+  <main class="ch" itemscope itemtype="https://schema.org/WebPage">
+    <meta itemprop="name" content="AI Chess Arena">
+    <meta itemprop="description" content="Play against chess bots written by AI models, or let two bots fight. Standard chess or Chess960.">
+    <link itemprop="url" href="https://aizanoianalytics.com/arcade/chess/">
+    <div hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+      <meta itemprop="name" content="Aizanoi Analytics">
+      <link itemprop="url" href="https://aizanoianalytics.com/">
+    </div>
+
+    <form id="ch-form" class="ch-picker" aria-label="Choose chess players">
+      <label class="ch-seat">
+        <span>White</span>
+        <select id="ch-white" name="white" disabled>
+          <option value="human">Human (click to move)</option>
+          <option value="custom">Your bot (upload…)</option>
+        </select>
+      </label>
+      <label class="ch-seat">
+        <span>Black</span>
+        <select id="ch-black" name="black" disabled>
+          <option value="human">Human (click to move)</option>
+          <option value="custom">Your bot (upload…)</option>
+        </select>
+      </label>
+      <label>
+        <span>Variant</span>
+        <select id="ch-variant" name="variant" disabled>
+          <option value="standard" selected>Standard chess</option>
+          <option value="chess960">Chess960 · random start</option>
+        </select>
+      </label>
+      <label>
+        <span>Series</span>
+        <select id="ch-series" name="series" disabled>
+          <option value="1" selected>1 game</option>
+          <option value="2">2 games · swap colours</option>
+          <option value="4">4 games · alternate colours</option>
+        </select>
+      </label>
+      <label>
+        <span>Bot pacing</span>
+        <select id="ch-speed" name="speed">
+          <option value="900">Slow</option>
+          <option value="450" selected>Normal</option>
+          <option value="150">Fast</option>
+          <option value="0">Instant</option>
+        </select>
+      </label>
+      <div class="ch-actions">
+        <button type="submit" id="ch-start" class="button" disabled>Start</button>
+        <button type="button" id="ch-resign" class="button secondary" disabled>Resign</button>
+        <button type="button" id="ch-flip" class="button secondary">Flip board</button>
+      </div>
+    </form>
+
+    <div class="ch-stage">
+      <div class="ch-board">
+        <canvas id="ch-canvas" width="720" height="720" tabindex="0"
+          role="application" aria-roledescription="interactive chess board"
+          aria-label="Chess board" aria-describedby="ch-board-help">
+          Use the Move in UCI form to enter moves if the board is unavailable.
+        </canvas>
+      </div>
+      <aside class="ch-side-panel" aria-label="Game information">
+        <div id="ch-cards"></div>
+        <p id="ch-ticker" class="ch-ticker" role="status" aria-live="polite" aria-atomic="true">Loading players…</p>
+        <p id="ch-result" class="ch-result" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+        <p id="ch-score" class="ch-score" aria-live="polite"></p>
+
+        <form id="ch-human-form" class="ch-human-form" aria-label="Enter a chess move">
+          <label for="ch-human-move">Move in UCI</label>
+          <div class="ch-human-entry">
+            <input id="ch-human-move" name="move" type="text" maxlength="5"
+              placeholder="e2e4" autocomplete="off" autocapitalize="none"
+              spellcheck="false" aria-describedby="ch-human-help" disabled>
+            <button id="ch-human-submit" type="submit" disabled>Play</button>
+          </div>
+          <p id="ch-human-help">From + to, such as e2e4. Promotion: e7e8q. Castle: king to its rook, such as e1h1.</p>
+        </form>
+
+        <section class="ch-history" aria-label="Move history">
+          <h2>Moves</h2>
+          <ol id="ch-moves" aria-label="SAN move pairs" tabindex="0"></ol>
+        </section>
+      </aside>
+    </div>
+
+    <p id="ch-board-help" class="ch-note">
+      Touch or click a piece, then a highlighted square. Keyboard: focus the board,
+      use arrows to choose a square and Enter or Space to select; Escape clears
+      selection. To castle, select your king and then its rook. The final g/c
+      square also works unless it is a legal ordinary king move. Choose a piece
+      when a pawn promotes, or include q/r/b/n in UCI input. Two humans can play
+      hot-seat. Black-only human play faces Black; Flip board changes the view.
+    </p>
+    <p class="ch-note">
+      Bots get 1 s per move and forfeit on illegal or late moves, exceptions or
+      loading failures. If both bots fail to load, the game is drawn. Pacing changes
+      display speed, not thinking time. Games also end on checkmate, stalemate,
+      automatic threefold repetition, the automatic fifty-move rule, insufficient
+      material or the 400-ply limit. Series alternate colours; each pair shares its
+      Chess960 position and participant random seeds.
+      <a href="#ch-roster">See all players</a>.
+    </p>
+    <p class="ch-note">
+      Write your own bot: <a href="BOT_API.md">read the Bot API</a>.
+      Choose Your bot (upload…) to load a .js file up to 256 KB, kept only in
+      this page's memory. Only load code you trust. Top-level bot code must not
+      depend on Math.random; seeded randomness is available inside move(state).
+    </p>
+
+    <section id="ch-roster" class="ch-roster" aria-label="All chess bots">
+      <h2>The players</h2>
+      <p>The Aizanoi sample bots are house examples, not AI-model benchmark entries.</p>
+      <ul id="ch-list"></ul>
+    </section>
+
+    <dialog id="ch-promo" aria-labelledby="ch-promo-title" aria-describedby="ch-promo-help">
+      <h2 id="ch-promo-title">Promote your pawn</h2>
+      <p id="ch-promo-help">Choose a piece. Press Escape to cancel this selection.</p>
+      <div class="ch-promo-options">
+        <button type="button" data-piece="q">Queen</button>
+        <button type="button" data-piece="r">Rook</button>
+        <button type="button" data-piece="b">Bishop</button>
+        <button type="button" data-piece="n">Knight</button>
+      </div>
+      <form method="dialog">
+        <button type="submit" class="secondary">Cancel</button>
+      </form>
+    </dialog>
+  </main>
+
+  <footer>
+    <p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p>
+    <nav class="public-identity-links" aria-label="Social and contact">
+      <a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a>
+      <a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:aizanoianalytics@protonmail.com">Email</a>
+    </nav>
+  </footer>
+
+  <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
+  <script src="runner.js"></script>
+  <script src="renderer.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

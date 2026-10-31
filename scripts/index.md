@@ -7,6 +7,7 @@ Scope: build-time, publishing and repository automation. These scripts are not a
 - Aizanoi News validation/build/publishing helpers → `news/`
 - AizanoiOS manifest validation and generated module wiring → [`modules/index.md`](modules/index.md)
 - Aizanoi Markets universe discovery, multi-provider ingestion and static shards → [`markets/index.md`](markets/index.md)
+- Offline Arcade tournaments and bot CLI → [`arcade/README.md`](arcade/README.md) (private tooling; public arena owners are in [`../frontend/arcade/index.md`](../frontend/arcade/index.md))
 - Public deployment → `deploy-public.sh`
 - Other maintenance automation → inspect the specific script named by the task; do not load unrelated automation by default.
 

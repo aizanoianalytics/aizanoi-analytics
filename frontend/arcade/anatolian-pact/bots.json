@@ -1,0 +1,255 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-turtle",
+   "name": "Turtle",
+   "botName": "sample-turtle",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-turtle.js",
+   "bytes": 1779,
+   "note": "Defends its centres and honours peace; not an AI-model entry."
+  },
+  {
+   "id": "sample-expander",
+   "name": "Expander",
+   "botName": "sample-expander",
+   "lab": "Aizanoi sample",
+   "color": "#ffd84d",
+   "file": "bots/sample-expander.js",
+   "bytes": 4381,
+   "note": "Pursues centres with supported attacks and opportunistic deals; not an AI-model entry."
+  },
+  {
+   "id": "sample-schemer",
+   "name": "Schemer",
+   "botName": "sample-schemer",
+   "lab": "Aizanoi sample",
+   "color": "#ff6fb5",
+   "file": "bots/sample-schemer.js",
+   "bytes": 5549,
+   "note": "Builds useful alliances, studies trust and may betray after year four; not an AI-model entry."
+  },
+  {
+   "id": "aiwar-claude-opus-5.5",
+   "name": "Claude Opus 5.5",
+   "botName": "Opus Strategos",
+   "lab": "Anthropic",
+   "color": "#e8875b",
+   "file": "bots/aiwar-claude-opus-5.5.js",
+   "bytes": 24190,
+   "note": "AI WAR 2026-10-31 entry written by Claude Opus 5.5. Anatolian Pact round robin: #1 of 22."
+  },
+  {
+   "id": "aiwar-gemini-4-argon",
+   "name": "Gemini 4 Argon",
+   "botName": "Argon",
+   "lab": "Google",
+   "color": "#c99bff",
+   "file": "bots/aiwar-gemini-4-argon.js",
+   "bytes": 39069,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Anatolian Pact round robin: #2 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "botName": "Anatolian Pactbreaker",
+   "lab": "OpenAI",
+   "color": "#7c6cf0",
+   "file": "bots/aiwar-gpt-5.6-luna.js",
+   "bytes": 22411,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Luna. Anatolian Pact round robin: #3 of 22."
+  },
+  {
+   "id": "aiwar-deepseek",
+   "name": "DeepSeek",
+   "botName": "Anatolian Fox",
+   "lab": "DeepSeek",
+   "color": "#65ee2b",
+   "file": "bots/aiwar-deepseek.js",
+   "bytes": 27796,
+   "note": "AI WAR 2026-10-31 entry written by DeepSeek. Anatolian Pact round robin: #4 of 22."
+  },
+  {
+   "id": "aiwar-muse-spark-1.3",
+   "name": "Muse Spark 1.3",
+   "botName": "Strategos",
+   "lab": "Meta",
+   "color": "#f0abfc",
+   "file": "bots/aiwar-muse-spark-1.3.js",
+   "bytes": 32166,
+   "note": "AI WAR 2026-10-31 entry written by Muse Spark 1.3. Anatolian Pact round robin: #5 of 22."
+  },
+  {
+   "id": "aiwar-gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "botName": "Anatolian Pact Apex",
+   "lab": "Google",
+   "color": "#8b9cff",
+   "file": "bots/aiwar-gemini-3.8-flash.js",
+   "bytes": 11553,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Anatolian Pact round robin: #6 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "botName": "Anatolian Grinder",
+   "lab": "OpenAI",
+   "color": "#00c896",
+   "file": "bots/aiwar-gpt-6-astra.js",
+   "bytes": 27340,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Anatolian Pact round robin: #7 of 22."
+  },
+  {
+   "id": "aiwar-glm",
+   "name": "GLM",
+   "botName": "Artemis",
+   "lab": "Z.ai",
+   "color": "#22d3ee",
+   "file": "bots/aiwar-glm.js",
+   "bytes": 31520,
+   "note": "AI WAR 2026-10-31 entry written by GLM. Anatolian Pact round robin: #8 of 22."
+  },
+  {
+   "id": "aiwar-mimo",
+   "name": "MiMo",
+   "botName": "Anatolian Thunder",
+   "lab": "Xiaomi",
+   "color": "#ee2b2b",
+   "file": "bots/aiwar-mimo.js",
+   "bytes": 34142,
+   "note": "AI WAR 2026-10-31 entry written by MiMo. Anatolian Pact round robin: #9 of 22."
+  },
+  {
+   "id": "aiwar-claude-sonnet-5.5",
+   "name": "Claude Sonnet 5.5",
+   "botName": "Claude Sonnet 5.5 Pact",
+   "lab": "Anthropic",
+   "color": "#2b2bee",
+   "file": "bots/aiwar-claude-sonnet-5.5.js",
+   "bytes": 11199,
+   "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Anatolian Pact round robin: #10 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "botName": "Anatolian Fox",
+   "lab": "OpenAI",
+   "color": "#d6a77a",
+   "file": "bots/aiwar-gpt-5.6-sol.js",
+   "bytes": 28335,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Sol. Anatolian Pact round robin: #11 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-terra",
+   "name": "GPT-6.1 Terra",
+   "botName": "Anatolian Hammer",
+   "lab": "OpenAI",
+   "color": "#c72bee",
+   "file": "bots/aiwar-gpt-6.1-terra.js",
+   "bytes": 21351,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Anatolian Pact round robin: #12 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "botName": "Pact Fox",
+   "lab": "OpenAI",
+   "color": "#ade755",
+   "file": "bots/aiwar-gpt-6-luna.js",
+   "bytes": 33319,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Anatolian Pact round robin: #13 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "botName": "Anatolian Falcon",
+   "lab": "OpenAI",
+   "color": "#ff4d4d",
+   "file": "bots/aiwar-gpt-6.1-sol.js",
+   "bytes": 35304,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Anatolian Pact round robin: #14 of 22."
+  },
+  {
+   "id": "aiwar-beam",
+   "name": "Beam",
+   "botName": "Anatolian Apex",
+   "lab": "OpenCode",
+   "color": "#2b79ee",
+   "file": "bots/aiwar-beam.js",
+   "bytes": 10300,
+   "note": "AI WAR 2026-10-31 entry written by Beam. Anatolian Pact round robin: #15 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "botName": "Anatolian Fox",
+   "lab": "OpenAI",
+   "color": "#55e781",
+   "file": "bots/aiwar-gpt-6-sol.js",
+   "bytes": 16181,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Anatolian Pact round robin: #16 of 22."
+  },
+  {
+   "id": "aiwar-flint",
+   "name": "Flint",
+   "botName": "Pactan",
+   "lab": "OpenCode",
+   "color": "#ee2b8c",
+   "file": "bots/aiwar-flint.js",
+   "bytes": 14897,
+   "note": "AI WAR 2026-10-31 entry written by Flint. Anatolian Pact round robin: #17 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "botName": "Anatolian Grinder",
+   "lab": "OpenAI",
+   "color": "#8de2a6",
+   "file": "bots/aiwar-gpt-5.6-terra.js",
+   "bytes": 19051,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Anatolian Pact round robin: #18 of 22."
+  },
+  {
+   "id": "aiwar-claude-haiku-5.5",
+   "name": "Claude Haiku 5.5",
+   "botName": "Haiku Sentinel",
+   "lab": "Anthropic",
+   "color": "#792bee",
+   "file": "bots/aiwar-claude-haiku-5.5.js",
+   "bytes": 11824,
+   "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Anatolian Pact round robin: #19 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-super",
+   "name": "Nemotron Super",
+   "botName": "Anatolian Vanguard",
+   "lab": "NVIDIA",
+   "color": "#2bee52",
+   "file": "bots/aiwar-nemotron-super.js",
+   "bytes": 10610,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Anatolian Pact round robin: #20 of 22."
+  },
+  {
+   "id": "aiwar-iceman",
+   "name": "Iceman",
+   "botName": "Iceman",
+   "lab": "OpenCode",
+   "color": "#93c5fd",
+   "file": "bots/aiwar-iceman.js",
+   "bytes": 7707,
+   "note": "AI WAR 2026-10-31 entry written by Iceman. Anatolian Pact round robin: #21 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-lightning",
+   "name": "Nemotron Lightning",
+   "botName": "Anatolian Strategist",
+   "lab": "NVIDIA",
+   "color": "#fbd38d",
+   "file": "bots/aiwar-nemotron-lightning.js",
+   "bytes": 7493,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Anatolian Pact round robin: #22 of 22."
+  }
+ ]
+}

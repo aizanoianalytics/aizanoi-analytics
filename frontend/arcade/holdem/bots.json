@@ -1,0 +1,255 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-caller",
+   "name": "Sample Caller",
+   "botName": "Caller",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-caller.js",
+   "bytes": 256,
+   "note": "House sample; not an AI-model entry. Calls or checks and never raises."
+  },
+  {
+   "id": "sample-tight",
+   "name": "Sample Tight",
+   "botName": "Tight",
+   "lab": "Aizanoi sample",
+   "color": "#ffd84d",
+   "file": "bots/sample-tight.js",
+   "bytes": 1914,
+   "note": "House sample; not an AI-model entry. Position-aware preflop selection and made-hand value play."
+  },
+  {
+   "id": "sample-equity",
+   "name": "Sample Equity",
+   "botName": "Equity",
+   "lab": "Aizanoi sample",
+   "color": "#2dd4bf",
+   "file": "bots/sample-equity.js",
+   "bytes": 1439,
+   "note": "House sample; not an AI-model entry. Monte Carlo equity, pot odds, value raises and occasional river bluffs."
+  },
+  {
+   "id": "aiwar-claude-opus-5.5",
+   "name": "Claude Opus 5.5",
+   "botName": "Opus Range Reader",
+   "lab": "Anthropic",
+   "color": "#e8875b",
+   "file": "bots/aiwar-claude-opus-5.5.js",
+   "bytes": 21149,
+   "note": "AI WAR 2026-10-31 entry written by Claude Opus 5.5. Hold'em round robin: #1 of 22."
+  },
+  {
+   "id": "aiwar-deepseek",
+   "name": "DeepSeek",
+   "botName": "Aizanoi Edge",
+   "lab": "DeepSeek",
+   "color": "#2b2bee",
+   "file": "bots/aiwar-deepseek.js",
+   "bytes": 24362,
+   "note": "AI WAR 2026-10-31 entry written by DeepSeek. Hold'em round robin: #2 of 22."
+  },
+  {
+   "id": "aiwar-claude-sonnet-5.5",
+   "name": "Claude Sonnet 5.5",
+   "botName": "Sonnet Equity Shark",
+   "lab": "Anthropic",
+   "color": "#6fa8ff",
+   "file": "bots/aiwar-claude-sonnet-5.5.js",
+   "bytes": 4526,
+   "note": "AI WAR 2026-10-31 entry written by Claude Sonnet 5.5. Hold'em round robin: #3 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "botName": "Aras",
+   "lab": "OpenAI",
+   "color": "#d6a77a",
+   "file": "bots/aiwar-gpt-5.6-sol.js",
+   "bytes": 18725,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Sol. Hold'em round robin: #4 of 22."
+  },
+  {
+   "id": "aiwar-iceman",
+   "name": "Iceman",
+   "botName": "Iceman",
+   "lab": "OpenCode",
+   "color": "#93c5fd",
+   "file": "bots/aiwar-iceman.js",
+   "bytes": 20936,
+   "note": "AI WAR 2026-10-31 entry written by Iceman. Hold'em round robin: #5 of 22."
+  },
+  {
+   "id": "aiwar-muse-spark-1.3",
+   "name": "Muse Spark 1.3",
+   "botName": "SparkShark",
+   "lab": "Meta",
+   "color": "#f0abfc",
+   "file": "bots/aiwar-muse-spark-1.3.js",
+   "bytes": 28477,
+   "note": "AI WAR 2026-10-31 entry written by Muse Spark 1.3. Hold'em round robin: #6 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-terra",
+   "name": "GPT-6.1 Terra",
+   "botName": "Aras",
+   "lab": "OpenAI",
+   "color": "#65ee2b",
+   "file": "bots/aiwar-gpt-6.1-terra.js",
+   "bytes": 17001,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Terra. Hold'em round robin: #7 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "botName": "Astra Forge",
+   "lab": "OpenAI",
+   "color": "#00c896",
+   "file": "bots/aiwar-gpt-6-astra.js",
+   "bytes": 19320,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Astra. Hold'em round robin: #8 of 22."
+  },
+  {
+   "id": "aiwar-mimo",
+   "name": "MiMo",
+   "botName": "Mimo Edge",
+   "lab": "Xiaomi",
+   "color": "#ee2bc7",
+   "file": "bots/aiwar-mimo.js",
+   "bytes": 19412,
+   "note": "AI WAR 2026-10-31 entry written by MiMo. Hold'em round robin: #9 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-super",
+   "name": "Nemotron Super",
+   "botName": "Nemotron Holdem",
+   "lab": "NVIDIA",
+   "color": "#b794f4",
+   "file": "bots/aiwar-nemotron-super.js",
+   "bytes": 3854,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Super. Hold'em round robin: #10 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "botName": "Aizanoi Terra",
+   "lab": "OpenAI",
+   "color": "#b5f23d",
+   "file": "bots/aiwar-gpt-5.6-terra.js",
+   "bytes": 18472,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Terra. Hold'em round robin: #11 of 22."
+  },
+  {
+   "id": "aiwar-gemini-4-argon",
+   "name": "Gemini 4 Argon",
+   "botName": "Argon",
+   "lab": "Google",
+   "color": "#ee2b2b",
+   "file": "bots/aiwar-gemini-4-argon.js",
+   "bytes": 38445,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 4 Argon. Hold'em round robin: #12 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "botName": "Luna",
+   "lab": "OpenAI",
+   "color": "#8c2bee",
+   "file": "bots/aiwar-gpt-6-luna.js",
+   "bytes": 20743,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Hold'em round robin: #13 of 22."
+  },
+  {
+   "id": "aiwar-beam",
+   "name": "Beam",
+   "botName": "HoldemForge",
+   "lab": "OpenCode",
+   "color": "#9ee28d",
+   "file": "bots/aiwar-beam.js",
+   "bytes": 1300,
+   "note": "AI WAR 2026-10-31 entry written by Beam. Hold'em round robin: #14 of 22."
+  },
+  {
+   "id": "aiwar-gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "botName": "TitanHoldem",
+   "lab": "Google",
+   "color": "#2b79ee",
+   "file": "bots/aiwar-gemini-3.8-flash.js",
+   "bytes": 19294,
+   "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Hold'em round robin: #15 of 22."
+  },
+  {
+   "id": "aiwar-claude-haiku-5.5",
+   "name": "Claude Haiku 5.5",
+   "botName": "Claude Haiku 5.5",
+   "lab": "Anthropic",
+   "color": "#ee2b79",
+   "file": "bots/aiwar-claude-haiku-5.5.js",
+   "bytes": 3413,
+   "note": "AI WAR 2026-10-31 entry written by Claude Haiku 5.5. Hold'em round robin: #16 of 22."
+  },
+  {
+   "id": "aiwar-glm",
+   "name": "GLM",
+   "botName": "Turbo Holdem",
+   "lab": "Z.ai",
+   "color": "#22d3ee",
+   "file": "bots/aiwar-glm.js",
+   "bytes": 24922,
+   "note": "AI WAR 2026-10-31 entry written by GLM. Hold'em round robin: #17 of 22."
+  },
+  {
+   "id": "aiwar-gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "botName": "Luna Edge",
+   "lab": "OpenAI",
+   "color": "#7c6cf0",
+   "file": "bots/aiwar-gpt-5.6-luna.js",
+   "bytes": 20097,
+   "note": "AI WAR 2026-10-31 entry written by GPT-5.6 Luna. Hold'em round robin: #18 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "botName": "Aras Holdem",
+   "lab": "OpenAI",
+   "color": "#ff4d4d",
+   "file": "bots/aiwar-gpt-6.1-sol.js",
+   "bytes": 22617,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6.1 Sol. Hold'em round robin: #19 of 22."
+  },
+  {
+   "id": "aiwar-gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "botName": "IceMan",
+   "lab": "OpenAI",
+   "color": "#2bee65",
+   "file": "bots/aiwar-gpt-6-sol.js",
+   "bytes": 17463,
+   "note": "AI WAR 2026-10-31 entry written by GPT-6 Sol. Hold'em round robin: #20 of 22."
+  },
+  {
+   "id": "aiwar-flint",
+   "name": "Flint",
+   "botName": "Flamma",
+   "lab": "OpenCode",
+   "color": "#e28db8",
+   "file": "bots/aiwar-flint.js",
+   "bytes": 4798,
+   "note": "AI WAR 2026-10-31 entry written by Flint. Hold'em round robin: #21 of 22."
+  },
+  {
+   "id": "aiwar-nemotron-lightning",
+   "name": "Nemotron Lightning",
+   "botName": "Nemotron Holdem",
+   "lab": "NVIDIA",
+   "color": "#fbd38d",
+   "file": "bots/aiwar-nemotron-lightning.js",
+   "bytes": 19511,
+   "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Hold'em round robin: #22 of 22."
+  }
+ ]
+}

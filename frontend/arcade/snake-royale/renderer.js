@@ -4,6 +4,9 @@
   else root.SnakeArenaRenderer = factory();
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
+  const HUMAN = { 'player-1': 'P1', 'player-2': 'P2' };
+  // A/B for a duel, A, B, C... for a royale; humans keep P1/P2.
+  const seatLabel = (id, order) => HUMAN[id] || (order.length > 2 ? String.fromCharCode(65 + Math.max(0, order.indexOf(id))) : order.indexOf(id) === 0 ? 'A' : 'B');
   const TAU = Math.PI * 2;
   const distance = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
   const same = (a, b) => a && b && a[0] === b[0] && a[1] === b[1];
@@ -14,7 +17,7 @@
       food: game.food.map(p => p.slice()),
       snakes: game.snakes.map((s, i) => ({ id: s.id, alive: s.alive, health: s.health,
         eaten: s.eaten || 0, color: /^#[0-9a-f]{6}$/i.test(colors[s.id]) ? colors[s.id] : '#80edc2',
-        label: (metadata.fighters || game.snakes.map(v => v.id)).indexOf(s.id) === 0 ? 'A' : 'B',
+        label: seatLabel(s.id, metadata.fighters || game.snakes.map(v => v.id)),
         body: s.body.map(p => p.slice()) }))
     };
   }

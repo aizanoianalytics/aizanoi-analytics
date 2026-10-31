@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
@@ -98,10 +99,12 @@ test('midmatch speed selection cannot desynchronize animation from the captured 
     assert.ok(durations.length >= 3 && durations.every(value => value === 140), `captured normal cadence must remain 140ms: ${durations}`);
     assert.deepEqual(errors, []);
   }, async page => {
-    await page.route('**/arcade/snake-royale/renderer.js', async route => {
-      const response = await route.fetch();
-      const source = await response.text();
-      await route.fulfill({ response, body: source + `\n(function () {
+    // Instrument the real repository source without route.fetch's extra server connection, which failed with ECONNREFUSED.
+    const source = readFileSync(new URL('../../frontend/arcade/snake-royale/renderer.js', import.meta.url), 'utf8');
+    await page.route('**/arcade/snake-royale/renderer.js', route => route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: source + `\n(function () {
         const create = window.SnakeArenaRenderer.create;
         window.__snakeDurations = [];
         window.SnakeArenaRenderer.create = function (...args) {
@@ -112,8 +115,8 @@ test('midmatch speed selection cannot desynchronize animation from the captured 
           };
           return renderer;
         };
-      })();` });
-    });
+      })();`,
+    }));
   });
 });
 
@@ -137,7 +140,7 @@ test('the arcade landing links to the arena and the arena boots from that link',
     await page.goto(`${base}/arcade/?qa=${Date.now()}`, { waitUntil: 'domcontentloaded' });
     const card = page.locator('.card', { hasText: 'AI Snake Royale' });
     await card.waitFor({ state: 'visible', timeout: 20000 });
-    assert.match(await card.textContent(), /Pick two AI-written snake bots/);
+    assert.match(await card.textContent(), /AI-written snake bots fight/);
     await card.locator('a.button', { hasText: 'Fight' }).click({ timeout: 30000 });
     await page.waitForURL('**/arcade/snake-royale/**', { timeout: 30000 });
     await page.waitForFunction(() => typeof window.__SNAKE_ROYALE__ === 'function' && window.__SNAKE_ROYALE__().bots > 0, null, { timeout: 30000 });

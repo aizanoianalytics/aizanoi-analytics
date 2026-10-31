@@ -1,29 +1,97 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Snake Royale — Aizanoi Arcade</title><meta name="description" content="Pick two AI-written snake bots and watch them fight. The bots were written by 23 different AI models in the Aizo TV benchmark and run live in your browser."><meta name="robots" content="index,follow,max-image-preview:large"><meta name="theme-color" content="#f7fafc">
-<link rel="canonical" href="https://aizanoianalytics.com/arcade/snake-royale/"><link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml"><link rel="manifest" href="/manifest.webmanifest"><link rel="stylesheet" href="/styles/landing.css"><link rel="stylesheet" href="snake-royale.css">
-<meta property="og:type" content="website"><meta property="og:site_name" content="Aizanoi Analytics"><meta property="og:title" content="AI Snake Royale — Aizanoi Arcade"><meta property="og:description" content="Pick two AI-written snake bots and press Fight."><meta property="og:url" content="https://aizanoianalytics.com/arcade/snake-royale/"><meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@AizanoiHQ"><meta name="twitter:title" content="AI Snake Royale — Aizanoi Arcade"><meta name="twitter:description" content="Pick two AI-written snake bots and press Fight."><meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"AI Snake Royale","description":"Pick two AI-written snake bots and watch them fight, live in the browser.","url":"https://aizanoianalytics.com/arcade/snake-royale/","isPartOf":{"@type":"WebSite","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"}}</script></head><body>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Snake Royale — Aizanoi Arcade</title>
+<meta name="description" content="Watch 23 AI-written snake bots fight, build a local royale, or join with keyboard and touch controls.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#f7fafc">
+<link rel="canonical" href="https://aizanoianalytics.com/arcade/snake-royale/">
+<link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/styles/landing.css">
+<link rel="stylesheet" href="snake-royale.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aizanoi Analytics">
+<meta property="og:title" content="AI Snake Royale — Aizanoi Arcade">
+<meta property="og:description" content="Pick two AI-written snake bots and press Fight.">
+<meta property="og:url" content="https://aizanoianalytics.com/arcade/snake-royale/">
+<meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@AizanoiHQ">
+<meta name="twitter:title" content="AI Snake Royale — Aizanoi Arcade">
+<meta name="twitter:description" content="Pick two AI-written snake bots and press Fight.">
+<meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+</head>
+<body>
 <header class="site-head"><a class="brand" href="/"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span>Aizanoi Analytics</span></a><nav aria-label="Products"><a href="/news/">News</a><a href="/tv/">TV</a><a href="/analytics/">Analytics</a><a href="/worlds/">Aizanoi</a><a href="/forge/">Forge</a><a href="/journal/">Journal</a><a href="/labs/">Labs</a><a href="/arcade/">Arcade</a></nav></header>
-<section class="hero"><p class="eyebrow">Aizo TV · AI War</p><h1>AI Snake Royale</h1><p class="lede">Every snake here is driven by a bot that an AI model wrote from the same prompt. Pick two and press Fight.</p></section>
-<main class="sr">
-<form id="sr-form" class="sr-picker" aria-label="Choose fighters">
-<label class="sr-side sr-a"><span>Fighter A</span><select id="sr-a" name="a"></select></label>
-<span class="sr-vs" aria-hidden="true">VS</span>
-<label class="sr-side sr-b"><span>Fighter B</span><select id="sr-b" name="b"></select></label>
-<label class="sr-opt"><span>Series</span><select id="sr-series"><option value="1">Single fight</option><option value="3">Best of 3</option><option value="5">Best of 5</option></select></label>
-<label class="sr-opt"><span>Speed</span><select id="sr-speed"><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
-<div class="sr-actions"><button type="submit" id="sr-fight" class="button">Fight</button><button type="button" id="sr-random" class="button secondary">Random pair</button></div>
-</form>
-<div class="sr-telemetry" aria-label="Arena status"><span id="sr-turn">TURN 0</span><span id="sr-storm">STORM IN 150</span><span>11 × 11 · DUEL</span></div>
-<div class="sr-stage">
-<canvas id="sr-canvas" width="720" height="720" role="img" aria-label="Snake Royale arena"></canvas>
-<aside class="sr-side-panel" aria-live="polite"><div id="sr-cards"></div><p id="sr-ticker" class="sr-ticker"></p><p id="sr-result" class="sr-result" hidden></p></aside>
-</div>
-<p class="sr-note">Rules: 11×11 board, +1 length per food, 100 health, a storm closes in from the edge after turn 150. Head-on: the longer snake wins. Bots get 400 ms per move and run in their own worker; the code is the original AI output, unedited. <a href="#sr-roster">See all fighters</a>.</p>
-<section id="sr-roster" class="sr-roster" aria-label="All fighters"><h2>The fighters</h2><ul id="sr-list"></ul></section>
+<section class="hero">
+  <p class="eyebrow">Aizo TV · AI War</p>
+  <h1>AI Snake Royale</h1>
+  <p class="lede">AI-written bots. One shrinking arena. Pick your fighters, add a royale roster, or join on the same device.</p>
+</section>
+<main class="sr" itemscope itemtype="https://schema.org/WebPage">
+  <meta itemprop="name" content="AI Snake Royale">
+  <meta itemprop="description" content="Pick AI-written snake bots and watch them fight, live in the browser.">
+  <link itemprop="url" href="https://aizanoianalytics.com/arcade/snake-royale/">
+  <div hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+    <meta itemprop="name" content="Aizanoi Analytics">
+    <link itemprop="url" href="https://aizanoianalytics.com/">
+  </div>
+  <template id="sr-custom-option"><option value="custom">Your bot (upload…)</option></template>
+  <form id="sr-form" class="sr-picker" aria-label="Choose fighters">
+    <label class="sr-side sr-a"><span>Fighter A</span><select id="sr-a" name="a"></select></label>
+    <span class="sr-vs" aria-hidden="true">VS</span>
+    <label class="sr-side sr-b"><span>Fighter B</span><select id="sr-b" name="b"></select></label>
+    <div id="sr-extras" class="sr-extras"></div>
+    <label class="sr-opt"><span>Player 1</span><select id="sr-p1"><option value="off" selected>Off</option><option value="wasd">Keyboard WASD</option><option value="arrows">Keyboard arrows</option></select></label>
+    <label class="sr-opt"><span>Player 2</span><select id="sr-p2"><option value="off" selected>Off</option><option value="wasd">Keyboard WASD</option><option value="arrows">Keyboard arrows</option></select></label>
+    <label class="sr-opt"><span>Series</span><select id="sr-series"><option value="1">Single fight</option><option value="3">Best of 3</option><option value="5">Best of 5</option></select></label>
+    <label class="sr-opt"><span>Speed</span><select id="sr-speed"><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
+    <div class="sr-actions">
+      <button type="submit" id="sr-fight" class="button" disabled>Fight</button>
+      <button type="button" id="sr-random" class="button secondary" disabled>Random pair</button>
+      <button type="button" id="sr-add" class="button secondary" disabled>+ Add bot</button>
+      <button type="button" id="sr-custom" class="button secondary" disabled>Load your bot</button>
+    </div>
+  </form>
+  <div class="sr-telemetry" aria-label="Arena status">
+    <span id="sr-turn">TURN 0</span>
+    <span id="sr-storm">STORM IN 150</span>
+    <span id="sr-mode">11 × 11 · DUEL</span>
+  </div>
+  <div class="sr-stage">
+    <div class="sr-board">
+      <canvas id="sr-canvas" width="720" height="720" role="img" aria-label="Snake Royale arena" aria-describedby="sr-play-help">The arena is drawn on canvas. Fighter cards below provide health, length and standings.</canvas>
+      <div id="sr-pad" role="group" aria-label="Player 1 direction controls" hidden>
+        <button type="button" data-dir="up" aria-label="Up" disabled>↑</button>
+        <button type="button" data-dir="left" aria-label="Left" disabled>←</button>
+        <button type="button" data-dir="down" aria-label="Down" disabled>↓</button>
+        <button type="button" data-dir="right" aria-label="Right" disabled>→</button>
+      </div>
+    </div>
+    <aside class="sr-side-panel" aria-label="Fighter standings and match events">
+      <p class="sr-panel-title">Arena standings</p>
+      <div id="sr-cards"></div>
+      <p id="sr-ticker" class="sr-ticker" role="status" aria-live="polite" aria-atomic="true"></p>
+      <p id="sr-result" class="sr-result" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+    </aside>
+  </div>
+  <div class="sr-note">
+    <p id="sr-play-help"><strong>Play locally:</strong> enable Player 1 or 2, choose different WASD/arrow controls, then press Fight. Player 1 also has a direction pad on touch devices. Humans keep their direction and cannot reverse into their neck. Play starts after a countdown; human ticks are at least 120 ms, or Normal speed when Instant is selected. Restart fight starts a new match with the current selections.</p>
+    <p><strong>Benchmark rules:</strong> 11×11 duel or 19×19 royale for more than two fighters, up to 12 total. Food adds one length and restores health to 100. Moves resolve simultaneously; the longer head wins and equal longest heads both die. Storm rings expand after turn 150, then every 20 turns, and become lethal on subsequent moves. These are the original benchmark rules, not official Battlesnake Royale rules.</p>
+    <p>Bots have 400 ms per move in their own worker and 5 seconds to initialize. A move timeout ends that worker for the game; its snake keeps the engine fallback direction. Series require a majority of wins, with at most four extra games for draws, including Single fight. <a href="BOT_API.md">Full rules and bot API</a> · <a href="#sr-roster">See all fighters</a></p>
+    <p>Write your own bot: <a href="BOT_API.md">read the Bot API</a>. Load a trusted .js file, up to 256 KB, with “Load your bot” or an extra seat’s “Your bot” option. Files stay in memory on this page and are not uploaded. Top-level bot code must not depend on Math.random; seeded randomness is available inside move(state).</p>
+  </div>
+  <section id="sr-roster" class="sr-roster" aria-label="All fighters"><h2>The fighters</h2><ul id="sr-list"></ul></section>
 </main>
 <footer><p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p><nav class="public-identity-links" aria-label="Social and contact"><a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a><a href="mailto:aizanoianalytics@protonmail.com">Email</a></nav></footer>
-<script src="engine.js"></script><script src="runner.js"></script><script src="renderer.js"></script><script src="game.js"></script>
-</body></html>
+<script src="engine.js"></script>
+<script src="/arcade/shared/arena-input.js"></script>
+<script src="/arcade/shared/custom-bot.js"></script>
+<script src="runner.js"></script>
+<script src="renderer.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Capture the Flag — Aizanoi Arcade</title>
+  <meta name="description" content="Build two teams of bots, join with your keyboard or touch controls, and capture the enemy flag in a live browser arena.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#f7fafc">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/capture-flag/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/styles/landing.css">
+  <link rel="stylesheet" href="capture-flag.css">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="Capture the Flag — Aizanoi Arcade">
+  <meta property="og:description" content="Two teams, two flags. Build a team of bots, join one yourself, and raid the other side.">
+  <meta property="og:url" content="https://aizanoianalytics.com/arcade/capture-flag/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="Capture the Flag — Aizanoi Arcade">
+  <meta name="twitter:description" content="Two teams, two flags. Build a team of bots, join one yourself, and raid the other side.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Capture the Flag",
+    "description": "Build two teams of bots, join with your keyboard or touch controls, and capture the enemy flag in a live browser arena.",
+    "url": "https://aizanoianalytics.com/arcade/capture-flag/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Aizanoi Analytics",
+      "url": "https://aizanoianalytics.com/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <header class="site-head">
+    <a class="brand" href="/">
+      <img src="/assets/branding/aizanoi-logo-mark.svg" alt="">
+      <span>Aizanoi Analytics</span>
+    </a>
+    <nav aria-label="Products">
+      <a href="/news/">News</a>
+      <a href="/tv/">TV</a>
+      <a href="/analytics/">Analytics</a>
+      <a href="/worlds/">Aizanoi</a>
+      <a href="/forge/">Forge</a>
+      <a href="/journal/">Journal</a>
+      <a href="/labs/">Labs</a>
+      <a href="/arcade/">Arcade</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Aizo TV · AI War</p>
+    <h1>Capture the Flag</h1>
+    <p class="lede">Two teams, two flags. Build a team of AI-written bots, join one yourself, and raid the other side.</p>
+  </section>
+
+  <main class="cf" itemscope itemtype="https://schema.org/WebPage">
+    <meta itemprop="name" content="Capture the Flag">
+    <meta itemprop="description" content="Build two teams and capture the enemy flag, live in the browser.">
+    <link itemprop="url" href="https://aizanoianalytics.com/arcade/capture-flag/">
+    <div hidden itemprop="isPartOf" itemscope itemtype="https://schema.org/WebSite">
+      <meta itemprop="name" content="Aizanoi Analytics">
+      <link itemprop="url" href="https://aizanoianalytics.com/">
+    </div>
+
+    <template id="cf-custom-option">
+      <option value="custom">Your bot (upload…)</option>
+    </template>
+
+    <form id="cf-form" class="cf-picker" aria-label="Build teams">
+      <div class="cf-teams">
+        <fieldset class="cf-team cf-team-west">
+          <legend id="cf-west-title">West</legend>
+          <div id="cf-west" class="cf-seats"></div>
+          <button id="cf-add-west" type="button" class="cf-secondary" disabled>+ Add West seat</button>
+        </fieldset>
+        <fieldset class="cf-team cf-team-east">
+          <legend id="cf-east-title">East</legend>
+          <div id="cf-east" class="cf-seats"></div>
+          <button id="cf-add-east" type="button" class="cf-secondary" disabled>+ Add East seat</button>
+        </fieldset>
+      </div>
+      <div class="cf-options">
+        <label>
+          <span>Team size</span>
+          <select id="cf-size">
+            <option value="" disabled>Custom teams</option>
+            <option value="1">1v1</option>
+            <option value="2" selected>2v2</option>
+            <option value="3">3v3</option>
+            <option value="4">4v4</option>
+          </select>
+        </label>
+        <label>
+          <span>Speed</span>
+          <select id="cf-speed">
+            <option value="200">Slow</option>
+            <option value="130" selected>Normal</option>
+            <option value="70">Fast</option>
+            <option value="0">Instant</option>
+          </select>
+        </label>
+        <label>
+          <span>Series</span>
+          <select id="cf-series">
+            <option value="1">1 game</option>
+            <option value="3">3 games</option>
+            <option value="5">5 games</option>
+          </select>
+        </label>
+        <div class="cf-actions">
+          <button type="submit" id="cf-start" disabled>Start</button>
+          <button type="button" id="cf-random" class="cf-secondary" disabled>Random teams</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="cf-hud" aria-label="Arena status">
+      <span id="cf-score">WEST 0 – 0 EAST</span>
+      <span id="cf-tick">TICK 0 / 1200</span>
+    </div>
+
+    <div class="cf-stage">
+      <div class="cf-board">
+        <canvas id="cf-canvas" width="990" height="630" role="img" aria-label="Capture the Flag arena: West on the left, East on the right." aria-describedby="cf-legend"></canvas>
+        <p id="cf-legend" class="cf-legend">
+          <span class="cf-legend-west">● West</span>
+          <span class="cf-legend-east">■ East</span>
+          <span>Dashed column: neutral</span>
+          <span>Striped boxes: jails</span>
+          <span>IDs match the agent cards</span>
+        </p>
+        <div id="cf-pad" role="group" aria-label="Human direction controls" hidden>
+          <label class="cf-touch-label">
+            <span>Touch player</span>
+            <select id="cf-touch-player" aria-label="Touch player"></select>
+          </label>
+          <button type="button" data-dir="up" aria-label="Up" disabled>↑</button>
+          <button type="button" data-dir="left" aria-label="Left" disabled>←</button>
+          <button type="button" data-dir="down" aria-label="Down" disabled>↓</button>
+          <button type="button" data-dir="right" aria-label="Right" disabled>→</button>
+        </div>
+      </div>
+      <aside class="cf-side-panel" aria-label="Agent statistics and match result">
+        <div id="cf-cards"></div>
+        <p id="cf-ticker" class="cf-ticker" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p id="cf-result" class="cf-result" role="status" hidden></p>
+        <p id="cf-series-tally" class="cf-series-tally"></p>
+      </aside>
+    </div>
+
+    <p class="cf-note">
+      Rules: each team has 1–4 agents. Raid the enemy flag and reach your own half to capture it.
+      First to 3 captures wins; equal simultaneous winning captures draw.
+      After 1200 ticks, captures decide, then tags, then a draw.
+      You can tag an enemy on your cell or an adjacent cell only inside your own half; crossing enemies can also be tagged.
+      The center column is neutral. Teammates may share cells.
+      Tagged agents go to the enemy jail and the enemy flag they carried returns immediately.
+      Reach or stand beside that jail to free your teammates; freed agents respawn at their own flag stand after 3 ticks.
+      Jail also releases agents automatically after 40 ticks.
+      Hold WASD for Player 1 or arrow keys for Player 2; release to stand still.
+      On a touch device, choose a human with the touch-player selector and hold or tap the pad.
+      Humans use Normal instead of Instant speed.
+      Series play the selected number of games, swapping lineups between West and East each game.
+      Every bot seat has its own worker and a 150 ms move deadline; a failed or timed-out worker is stopped and that seat stays still.
+      The included bots are house samples, not AI-model benchmark entries.
+      <a href="#cf-roster">See all bots</a> · <a href="BOT_API.md">Write a bot</a>.
+    </p>
+    <p class="cf-note">Write your own bot: read the <a href="BOT_API.md">Bot API</a>.</p>
+    <p class="cf-note">
+      Upload a trusted .js file up to 256 KB. It stays in memory in this page and is not uploaded or saved.
+      Uploaded bots run in workers, not a security sandbox for hostile code.
+      Top-level bot code must not depend on Math.random; seeded randomness is available inside move(state).
+    </p>
+
+    <section id="cf-roster" class="cf-roster" aria-label="Available bots">
+      <h2>The bots</h2>
+      <ul id="cf-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Aizanoi Analytics · Media, data, software, research and interactive worlds.</p>
+    <nav class="public-identity-links" aria-label="Social and contact">
+      <a href="https://x.com/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ</a>
+      <a href="https://github.com/aizanoianalytics/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="mailto:aizanoianalytics@protonmail.com">Email</a>
+    </nav>
+  </footer>
+
+  <script src="/arcade/shared/arena-input.js"></script>
+  <script src="engine.js"></script>
+  <script src="/arcade/shared/custom-bot.js"></script>
+  <script src="runner.js"></script>
+  <script src="renderer.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

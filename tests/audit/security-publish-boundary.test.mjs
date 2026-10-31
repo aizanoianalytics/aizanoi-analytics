@@ -66,8 +66,16 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/web-editor\/manifest\.json$/,
   /\/js\/v3\/apps\/workspace\/manifest\.json$/,
   /\/js\/v3\/apps\/winamp\/manifest\.json$/,
-  // AI Snake Royale publishes its fighter manifest as static data the page fetches.
+  // Explicit static arena rosters, not arbitrary JSON beneath arcade/.
   /\/arcade\/snake-royale\/bots\.json$/,
+  /\/arcade\/chess\/bots\.json$/,
+  /\/arcade\/maze-chase\/bots\.json$/,
+  /\/arcade\/capture-flag\/bots\.json$/,
+  /\/arcade\/holdem\/bots\.json$/,
+  /\/arcade\/football\/bots\.json$/,
+  /\/arcade\/anatolian-pact\/bots\.json$/,
+  // Authored static geography consumed by the Anatolian Pact map renderer.
+  /\/arcade\/anatolian-pact\/data\/anatolia-geo\.json$/,
 ];
 
 test('denylist: no source or workbook files enter frontend', () => {

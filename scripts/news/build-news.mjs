@@ -33,6 +33,12 @@ const staticSitemapEntries = Object.freeze([
   ['/labs/', '2026-08-24'],
   ['/arcade/', '2026-08-24'],
   ['/arcade/snake-royale/', '2026-10-26'],
+  ['/arcade/chess/', '2026-10-31'],
+  ['/arcade/maze-chase/', '2026-10-31'],
+  ['/arcade/capture-flag/', '2026-10-31'],
+  ['/arcade/holdem/', '2026-10-31'],
+  ['/arcade/football/', '2026-10-31'],
+  ['/arcade/anatolian-pact/', '2026-10-31'],
   ['/worlds/aizanoi-225/', '2026-09-07']
 ]);
 
