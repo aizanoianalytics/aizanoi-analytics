@@ -59,12 +59,12 @@
     max-width:100%;
     overflow:hidden;
     text-overflow:ellipsis;
-    color:#17243a;
+    color:var(--az-wall-ink);
     font-size:11px;
     font-weight:690;
     line-height:1.15;
     white-space:nowrap;
-    text-shadow:0 1px 4px rgba(255,255,255,.78);
+    text-shadow:var(--az-wall-ink-glow);
   }
 
   .az-device-widget-action,

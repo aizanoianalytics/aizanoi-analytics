@@ -1,4 +1,4 @@
-import { mountShell } from './shell.js';
+import { mountShell, applyWallpaper } from './shell.js';
 import { getState } from './store.js';
 import { installAizanoiOS } from './aizanoi-os.js';
 import { installBrandPlatform } from './brand-platform.js';
@@ -66,6 +66,10 @@ function installUtilityWindowPreferences(api){
   scan();
   new MutationObserver(()=>queueMicrotask(scan)).observe(layer,{childList:true});
 }
+function installWallpaperSync(api){
+  applyWallpaper(api.store.getState().wallpaper);
+  api.store.subscribe((event)=>{if(event.type==='reset'||(event.type==='preference'&&event.detail?.name==='wallpaper'))applyWallpaper(event.state.wallpaper);});
+}
 function installReducedMotionSync(api){
   const media=matchMedia('(prefers-reduced-motion: reduce)');
   const sync=()=>document.body.classList.toggle('az-reduce-motion',Boolean(api.store.getState().reduceMotion||media.matches));
@@ -76,4 +80,4 @@ function installReducedMotionSync(api){
   else media.addListener?.(sync);
 }
 
-try{const api=mountShell();installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installDesktopYouTubeLink();installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open Aizanoi directly.</span><a class="az-button" href="/worlds/aizanoi-225/">Open Aizanoi</a></div>';}
+try{const api=mountShell();installWallpaperSync(api);installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installDesktopYouTubeLink();installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open Aizanoi directly.</span><a class="az-button" href="/worlds/aizanoi-225/">Open Aizanoi</a></div>';}

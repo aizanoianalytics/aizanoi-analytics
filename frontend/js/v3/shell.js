@@ -338,6 +338,15 @@ function createFullscreenSurface(app) {
  return el;
 }
 
+const glyph=(d)=>`<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const WINDOW_GLYPHS=Object.freeze({
+ menu:'<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="3.5" cy="8" r="1.3" fill="currentColor"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/><circle cx="12.5" cy="8" r="1.3" fill="currentColor"/></svg>',
+ minimize:glyph('M3.5 8.5h9'),
+ maximize:glyph('M4 4h8v8H4z'),
+ restore:glyph('M5.5 3.5h7v7M3.5 5.5h7v7h-7z'),
+ close:glyph('M4 4l8 8M12 4l-8 8'),
+});
+
 function createWindow(app) {
  const layer = document.querySelector('.az-window-layer');
  const rect = defaultRect(app.id);
@@ -348,7 +357,7 @@ function createWindow(app) {
  el.setAttribute('aria-label', app.label);
  el.tabIndex = -1;
  Object.assign(el.style,{ left:`${rect.left}px`, top:`${rect.top}px`, width:`${rect.width}px`, height:`${rect.height}px`, zIndex:String(++zCounter) });
- el.innerHTML = `<header class="az-window-bar" data-window-drag><img class="az-window-icon" src="${escapeHtml(app.icon)}" alt=""><strong class="az-window-title">${escapeHtml(app.label)}</strong><span class="az-window-context">AIZANOI</span><div class="az-window-controls"><button class="az-window-control" type="button" data-action="menu" aria-label="Window menu">⋯</button><button class="az-window-control" type="button" data-action="minimize" aria-label="Minimize ${escapeHtml(app.label)}">—</button><button class="az-window-control" type="button" data-action="maximize" aria-label="Maximize or restore ${escapeHtml(app.label)}">□</button><button class="az-window-control" type="button" data-action="close" aria-label="Close ${escapeHtml(app.label)}">×</button></div></header><div class="az-window-body" data-app-body></div>${resizeMarkup()}`;
+ el.innerHTML = `<header class="az-window-bar" data-window-drag><img class="az-window-icon" src="${escapeHtml(app.icon)}" alt=""><strong class="az-window-title">${escapeHtml(app.label)}</strong><span class="az-window-context">AIZANOI</span><div class="az-window-controls"><button class="az-window-control" type="button" data-action="menu" aria-label="Window menu" title="Window menu">${WINDOW_GLYPHS.menu}</button><button class="az-window-control" type="button" data-action="minimize" aria-label="Minimize ${escapeHtml(app.label)}" title="Minimize">${WINDOW_GLYPHS.minimize}</button><button class="az-window-control" type="button" data-action="maximize" aria-label="Maximize or restore ${escapeHtml(app.label)}" title="Maximize">${WINDOW_GLYPHS.maximize}</button><button class="az-window-control" type="button" data-action="close" aria-label="Close ${escapeHtml(app.label)}" title="Close">${WINDOW_GLYPHS.close}</button></div></header><div class="az-window-body" data-app-body></div>${resizeMarkup()}`;
  layer.appendChild(el);
  wireWindow(el, app.id);
  return el;
@@ -495,10 +504,17 @@ function minimizeApp(appId) {
  announce(`${item.app.label} minimized`);
 }
 
+function syncMaximizeControl(item) {
+ const button=item.el.querySelector('.az-window-control[data-action="maximize"]'); if(!button)return;
+ button.innerHTML=item.maximized?WINDOW_GLYPHS.restore:WINDOW_GLYPHS.maximize;
+ button.title=item.maximized?'Restore':'Maximize';
+}
+
 function maximizeApp(appId) {
  const item = windows.get(appId); if (!item) return;
  item.maximized = !item.maximized;
  item.el.classList.toggle('is-maximized', item.maximized);
+ syncMaximizeControl(item);
  announce(`${item.app.label} ${item.maximized ? 'maximized' : 'restored'}`);
 }
 
@@ -545,6 +561,7 @@ function snapWindow(appId, side) {
  const rect = snapRect(side); if (!rect) return false;
  item.maximized = false;
  item.el.classList.remove('is-maximized');
+ syncMaximizeControl(item);
  Object.assign(item.el.style, { left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px` });
  Store.saveWindowRect(appId, rect);
  announce(`${item.app.label} snapped ${side}`);
@@ -660,10 +677,17 @@ function renderSwitcher() {
  }).join('') : '<div class="az-empty-state"><div><h3>No apps open</h3><p>Open an Aizanoi application from Home.</p></div></div>';
 }
 
+export function applyWallpaper(id=Store.getState().wallpaper) {
+ document.documentElement.dataset.wallpaper=Store.WALLPAPERS.includes(id)?id:'morning';
+}
+
 function renderSettings() {
  const body=document.querySelector('[data-settings-body]'); if(!body)return;
  const state=Store.getState();
- body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label><label class="az-setting-row"><input type="checkbox" data-setting="soundOn" ${state.soundOn!==false?'checked':''}> Interface sounds</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Aizanoi session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
+ const wallpapers=[['morning','Morning','Bright temple sunrise'],['blue-hour','Blue hour','Evening light over the river'],['aurora','Aurora','The original night sky']];
+ const wallpaper=state.wallpaper||'morning';
+ const picker=`<fieldset class="az-wallpaper-picker"><legend>Wallpaper</legend>${wallpapers.map(([id,label,hint])=>`<label class="az-wallpaper-choice" data-wallpaper-choice="${id}"><input type="radio" name="az-wallpaper" value="${id}" ${wallpaper===id?'checked':''}><span class="az-wallpaper-thumb" aria-hidden="true"></span><strong>${label}</strong><small>${hint}</small></label>`).join('')}</fieldset>`;
+ body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card az-settings-wide"><h3>Desktop</h3>${picker}</div><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label><label class="az-setting-row"><input type="checkbox" data-setting="soundOn" ${state.soundOn!==false?'checked':''}> Interface sounds</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Aizanoi session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
 }
 
 function loadStaticSearchEntries() {
@@ -887,6 +911,7 @@ function handleRootClick(event) {
  }
  if(event.target.closest('[data-clear-activity]')){Store.clearActivity();renderNotifications();return;}
  if(event.target.closest('[data-reset-workspace]')){Store.resetWorkspace();location.reload();return;}
+ if(event.target.matches('input[type="radio"][name="az-wallpaper"]')){if(Store.setPreference('wallpaper',event.target.value))applyWallpaper(event.target.value);return;}
  const settingToggle=event.target.matches('input[type="checkbox"][data-setting]')?event.target:null;
  if(settingToggle){
  const name=settingToggle.dataset.setting;
@@ -960,6 +985,7 @@ function resizeAll() {
  if(layoutMode()!=='large'){
  item.el.classList.remove('is-maximized');
  item.maximized=false;
+ syncMaximizeControl(item);
  }
  const rect=clampRect(item.el.getBoundingClientRect());
  Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});

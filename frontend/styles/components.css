@@ -222,6 +222,22 @@
   .az-settings-grid { grid-template-columns: 1fr; }
   .az-setting-row { display: flex; align-items: center; gap: 10px; min-height: 44px; color: #344158; font-size: 12px; }
   .az-setting-row input { width: 18px; height: 18px; accent-color: var(--az-accent); }
+  .az-settings-wide { grid-column: 1 / -1; min-height: 0; }
+  .az-wallpaper-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; border: 0; }
+  .az-wallpaper-picker legend { margin-bottom: 8px; padding: 0; color: var(--az-text-2); font-size: 12px; }
+  .az-wallpaper-choice { position: relative; display: grid; gap: 2px; padding: 6px 6px 9px; border: 1px solid var(--az-border); border-radius: 13px; background: var(--az-surface-1); color: var(--az-text); cursor: pointer; transition: border-color var(--az-motion-fast), box-shadow var(--az-motion-fast); }
+  .az-wallpaper-choice:hover { border-color: var(--az-border-strong); }
+  .az-wallpaper-choice:has(input:checked) { border-color: var(--az-accent); box-shadow: 0 0 0 2px rgba(79, 96, 202, .22); }
+  .az-wallpaper-choice:has(input:focus-visible) { outline: 3px solid var(--az-focus); outline-offset: 2px; }
+  .az-wallpaper-choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .az-wallpaper-thumb { aspect-ratio: 16 / 10; margin-bottom: 5px; border-radius: 9px; background: var(--az-wall-color) center / cover no-repeat; }
+  [data-wallpaper-choice="morning"] .az-wallpaper-thumb { background-image: url('/assets/wallpapers/aizanoi-morning-1280.jpg'); }
+  [data-wallpaper-choice="blue-hour"] .az-wallpaper-thumb { background-image: url('/assets/wallpapers/aizanoi-blue-hour-1280.jpg'); }
+  [data-wallpaper-choice="aurora"] .az-wallpaper-thumb { background-image: url('/assets/wallpapers/aizanoi-temple-aurora.jpg'); }
+  .az-wallpaper-choice strong { padding: 0 3px; font-size: 12px; font-weight: 680; }
+  .az-wallpaper-choice small { padding: 0 3px; color: var(--az-text-3); font-size: 11px; line-height: 1.3; }
+  .az-wallpaper-choice:has(input:checked) strong::after { content: " ✓"; color: var(--az-accent); }
+  @media (max-width: 520px) { .az-wallpaper-picker { grid-template-columns: 1fr; } .az-wallpaper-choice { grid-template-columns: 96px 1fr; align-items: center; column-gap: 10px; } .az-wallpaper-thumb { grid-row: span 2; margin: 0; } }
 
   .az-toast-stack { position: fixed; z-index: 1500; right: 16px; top: 52px; width: min(360px, calc(100vw - 32px)); display: grid; gap: 8px; pointer-events: none; }
   .az-toast { position: relative; overflow: hidden; pointer-events: auto; padding: 12px 14px 15px; border: 1px solid rgba(255, 255, 255, .78); border-radius: 14px; background: rgba(249, 251, 255, .88); color: #26344a; box-shadow: var(--az-shadow-soft); animation: az-toast-in var(--az-motion) ease-out; backdrop-filter: blur(22px); }
