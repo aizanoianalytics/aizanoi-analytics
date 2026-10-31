@@ -2,20 +2,20 @@
 
 module.exports = function decide(state) {
   if (state.phase === 'goal') return { x: 0, y: 0, kick: false };
-  
+
   var you = state.you;
   var ball = state.ball;
   var field = state.field;
   var mates = state.teammates || [];
   var enemies = state.opponents || [];
   var allMates = [you].concat(mates);
-  
+
   function dist(a,b){ var dx=a.x-b.x, dy=a.y-b.y; return Math.hypot(dx,dy); }
   function nrm(x,y){ var l=Math.hypot(x,y); if(l<1e-18)return {x:1,y:0}; return {x:x/l,y:y/l}; }
-  
+
   var enemyGoalX = field.enemyGoalX;
   var kr = field.kickRange;
-  
+
   // Find closest to ball
   var carrier = you, cd = dist(you,ball);
   for (var i=0;i<allMates.length;i++) {
@@ -25,7 +25,7 @@ module.exports = function decide(state) {
     }
   }
   var amCarrier = String(carrier.id) === String(you.id);
-  
+
   // Defense
   if (ball.x < -290) {
     var bd = dist(you,ball);
@@ -36,7 +36,7 @@ module.exports = function decide(state) {
     var vt = nrm(-385-you.x, ball.y*0.2-you.y);
     return {x:vt.x, y:vt.y, kick: bd <= kr + 4};
   }
-  
+
   if (!amCarrier && allMates.length > 0) {
     var bd2 = dist(you,ball);
     if (ball.x > -80) {
@@ -48,7 +48,7 @@ module.exports = function decide(state) {
     var vx2 = nrm(Math.max(-150, ball.x-30)-you.x, ball.y-you.y);
     return {x:vx2.x, y:vx2.y, kick: bd2 <= kr + 3};
   }
-  
+
   // Carrier
   var yb = dist(you,ball);
   var bxv = ball.x-you.x, byv = ball.y-you.y;
@@ -57,7 +57,7 @@ module.exports = function decide(state) {
   var gnx = gvx/glv, gny = gvy/glv;
   var behind = bxv*gnx + byv*gny;
   var crossv = bxv*gny - byv*gnx;
-  
+
   // If very close and pointing at goal, shoot
   if (yb <= kr + 6) {
     if (behind > -5 && Math.abs(crossv) < 50) {
@@ -68,7 +68,7 @@ module.exports = function decide(state) {
       return {x:gnx, y:gny, kick: yb <= kr + 2 || behind > -3};
     }
   }
-  
+
   // Get behind
   if (behind > -25) {
     var tx = ball.x - gnx*20;

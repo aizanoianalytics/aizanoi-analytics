@@ -2,7 +2,7 @@
 
 /**
  * Flash - High Performance Chess & Chess960 Engine for AI Arena
- * 
+ *
  * Features:
  * - Ultra-fast 0x88 board representation with 3.5M nodes/sec raw throughput
  * - Direct O(1) state synchronization from ChessEngine root

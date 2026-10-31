@@ -41,7 +41,7 @@ function evaluate(game) {
   const turn = game.turn;
   let score = 0;
   const pawnCount = { w: 0, b: 0 };
-  
+
   for (let row = 0; row < 8; row++) {
     for (let file = 0; file < 8; file++) {
       const piece = board[row][file];
@@ -63,14 +63,14 @@ function evaluate(game) {
       score += color === turn ? val : -val;
     }
   }
-  
+
   // Mobility bonus
   try {
     const legal = game.legalMoves();
     const mob = legal.length;
     score += (game.turn === turn) ? mob * 0.5 : -mob * 0.5;
   } catch (e) {}
-  
+
   return score;
 }
 
@@ -102,27 +102,27 @@ function ordered(game, preferred, ttMove) {
 
 module.exports = function move(state) {
   if (!state.legalMoves || !state.legalMoves.length) return state.legalMoves ? state.legalMoves[0] : undefined;
-  
+
   const timeLimit = state.timeLimitMs || 1000;
   const deadline = Date.now() + Math.min(850, Math.max(50, timeLimit - 150));
-  
+
   let ChessEngine;
   try {
     ChessEngine = globalThis.ChessEngine;
   } catch (e) {
     return state.legalMoves[0];
   }
-  
+
   let root;
   try {
     root = ChessEngine.fromBotState(state);
   } catch (e) {
     return state.legalMoves[0];
   }
-  
+
   const tt = new Map();
   let bestMove = state.legalMoves[0];
-  
+
   function ttKey(game) {
     try {
       return game.fen();
@@ -130,11 +130,11 @@ module.exports = function move(state) {
       return null;
     }
   }
-  
+
   function checkTime() {
     if (Date.now() >= deadline) throw TIMEOUT;
   }
-  
+
   function quiesce(game, alpha, beta, ply) {
     checkTime();
     const status = game.status();
@@ -145,7 +145,7 @@ module.exports = function move(state) {
     let standPat = evaluate(game);
     if (standPat >= beta) return beta;
     if (alpha < standPat) alpha = standPat;
-    
+
     // Only consider captures and checks
     const board = game.board();
     const candidates = [];
@@ -161,7 +161,7 @@ module.exports = function move(state) {
     }
     if (candidates.length === 0) return standPat;
     candidates.sort((a, b) => b.score - a.score);
-    
+
     for (let i = 0; i < candidates.length && i < 8; i++) {
       checkTime();
       const child = game.clone();
@@ -172,18 +172,18 @@ module.exports = function move(state) {
     }
     return alpha;
   }
-  
+
   function search(game, depth, alpha, beta, ply, isPv) {
     checkTime();
     const status = game.status();
     if (status.over) {
       if (status.reason === 'checkmate') return -MATE + ply;
-      if (status.reason === 'stalemate' || status.reason === 'threefold' || 
+      if (status.reason === 'stalemate' || status.reason === 'threefold' ||
           status.reason === 'fifty-move' || status.reason === 'insufficient') return 0;
       return 0;
     }
     if (ply > 80) return quiesce(game, alpha, beta, ply);
-    
+
     const key = ttKey(game);
     if (key && depth <= 3) {
       const cached = tt.get(key + ':' + depth);
@@ -193,34 +193,34 @@ module.exports = function move(state) {
         if (cached.flag === 2 && cached.score <= alpha) return cached.score;
       }
     }
-    
+
     if (depth <= 0) {
       return quiesce(game, alpha, beta, ply);
     }
-    
+
     let ttMove = null;
     if (key) {
       const cached = tt.get(key);
       if (cached && cached.best) ttMove = cached.best;
     }
-    
+
     const moves = ordered(game, null, ttMove);
     if (moves.length === 0) {
       if (game.inCheck && game.inCheck()) return -MATE + ply;
       return 0;
     }
-    
+
     let bestScore = -Infinity;
     let localBest = moves[0];
     let origAlpha = alpha;
-    
+
     for (let i = 0; i < moves.length; i++) {
       checkTime();
       const uci = moves[i];
       const child = game.clone();
       const res = child.move(uci);
       if (!res.ok) continue;
-      
+
       let score;
       if (i === 0 || isPv) {
         score = -search(child, depth - 1, -beta, -alpha, ply + 1, true);
@@ -230,7 +230,7 @@ module.exports = function move(state) {
           score = -search(child, depth - 1, -beta, -alpha, ply + 1, true);
         }
       }
-      
+
       if (score > bestScore) {
         bestScore = score;
         localBest = uci;
@@ -238,16 +238,16 @@ module.exports = function move(state) {
       }
       if (alpha >= beta) break;
     }
-    
+
     if (key) {
       const flag = bestScore >= beta ? 1 : (bestScore <= origAlpha ? 2 : 0);
       tt.set(key, { best: localBest, score: bestScore, flag, depth });
       if (depth <= 3) tt.set(key + ':' + depth, { score: bestScore, flag });
     }
-    
+
     return bestScore;
   }
-  
+
   try {
     for (let depth = 1; depth <= 6; depth++) {
       checkTime();
@@ -255,7 +255,7 @@ module.exports = function move(state) {
       let beta = Infinity;
       let iterationBest = bestMove;
       const moves = ordered(root, bestMove, null);
-      
+
       for (let i = 0; i < moves.length; i++) {
         checkTime();
         const uci = moves[i];
@@ -276,7 +276,7 @@ module.exports = function move(state) {
       // fall through to bestMove
     }
   }
-  
+
   if (state.legalMoves.includes(bestMove)) {
     return bestMove;
   }

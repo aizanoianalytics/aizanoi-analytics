@@ -243,11 +243,16 @@ runners report errors and apply each game's documented fallback/forfeit policy.
 
 One packaging repair is applied to Chess Beam (`aiwar-beam`): the raw response
 included a Markdown fence and non-JavaScript model commentary after its exports.
-Only that trailing prose was removed; the executable search prefix is unchanged.
+Only that trailing prose was removed; the executable search algorithm is unchanged.
 The raw response SHA-256 was
 `aab930b0d5f69bead3e2bc29c11f6c0e59cba910f1dffc6082643a8e19c39c31`;
-the retained executable prefix SHA-256 is
+the retained prefix before whitespace normalization SHA-256 was
 `4f474c37bb47defff6c6fa931d45c3485f0f4e6ce89d5f569088a16ad48fb317`.
+After removing trailing line whitespace, its SHA-256 is
+`f1755ad8702c31ef6ce9b5ffab5f0fca1570ce58fee767a11e4cea4cfa5da030`.
+Eight imported scripts required trailing-whitespace normalization for the
+repository quality gate. Their executable token streams were compared before
+and after normalization and are identical; roster byte counts were refreshed.
 `tests/arcade-roster.test.mjs` verifies this identity, all submitted scripts parse,
 exact roster byte metadata, submission counts and within-arena color uniqueness.
 Legacy Snake byte metadata is refreshed from its existing files; their code is

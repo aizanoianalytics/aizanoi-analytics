@@ -111,7 +111,7 @@ function getDrawOuts(holeCards, board) {
     return { flushOuts: 0, straightOuts: 0, totalOuts: 0 };
   }
   const currentEval = PokerEngine.evaluate(pool);
-  
+
   const suitCounts = { c: 0, d: 0, h: 0, s: 0 };
   for (const c of pool) suitCounts[c[1]]++;
   let flushOuts = 0;

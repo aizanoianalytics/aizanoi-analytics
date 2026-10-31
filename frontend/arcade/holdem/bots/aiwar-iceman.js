@@ -15,7 +15,7 @@ module.exports = {
       const maxRaiseTo = state.maxRaiseTo;
       const bb = (state.blinds && state.blinds[1]) || 100;
       const buttonSeat = state.buttonSeat;
-      
+
       // Count opponents still in hand
       const opponentsInHand = state.seats.filter(s => s.id !== you.id && !s.out && !s.folded).length;
       const opponentsAlive = state.seats.filter(s => s.id !== you.id && !s.out).length;
@@ -29,7 +29,7 @@ module.exports = {
           // can't see individual actions in history summary, but rough
         }
       }
-      
+
       // Position
       const activeSeats = state.seats.filter(s => !s.out);
       const posFromButton = activeSeats.length === 0 ? 0 : ((you.seat - buttonSeat + state.seats.length) % state.seats.length);
@@ -37,7 +37,7 @@ module.exports = {
       const isSB = you.seat === state.smallBlindSeat;
       const isBB = you.seat === state.bigBlindSeat;
       const inPosition = isButton || (opponentsInHand > 0 && posFromButton < Math.floor(activeSeats.length / 2) && !isButton); // rough
-      
+
       // Preflop hand evaluation
       const RANKS = '23456789TJQKA';
       const getRank = c => RANKS.indexOf(c[0]) + 2;
@@ -46,7 +46,7 @@ module.exports = {
       const pair = r1 === r2;
       const suited = cards[0][1] === cards[1][1];
       const gap = high - low;
-      
+
       function preflopStrength() {
         if (pair) {
           if (high >= 14) return 1.0; // AA
@@ -117,9 +117,9 @@ module.exports = {
           return 0.46;
         }
       }
-      
+
       let preflopStr = street === 'preflop' ? preflopStrength() : 0;
-      
+
       // Postflop hand strength
       let madeStrength = 0;
       let equity = 0.5;
@@ -139,7 +139,7 @@ module.exports = {
           equity = 0.5;
         }
       }
-      
+
       // Adjust preflop by position
       if (street === 'preflop') {
         const posAdj = isButton ? 1.08 : (posFromButton <= 1 && activeSeats.length > 2 ? 0.95 : (posFromButton >= activeSeats.length - 2 ? 1.02 : 1.0));
@@ -149,15 +149,15 @@ module.exports = {
           preflopStr = Math.min(1.0, preflopStr * 1.1); // play wider heads up
         }
       }
-      
+
       const effectiveStack = Math.min(you.stack + you.bet, state.seats.filter(s=>!s.out).reduce((m,s)=>Math.max(m,s.stack+s.bet), 0));
       const spr = pot > 0 ? (you.stack / pot) : 10;
-      
+
       // Decide action
       if (street === 'preflop') {
         const facingRaise = state.actions && state.actions.length > 0 && state.actions.some(a=>a.street==='preflop' && (a.type === 'raise' || a.type === 'allin'));
         const facingBet = toCall > 0 && !canCheck; // facing a bet/raise
-        
+
         if (!facingBet && canCheck) {
           // Can check - rare preflop except BB can check if all limped? Or if we already posted blinds
           // If we're BB and no one raised above BB
@@ -178,11 +178,11 @@ module.exports = {
           }
           return { type: 'check' };
         }
-        
+
         if (facingBet) {
           const betSize = toCall;
           const potOdds = pot > 0 ? betSize / (pot + betSize) : 1;
-          
+
           if (preflopStr >= 0.95) {
             if (minRaiseTo !== null) {
               const reraiseSize = Math.min(maxRaiseTo, Math.max(minRaiseTo, you.bet + toCall + Math.max(bb * 3.5, toCall * 3)));
@@ -227,7 +227,7 @@ module.exports = {
             return { type: 'fold' };
           }
         }
-        
+
         // Opening action
         if (preflopStr >= 0.95) {
           if (minRaiseTo !== null) {
@@ -291,10 +291,10 @@ module.exports = {
           return { type: 'fold' };
         }
       }
-      
+
       // Postflop
       const potOdds = toCall > 0 ? toCall / (pot + toCall) : 0;
-      
+
       // Very strong made hands
       if (madeStrength >= 0.625) { // Full house or better
         if (!canCheck && minRaiseTo !== null) {
@@ -388,7 +388,7 @@ module.exports = {
         if (opponentsInHand === 1 && inPosition && street !== 'river' && equity > 0.4 && potOdds < 0.37) return { type: 'call' };
         return { type: 'fold' };
       }
-      
+
       // Fallback
       if (canCheck) return { type: 'check' };
       if (toCall > 0 && toCall < bb * 2 && Math.random() < 0.3) return { type: 'call' };

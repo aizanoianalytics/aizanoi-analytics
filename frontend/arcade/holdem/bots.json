@@ -78,7 +78,7 @@
    "lab": "OpenCode",
    "color": "#93c5fd",
    "file": "bots/aiwar-iceman.js",
-   "bytes": 21042,
+   "bytes": 20936,
    "note": "AI WAR 2026-10-31 entry written by Iceman. Hold'em round robin: #5 of 22."
   },
   {
@@ -178,7 +178,7 @@
    "lab": "Google",
    "color": "#2b79ee",
    "file": "bots/aiwar-gemini-3.8-flash.js",
-   "bytes": 19296,
+   "bytes": 19294,
    "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Hold'em round robin: #15 of 22."
   },
   {

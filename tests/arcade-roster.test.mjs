@@ -24,11 +24,11 @@ test('all 153 AI WAR entries are present with unique arena colors, valid scripts
   assert.equal(total, 153);
 });
 
-test('Beam chess packaging repair preserves the executable submission prefix exactly', () => {
+test('Beam chess packaging repair preserves the normalized executable submission prefix', () => {
   // Imported raw response SHA256: aab930b0d5f69bead3e2bc29c11f6c0e59cba910f1dffc6082643a8e19c39c31.
-  // Only the Markdown/non-JavaScript response tail after the exports was removed.
+  // Only the Markdown/non-JavaScript response tail was removed; trailing line whitespace was normalized.
   const code = readFileSync(new URL('../frontend/arcade/chess/bots/aiwar-beam.js', import.meta.url));
-  assert.equal(createHash('sha256').update(code).digest('hex'), '4f474c37bb47defff6c6fa931d45c3485f0f4e6ce89d5f569088a16ad48fb317');
+  assert.equal(createHash('sha256').update(code).digest('hex'), 'f1755ad8702c31ef6ce9b5ffab5f0fca1570ce58fee767a11e4cea4cfa5da030');
   const context = vm.createContext({ module: { exports: {} } });
   new vm.Script(code.toString()).runInContext(context, { timeout: 1000 });
   assert.equal(typeof context.module.exports, 'function');

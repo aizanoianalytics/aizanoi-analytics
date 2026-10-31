@@ -43,7 +43,7 @@ function popHeap(heap){
 module.exports = function move(state){
   const you = state.you;
   if(you.jailed || you.respawnIn > 0) return 'stay';
-  
+
   const team = state.team;
   const enemyTeam = team === 'west' ? 'east' : 'west';
   const w = state.width, h = state.height;
@@ -51,24 +51,24 @@ module.exports = function move(state){
   const border = state.border;
   const ownHalf = x => team === 'west' ? x < border : x > border;
   const inEnemyHalf = x => team === 'west' ? x > border : x < border;
-  
+
   const allies = [you, ...(state.teammates||[])];
   const enemies = state.enemies || [];
   const livingEnemies = enemies.filter(e=>!e.jailed && e.respawnIn === 0 && e.x != null);
   const enemiesInOurHalf = livingEnemies.filter(e=>ownHalf(e.x));
   const enemyAttackers = livingEnemies.filter(e=>!ownHalf(e.x) && e.x !== border);
-  
+
   const enemyFlag = state.flags[enemyTeam];
   const enemyJail = state.zones[enemyTeam].jail;
   const myPrisoners = allies.filter(a=>a.jailed);
-  
+
   const order = allies.slice().sort((a,b)=>{
     const sa=String(a.id), sb=String(b.id);
     if(sa<sb)return -1; if(sa>sb)return 1; return 0;
   });
   const isCaptain = order.length>0 && order[0].id === you.id;
   const isVice = order.length>1 && order[1].id === you.id;
-  
+
   // A* with risk
   function astar(goalFn, riskFn){
     const size = w*h;
@@ -110,10 +110,10 @@ module.exports = function move(state){
     }
     return 'stay';
   }
-  
+
   // role like squad
   const defending = order.length > 1 && isCaptain && !you.carrying;
-  
+
   // If carrying
   if(you.carrying){
     let m = astar(x=>ownHalf(x), (nx,ny)=>{
@@ -133,7 +133,7 @@ module.exports = function move(state){
     if(m !== 'stay') return m;
     return 'stay';
   }
-  
+
   // Rescue like squad
   let doRescue = false;
   if(!you.carrying && myPrisoners.length > 0){
@@ -166,7 +166,7 @@ module.exports = function move(state){
     });
     if(m !== 'stay') return m;
   }
-  
+
   // Defense
   if(defending){
     const intruders = livingEnemies.filter(a=>ownHalf(a.x));
@@ -194,7 +194,7 @@ module.exports = function move(state){
       if(m !== 'stay') return m;
     }
   }
-  
+
   // Attack
   if(enemyFlag && !enemyFlag.carrier){
     let m = astar((x,y)=>x===enemyFlag.x && y===enemyFlag.y, (nx,ny)=>{
@@ -230,7 +230,7 @@ module.exports = function move(state){
     let m = astar((x,y)=>x===enemyFlag.x && y===enemyFlag.y, null);
     if(m !== 'stay') return m;
   }
-  
+
   // Push forward
   let m = astar((x,y)=>inEnemyHalf(x), (nx,ny)=>{
     if(ownHalf(nx)) return 0;

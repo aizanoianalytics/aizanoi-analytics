@@ -492,7 +492,7 @@ function rootSearch(game, deadline) {
     }
   }
 
-  // ensure root state restored? search restores. 
+  // ensure root state restored? search restores.
   return bestMove;
 }
 

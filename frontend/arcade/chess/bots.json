@@ -68,7 +68,7 @@
    "lab": "Google",
    "color": "#8b9cff",
    "file": "bots/aiwar-gemini-3.8-flash.js",
-   "bytes": 50119,
+   "bytes": 50118,
    "note": "AI WAR 2026-10-31 entry written by Gemini 3.8 Flash. Chess round robin: #4 of 22."
   },
   {
@@ -168,7 +168,7 @@
    "lab": "OpenCode",
    "color": "#93c5fd",
    "file": "bots/aiwar-iceman.js",
-   "bytes": 8989,
+   "bytes": 8904,
    "note": "AI WAR 2026-10-31 entry written by Iceman. Chess round robin: #14 of 22."
   },
   {
@@ -238,7 +238,7 @@
    "lab": "NVIDIA",
    "color": "#fbd38d",
    "file": "bots/aiwar-nemotron-lightning.js",
-   "bytes": 6518,
+   "bytes": 6517,
    "note": "AI WAR 2026-10-31 entry written by Nemotron Lightning. Chess round robin: #21 of 22."
   },
   {
@@ -248,7 +248,7 @@
    "lab": "OpenCode",
    "color": "#ca55e7",
    "file": "bots/aiwar-beam.js",
-   "bytes": 16122,
+   "bytes": 16121,
    "note": "AI WAR 2026-10-31 entry written by Beam. Chess round robin: #22 of 22. Packaging repair: removed trailing non-JavaScript model commentary after the exports; search algorithm unchanged."
   }
  ]

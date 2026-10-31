@@ -174,7 +174,7 @@ module.exports = function move(state) {
   const root = globalThis.ChessEngine.fromBotState(state);
 
   let bestMove = state.legalMoves[0];
-  
+
   let alpha = -Infinity;
   let beta = Infinity;
 
