@@ -5,6 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const frontend = fileURLToPath(new URL('../../frontend/', import.meta.url));
 const types = {
@@ -129,9 +130,9 @@ test('football: an uploaded bot plays a Max-speed match against sample bots unde
   );
   await page.waitForFunction(() =>
     typeof window.__FOOTBALL__ === 'function' &&
-    window.__FOOTBALL__().bots === 3 &&
     !document.getElementById('fb-start').disabled
   );
+  await assertFullRoster(page, 'football');
 
   const redSelect = page.locator('#fb-red select').first();
   assert.deepEqual(await redSelect.locator('option').evaluateAll(options =>

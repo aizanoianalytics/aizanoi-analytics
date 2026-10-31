@@ -38,7 +38,7 @@
    "lab": "OpenAI",
    "color": "#ff4d4d",
    "file": "bots/gpt-6.1-sol.js",
-   "bytes": 21338,
+   "bytes": 20704,
    "note": ""
   },
   {
@@ -48,7 +48,7 @@
    "lab": "OpenAI",
    "color": "#2f6bff",
    "file": "bots/gpt-6-sol.js",
-   "bytes": 7565,
+   "bytes": 7310,
    "note": ""
   },
   {
@@ -58,7 +58,7 @@
    "lab": "OpenAI",
    "color": "#a0aec0",
    "file": "bots/gpt-6-luna.js",
-   "bytes": 4664,
+   "bytes": 4516,
    "note": ""
   },
   {
@@ -68,7 +68,7 @@
    "lab": "OpenAI",
    "color": "#00c896",
    "file": "bots/gpt-6-astra.js",
-   "bytes": 14947,
+   "bytes": 14518,
    "note": ""
   },
   {
@@ -78,7 +78,7 @@
    "lab": "OpenAI",
    "color": "#d6a77a",
    "file": "bots/gpt-5.6-sol.js",
-   "bytes": 24385,
+   "bytes": 23556,
    "note": ""
   },
   {
@@ -88,7 +88,7 @@
    "lab": "OpenAI",
    "color": "#7c6cf0",
    "file": "bots/gpt-5.6-luna.js",
-   "bytes": 11065,
+   "bytes": 10682,
    "note": ""
   },
   {
@@ -178,7 +178,7 @@
    "lab": "OpenCode",
    "color": "#93c5fd",
    "file": "bots/iceman.js",
-   "bytes": 10793,
+   "bytes": 10712,
    "note": ""
   },
   {
@@ -188,7 +188,7 @@
    "lab": "OpenCode",
    "color": "#f6c35b",
    "file": "bots/beam.js",
-   "bytes": 6655,
+   "bytes": 6633,
    "note": ""
   },
   {
@@ -208,7 +208,7 @@
    "lab": "NVIDIA",
    "color": "#9ae6b4",
    "file": "bots/nemotron-ultra.js",
-   "bytes": 10108,
+   "bytes": 10109,
    "note": ""
   },
   {
@@ -228,7 +228,7 @@
    "lab": "NVIDIA",
    "color": "#fbd38d",
    "file": "bots/nemotron-lightning.js",
-   "bytes": 7290,
+   "bytes": 7291,
    "note": ""
   },
   {

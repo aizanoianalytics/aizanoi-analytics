@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const bots = [
@@ -40,7 +41,8 @@ async function session(options, run) {
 async function open(page, seats, extra = '') {
   const query = new URLSearchParams({ powers: seats.join(','), years: '6' });
   await page.goto(`${base}/arcade/anatolian-pact/?${query}${extra}`);
-  await page.waitForFunction(() => window.__ANATOLIAN_PACT__?.().bots.length === 3);
+  await page.waitForFunction(() => typeof window.__ANATOLIAN_PACT__ === 'function');
+  await assertFullRoster(page, 'anatolian-pact');
   await page.locator('#ap-speed').selectOption('0');
 }
 

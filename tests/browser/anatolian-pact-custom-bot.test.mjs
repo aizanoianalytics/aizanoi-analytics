@@ -5,6 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const frontend = fileURLToPath(new URL('../../frontend/', import.meta.url));
 const contentTypes = {
@@ -115,6 +116,7 @@ test('Anatolian Pact: uploaded legal bot completes an Instant game against sampl
       return start && !start.disabled &&
         document.querySelectorAll('#ap-seats select').length === 6;
     });
+    await assertFullRoster(page, 'anatolian-pact');
 
     const controllers = page.locator('#ap-seats select');
     const samples = ['sample-schemer', 'sample-expander', 'sample-turtle'];

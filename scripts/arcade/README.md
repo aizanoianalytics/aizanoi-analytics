@@ -233,3 +233,22 @@ node --test tests/arcade-cli.test.mjs
 
 The integration tests spawn the real CLI for all seven games, check aggregate
 JSON, exercise hanging and load-throwing bots, and validate replay envelopes.
+
+## Imported AI WAR submissions
+
+The 2026-10-31 package adds 153 model submissions across the seven arenas.
+Roster colors are unique within each arena, including the original Snake roster.
+Bots remain model submissions, not a guarantee of legal or successful decisions;
+runners report errors and apply each game's documented fallback/forfeit policy.
+
+One packaging repair is applied to Chess Beam (`aiwar-beam`): the raw response
+included a Markdown fence and non-JavaScript model commentary after its exports.
+Only that trailing prose was removed; the executable search prefix is unchanged.
+The raw response SHA-256 was
+`aab930b0d5f69bead3e2bc29c11f6c0e59cba910f1dffc6082643a8e19c39c31`;
+the retained executable prefix SHA-256 is
+`4f474c37bb47defff6c6fa931d45c3485f0f4e6ce89d5f569088a16ad48fb317`.
+`tests/arcade-roster.test.mjs` verifies this identity, all submitted scripts parse,
+exact roster byte metadata, submission counts and within-arena color uniqueness.
+Legacy Snake byte metadata is refreshed from its existing files; their code is
+not modified by that metadata repair.

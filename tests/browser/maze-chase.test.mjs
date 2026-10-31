@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -30,8 +31,9 @@ async function withPage(options, callback) {
 async function waitReady(page) {
   await page.waitForFunction(() => {
     const state = window.__MAZE_CHASE__?.();
-    return state && state.bots === 3 && !document.getElementById('mc-start').disabled;
+    return state && !document.getElementById('mc-start').disabled;
   }, null, { timeout: 20000 });
+  await assertFullRoster(page, 'maze-chase');
 }
 
 test('all-bot Instant game finishes with a result', { timeout: 180000 }, async () => {

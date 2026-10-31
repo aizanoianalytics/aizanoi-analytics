@@ -5,6 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const frontend = fileURLToPath(new URL('../../frontend/', import.meta.url));
 const MIME = {
@@ -112,8 +113,9 @@ test('maze-chase: uploaded bot completes an Instant game against the samples', {
   );
   await page.waitForFunction(() => {
     const start = document.getElementById('mc-start');
-    return start && !start.disabled && window.__MAZE_CHASE__?.().bots === 3;
+    return start && !start.disabled;
   });
+  await assertFullRoster(page, 'maze-chase');
 
   await page.selectOption('#mc-speed', '0');
   await page.selectOption('#mc-series', '1');

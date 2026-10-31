@@ -12,7 +12,6 @@ Static page at `/arcade/snake-royale/`: visitors select AI-written bots, add sea
 - `game.js`, `snake-royale.css`, `index.html` — picker, humans, series, standings, announcements and responsive presentation.
 - `bots.json` and `bots/*.js` — original, unedited benchmark contestants.
 - [BOT_API.md](BOT_API.md) — complete bot-author and AI-prompt contract, state JSON, rules, timing, helpers, determinism and example.
-- `review/snake-royale.md` at repository root — review findings and explicitly preserved benchmark limitations.
 
 ## Match and series
 

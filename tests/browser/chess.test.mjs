@@ -1,6 +1,7 @@
 import { after, before, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const arenaUrl = new URL('/arcade/chess/', base).href;
@@ -30,6 +31,7 @@ async function openArena(viewport = { width: 1280, height: 1000 }) {
       return typeof window.__CHESS_ARENA__ === 'function' &&
         !document.getElementById('ch-start').disabled;
     }, null, { timeout: 15000 });
+    await assertFullRoster(page, 'chess');
 
     return { context, page, errors };
   } catch (error) {

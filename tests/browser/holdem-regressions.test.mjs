@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -24,8 +25,8 @@ async function open(page, seats) {
   url.searchParams.set('seats', seats.join(','));
   await page.goto(url.href, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => window.__HOLDEM__ &&
-    window.__HOLDEM__().bots === 3 &&
     !document.getElementById('ph-start').disabled);
+  await assertFullRoster(page, 'holdem');
 }
 
 test('nine-seat phone plates remain inside the table and do not overlap', {
@@ -149,7 +150,7 @@ test('all-in control is disabled for a closed raise right', {
         };
       };
       document.getElementById('ph-start').click();
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise(resolve => { setTimeout(resolve, 50); });
       document.getElementById('ph-show').click();
       const disabled = document.getElementById('ph-allin').disabled;
       const raiseDisabled = document.getElementById('ph-raise').disabled;

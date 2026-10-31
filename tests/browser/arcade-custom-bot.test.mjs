@@ -5,6 +5,7 @@ import path from 'node:path';
 import { readFile, stat } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const frontend = fileURLToPath(new URL('../../frontend/', import.meta.url));
 const contentTypes = {
@@ -84,6 +85,7 @@ test('chess: uploaded bot completes an Instant game under strict CSP', {
 
   await page.goto(`${site.origin}/arcade/chess/`, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => !document.getElementById('ch-white').disabled);
+  await assertFullRoster(page, 'chess');
 
   const chooser = page.waitForEvent('filechooser');
   await page.selectOption('#ch-white', 'custom');

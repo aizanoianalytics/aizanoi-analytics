@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const baseURL = process.env.BASE_URL || 'http://127.0.0.1:4173';
 
@@ -28,6 +29,7 @@ test('capture-flag: uploaded bot completes an Instant game against samples', {
         document.querySelectorAll('#cf-west .cf-seat select').length === 2 &&
         document.querySelectorAll('#cf-east .cf-seat select').length === 2;
     });
+    await assertFullRoster(page, 'capture-flag');
 
     const code = 'module.exports = function move(state) { return "right"; };';
     const chooser = page.waitForEvent('filechooser');

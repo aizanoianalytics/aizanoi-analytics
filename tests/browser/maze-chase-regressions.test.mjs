@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -24,8 +25,9 @@ async function ready(page, query) {
   await page.goto(new URL(`/arcade/maze-chase/${query}`, base).href);
   await page.waitForFunction(() => {
     const state = window.__MAZE_CHASE__?.();
-    return state?.bots === 3 && !document.getElementById('mc-start').disabled;
+    return state && !document.getElementById('mc-start').disabled;
   }, null, { timeout: 20000 });
+  await assertFullRoster(page, 'maze-chase');
 }
 
 test('repeated entrants have distinct numbered cards and accessible arena markers',

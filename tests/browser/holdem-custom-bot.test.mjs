@@ -5,6 +5,7 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const frontend = fileURLToPath(new URL('../../frontend/', import.meta.url));
 const mimeTypes = {
@@ -93,9 +94,9 @@ test('holdem: uploaded bot completes an Instant tournament against samples under
   );
   await page.waitForFunction(() =>
     typeof window.__HOLDEM__ === 'function' &&
-    window.__HOLDEM__().bots === 3 &&
     !document.getElementById('ph-start').disabled
   );
+  await assertFullRoster(page, 'holdem');
 
   // All-in is legal while this seat has chips and avoids any assumptions
   // about the shape of the engine's bot-state legal-action metadata.

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -36,8 +37,9 @@ async function ready(page, query = '') {
 
   await page.waitForFunction(() => {
     const state = window.__CAPTURE_FLAG__ && window.__CAPTURE_FLAG__();
-    return state && state.bots === 3 && state.seats.length === 4;
-  }, { timeout: 20000 });
+    return state && state.seats.length === 4;
+  }, null, { timeout: 20000 });
+  await assertFullRoster(page, 'capture-flag');
 }
 
 test('all-bot 2v2 finishes at Instant speed without page errors', {
@@ -58,7 +60,7 @@ test('all-bot 2v2 finishes at Instant speed without page errors', {
     await page.waitForFunction(() => {
       const state = window.__CAPTURE_FLAG__();
       return !state.running && Boolean(state.result);
-    }, { timeout: 150000 });
+    }, null, { timeout: 150000 });
 
     const state = await page.evaluate(() => window.__CAPTURE_FLAG__());
     assert.ok(state.tick > 0 && state.tick <= 1200);
@@ -86,7 +88,7 @@ test('default human seat advances while KeyD is held at Normal speed', {
     await page.waitForFunction(() => {
       const state = window.__CAPTURE_FLAG__();
       return state.running && state.tick > 0;
-    }, { timeout: 15000 });
+    }, null, { timeout: 15000 });
 
     const before = await page.evaluate(() => window.__CAPTURE_FLAG__().tick);
     await page.keyboard.down('KeyD');

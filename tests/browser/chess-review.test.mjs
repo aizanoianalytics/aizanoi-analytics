@@ -1,6 +1,7 @@
 import { after, before, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 let browser;
@@ -19,6 +20,7 @@ async function open(viewport = { width: 1280, height: 1000 }, setup) {
     await page.waitForFunction(() =>
       typeof window.__CHESS_ARENA__ === 'function' &&
       !document.getElementById('ch-start').disabled);
+    await assertFullRoster(page, 'chess');
     return { context, page, errors };
   } catch (error) {
     await context.close();

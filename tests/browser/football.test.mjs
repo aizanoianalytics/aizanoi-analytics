@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -16,7 +17,8 @@ async function openPage(t, options = {}) {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(new URL('/arcade/football/', base).href, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => window.__FOOTBALL__ && window.__FOOTBALL__().bots === 3);
+  await page.waitForFunction(() => typeof window.__FOOTBALL__ === 'function');
+  await assertFullRoster(page, 'football');
   return { page, errors };
 }
 

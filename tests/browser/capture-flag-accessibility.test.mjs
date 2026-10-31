@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -30,6 +31,7 @@ test('Player 2-only phone configuration has usable touch controls and arena text
       await page.waitForFunction(() =>
         window.__CAPTURE_FLAG__ && window.__CAPTURE_FLAG__().seats.length === 4,
       );
+      await assertFullRoster(page, 'capture-flag');
 
       assert.equal(await page.locator('#cf-pad').isVisible(), true);
       assert.equal(await page.locator('#cf-touch-player').inputValue(), 'p2');

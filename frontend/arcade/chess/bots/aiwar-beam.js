@@ -510,27 +510,3 @@ function move(state) {
 
 module.exports = function (state) { return move(state); };
 module.exports.move = move;
-```
-
-Wait aspiration re-search logic is messy and possibly leaves state inconsistent. Also `score === MATE-1` throw TIMEOUT to break is hacky but okay? It breaks out of iterative loop and returns bestMove. But if thrown, catch breaks; bestMove set. Fine. But rootSearch returns after catch. However if aspiration failure, we did double make/unmake; okay.
-
-But there is a bug: In root search, when aspiration re-search branch, we unmake then redo. But in non-failure branch we also unmake. Good. But score variable maybe stale? We set score in redo. Good.
-
-However aspiration window re-search condition: if score <= alpha (original alpha before move?) Actually alpha is updated as we go; standard aspiration at root should use full window on fail. We set alpha initial bestScore-50. During loop alpha changes. Fine.
-
-Potential issue: `ordered` from orderMoves uses game._legal() at root; okay.
-
-Potential performance issue: TT global replaced each move; fine.
-
-Potential issue: `isCapture` uses `game._board` before make? In search, isCap computed after make? I wrote `const isCap = isCapture(m, game)` but game has been made, side switched, board changed (piece moved). isCapture checks game._board[m.t] which after move may be piece (moved piece) not original target! That's wrong. Need determine capture before make. Let's fix: compute `const wasCapture = !!game._board_before?`. We need check before make. Let's compute before make:
-```
-const isCap = isCapture(m, game); // call before game._make
-```
-Move code order: currently make then compute. Let's adjust: before make, `const isCap = isCapture(m, game);`. Then make. I'll edit.
-
-Also in quiescence, isCapture(m, game) called before make? In candidates filter, game not yet made; yes called on current game, correct. In search LMR, need isCap before make. Fix.
-
-Let's also remove unused `capture`.
-
-Now test. Let me write file and test load.<|end|><|start|>-start to=bash<|channel|>analysis <|constrain|>xml<|message|><rfl:parameter name="command">
-cd "C:\Users\husey\oc-sandbox\duo\chess\beam" && node -e "const vm=require('vm');const fs=require('fs');const code=fs.readFileSync('engine.js','utf8');const ctx={};vm.createContext(ctx);vm.runInContext(code,ctx);globalThis.ChessEngine=ctx.ChessEngine||ctx.module?.exports; console.log(typeof globalThis.ChessEngine);"

@@ -248,8 +248,8 @@
    "lab": "OpenCode",
    "color": "#ca55e7",
    "file": "bots/aiwar-beam.js",
-   "bytes": 18445,
-   "note": "AI WAR 2026-10-31 entry written by Beam. Chess round robin: #22 of 22."
+   "bytes": 16122,
+   "note": "AI WAR 2026-10-31 entry written by Beam. Chess round robin: #22 of 22. Packaging repair: removed trailing non-JavaScript model commentary after the exports; search algorithm unchanged."
   }
  ]
 }

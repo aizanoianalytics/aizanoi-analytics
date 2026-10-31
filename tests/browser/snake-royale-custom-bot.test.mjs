@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -29,6 +30,7 @@ async function openArena(page) {
 
   await page.goto(`${base}/arcade/snake-royale/`);
   await waitForFightEnabled(page);
+  await assertFullRoster(page, 'snake-royale');
   assert.equal(await page.locator('#sr-fight').isEnabled(), true);
 
   const rosterSize = await page.evaluate(() => window.__SNAKE_ROYALE__().bots);

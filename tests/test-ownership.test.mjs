@@ -161,6 +161,38 @@ test('routine CI stays small and the expensive suites are not required', () => {
   assert.match(workflows.fullQa, /schedule:/);
 });
 
+test('arcade browser matrix executes every arena suite and gates the existing required context', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const arcadeJob = workflows.ci.split('\n  arcade-browser:\n')[1]?.split('\n  browser-smoke:\n')[0];
+  assert.ok(arcadeJob, 'routine CI must have a dedicated arcade browser job');
+  assert.match(arcadeJob, /fail-fast: false/);
+  const arenas = [...arcadeJob.matchAll(/^\s+- arena: ([a-z-]+)$/gm)].map((match) => match[1]);
+  assert.deepEqual(arenas.sort(), [
+    'anatolian-pact', 'capture-flag', 'chess', 'football', 'holdem', 'maze-chase', 'snake-royale',
+  ]);
+  const declared = [...arcadeJob.matchAll(/tests\/browser\/[a-z-]+\.test\.mjs/g)].map((match) => match[0]);
+  assert.equal(new Set(declared).size, declared.length, 'each arena suite runs once');
+  const expected = browserSuites('tests/browser').filter((suite) =>
+    /\/(?:anatolian-pact|arcade-custom-bot|capture-flag|chess|football|holdem|maze-chase|snake-royale)(?:[.-])/.test(suite));
+  assert.deepEqual([...declared].sort(), expected, 'every arena browser suite must be in the executing matrix');
+  for (const suite of declared) {
+    assert.match(read(suite), /\bassert\./, `${suite} must assert a regression, not only capture evidence`);
+  }
+  assert.match(arcadeJob, /ARCADE_BROWSER_SUITES: '\$\{\{ matrix\.suites \}\}'/);
+  assert.ok(arcadeJob.includes('read -r -a suites <<< "$ARCADE_BROWSER_SUITES"'));
+  assert.ok(arcadeJob.includes('node --test --test-concurrency=1 "${suites[@]}"'));
+  assert.match(arcadeJob, /set -euo pipefail/);
+  const smokeJob = workflows.ci.split('\n  browser-smoke:\n')[1]?.split('\n  lighthouse:\n')[0];
+  assert.match(smokeJob, /needs: arcade-browser\n\s+if: always\(\)/);
+  assert.match(smokeJob, /ARCADE_RESULT: '\$\{\{ needs\.arcade-browser\.result \}\}'/);
+  const gate = smokeJob.match(/run: (test "\$ARCADE_RESULT" = success)/)?.[1];
+  assert.ok(gate, 'browser-smoke must explicitly reject a failed, skipped or cancelled matrix');
+  for (const result of ['success', 'failure', 'cancelled', 'skipped', '']) {
+    const run = spawnSync('bash', ['-c', gate], { env: { ...process.env, ARCADE_RESULT: result } });
+    assert.equal(run.status, result === 'success' ? 0 : 1, `required-context gate for ${result}`);
+  }
+});
+
 // Repositories cannot read their own branch protection without elevated
 // credentials, so the deterministic contract lives in the workflow assertions
 // above. This last check is a best-effort live confirmation: it runs only when

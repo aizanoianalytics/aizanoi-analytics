@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const csp = "default-src 'self'; script-src 'self'; style-src 'self'; worker-src 'self'; connect-src 'self'; img-src 'self' data:; object-src 'none'";
@@ -30,7 +31,8 @@ test('phone arena remains CSP-safe and announces events rather than every card u
       });
     });
     await page.goto(`${base}/arcade/snake-royale/?accessibility=1`);
-    await page.waitForFunction(() => window.__SNAKE_ROYALE__?.().bots >= 20);
+    await page.waitForFunction(() => typeof window.__SNAKE_ROYALE__ === 'function');
+    await assertFullRoster(page, 'snake-royale');
     assert.equal(await page.locator('.sr-side-panel[aria-live]').count(), 0);
     assert.equal(await page.locator('#sr-ticker').getAttribute('role'), 'status');
     assert.equal(await page.locator('#sr-result').getAttribute('role'), 'status');
@@ -115,7 +117,8 @@ test('failed bot startup is visible and final cards expose actual placements', a
       body: "'use strict'; module.exports = function () { return 'up'; };",
     }));
     await page.goto(`${base}/arcade/snake-royale/?a=opus&b=haiku`);
-    await page.waitForFunction(() => window.__SNAKE_ROYALE__?.().bots >= 20);
+    await page.waitForFunction(() => typeof window.__SNAKE_ROYALE__ === 'function');
+    await assertFullRoster(page, 'snake-royale');
     await page.selectOption('#sr-speed', '0');
     await page.locator('#sr-fight').click();
     await page.waitForFunction(() => window.__SNAKE_ROYALE__().result !== null);

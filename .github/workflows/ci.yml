@@ -32,7 +32,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/diagnostics
-          while IFS= read -r -d '' file; do node --check "$file"; done < <(find frontend/js/v3 frontend/worlds -type f -name '*.js' -print0)
+          while IFS= read -r -d '' file; do node --check "$file"; done < <(find frontend/js/v3 frontend/worlds frontend/arcade -type f -name '*.js' -print0)
           node --check frontend/release.js
           node --check frontend/analytics/catalog.js
           node --check frontend/analytics/app.js
@@ -74,10 +74,100 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with: { name: aizanoi-validate-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
 
+  # Isolate arena matches from the existing 12-minute WebGL/shell smoke.
+  # Each game runs sequentially within its shard; games have separate runners.
+  arcade-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arena: snake-royale
+            suites: >-
+              tests/browser/snake-royale.test.mjs
+              tests/browser/snake-royale-accessibility.test.mjs
+              tests/browser/snake-royale-custom-bot.test.mjs
+              tests/browser/arcade-custom-bot.test.mjs
+          - arena: chess
+            suites: >-
+              tests/browser/chess.test.mjs
+              tests/browser/chess-review.test.mjs
+          - arena: maze-chase
+            suites: >-
+              tests/browser/maze-chase.test.mjs
+              tests/browser/maze-chase-regressions.test.mjs
+              tests/browser/maze-chase-custom-bot.test.mjs
+          - arena: capture-flag
+            suites: >-
+              tests/browser/capture-flag.test.mjs
+              tests/browser/capture-flag-accessibility.test.mjs
+              tests/browser/capture-flag-custom-bot.test.mjs
+          - arena: holdem
+            suites: >-
+              tests/browser/holdem.test.mjs
+              tests/browser/holdem-regressions.test.mjs
+              tests/browser/holdem-custom-bot.test.mjs
+          - arena: football
+            suites: >-
+              tests/browser/football.test.mjs
+              tests/browser/football-custom-bot.test.mjs
+          - arena: anatolian-pact
+            suites: >-
+              tests/browser/anatolian-pact.test.mjs
+              tests/browser/anatolian-pact-review.test.mjs
+              tests/browser/anatolian-pact-custom-bot.test.mjs
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Restore Playwright browser cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install pinned browser QA dependencies
+        run: |
+          mkdir -p artifacts/diagnostics
+          npm ci --ignore-scripts --no-fund
+          node scripts/ci/npm-audit-gate.mjs
+          npx playwright install chromium
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >"${RUNNER_TEMP}/arcade-http.log" 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/arcade/ >/dev/null && exit 0; sleep 0.5; done
+          cat "${RUNNER_TEMP}/arcade-http.log"; exit 1
+      - name: Arena interaction and regression suites
+        env:
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+          ARCADE_BROWSER_SUITES: '${{ matrix.suites }}'
+          ARCADE_ARENA: '${{ matrix.arena }}'
+        run: |
+          set -euo pipefail
+          # Intentional splitting of the repository-authored suite list, not eval.
+          read -r -a suites <<< "$ARCADE_BROWSER_SUITES"
+          node --test --test-concurrency=1 "${suites[@]}" 2>&1 | tee "artifacts/diagnostics/arcade-${ARCADE_ARENA}.log"
+      - name: Upload arcade diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aizanoi-arcade-${{ matrix.arena }}-diagnostics
+          path: 'artifacts/diagnostics/*'
+          retention-days: 3
+
   browser-smoke:
+    # Preserve the required context while failing closed on every arena shard.
+    needs: arcade-browser
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
+      - name: Require successful arcade browser matrix
+        env: { ARCADE_RESULT: '${{ needs.arcade-browser.result }}' }
+        run: test "$ARCADE_RESULT" = success
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
@@ -170,12 +260,11 @@ jobs:
           node --test tests/browser/dungeon-3d-shell-tokens.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-shell-tokens.log || status=1
           node --test tests/browser/dungeon-3d-core-blockers.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-core-blockers.log || status=1
           exit $status
-      - name: Arcade and TV surface QA
+      - name: AizanoiOS Arcade and TV surface QA
         env:
           ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
         run: |
           set -o pipefail
-          node --test tests/browser/snake-royale.test.mjs 2>&1 | tee artifacts/diagnostics/snake-royale.log
           node --test tests/browser/aizanoi-os-snake-royale.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-snake-royale.log
           node --test tests/browser/aizanoi-os-videos.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-videos.log
       - name: Upload browser diagnostics

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { assertFullRoster } from './arcade-roster.mjs';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
@@ -30,8 +31,9 @@ async function open(page, seats) {
   await page.goto(url.href, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => {
     const qa = window.__HOLDEM__ && window.__HOLDEM__();
-    return qa && qa.bots === 3 && !document.getElementById('ph-start').disabled;
+    return qa && !document.getElementById('ph-start').disabled;
   });
+  await assertFullRoster(page, 'holdem');
 }
 
 async function start(page, speed) {
@@ -41,7 +43,7 @@ async function start(page, speed) {
 }
 
 async function waitForHuman(page) {
-  await page.waitForFunction(() => window.__HOLDEM__().humanToAct, {
+  await page.waitForFunction(() => window.__HOLDEM__().humanToAct, null, {
     timeout: 30000,
   });
 }
@@ -71,7 +73,7 @@ test('three bot seats finish an Instant tournament without page errors', {
     await open(page, ['sample-equity', 'sample-caller', 'sample-tight']);
     await start(page, '0');
 
-    await page.waitForFunction(() => Boolean(window.__HOLDEM__().result), {
+    await page.waitForFunction(() => Boolean(window.__HOLDEM__().result), null, {
       timeout: 270000,
     });
 
@@ -152,7 +154,7 @@ test('two humans must pass the device before every private reveal', {
     await page.waitForFunction(() => (
       window.__HOLDEM__().humanToAct &&
       !document.getElementById('ph-pass').hidden
-    ), { timeout: 30000 });
+    ), null, { timeout: 30000 });
 
     await assertPrivateCardsHidden(page);
     assert.equal(await page.locator('#ph-actions').isVisible(), false);
