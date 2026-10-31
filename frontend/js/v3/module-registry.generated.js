@@ -137,6 +137,15 @@ export const INSTALLED_MODULES = Object.freeze([
   }),
   Object.freeze({
     manifestVersion: 1,
+    id: "trade-arena",
+    type: "desktop-app",
+    entry: "/js/v3/apps/trade-arena/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze([]),
+    provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
     id: "videos",
     type: "desktop-app",
     entry: "/js/v3/apps/videos/src/index.js",

@@ -17,6 +17,7 @@ export default [
   {
     files:[
       'frontend/js/v3/**/*.js',
+      'frontend/arcade/trade-arena/**/*.js',
       'frontend/analytics/*.js',
       'frontend/analytics/**/*.js',
       'frontend/dungeon/**/*.js',

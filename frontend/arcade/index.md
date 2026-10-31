@@ -11,6 +11,7 @@ Scope: public static arena pages, local bot workers and shared browser controls.
 - [Hold'em](holdem/index.md) — poker table, betting and worker lifecycle.
 - [Football](football/index.md) — team pitch and keyboard/touch controls.
 - [Anatolian Pact](anatolian-pact/index.md) — strategy orders and authored map data.
+- [AI Trade Arena](trade-arena/index.md) — independent historical paper-trading app and supplied market snapshot.
 - [Shared browser modules](shared/index.md) — input and in-memory custom-bot loading; worker isolation is not a hostile-code sandbox.
 
 Each arena owns its BOT_API.md contract, roster, engine, runner and page. The public landing is `index.html`; AizanoiOS catalog/lifecycle ownership stays with `../js/v3/registry.js` and the corresponding shell app modules.

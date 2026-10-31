@@ -166,8 +166,9 @@ for (const [name, css] of Object.entries({shell,components,deviceShell,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 19, 'public AizanoiOS catalog includes the in-shell Snake Royale app and no retired Flowerseller entry');
-assert.equal(registry.ALL_APPS.length, 19, 'combined public app catalog must match the registry exactly');
+assert.equal(registry.APPS.length, 20, 'public AizanoiOS catalog includes independent Snake Royale and Trade Arena apps and no retired Flowerseller entry');
+assert.equal(registry.ALL_APPS.length, 20, 'combined public app catalog must match the registry exactly');
+assert.ok(registry.APPS.some(app => app.id === 'trade-arena'), 'Trade Arena must remain an independent public app');
 assert.equal('WORKBENCH_APPS' in registry, false, 'retired Workbench catalog export returned');
 assert.equal('WORLDS' in registry, false, 'retired WORLDS catalog export returned');
 for (const id of ['news','videos','analytics','aizanoi','forge','journal','labs','games']) {

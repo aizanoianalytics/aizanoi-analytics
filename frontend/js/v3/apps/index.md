@@ -18,6 +18,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - [`news/index.md`](news/index.md) — Aizanoi News
 - [`notepad/index.md`](notepad/index.md) — Notepad
 - [`recycle-bin/index.md`](recycle-bin/index.md) — Recycle Bin
+- [`trade-arena/index.md`](trade-arena/index.md) — independent AI Trade Arena historical simulation
 - [`snake-royale/index.md`](snake-royale/index.md) — AI Snake Royale in-shell arena
 - [`videos/index.md`](videos/index.md) — Aizanoi TV
 - [`web-editor/index.md`](web-editor/index.md) — single-file browser-local Web Editor with isolated preview runner

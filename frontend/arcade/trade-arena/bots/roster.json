@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "bots": [
+    {
+      "id": "sonnet-5-5",
+      "name": "Claude Sonnet 5.5",
+      "short": "Sonnet",
+      "initials": "S5",
+      "lab": "Anthropic",
+      "kind": "ai",
+      "model": "claude-sonnet-5-5",
+      "color": "#ff8a4c",
+      "file": "bots/ai/sonnet-5-5.js",
+      "strategy": "Holds up to 6 assets in confirmed uptrends (above SMA200 and SMA50, positive 60-bar return, Supertrend up), ranked by a blend of 60- and 20-bar momentum ranks and Sharpe rank with a bonus for current holdings. Inverse-volatility weights capped at 30%, total exposure scaled by market breadth. Rebalances about every periodsPerYear/70 bars and exits early when a holding falls 5% below its SMA50.",
+      "botName": "Trend Keeper",
+      "session": {
+        "secs": 133,
+        "turns": 6
+      },
+      "colorLight": "#b54d17"
+    },
+    {
+      "id": "haiku-5-5",
+      "name": "Claude Haiku 5.5",
+      "short": "Haiku",
+      "initials": "H5",
+      "lab": "Anthropic",
+      "kind": "ai",
+      "model": "claude-haiku-5-5",
+      "color": "#2ee6d6",
+      "file": "bots/ai/haiku-5-5.js",
+      "strategy": "Holds up to 5 assets above both SMA50 and SMA200 with the best 60-bar return per unit of volatility, sized by inverse volatility and capped at 40%. Rebalances about monthly with a 6% drift band to save fees, stops out any position down 20% from entry, and dials exposure down when breadth is weak, SPY is below its 200-day average or VIX is above 30.",
+      "botName": "Trend Rotator",
+      "session": {
+        "secs": 319,
+        "turns": 22
+      },
+      "colorLight": "#097c73"
+    },
+    {
+      "id": "momentum",
+      "name": "Momentum Five",
+      "short": "Momentum",
+      "initials": "M5",
+      "lab": "House bot",
+      "kind": "house",
+      "color": "#b18cff",
+      "file": "bots/house/momentum.js",
+      "strategy": "Every 7 bars holds the five assets with the best 60-bar return that trade above their 200-bar average. Goes to cash when nothing qualifies.",
+      "colorLight": "#6d4bd8"
+    },
+    {
+      "id": "hodl",
+      "name": "HODL",
+      "short": "HODL",
+      "initials": "HD",
+      "lab": "House bot",
+      "kind": "house",
+      "color": "#8fa3c7",
+      "file": "bots/house/hodl.js",
+      "strategy": "Buys every listed asset in equal weight on the first bar and never sells. The market itself, minus fees.",
+      "colorLight": "#55657f"
+    },
+    {
+      "id": "monkey",
+      "name": "Monkey",
+      "short": "Monkey",
+      "initials": "MK",
+      "lab": "House bot",
+      "kind": "house",
+      "color": "#ffd54a",
+      "file": "bots/house/monkey.js",
+      "strategy": "Throws darts: every 10 bars it holds three random assets. The baseline every strategy must beat.",
+      "colorLight": "#8f6400"
+    }
+  ],
+  "benchmarks": {
+    "Equal weight": "#e8edf9",
+    "BTC hold": "#f7931a",
+    "S&P 500 hold": "#5aa9ff"
+  },
+  "benchmarksLight": {
+    "Equal weight": "#26313c",
+    "BTC hold": "#a65d00",
+    "S&P 500 hold": "#3158c7"
+  }
+}
