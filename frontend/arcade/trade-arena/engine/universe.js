@@ -398,3 +398,18 @@ export const UNIVERSE = {
   }
  ]
 };
+
+// Fail-closed payload validation for downloaded history. A 200 response with a
+// null, truncated or mistyped body must abort the race, never silently drop
+// the asset and persist an ordinary result.
+export function requireSeries(url, cols) {
+  if (!cols || typeof cols !== 'object' || !Array.isArray(cols.t) || cols.t.length === 0)
+    throw new Error(`Required historical file ${url}: missing or malformed payload`);
+  return cols;
+}
+
+export function requireFunding(url, funding) {
+  if (!funding || typeof funding !== 'object' || !Array.isArray(funding.t) || !Array.isArray(funding.rate))
+    throw new Error(`Required historical file ${url}: missing or malformed payload`);
+  return funding;
+}

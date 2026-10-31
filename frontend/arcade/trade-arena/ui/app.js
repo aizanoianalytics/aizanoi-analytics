@@ -234,10 +234,10 @@ function renderLeague(view) {
   const { league, roster } = state;
   const bot = id => roster.bots.find(b => b.id === id) || { name: id, color: '#888', initials: '?' };
   let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('arena-history') || '[]'); } catch { /* storage blocked */ }
+  try { hist = JSON.parse(localStorage.getItem('trade-arena:history') || localStorage.getItem('arena-history') || '[]'); } catch { /* storage blocked */ }
   const mine = {};
   for (const h of hist) {
-    if (h.stats.length < 2) continue;
+    if (!Array.isArray(h.stats) || h.stats.length < 2) continue;
     [...h.stats].sort((a, b) => b.final - a.final).forEach((s, i) => { const m = (mine[s.id] ??= { id: s.id, races: 0, wins: 0, ret: 0 }); m.races++; if (!i) m.wins++; m.ret += s.totalReturn; });
   }
   const myRows = Object.values(mine).sort((a, b) => b.wins - a.wins || b.ret - a.ret);
@@ -263,7 +263,7 @@ function renderLeague(view) {
     if (e.target.closest('[data-sort-reset]')) { state.leagueSort = null; renderLeague(view); return; }
     const b = e.target.closest('[data-watch]');
     if (b) { const r = league.races[+b.dataset.watch]; startRace({ title: r.title, market: r.market, tf: r.tf, start: r.start, end: r.end, blind: r.blind, short: r.short, gross: r.gross, seed: 7, bots: league.standings.map(x => x.id) }, roster); return; }
-    if (e.target.closest('#clear-hist') && confirm('Delete the races stored in this browser? The official league is not affected.')) { try { localStorage.removeItem('arena-history'); } catch { /* storage blocked */ } renderLeague(view); }
+    if (e.target.closest('#clear-hist') && confirm('Delete the races stored in this browser? The official league is not affected.')) { try { localStorage.removeItem('trade-arena:history'); localStorage.removeItem('arena-history'); } catch { /* storage blocked */ } renderLeague(view); }
   };
 }
 

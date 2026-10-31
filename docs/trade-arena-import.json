@@ -1103,7 +1103,7 @@
     },
     {
       "path": "engine/universe.js",
-      "sha256": "a88f4dc6bbf6526d4a2c5f4c92ebdace557576d2629ca1acb68ce70328e20d19",
+      "sha256": "82ef0bb7a74e29d5c679c4d85b16086fb332f84ee225606196eb1659dbb55125",
       "sourceSha256": "a88f4dc6bbf6526d4a2c5f4c92ebdace557576d2629ca1acb68ce70328e20d19"
     },
     {
@@ -1123,7 +1123,7 @@
     },
     {
       "path": "ui/app.js",
-      "sha256": "06de61b6aca2c9192788c8a70b4f7457e13a921d4f5c97e9c05046be51d87036",
+      "sha256": "bb94b0a7b60ace6935f340b36d1c1fc0abb97c7b4ca0b595658b46f1425427c7",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
@@ -1153,7 +1153,7 @@
     },
     {
       "path": "ui/race-worker.js",
-      "sha256": "b85352199aacca5e51a4092efac7996ad43ef593ece3c0ccf13522ee74ea8909",
+      "sha256": "12bb2663ffd2bac50cfa1c363792ca584009a135a3ea0329a34fd1072bf40e46",
       "sourceSha256": "7855727a79da8d1e7992da9382bf1d3255d402fff1ae6c8e0e9adb210d9b0780"
     },
     {

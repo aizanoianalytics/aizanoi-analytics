@@ -3,7 +3,7 @@ import { WebHost } from './web-host.js';
 import { prepareMarket } from '../engine/market.js';
 import { runRace, benchmarks, stats, DEFAULT_RULES } from '../engine/sim.js';
 import { to4h } from '../engine/bars.js';
-import { UNIVERSE } from '../engine/universe.js';
+import { UNIVERSE, requireSeries, requireFunding } from '../engine/universe.js';
 
 const BASE = new URL('../', import.meta.url);
 const cache = new Map();
@@ -19,15 +19,14 @@ async function loadUniverse(market, tf, progress) {
   let done = 0;
   const total = jobs.length + UNIVERSE.context.length + (market !== 'stocks' ? UNIVERSE.crypto.length : 0);
   const tick = () => progress(++done / total);
-  const series = (await Promise.all(jobs.map(async ([mk, a, url]) => {
-    let cols = await get(url); tick();
-    if (!cols) return null;
+  const series = await Promise.all(jobs.map(async ([mk, a, url]) => {
+    let cols = requireSeries(url, await get(url)); tick();
     if (mk === 'stocks' && tf === '4h') cols = to4h(cols);
     return { symbol: a.ticker, name: a.name, market: mk, sector: a.sector || 'Crypto', cols };
-  }))).filter(Boolean);
+  }));
   const context = {}, funding = {};
-  await Promise.all(UNIVERSE.context.map(async a => { const c = await get(`data/raw/context/1d/${a.ticker}.json`); tick(); if (c) context[a.ticker] = c; }));
-  if (market !== 'stocks') await Promise.all(UNIVERSE.crypto.map(async a => { const f = await get(`data/raw/crypto/funding/${a.ticker}.json`); tick(); if (f) funding[a.ticker] = f; }));
+  await Promise.all(UNIVERSE.context.map(async a => { const url = `data/raw/context/1d/${a.ticker}.json`; const c = await get(url); tick(); context[a.ticker] = requireSeries(url, c); }));
+  if (market !== 'stocks') await Promise.all(UNIVERSE.crypto.map(async a => { const url = `data/raw/crypto/funding/${a.ticker}.json`; const f = await get(url); tick(); funding[a.ticker] = requireFunding(url, f); }));
   return { series, context, funding };
 }
 

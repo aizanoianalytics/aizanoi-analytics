@@ -46,6 +46,22 @@ test('strict CSP adapter contains no eval, inline script/style, remote fonts or 
   assert.match(read('frontend/js/v3/apps/trade-arena/src/index.js'), /frame\.src = 'about:blank'; frame\.remove\(\)/);
 });
 
+test('malformed historical downloads fail instead of silently dropping assets', async () => {
+  const { requireSeries, requireFunding } = await import('../frontend/arcade/trade-arena/engine/universe.js');
+  const good = { t: [1, 2], c: [10, 11] };
+  assert.equal(requireSeries('data/raw/crypto/1d/BTC.json', good), good);
+  for (const bad of [null, undefined, 0, 'x', [], {}, { t: [] }, { t: 'nope' }])
+    assert.throws(() => requireSeries('data/raw/crypto/1d/BTC.json', bad), /missing or malformed payload/);
+  assert.equal(requireFunding('data/raw/crypto/funding/BTC.json', { t: [1], rate: [0.01] }).rate[0], 0.01);
+  for (const bad of [null, {}, { t: [1] }, { rate: [0.01] }, { t: 'x', rate: [] }])
+    assert.throws(() => requireFunding('data/raw/crypto/funding/BTC.json', bad), /missing or malformed payload/);
+});
+
+test('league page tallies races under the Trade Arena history key', () => {
+  assert.match(read(root + 'ui/app.js'), /localStorage\.getItem\('trade-arena:history'\)/);
+  assert.match(read(root + 'ui/race-view.js'), /localStorage\.setItem\('trade-arena:history'/);
+});
+
 test('unaudited stock intraday sessions cannot produce a race', () => {
   for (const market of ['stocks','mixed']) for (const tf of ['1h','4h']) assert.throws(() => prepareMarket([], {market,tf}), /Stock intraday races are unavailable/);
 });
