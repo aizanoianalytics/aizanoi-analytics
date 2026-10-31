@@ -72,7 +72,8 @@ test('historical race computes real trades for every bot, paints charts, and rea
     await page.locator('#q-clear').click();
     assert.equal(await page.locator('#alist button[data-s]').count(),35);
     await page.locator('.nav [data-r="league"]').click();
-    assert.match(await page.locator('#view').innerText(),/Imported standings/);
+    await page.waitForFunction(() => document.querySelector('#view')?.textContent.includes('Imported standings'), null, { timeout: 15000 });
+    assert.match(await page.locator('#view').innerText(), /Imported standings/);
     assert.deepEqual(errors,[]);
   });
 });
