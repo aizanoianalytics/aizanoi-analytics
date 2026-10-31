@@ -1,3 +1,6 @@
+// Keep worker implementation bindings private: imported bot scripts may declare
+// their own global decide(), sanitize() or helper names.
+(function () {
 'use strict';
 
 if (!self.__ARENA_INLINE__) {
@@ -86,3 +89,4 @@ self.onmessage = event => {
   if (Number.isSafeInteger(message.request)) reply.request = message.request;
   postMessage(reply);
 };
+})();

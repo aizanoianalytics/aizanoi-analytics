@@ -138,7 +138,49 @@ test('chess: uploaded bot completes an Instant game under strict CSP', {
   assert.match(apiResponse.headers()['content-type'], /^text\/plain\b/);
 });
 
-// MAZE-CHASE INTEGRATION PLACEHOLDER:
-// Add a separate test after that arena supports custom seats. Upload a .js bot
-// returning 'left', select Instant pacing, complete a game, and assert a result
-// with no page errors. No maze-chase behavior is implemented in this step.
+test('every installed roster entry initializes in its real browser worker under strict CSP', {
+  timeout: 180000
+}, async t => {
+  const site = await serveFrontend();
+  t.after(() => site.close());
+  const browser = await chromium.launch({ headless: true });
+  t.after(() => browser.close());
+  const page = await browser.newPage();
+  const games = ['snake-royale', 'chess', 'maze-chase', 'capture-flag', 'holdem', 'football', 'anatolian-pact'];
+  let checked = 0;
+  for (const game of games) {
+    const { bots } = JSON.parse(await readFile(path.join(frontend, 'arcade', game, 'bots.json'), 'utf8'));
+    await page.goto(`${site.origin}/arcade/${game}/`, { waitUntil: 'domcontentloaded' });
+    const records = await page.evaluate(async ({ game, ids }) => {
+      const records = [];
+      for (const id of ids) {
+        const result = await new Promise(resolve => {
+          const worker = new Worker(`/arcade/${game}/bot-worker.js`);
+          let settled = false;
+          const finish = response => {
+            if (settled) return;
+            settled = true;
+            clearTimeout(timer);
+            worker.terminate();
+            resolve({ id, ...response });
+          };
+          const budget = game === 'chess' ? 1000 : game === 'anatolian-pact' ? 2000 : 5000;
+          const timer = setTimeout(() => finish({ type: 'timeout' }), budget);
+          worker.onmessage = event => finish(event.data);
+          worker.onerror = event => {
+            event.preventDefault();
+            finish({ type: 'error', detail: event.message });
+          };
+          worker.onmessageerror = () => finish({ type: 'error', detail: 'Unreadable worker response' });
+          worker.postMessage({ type: 'init', id, seed: 7 });
+        });
+        records.push(result);
+      }
+      return records;
+    }, { game, ids: bots.map(bot => bot.id) });
+    assert.deepEqual(records.map(record => record.id), bots.map(bot => bot.id), `${game}: every canonical roster entry checked`);
+    assert.deepEqual(records.filter(record => record.type !== 'ready'), [], `${game}: imported contestants must initialize`);
+    checked += records.length;
+  }
+  assert.equal(checked, 194, 'all installed entries, including 153 AI WAR submissions');
+});
