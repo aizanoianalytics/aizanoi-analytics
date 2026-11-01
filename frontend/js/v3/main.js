@@ -56,7 +56,6 @@ function installUtilityWindowPreferences(api){
   new MutationObserver(()=>queueMicrotask(scan)).observe(layer,{childList:true});
 }
 function installWallpaperSync(api){
-  applyWallpaper(api.store.getState().wallpaper);
   api.store.subscribe((event)=>{if(event.type==='reset'||(event.type==='preference'&&event.detail?.name==='wallpaper'))applyWallpaper(event.state.wallpaper);});
 }
 function installReducedMotionSync(api){
@@ -69,4 +68,5 @@ function installReducedMotionSync(api){
   else media.addListener?.(sync);
 }
 
-try{const api=mountShell();installWallpaperSync(api);installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open Aizanoi directly.</span><a class="az-button" href="/worlds/aizanoi-225/">Open Aizanoi</a></div>';}
+applyWallpaper(getState().wallpaper);
+try{const api=mountShell();installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installWallpaperSync(api);installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open Aizanoi directly.</span><a class="az-button" href="/worlds/aizanoi-225/">Open Aizanoi</a></div>';}
