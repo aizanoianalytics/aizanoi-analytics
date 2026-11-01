@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-01-china-manufacturing-pmi-october",
+  "title": "China's factory gauge slips back into contraction at 49.3",
+  "summary": "China's official NBS manufacturing PMI fell to 49.3 in October from 50.1 in September, missing forecasts of 50 and marking the lowest reading since July. Output, new orders, export orders and purchasing activity all dropped below the 50 line, employment held at 48.4, and input-cost inflation eased to 56.8 from 60.8. The survey pointed to subdued domestic demand as the Golden Week boost faded and overseas orders softened.",
+  "category": "economy-markets",
+  "priority": 65,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "china",
+    "pmi",
+    "manufacturing",
+    "macro-data"
+  ],
+  "sources": [
+    {
+      "publisher": "Trading Economics (NBS data)",
+      "url": "https://tradingeconomics.com/china/business-confidence",
+      "publishedAt": "2026-10-31T01:30:00Z"
+    },
+    {
+      "publisher": "Myfxbook economic calendar",
+      "url": "https://www.myfxbook.com/forex-economic-calendar/china/nbs-manufacturing-pmi",
+      "publishedAt": "2026-10-31T01:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

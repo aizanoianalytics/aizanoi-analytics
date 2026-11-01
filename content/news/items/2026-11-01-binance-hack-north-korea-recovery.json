@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-01-binance-hack-north-korea-recovery",
+  "title": "Binance says it has replaced 90% of the $6.3bn taken in record hack",
+  "summary": "Binance said on Saturday it had replenished 90% of the roughly $6.3bn drained from its hot wallets on 29 October, drawing on company funds, its SAFU reserve and treasury to rebuy tokens; the rest sits in less liquid assets. The FBI blamed North Korea's TraderTraitor unit, and TRM Labs and Chainalysis reached the same conclusion. About $3bn has been frozen. Co-CEO Richard Teng said users would not bear the loss.",
+  "category": "economy-markets",
+  "priority": 84,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "binance",
+    "crypto",
+    "cyber-theft",
+    "north-korea",
+    "exchanges"
+  ],
+  "sources": [
+    {
+      "publisher": "AP News",
+      "url": "https://apnews.com/article/binance-cryptocurrency-security-hack-north-korea-550e9b876550f71f07098494fe735beb",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "NBC News",
+      "url": "https://www.nbcnews.com/business/business-news/fbi-says-north-korea-was-6-billion-binance-crypto-hack-rcna606758",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "Chainalysis",
+      "url": "https://www.chainalysis.com/blog/binance-exploit-latest-findings-and-response/",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

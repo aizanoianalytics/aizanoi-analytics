@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-01-apple-m6-macbook-pro-memory-premium",
+  "title": "Apple's 2nm M6 reaches the MacBook Pro with memory-driven storage premiums",
+  "summary": "Apple's first 2nm chip is now in the entry 14-inch MacBook Pro, which starts at $1,999 with 16GB of memory and 1TB of storage; preorders opened on 28 October and shipping begins on 6 November. The M6 moves to a 12-core CPU, a dual 16-core Neural Engine and, via the N1 chip, Wi-Fi 7 and Bluetooth 6. Storage upgrades rose: 4TB now costs $1,500 more, against $1,200 a year ago, which Apple attributes to the memory shortage.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "m6",
+    "macbook-pro",
+    "memory-prices",
+    "2nm"
+  ],
+  "sources": [
+    {
+      "publisher": "Chip Dispatch",
+      "url": "https://chipdispatch.com/articles/apple-puts-first-2nm-m6-chip-into-1-999-macbook-pro",
+      "publishedAt": "2026-10-28T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
