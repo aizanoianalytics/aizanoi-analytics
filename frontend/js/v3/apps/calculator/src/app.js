@@ -5,7 +5,7 @@ export async function mountCalculator({ container, capabilities }) {
   <div class="az-app-shell az-utility-shell az-calculator-shell">
     <div class="az-calc" aria-label="Standard calculator">
       <div class="az-calc-meta"><span>Standard</span><strong data-calc-memory-indicator role="status" aria-label="Memory status"></strong></div>
-      <div class="az-calc-display" data-calc-display role="status" aria-live="polite">0</div>
+      <div class="az-calc-display" data-calc-display role="status" aria-live="polite" aria-atomic="true">0</div>
       <div class="az-calc-memory" role="group" aria-label="Memory controls">
         ${[['MC','m'],['MR','r'],['MS','s'],['M+','p']].map(([label, action]) => `<button class="az-calc-key az-calc-key--memory" type="button" data-calc="${action}">${label}</button>`).join('')}
       </div>
@@ -88,7 +88,8 @@ export async function mountCalculator({ container, capabilities }) {
       resetNext = false;
     } else if (key === 'back') {
       if (resetNext) return;
-      current = current.length > 1 ? current.slice(0, -1) : '0';
+      const next = current.slice(0, -1);
+      current = next === '' || next === '-' || next === '-0' ? '0' : next;
     } else if (key === 'neg') {
       current = current.startsWith('-') ? current.slice(1) : (current === '0' ? current : `-${current}`);
     } else if (key === 'sqrt') {
@@ -137,6 +138,7 @@ export async function mountCalculator({ container, capabilities }) {
   function handleKeydown(event) {
     const active = document.activeElement;
     const hostWindow = container.closest('.az-window');
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
     if (!container.contains(active) && active !== document.body && active !== hostWindow) return;
     const map = { '*':'×', '/':'÷', Enter:'=', '=':'=', Escape:'c', Backspace:'back' };
     const key = map[event.key] ?? event.key;
