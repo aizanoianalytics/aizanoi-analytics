@@ -256,10 +256,13 @@ export async function mountWebEditor({container,options,capabilities}){
     editorFolderId=folder.id;
     return editorFolderId;
   }
-  async function saveFile(asNew=false){
-    source=editor.value;
+  let saving=null;
+  function saveFile(asNew=false){if(saving)return saving;saving=writeFile(asNew).finally(()=>{saving=null;});return saving;}
+  async function writeFile(asNew){
+    const generation=revision.generation,targetId=fileId;
+    let savedName=fileName;
     await ensureEditorFolder();
-    let target=fileId&&!asNew?await filesystem.getNode(fileId):null;
+    let target=targetId&&!asNew?await filesystem.getNode(targetId):null;
     if(target&&target.parent!==editorFolderId)target=null;
     if(!target){
       const requested=await dialog.prompt({
@@ -274,17 +277,17 @@ export async function mountWebEditor({container,options,capabilities}){
       if(!nextName){notifications.notify('Web Editor','Choose a valid HTML file name.','error');return false;}
       const children=await filesystem.childrenOf(editorFolderId);
       const existing=children.find((node)=>node.kind==='file'&&String(node.name||'').toLowerCase()===nextName.toLowerCase());
-      if(existing&&existing.id!==fileId){
+      if(existing&&existing.id!==targetId){
         const choice=await dialog.confirm({title:'File already exists',message:`Replace ${nextName}?`,kind:'warn',confirmLabel:'Replace',cancelLabel:'Cancel'});
         if(choice!=='ok')return false;
       }
       target=existing||null;
-      fileName=nextName;
+      savedName=nextName;
     }else{
-      fileName=target.name;
+      savedName=target.name;
     }
-    source=editor.value;
-    const snap=revision.snapshot(),savedName=fileName,blob=new Blob([source],{type:HTML_MIME});
+    if(closed||generation!==revision.generation)return false;
+    const snap=revision.snapshot(),blob=new Blob([editor.value],{type:HTML_MIME});
     let savedId;
     if(target){
       await filesystem.updateFileContent(target.id,blob);
@@ -293,17 +296,19 @@ export async function mountWebEditor({container,options,capabilities}){
       const created=await filesystem.createFile({name:savedName,parent:editorFolderId,blob,mime:HTML_MIME});
       savedId=created.id;
     }
-    if(closed)return true;
-    if(revision.markSaved(snap)){
-      fileId=savedId;
-      lastSavedAt=new Date();
-    }
+    if(closed||!revision.markSaved(snap))return false;
+    fileId=savedId;
+    fileName=savedName;
+    lastSavedAt=new Date();
     renderState();
     sound.play('notification');
     notifications.notify('Aizanoi Web Editor',`${savedName} saved to Workspace / Editor.${revision.dirty?' Newer edits are still unsaved.':''}`,'system');
-    return true;
+    return !revision.dirty;
   }
   async function resolveUnsaved(){
+    const generation=revision.generation;
+    if(saving)await saving;
+    if(closed||generation!==revision.generation)return false;
     if(!revision.dirty)return true;
     const choice=await dialog.confirm({
       title:'Unsaved Web Editor changes',
@@ -313,13 +318,16 @@ export async function mountWebEditor({container,options,capabilities}){
       secondaryLabel:'Discard',
       cancelLabel:'Cancel'
     });
+    if(closed||generation!==revision.generation)return false;
     if(choice==='ok')return saveFile(false);
     if(choice==='secondary')return true;
     return false;
   }
   async function loadLegacyProject(folderId,{skipUnsaved=false}={}){
+    const seq=++loadSeq;
     if(!skipUnsaved&&!(await resolveUnsaved()))return false;
-    const seq=++loadSeq,editRev=revision.snapshot().rev;
+    if(closed||seq!==loadSeq)return false;
+    const editRev=revision.snapshot().rev;
     await ensureEditorFolder();
     const folder=await filesystem.getNode(folderId);
     if(!folder||folder.kind!=='folder')return false;
@@ -345,12 +353,15 @@ export async function mountWebEditor({container,options,capabilities}){
     return true;
   }
   async function loadFile(nextFileId,{skipUnsaved=false}={}){
+    const seq=++loadSeq;
     if(!skipUnsaved&&!(await resolveUnsaved()))return false;
-    const seq=++loadSeq,editRev=revision.snapshot().rev;
+    if(closed||seq!==loadSeq)return false;
+    const editRev=revision.snapshot().rev;
     await ensureEditorFolder();
     const file=await filesystem.getNode(nextFileId);
     if(!file||file.kind!=='file'||!isHtmlFile(file))return false;
     const parent=await filesystem.getNode(file.parent);
+    if(closed||seq!==loadSeq||revision.snapshot().rev!==editRev)return false;
     if(parent?.kind==='folder'&&parent.parent===editorFolderId){
       return loadLegacyProject(parent.id,{skipUnsaved:true});
     }
@@ -382,7 +393,8 @@ export async function mountWebEditor({container,options,capabilities}){
     }).join(''):'<p class="az-web-editor-empty">No saved HTML files yet.</p><button class="az-button az-button-primary az-web-editor-empty-action" type="button" data-web-action="save">Save this page as the first one</button>';
   }
   async function newFile(){
-    if(!(await resolveUnsaved()))return;
+    const seq=++loadSeq;
+    if(!(await resolveUnsaved())||closed||seq!==loadSeq)return;
     source=DEFAULT_DOCUMENT;
     editor.value=source;
     fileId=null;
