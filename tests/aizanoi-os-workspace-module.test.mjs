@@ -45,7 +45,7 @@ test('Workspace private code uses injected capabilities instead of concrete core
 });
 
 test('Workspace cleanup owns listeners, menus, previews and temporary download URLs', () => {
-  assert.match(privateApp, /removeEventListener\('change',\s*handleFileChange\)/);
+  assert.match(privateApp, /removeEventListener\('change',\s*handleFileChangeSafe\)/);
   assert.match(privateApp, /removeEventListener\('click',\s*handleClick\)/);
   assert.match(privateApp, /document\.removeEventListener\('click',\s*onDocClick,\s*true\)/);
   assert.match(privateApp, /document\.removeEventListener\('keydown',\s*onMenuKey,\s*true\)/);
