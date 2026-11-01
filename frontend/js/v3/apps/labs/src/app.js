@@ -66,7 +66,7 @@ export function createLabsApp({ apps }) {
   return {
     async mount(container) {
       container.replaceChildren();
-      const tabs = Object.values(WORKSPACES).map((workspace, index) => `<button class="az-button${index === 0 ? ' is-active' : ''}" type="button" data-workspace-tab="${workspace.id}" aria-controls="labs-workspace-${workspace.id}" aria-selected="${index === 0}">${workspace.model}</button>`).join('');
+      const tabs = Object.values(WORKSPACES).map((workspace, index) => `<button class="az-button${index === 0 ? ' is-active' : ''}" type="button" data-workspace-tab="${workspace.id}" aria-controls="labs-workspace-${workspace.id}" aria-pressed="${index === 0}">${workspace.model}</button>`).join('');
       container.innerHTML = shell(`<nav class="az-labs-switcher" aria-label="Labs experiments">${tabs}</nav>${Object.values(WORKSPACES).map((workspace, index) => renderWorkspace(workspace, index === 0)).join('')}${renderCards()}`);
       const mediaCleanup = [];
       Object.values(WORKSPACES).forEach((workspace) => {
@@ -120,7 +120,8 @@ export function createLabsApp({ apps }) {
           const selected = workspace.id === id;
           panel.hidden = !selected;
           tab.classList.toggle('is-active', selected);
-          tab.setAttribute('aria-selected', String(selected));
+          tab.setAttribute('aria-pressed', String(selected));
+          if (!selected) panel.querySelector('video')?.pause();
         });
       }
       function handleClick(event) {
