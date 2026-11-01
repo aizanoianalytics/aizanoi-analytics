@@ -101,3 +101,14 @@ test('all supplied strategies trade through the actual historical market and sim
   assert.equal(result.stats.length, roster.bots.length);
   for (const stat of result.stats) { assert.equal(stat.errors, 0); assert.equal(stat.retired, null); assert.ok(Number.isFinite(stat.final)); assert.ok(stat.trades > 0, 'strategy must place real trades'); }
 });
+
+test('every roster and benchmark colour has CSP-safe colour rules (inline style is forbidden, so avatars/bars are painted by data-color rules)', () => {
+  const css = read(root + 'ui/app.css').toLowerCase();
+  const colours = new Set();
+  for (const bot of roster.bots) for (const key of ['color', 'colorLight', 'colorDark']) if (bot[key]) colours.add(bot[key].toLowerCase());
+  for (const key of ['benchmarks', 'benchmarksLight', 'benchmarksDark']) for (const value of Object.values(roster[key] || {})) colours.add(String(value).toLowerCase());
+  assert.ok(colours.size >= 26, 'roster should expose light and dark colours for every bot');
+  for (const colour of colours) {
+    for (const attr of ['data-color', 'data-bg', 'data-ink']) assert.ok(css.includes('[' + attr + '="' + colour + '"]'), attr + ' rule missing for ' + colour);
+  }
+});
