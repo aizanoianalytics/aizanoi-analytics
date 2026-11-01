@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-01-sp-meta-outlook-negative",
+  "title": "S&P cuts its Meta outlook to negative over AI cash burn",
+  "summary": "S&P Global Ratings lowered its outlook on Meta's AA- credit rating to negative from stable on Friday, citing negative free operating cash flow and spending it expects to stay elevated. Meta has guided to $135bn-$145bn of capital expenditure this year after a $2.12bn free-cash-flow deficit in the third quarter. S&P forecasts deficits of $39bn in 2026 and $71bn in 2027, and says leverage could exceed 1.0x as early as 2027. Meta says its credit profile remains strong.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "credit-rating",
+    "sp-global",
+    "capex",
+    "ai-spending"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/30/meta-outlook-to-revised-to-negative-by-sp-after-cash-flow-negative.html",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "The Business Times (Bloomberg)",
+      "url": "https://www.businesstimes.com.sg/companies-markets/metas-rating-outlook-cut-negative-sp-ai-spending",
+      "publishedAt": "2026-10-31T02:42:00Z"
+    }
+  ],
+  "kind": "daily"
+}

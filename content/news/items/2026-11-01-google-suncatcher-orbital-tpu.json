@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-01-google-suncatcher-orbital-tpu",
+  "title": "Google's orbital TPU returns its first AI answer from space",
+  "summary": "A Tensor Processing Unit aboard Google's Project Suncatcher prototype satellite ran the open Gemma 4 model and returned a haiku during a ground-station pass over Svalbard, Norway. Google calls it the first AI response from a data-centre-class TPU in orbit. The satellite launched on 1 October; thermal and radiation testing comes next, ahead of a 2027 milestone in which twin interconnected satellites would share inference work.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "suncatcher",
+    "tpu",
+    "space",
+    "gemma"
+  ],
+  "sources": [
+    {
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-satellite-response",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/tech/1023528/google-project-suncatcher-ai-satellite-transmission",
+      "publishedAt": "2026-10-30T18:21:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-01-ai-labs-shared-training-opt-out",
+  "title": "AI labs agree to read one robots.txt training opt-out",
+  "summary": "Google, Microsoft, OpenAI and Anthropic said on Friday they will honour a single shared policy token in robots.txt, letting a publisher refuse generative-AI training without writing a rule for every crawler. The signal comes from an IETF draft by Anthropic's Kevin Kelley; Anthropic has begun implementing it, OpenAI aims to follow in the coming months, Microsoft on 1 February 2027 and Google in 2027. The token states a preference about training, not a block on crawling.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "robots-txt",
+    "ai-training",
+    "ietf",
+    "publishers",
+    "crawling"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Search Central Blog",
+      "url": "https://developers.google.com/search/blog/2026/10/ai-training-control",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/10/30/google-anthropic-and-others-to-support-new-ai-crawling-opt-out-standard",
+      "publishedAt": "2026-10-31T02:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/ai-training-opt-out-robots-txt-google-openai-microsoft-anthropic",
+      "publishedAt": "2026-10-31T12:24:00Z"
+    }
+  ],
+  "kind": "daily"
+}

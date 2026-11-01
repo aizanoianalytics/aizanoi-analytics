@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-01-altman-samsung-memory-talks",
+  "title": "Altman takes OpenAI's memory squeeze to Samsung's boardroom",
+  "summary": "OpenAI chief executive Sam Altman met about 50 Samsung Group executives in Yongin, south of Seoul, on Saturday, with memory supply and AI infrastructure on the agenda alongside a wider session on how AI may reshape their industries. Samsung said the talks build on earlier cooperation to supply memory for OpenAI's Stargate build-out. Memory accounts for roughly a third of data-centre spending, and shortages across memory categories are pushing chip prices higher.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "samsung",
+    "memory",
+    "stargate",
+    "data-centres"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-31/openai-sam-altman-samsung-executives-memory-crunch-deepens",
+      "publishedAt": "2026-10-31T06:40:00Z"
+    },
+    {
+      "publisher": "Economic Times (ET Enterprise AI)",
+      "url": "https://enterpriseai.economictimes.indiatimes.com/news/industry/openai-ceo-sam-altman-meets-samsung-executives-to-discuss-memory-chip-supply-ai-infrastructure/135401204",
+      "publishedAt": "2026-10-31T12:34:00Z"
+    }
+  ],
+  "kind": "daily"
+}
