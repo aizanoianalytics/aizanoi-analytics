@@ -156,7 +156,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .preset:has(input:focus-visible), .bot-card:has(input:focus-visible), .toggle:has(input:focus-visible) i { outline: 2px solid var(--focus); outline-offset: 3px; }
 .preset input, .bot-card input, .toggle input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
 .preset .tag { position: absolute; top: 14px; right: 14px; }
-.preset h4 { margin: 10px 0 6px; font-size: 17px; }
+.preset h3 { margin: 10px 0 6px; font-size: 17px; }
 .preset p { margin: 0; color: var(--muted); font-size: 13px; }
 .preset .meta { margin-top: auto; padding-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
 .preset .icon { font-size: 22px; }

@@ -341,8 +341,8 @@ try {
   await mkdir(stageDir, { recursive:true });
   await writeFile(path.join(stageDir, 'index.json'), `${JSON.stringify(feed, null, 2)}\n`);
   await writeFile(path.join(stageDir, 'news.css'), `${css}\n`);
-  const archiveLinks = editions.length ? `<aside class="archive-strip"><h2>Past editions</h2>${editions.map((edition) => `<a href="${edition.path}">${edition.date} (${edition.itemCount})</a>`).join('')}</aside>` : '';
-  const weeklyArchiveLinks = weeklyEditions.length ? `<aside class="archive-strip"><h2>Weekly archive</h2>${weeklyEditions.map((edition) => `<a href="${edition.path}">${edition.date} · ${edition.week} (${edition.itemCount})</a>`).join('')}</aside>` : '';
+  const archiveLinks = editions.length ? `<aside class="archive-strip" aria-label="Past editions"><h2>Past editions</h2>${editions.map((edition) => `<a href="${edition.path}">${edition.date} (${edition.itemCount})</a>`).join('')}</aside>` : '';
+  const weeklyArchiveLinks = weeklyEditions.length ? `<aside class="archive-strip" aria-label="Weekly archive"><h2>Weekly archive</h2>${weeklyEditions.map((edition) => `<a href="${edition.path}">${edition.date} · ${edition.week} (${edition.itemCount})</a>`).join('')}</aside>` : '';
   const latestDate = dates.filter((date) => items.some((item) => itemDate(item) === date && item.kind !== 'weekly'))[0];
   const latestWeeklyDate = weeklyEditions[0]?.date;
   await writeFile(path.join(stageDir, 'index.html'), page({ title:'Aizanoi News — The Daily Edition', eyebrow:latestDate ? dateLabel(latestDate) : 'Independent · Original · Source-linked', heading:latestDate ? dateLabel(latestDate) : 'The Daily Edition', deck:latestDate ? 'AI, technology, markets and football — edited into one concise edition.' : 'The press is ready. The record remains empty until verified reporting is published.', items:latestDate ? items.filter((item) => itemDate(item) === latestDate && item.kind !== 'weekly') : [], editionDate:latestDate, editionNav:latestDate ? editionNavMarkup(editions, latestDate, 'daily', '/news/') : '', archiveLinks, extraArchive:weeklyArchiveLinks }));

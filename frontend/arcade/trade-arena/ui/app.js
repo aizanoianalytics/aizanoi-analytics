@@ -71,9 +71,9 @@ function renderLobby(view) {
     <div class="grid-presets" id="presets">${PRESETS.map(p => `<label class="panel preset">
       <input type="radio" name="preset" value="${p.id}" ${p.id === pick.preset ? 'checked' : ''}>
       <span class="tag">${p.oos ? '<span class="chip oos">after cutoff</span>' : '<span class="chip">inside bot data</span>'}</span>
-      <span class="icon" aria-hidden="true">${p.icon}</span><h4>${esc(p.title)}</h4><p>${esc(p.desc)}</p>
+      <span class="icon" aria-hidden="true">${p.icon}</span><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>
       <span class="meta"><span class="chip">${p.market}</span><span class="chip">${p.tf} bars</span><span class="chip">${p.start} → ${p.end}</span>${p.blind ? '<span class="chip blind">blind</span>' : ''}</span></label>`)}
-      <label class="panel preset"><input type="radio" name="preset" value="custom" ${pick.preset === 'custom' ? 'checked' : ''}><span class="icon" aria-hidden="true">🛠</span><h4>Custom race</h4><p>Any market, bar size and period from ${DATA_START} to ${DATA_END}.</p><span class="meta"><span class="chip">your rules</span></span></label>
+      <label class="panel preset"><input type="radio" name="preset" value="custom" ${pick.preset === 'custom' ? 'checked' : ''}><span class="icon" aria-hidden="true">🛠</span><h3>Custom race</h3><p>Any market, bar size and period from ${DATA_START} to ${DATA_END}.</p><span class="meta"><span class="chip">your rules</span></span></label>
     </div>
   </fieldset>
 

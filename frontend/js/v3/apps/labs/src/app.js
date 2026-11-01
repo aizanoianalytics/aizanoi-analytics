@@ -27,7 +27,7 @@ function shell(body) {
 }
 
 function renderWorkspace(workspace, active = false) {
-  return `<main id="labs-workspace-${workspace.id}" class="az-labs-workspace" data-workspace-panel="${workspace.id}" aria-label="${workspace.model} workspace"${active ? '' : ' hidden'}>
+  return `<section id="labs-workspace-${workspace.id}" class="az-labs-workspace" data-workspace-panel="${workspace.id}" aria-label="${workspace.model} workspace"${active ? '' : ' hidden'}>
     <header class="az-labs-hero">
       <div>
         <p class="az-kicker">AIZANOI LABS / PROTOTYPE</p>
@@ -52,7 +52,7 @@ function renderWorkspace(workspace, active = false) {
         <p class="az-labs-hint">One local video attachment is reserved for this experiment.</p>
       </article>
     </section>
-  </main>`;
+  </section>`;
 }
 
 function renderCards() {

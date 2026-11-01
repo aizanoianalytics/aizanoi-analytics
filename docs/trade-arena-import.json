@@ -1158,12 +1158,12 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "fd5118a1838cbbf76f5a7bfa1262e2faf458520dd23bffb80288d521c07c122f",
+      "sha256": "b98a402d59362f21f5d5da065e3ef0e11f9d914d80388d76980ac9103fe41520",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "cd5bcdb7b5c34f762b0118bd44fc57a0fc01f29ffa4a87a3365ce355300667dc",
+      "sha256": "69db09c8fc03b865c3029d8e2eb02b315a23b66765f109a7b446f0db67f10bf4",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {

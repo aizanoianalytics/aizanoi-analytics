@@ -89,6 +89,7 @@
         if (!value) {
           face.classList.remove('ph-back');
           face.classList.add('ph-empty');
+          face.setAttribute('role', 'img');
           face.setAttribute('aria-label', 'Undealt community card');
         }
         board.appendChild(face);
