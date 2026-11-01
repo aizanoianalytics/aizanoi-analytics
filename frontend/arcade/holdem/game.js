@@ -534,6 +534,23 @@
   });
   $('ph-stack').addEventListener('change', preview);
   $('ph-show').addEventListener('click', showHuman);
+  function resetEnd() {
+    $('ph-end').textContent = 'End match';
+    $('ph-end').dataset.armed = '';
+  }
+  $('ph-end').addEventListener('click', () => {
+    if (!$('ph-end').dataset.armed) {
+      $('ph-end').dataset.armed = '1';
+      $('ph-end').textContent = 'Confirm: end match';
+      return;
+    }
+    resetEnd();
+    generation++;
+    cleanup();
+    render();
+    $('ph-ticker').textContent = 'Match ended. No hidden cards were shown. Press Start for a new match.';
+    $('ph-start').focus({ preventScroll: true });
+  });
   $('ph-fold').addEventListener('click', () => submit({ type: 'fold' }));
   $('ph-check').addEventListener('click', () => {
     const legal = limits();
@@ -548,9 +565,15 @@
 
   document.addEventListener('keydown', event => {
     if (!$('ph-pass').hidden) {
-      if (event.key === 'Tab') {
+      if (event.key === 'Escape') {
         event.preventDefault();
+        resetEnd();
         $('ph-show').focus();
+      } else if (event.key === 'Tab') {
+        event.preventDefault();
+        const order = [$('ph-show'), $('ph-end')];
+        const at = order.indexOf(document.activeElement);
+        order[(at + (event.shiftKey ? order.length - 1 : 1)) % order.length].focus();
       }
       return;
     }
