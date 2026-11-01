@@ -249,9 +249,9 @@ test('Audit — dashboard load failures route to showError', () => {
   assert.match(dashboard, /if \(!response\.ok\) throw new Error\(`Market data unavailable/);
   // loadMarket failures and the top-level Promise.all bootstrap both route
   // through showError. The compact close-price UX keeps this contract.
-  const catchShowError = /\.catch\(showError\)/g;
-  const matches = dashboard.match(catchShowError) || [];
-  assert.ok(matches.length >= 2, `expected at least two .catch(showError) handlers, found ${matches.length}`);
+  // selectMarket is the single load entry point (initial load, switch, retry, popstate).
+  assert.match(dashboard, /function selectMarket[\s\S]*?\.catch\(error => \{[\s\S]*?showError\(error\)/);
+  assert.match(dashboard, /function errorCause/);
 });
 
 // ---------------------------------------------------------------------------
