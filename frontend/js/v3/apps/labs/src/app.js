@@ -27,7 +27,7 @@ function shell(body) {
 }
 
 function renderWorkspace(workspace, active = false) {
-  return `<main id="labs-workspace-${workspace.id}" class="az-labs-workspace" data-workspace-panel="${workspace.id}" aria-label="${workspace.model} workspace"${active ? '' : ' hidden'}>
+  return `<section id="labs-workspace-${workspace.id}" class="az-labs-workspace" data-workspace-panel="${workspace.id}" aria-label="${workspace.model} workspace"${active ? '' : ' hidden'}>
     <header class="az-labs-hero">
       <div>
         <p class="az-kicker">AIZANOI LABS / PROTOTYPE</p>
@@ -52,7 +52,7 @@ function renderWorkspace(workspace, active = false) {
         <p class="az-labs-hint">One local video attachment is reserved for this experiment.</p>
       </article>
     </section>
-  </main>`;
+  </section>`;
 }
 
 function renderCards() {
@@ -66,7 +66,7 @@ export function createLabsApp({ apps }) {
   return {
     async mount(container) {
       container.replaceChildren();
-      const tabs = Object.values(WORKSPACES).map((workspace, index) => `<button class="az-button${index === 0 ? ' is-active' : ''}" type="button" data-workspace-tab="${workspace.id}" aria-controls="labs-workspace-${workspace.id}" aria-selected="${index === 0}">${workspace.model}</button>`).join('');
+      const tabs = Object.values(WORKSPACES).map((workspace, index) => `<button class="az-button${index === 0 ? ' is-active' : ''}" type="button" data-workspace-tab="${workspace.id}" aria-controls="labs-workspace-${workspace.id}" aria-pressed="${index === 0}">${workspace.model}</button>`).join('');
       container.innerHTML = shell(`<nav class="az-labs-switcher" aria-label="Labs experiments">${tabs}</nav>${Object.values(WORKSPACES).map((workspace, index) => renderWorkspace(workspace, index === 0)).join('')}${renderCards()}`);
       const mediaCleanup = [];
       Object.values(WORKSPACES).forEach((workspace) => {
@@ -120,7 +120,8 @@ export function createLabsApp({ apps }) {
           const selected = workspace.id === id;
           panel.hidden = !selected;
           tab.classList.toggle('is-active', selected);
-          tab.setAttribute('aria-selected', String(selected));
+          tab.setAttribute('aria-pressed', String(selected));
+          if (!selected) panel.querySelector('video')?.pause();
         });
       }
       function handleClick(event) {

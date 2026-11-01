@@ -86,7 +86,7 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
 - Menu offers Begin (classic seed), New descent (fresh seed), Daily
   descent (shared `aizo-daily-YYYY-MM-DD` seed, no server), Continue for
   saved runs, and Settings. The settings surface covers assist mode,
-  auto-fire reserve, master/music/effects volumes, shake, quality,
+  auto-fire reserve, master/effects volumes (no music track is shipped), shake, quality,
   damage numbers, high contrast, left-handed layout and reduced motion;
   all persist under `aizanoi.dungeon.settings.v1` and apply immediately.
   Local meta (`aizanoi.dungeon.meta.v1`) stores up to 20 run-history entries,

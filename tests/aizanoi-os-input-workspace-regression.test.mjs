@@ -19,13 +19,19 @@ test('Signal Snake keeps keyboard restart available and renders a legible New Ga
   const source = read('frontend/js/v3/apps/games/assets/snake.js');
   assert.match(source, /window\.addEventListener\('keydown', onKey\)/);
   assert.match(source, /\(e\.key === ' ' \|\| e\.key === 'Enter'\) && over/);
-  assert.match(source, /btn\.textContent = 'New Game'/);
-  assert.match(source, /background:#5265db;color:#fff/);
+  // The shared cabinet toolbar renders the visible "New game" control; arcade.css makes it legible.
+  const utils = read('frontend/js/v3/apps/games/assets/game-utils.js');
+  const css = read('frontend/js/v3/apps/games/assets/arcade.css');
+  assert.match(utils, /add\('restart', 'New game', onRestart\)/);
+  assert.match(source, /toolbar\(/);
+  assert.match(css, /\.az-arcade \.ag-btn/);
 });
 
 test('Mines cancels a pending long-press when touch movement begins', () => {
   const source = read('frontend/js/v3/apps/games/assets/mines.js');
-  assert.match(source, /cell\.addEventListener\('pointermove',[\s\S]*clearTimeout\(longPressTimer\)/);
+  assert.match(source, /function cancelLongPress\(\) \{ if \(longPressTimer\) clearTimeout\(longPressTimer\)/);
+  assert.match(source, /grid\.addEventListener\('pointermove', cancelLongPress\)/);
+  assert.match(source, /grid\.removeEventListener\('pointermove', cancelLongPress\)/);
 });
 
 test('desktop exposes Workspace and Workspace opens at the local root with Photos, Music, Text and Editor', () => {
@@ -38,9 +44,12 @@ test('desktop exposes Workspace and Workspace opens at the local root with Photo
   assert.match(workspace, /if\(!cwd\)cwd=rootId/);
 });
 
-test('frameless utility windows draw a deterministic close glyph', () => {
+test('every window control draws a deterministic SVG glyph rather than a font character', () => {
   const css = read('frontend/styles/shell.css');
-  assert.match(css, /\.az-window-control\[data-action="close"\]::before/);
-  assert.match(css, /rotate\(45deg\)/);
-  assert.match(css, /rotate\(-45deg\)/);
+  const shell = read('frontend/js/v3/shell.js');
+  assert.match(shell, /WINDOW_GLYPHS=Object\.freeze\(\{/);
+  assert.match(shell, /close:glyph\('M4 4l8 8M12 4l-8 8'\)/);
+  assert.match(shell, /data-action="close" aria-label="Close \$\{escapeHtml\(app\.label\)\}"[^>]*>\$\{WINDOW_GLYPHS\.close\}/);
+  assert.doesNotMatch(shell, /data-action="close"[^>]*>×</);
+  assert.match(css, /\.az-window-control svg \{/);
 });

@@ -1,6 +1,6 @@
 @layer shell {
   #az-root { position:fixed; inset:0; overflow:hidden; }
-  .az-shell { position:absolute; inset:0; display:grid; grid-template-rows:34px minmax(0,1fr) 92px; isolation:isolate; background:#dfeaf6 linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)) center / cover no-repeat; background-image:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),url('/assets/wallpapers/aizanoi-temple-aurora.jpg'); }
+  .az-shell { position:absolute; inset:0; display:grid; grid-template-rows:34px minmax(0,1fr) 92px; isolation:isolate; background:var(--az-wall-color) center / cover no-repeat; background-image:var(--az-wall); }
   .az-system-bar { z-index:700; display:flex; align-items:center; gap:7px; min-width:0; padding:0 max(12px,env(safe-area-inset-left)); color:#172033; border-bottom:1px solid rgba(255,255,255,.5); background:rgba(250,252,255,.56); box-shadow:0 1px 14px rgba(45,58,82,.07); backdrop-filter:blur(24px) saturate(150%); -webkit-backdrop-filter:blur(24px) saturate(150%); }
   .az-brand-button,.az-system-menu button,.az-system-action { border:0; background:transparent; color:inherit; cursor:pointer; transition:background var(--az-motion-fast),transform var(--az-motion-fast); }
   .az-brand-button:hover,.az-system-menu button:hover,.az-system-action:hover { background:rgba(255,255,255,.5); }
@@ -19,26 +19,17 @@
   .az-stage { position:relative; min-height:0; overflow:hidden; }
   .az-home-scroll { position:absolute; inset:0; overflow:hidden; }
   .az-desktop { position:relative; width:100%; min-height:100%; }
-  .az-desktop-signature { position:absolute; top:28px; left:30px; display:flex; flex-direction:column; color:rgba(24,39,67,.66); text-shadow:0 1px 10px rgba(255,255,255,.72); }
+  .az-desktop-signature { position:absolute; top:28px; left:30px; display:flex; flex-direction:column; color:var(--az-wall-ink); text-shadow:var(--az-wall-ink-glow); }
   .az-desktop-signature strong { font-size:clamp(28px,2.5vw,40px); font-weight:760; letter-spacing:-.045em; }
-  .az-desktop-signature span { margin-top:-2px; font-size:12px; font-weight:570; letter-spacing:.02em; }
+  .az-desktop-signature span { margin-top:-2px; color:var(--az-wall-ink-soft); font-size:12px; font-weight:600; letter-spacing:.02em; }
   .az-desktop-shortcuts { position:absolute; top:24px; right:24px; display:grid; grid-template-columns:repeat(2,94px); grid-auto-rows:98px; gap:8px 10px; justify-items:center; }
   .az-desktop-shortcut { width:90px; min-height:90px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:6px; padding:5px 4px; border:0; border-radius:13px; background:transparent; color:#162337; text-align:center; cursor:default; transition:background var(--az-motion-fast),transform var(--az-motion-fast); }
   .az-desktop-shortcut:hover { background:rgba(255,255,255,.26); }
   .az-desktop-shortcut:active { transform:scale(.97); }
   .az-desktop-icon { width:58px; height:58px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.72); border-radius:17px; background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(235,242,251,.66)); box-shadow:0 10px 24px rgba(45,60,86,.15),inset 0 1px rgba(255,255,255,.75); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
   .az-desktop-icon img { width:36px; height:36px; filter:drop-shadow(0 3px 4px rgba(30,40,60,.1)); }
-  .az-world-shortcut .az-desktop-icon[data-accent="brass"] { background:linear-gradient(145deg,rgba(255,242,213,.94),rgba(231,190,126,.76)); }
-  .az-world-shortcut .az-desktop-icon[data-accent="rust"] { background:linear-gradient(145deg,rgba(255,227,216,.94),rgba(221,142,112,.76)); }
-  .az-world-shortcut .az-desktop-icon[data-accent="teal"] { background:linear-gradient(145deg,rgba(219,248,246,.94),rgba(111,192,190,.76)); }
-  .az-desktop-label { max-width:88px; padding:2px 5px; border-radius:6px; color:#142033; font-size:11px; font-weight:650; line-height:1.2; text-shadow:0 1px 3px rgba(255,255,255,.9); }
-  .az-session-widget { position:absolute; left:28px; bottom:22px; width:min(360px,calc(100vw - 290px)); min-height:132px; display:grid; grid-template-columns:54px minmax(0,1fr); gap:14px; padding:16px 17px; border:1px solid rgba(255,255,255,.7); border-radius:21px; background:rgba(250,252,255,.46); box-shadow:var(--az-shadow-soft); backdrop-filter:blur(28px) saturate(145%); -webkit-backdrop-filter:blur(28px) saturate(145%); }
-  .az-session-orb { width:50px; height:50px; border-radius:17px; background:radial-gradient(circle at 33% 28%,rgba(255,255,255,.96) 0 5%,transparent 6%),linear-gradient(145deg,#7081ef 0%,#63a8d4 46%,#efa98f 100%); box-shadow:inset 0 1px rgba(255,255,255,.82),0 10px 24px rgba(62,79,132,.18); }
-  .az-session-copy { min-width:0; }
+  .az-desktop-label { max-width:88px; padding:2px 6px; border-radius:7px; background:var(--az-wall-label-bg); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); color:var(--az-wall-ink); font-size:11px; font-weight:650; line-height:1.2; text-shadow:var(--az-wall-ink-glow); }
   .az-eyebrow { display:block; color:#65748a; font:700 11px/1.3 var(--az-font-mono); letter-spacing:.07em; text-transform:uppercase; }
-  .az-session-widget h1 { margin:4px 0 3px; color:#1a2740; font:660 18px/1.15 var(--az-font-ui); letter-spacing:-.02em; }
-  .az-session-widget p { margin:0; color:#536178; font-size:12px; line-height:1.45; }
-  .az-session-actions { display:flex; gap:7px; flex-wrap:wrap; margin-top:10px; }
   .az-aizo-card {
     position:absolute;
     left:28px;
@@ -88,18 +79,25 @@
   .az-window.is-active { opacity:1; transform:none; box-shadow:0 34px 86px rgba(43,54,78,.27),0 7px 22px rgba(43,54,78,.12); }
   .az-window.is-minimized { display:none; }
   .az-window.is-maximized { inset:8px !important; width:auto !important; height:auto !important; border-radius:15px; }
-  .az-window-bar { position:relative; height:var(--az-titlebar); flex:0 0 var(--az-titlebar); display:flex; align-items:center; gap:8px; padding:0 48px 0 14px; border-bottom:1px solid rgba(35,50,75,.08); background:rgba(249,251,254,.86); user-select:none; touch-action:none; backdrop-filter:blur(26px) saturate(145%); -webkit-backdrop-filter:blur(26px) saturate(145%); }
+  .az-window-bar { position:relative; height:var(--az-titlebar); flex:0 0 var(--az-titlebar); display:flex; align-items:center; gap:8px; padding:0 8px 0 16px; border-bottom:1px solid rgba(35,50,75,.08); background:rgba(249,251,254,.86); user-select:none; touch-action:none; backdrop-filter:blur(26px) saturate(145%); -webkit-backdrop-filter:blur(26px) saturate(145%); }
   .az-window-icon { width:19px; height:19px; }
   .az-window-title { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#28354a; font-size:12px; font-weight:650; }
   .az-window-context { display:none; }
-  .az-window-controls { order:-1; display:flex; gap:8px; align-items:center; margin-right:5px; }
-  .az-window-control { width:13px; height:13px; display:grid; place-items:center; padding:0; border:1px solid rgba(0,0,0,.08); border-radius:50%; color:transparent; font-size:0; line-height:1; cursor:pointer; transition:filter var(--az-motion-fast),transform var(--az-motion-fast); }
-  .az-window-control:hover { filter:brightness(.94); transform:scale(1.06); }
-  .az-window-control[data-action="close"] { order:1; background:#ff6158; }
-  .az-window-control[data-action="minimize"] { order:2; background:#ffbd2e; }
-  .az-window-control[data-action="maximize"] { order:3; background:#28c840; }
-  .az-window-control[data-action="menu"] { position:absolute; top:8px; right:8px; order:4; width:34px; height:32px; border:0; border-radius:9px; background:transparent; color:#617087; font-size:17px; letter-spacing:1px; }
-  .az-window-control[data-action="menu"]:hover { background:rgba(60,76,103,.08); transform:none; filter:none; }
+  /* AizanoiOS window controls: labelled icon buttons on the right, one glyph set
+     (inline SVG from shell.js) for every window. Close is the only one that turns
+     to a warm danger tone, so it is recognisable without colour-only cues. */
+  .az-window-title { flex:1; }
+  .az-window-controls { display:flex; align-items:center; gap:2px; margin-left:auto; }
+  .az-window-control { width:var(--az-control); height:var(--az-control); display:grid; place-items:center; padding:0; border:0; border-radius:9px; background:transparent; color:#4c5a70; cursor:pointer; transition:background var(--az-motion-fast),color var(--az-motion-fast); }
+  .az-window-control svg { width:16px; height:16px; pointer-events:none; }
+  .az-window-control[hidden] { display:none; }
+  .az-window-control:hover { background:rgba(60,76,103,.09); color:var(--az-text); }
+  .az-window-control:active { background:rgba(60,76,103,.15); }
+  .az-window-control:focus-visible { outline:2px solid var(--az-focus); outline-offset:1px; }
+  .az-window-control[data-action="close"]:hover,.az-window-control[data-action="close"]:focus-visible { background:#c2412f; color:#fff; }
+  .az-window-control[data-action="close"]:active { background:#a5352a; }
+  .az-window-control[data-action="menu"] { margin-right:4px; }
+  .az-window:not(.is-active) .az-window-control:not(:hover) { color:#7b8798; }
   .az-window-body { min-height:0; flex:1; overflow:auto; background:#f7f9fc; color:var(--az-text); }
   .az-resize-handle { position:absolute; z-index:6; opacity:0; }
   .az-resize-handle[data-edge="n"],.az-resize-handle[data-edge="s"] { left:12px; right:12px; height:8px; cursor:ns-resize; }
@@ -124,19 +122,14 @@
     .az-brand-button { min-height:44px; }
     .az-system-menu button { min-height:44px; }
     .az-system-action { width:44px; height:44px; }
-    .az-window-control { width:44px; height:44px; border:0; background:transparent !important; }
-    .az-window-control::before { content:""; width:14px; height:14px; border-radius:50%; box-shadow:inset 0 0 0 1px rgba(0,0,0,.08); }
-    .az-window-control[data-action="close"]::before { background:#ff6158; }
-    .az-window-control[data-action="minimize"]::before { background:#ffbd2e; }
-    .az-window-control[data-action="maximize"]::before { background:#28c840; }
-    .az-window-control[data-action="menu"] { width:44px; height:44px; top:2px; }
+    .az-window-control { width:var(--az-control-touch); height:var(--az-control-touch); border-radius:12px; }
+    .az-window-control svg { width:18px; height:18px; }
   }
 
   @media (max-width:1199px) {
     .az-shell { grid-template-rows:42px minmax(0,1fr) 82px; }
     .az-system-bar { padding-inline:12px; }
     .az-desktop-shortcuts { top:20px; right:18px; grid-template-columns:repeat(2,90px); }
-    .az-session-widget { left:20px; bottom:22px; width:min(360px,calc(100vw - 240px)); }
     .az-window { left:3% !important; top:3% !important; width:94% !important; height:94% !important; min-width:0; min-height:0; }
     .az-window-bar { height:var(--az-titlebar-touch); flex-basis:var(--az-titlebar-touch); }
     .az-resize-handle { display:none; }
@@ -147,7 +140,6 @@
     .az-desktop { min-height:max(100%,700px); padding:18px 18px 110px; }
     .az-desktop-signature { position:static; margin:6px 4px 18px; }
     .az-desktop-shortcuts { position:static; display:grid; grid-template-columns:repeat(3,minmax(84px,1fr)); grid-auto-rows:auto; gap:8px; justify-items:center; }
-    .az-session-widget { position:static; width:min(100%,500px); margin:24px auto 0; }
   }
   @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-shell { grid-template-rows:48px minmax(0,1fr) var(--az-bottom-nav); }
@@ -164,10 +156,6 @@
     .az-desktop-shortcuts { grid-template-columns:repeat(3,minmax(84px,1fr)); }
     .az-desktop-shortcut { width:88px; min-height:88px; }
     .az-desktop-icon { width:54px; height:54px; }
-    .az-session-widget { grid-template-columns:46px minmax(0,1fr); gap:12px; padding:14px; border-radius:18px; }
-    .az-session-orb { width:44px; height:44px; border-radius:15px; }
-    .az-session-widget h1 { font-size:17px; }
-    .az-session-widget p { font-size:12px; }
     .az-task-shelf-wrap { padding:4px 8px max(6px,env(safe-area-inset-bottom)); }
     .az-task-shelf { width:100%; min-height:58px; max-width:none; gap:1px; padding:4px 5px; border-radius:17px; overflow-x:auto; justify-content:flex-start; scrollbar-width:none; }
     .az-task-shelf::-webkit-scrollbar { display:none; }
@@ -188,11 +176,11 @@
     .az-desktop-context { display:none !important; }
   }
 
-
   /* Per-app shell finalization previously lived in tool-windows.css; it is part of shell ownership. */
 
-  /* Calculator, Winamp and Arcade are objects of their own. The OS still owns
-     lifecycle/focus/routing, but it does not draw a second visible frame. */
+  /* Calculator, Winamp and Arcade are objects of their own: no second visible
+     frame, but the same controls as every other window, gathered in a floating
+     glass cluster (menu, minimize, close). Maximize is not offered for them. */
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) {
     overflow:visible;
     border:0;
@@ -203,11 +191,11 @@
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]).is-active { box-shadow:none; }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-bar {
     position:absolute;
-    top:8px;
-    right:8px;
+    top:10px;
+    right:10px;
     z-index:45;
-    width:34px;
-    height:34px;
+    width:auto;
+    height:auto;
     min-height:0;
     flex:0 0 auto;
     padding:0;
@@ -221,50 +209,31 @@
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-icon,
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-title,
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-context,
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:not([data-action="close"]),
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="maximize"],
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-resize-handle {
     display:none;
   }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-controls {
-    width:34px;
-    height:34px;
+    gap:2px;
     margin:0;
-    gap:0;
+    padding:3px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:13px;
+    background:rgba(17,25,40,.72);
+    box-shadow:0 8px 22px rgba(13,20,34,.24);
     pointer-events:auto;
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
   }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"] {
-    position:relative;
-    width:32px;
-    height:32px;
-    display:grid;
-    place-items:center;
-    overflow:hidden;
-    padding:0;
-    border:1px solid rgba(255,255,255,.52);
-    border-radius:50%;
-    appearance:none;
-    background:rgba(17,25,40,.86) !important;
-    box-shadow:0 7px 22px rgba(13,20,34,.2);
-    color:transparent !important;
-    font-size:0 !important;
-    pointer-events:auto;
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control { width:28px; height:28px; border-radius:9px; color:rgba(255,255,255,.86); }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:hover { background:rgba(255,255,255,.14); color:#fff; }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="menu"] { margin-right:0; }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]:hover,
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]:focus-visible { background:#c2412f; color:#fff; }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:focus-visible { outline:2px solid #fff; outline-offset:1px; }
+  @media (pointer:coarse) {
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control { width:var(--az-control-touch); height:var(--az-control-touch); }
   }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::before,
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::after {
-    content:'';
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:13px;
-    height:2px;
-    border-radius:999px;
-    background:#fff;
-    transform-origin:center;
-  }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::before { transform:translate(-50%,-50%) rotate(45deg); }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::after { transform:translate(-50%,-50%) rotate(-45deg); }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-body {
     min-height:100%;
     overflow:hidden;
@@ -393,7 +362,6 @@
     place-items:center;
   }
   .az-arcade-cabinet > * { max-width:100%; }
-  .az-blockfall canvas { touch-action:none; }
 
   @media (max-width:1199px) {
     .az-window[data-app-id="camera"] .az-camera-stage { max-height:360px; }
@@ -432,7 +400,6 @@
     .az-arcade-session-head h3 { font-size:22px; }
     .az-arcade-cabinet { align-items:start; }
   }
-
 
 /* Calculator: compact, predictable four-column keypad. Window geometry is owned by shell.js. */
   .az-window[data-app-id="calculator"] .az-calculator-shell {
@@ -507,7 +474,6 @@
     color:#fff;
   }
 
-
   /* Camera startup/privacy state. */
   .az-window[data-app-id="camera"] .az-camera-privacy {
     display:flex;
@@ -526,14 +492,16 @@
     color:#4053bd;
   }
 
-
   /* Winamp remains intentionally player-like without another title bar. */
   .az-window[data-app-id="winamp"] .az-winamp-shell {
     display:grid;
     place-items:center;
-    padding:18px;
+    padding:0;
+    background:transparent;
   }
   .az-window[data-app-id="winamp"] .az-winamp {
+    border-radius:22px;
+    box-shadow:0 24px 64px rgba(35,47,72,.28);
     width:min(100%,440px);
     max-width:none;
     margin:0;
@@ -547,9 +515,10 @@
     font-size:11px;
     letter-spacing:.08em;
   }
+  /* keep the deck's own caption clear of the floating window controls */
+  .az-window[data-app-id="winamp"] .az-winamp-brand { padding-right:104px; }
   .az-window[data-app-id="winamp"] .az-winamp-brand strong { font-size:13px;letter-spacing:.14em; }
   .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#a8b8ce;letter-spacing:0; }
-
 
   /* Recycle Bin uses one clean toolbar inside the OS window. */
   .az-window[data-app-id="recycle-bin"] .az-recycle-actions > strong {
@@ -557,7 +526,6 @@
     color:#25334a;
     font-size:12px;
   }
-
 
   /* Analytics Sets: catalog first, collection detail second. */
   .az-window[data-app-id="analytics"] .az-analytics-app {

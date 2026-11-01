@@ -391,6 +391,8 @@
   text-align: center;
 }
 
+.ph-pass-card button { min-height: 44px; }
+.ph-pass-card .ph-end { display: block; margin: 10px auto 0; width: 100%; background: transparent; color: #f4c6d0; border: 1px solid #6b819e; }
 .ph-pass-card h2 { margin: 0 0 14px; }
 .ph-pass-card p { color: #d2dfee; }
 .ph-note { margin: 22px 0; color: #53647a; font-size: 0.9rem; line-height: 1.65; }

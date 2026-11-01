@@ -236,7 +236,8 @@ button:focus-visible, select:focus-visible, a:focus-visible {
   color: #18243a;
 }
 #ap-pass::backdrop { background: #0b0f18; }
-#ap-pass button { width: 100%; }
+#ap-pass button { width: 100%; min-height: 44px; }
+#ap-pass .ap-pass-end { margin-top: 10px; background: transparent; color: #7b3143; border: 1px solid #bdcddd; }
 .ap-rules p, .ap-roster p { line-height: 1.65; }
 #ap-list {
   display: grid;

@@ -1429,7 +1429,7 @@ export function checkDuo(state) {
 
 export function rerollChest(state, chestId) {
   const chest = state.chests.find((item) => item.id === chestId);
-  if (!chest || chest.opened || (chest.rerolls || 0) <= 0) return { rerolled: false };
+  if (!chest || (chest.opened && !chest.draftPending) || (chest.rerolls || 0) <= 0) return { rerolled: false };
   const cost = 20 + state.chapter * 5;
   if (state.player.gold < cost) return { rerolled: false, reason: 'no-gold' };
   state.player.gold -= cost;

@@ -32,7 +32,9 @@ test('calculator, Winamp and Arcade use frameless native tool presentation in th
     assert.ok(shellCss.includes(`data-app-id="${id}"`), `${id} frameless selector missing from shell.css`);
   }
   assert.match(shellCss, /az-window-control\[data-action="close"\]/);
-  assert.match(shellCss, /az-window-control:not\(\[data-action="close"\]\)/);
+  // Object windows keep menu, minimize and close in a floating cluster; only maximize is withheld.
+  assert.match(shellCss, /calculator[^{]*\.az-window-control\[data-action="maximize"\],/);
+  assert.doesNotMatch(shellCss, /az-window-control:not\(\[data-action="close"\]\)/);
   assert.match(shellCss, /az-resize-handle/);
 });
 

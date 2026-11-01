@@ -9,15 +9,13 @@
 }
 
 @layer base {
-  html { background: #dce8f4; }
+  html { background: var(--az-wall-color); }
   body {
     min-height: 100dvh;
     overflow: hidden;
     color: var(--az-text);
-    background-color: #dfeaf6;
-    background-image:
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-      url('/assets/wallpapers/aizanoi-temple-aurora.jpg');
+    background-color: var(--az-wall-color);
+    background-image: var(--az-wall);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -45,7 +43,7 @@
     box-shadow: 0 0 0 2px var(--az-surface-solid), 0 0 0 5px var(--az-focus);
   }
   :is(h1,h2,h3,h4) { letter-spacing: -.02em; text-wrap: balance; }
-  :is(.az-kpi,.az-markets,[data-numeric],time,.az-clock) {
+  :is([data-numeric],time,.az-clock) {
     font-variant-numeric: tabular-nums lining-nums;
   }
   ::selection { background: rgba(89,105,220,.22); color: var(--az-text); }
@@ -69,48 +67,8 @@
   }
   .az-hidden { display: none !important; }
 
-  /* Keep the airy light theme while maintaining WCAG AA contrast for compact metadata. */
-  .az-collection-nav h3,
-  .az-metadata-form > label,
-  .az-meta-list dt { color: #5f6b7c; }
-  .az-record-kind { color: #8f622d; }
-
-  /* Standard windows have traffic lights; object windows own their cross. */
-  .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control:not([data-action="menu"]) {
-    position: relative;
-    width: 26px;
-    height: 26px;
-    padding: 0;
-    border: 0;
-    background: transparent !important;
-    transform: none;
-    filter: none;
-  }
-  .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control:not([data-action="menu"])::before {
-    content: "";
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
-    transition: filter var(--az-motion-fast), transform var(--az-motion-fast);
-  }
-  .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control[data-action="close"]::before { background: var(--az-rust) !important; }
-  .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control[data-action="minimize"]::before { background: var(--az-brass-hi) !important; }
-  .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control[data-action="maximize"]::before { background: var(--az-teal-hi) !important; }
-  .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control:not([data-action="menu"]):hover::before {
-    filter: brightness(.94);
-    transform: scale(1.06);
-  }
-
-  @media (pointer: coarse) {
-    .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control:not([data-action="menu"]) { width: 44px; height: 44px; }
-    .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control:not([data-action="menu"])::before { width: 14px; height: 14px; }
-  }
 
   @media (max-width: 599px), (max-height: 500px) and (max-width: 899px) {
-    .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control[data-action="close"] { width: 44px; height: 44px; }
-    .az-window:not(:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"])) .az-window-control[data-action="close"]::before { width: 14px; height: 14px; }
-
     /* A phone should read as a compact OS, not a horizontally cropped desktop. */
     .az-desktop-shortcuts {
       width: 100%;
@@ -118,24 +76,13 @@
       justify-items: center;
     }
     .az-desktop-shortcut { width: 100%; max-width: 112px; }
-    .az-session-widget { width: 100%; max-width: 100%; overflow: hidden; }
 
-    /* Keep the mobile dock centered and expose the primary apps plus Applications. */
-    [data-dock-app="data-lab"],
-    [data-dock-app="projects"] { display: none; }
+    /* Keep the mobile dock centered. */
     .az-task-shelf { justify-content: center; overflow: hidden; }
 
-    /* Archive becomes a single-column reading surface instead of a squeezed desktop grid. */
+    /* App surfaces never widen past a phone screen. */
     .az-app-shell,
-    .az-archive-layout,
-    .az-app-toolbar,
-    .az-record-stage,
-    .az-record-grid { min-width: 0; width: 100%; max-width: 100%; }
+    .az-app-toolbar { min-width: 0; width: 100%; max-width: 100%; }
     .az-app-shell { overflow-x: hidden; }
-    .az-archive-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .az-archive-toolbar > * { min-width: 0 !important; max-width: 100%; }
-    .az-record-grid { grid-template-columns: 1fr !important; }
-    .az-record-card { min-width: 0; width: 100%; }
-    .az-collection-nav { width: 100%; max-width: 100%; }
   }
 }

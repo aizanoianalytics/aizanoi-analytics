@@ -50,7 +50,13 @@
     };
   }
 
+  function touchKeys() {
+    const all = ['red', 'blue'].flatMap(team => teams[team]);
+    return all.includes('p1') ? 'p1' : all.includes('p2') ? 'p2' : null;
+  }
+
   function selectedSeats() {
+    const owner = touchKeys();
     return ['red', 'blue'].flatMap(team => teams[team].map((value, index) => {
       const human = value === 'p1' || value === 'p2';
       const bot = value === 'custom' && customBot ? customSeat() : byId.get(value);
@@ -66,7 +72,7 @@
         lab: human ? '' : bot.lab,
         ...(bot && bot.custom ? { custom: { ...bot.custom } } : {}),
         shortName: human ? value.toUpperCase() : `${team === 'red' ? 'R' : 'B'}${index + 1}`,
-        input: value === 'p1' ? () => ({ ...touch }) : null
+        input: human && value === owner ? () => ({ ...touch }) : null
       };
     }));
   }
@@ -93,7 +99,11 @@
 
   function syncTouch() {
     const seats = activeSeats || (ready ? selectedSeats() : []);
-    const present = seats.some(seat => seat.human && seat.keys === 'p1');
+    const keys = seats.some(seat => seat.human && seat.keys === 'p1') ? 'p1' : 'p2';
+    const present = seats.some(seat => seat.human && seat.keys === keys);
+    const label = keys === 'p2' ? 'Player 2' : 'Player 1';
+    $('fb-touch').setAttribute('aria-label', `${label} touch controls`);
+    $('fb-stick').setAttribute('aria-label', `Drag to move ${label}`);
     $('fb-touch').hidden = !(coarse.matches && present);
     const enabled = running && activeRun && !paused && present;
     $('fb-stick').disabled = !enabled;

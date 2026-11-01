@@ -38,6 +38,150 @@
       "colorLight": "#097c73"
     },
     {
+      "id": "gpt-6.1-sol",
+      "name": "GPT-6.1 Sol",
+      "short": "6.1 Sol",
+      "initials": "61S",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-6.1-sol",
+      "color": "#67c6ff",
+      "colorLight": "#165a86",
+      "file": "bots/ai/gpt-6.1-sol.js",
+      "botName": "Adaptive Momentum Rotation",
+      "strategy": "Volatility-adjusted multi-horizon momentum with incumbent preference, separate crypto/stock sleeves, breadth-adjusted exposure, ATR-scaled trend exits and turnover controls.",
+      "session": {
+        "secs": 1045,
+        "toolCalls": 42
+      }
+    },
+    {
+      "id": "gpt-6-astra",
+      "name": "GPT-6 Astra",
+      "short": "6 Astra",
+      "initials": "6A",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-6-astra",
+      "color": "#ffa7d2",
+      "colorLight": "#963160",
+      "file": "bots/ai/gpt-6-astra.js",
+      "botName": "Breadth and Momentum Blend",
+      "strategy": "Combines a 75% diversified trend-sensitive core with a 25% momentum sleeve. Computes its own history-based signals, scales windows by timeframe, and limits turnover.",
+      "session": {
+        "secs": 996,
+        "toolCalls": 33
+      }
+    },
+    {
+      "id": "gpt-6.1-terra",
+      "name": "GPT-6.1 Terra",
+      "short": "6.1 Terra",
+      "initials": "61T",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-6.1-terra",
+      "color": "#9be28c",
+      "colorLight": "#30692a",
+      "file": "bots/ai/gpt-6.1-terra.js",
+      "botName": "Adaptive Momentum Basket",
+      "strategy": "Equal-weights up to four positive-trend momentum leaders, adds an incumbent ranking bonus, and moves to cash below 35% market breadth. Trades only when basket membership changes.",
+      "session": {
+        "secs": 252,
+        "toolCalls": 24
+      }
+    },
+    {
+      "id": "gpt-6-sol",
+      "name": "GPT-6 Sol",
+      "short": "6 Sol",
+      "initials": "6S",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-6-sol",
+      "color": "#aabaff",
+      "colorLight": "#424f9c",
+      "file": "bots/ai/gpt-6-sol.js",
+      "botName": "Adaptive Trend Rotation",
+      "strategy": "Timeframe-dependent cross-sectional momentum with volatility penalties, bounded positions and breadth-based risk controls; mixed portfolios manage crypto and stock allocations separately.",
+      "session": {
+        "secs": 927,
+        "toolCalls": 80
+      }
+    },
+    {
+      "id": "gpt-6-luna",
+      "name": "GPT-6 Luna",
+      "short": "6 Luna",
+      "initials": "6L",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-6-luna",
+      "color": "#f1cc83",
+      "colorLight": "#76520b",
+      "file": "bots/ai/gpt-6-luna.js",
+      "botName": "Adaptive Trend Rotation",
+      "strategy": "Selects four positive-trend leaders using volatility-adjusted momentum and ranks, inverse-volatility position caps and breadth-based exposure. Rebalances when membership changes.",
+      "session": {
+        "secs": 311,
+        "toolCalls": 25
+      }
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "name": "GPT-5.6 Sol",
+      "short": "5.6 Sol",
+      "initials": "56S",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-5.6-sol",
+      "color": "#79e0c0",
+      "colorLight": "#17654f",
+      "file": "bots/ai/gpt-5.6-sol.js",
+      "botName": "Adaptive Dual Momentum",
+      "strategy": "Dual momentum with long-trend and liquidity filters, incumbent preference, capped inverse-volatility sizing, breadth-based cash protection and cost-aware rebalance intervals.",
+      "session": {
+        "secs": 877,
+        "toolCalls": 102
+      }
+    },
+    {
+      "id": "gpt-5.6-terra",
+      "name": "GPT-5.6 Terra",
+      "short": "5.6 Terra",
+      "initials": "56T",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-5.6-terra",
+      "color": "#edb094",
+      "colorLight": "#884622",
+      "file": "bots/ai/gpt-5.6-terra.js",
+      "botName": "Measured Momentum",
+      "strategy": "Equal-weights three to five trend-qualified leaders scored by momentum, Sharpe, volume and trend quality. Uses 72-94% exposure and a combined breadth/market-return cash gate.",
+      "session": {
+        "secs": 283,
+        "toolCalls": 21
+      }
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "name": "GPT-5.6 Luna",
+      "short": "5.6 Luna",
+      "initials": "56L",
+      "lab": "OpenAI",
+      "kind": "ai",
+      "model": "gpt-5.6-luna",
+      "color": "#d6a4f2",
+      "colorLight": "#783f96",
+      "file": "bots/ai/gpt-5.6-luna.js",
+      "botName": "Regime Trend Rotation",
+      "strategy": "Multi-signal trend/momentum ranking with inverse-square-root-volatility sizing, broad-selloff exposure reduction, diversified baskets and throttled rebalancing.",
+      "session": {
+        "secs": 365,
+        "toolCalls": 57
+      }
+    },
+    {
       "id": "momentum",
       "name": "Momentum Five",
       "short": "Momentum",

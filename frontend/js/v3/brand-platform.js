@@ -7,6 +7,7 @@ const PHONE_DOCK=Object.freeze(['news','videos','analytics','aizanoi']);
 const PLATFORM_STYLE_HREF='/styles/shell.css';
 const AIZO_X_URL='https://x.com/AizanoiHQ';
 const PUBLIC_EMAIL='aizanoianalytics@protonmail.com';
+const AIZO_YOUTUBE_URL='https://www.youtube.com/@heyaizo/videos';
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 function ensurePlatformStyles(){
@@ -50,6 +51,7 @@ function renderAizoCard(className){
     <div class="az-aizo-actions">
       <a class="az-aizo-action az-aizo-action-primary" href="${AIZO_X_URL}" target="_blank" rel="noopener noreferrer">Follow @AizanoiHQ ↗</a>
       <a class="az-aizo-action" href="mailto:${PUBLIC_EMAIL}">Contact Aizanoi Analytics ↗</a>
+      <a class="az-aizo-action" href="${AIZO_YOUTUBE_URL}" target="_blank" rel="noopener noreferrer">Watch Aizo on YouTube ↗</a>
     </div>
     <a class="az-aizo-email" href="mailto:${PUBLIC_EMAIL}">${PUBLIC_EMAIL}</a>
   </aside>`;
@@ -73,11 +75,15 @@ function renderPhoneHome(){
         <div><span class="az-device-kicker">AIZANOI NEWS</span><h2>Briefings with sources</h2><p>AI, Technology, Economy / Markets and Football in one concise edition.</p></div>
         <button class="az-device-widget-action" type="button" data-app="news">Read</button>
       </article>
-      ${renderAizoCard('az-phone-aizo-card')}
+      <article class="az-phone-widget az-phone-aizo-widget">
+        <div><span class="az-device-kicker">AIZO / ONLINE</span><h2>Aizo is on X.</h2><p>Unfortunately. Short takes from a small piece of ancient marble.</p></div>
+        <a class="az-device-widget-action" href="${AIZO_X_URL}" target="_blank" rel="noopener noreferrer">Follow ↗</a>
+      </article>
     </div>
     <section class="az-phone-apps" aria-label="Aizanoi Analytics apps">
       ${PUBLIC_APPS.map((id)=>deviceAppButton(id,'az-phone-app')).join('')}
     </section>
+    ${renderAizoCard('az-phone-aizo-card')}
   </section>`;
 }
 

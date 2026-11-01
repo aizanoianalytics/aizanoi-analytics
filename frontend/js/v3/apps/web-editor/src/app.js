@@ -1,3 +1,4 @@
+import { createRevisionTracker } from './revision.js';
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const PREVIEW_ROUTE='/web-editor-preview/';
 const MESSAGE_RUN='aizanoi-web-editor-run';
@@ -101,14 +102,17 @@ function mergeLegacySources(html='',css='',js=''){
 
 export async function mountWebEditor({container,options,capabilities}){
   const {filesystem,dialog,notifications,sound}=capabilities;
-  let editorFolderId=null,fileId=null,fileName='Untitled.html',dirty=false,lastSavedAt=null;
+  let editorFolderId=null,fileId=null,fileName='Untitled.html',lastSavedAt=null;
+  const revision=createRevisionTracker();
+  let loadSeq=0,closed=false,tabEscape=false,tabIndent=true;
+  try{tabIndent=localStorage.getItem('aizanoi-web-editor-tab')!=='focus';}catch{}
   let previewRunId=0,pendingPreview=null,previewTimer=null;
   let source=DEFAULT_DOCUMENT;
 
   container.innerHTML=`<div class="az-app-shell az-web-editor">
     <div class="az-web-editor-actions" role="toolbar" aria-label="Web Editor actions">
       <button class="az-button" type="button" data-web-action="new">New</button>
-      <button class="az-button" type="button" data-web-action="open">Open</button>
+      <button class="az-button" type="button" data-web-action="open" aria-expanded="false">Open</button>
       <button class="az-button" type="button" data-web-action="save">Save</button>
       <button class="az-button" type="button" data-web-action="saveas">Save as</button>
       <span class="az-system-spacer"></span>
@@ -117,7 +121,9 @@ export async function mountWebEditor({container,options,capabilities}){
     </div>
     <div class="az-web-editor-layout">
       <section class="az-web-editor-code" aria-label="HTML editor">
-        <textarea class="az-web-editor-text" data-web-source spellcheck="false" aria-label="HTML, CSS and JavaScript source"></textarea>
+        <div class="az-web-editor-tabbar"><span class="az-web-editor-hint" data-web-tab-hint id="az-web-tab-hint"></span><button class="az-button" type="button" data-web-tab-toggle aria-pressed="true">Tab: indent</button></div>
+        <textarea class="az-web-editor-text" data-web-source spellcheck="false" aria-label="HTML, CSS and JavaScript source" aria-describedby="az-web-tab-hint"></textarea>
+        <p class="az-sr-only" role="status" data-web-tab-live></p>
       </section>
       <section class="az-web-editor-preview" aria-label="Preview">
         <span class="az-web-editor-security">sandboxed preview</span>
@@ -146,11 +152,17 @@ export async function mountWebEditor({container,options,capabilities}){
   const consoleOutput=container.querySelector('[data-web-console-output]');
   const projectPanel=container.querySelector('[data-web-projects]');
   const projectList=container.querySelector('[data-web-project-list]');
+  const openBtn=container.querySelector('[data-web-action="open"]');
+  const tabBtn=container.querySelector('[data-web-tab-toggle]');
+  const tabHint=container.querySelector('[data-web-tab-hint]');
+  const tabLive=container.querySelector('[data-web-tab-live]');
+  let tabTimer=null;
+  function announceTab(text){tabLive.textContent='';clearTimeout(tabTimer);tabTimer=setTimeout(()=>{tabLive.textContent=text;},30);}
   editor.value=source;
 
   function renderState(message=''){
     if(message){statusEl.textContent=message;return;}
-    if(dirty){statusEl.textContent=`${fileName} · unsaved changes`;return;}
+    if(revision.dirty){statusEl.textContent=`${fileName} · unsaved changes`;return;}
     if(fileId){
       statusEl.textContent=lastSavedAt?`${fileName} · saved ${lastSavedAt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`:`${fileName} · saved in Editor`;
       return;
@@ -194,7 +206,7 @@ export async function mountWebEditor({container,options,capabilities}){
     clearPreviewTimer();
     clearConsole();
     showPreviewState('Starting preview…');
-    renderState(dirty?'Running preview · unsaved changes':'Running preview');
+    renderState(revision.dirty?'Running preview · unsaved changes':'Running preview');
     preview.src=`${PREVIEW_ROUTE}?run=${runId}`;
     previewTimer=setTimeout(()=>{
       previewTimer=null;
@@ -223,7 +235,7 @@ export async function mountWebEditor({container,options,capabilities}){
     if(event.data.type===MESSAGE_DONE){
       clearPreviewTimer();
       hidePreviewState();
-      renderState(dirty?'Preview ready · unsaved changes':'Preview ready');
+      renderState(revision.dirty?'Preview ready · unsaved changes':'Preview ready');
       return;
     }
     if(event.data.type===MESSAGE_ERROR){
@@ -244,10 +256,13 @@ export async function mountWebEditor({container,options,capabilities}){
     editorFolderId=folder.id;
     return editorFolderId;
   }
-  async function saveFile(asNew=false){
-    source=editor.value;
+  let saving=null;
+  function saveFile(asNew=false){if(saving)return saving;saving=writeFile(asNew).finally(()=>{saving=null;});return saving;}
+  async function writeFile(asNew){
+    const generation=revision.generation,targetId=fileId;
+    let savedName=fileName;
     await ensureEditorFolder();
-    let target=fileId&&!asNew?await filesystem.getNode(fileId):null;
+    let target=targetId&&!asNew?await filesystem.getNode(targetId):null;
     if(target&&target.parent!==editorFolderId)target=null;
     if(!target){
       const requested=await dialog.prompt({
@@ -262,32 +277,39 @@ export async function mountWebEditor({container,options,capabilities}){
       if(!nextName){notifications.notify('Web Editor','Choose a valid HTML file name.','error');return false;}
       const children=await filesystem.childrenOf(editorFolderId);
       const existing=children.find((node)=>node.kind==='file'&&String(node.name||'').toLowerCase()===nextName.toLowerCase());
-      if(existing&&existing.id!==fileId){
+      if(existing&&existing.id!==targetId){
         const choice=await dialog.confirm({title:'File already exists',message:`Replace ${nextName}?`,kind:'warn',confirmLabel:'Replace',cancelLabel:'Cancel'});
         if(choice!=='ok')return false;
       }
       target=existing||null;
-      fileName=nextName;
+      savedName=nextName;
     }else{
-      fileName=target.name;
+      savedName=target.name;
     }
-    const blob=new Blob([source],{type:HTML_MIME});
+    if(closed||generation!==revision.generation)return false;
+    const snap=revision.snapshot(),blob=new Blob([editor.value],{type:HTML_MIME});
+    let savedId;
     if(target){
       await filesystem.updateFileContent(target.id,blob);
-      fileId=target.id;
+      savedId=target.id;
     }else{
-      const created=await filesystem.createFile({name:fileName,parent:editorFolderId,blob,mime:HTML_MIME});
-      fileId=created.id;
+      const created=await filesystem.createFile({name:savedName,parent:editorFolderId,blob,mime:HTML_MIME});
+      savedId=created.id;
     }
-    dirty=false;
+    if(closed||!revision.markSaved(snap))return false;
+    fileId=savedId;
+    fileName=savedName;
     lastSavedAt=new Date();
     renderState();
     sound.play('notification');
-    notifications.notify('Aizanoi Web Editor',`${fileName} saved to Workspace / Editor.`,'system');
-    return true;
+    notifications.notify('Aizanoi Web Editor',`${savedName} saved to Workspace / Editor.${revision.dirty?' Newer edits are still unsaved.':''}`,'system');
+    return !revision.dirty;
   }
   async function resolveUnsaved(){
-    if(!dirty)return true;
+    const generation=revision.generation;
+    if(saving)await saving;
+    if(closed||generation!==revision.generation)return false;
+    if(!revision.dirty)return true;
     const choice=await dialog.confirm({
       title:'Unsaved Web Editor changes',
       message:`Save changes to ${fileName} before continuing?`,
@@ -296,12 +318,16 @@ export async function mountWebEditor({container,options,capabilities}){
       secondaryLabel:'Discard',
       cancelLabel:'Cancel'
     });
+    if(closed||generation!==revision.generation)return false;
     if(choice==='ok')return saveFile(false);
     if(choice==='secondary')return true;
     return false;
   }
   async function loadLegacyProject(folderId,{skipUnsaved=false}={}){
+    const seq=++loadSeq;
     if(!skipUnsaved&&!(await resolveUnsaved()))return false;
+    if(closed||seq!==loadSeq)return false;
+    const editRev=revision.snapshot().rev;
     await ensureEditorFolder();
     const folder=await filesystem.getNode(folderId);
     if(!folder||folder.kind!=='folder')return false;
@@ -314,30 +340,39 @@ export async function mountWebEditor({container,options,capabilities}){
       textOf(filesystem,byName.get('style.css')),
       textOf(filesystem,byName.get('script.js'))
     ]);
+    if(closed||seq!==loadSeq)return false;
+    if(revision.snapshot().rev!==editRev){notifications.notify('Web Editor','You kept typing while the project was loading, so it was not opened. Open it again to replace the text.','error');return false;}
     source=mergeLegacySources(html,css,js);
     editor.value=source;
     fileId=null;
     fileName=validHtmlName(folder.name)||'Imported project.html';
-    dirty=true;
+    revision.baseline();revision.markDirty();
     lastSavedAt=null;
     renderState(`${folder.name} · legacy project loaded · save to convert`);
     runPreview();
     return true;
   }
   async function loadFile(nextFileId,{skipUnsaved=false}={}){
+    const seq=++loadSeq;
     if(!skipUnsaved&&!(await resolveUnsaved()))return false;
+    if(closed||seq!==loadSeq)return false;
+    const editRev=revision.snapshot().rev;
     await ensureEditorFolder();
     const file=await filesystem.getNode(nextFileId);
     if(!file||file.kind!=='file'||!isHtmlFile(file))return false;
     const parent=await filesystem.getNode(file.parent);
+    if(closed||seq!==loadSeq||revision.snapshot().rev!==editRev)return false;
     if(parent?.kind==='folder'&&parent.parent===editorFolderId){
       return loadLegacyProject(parent.id,{skipUnsaved:true});
     }
-    source=await textOf(filesystem,file);
+    const text=await textOf(filesystem,file);
+    if(closed||seq!==loadSeq)return false;
+    if(revision.snapshot().rev!==editRev){notifications.notify('Web Editor','You kept typing while the file was loading, so it was not opened. Open it again to replace the text.','error');return false;}
+    source=text;
     editor.value=source;
     fileId=file.parent===editorFolderId?file.id:null;
     fileName=validHtmlName(file.name)||'Imported.html';
-    dirty=false;
+    revision.baseline();
     lastSavedAt=file.updatedAt?new Date(file.updatedAt):null;
     renderState(fileId?'':'Opened outside Editor · Save will copy this file to Editor');
     runPreview();
@@ -355,31 +390,42 @@ export async function mountWebEditor({container,options,capabilities}){
     projectList.innerHTML=entries.length?entries.map((node)=>{
       const legacy=node.kind==='folder';
       return `<button class="az-web-editor-project" type="button" data-web-open-id="${esc(node.id)}" data-web-open-kind="${legacy?'legacy':'file'}"><span><strong>${esc(node.name)}</strong><small>${legacy?'Legacy 3-file project · opens as one HTML file':'Single HTML file'}</small></span><b>Open</b></button>`;
-    }).join(''):'<p class="az-web-editor-empty">No saved HTML files yet.</p>';
+    }).join(''):'<p class="az-web-editor-empty">No saved HTML files yet.</p><button class="az-button az-button-primary az-web-editor-empty-action" type="button" data-web-action="save">Save this page as the first one</button>';
   }
   async function newFile(){
-    if(!(await resolveUnsaved()))return;
+    const seq=++loadSeq;
+    if(!(await resolveUnsaved())||closed||seq!==loadSeq)return;
     source=DEFAULT_DOCUMENT;
     editor.value=source;
     fileId=null;
     fileName='Untitled.html';
-    dirty=false;
+    loadSeq+=1;
+    revision.baseline();
     lastSavedAt=null;
     renderState();
     runPreview();
     queueMicrotask(()=>editor.focus({preventScroll:true}));
   }
 
-  const handleInput=()=>{source=editor.value;dirty=true;renderState();};
+  const handleInput=()=>{source=editor.value;revision.touch();renderState();};
+  function showProjects(){projectPanel.hidden=false;openBtn.setAttribute('aria-expanded','true');(projectList.querySelector('[data-web-open-id]')||projectPanel.querySelector('[data-web-close-projects]')).focus({preventScroll:true});}
+  function hideProjects(restore){if(projectPanel.hidden)return;projectPanel.hidden=true;openBtn.setAttribute('aria-expanded','false');(restore==='editor'?editor:openBtn).focus({preventScroll:true});}
+  function renderTabMode(){tabBtn.setAttribute('aria-pressed',String(tabIndent));tabBtn.textContent=tabIndent?'Tab: indent':'Tab: move focus';tabHint.textContent=tabIndent?'Tab inserts two spaces. Press Escape, then Tab, to move focus out of the editor.':'Tab moves focus out of the editor.';}
   const handlePointerDown=(event)=>{if(event.target.closest('[data-web-source]'))event.stopPropagation();};
   const handleKeyDown=(event)=>{
+    if(event.target.matches('[data-web-source]')&&event.key==='Escape'&&tabIndent){
+      tabEscape=true;event.stopPropagation();announceTab('Tab key now moves focus. Press Tab to leave the editor.');return;
+    }
+    if(event.key==='Escape'&&!projectPanel.hidden){event.preventDefault();event.stopPropagation();hideProjects();return;}
     if(event.target.matches('[data-web-source]')&&event.key==='Tab'){
+      if(!tabIndent||event.shiftKey||tabEscape||event.ctrlKey||event.altKey||event.metaKey)return;
       event.preventDefault();
       const node=event.target,start=node.selectionStart,end=node.selectionEnd;
       node.setRangeText('  ',start,end,'end');
       node.dispatchEvent(new Event('input',{bubbles:true}));
       return;
     }
+    if(event.target.matches('[data-web-source]')&&tabEscape&&event.key!=='Tab'&&event.key!=='Shift'&&event.key!=='Escape')tabEscape=false;
     if(!(event.ctrlKey||event.metaKey))return;
     if(event.key==='Enter'){event.preventDefault();event.stopPropagation();runPreview();return;}
     if(event.key.toLowerCase()==='s'){
@@ -390,28 +436,32 @@ export async function mountWebEditor({container,options,capabilities}){
   };
   const handleClick=async(event)=>{
     if(event.target.closest('[data-web-console-clear]')){clearConsole();return;}
+    if(event.target.closest('[data-web-close-projects]')){hideProjects();return;}
+    if(event.target.closest('[data-web-tab-toggle]')){tabIndent=!tabIndent;tabEscape=false;try{localStorage.setItem('aizanoi-web-editor-tab',tabIndent?'indent':'focus');}catch{}renderTabMode();return;}
     const openButton=event.target.closest('[data-web-open-id]');
-    if(openButton){
-      const opened=openButton.dataset.webOpenKind==='legacy'
-        ?await loadLegacyProject(openButton.dataset.webOpenId)
-        :await loadFile(openButton.dataset.webOpenId);
-      if(opened)projectPanel.hidden=true;
-      return;
-    }
-    if(event.target.closest('[data-web-close-projects]')){projectPanel.hidden=true;return;}
     const action=event.target.closest('[data-web-action]')?.dataset.webAction;
-    if(!action)return;
+    if(!openButton&&!action)return;
     try{
+      if(openButton){
+        const opened=openButton.dataset.webOpenKind==='legacy'
+          ?await loadLegacyProject(openButton.dataset.webOpenId)
+          :await loadFile(openButton.dataset.webOpenId);
+        if(opened)hideProjects('editor');
+        return;
+      }
       if(action==='run')runPreview();
       else if(action==='save')await saveFile(false);
       else if(action==='saveas')await saveFile(true);
       else if(action==='new')await newFile();
-      else if(action==='open'){await refreshFiles();projectPanel.hidden=false;}
+      else if(action==='open'){if(!projectPanel.hidden)hideProjects();else{await refreshFiles();showProjects();}}
     }catch(error){
-      notifications.notify('Web Editor',error.message,'error');
+      notifications.notify('Web Editor',`${error.message||'Something went wrong.'} Your current text was kept.`,'error');
     }
   };
 
+  const handleBlur=()=>{tabEscape=false;};
+  editor.addEventListener('blur',handleBlur);
+  renderTabMode();
   editor.addEventListener('input',handleInput);
   container.addEventListener('pointerdown',handlePointerDown);
   container.addEventListener('keydown',handleKeyDown);
@@ -426,6 +476,9 @@ export async function mountWebEditor({container,options,capabilities}){
 
   return{
     cleanup(){
+      closed=true;loadSeq+=1;
+      editor.removeEventListener('blur',handleBlur);
+      clearTimeout(tabTimer);
       editor.removeEventListener('input',handleInput);
       container.removeEventListener('pointerdown',handlePointerDown);
       container.removeEventListener('keydown',handleKeyDown);

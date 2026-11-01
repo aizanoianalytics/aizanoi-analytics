@@ -81,10 +81,17 @@
     });
   }
 
+  function padOwnerId() {
+    const ids = running ? activeHumans.map(p => p.id)
+      : ['player-1', 'player-2'].filter(id => $(id === 'player-1' ? 'sr-p1' : 'sr-p2').value !== 'off');
+    return ids.includes('player-1') ? 'player-1' : ids[0] || null;
+  }
+
   function syncPad() {
-    const player = activeHumans.find(p => p.id === 'player-1');
-    const selected = running ? !!player : $('sr-p1').value !== 'off';
-    $('sr-pad').hidden = !(coarse.matches && selected);
+    const ownerId = padOwnerId();
+    const player = activeHumans.find(p => p.id === ownerId);
+    $('sr-pad').hidden = !(coarse.matches && ownerId);
+    $('sr-pad').setAttribute('aria-label', `${ownerId === 'player-2' ? 'Player 2' : 'Player 1'} direction controls`);
     $('sr-pad').querySelectorAll('button').forEach(button => {
       button.disabled = !(running && player && player.enabled);
     });
@@ -445,8 +452,9 @@
         player.enabled = false;
         player.input.enable(false);
         activeHumans.push(player);
-        if (player.id === 'player-1') player.input.attachPad($('sr-pad'));
       });
+      const padOwner = activeHumans.find(player => player.id === padOwnerId());
+      if (padOwner) padOwner.input.attachPad($('sr-pad'));
       activeSeats = entries;
       setRunning(true);
       while (!entries.some(entry => series.wins[entry.id] >= need) &&

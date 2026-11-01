@@ -182,7 +182,7 @@ test('settings persist separately and drive assist defaults', () => {
 
 test('blessing pick screen offers 3 cards with reroll and skip', () => {
   const source = read('src/runtime/GameApp.js');
-  assert.match(source, /showPick\(chest\)/);
+  assert.match(source, /showPick\(chest\b/);
   assert.match(source, /pickChoice\(index\)/);
   assert.match(source, /pickReroll\(\)/);
   assert.match(source, /pickSkip\(\)/);

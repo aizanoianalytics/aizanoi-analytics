@@ -51,7 +51,7 @@ test('desktop shell includes active app chrome, snapping and window motion', () 
   assert.match(os, /data-active-app-title/);
   assert.match(os, /installWindowSnapping/);
   assert.match(os, /installWindowMotion/);
-  assert.match(os, /Math\.hypot/);
+  assert.match(os, /requestAnimationFrame\(\(\)=>\{[\s\S]*el\.animate/); // snapping is animation-only; geometry lives in shell.js
   assert.match(os, /animateWindowFromDock/);
 });
 
@@ -60,8 +60,11 @@ test('app captions and empty states use explicit readable text colors', () => {
   assert.match(read('frontend/styles/components.css'), /\.az-empty-state p\s*\{[^}]*color:\s*#5b6678/s);
 });
 
-test('traffic lights use the AizanoiOS accent palette', () => {
-  assert.match(base, /data-action=\"close\"\]\:\:before \{ background: var\(--az-rust\) !important; \}/);
-  assert.match(base, /data-action=\"minimize\"\]\:\:before \{ background: var\(--az-brass-hi\) !important; \}/);
-  assert.match(base, /data-action=\"maximize\"\]\:\:before \{ background: var\(--az-teal-hi\) !important; \}/);
+test('window controls are neutral glyph buttons; only Close turns to a danger tone', () => {
+  const shellCss = read('frontend/styles/shell.css');
+  // Evidence colours (rust/brass/teal) stay reserved for historical evidence, not chrome.
+  assert.doesNotMatch(base, /az-window-control/);
+  assert.doesNotMatch(shellCss, /az-window-control[^{]*\{[^}]*var\(--az-(rust|brass-hi|teal-hi)\)/);
+  assert.match(shellCss, /\.az-window-control\[data-action="close"\]:hover,\.az-window-control\[data-action="close"\]:focus-visible \{ background:#c2412f; color:#fff; \}/);
+  assert.match(shellCss, /\.az-window-control:focus-visible \{ outline:2px solid var\(--az-focus\)/);
 });

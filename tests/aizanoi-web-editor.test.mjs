@@ -25,7 +25,7 @@ test('Aizanoi Web Editor is a discoverable capability-scoped desktop module',()=
 test('Web Editor uses one source surface and persists one HTML file directly under Editor',()=>{
   assert.match(app,/const HTML_MIME='text\/html'/);
   assert.match(app,/createFolder\(\{name:'Editor',parent:rootId\}\)/);
-  assert.match(app,/createFile\(\{name:fileName,parent:editorFolderId,blob,mime:HTML_MIME\}\)/);
+  assert.match(app,/createFile\(\{name:savedName,parent:editorFolderId,blob,mime:HTML_MIME\}\)/);
   assert.match(app,/updateFileContent\(target\.id,blob\)/);
   assert.match(app,/one HTML file in Workspace \/ Editor/);
   assert.match(app,/data-web-source spellcheck="false"/);

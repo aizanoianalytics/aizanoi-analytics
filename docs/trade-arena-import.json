@@ -7,6 +7,46 @@
       "sourceSha256": "3b7da2a88c21197afeaea17795be149c23af6acc1a48e3cfcb1c440cb6752fde"
     },
     {
+      "path": "bots/ai/gpt-5.6-luna.js",
+      "sha256": "bc78ae0e656c93e133566606729d520c6310a5806d489fd3932878db03be890a",
+      "sourceSha256": "bc78ae0e656c93e133566606729d520c6310a5806d489fd3932878db03be890a"
+    },
+    {
+      "path": "bots/ai/gpt-5.6-sol.js",
+      "sha256": "3de6b018c22db6835da0a4292b577c671ae7565f2171933663f1d16037140ae8",
+      "sourceSha256": "3de6b018c22db6835da0a4292b577c671ae7565f2171933663f1d16037140ae8"
+    },
+    {
+      "path": "bots/ai/gpt-5.6-terra.js",
+      "sha256": "b3c56493ce7a3a6b6640e6e60d8686c5c648f2d63b2d3c608be8255e399792d9",
+      "sourceSha256": "b3c56493ce7a3a6b6640e6e60d8686c5c648f2d63b2d3c608be8255e399792d9"
+    },
+    {
+      "path": "bots/ai/gpt-6-astra.js",
+      "sha256": "73fcfa1d6252ad0aab653041184e77b6e35979f4ac9492d65832aa1b95e50cc2",
+      "sourceSha256": "73fcfa1d6252ad0aab653041184e77b6e35979f4ac9492d65832aa1b95e50cc2"
+    },
+    {
+      "path": "bots/ai/gpt-6-luna.js",
+      "sha256": "04213c0a9f5754b277833e22a899bf63bc90df14566577c3e39eebdbffe00017",
+      "sourceSha256": "04213c0a9f5754b277833e22a899bf63bc90df14566577c3e39eebdbffe00017"
+    },
+    {
+      "path": "bots/ai/gpt-6-sol.js",
+      "sha256": "03bdf5565270272187920c0fd62353c73f6db0a9c47c09b5edd5dd0af79e0e63",
+      "sourceSha256": "03bdf5565270272187920c0fd62353c73f6db0a9c47c09b5edd5dd0af79e0e63"
+    },
+    {
+      "path": "bots/ai/gpt-6.1-sol.js",
+      "sha256": "459f7758fe1de02298c536b16f7deac54af0da1736981eea032cdb35256f6565",
+      "sourceSha256": "459f7758fe1de02298c536b16f7deac54af0da1736981eea032cdb35256f6565"
+    },
+    {
+      "path": "bots/ai/gpt-6.1-terra.js",
+      "sha256": "18a08e9f77b3b2617e143c5eb566df150cb6cdaa09d4d122d0d7246b41b86d04",
+      "sourceSha256": "18a08e9f77b3b2617e143c5eb566df150cb6cdaa09d4d122d0d7246b41b86d04"
+    },
+    {
       "path": "bots/ai/haiku-5-5.js",
       "sha256": "74b3df9ee7f81c2aaf7db8f030ae53fede1ae8fdc83f0a87f2a740916b319da5",
       "sourceSha256": "74b3df9ee7f81c2aaf7db8f030ae53fede1ae8fdc83f0a87f2a740916b319da5"
@@ -33,8 +73,8 @@
     },
     {
       "path": "bots/roster.json",
-      "sha256": "61789485783ddbf78f938717631828df900a5e9cc8cccc20f507a4e8721f219a",
-      "sourceSha256": "61789485783ddbf78f938717631828df900a5e9cc8cccc20f507a4e8721f219a"
+      "sha256": "247575f891d5aee7155d9b0c8087ca859389bc309aa3a48244017cb2386e327a",
+      "sourceSha256": "247575f891d5aee7155d9b0c8087ca859389bc309aa3a48244017cb2386e327a"
     },
     {
       "path": "data/catalog.json",
@@ -43,8 +83,8 @@
     },
     {
       "path": "data/league.json",
-      "sha256": "e38c452a937f0b831937c0f4693c7808f19c4759032f9622cda73b2a99c1cd11",
-      "sourceSha256": "e38c452a937f0b831937c0f4693c7808f19c4759032f9622cda73b2a99c1cd11"
+      "sha256": "87c25ac1097ae491ae61a3cf8e5f1f219f3f456e9251645a15c5259f3e805b01",
+      "sourceSha256": "87c25ac1097ae491ae61a3cf8e5f1f219f3f456e9251645a15c5259f3e805b01"
     },
     {
       "path": "data/raw/context/1d/DXY.json",
@@ -1108,7 +1148,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "88f51582987719f6752a4ce878c52fb1912f5494a1770abfd28c9c7cffaf9403",
+      "sha256": "173c5e99b21fbc3f8d7e9584522ed10428987211e1fded2828909199f3ec0f3c",
       "sourceSha256": "902c9cf8eaa7f66bdbaa9359c02c6621444028e68e39499e560aae2f6deabd69"
     },
     {
@@ -1118,17 +1158,17 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "529f53edec964a3a8118c1e029e573e74b08a9e9841e9796c1ec6ae4e71d7e28",
+      "sha256": "b98a402d59362f21f5d5da065e3ef0e11f9d914d80388d76980ac9103fe41520",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "bb94b0a7b60ace6935f340b36d1c1fc0abb97c7b4ca0b595658b46f1425427c7",
+      "sha256": "69db09c8fc03b865c3029d8e2eb02b315a23b66765f109a7b446f0db67f10bf4",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
       "path": "ui/bot-worker.js",
-      "sha256": "2c94cf6d31c108258dd39591ac85baa471a4dc78a37a0567550bb7952558cf6f",
+      "sha256": "82a021b966fa854f07e10cf655a2a3a2cd7043ba4c03da299a952a6b8dd8b942",
       "sourceSha256": "8c17f093eaf15e8eecff258e1c085d2d60cbbed2f3de11e93d977af68e95975f"
     },
     {
@@ -1187,6 +1227,25 @@
       "path": "ui/web-host.js",
       "sha256": "0aae583180d88845f2b505892b4dd0845f7700d5086ee55cd1e21cfe9ac6a1ac",
       "sourceSha256": null
+    }
+  ],
+  "supplements": [
+    {
+      "date": "2026-11-01",
+      "note": "Owner-supplied eight OpenAI (openai-codex OAuth) bots written under the same 2024-12-31 data cutoff, and the 13-bot Season 1 league recomputed with engine 1.1 and 25-18-15-12-10-8-6-4-2-1 points.",
+      "source": "C:/Users/husey/oc-sandbox/trade-arena (owner workstation)",
+      "paths": [
+        "bots/ai/gpt-6.1-sol.js",
+        "bots/ai/gpt-6-astra.js",
+        "bots/ai/gpt-6.1-terra.js",
+        "bots/ai/gpt-6-sol.js",
+        "bots/ai/gpt-6-luna.js",
+        "bots/ai/gpt-5.6-sol.js",
+        "bots/ai/gpt-5.6-terra.js",
+        "bots/ai/gpt-5.6-luna.js",
+        "bots/roster.json",
+        "data/league.json"
+      ]
     }
   ]
 }

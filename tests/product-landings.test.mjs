@@ -102,15 +102,17 @@ test('Arcade landing matches the four-game module catalog', () => {
   assert.doesNotMatch(html, /Three small playable|three small playable|Three-game/i);
 });
 
-test('Forge exposes repository-backed project status, version, demo and source metadata', () => {
+test('Forge exposes repository-backed project status, version and source metadata', () => {
   const html = read('frontend/forge/index.html');
-  for (const field of ['Status', 'Version', 'Demo', 'Source']) assert.match(html, new RegExp(`<dt>${field}<\\/dt>`));
+  for (const field of ['Status', 'Version', 'Launch', 'Source', 'Docs']) assert.match(html, new RegExp(`<dt>${field}<\\/dt>`));
   assert.match(html, /aizanoianalytics\/aizanoi-analytics/);
   assert.match(html, /AizanoiOS/);
   assert.match(html, /Aizanoi/);
   assert.match(html, /Aizanoi Arcade/);
   assert.match(html, /frontend\/js\/v3\/apps\/games/);
-  assert.match(html, /Four-game repository build/);
+  assert.match(html, /data-release/);
+  assert.match(html, /<script src="\/release\.js"><\/script><script src="\/forge\/release-badge\.js"><\/script>/);
+  assert.doesNotMatch(html, /Four-game repository build|Current repository build<\/dd>/);
   assert.doesNotMatch(html, /tree\/main\/frontend\/games/);
 });
 

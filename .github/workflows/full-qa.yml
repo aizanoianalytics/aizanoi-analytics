@@ -64,7 +64,7 @@ jobs:
           node --test tests/browser/web-editor-layout.test.mjs 2>&1 | tee artifacts/diagnostics/web-editor-browser.log || status=1
           node --test tests/browser/public-social-identity.test.mjs 2>&1 | tee artifacts/diagnostics/public-social-identity.log || status=1
           exit $status
-      - name: App browser suites (calculator, camera, arcade, mobile home)
+      - name: App browser suites (calculator, camera, arcade, mobile home, shell contract, media lifecycle)
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
@@ -73,6 +73,8 @@ jobs:
           node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-browser.log || status=1
           node --test tests/browser/arcade-module.test.mjs tests/browser/arcade-legacy-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-browser.log || status=1
           node --test tests/browser/mobile-home.test.mjs 2>&1 | tee artifacts/diagnostics/mobile-home.log || status=1
+          node --test tests/browser/aizanoi-os-shell-contract.test.mjs 2>&1 | tee artifacts/diagnostics/shell-contract-browser.log || status=1
+          node --test tests/browser/media-apps-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/media-apps-lifecycle-browser.log || status=1
           exit $status
       - name: Aizanoi Markets browser suites
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
@@ -82,6 +84,7 @@ jobs:
           node --test tests/browser/aizanoi-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-markets-browser.log || status=1
           node --test tests/browser/aizanoi-os-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-markets-browser.log || status=1
           node --test tests/browser/app-style-isolation.test.mjs 2>&1 | tee artifacts/diagnostics/app-style-isolation-browser.log || status=1
+          node --test tests/browser/markets-shell-isolation.test.mjs 2>&1 | tee artifacts/diagnostics/markets-shell-isolation-browser.log || status=1
           exit $status
       - name: Tableau extension pilot browser suite
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
@@ -174,12 +177,13 @@ jobs:
         run: |
           set -o pipefail
           node --test tests/dungeon-3d-facade.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-browser.log
-      - name: Dungeon 3D depth
+      - name: Dungeon 3D depth and UX contracts
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
           status=0
           node --test tests/browser/dungeon-3d-depth.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-depth.log || status=1
+          node --test tests/browser/dungeon-3d-ux-a11y.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-ux-a11y.log || status=1
           exit $status
       - name: Labs interaction
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }

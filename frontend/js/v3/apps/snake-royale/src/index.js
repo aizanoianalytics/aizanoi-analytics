@@ -14,6 +14,24 @@ function loadScript(file) {
   }
   return scripts.get(file);
 }
+// One shared stylesheet link for all open Snake Royale windows; removed with the last one.
+let styleUsers = 0;
+function acquireStyles() {
+  let link = document.head.querySelector('link[data-az-snake-royale-css]');
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = '/js/v3/apps/snake-royale/src/app.css';
+    link.dataset.azSnakeRoyaleCss = '';
+    document.head.append(link);
+  }
+  styleUsers++;
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    if (--styleUsers <= 0) { styleUsers = 0; document.head.querySelector('link[data-az-snake-royale-css]')?.remove(); }
+  };
+}
 const node = (tag, cls, text) => {
   const element = document.createElement(tag);
   if (cls) element.className = cls;
@@ -27,20 +45,18 @@ export async function mount({ container }) {
   root.innerHTML = `<div class="sr-app-head"><h2>AI Snake Royale</h2><a href="/arcade/snake-royale/" target="_blank" rel="noopener noreferrer">Full arena ↗</a></div>
     <p>Pick two AI-written bots and watch them fight live.</p>
     <form class="sr-app-form" aria-label="Choose fighters">
-      <label>Fighter A <select name="a" aria-label="Fighter A"></select></label>
-      <label>Fighter B <select name="b" aria-label="Fighter B"></select></label>
-      <label>Series <select name="series"><option value="1">Single fight</option><option value="3">Best of 3</option><option value="5">Best of 5</option></select></label>
-      <label>Speed <select name="speed"><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
-      <div class="sr-app-actions"><button type="submit">Fight</button><button type="button" data-random>Random pair</button><button type="button" data-retry hidden>Retry</button></div>
+      <label>Fighter A <select name="a" aria-label="Fighter A" disabled></select></label>
+      <label>Fighter B <select name="b" aria-label="Fighter B" disabled></select></label>
+      <label>Series <select name="series" disabled><option value="1">Single fight</option><option value="3">Best of 3</option><option value="5">Best of 5</option></select></label>
+      <label>Speed <select name="speed" disabled><option value="260">Slow</option><option value="140" selected>Normal</option><option value="60">Fast</option><option value="0">Instant</option></select></label>
+      <div class="sr-app-actions"><button type="submit" disabled>Fight</button><button type="button" data-random disabled>Random pair</button><button type="button" data-retry hidden>Retry</button></div>
     </form>
     <div class="sr-app-telemetry" aria-label="Arena status"><span data-turn>TURN 0</span><span data-storm>STORM IN 150</span><span>11 × 11 · DUEL</span></div>
     <div class="sr-app-stage"><canvas width="660" height="660" role="img" aria-label="Snake Royale arena"></canvas>
-      <aside aria-live="polite"><div data-cards></div><p data-ticker>Loading fighters…</p><strong data-result hidden></strong></aside></div>
+      <aside aria-label="Fighters"><div data-cards></div><p data-ticker role="status">Loading fighters…</p><strong data-result role="status" hidden></strong></aside></div>
     <p class="sr-app-rules">11×11 board · 100 health · shrinking storm after turn 150 · 400 ms per bot move.</p>`;
   container.append(root);
-  const cssLink = document.createElement('link');
-  cssLink.rel = 'stylesheet'; cssLink.href = '/js/v3/apps/snake-royale/src/app.css';
-  document.head.append(cssLink);
+  const releaseStyles = acquireStyles();
   const get = selector => root.querySelector(selector);
   const a = get('[name=a]'), b = get('[name=b]'), ticker = get('[data-ticker]');
   const result = get('[data-result]'), canvas = get('canvas');
@@ -85,6 +101,7 @@ export async function mount({ container }) {
     }
   }
   function randomPair() {
+    if (bots.length < 2) return;
     const first = Math.floor(Math.random() * bots.length);
     let second = Math.floor(Math.random() * (bots.length - 1));
     if (second >= first) second++;
@@ -92,6 +109,7 @@ export async function mount({ container }) {
   }
   async function fight(event) {
     event.preventDefault();
+    if (bots.length < 2) return;
     cancel();
     result.hidden = true; result.textContent = '';
     const mine = generation;
@@ -174,6 +192,6 @@ export async function mount({ container }) {
   await load();
   return () => {
     closed = true;
-    cancel(); renderer?.destroy(); abort.abort(); cssLink.remove(); root.remove();
+    cancel(); renderer?.destroy(); abort.abort(); releaseStyles(); root.remove();
   };
 }

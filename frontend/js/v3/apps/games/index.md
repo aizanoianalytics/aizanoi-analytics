@@ -34,7 +34,7 @@ The existing game engines are intentionally not rewritten during the ownership m
 
 - `game-utils.js` exposes `window.AizanoiGames` for the four owned game assets;
 - Blockfall exposes `window.AizanoiArcadeBlocks` as an explicit mount/cleanup factory;
-- Snake, Mines and Brick remain self-initializing owned assets and stop their timers/animation loops when their container is disconnected.
+- Snake, Mines and Brick expose mount/dispose factories (`AizanoiArcadeSnake`, `AizanoiArcadeMines`, `AizanoiArcadeBrick`) like Blockfall; `assets/arcade.css` is the shared cabinet stylesheet, loaded ref-counted by the launcher.
 
 These globals are module-internal compatibility surfaces, not public APIs for other AizanoiOS modules. Their legacy inline styling/event patterns are covered by one exact compatibility allow-list in the V3 source guard; the exception must not be widened to the whole module or directory.
 

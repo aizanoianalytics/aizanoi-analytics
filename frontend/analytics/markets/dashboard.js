@@ -281,22 +281,42 @@ function renderPicksView(state, context) {
   return `<section class="market-picks-view" data-panel="picks">${renderPicks.call(context, state)}</section>`;
 }
 
+const STYLE_FILES = ['/analytics/markets/markets.css', '/analytics/markets/markets-ux.css'];
+const styleLeases = new Map();
+
+// Stylesheets are fully scoped, but links this module adds are still owned: reference-counted, and a link that already exists in the page (standalone) is never removed.
+function acquireStyles() {
+  const taken = STYLE_FILES.map(href => {
+    const lease = styleLeases.get(href);
+    if (lease) { lease.count += 1; return href; }
+    const existing = document.querySelector(`link[rel="stylesheet"][href="${href}"]`);
+    if (existing) { styleLeases.set(href, { count:1, link:null }); return href; }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    link.dataset.marketsOwned = '';
+    document.head.appendChild(link);
+    styleLeases.set(href, { count:1, link });
+    return href;
+  });
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    for (const href of taken) {
+      const lease = styleLeases.get(href);
+      if (!lease) continue;
+      lease.count -= 1;
+      if (lease.count > 0) continue;
+      lease.link?.remove();
+      styleLeases.delete(href);
+    }
+  };
+}
+
 export function createMarketsDashboard(container, options = {}) {
   const { compact = false, updateUrl = !compact, readUrl = !compact } = options;
-  if (!document.querySelector('link[href="/analytics/markets/markets.css"],link[data-markets-styles]')) {
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = '/analytics/markets/markets.css';
-    stylesheet.dataset.marketsStyles = '';
-    document.head.appendChild(stylesheet);
-  }
-  if (!document.querySelector('link[href="/analytics/markets/markets-ux.css"],link[data-markets-ux-styles]')) {
-    const ux = document.createElement('link');
-    ux.rel = 'stylesheet';
-    ux.href = '/analytics/markets/markets-ux.css';
-    ux.dataset.marketsUxStyles = '';
-    document.head.appendChild(ux);
-  }
+  const releaseStyles = acquireStyles();
 
   const params = readUrl ? new URLSearchParams(location.search) : new URLSearchParams();
   const state = defaultState();
@@ -352,20 +372,26 @@ export function createMarketsDashboard(container, options = {}) {
     </div>
     <header class="market-product-bar">
       <div class="market-brand-row"><span class="eyebrow">AIZANOI MARKETS</span><span class="market-brand-title">${esc(marketSessionState(state.market).label)}</span></div>
-      <div class="market-switch" role="tablist" aria-label="Market universe">
-        <button type="button" data-market="us" role="tab" aria-selected="${state.market === 'us'}">US</button>
-        <button type="button" data-market="crypto" role="tab" aria-selected="${state.market === 'crypto'}">Crypto</button>
+      <div class="market-switch" role="group" aria-label="Market universe">
+        <button type="button" data-market="us" aria-pressed="${state.market === 'us'}">US</button>
+        <button type="button" data-market="crypto" aria-pressed="${state.market === 'crypto'}">Crypto</button>
       </div>
       <nav class="market-nav" aria-label="Markets views">
-        <a href="${esc(location.pathname)}?market=${esc(state.market)}" data-nav="main" aria-current="${state.view === 'main' ? 'page' : 'false'}">Markets</a>
-        <a href="${esc(location.pathname)}?market=${esc(state.market)}&view=picks" data-nav="picks" aria-current="${state.view === 'picks' ? 'page' : 'false'}">Aizanoi Picks</a>
+        ${['main', 'picks'].map(view => {
+          const label = view === 'main' ? 'Markets' : 'Aizanoi Picks';
+          const current = state.view === view;
+          return compact
+            ? `<button type="button" data-nav="${view}" aria-pressed="${current}">${label}</button>`
+            : `<a href="${esc(location.pathname)}?market=${esc(state.market)}${view === 'picks' ? '&view=picks' : ''}" data-nav="${view}" aria-current="${current ? 'page' : 'false'}">${label}</a>`;
+        }).join('')}
       </nav>
     </header>
     <div class="market-error" data-error hidden role="alert">
-      <p data-error-message></p>
+      <div class="market-error-copy"><strong>Market data could not be loaded</strong><p data-error-message></p></div>
       <button type="button" class="market-error-retry" data-market-retry>Try again</button>
     </div>
     <div data-views></div>
+    <p class="visually-hidden" role="status" data-market-announce></p>
   </div>`;
 
   const query = selector => container.querySelector(selector);
@@ -377,24 +403,51 @@ export function createMarketsDashboard(container, options = {}) {
   function syncControls() {
     all('[data-market]').forEach(button => {
       const active = button.dataset.market === state.market;
-      button.setAttribute('aria-selected', String(active));
+      button.setAttribute('aria-pressed', String(active));
     });
     const brandTitle = query('.market-brand-title');
     if (brandTitle) {
       brandTitle.textContent = marketSessionState(state.market).label;
     }
     all('[data-nav]').forEach(link => {
+      if (link.tagName === 'BUTTON') { link.setAttribute('aria-pressed', String(link.dataset.nav === state.view)); return; }
       link.setAttribute('aria-current', link.dataset.nav === state.view ? 'page' : 'false');
       const viewParam = link.dataset.nav === 'picks' ? '&view=picks' : '';
       link.setAttribute('href', `${location.pathname}?market=${encodeURIComponent(state.market)}${viewParam}`);
     });
   }
 
+  let lastAnnouncedTotal = null;
+  const FOCUS_KEYS = ['data-sort-key', 'data-ranking-preset', 'data-price-mode', 'data-columns-expanded', 'data-table-filter-toggle', 'data-page-action', 'data-chip-key', 'data-export-csv', 'data-exchange', 'data-membership', 'data-min-price', 'data-max-price', 'data-performance-horizon', 'data-performance-op', 'data-performance-min', 'data-performance-max', 'data-ranking-symbol'];
+  // The views are re-rendered wholesale, so keep the keyboard user on the control they just used.
+  function focusSelector(target) {
+    const active = document.activeElement;
+    if (!active || !target.contains(active) || active === target) return '';
+    for (const key of FOCUS_KEYS) {
+      if (active.hasAttribute(key)) {
+        const value = active.getAttribute(key);
+        return value === '' ? `[${key}]` : `[${key}="${CSS.escape(value)}"]`;
+      }
+    }
+    return '';
+  }
   function renderView() {
     const target = query('[data-views]');
     if (!target) return;
+    const restore = focusSelector(target);
+    renderViewContent(target);
+    if (restore) target.querySelector(restore)?.focus({ preventScroll:true });
+  }
+  function renderViewContent(target) {
     if (state.view === 'picks') target.innerHTML = renderPicksView(state, context);
-    else target.innerHTML = renderMain(state, context);
+    else {
+      target.innerHTML = renderMain(state, context);
+      const total = filterRows(context.currentRows(), state).length;
+      if (total !== lastAnnouncedTotal) {
+        if (lastAnnouncedTotal !== null) announce(total ? `${formatNumber(total)} instruments match.` : 'No instruments match these filters.');
+        lastAnnouncedTotal = total;
+      }
+    }
   }
 
   function renderAll() {
@@ -472,37 +525,73 @@ export function createMarketsDashboard(container, options = {}) {
   }
 
   async function loadMarket(market) {
+    if (!context.manifest) {
+      const [manifest, health] = await Promise.all([
+        getJson(`${DATA_ROOT}/manifest.json`, controller.signal),
+        getJson(`${DATA_ROOT}/health.json`, controller.signal).catch(() => null),
+      ]);
+      context.manifest = manifest;
+      context.health = health;
+    }
     if (!context.pulse[market]) {
       context.pulse[market] = await getJson(`${DATA_ROOT}/pulse/${market}.json`, controller.signal).catch(() => null);
     }
     await loadRows(market);
-    renderAll();
+  }
+
+  function announce(text) {
+    const region = query('[data-market-announce]');
+    if (region) region.textContent = text;
+  }
+
+  function setLoading(on) {
+    const skeleton = query('[data-skeleton]');
+    if (skeleton) skeleton.hidden = !on;
+    query('[data-markets-product]')?.setAttribute('aria-busy', String(on));
+  }
+
+  function errorCause(error) {
+    const message = String(error?.message || '');
+    const status = /\((\d{3})\)/.exec(message)?.[1];
+    if (status === '404') return 'The published market snapshot was not found on this server. Data is generated when the site is built, so it can be missing in a local or partial deployment.';
+    if (status) return `The server answered with an error (HTTP ${status}) while loading the snapshot.`;
+    if (error instanceof SyntaxError) return 'The snapshot file was not valid data. It may be mid-publish.';
+    return 'The snapshot could not be reached. Check your connection and try again.';
   }
 
   function showError(error) {
+    if (error?.name === 'AbortError') return;
     const target = query('[data-error]');
     const message = query('[data-error-message]');
     if (!target) return;
+    setLoading(false);
     target.hidden = false;
-    if (message) {
-      message.textContent = 'Market data could not be loaded. Please try again.';
-      target.title = error?.message || '';
-    } else {
-      target.textContent = error?.message || 'Market data could not be loaded.';
-    }
+    if (message) message.textContent = errorCause(error);
+    const views = query('[data-views]');
+    if (views && !context.currentRows().length) views.innerHTML = '<section class="market-empty-state" data-load-failed><h2>No market data to show</h2><p>The controls above still work. Use Try again once the snapshot is available.</p></section>';
+  }
+
+  // One entry point for initial load, market switches and retries; stale answers are dropped.
+  let loadToken = 0;
+  function selectMarket(market) {
+    const token = ++loadToken;
+    state.market = market;
+    const target = query('[data-error]');
+    if (target) target.hidden = true;
+    syncControls();
+    if (!context.rows[market]) { setLoading(true); announce(`Loading ${market === 'crypto' ? 'crypto' : 'US'} market data…`); }
+    return loadMarket(market).then(() => {
+      if (token !== loadToken) return;
+      setLoading(false);
+      renderAll();
+      announce(`${market === 'crypto' ? 'Crypto' : 'US'} market loaded, ${formatNumber(context.currentRows().length)} instruments.`);
+    }).catch(error => {
+      if (token === loadToken) showError(error);
+    });
   }
 
   function retryMarketLoad() {
-    const target = query('[data-error]');
-    if (target) target.hidden = true;
-    const skeleton = query('[data-skeleton]');
-    if (skeleton) skeleton.hidden = false;
-    loadMarket(state.market).then(() => {
-      if (skeleton) skeleton.hidden = true;
-    }).catch(error => {
-      if (skeleton) skeleton.hidden = true;
-      showError(error);
-    });
+    selectMarket(state.market);
   }
 
   function selectRow(symbol) {
@@ -552,12 +641,12 @@ export function createMarketsDashboard(container, options = {}) {
     }
     const marketTarget = event.target.closest('[data-market]');
     if (marketTarget && marketTarget.tagName === 'BUTTON') {
-      state.market = marketTarget.dataset.market;
+      if (marketTarget.dataset.market === state.market) return;
       state.exchange = '';
       state.membership = '';
       state.page = 1;
       state.selectedSymbol = null;
-      loadMarket(state.market).catch(showError);
+      selectMarket(marketTarget.dataset.market);
       return;
     }
     const navTarget = event.target.closest('[data-nav]');
@@ -711,32 +800,22 @@ export function createMarketsDashboard(container, options = {}) {
   container.addEventListener('submit', handleSubmit, { signal: controller.signal });
   container.addEventListener('keydown', handleKey, { signal: controller.signal });
 
-  const skeleton = query('[data-skeleton]');
-  if (skeleton) skeleton.hidden = false;
-  Promise.all([
-    getJson(`${DATA_ROOT}/manifest.json`, controller.signal),
-    getJson(`${DATA_ROOT}/health.json`, controller.signal).catch(() => null),
-  ]).then(([manifest, health]) => {
-    context.manifest = manifest;
-    context.health = health;
-    return loadMarket(state.market);
-  }).then(() => {
-    if (skeleton) skeleton.hidden = true;
-  }).catch((error) => {
-    if (skeleton) skeleton.hidden = true;
-    showError(error);
-  });
+  selectMarket(state.market);
 
-  window.addEventListener('popstate', () => {
-    restoreUrlState(new URLSearchParams(location.search));
-    loadMarket(state.market).catch(showError);
-  }, { signal: controller.signal });
+  // Embedded Markets keeps its filter state local; only the standalone page follows the address bar.
+  if (readUrl) {
+    window.addEventListener('popstate', () => {
+      restoreUrlState(new URLSearchParams(location.search));
+      selectMarket(state.market);
+    }, { signal: controller.signal });
+  }
 
   syncControls();
 
   return () => {
     clearTimeout(searchTimer);
     controller.abort();
+    releaseStyles();
     container.replaceChildren();
   };
 }
