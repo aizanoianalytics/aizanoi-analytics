@@ -84,7 +84,7 @@ test('A03/A04: concurrent edits stay dirty after an in-flight save resolves', as
     tracker.touch(); // user typed "one two"
     const snap = tracker.snapshot();
     const write = (async () => {
-      await new Promise((resolve) => setTimeout(resolve, 25));
+      await new Promise((resolve) => { setTimeout(resolve, 25); });
       return tracker.markSaved(snap);
     })();
     tracker.touch(); // user typed "three" while the write was in flight

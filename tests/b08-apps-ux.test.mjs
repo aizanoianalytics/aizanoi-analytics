@@ -10,7 +10,7 @@ test('Arcade games are mount/dispose factories gated by active window and editab
   assert.match(utils, /is-active/);
   for (const [file, global] of [['snake', 'AizanoiArcadeSnake'], ['mines', 'AizanoiArcadeMines'], ['brick', 'AizanoiArcadeBrick'], ['blockfall', 'AizanoiArcadeBlocks']]) {
     const src = read(`games/assets/${file}.js`);
-    assert.match(src, new RegExp(`window\.${global} = \{ mount \}`));
+    assert.ok(src.includes(`window.${global} = { mount }`), `${file} must expose a mount factory`);
     assert.match(src, /acceptsKey\(container/);
     assert.match(src, /removeEventListener\('(keydown|pointermove|pointerdown)'/);
     assert.doesNotMatch(src, /style\.cssText|style="/);
