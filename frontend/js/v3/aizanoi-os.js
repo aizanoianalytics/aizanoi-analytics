@@ -244,47 +244,31 @@ function installWindowMotion(api) {
  },true);
 }
 
+// Animation only: snap detection and geometry belong to shell.js. After the shell has
+// applied a snap on pointerup, this adapter just eases the window from where it was dropped.
 function installWindowSnapping(api) {
  if(matchMedia('(pointer:coarse)').matches)return;
- const layer=document.querySelector('.az-window-layer');
- const stage=document.querySelector('.az-stage');
- if(!layer || !stage)return;
+ const layer=document.querySelector('.az-window-layer'); if(!layer)return;
  let drag=null;
-
  layer.addEventListener('pointerdown',(event)=>{
  const bar=event.target.closest('[data-window-drag]');
- if(!bar || event.target.closest('button') || innerWidth<1200)return;
+ if(!bar || event.target.closest('button'))return;
  const el=bar.closest('.az-window');
- if(!el || el.classList.contains('is-maximized'))return;
- drag={el,appId:el.dataset.appId,startX:event.clientX,startY:event.clientY};
+ drag=el && !el.classList.contains('is-maximized') ? el : null;
  },true);
-
- document.addEventListener('pointerup',(event)=>{
- const current=drag; drag=null;
- if(!current || innerWidth<1200)return;
- const moved=Math.hypot(event.clientX-current.startX,event.clientY-current.startY);
- if(moved<14)return;
- const stageRect=stage.getBoundingClientRect();
- const edge=28;
- const localX=event.clientX-stageRect.left;
- const side=localX<=edge ? 'left' : localX>=stageRect.width-edge ? 'right' : null;
- if(!side)return;
- const before=current.el.getBoundingClientRect();
- const margin=8, gap=8;
- const width=(stageRect.width-margin*2-gap)/2;
- const height=Math.max(300,stageRect.height-margin*2);
- const left=side==='left' ? margin : stageRect.width-margin-width;
- const top=margin;
- Object.assign(current.el.style,{left:`${left}px`,top:`${top}px`,width:`${width}px`,height:`${height}px`});
- api.store.saveWindowRect(current.appId,{left,top,width,height});
- if(!motionEnabled(api.store) || typeof current.el.animate!=='function')return;
- const after=current.el.getBoundingClientRect();
- const dx=before.left-after.left, dy=before.top-after.top;
- const sx=before.width/after.width, sy=before.height/after.height;
- current.el.animate([
- {transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,transformOrigin:'top left'},
+ document.addEventListener('pointerup',()=>{
+ const el=drag; drag=null;
+ if(!el || !motionEnabled(api.store) || typeof el.animate!=='function')return;
+ const before=el.getBoundingClientRect();
+ requestAnimationFrame(()=>{
+ if(!el.isConnected)return;
+ const after=el.getBoundingClientRect();
+ if(Math.abs(before.width-after.width)<2 && Math.abs(before.height-after.height)<2)return;
+ el.animate([
+ {transform:`translate(${before.left-after.left}px,${before.top-after.top}px) scale(${before.width/after.width},${before.height/after.height})`,transformOrigin:'top left'},
  {transform:'none',transformOrigin:'top left'}
  ],{duration:180,easing:'cubic-bezier(.16,.84,.32,1)'});
+ });
  });
 }
 
