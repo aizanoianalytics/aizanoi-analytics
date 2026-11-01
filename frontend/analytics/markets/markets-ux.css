@@ -11,7 +11,7 @@
 .market-ranking-switch button {
   border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 12px; cursor:pointer; font-weight:600;
 }
-.market-ranking-switch button[aria-selected='true'] { background:var(--blue); color:#fff; border-color:var(--blue); }
+.market-ranking-switch button[aria-pressed='true'] { background:var(--blue); color:#fff; border-color:var(--blue); }
 .market-rankings-grid--single { grid-template-columns:minmax(0, 520px); }
 .market-export-button {
   min-height:38px; padding:8px 13px; border:1px solid var(--line); border-radius:10px; background:#fff; cursor:pointer; font-weight:700;
@@ -48,8 +48,9 @@
 .market-product.is-compact .market-table { min-width:520px; }
 .market-product.is-compact h2 { font-size:20px; }
 
+/* Dark theme belongs to the standalone document only. Embedded Markets (AizanoiOS) is light-only like the shell and must never touch :root/html/body. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  html:has(> body > .market-head), html:has(> body > .market-head) .market-product {
     color-scheme: dark;
     --ink:#e8eef8;
     --muted:#9aa8be;
@@ -59,14 +60,24 @@
     --blue:#7ea0ff;
     --up:#3dcea8;
     --down:#f07186;
+    background:#101826;
   }
-  body { background: radial-gradient(circle at 10% 0, #1a2436 0, transparent 32%), linear-gradient(145deg, #101826, #162033 58%, #101c28); }
-  .market-product-bar, .market-ranking, .market-status-strip, .market-table-wrap, .market-picks-card, .chart-stage, .freshness, .market-drawer {
+  html:has(> body > .market-head) .market-product { background:transparent; }
+  html:has(> body > .market-head) body { background: radial-gradient(circle at 10% 0, #1a2436 0, transparent 32%), linear-gradient(145deg, #101826, #162033 58%, #101c28); }
+  html:has(> body > .market-head) .market-head { background:#101826e6; border-bottom-color:#31425d; }
+  html:has(> body > .market-head) .market-product-bar, html:has(> body > .market-head) .market-ranking, html:has(> body > .market-head) .market-status-strip, html:has(> body > .market-head) .market-table-wrap, html:has(> body > .market-head) .market-picks-card, html:has(> body > .market-head) .chart-stage, html:has(> body > .market-head) .freshness, html:has(> body > .market-head) .market-drawer, html:has(> body > .market-head) .market-pager {
     background:#182233e6; border-color:#31425d;
   }
-  .market-switch button, .market-nav a, .market-raw-mode, .market-table-filter-toggle, .market-export-button, .market-pager-button, .instrument-study-picker label {
+  html:has(> body > .market-head) .market-switch button, html:has(> body > .market-head) .market-nav a, html:has(> body > .market-head) .market-raw-mode, html:has(> body > .market-head) .market-table-filter-toggle, html:has(> body > .market-head) .market-export-button, html:has(> body > .market-head) .market-pager-button, html:has(> body > .market-head) .instrument-study-picker label, html:has(> body > .market-head) .market-ranking-switch button, html:has(> body > .market-head) .market-table-filter-form input, html:has(> body > .market-head) .market-table-filter-form select, html:has(> body > .market-head) .market-table-filter-reset {
     background:#1c2a3e; color:var(--ink); border-color:#31425d;
   }
-  .market-table thead th, .market-table th[data-col="stock"], .market-table td[data-col="stock"] { background:#1a283c; }
-  .market-picks-link, .market-picks-horizon { background:#1c2a3e; }
+  html:has(> body > .market-head) .market-switch button[aria-pressed='true'], html:has(> body > .market-head) .market-ranking-switch button[aria-pressed='true'], html:has(> body > .market-head) .market-nav a[aria-current='page'] { background:var(--blue); color:#101826; border-color:var(--blue); }
+  html:has(> body > .market-head) .market-table thead th, html:has(> body > .market-head) .market-table th[data-col="stock"], html:has(> body > .market-head) .market-table td[data-col="stock"] { background:#1a283c; }
+  html:has(> body > .market-head) .market-table-filter-row th { background:#17243a !important; }
+  html:has(> body > .market-head) .market-table th, html:has(> body > .market-head) .market-table td { border-bottom-color:#26364f; }
+  html:has(> body > .market-head) .market-table tbody tr:nth-child(even) td { background-color:#1b2940; }
+  html:has(> body > .market-head) .market-table tbody tr:hover td { background:#22324a; }
+  html:has(> body > .market-head) .market-table tbody tr.is-selected td { background:#2a3550; }
+  html:has(> body > .market-head) .market-picks-link, html:has(> body > .market-head) .market-picks-horizon { background:#1c2a3e; }
+  html:has(> body > .market-head) .market-error, html:has(> body > .market-head) .market-stale-banner { background:#3a1d28; border-color:#6b2e40; }
 }

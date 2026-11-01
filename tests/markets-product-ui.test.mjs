@@ -25,8 +25,9 @@ test('standalone Markets exposes only Markets and Aizanoi Picks navigation, no l
   for (const legacy of ['Signals', 'Explorer', 'Crypto risk', 'Data health', 'data-view="signals"', 'data-view="explorer"', 'data-view="crypto-risk"', 'data-view="data-health"', 'Rate of change 20']) {
     assert.doesNotMatch(html + dashboard, new RegExp(legacy.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), legacy);
   }
-  assert.match(html + dashboard, /data-nav="main"/);
-  assert.match(html + dashboard, /data-nav="picks"/);
+  assert.match(dashboard, /\['main', 'picks'\]\.map\(view =>/);
+  assert.match(dashboard, /data-nav="\$\{view\}"/);
+  assert.match(dashboard, /'Aizanoi Picks'/);
   assert.match(html, /Aizanoi Picks/);
   assert.match(html, /Markets/);
 });
@@ -61,7 +62,8 @@ test('frontends use market-scoped summaries and shared dashboard code', () => {
   const standalone = read('frontend/analytics/markets/app.js');
   const osApp = read('frontend/js/v3/apps/markets/src/app.js');
   assert.match(shared, /summary\/\$\{market\}\/index\.json/);
-  assert.match(shared, /link\[href=\"\/analytics\/markets\/markets\.css\"\]/);
+  assert.match(shared, /'\/analytics\/markets\/markets\.css'/);
+  assert.match(shared, /function acquireStyles/);
   assert.doesNotMatch(shared, /cache\s*:\s*['"]no-store/);
   assert.match(standalone, /createMarketsDashboard/);
   assert.match(osApp, /createMarketsDashboard/);
