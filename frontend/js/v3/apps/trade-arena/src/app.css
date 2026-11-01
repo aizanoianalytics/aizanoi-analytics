@@ -1,1 +1,7 @@
-.ta-shell{height:100%;min-height:400px;display:flex;flex-direction:column;gap:8px}.ta-shell>a{font-size:12px;min-height:32px;display:flex;align-items:center}.ta-shell-frame{flex:1;width:100%;min-height:350px;border:0;background:#f5f7fb}
+.ta-shell{height:100%;min-height:400px;display:flex;flex-direction:column;gap:10px;padding:10px;box-sizing:border-box}
+.ta-shell-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.ta-shell-head h2{margin:0;font:650 18px/1.2 var(--az-font-ui,system-ui,sans-serif)}
+.ta-shell-head p{margin:2px 0 0;color:#5f6d80;font-size:13px}
+.ta-shell-head .az-button{min-height:44px;display:inline-flex;align-items:center;text-decoration:none}
+.ta-shell-status{margin:0;color:#5f6d80;font-size:13px}
+.ta-shell-frame{flex:1;width:100%;min-height:350px;border:1px solid rgba(43,58,83,.12);border-radius:12px;background:#f5f7fb}
