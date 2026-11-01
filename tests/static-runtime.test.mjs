@@ -62,7 +62,9 @@ test('service worker core precache includes the adaptive shell and remains compl
   assert.match(precache, /\/js\/v3\/module-registry\.generated\.js/);
   assert.match(precache, /\/styles\/device-shell\.css/);
   assert.match(precache, /\/news\/index\.json/);
-  assert.match(precache, /\/assets\/wallpapers\/aizanoi-os-sunrise\.svg/);
+  // The default (Morning) wallpaper the shell actually paints is available offline after install.
+  assert.match(precache, /\/assets\/wallpapers\/aizanoi-morning-1920\.avif/);
+  assert.match(precache, /\/assets\/wallpapers\/aizanoi-morning-portrait-828\.avif/);
   assert.doesNotMatch(precache, /\/styles\/apps\.css|\/js\/v3\/archive-store\.js|\/js\/v3\/apps\//, 'lazy app assets must not be pulled during service-worker install');
 });
 

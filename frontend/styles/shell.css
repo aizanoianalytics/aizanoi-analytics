@@ -193,8 +193,9 @@
 
   /* Per-app shell finalization previously lived in tool-windows.css; it is part of shell ownership. */
 
-  /* Calculator, Winamp and Arcade are objects of their own. The OS still owns
-     lifecycle/focus/routing, but it does not draw a second visible frame. */
+  /* Calculator, Winamp and Arcade are objects of their own: no second visible
+     frame, but the same controls as every other window, gathered in a floating
+     glass cluster (menu, minimize, close). Maximize is not offered for them. */
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) {
     overflow:visible;
     border:0;
@@ -205,11 +206,11 @@
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]).is-active { box-shadow:none; }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-bar {
     position:absolute;
-    top:8px;
-    right:8px;
+    top:10px;
+    right:10px;
     z-index:45;
-    width:34px;
-    height:34px;
+    width:auto;
+    height:auto;
     min-height:0;
     flex:0 0 auto;
     padding:0;
@@ -223,50 +224,31 @@
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-icon,
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-title,
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-context,
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:not([data-action="close"]),
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="maximize"],
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-resize-handle {
     display:none;
   }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-controls {
-    width:34px;
-    height:34px;
+    gap:2px;
     margin:0;
-    gap:0;
+    padding:3px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:13px;
+    background:rgba(17,25,40,.72);
+    box-shadow:0 8px 22px rgba(13,20,34,.24);
     pointer-events:auto;
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
   }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"] {
-    position:relative;
-    width:32px;
-    height:32px;
-    display:grid;
-    place-items:center;
-    overflow:hidden;
-    padding:0;
-    border:1px solid rgba(255,255,255,.52);
-    border-radius:50%;
-    appearance:none;
-    background:rgba(17,25,40,.86) !important;
-    box-shadow:0 7px 22px rgba(13,20,34,.2);
-    color:transparent !important;
-    font-size:0 !important;
-    pointer-events:auto;
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control { width:28px; height:28px; border-radius:9px; color:rgba(255,255,255,.86); }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:hover { background:rgba(255,255,255,.14); color:#fff; }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="menu"] { margin-right:0; }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]:hover,
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]:focus-visible { background:#c2412f; color:#fff; }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:focus-visible { outline:2px solid #fff; outline-offset:1px; }
+  @media (pointer:coarse) {
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control { width:var(--az-control-touch); height:var(--az-control-touch); }
   }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::before,
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::after {
-    content:'';
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:13px;
-    height:2px;
-    border-radius:999px;
-    background:#fff;
-    transform-origin:center;
-  }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::before { transform:translate(-50%,-50%) rotate(45deg); }
-  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::after { transform:translate(-50%,-50%) rotate(-45deg); }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-body {
     min-height:100%;
     overflow:hidden;

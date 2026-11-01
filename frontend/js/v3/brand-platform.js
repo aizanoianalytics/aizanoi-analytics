@@ -7,6 +7,7 @@ const PHONE_DOCK=Object.freeze(['news','videos','analytics','aizanoi']);
 const PLATFORM_STYLE_HREF='/styles/shell.css';
 const AIZO_X_URL='https://x.com/AizanoiHQ';
 const PUBLIC_EMAIL='aizanoianalytics@protonmail.com';
+const AIZO_YOUTUBE_URL='https://www.youtube.com/@heyaizo/videos';
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 function ensurePlatformStyles(){
@@ -50,6 +51,7 @@ function renderAizoCard(className){
     <div class="az-aizo-actions">
       <a class="az-aizo-action az-aizo-action-primary" href="${AIZO_X_URL}" target="_blank" rel="noopener noreferrer">Follow @AizanoiHQ ↗</a>
       <a class="az-aizo-action" href="mailto:${PUBLIC_EMAIL}">Contact Aizanoi Analytics ↗</a>
+      <a class="az-aizo-action" href="${AIZO_YOUTUBE_URL}" target="_blank" rel="noopener noreferrer">Watch Aizo on YouTube ↗</a>
     </div>
     <a class="az-aizo-email" href="mailto:${PUBLIC_EMAIL}">${PUBLIC_EMAIL}</a>
   </aside>`;

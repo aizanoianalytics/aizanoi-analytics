@@ -38,9 +38,12 @@ test('desktop exposes Workspace and Workspace opens at the local root with Photo
   assert.match(workspace, /if\(!cwd\)cwd=rootId/);
 });
 
-test('frameless utility windows draw a deterministic close glyph', () => {
+test('every window control draws a deterministic SVG glyph rather than a font character', () => {
   const css = read('frontend/styles/shell.css');
-  assert.match(css, /\.az-window-control\[data-action="close"\]::before/);
-  assert.match(css, /rotate\(45deg\)/);
-  assert.match(css, /rotate\(-45deg\)/);
+  const shell = read('frontend/js/v3/shell.js');
+  assert.match(shell, /WINDOW_GLYPHS=Object\.freeze\(\{/);
+  assert.match(shell, /close:glyph\('M4 4l8 8M12 4l-8 8'\)/);
+  assert.match(shell, /data-action="close" aria-label="Close \$\{escapeHtml\(app\.label\)\}"[^>]*>\$\{WINDOW_GLYPHS\.close\}/);
+  assert.doesNotMatch(shell, /data-action="close"[^>]*>×</);
+  assert.match(css, /\.az-window-control svg \{/);
 });

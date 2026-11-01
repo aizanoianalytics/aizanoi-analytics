@@ -88,7 +88,7 @@ test('desktop wallpaper survives window lifecycle independently of the document 
     await page.locator('.az-window[data-app-id="calculator"] [data-action="close"]').click();
     await page.evaluate(() => { document.body.style.backgroundImage = 'none'; });
     const wallpaper = await page.locator('.az-shell').evaluate((node) => getComputedStyle(node).backgroundImage);
-    assert.match(wallpaper, /aizanoi-temple-aurora\.jpg/, 'desktop shell must paint wallpaper even when body canvas is unavailable');
+    assert.match(wallpaper, /aizanoi-morning-\d+\.(avif|jpg)/, 'desktop shell must paint the selected (default Morning) wallpaper even when body canvas is unavailable');
     assert.equal(await page.locator('.az-window').count(), 0);
     assert.equal(await page.locator('.az-desktop:visible').count(), 1);
   } finally {
@@ -109,14 +109,17 @@ test('window close affordance is a clean cross for object windows and guidance l
     await page.locator('.az-desktop-shortcut[data-app="calculator"]:visible').click();
     const close = page.locator('.az-window[data-app-id="calculator"] [data-action="close"]');
     const shape = await close.evaluate((node) => ({
-      button: getComputedStyle(node).width,
-      before: getComputedStyle(node, '::before').backgroundColor,
-      beforeRadius: getComputedStyle(node, '::before').borderRadius,
-      after: getComputedStyle(node, '::after').backgroundColor,
+      width: parseFloat(getComputedStyle(node).width),
+      glyph: Boolean(node.querySelector('svg path')),
+      label: node.getAttribute('aria-label'),
+      minimize: getComputedStyle(node.closest('.az-window-controls').querySelector('[data-action="minimize"]')).display,
+      maximize: getComputedStyle(node.closest('.az-window-controls').querySelector('[data-action="maximize"]')).display,
     }));
-    assert.equal(shape.button, '32px', 'object close button should keep its intended hit area');
-    assert.equal(shape.beforeRadius, '999px', 'cross stroke must not be restyled as a circular dot');
-    assert.equal(shape.before, shape.after, 'both cross strokes should be the same color');
+    assert.ok(shape.width >= 28, 'object close button should keep a usable hit area');
+    assert.ok(shape.glyph, 'close draws a vector cross, not a font character');
+    assert.match(shape.label, /^Close /);
+    assert.notEqual(shape.minimize, 'none', 'object windows keep minimize in their floating control cluster');
+    assert.equal(shape.maximize, 'none', 'object windows do not offer maximize');
     await close.click();
     assert.equal(await page.locator('.az-window[data-app-id="calculator"]').count(), 0);
   } finally {

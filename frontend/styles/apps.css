@@ -38,12 +38,12 @@
     background:rgba(248,250,254,.72);
   }
 
-  .az-simple-grid {
+  .az-window-body .az-simple-grid {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
     gap:12px;
   }
-  .az-simple-card {
+  .az-window-body .az-simple-card {
     min-height:150px;
     display:flex;
     flex-direction:column;
@@ -54,23 +54,23 @@
     background:rgba(255,255,255,.78);
     box-shadow:0 5px 18px rgba(41,59,88,.045);
   }
-  .az-simple-card h3 {
+  .az-window-body .az-simple-card h3 {
     margin:0 0 7px;
     font:600 20px/1.2 var(--az-font-ui);
     letter-spacing:-.02em;
     overflow-wrap:anywhere;
   }
-  .az-simple-card p {
+  .az-window-body .az-simple-card p {
     margin-top:0;
     color:var(--az-text-2);
     font-size:12px;
     line-height:1.55;
   }
-  .az-simple-card > .az-button,
-  .az-simple-card > a.az-button {
+  .az-window-body .az-simple-card > .az-button,
+  .az-window-body .az-simple-card > a.az-button {
     margin-top:auto;
   }
-  .az-simple-card small {
+  .az-window-body .az-simple-card small {
     margin-top:auto;
     color:var(--az-text-3);
     font-size:11px;
@@ -922,3 +922,25 @@
 .az-tv-related>span{margin-right:auto;color:#4b5c75;font:700 12px var(--az-font-ui)}
 @media(max-width:750px){.az-tv-media{padding:12px}.az-tv-stage-grid{grid-template-columns:1fr}.az-tv-stage-side{padding:4px 0}.az-tv-stage-side a:first-of-type{margin-top:0}}
 @media(max-width:520px){.az-tv-stage{padding:15px;border-radius:14px}.az-tv-stage-mark{width:38px;height:38px;font-size:19px}.az-tv-frame{border-radius:9px}.az-tv-related>span{flex:0 0 100%}}
+
+@layer apps {
+  /* Camera, Winamp and Calculator states (lifecycle-safe app bodies). */
+  .az-camera-stage[data-flash="on"]::after { content:""; position:absolute; inset:0; background:#fff; opacity:.7; pointer-events:none; animation:az-cam-flash .22s ease-out forwards; }
+  @keyframes az-cam-flash { to { opacity:0; } }
+  .az-camera-off:is([data-cam-state="denied"],[data-cam-state="missing"]) h3 { color:#fecaca; }
+  :is(.az-calc-key,.az-winamp-shell button,.az-camera-shell button):focus-visible { outline:2px solid var(--az-focus); outline-offset:2px; }
+  .az-winamp-empty { display:grid; gap:10px; justify-items:start; }
+  .az-winamp-empty p { margin:0; }
+  .az-winamp-item[aria-current] { font-weight:700; }
+  .az-winamp, .az-winamp-playlist { min-width:0; }
+  /* Winamp buttons sit on a dark deck: give them a dark-deck variant with AA contrast. */
+  .az-winamp .az-button { border-color:#3b4d6b; background:#22304a; color:#e8f5ef; }
+  .az-winamp .az-button:hover { background:#2c3d5c; border-color:#55709a; }
+  .az-winamp .az-button:is(.az-button-primary,[data-winamp="play"]) { border-color:#4ade80; background:#1f5c3f; color:#ffffff; }
+  .az-winamp .az-button:disabled { opacity:.45; }
+  @media (pointer:coarse) {
+    .az-calc-key { min-height:52px; }
+    .az-winamp-row-actions button { min-width:44px; min-height:44px; }
+  }
+  @media (prefers-reduced-motion:reduce) { .az-camera-stage[data-flash="on"]::after { animation:none; opacity:0; } }
+}
