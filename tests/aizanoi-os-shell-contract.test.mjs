@@ -28,8 +28,7 @@ test('min size constant matches CSS and rects use layer coordinates', () => {
   const m = css.match(/\.az-window \{[^}]*min-width:(\d+)px; min-height:(\d+)px/);
   assert.ok(m, 'CSS .az-window min size found');
   assert.ok(shell.includes(`WINDOW_MIN = Object.freeze({ width:${m[1]}, height:${m[2]} })`));
-  const withoutLayerBox = shell.replace(/function layerBox[\s\S]*?\n}\n/, '');
-  assert.doesNotMatch(withoutLayerBox, /innerHeight-1|innerHeight - 1/);
+  assert.doesNotMatch(shell, /el\.getBoundingClientRect\(\)|item\.el\.getBoundingClientRect/);
 });
 
 test('adapter does not write window geometry or persist rects', () => {
