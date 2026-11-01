@@ -8,6 +8,10 @@ Imported runtime ownership: [arena router](../frontend/arcade/trade-arena/index.
 
 Integration adaptations: canonical standalone document, independent AizanoiOS frame lifecycle, local fonts, external scripts only, static stylesheet/data-attribute presentation, allowlisted classic-worker strategy imports replacing Function evaluation, scoped storage, chart cleanup and route teardown. No production CSP changes or backend required. Lightweight Charts is supplied version 4.2.0, copyright TradingView, Apache-2.0 (license header retained); visible TradingView attribution is included. No broader license for the archive is inferred.
 
+## Supplement 2026-11-01
+
+The owner added eight OpenAI strategies (GPT-6.1 Sol, GPT-6.1 Terra, GPT-6 Astra, GPT-6 Sol, GPT-6 Luna, GPT-5.6 Sol, GPT-5.6 Terra, GPT-5.6 Luna). Each was written by its model through the openai-codex OAuth provider in an isolated workspace with the same inputs as the original entrants: BOT_API, engine, CLI runner and historical data cut at 2024-12-31, a 45-minute wall-clock and 50-iteration budget, no rival sources. Their files, the 13-bot roster and the recomputed engine-1.1 Season 1 league (points 25-18-15-12-10-8-6-4-2-1 for places 1-10) are recorded under `supplements` in the byte inventory; the worker allowlist lists exactly the roster's files. Production-log counts for these bots are tool calls, not agent turns. The same provenance limits below apply.
+
 ## Data and provenance limits
 
 This is an owner-supplied historical snapshot, not independently fetched or verified market data. Model names, claimed strategy authorship, session times, cutoff and league outcomes are source labels, not verified model evaluation results. The included league is imported, not recomputed by this integration; its engineNotes refer to a prior league-v1.0.json that the archive does not supply. No unavailable tools or historical league file are advertised as installed. No inference about model intelligence, pretraining isolation, redistribution permissions or future performance is warranted. Paper money only; no live orders, credentials, provider calls or investment advice.

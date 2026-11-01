@@ -32,7 +32,10 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
   }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
   assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.context.length, 7);
-  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'momentum', 'hodl', 'monkey']);
+  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'momentum', 'hodl', 'monkey']);
+  // Every roster strategy must be runnable by the strict-CSP worker, and nothing else.
+  const allowed = read(root + 'ui/bot-worker.js').match(/new Set\(\[([^\]]*)\]\)/)[1].split(',').map(x => x.trim().slice(1, -1));
+  assert.deepEqual(allowed.sort(), roster.bots.map(bot => bot.file).sort());
   assert.ok(!readdirSync(new URL('../' + root, import.meta.url)).some(name => ['tools','docs'].includes(name)));
 });
 
@@ -85,7 +88,7 @@ test('a non-responsive strategy has one absolute hard deadline and close settles
 test('all supplied strategies trade through the actual historical market and simulation engine', async () => {
   const universe = await import('../frontend/arcade/trade-arena/engine/universe.js');
   const series = universe.UNIVERSE.crypto.map(asset => ({ symbol: asset.ticker, name: asset.name, market: 'crypto', sector: 'Crypto', cols: JSON.parse(read(root + 'data/raw/crypto/1d/' + asset.ticker + '.json')) }));
-  const market = prepareMarket(series, { market: 'crypto', tf: '1d', start: Date.parse('2025-01-01'), end: Date.parse('2025-02-01'), seed: 7 }, {}, {});
+  const market = prepareMarket(series, { market: 'crypto', tf: '1d', start: Date.parse('2025-01-01'), end: Date.parse('2025-07-01'), seed: 7 }, {}, {}); // six months: regime-filtered bots may sit in cash through a short bear window
   const bots = roster.bots.map(bot => {
     const sandbox = { module: { exports: {} }, Math: Object.create(Math), console: { log() {} } };
     // Node-only test fixture evaluates the unchanged CommonJS contract; production never evaluates text.
@@ -95,6 +98,6 @@ test('all supplied strategies trade through the actual historical market and sim
     return { id:bot.id, name:bot.name, host };
   });
   const result = await runRace(market, bots, DEFAULT_RULES);
-  assert.equal(result.stats.length, 5);
+  assert.equal(result.stats.length, roster.bots.length);
   for (const stat of result.stats) { assert.equal(stat.errors, 0); assert.equal(stat.retired, null); assert.ok(Number.isFinite(stat.final)); assert.ok(stat.trades > 0, 'strategy must place real trades'); }
 });

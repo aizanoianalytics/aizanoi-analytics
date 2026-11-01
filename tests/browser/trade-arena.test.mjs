@@ -22,7 +22,7 @@ async function withPage(size, run) {
   try { await run(page, errors); } finally { await context.unrouteAll({ behavior:'ignoreErrors' }); await browser.close(); }
 }
 
-test('all five real shipped workers initialize under production CSP and reject arbitrary paths', async () => {
+test('every shipped roster worker initializes under production CSP and arbitrary paths are rejected', async () => {
   await withPage({width:1280,height:900}, async (page,errors) => {
     await page.goto(base + '/arcade/trade-arena/');
     await page.locator('#go').waitFor();
@@ -37,9 +37,10 @@ test('all five real shipped workers initialize under production CSP and reject a
       });
       return Promise.all([...roster.bots.map(bot => bot.file), 'https://example.com/evil.js'].map(load));
     });
-    assert.equal(loaded.length,6);
-    for (const worker of loaded.slice(0,5)) assert.equal(worker.ok,true,JSON.stringify(worker));
-    assert.equal(loaded[5].ok,false); assert.match(loaded[5].error,/Unknown shipped strategy/);
+    const evil = loaded.pop();
+    assert.equal(loaded.length,13);
+    for (const worker of loaded) assert.equal(worker.ok,true,JSON.stringify(worker));
+    assert.equal(evil.ok,false); assert.match(evil.error,/Unknown shipped strategy/);
     assert.deepEqual(errors,[]);
   });
 });
@@ -48,12 +49,13 @@ test('historical race computes real trades for every bot, paints charts, and rea
   await withPage({width:1440,height:1000}, async (page,errors) => {
     await page.goto(base + '/arcade/trade-arena/');
     await page.locator('#go').waitFor();
-    for (const label of await page.locator('#roster label').all()) if (!await label.locator('input').isChecked()) await label.click();
+    // The UI allows six contestants per race; fill the field from the top of the roster.
+    for (const label of await page.locator('#roster label').all()) { const input = label.locator('input'); if (!await input.isChecked() && await input.isEnabled()) await label.click(); }
     await page.locator('#go').click();
     await page.locator('#speeds [data-v="Infinity"]').click();
     await page.locator('dialog.results[open]').waitFor({timeout:100000});
     const rows = page.locator('dialog.results table.stats tbody tr:not(.bench)');
-    assert.equal(await rows.count(),5);
+    assert.equal(await rows.count(),6);
     for (const row of await rows.all()) {
       const values = await row.locator('td').allTextContents();
       assert.ok(Number(values[8]) > 0, 'real executed trade count: ' + values.join('|'));
@@ -117,7 +119,7 @@ for (const width of [390,768,1440]) test(`independent shell launcher and frame t
     await page.goto(base + '/?app=trade-arena');
     const frame = page.frameLocator('iframe.ta-shell-frame');
     await frame.locator('#go').waitFor({timeout:30000});
-    assert.equal(await frame.locator('#roster input').count(),5);
+    assert.equal(await frame.locator('#roster input').count(),13);
     const overflow = await frame.locator('html').evaluate(el => el.scrollWidth - el.clientWidth);
     assert.ok(overflow<=1, `frame overflow at ${width}px: ${overflow}`);
     await frame.locator('#go').click();

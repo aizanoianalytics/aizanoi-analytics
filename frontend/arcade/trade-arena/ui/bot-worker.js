@@ -1,7 +1,7 @@
 // One shipped, allowlisted strategy per classic worker. Not an untrusted-code sandbox.
 (() => {
 let bot = null, loadError = null, logs = 0;
-const allowed = new Set(['bots/ai/sonnet-5-5.js','bots/ai/haiku-5-5.js','bots/house/hodl.js','bots/house/monkey.js','bots/house/momentum.js']);
+const allowed = new Set(['bots/ai/sonnet-5-5.js','bots/ai/haiku-5-5.js','bots/ai/gpt-6.1-sol.js','bots/ai/gpt-6-astra.js','bots/ai/gpt-6.1-terra.js','bots/ai/gpt-6-sol.js','bots/ai/gpt-6-luna.js','bots/ai/gpt-5.6-sol.js','bots/ai/gpt-5.6-terra.js','bots/ai/gpt-5.6-luna.js','bots/house/momentum.js','bots/house/hodl.js','bots/house/monkey.js']);
 self.onmessage = ({ data: { id, type, payload } }) => {
   if (type === 'load') {
     let a = payload.seed >>> 0;
