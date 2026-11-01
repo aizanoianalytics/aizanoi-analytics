@@ -497,9 +497,12 @@
   .az-window[data-app-id="winamp"] .az-winamp-shell {
     display:grid;
     place-items:center;
-    padding:18px;
+    padding:0;
+    background:transparent;
   }
   .az-window[data-app-id="winamp"] .az-winamp {
+    border-radius:22px;
+    box-shadow:0 24px 64px rgba(35,47,72,.28);
     width:min(100%,440px);
     max-width:none;
     margin:0;
@@ -513,6 +516,8 @@
     font-size:11px;
     letter-spacing:.08em;
   }
+  /* keep the deck's own caption clear of the floating window controls */
+  .az-window[data-app-id="winamp"] .az-winamp-brand { padding-right:104px; }
   .az-window[data-app-id="winamp"] .az-winamp-brand strong { font-size:13px;letter-spacing:.14em; }
   .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#a8b8ce;letter-spacing:0; }
 

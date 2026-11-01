@@ -536,6 +536,8 @@
   .az-winamp-item[aria-current] { font-weight:700; }
   .az-winamp, .az-winamp-playlist { min-width:0; }
   /* Winamp buttons sit on a dark deck: give them a dark-deck variant with AA contrast. */
+  .az-camera-off .az-button { border-color:#4a5d7d; background:#22304a; color:#eef4fb; }
+  .az-camera-off .az-button:hover { background:#2c3d5c; }
   .az-winamp .az-button { border-color:#3b4d6b; background:#22304a; color:#e8f5ef; }
   .az-winamp .az-button:hover { background:#2c3d5c; border-color:#55709a; }
   .az-winamp .az-button:is(.az-button-primary,[data-winamp="play"]) { border-color:#4ade80; background:#1f5c3f; color:#ffffff; }
