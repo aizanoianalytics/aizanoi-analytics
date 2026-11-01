@@ -1,8 +1,11 @@
+/* Keep legacy consumers such as Analytics on the same canonical tokens. */
+@import url('/styles/tokens.css');
+
 /* Public product landing pages (TV, Journal, Labs, Forge, Aizanoi, Arcade, Privacy, error pages).
    Link /styles/tokens.css first; this file only consumes --az-* tokens and a per-family --fam accent.
-   Page rules are scoped to body.site so the error pages can reuse the file safely. */
+   Page rules are scoped to body:has(> .site-head) so the error pages can reuse the file safely. */
 @layer landing {
-  body.site {
+  body:has(> .site-head) {
     --fam: var(--az-accent);
     --fam-ink: color-mix(in srgb, var(--fam) 78%, #0b1220);
     --fam-wash: color-mix(in srgb, var(--fam) 10%, transparent);
@@ -19,21 +22,22 @@
     background-attachment: fixed;
     -webkit-text-size-adjust: 100%;
   }
-  body.site *, body.site *::before, body.site *::after { box-sizing: border-box; }
-  body.site.fam-tv { --fam: #3d4f9c; }
-  body.site.fam-journal { --fam: var(--az-brass); }
-  body.site.fam-labs { --fam: var(--az-teal); }
-  body.site.fam-forge { --fam: var(--az-accent); }
-  body.site.fam-worlds { --fam: var(--az-rust); }
-  body.site.fam-arcade { --fam: var(--az-rust); }
-  body.site.fam-privacy { --fam: var(--az-blue); }
-  body.site a { color: var(--fam-ink); text-underline-offset: 3px; }
-  body.site :focus-visible { outline: 3px solid var(--az-focus); outline-offset: 3px; border-radius: 6px; }
-  body.site main { flex: 1 0 auto; width: min(1120px, calc(100% - 2 * var(--gutter))); margin-inline: auto; outline: 0; }
+  body:has(> .site-head) *, body:has(> .site-head) *::before, body:has(> .site-head) *::after { box-sizing: border-box; }
+  body.fam-tv { --fam: #3d4f9c; }
+  body.fam-journal { --fam: var(--az-brass); }
+  body.fam-labs { --fam: var(--az-accent); }
+  body.fam-forge { --fam: var(--az-accent); }
+  body.fam-worlds { --fam: var(--az-rust); }
+  body.fam-arcade { --fam: var(--az-accent); }
+  body.fam-privacy { --fam: var(--az-accent); }
+  body:has(> .site-head) a { color: var(--fam-ink); text-underline-offset: 3px; }
+  body:has(> .site-head) :focus-visible { outline: 3px solid var(--az-focus); outline-offset: 3px; border-radius: 6px; }
+  body:has(> .site-head) main { flex: 1 0 auto; width: min(1120px, calc(100% - 2 * var(--gutter))); margin-inline: auto; outline: 0; }
 
   /* Skip link */
   .skip-link { position: absolute; left: 12px; top: -80px; z-index: 50; min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: var(--az-radius-control); background: var(--az-text); color: #fff; font-weight: 700; text-decoration: none; }
   .skip-link:focus { top: 12px; }
+  body:has(> .site-head) a.skip-link { color: var(--az-canvas-soft); }
 
   /* Header + product navigation */
   .site-head { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 8px var(--gutter); border-bottom: 1px solid var(--az-border); background: var(--az-glass-strong); backdrop-filter: blur(16px) saturate(150%); }
@@ -47,6 +51,8 @@
 
   /* Hero */
   .hero { padding: clamp(40px, 7vw, 96px) 0 clamp(24px, 3vw, 40px); }
+  body:has(> .site-head) > .hero,
+  body:has(> .site-head) > noscript > .grid { width: min(1120px, calc(100% - 2 * var(--gutter))); margin-inline: auto; }
   .eyebrow { display: inline-block; margin: 0; color: var(--fam-ink); font: 800 12px/1.4 var(--az-font-ui); letter-spacing: .14em; text-transform: uppercase; }
   .hero h1 { max-width: 16ch; margin: 10px 0 16px; font: 800 clamp(40px, 7.5vw, 84px)/1.02 var(--az-font-ui); letter-spacing: -.04em; text-wrap: balance; }
   .fam-journal .hero h1, .fam-journal h2 { font-family: var(--az-font-display); font-weight: 700; letter-spacing: -.02em; }
@@ -55,18 +61,26 @@
   .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
   /* Buttons */
-  .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 20px; border: 1px solid var(--fam); border-radius: var(--az-radius-control); background: var(--fam); color: #fff; font: 700 15px/1.2 var(--az-font-ui); text-decoration: none; box-shadow: 0 6px 16px color-mix(in srgb, var(--fam) 28%, transparent); transition: transform var(--az-motion) var(--az-ease-out-expo), box-shadow var(--az-motion); }
-  body.site a.button { color: #fff; }
+  .button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border: 1px solid var(--fam-ink); border-radius: var(--az-radius-control); background: var(--fam-ink); color: #fff; font: 700 15px/1.2 var(--az-font-ui); text-decoration: none; box-shadow: 0 6px 16px color-mix(in srgb, var(--fam) 28%, transparent); transition: transform var(--az-motion) var(--az-ease-out-expo), box-shadow var(--az-motion); }
+  body:has(> .site-head) a.button { color: #fff; }
   .button:hover { transform: translateY(-1px); box-shadow: 0 10px 22px color-mix(in srgb, var(--fam) 32%, transparent); }
   .button.secondary { background: var(--az-surface-2); color: var(--fam-ink); border-color: var(--az-border-strong); box-shadow: none; }
-  body.site a.button.secondary { color: var(--fam-ink); }
+  body:has(> .site-head) a.button.secondary { color: var(--fam-ink); }
   .button.secondary:hover { background: #fff; border-color: var(--fam); box-shadow: none; }
+  .button { white-space: nowrap; }
+  .button:active { transform: translateY(1px); box-shadow: none; }
+  .card { transition: transform var(--az-motion) var(--az-ease-out-expo), box-shadow var(--az-motion), border-color var(--az-motion); }
+  .card:hover { box-shadow: var(--az-shadow-float), inset 0 1px rgba(255, 255, 255, .8); border-color: var(--az-border-strong); }
+  .card:focus-within { border-color: var(--fam); }
+  .card:active { box-shadow: var(--az-shadow-soft); }
+  .card .actions { margin-top: auto; padding-top: 8px; }
   .button.small { min-height: 44px; padding: 0 16px; font-size: 14px; }
 
   /* Chips and status badges */
   .chip { display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border: 1px solid var(--az-border-strong); border-radius: 999px; background: var(--az-surface-2); color: var(--az-text-2); font: 600 12.5px/1 var(--az-font-mono); }
   .badge { display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 10px; border-radius: 999px; background: var(--fam-wash); color: var(--fam-ink); font: 800 11.5px/1 var(--az-font-ui); letter-spacing: .08em; text-transform: uppercase; }
   .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .card > .badge { align-self: flex-start; }
   .badge.is-active { --fam: var(--az-success); }
   .badge.is-experimental { --fam: var(--az-warning); }
   .badge.is-prototype { --fam: var(--az-teal); }
@@ -78,6 +92,7 @@
   .card { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: clamp(18px, 2.4vw, 26px); border: 1px solid var(--az-glass-border); border-radius: var(--az-radius-card); background: var(--az-surface-2); box-shadow: var(--az-shadow-soft), inset 0 1px rgba(255, 255, 255, .8); }
   .card > * { margin: 0; }
   .card h2, .card h3 { font: 750 20px/1.2 var(--az-font-ui); letter-spacing: -.015em; }
+  .fam-journal .card h2 { font-family: var(--az-font-display); font-size: 25px; }
   .card p { color: var(--az-text-2); font-size: 15px; }
   .card p strong { color: var(--az-text); }
   .card .card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 8px; }
@@ -86,7 +101,6 @@
   .muted { color: var(--az-text-3); }
   .section-title { margin: clamp(24px, 4vw, 48px) 0 4px; font: 800 clamp(24px, 3vw, 32px)/1.15 var(--az-font-ui); letter-spacing: -.025em; }
   .fam-labs .card.is-concept { border-style: dashed; border-color: color-mix(in srgb, var(--az-teal) 45%, transparent); }
-  .fam-arcade .card { transition: transform var(--az-motion) var(--az-ease-spring), box-shadow var(--az-motion); }
   .fam-arcade .card:hover { transform: translateY(-3px); box-shadow: var(--az-shadow-float); }
   .card .tag { font: 700 11.5px/1 var(--az-font-mono); letter-spacing: .04em; color: var(--az-text-3); text-transform: uppercase; }
 
@@ -95,7 +109,7 @@
   dt { color: var(--az-text-3); font: 700 12px/1.9 var(--az-font-mono); letter-spacing: .06em; text-transform: uppercase; }
   dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
   .fam-forge dd code, .release { font: 600 13px/1.5 var(--az-font-mono); }
-  dd a { display: inline-flex; align-items: center; min-height: 32px; font-weight: 650; }
+  dd a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 650; overflow-wrap: anywhere; }
 
   /* Prose lists (Aizanoi page, Privacy) */
   .prose { max-width: 46rem; }
@@ -104,13 +118,13 @@
   .prose li strong { color: var(--az-text); }
 
   /* Footer */
-  body.site footer { margin-top: auto; padding: 24px var(--gutter) calc(24px + env(safe-area-inset-bottom)); border-top: 1px solid var(--az-border); background: var(--az-surface-1); color: var(--az-text-3); font-size: 14px; }
+  body:has(> .site-head) footer { margin-top: auto; padding: 24px var(--gutter) calc(24px + env(safe-area-inset-bottom)); border-top: 1px solid var(--az-border); background: var(--az-surface-1); color: var(--az-text-3); font-size: 14px; }
   footer p { margin: 0; }
   .public-identity-links { display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 4px; }
   .public-identity-links a { min-height: 44px; display: inline-flex; align-items: center; font-weight: 650; }
 
   /* Error pages reuse components.css; only the missing h1 look is supplied here. */
-  .az-error-page h1 { margin: 0 0 8px; color: #26344a; font: 650 23px/1.15 var(--az-font-ui); letter-spacing: -.02em; }
+  .az-error-page h1 { margin: 0 0 8px; color: var(--az-text); font: 650 23px/1.15 var(--az-font-ui); letter-spacing: -.02em; }
 
   @media (max-width: 700px) {
     .site-head { position: static; flex-direction: column; align-items: flex-start; padding-block: 4px 8px; }
@@ -123,7 +137,11 @@
     dt { margin-top: 8px; line-height: 1.4; }
   }
   @media (prefers-reduced-motion: reduce) {
-    body.site *, body.site *::before, body.site *::after { transition: none !important; animation: none !important; }
+    body:has(> .site-head) *, body:has(> .site-head) *::before, body:has(> .site-head) *::after { transition: none !important; animation: none !important; }
     .button:hover, .fam-arcade .card:hover { transform: none; }
+  }
+  @media (forced-colors: active) {
+    .button, .card, .chip, .badge { border: 1px solid CanvasText; }
+    .site-head nav a[aria-current="page"] { text-decoration: underline; }
   }
 }
