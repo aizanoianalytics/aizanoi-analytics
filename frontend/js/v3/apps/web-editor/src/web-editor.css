@@ -348,4 +348,54 @@
       max-height:calc(100% - 114px);
     }
   }
+
+  .az-web-editor-tabbar{
+    position:absolute;
+    top:5px;
+    right:8px;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    max-width:calc(100% - 190px);
+  }
+  .az-web-editor-hint{
+    min-width:0;
+    overflow:hidden;
+    color:#8795ad;
+    font:11px/1 var(--az-font-ui);
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .az-web-editor-tabbar .az-button{
+    min-height:26px;
+    padding-inline:8px;
+    border-color:rgba(255,255,255,.14);
+    background:#182234;
+    color:#c7d2e4;
+    font-size:11px;
+  }
+  .az-web-editor-tabbar .az-button[aria-pressed="true"]{border-color:#7188ef}
+  .az-web-editor-empty-action{margin:0 22px 22px}
+  .az-web-editor .az-button:focus-visible,
+  .az-web-editor-project:focus-visible,
+  .az-web-editor-text:focus-visible{
+    outline:2px solid #7188ef;
+    outline-offset:2px;
+  }
+  .az-web-editor-text:focus-visible{outline-offset:-3px}
+  .az-web-editor-actions{flex-wrap:wrap}
+  .az-web-editor-project-list .az-button{margin:0 12px 12px}
+  @media (max-width:1100px){.az-web-editor-hint{display:none}}
+  @media (pointer:coarse){
+    .az-web-editor-actions .az-button,
+    .az-web-editor-tabbar .az-button,
+    .az-web-editor-console>header .az-button,
+    .az-web-editor-projects .az-button,
+    .az-web-editor-project{min-height:44px;min-width:44px}
+    .az-web-editor-console>header{min-height:44px}
+    .az-web-editor-code,.az-web-editor-preview{grid-template-rows:48px minmax(0,1fr)}
+    .az-web-editor-preview{grid-template-rows:48px minmax(0,1fr) 150px}
+    .az-web-editor-tabbar{top:2px}
+  }
 }
