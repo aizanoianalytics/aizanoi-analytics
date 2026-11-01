@@ -1108,7 +1108,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "88f51582987719f6752a4ce878c52fb1912f5494a1770abfd28c9c7cffaf9403",
+      "sha256": "173c5e99b21fbc3f8d7e9584522ed10428987211e1fded2828909199f3ec0f3c",
       "sourceSha256": "902c9cf8eaa7f66bdbaa9359c02c6621444028e68e39499e560aae2f6deabd69"
     },
     {
@@ -1118,7 +1118,7 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "529f53edec964a3a8118c1e029e573e74b08a9e9841e9796c1ec6ae4e71d7e28",
+      "sha256": "aa2eedf078bc561885fa6976b7c865a7d47dde2b015f7925328a61b48e3e3e10",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
