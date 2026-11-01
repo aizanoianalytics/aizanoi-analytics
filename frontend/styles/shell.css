@@ -90,6 +90,7 @@
   .az-window-controls { display:flex; align-items:center; gap:2px; margin-left:auto; }
   .az-window-control { width:var(--az-control); height:var(--az-control); display:grid; place-items:center; padding:0; border:0; border-radius:9px; background:transparent; color:#4c5a70; cursor:pointer; transition:background var(--az-motion-fast),color var(--az-motion-fast); }
   .az-window-control svg { width:16px; height:16px; pointer-events:none; }
+  .az-window-control[hidden] { display:none; }
   .az-window-control:hover { background:rgba(60,76,103,.09); color:var(--az-text); }
   .az-window-control:active { background:rgba(60,76,103,.15); }
   .az-window-control:focus-visible { outline:2px solid var(--az-focus); outline-offset:1px; }

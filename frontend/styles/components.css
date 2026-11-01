@@ -73,6 +73,15 @@
   .az-command-row { width: 100%; min-height: 52px; display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 11px; padding: 8px 10px; border: 0; border-radius: 12px; background: transparent; color: #223048; text-align: left; cursor: pointer; }
   .az-command-row:hover, .az-command-row.is-selected { background: rgba(79, 96, 202, .10); }
   .az-command-row img { width: 29px; height: 29px; }
+  .az-command-row[aria-selected="true"] { background: rgba(79, 96, 202, .12); box-shadow: inset 0 0 0 1px rgba(79, 96, 202, .35); }
+  #az-command-empty { padding: 18px 12px; color: var(--az-text-2); font-size: 13px; text-align: center; }
+  /* Reset confirmation: a short, honest "what goes / what stays" summary. */
+  .az-confirm-dialog { width: min(480px, calc(100vw - 32px)); }
+  .az-confirm-dialog .az-dialog-body { display: grid; gap: 12px; }
+  .az-confirm-dialog h3 { margin: 4px 0 2px; color: var(--az-text); font-size: 13px; font-weight: 680; }
+  .az-confirm-dialog ul { margin: 0; padding-left: 18px; color: var(--az-text-2); font-size: 12.5px; line-height: 1.55; }
+  .az-confirm-dialog p { margin: 0; color: var(--az-text-2); font-size: 12.5px; }
+  .az-confirm-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
   .az-command-row strong { display: block; font-size: 13px; }
   .az-command-row small { display: block; color: #607084; font-size: 11px; }
   .az-command-row .az-command-kind { color: #607084; font: 11px/1 var(--az-font-mono); text-transform: uppercase; }
