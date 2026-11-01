@@ -51,7 +51,7 @@ test('desktop shell includes active app chrome, snapping and window motion', () 
   assert.match(os, /data-active-app-title/);
   assert.match(os, /installWindowSnapping/);
   assert.match(os, /installWindowMotion/);
-  assert.match(os, /Math\.hypot/);
+  assert.match(os, /requestAnimationFrame\(\(\)=>\{[\s\S]*el\.animate/); // snapping is animation-only; geometry lives in shell.js
   assert.match(os, /animateWindowFromDock/);
 });
 
