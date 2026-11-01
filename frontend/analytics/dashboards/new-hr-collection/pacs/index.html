@@ -102,7 +102,33 @@ tbody tr.row-selected td{background:#dff0e8 !important; color:#0f2f23; font-weig
 tbody tr.row-selected .sticky-col{background:#dff0e8 !important}
 tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-weight:850;
   box-shadow:inset 0 1px 0 rgba(37,99,235,.14), inset 0 -1px 0 rgba(37,99,235,.14)}
-.person-link{padding:3px 5px; margin:-3px -5px; border-radius:6px; cursor:pointer}
+.person-link{padding:3px 5px; margin:-3px -5px; border-radius:6px; cursor:pointer; display:inline-block; border:0; background:transparent; font:inherit; color:inherit; text-align:inherit; max-width:100%}
+.open-detail{margin-left:6px; padding:2px 8px; border:1px solid var(--line); border-radius:99px; background:#fff; color:#1e3a8a; font:inherit; font-size:11px; font-weight:800; cursor:pointer; white-space:nowrap}
+.open-detail:hover{background:#eff6ff; border-color:#93c5fd}
+:where(button,select,input,a,[tabindex]):focus-visible{outline:2px solid var(--blue); outline-offset:2px}
+.dropzone.is-over{border-color:#1d4ed8; background:#eff6ff}
+.dropzone .button{margin-top:14px}
+.visually-hidden-input{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); border:0; opacity:0}
+.status-box{padding:1rem; border-radius:8px; border:1px solid; line-height:1.5}
+.status-box.busy{background:#eff6ff; border-color:#93c5fd; color:#1e3a8a}
+.status-box.ok{background:#d1fae5; border-color:#10b981; color:#065f46}
+.status-box.error{background:#fee2e2; border-color:#ef4444; color:#991b1b}
+.status-box .button{margin-top:10px}
+.privacy-note{margin:12px 0 0; padding:10px 12px; border-radius:10px; background:#f0f9ff; border:1px solid #bae6fd; color:#0c4a6e; font-size:12.5px; line-height:1.5}
+.export-note{flex:1 0 100%; margin:0; text-align:right; font-size:11.5px; color:#dceafa; max-width:none}
+.export-note.warn{color:#fde68a}
+@media (pointer:coarse){
+  .view-tab,.button,.fill-mode button,.toggle-field,select,input:not([type=checkbox]):not([type=radio]),.global-period select{min-height:44px}
+  .button,.toolbar .button{height:44px}
+  .view-tab{padding-top:11px; padding-bottom:11px}
+  .toolbar{gap:14px}
+  .table-filter-button{height:44px; min-width:66px}
+  .open-detail,.person-link{min-height:44px; display:inline-flex; align-items:center}
+  .col-filter-menu-actions button,.col-filter-menu-footer button,.col-filter-menu-sort button,.col-filter-menu-search input{min-height:44px}
+  .col-filter-menu-list label{min-height:44px}
+  .col-filter-menu-list input[type=checkbox]{width:20px; height:20px}
+}
+@media (prefers-reduced-motion:reduce){.dropzone{transition:none}}
 .person-link:hover{background:#eff6ff; color:#1e3a8a}
 .person-link.selected{background:#dff0e8; color:#0f5132; font-weight:850}
 .num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
@@ -221,7 +247,7 @@ tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-we
   .table-reset-row{justify-content:flex-start}
 }
 
-.dropzone { border: 2px dashed var(--blue); background: #f8fafc; border-radius: 14px; padding: 3rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+.dropzone { border: 2px dashed var(--blue); background: #f8fafc; border-radius: 14px; padding: 3rem 1.5rem; text-align: center; transition: all 0.2s; position: relative; }
 .dropzone:hover { background: #eff6ff; border-color: #1d4ed8; }
 
 
@@ -238,9 +264,10 @@ tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-we
     <span id="heroSource">Source: pacs_sample_data.xlsx</span>
     <span id="heroStats">120 Monitored Staff · 22,080 Records</span>
     <span id="heroRange">March 2026 – August 2026</span>
-    <div style="margin-left:auto; display:flex; gap:8px;">
+    <div style="margin-left:auto; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; max-width:100%;">
       <button type="button" class="button" onclick="showView('importView')" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);">Import Excel</button>
       <button type="button" class="button" onclick="downloadPortablePACS()" style="background:var(--blue);">Download Portable HTML</button>
+      <p class="export-note" id="exportNote">Includes all currently loaded employee records (built-in sample data).</p>
     </div>
   </div>
 </header>
@@ -381,13 +408,15 @@ tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-we
   <div class="panel">
     <h2>Native In-Browser Excel Loader</h2>
     <p class="subtext">Upload any PDKS attendance workbook. The dashboard computes all working hours, missing card times, and organizational matrices directly in your browser with zero server or Python requirements.</p>
-    <div class="dropzone" id="pacsDropzone" onclick="document.getElementById('pacsExcelFileInput').click()">
+    <div class="dropzone" id="pacsDropzone">
       <div style="font-size:2.5rem;margin-bottom:0.5rem;">📊</div>
-      <h3 style="margin:0 0 4px;font-size:16px;font-weight:800;">Drag & Drop PDKS Excel File Here</h3>
-      <p style="margin:0;color:var(--muted);font-size:13px;">or click to select from your computer (.xlsx / .xlsm)</p>
-      <input type="file" id="pacsExcelFileInput" accept=".xlsx,.xlsm" style="display:none;" onchange="if(this.files.length)handlePDKSExcelUpload(this.files[0])">
+      <h3 style="margin:0 0 4px;font-size:16px;font-weight:800;">Drag &amp; drop a PDKS Excel file here</h3>
+      <p style="margin:0;color:var(--muted);font-size:13px;">or choose a file from your computer (.xlsx / .xlsm)</p>
+      <button type="button" class="button" id="pacsChooseBtn">Choose workbook</button>
+      <input type="file" id="pacsExcelFileInput" class="visually-hidden-input" accept=".xlsx,.xlsm" tabindex="-1" aria-hidden="true" onchange="if(this.files.length)handlePDKSExcelUpload(this.files[0])">
     </div>
-    <div id="pacsUploadStatus" style="margin-top:1rem;"></div>
+    <p class="privacy-note" id="pacsPrivacyNote"><b>Your data stays in this browser.</b> The workbook is read and calculated locally on this page; nothing is uploaded. Until you load a workbook the dashboard shows the built-in sample data. Loading a workbook replaces the sample for this session only.</p>
+    <div id="pacsUploadStatus" style="margin-top:1rem;" role="status" aria-live="polite"></div>
     <div style="margin-top:1.5rem;background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:1rem;">
       <h4 style="margin:0 0 6px;font-size:13px;font-weight:800;">Expected Workbook Format:</h4>
       <p style="margin:0 0 8px;font-size:12px;color:var(--muted);">Both Turkish and English column headers are automatically supported:</p>
@@ -627,24 +656,38 @@ function processExcelWorkbook(workbook, fileName) {
 async function handlePDKSExcelUpload(file) {
   if (!file) return;
   const el = document.getElementById("pacsUploadStatus");
-  if (el) el.innerHTML = '<div style="padding:1rem;background:var(--blue);color:#fff;border-radius:8px;">Parsing ' + escapeHtml(file.name) + '...</div>';
+  if (el) { el.setAttribute('aria-busy','true'); el.innerHTML = '<div class="status-box busy">Parsing ' + escapeHtml(file.name) + '...</div>'; }
+  if (!/\.xls[xm]$/i.test(file.name)) { if (el) { el.removeAttribute('aria-busy'); el.innerHTML = '<div class="status-box error" role="alert"><b>Unsupported file</b><br>' + escapeHtml(file.name) + ' is not an .xlsx or .xlsm workbook. Choose an Excel workbook exported from your PDKS system.</div>'; } return; }
   try {
     const buf = await file.arrayBuffer();
     const wb = XLSX.read(buf, {type:"array",cellDates:true});
     const newData = processExcelWorkbook(wb, file.name);
+    newData.meta.visitor_workbook = true;
     DATA = newData;
     STATE.settings = loadSettings();
     renderGlobalPeriodSelector();
     updateHeroBanner();
     showView("dashboardView");
-    if (el) el.innerHTML = '<div style="padding:1rem;background:#d1fae5;border:1px solid #10b981;border-radius:8px;color:#065f46;"><b>' + escapeHtml(file.name) + ' loaded successfully!</b><br>' + escapeHtml(newData.meta.person_count) + ' staff, ' + escapeHtml(newData.meta.rows_count) + ' records (' + escapeHtml(newData.meta.date_min) + ' to ' + escapeHtml(newData.meta.date_max) + ')<br><br><button class="button" onclick="downloadPortablePACS()" style="background:#047857;">Download Portable PACS.html</button></div>';
+    if (el) { el.removeAttribute('aria-busy'); el.innerHTML = '<div class="status-box ok"><b>' + escapeHtml(file.name) + ' loaded successfully!</b><br>' + escapeHtml(newData.meta.person_count) + ' staff, ' + escapeHtml(newData.meta.rows_count) + ' records (' + escapeHtml(newData.meta.date_min) + ' to ' + escapeHtml(newData.meta.date_max) + ')<br><br><button type="button" class="button" onclick="downloadPortablePACS()" style="background:#047857;">Download Portable PACS.html</button><br><small>Includes all currently loaded employee records. Share only with people entitled to see them.</small></div>'; }
+    updateExportNote();
     flashStatus(newData.meta.person_count + " staff loaded from " + file.name);
   } catch(err) {
-    if (el) el.innerHTML = '<div style="padding:1rem;background:#fee2e2;border:1px solid #ef4444;border-radius:8px;color:#991b1b;"><b>Upload Failed</b><br>' + err.message + '</div>';
+    if (el) { el.removeAttribute('aria-busy'); el.innerHTML = '<div class="status-box error" role="alert"><b>Could not read this workbook</b><br>' + escapeHtml((err && err.message) || 'Unknown error') + '<br>Check that it is an unprotected .xlsx/.xlsm file with the columns listed below, then choose it again. The dashboard still shows the previous data.<br><button type="button" class="button" id="pacsRetryBtn">Choose another workbook</button></div>'; const rb = document.getElementById('pacsRetryBtn'); if (rb) rb.addEventListener('click', () => document.getElementById('pacsExcelFileInput').click()); }
   }
 }
 
+function updateExportNote() {
+  const n = document.getElementById('exportNote');
+  if (!n) return;
+  const visitor = !!(DATA && DATA.meta && DATA.meta.visitor_workbook);
+  n.classList.toggle('warn', visitor);
+  n.textContent = visitor
+    ? 'Includes all currently loaded employee records from your workbook. Share the file only with people entitled to see them.'
+    : 'Includes all currently loaded employee records (built-in sample data).';
+}
+
 function downloadPortablePACS() {
+  if (DATA && DATA.meta && DATA.meta.visitor_workbook && !window.confirm('This portable file will embed every employee record from the workbook you loaded (' + DATA.meta.person_count + ' staff, ' + DATA.meta.rows_count + ' records). Anyone who opens it can read them. Continue?')) return;
   try {
     const safeP = JSON.stringify(DATA).replace(/</g,"\\u003c");
     const fullHtml = "<!doctype html>\n" + document.documentElement.outerHTML;
@@ -677,10 +720,13 @@ function updateHeroBanner() {
 
 document.addEventListener('DOMContentLoaded', function() {
   const dz = document.getElementById('pacsDropzone');
+  const choose = document.getElementById('pacsChooseBtn');
+  updateExportNote();
+  if (choose) choose.addEventListener('click', function() { document.getElementById('pacsExcelFileInput').click(); });
   if (dz) {
-    dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.style.borderColor='#1d4ed8'; dz.style.background='#eff6ff'; });
-    dz.addEventListener('dragleave', function() { dz.style.borderColor=''; dz.style.background=''; });
-    dz.addEventListener('drop', function(e) { e.preventDefault(); dz.style.borderColor=''; dz.style.background=''; if(e.dataTransfer.files.length) handlePDKSExcelUpload(e.dataTransfer.files[0]); });
+    dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('is-over'); });
+    dz.addEventListener('dragleave', function() { dz.classList.remove('is-over'); });
+    dz.addEventListener('drop', function(e) { e.preventDefault(); dz.classList.remove('is-over'); if(e.dataTransfer.files.length) handlePDKSExcelUpload(e.dataTransfer.files[0]); });
   }
 });
 
@@ -1604,7 +1650,7 @@ function renderDashboard() {
         cls: 'sticky-col cell-text',
         sortType: 'text',
         value: r => r.org,
-        html: r => `<div style="font-weight:750; color:var(--ink);">${escapeHtml(titleCaseTr(r.org))} <span style="font-weight:600; color:var(--muted); font-size:11px;">(${r.person} staff)</span></div>`
+        html: r => `<div style="font-weight:750; color:var(--ink);">${escapeHtml(titleCaseTr(r.org))} <span style="font-weight:600; color:var(--muted); font-size:11px;">(${r.person} staff)</span><button type="button" class="open-detail" data-open-org="${escapeHtml(r.org)}" aria-label="Open organization detail for ${escapeHtml(titleCaseTr(r.org))}">Details</button></div>`
       },
       metricCol('workdays', 'Monthly Workdays', r => r.m.workdays, { toggleGroup: 'workdays' }),
       metricCol('holiday', 'Public Holiday', r => r.m.holiday, { childGroup: 'workdays' }),
@@ -1630,7 +1676,7 @@ function renderDashboard() {
       const cardBreakdown = computeMatrixCardBreakdown([p]);
       const cardAverages = computeRealCardAverages(days);
       const namesText = `${titleCaseTr(p.ad_soyad)} (${p.pers_no})`;
-      const namesHtml = `<div class="person-link ${STATE.orgMatrixSelectedPerson === p.pers_no ? 'selected' : ''}" data-person-key="${escapeHtml(p.pers_no)}" title="Single click to select, double click to view person details">${escapeHtml(titleCaseTr(p.ad_soyad))} <small style="color:var(--muted)">(${escapeHtml(p.pers_no)})</small></div>`;
+      const namesHtml = `<button type="button" class="person-link ${STATE.orgMatrixSelectedPerson === p.pers_no ? 'selected' : ''}" data-person-key="${escapeHtml(p.pers_no)}" aria-pressed="${STATE.orgMatrixSelectedPerson === p.pers_no ? 'true' : 'false'}" title="Click to select, double click or use Details to view person details">${escapeHtml(titleCaseTr(p.ad_soyad))} <small style="color:var(--muted)">(${escapeHtml(p.pers_no)})</small></button><button type="button" class="open-detail" data-open-person="${escapeHtml(p.pers_no)}" aria-label="Open details for ${escapeHtml(titleCaseTr(p.ad_soyad))}">Details</button>`;
       return {
         rowKey: p.pers_no,
         pers_no: p.pers_no,
@@ -1764,12 +1810,27 @@ function renderDashboard() {
         return;
       }
       STATE.orgMatrixSelectedPerson = persNo;
-      $('matrixWrap').querySelectorAll('[data-person-key]').forEach(item =>
-        item.classList.toggle('selected', item.dataset.personKey === persNo));
+      $('matrixWrap').querySelectorAll('[data-person-key]').forEach(item => {
+        item.classList.toggle('selected', item.dataset.personKey === persNo);
+        item.setAttribute('aria-pressed', item.dataset.personKey === persNo ? 'true' : 'false');
+      });
     });
     personEl.addEventListener('dblclick', e => {
       e.stopPropagation();
       openSelectedPerson(personEl.dataset.personKey || '');
+    });
+  });
+
+  $('matrixWrap').querySelectorAll('[data-open-person]').forEach(btn => {
+    btn.addEventListener('click', e => { e.stopPropagation(); openSelectedPerson(btn.dataset.openPerson || ''); });
+  });
+  $('matrixWrap').querySelectorAll('[data-open-org]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      STATE.orgDetailName = btn.dataset.openOrg || '';
+      STATE.orgStaffFilter = '';
+      history.replaceState(null, '', '#organization');
+      showView('organizationView');
     });
   });
 
@@ -1938,7 +1999,7 @@ function renderOrganizationView() {
         const rowId = `${p.pers_no}_${d.tarih}`;
         return `<tr data-row-key="${escapeHtml(rowId)}" class="${STATE.orgDaySelectedRow === rowId ? 'row-selected' : ''}">
           <td data-col="pers_no"><small style="color:var(--muted);">${escapeHtml(p.pers_no)}</small></td>
-          <td data-col="ad_soyad" class="sticky-col cell-text"><div class="person-link" data-person-key="${escapeHtml(p.pers_no)}" title="Click to view person details">${escapeHtml(titleCaseTr(p.ad_soyad))}</div></td>
+          <td data-col="ad_soyad" class="sticky-col cell-text"><button type="button" class="person-link" data-person-key="${escapeHtml(p.pers_no)}" title="Click to view person details">${escapeHtml(titleCaseTr(p.ad_soyad))}</button></td>
           <td data-col="tarih">${r.tarih}</td>
           <td data-col="gun">${r.gun}</td>
           <td data-col="durum"><span class="badge ${durumBadge}">${r.durum}</span></td>
@@ -2339,6 +2400,8 @@ function openColumnFilter(anchor, colKey, values, colLabel, options = {}) {
   const currentSel = filters[colKey] || new Set();
   const menu = document.createElement('div');
   menu.className = 'col-filter-menu';
+  menu.setAttribute('role', 'dialog');
+  menu.setAttribute('aria-label', colLabel + ' filter and sort');
   const selected = new Set((currentSel instanceof Set ? [...currentSel] : (Array.isArray(currentSel) ? currentSel : [])).map(String));
   const searchInit = searchState[colKey] || '';
   let pendingSort = sortState.key === colKey ? (sortState.direction || '') : '';
@@ -2351,17 +2414,17 @@ function openColumnFilter(anchor, colKey, values, colLabel, options = {}) {
       <button type="button" data-sort="desc" class="${pendingSort === 'desc' ? 'active' : ''}">${descendingLabel}</button>
       <button type="button" data-sort="" class="${pendingSort === '' ? 'active' : ''}">No Sorting</button>
     </div>
-    <div class="col-filter-menu-search"><input type="search" placeholder="Search values..." value="${escapeHtml(searchInit)}"></div>
+    <div class="col-filter-menu-search"><input type="search" aria-label="Search ${escapeHtml(colLabel)} values" placeholder="Search values..." value="${escapeHtml(searchInit)}"></div>
     <div class="col-filter-menu-actions">
-      <button data-act="visible">Select Visible</button>
-      <button data-act="all">Select All</button>
-      <button data-act="clear">Clear All</button>
+      <button type="button" data-act="visible">Select Visible</button>
+      <button type="button" data-act="all">Select All</button>
+      <button type="button" data-act="clear">Clear All</button>
     </div>
     <div class="col-filter-menu-list"></div>
     <div class="col-filter-menu-footer">
       <span class="filter-count"></span>
-      <button data-act="cancel">Cancel</button>
-      <button data-act="apply" class="primary">Apply</button>
+      <button type="button" data-act="cancel">Cancel</button>
+      <button type="button" data-act="apply" class="primary">Apply</button>
     </div>`;
   document.body.appendChild(menu);
   const rect = anchor.getBoundingClientRect();
@@ -2432,7 +2495,7 @@ function openColumnFilter(anchor, colKey, values, colLabel, options = {}) {
               .forEach(v => selected.add(String(v)));
         renderList(q);
       } else if (act === 'cancel') {
-        closeMenu();
+        closeMenu(true);
       } else if (act === 'apply') {
         if (selected.size === 0 || selected.size === values.length) {
           delete filters[colKey];
@@ -2446,14 +2509,18 @@ function openColumnFilter(anchor, colKey, values, colLabel, options = {}) {
           delete sortState.key;
           delete sortState.direction;
         }
-        closeMenu();
+        closeMenu(false);
         onApply();
+        const next = document.querySelector('[data-filter-open][data-col="' + colKey + '"]');
+        if (next) next.focus();
       }
     });
   });
 
-  const closeMenu = () => {
+  const closeMenu = (restore) => {
+    const hadFocus = menu.contains(document.activeElement);
     menu.remove();
+    if (restore !== false && (restore === true || hadFocus) && anchor.isConnected) anchor.focus();
     document.removeEventListener('click', onDocClick);
     document.removeEventListener('keydown', onKeyDown);
     window.removeEventListener('resize', closeMenu);
@@ -2463,7 +2530,16 @@ function openColumnFilter(anchor, colKey, values, colLabel, options = {}) {
       closeMenu();
     }
   };
-  const onKeyDown = ev => { if (ev.key === 'Escape') closeMenu(); };
+  const onKeyDown = ev => {
+    if (ev.key === 'Escape') { closeMenu(true); return; }
+    if (ev.key !== 'Tab') return;
+    const f = [...menu.querySelectorAll('button,input:not([disabled])')].filter(el => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (!menu.contains(document.activeElement)) { ev.preventDefault(); first.focus(); }
+    else if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+  };
   setTimeout(() => document.addEventListener('click', onDocClick), 0);
   document.addEventListener('keydown', onKeyDown);
   window.addEventListener('resize', closeMenu);
