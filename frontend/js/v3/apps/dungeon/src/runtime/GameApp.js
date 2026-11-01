@@ -687,6 +687,11 @@ export class GameApp {
         app.syncWorld();
         app.updateHud();
         if (result.victory === true) app.showVictory();
+        // openChest just emitted the victory event that the render loop would
+        // otherwise consume on a later frame. The panel is already up, so drain
+        // it now: the showVictory guard makes this a display no-op, and no
+        // stale victory event can re-open the panel after the run continues.
+        app.processEvents();
         return { opened: true, victory: result.victory === true };
       },
     });
