@@ -4,9 +4,13 @@ const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
 }[char]));
 
+// The page ships a complete static catalog (every set incl. Tableau, plus the
+// publishing-standard card). This module only re-renders it from the canonical
+// ANALYTICS_SETS; any failure leaves the static markup in place.
 const host = document.querySelector('[data-analytics-catalog]');
 if (host) {
-  host.innerHTML = ANALYTICS_SETS.map((set) => `
+  try {
+    const html = ANALYTICS_SETS.map((set) => `
     <article class="card">
       <p class="eyebrow">${esc(set.eyebrow)}</p>
       <h2>${esc(set.title)} ${esc(set.accent)}</h2>
@@ -23,4 +27,8 @@ if (host) {
       <p>Every production project exposes a usable launch surface, concise documentation, transparent formulas and explicit data provenance.</p>
       <p class="muted">Dashboards are one interface format inside Analytics—not the identity of the entire product family.</p>
     </article>`;
+    if (ANALYTICS_SETS.length) host.innerHTML = html;
+  } catch (error) {
+    console.warn('Analytics catalog enhancement skipped; static catalog kept.', error);
+  }
 }
