@@ -226,10 +226,6 @@
   .az-winamp-empty { padding:10px;color:#a8b8ce;font-size:12px; }
 
   /* Blockfall */
-  .az-blockfall { display:flex;gap:14px;align-items:flex-start;justify-content:center; }
-  .az-blockfall canvas { border:1px solid var(--az-border);border-radius:8px;background:#0d1524; }
-  .az-blockfall-side { display:grid;gap:10px;justify-items:center;color:#4d5b72;font-size:11.5px;max-width:130px;text-align:center; }
-  .az-blockfall-side strong { color:#172033;font-size:12px;letter-spacing:.06em;text-transform:uppercase; }
 
   /* Win98 dialog */
   
@@ -418,11 +414,7 @@
   .az-arcade-back { min-height:44px;padding:0 12px;border:1px solid rgba(157,178,220,.2);border-radius:11px;background:rgba(255,255,255,.06);color:#dbe6f7;font:700 11px var(--az-font-ui);cursor:pointer; }
   .az-arcade-cabinet { margin-top:16px; }
   /* Legacy games paint a grey wrapper inline. The module shell owns that frame now. */
-  .az-arcade-cabinet { background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important; }
   .az-arcade .az-game-stage .az-simple-card { min-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none; }
-  .az-arcade [data-bf-close] { display:none; }
-  .az-arcade .game-v2-toolbar { width:min(100%,420px);display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0 auto;padding:2px 0;color:#9caec8;font:10px var(--az-font-ui); }
-  .az-arcade .game-v2-toolbar button { min-height:36px;padding:0 11px;border:1px solid rgba(157,178,220,.22);border-radius:9px;background:#162238;color:#e7eef9;cursor:pointer; }
 
   /* Winamp becomes the interior itself instead of a card floating inside a generic app shell. */
   .az-winamp-shell { min-height:100%;background:linear-gradient(145deg,#202c42,#101827); }

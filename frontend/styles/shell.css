@@ -362,7 +362,6 @@
     place-items:center;
   }
   .az-arcade-cabinet > * { max-width:100%; }
-  .az-blockfall canvas { touch-action:none; }
 
   @media (max-width:1199px) {
     .az-window[data-app-id="camera"] .az-camera-stage { max-height:360px; }
