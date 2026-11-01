@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-01-ibm-quantum-processor-interconnect",
+  "title": "IBM links two 120-qubit processors with four metre-scale cables",
+  "summary": "IBM researchers joined two 120-qubit Nighthawk R1 processors with four 80-centimetre superconducting aluminium cables fixed after both chips were already mounted in one dilution refrigerator. State transfer averaged 99% fidelity, with a best link at 99.29%, and two-qubit gates across the chips averaged 94.75%. The arXiv preprint argues the couplers make modular multi-chip machines practical, though fidelity is not yet high enough to run two processors as one.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ibm",
+    "quantum-computing",
+    "interconnects",
+    "modular-hardware"
+  ],
+  "sources": [
+    {
+      "publisher": "Phys.org",
+      "url": "https://phys.org/news/2026-10-superconducting-cables-link-large-quantum.html",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "arXiv (IBM Research preprint)",
+      "url": "https://arxiv.org/abs/2610.29986",
+      "publishedAt": "2026-10-21T16:28:00Z"
+    },
+    {
+      "publisher": "Science",
+      "url": "https://www.science.org/content/article/ibm-links-two-quantum-chips-key-step-toward-bigger-computers",
+      "publishedAt": "2026-10-27T18:10:00Z"
+    }
+  ],
+  "kind": "daily"
+}

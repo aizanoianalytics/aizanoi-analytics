@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-01-altman-openai-science-blitz",
+  "title": "Altman says OpenAI will keep publishing faster than academia can check",
+  "summary": "OpenAI chief executive Sam Altman said on the Cheeky Pint podcast that humanity deserves fundamental knowledge and the company should not sit on a major discovery, confirming it holds more unpublished results. He conceded the push had \"got out of control\" at times. Researchers described the effect to Wired in blunter terms: UC Santa Barbara's Daniel Lokshtanov called it \"a giant bomb dropped into the middle of the field\", and much of the output remains unpeer-reviewed.",
+  "category": "ai",
+  "priority": 54,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "mathematics",
+    "research",
+    "peer-review",
+    "sam-altman"
+  ],
+  "sources": [
+    {
+      "publisher": "TechRadar",
+      "url": "https://www.techradar.com/ai-platforms-assistants/openai/sam-altman-says-openai-wont-slow-science-paper-blitz-even-though-academics-are-calling-it-a-giant-bomb",
+      "publishedAt": "2026-10-31T01:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

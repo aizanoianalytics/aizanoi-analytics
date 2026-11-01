@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-01-meta-humanoid-max-fourier",
+  "title": "Meta built a humanoid prototype with China's Fourier, report says",
+  "summary": "The Information reported on Saturday that Meta assembled a humanoid, internally codenamed Max, with Chinese startup Fourier in about three months. The roughly 1.5-metre machine uses Nvidia's Jetson Thor chip and carries a display that mimics facial expressions, speakers and five-fingered hands for small objects. A second prototype began in September with a redesigned torso and stair sensors. Meta told the outlet the work is internal research, with no plans to sell units.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "humanoid-robots",
+    "fourier",
+    "nvidia",
+    "robotics"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://money.usnews.com/investing/news/articles/2026-10-31/meta-builds-humanoid-robot-with-chinese-startup-fourier-the-information-says",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "Investing.com via Yahoo Finance",
+      "url": "https://finance.yahoo.com/news/meta-builds-humanoid-robot-china-180011210.html",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-01-bayern-dortmund-klassiker-draw",
+  "title": "Dortmund salvage a 2-2 draw in Munich as Silva strikes late",
+  "summary": "Konrad Laimer put Bayern ahead in the 38th minute and Dayot Upamecano restored the lead on 66, but Serhou Guirassy had levelled on the hour and substitute Fábio Silva equalised again in the 89th, converting Konstantinos Karetsas's corner after a VAR check. Bayern held 56% of the ball and generated 4.18 expected goals; both sides remain unbeaten and level on points at the top of the Bundesliga.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "bayern-munich",
+    "borussia-dortmund",
+    "der-klassiker"
+  ],
+  "sources": [
+    {
+      "publisher": "DFB Datencenter",
+      "url": "https://datencenter.dfb.de/en/competitions/12/seasons/current/current_matchweek",
+      "publishedAt": "2026-10-31T19:30:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cke8rnzy49m7t",
+      "publishedAt": "2026-10-31T19:30:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401884754/borussia-dortmund-bayern-munich",
+      "publishedAt": "2026-10-31T19:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

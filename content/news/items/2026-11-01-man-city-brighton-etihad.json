@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-01-man-city-brighton-etihad",
+  "title": "Brighton win at the Etihad for the first time and close on City",
+  "summary": "Yasin Ayari scored in the 11th minute after Matheus Nunes misjudged a clearance, and Bart Verbruggen made seven saves as Brighton won 1-0 at Manchester City, their first away victory over them in 18 attempts. City lost consecutive Premier League games for the first time since August 2025, and for the first time under Enzo Maresca, despite 1.92 expected goals and 62% possession.",
+  "category": "football",
+  "priority": 68,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-city",
+    "brighton",
+    "etihad"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13606112/man-city-0-1-brighton-yasin-ayari-and-bart-verbruggen-the-heroes-in-historic-win-for-seagulls-at-etihad",
+      "publishedAt": "2026-10-31T18:18:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/oct/31/manchester-city-brighton-premier-league-match-report",
+      "publishedAt": "2026-10-31T18:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

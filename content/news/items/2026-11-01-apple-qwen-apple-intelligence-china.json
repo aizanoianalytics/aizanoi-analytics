@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-01-apple-qwen-apple-intelligence-china",
+  "title": "Apple hands Apple Intelligence in China to Alibaba's Qwen",
+  "summary": "Alibaba and Apple confirmed on Saturday that Qwen will power Apple Intelligence on iPhones in mainland China, reaching Siri, Writing Tools and Visual Intelligence. Testing begins in the latest iOS developer beta on 4 November and the features ship with iOS 27.3 in December. Users can decline the integration, Alibaba says requests and responses will not train its models, and access depends on both device location and Apple Account region being set to China.",
+  "category": "ai",
+  "priority": 92,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "alibaba",
+    "qwen",
+    "apple-intelligence",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "South China Morning Post",
+      "url": "https://www.scmp.com/tech/big-tech/article/3372831/apple-intelligence-roll-out-iphones-china-december-alibaba-backing",
+      "publishedAt": "2026-10-31T10:02:00Z"
+    },
+    {
+      "publisher": "RTHK (Xinhua)",
+      "url": "https://news.rthk.hk/rthk/en/component/k2/1876095-20261031.htm",
+      "publishedAt": "2026-10-31T14:40:00Z"
+    },
+    {
+      "publisher": "Anadolu Agency",
+      "url": "https://www.aa.com.tr/en/asia-pacific/alibaba-partners-with-apple-to-integrate-qwen-ai-model-into-apple-intelligence-for-chinese-market/4107573",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

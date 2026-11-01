@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-01-chelsea-man-utd-carrick-pressure",
+  "title": "Ten-man United lose at Chelsea as Carrick's winless run reaches nine",
+  "summary": "Morgan Rogers ran through a static United defence to open the scoring five minutes after half-time, and Cole Palmer converted a penalty on 64 after Lisandro Martínez collected a second booking for raising an arm to Wesley Fofana. Chelsea won 2-0, extending United's winless run in all competitions to nine matches, their longest since 1984, and leaving Michael Carrick's position under renewed scrutiny.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-11-01T05:20:00Z",
+  "updatedAt": "2026-11-01T05:20:00Z",
+  "retrievedAt": "2026-11-01T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "chelsea",
+    "manchester-united",
+    "michael-carrick"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/chelsea-vs-man-utd/report/559527",
+      "publishedAt": "2026-10-31T16:47:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401879248/manchester-united-chelsea",
+      "publishedAt": "2026-10-31T16:45:00Z"
+    }
+  ],
+  "kind": "daily"
+}
