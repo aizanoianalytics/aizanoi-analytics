@@ -75,11 +75,15 @@ function renderPhoneHome(){
         <div><span class="az-device-kicker">AIZANOI NEWS</span><h2>Briefings with sources</h2><p>AI, Technology, Economy / Markets and Football in one concise edition.</p></div>
         <button class="az-device-widget-action" type="button" data-app="news">Read</button>
       </article>
-      ${renderAizoCard('az-phone-aizo-card')}
+      <article class="az-phone-widget az-phone-aizo-widget">
+        <div><span class="az-device-kicker">AIZO / ONLINE</span><h2>Aizo is on X.</h2><p>Unfortunately. Short takes from a small piece of ancient marble.</p></div>
+        <a class="az-device-widget-action" href="${AIZO_X_URL}" target="_blank" rel="noopener noreferrer">Follow ↗</a>
+      </article>
     </div>
     <section class="az-phone-apps" aria-label="Aizanoi Analytics apps">
       ${PUBLIC_APPS.map((id)=>deviceAppButton(id,'az-phone-app')).join('')}
     </section>
+    ${renderAizoCard('az-phone-aizo-card')}
   </section>`;
 }
 

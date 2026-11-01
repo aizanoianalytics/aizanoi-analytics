@@ -19,13 +19,19 @@ test('Signal Snake keeps keyboard restart available and renders a legible New Ga
   const source = read('frontend/js/v3/apps/games/assets/snake.js');
   assert.match(source, /window\.addEventListener\('keydown', onKey\)/);
   assert.match(source, /\(e\.key === ' ' \|\| e\.key === 'Enter'\) && over/);
-  assert.match(source, /btn\.textContent = 'New Game'/);
-  assert.match(source, /background:#5265db;color:#fff/);
+  // The shared cabinet toolbar renders the visible "New game" control; arcade.css makes it legible.
+  const utils = read('frontend/js/v3/apps/games/assets/game-utils.js');
+  const css = read('frontend/js/v3/apps/games/assets/arcade.css');
+  assert.match(utils, /add\('restart', 'New game', onRestart\)/);
+  assert.match(source, /toolbar\(/);
+  assert.match(css, /\.az-arcade \.ag-btn/);
 });
 
 test('Mines cancels a pending long-press when touch movement begins', () => {
   const source = read('frontend/js/v3/apps/games/assets/mines.js');
-  assert.match(source, /cell\.addEventListener\('pointermove',[\s\S]*clearTimeout\(longPressTimer\)/);
+  assert.match(source, /function cancelLongPress\(\) \{ if \(longPressTimer\) clearTimeout\(longPressTimer\)/);
+  assert.match(source, /grid\.addEventListener\('pointermove', cancelLongPress\)/);
+  assert.match(source, /grid\.removeEventListener\('pointermove', cancelLongPress\)/);
 });
 
 test('desktop exposes Workspace and Workspace opens at the local root with Photos, Music, Text and Editor', () => {

@@ -29,5 +29,5 @@ test('offline caches cannot resurrect Flowerseller static assets', () => {
   assert.match(worker, /'\/assets\/icons\/aizanoi-flowerseller\.svg'/);
   assert.match(worker, /async function networkFirstStatic\(request\)[\s\S]*?isRetiredPath\(new URL\(request\.url\)\.pathname\)/);
   assert.match(worker, /if\(isRetiredPath\(url\.pathname\)\)throw error/);
-  assert.match(read('frontend/release.js'), /CACHE: 'aizanoi-os-shell-v4\.6\.1'/);
+  assert.match(read('frontend/release.js'), /CACHE: 'aizanoi-os-shell-v4\.7\.0'/);
 });

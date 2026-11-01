@@ -26,8 +26,8 @@ test('Markets landing exposes simplified Markets and Aizanoi Picks navigation', 
   const dashboard = read('frontend/analytics/markets/dashboard.js');
   assert.match(html, /<title>Aizanoi Markets — Aizanoi Analytics<\/title>/);
   assert.match(html, /data-markets-root/);
-  assert.match(html + dashboard, /data-nav="main"/);
-  assert.match(html + dashboard, /data-nav="picks"/);
+  assert.match(html + dashboard, /data-nav="\$\{view\}"/);
+  assert.match(dashboard, /\['main', 'picks'\]\.map/);
   assert.match(html, /Close-price intelligence/);
   assert.match(html, /name="twitter:site" content="@AizanoiHQ"/);
   assert.match(html, /application\/ld\+json/);
