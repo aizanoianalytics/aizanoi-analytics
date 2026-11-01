@@ -11,6 +11,8 @@ let fpsRaf = 0;
 let activeOverlay = null;
 let overlayOpener = null;
 let keyboardWindowMode = null;
+let confirmReturnOpener = null;
+let commandSelectedKey = null;
 let appsStylePromise = null;
 let staticSearchEntries = [];
 let staticSearchPromise = null;
@@ -39,6 +41,26 @@ function layoutMode() {
  if (width < 1200) return 'expanded';
  return 'large';
 }
+
+// One minimum window size, mirrored from CSS (.az-window min-width/min-height).
+export const WINDOW_MIN = Object.freeze({ width:420, height:300 });
+const WINDOW_MARGIN = Object.freeze({ x:12, top:8, bottom:8 });
+
+function layerBox() {
+ const box = document.querySelector('.az-window-layer')?.getBoundingClientRect();
+ return box && box.width > 0 && box.height > 0 ? { left:box.left, top:box.top, width:box.width, height:box.height } : { left:0, top:0, width:innerWidth, height:Math.max(0, innerHeight - 126) };
+}
+
+function windowRectOf(el) {
+ const num = (value, fallback) => { const parsed = parseFloat(value); return Number.isFinite(parsed) ? parsed : fallback; };
+ return { left:num(el.style.left, el.offsetLeft), top:num(el.style.top, el.offsetTop), width:num(el.style.width, el.offsetWidth), height:num(el.style.height, el.offsetHeight) };
+}
+
+function applyRect(el, rect) {
+ Object.assign(el.style, { left:`${rect.left}px`, top:`${rect.top}px`, width:`${rect.width}px`, height:`${rect.height}px` });
+}
+
+function canMaximize() { return ['large','expanded'].includes(layoutMode()); }
 
 function ensureAppsStyle() {
  if (appsStylePromise) return appsStylePromise;
@@ -234,8 +256,8 @@ function shellTemplate() {
  </header>
  <section class="az-stage">
  <div class="az-home-scroll"></div>
- <div class="az-window-layer" aria-live="polite"></div>
- <div class="az-fullscreen-layer" aria-live="polite"></div>
+ <div class="az-window-layer"></div>
+ <div class="az-fullscreen-layer"></div>
  </section>
  <footer class="az-task-shelf-wrap"><nav class="az-task-shelf" aria-label="Open apps and navigation">${shelfMarkup()}</nav></footer>
  ${overlayMarkup()}
@@ -243,18 +265,36 @@ function shellTemplate() {
  </div>`;
 }
 
+const RESET_SCOPE = Object.freeze({
+ reset:['Open apps and the active app','Window positions and sizes','Recent items','Notification history'],
+ kept:['Wallpaper, motion and sound preferences','Files and documents saved inside apps','Your Aizanoi world progress']
+});
+const RESET_SUMMARY_HTML = `<p>Apps with unsaved changes will ask before they close. Then the page reloads.</p><h3>Will be reset</h3><ul>${RESET_SCOPE.reset.map((line)=>`<li>${line}</li>`).join('')}</ul><h3>Stays as it is</h3><ul>${RESET_SCOPE.kept.map((line)=>`<li>${line}</li>`).join('')}</ul>`;
+
 function overlayMarkup() {
- return `<div class="az-overlay" id="az-command-overlay" aria-hidden="true"><section class="az-dialog az-command" role="dialog" aria-modal="true" aria-labelledby="az-command-title"><h2 id="az-command-title" class="az-sr-only">Search Aizanoi</h2><div class="az-command-search">${icon('search')}<input id="az-command-input" type="search" autocomplete="off" spellcheck="false" placeholder="Open an app or action…" aria-label="Search Aizanoi apps and commands"><span class="az-key">ESC</span></div><div class="az-command-results" role="listbox" aria-label="Search results"></div></section></div>
+ return `<div class="az-overlay" id="az-command-overlay" aria-hidden="true"><section class="az-dialog az-command" role="dialog" aria-modal="true" aria-labelledby="az-command-title"><h2 id="az-command-title" class="az-sr-only">Search Aizanoi</h2><div class="az-command-search">${icon('search')}<input id="az-command-input" type="search" role="combobox" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" aria-controls="az-command-results" autocomplete="off" spellcheck="false" placeholder="Open an app or action…" aria-label="Search Aizanoi apps and commands"><span class="az-key">ESC</span></div><div class="az-command-results" id="az-command-results" role="listbox" aria-label="Search results"></div><div class="az-command-empty" id="az-command-empty" role="status" hidden>No direct match. Try an app or action.</div></section></div>
  <div class="az-overlay" id="az-switcher-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-switcher-title"><header class="az-dialog-header"><strong id="az-switcher-title">Open Apps</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close open apps">×</button></header><div class="az-dialog-body"><div class="az-switcher-list" data-switcher-list></div></div></section></div>
  <div class="az-overlay" id="az-settings-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-settings-title"><header class="az-dialog-header"><strong id="az-settings-title">AizanoiOS Settings</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close settings">×</button></header><div class="az-dialog-body" data-settings-body></div></section></div>
  <div class="az-overlay" id="az-window-menu-overlay" aria-hidden="true"><section class="az-dialog az-window-menu-dialog" role="dialog" aria-modal="true" aria-labelledby="az-window-menu-title"><header class="az-dialog-header"><strong id="az-window-menu-title">Window</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close window menu">×</button></header><div class="az-dialog-body" data-window-menu-body></div></section></div>
+ <div class="az-overlay" id="az-confirm-overlay" aria-hidden="true"><section class="az-dialog az-confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="az-confirm-title" aria-describedby="az-confirm-body"><header class="az-dialog-header"><strong id="az-confirm-title">Reset local state?</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Cancel reset">×</button></header><div class="az-dialog-body" id="az-confirm-body">${RESET_SUMMARY_HTML}<div class="az-confirm-actions"><button class="az-button" type="button" data-overlay-close data-confirm-cancel>Cancel</button><button class="az-button az-button-danger" type="button" data-confirm-reset>Reset local state</button></div></div></section></div>
  <div class="az-overlay" id="az-notifications-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-notifications-title"><header class="az-dialog-header"><strong id="az-notifications-title">Notifications</strong><span class="az-system-spacer"></span><button class="az-button" type="button" data-clear-activity>Clear</button><button class="az-icon-button" type="button" data-overlay-close aria-label="Close notifications">×</button></header><div class="az-dialog-body"><div class="az-notifications-list" data-notifications-list></div></div></section></div>`;
 }
 
-function setBackgroundInert(value) {
- for (const selector of ['.az-system-bar','.az-stage','.az-task-shelf-wrap']) {
- const node = document.querySelector(selector);
- if (node) node.inert = Boolean(value);
+// Single derived inert state: overlay (dialog) state plus layout and active-window state.
+function syncIsolation() {
+ const overlay = Boolean(activeOverlay);
+ const mode = layoutMode();
+ const activeId = Store.getState().activeApp;
+ const active = activeId ? windows.get(activeId) : null;
+ const covering = mode === 'compact' && Boolean(active && !active.minimized && !active.fullscreen);
+ const set = (selector, value) => { const node = document.querySelector(selector); if (node) node.inert = Boolean(value); };
+ set('.az-system-bar', overlay);
+ set('.az-stage', overlay);
+ set('.az-task-shelf-wrap', overlay || covering);
+ set('.az-home-scroll', overlay || covering);
+ for (const [id, item] of windows) {
+ if (item.fullscreen) continue;
+ item.el.inert = item.minimized || (mode !== 'large' && id !== activeId);
  }
 }
 
@@ -262,15 +302,15 @@ function focusables(root) {
  return [...root.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')].filter((node) => !node.hidden && getComputedStyle(node).display !== 'none');
 }
 
-function openOverlay(id, opener = document.activeElement) {
+function openOverlay(id, opener = document.activeElement, focusSelector = null) {
  closeOverlay(false);
  const overlay = document.getElementById(id); if (!overlay) return;
  activeOverlay = overlay;
  overlayOpener = opener instanceof HTMLElement ? opener : null;
  overlay.classList.add('is-open');
  overlay.setAttribute('aria-hidden','false');
- setBackgroundInert(true);
- const first = focusables(overlay)[0];
+ syncIsolation();
+ const first = (focusSelector && overlay.querySelector(focusSelector)) || focusables(overlay)[0];
  setTimeout(() => first?.focus(), 0);
 }
 
@@ -282,8 +322,10 @@ function closeOverlay(restore = true) {
  overlayOpener = null;
  last.classList.remove('is-open');
  last.setAttribute('aria-hidden','true');
- setBackgroundInert(false);
- if (restore && opener?.isConnected) opener.focus({ preventScroll:true });
+ syncIsolation();
+ if (last.id === 'az-command-overlay') { const input = document.getElementById('az-command-input'); input?.setAttribute('aria-expanded','false'); input?.removeAttribute('aria-activedescendant'); }
+ if (restore && last.id === 'az-confirm-overlay') { renderSettings(); openOverlay('az-settings-overlay', confirmReturnOpener, '[data-reset-workspace]'); return; }
+ if (restore && opener?.isConnected && !opener.closest('[inert]')) opener.focus({ preventScroll:true });
 }
 
 function trapOverlayKey(event) {
@@ -297,21 +339,23 @@ function trapOverlayKey(event) {
  return true;
 }
 
+// Rects are always in the window layer's own coordinate system (the layer is inset:0 in the stage).
 function defaultRect(appId) {
  const saved = Store.windowRect(appId); if (saved) return clampRect(saved);
+ const layer = layerBox();
  const index = Math.max(0, APPS.findIndex((app) => app.id === appId));
- const width = Math.min(980, Math.max(620, innerWidth * .66));
- const height = Math.min(700, Math.max(460, innerHeight * .70));
- return clampRect({ width, height, left:(innerWidth-width)/2 + (index%4)*14, top:Math.max(10,(innerHeight-height)/2 - 24 + (index%4)*10) });
+ const width = Math.min(980, Math.max(620, layer.width * .66));
+ const height = Math.min(700, Math.max(460, layer.height * .78));
+ return clampRect({ width, height, left:(layer.width-width)/2 + (index%4)*14, top:(layer.height-height)/2 + (index%4)*10 });
 }
 
 function clampRect(rect) {
- const mode = layoutMode();
- if (mode !== 'large') return { left:0, top:0, width:innerWidth, height:Math.max(300, innerHeight - 126) };
- const width = Math.min(Math.max(360, Number(rect.width)||760), innerWidth-32);
- const height = Math.min(Math.max(260, Number(rect.height)||560), innerHeight-132);
- const left = Math.min(Math.max(12, Number(rect.left)||20), innerWidth-width-12);
- const top = Math.min(Math.max(8, Number(rect.top)||20), innerHeight-height-88);
+ const layer = layerBox();
+ const finite = (value, fallback) => value !== null && value !== '' && Number.isFinite(Number(value)) ? Number(value) : fallback;
+ const width = Math.round(Math.min(Math.max(WINDOW_MIN.width, finite(rect.width, 760)), Math.max(WINDOW_MIN.width, layer.width - WINDOW_MARGIN.x * 2)));
+ const height = Math.round(Math.min(Math.max(WINDOW_MIN.height, finite(rect.height, 560)), Math.max(WINDOW_MIN.height, layer.height - WINDOW_MARGIN.top - WINDOW_MARGIN.bottom)));
+ const left = Math.round(Math.min(Math.max(WINDOW_MARGIN.x, finite(rect.left, 20)), Math.max(WINDOW_MARGIN.x, layer.width - width - WINDOW_MARGIN.x)));
+ const top = Math.round(Math.min(Math.max(WINDOW_MARGIN.top, finite(rect.top, 20)), Math.max(WINDOW_MARGIN.top, layer.height - height - WINDOW_MARGIN.bottom)));
  return { left, top, width, height };
 }
 
@@ -324,7 +368,6 @@ function createFullscreenSurface(app) {
  if (!layer) {
  layer = document.createElement('div');
  layer.className = 'az-fullscreen-layer';
- layer.setAttribute('aria-live', 'polite');
  document.querySelector('.az-stage')?.appendChild(layer);
  }
  const el = document.createElement('section');
@@ -363,27 +406,64 @@ function createWindow(app) {
  return el;
 }
 
-function focusWindow(appId, { updateRoute=true } = {}) {
- const item = windows.get(appId); if (!item) return;
+// Activation (z-order, active state, route) is separate from focus transfer, so a pointer press keeps the native focus of the control that was clicked.
+function activateWindow(appId, { updateRoute=true } = {}) {
+ const item = windows.get(appId); if (!item) return null;
+ const already = Store.getState().activeApp === appId && item.el.classList.contains('is-active') && !item.minimized;
+ if (!already) {
  for (const [id, other] of windows) other.el.classList.toggle('is-active', id === appId);
  item.minimized = false;
  item.el.classList.remove('is-minimized');
  item.el.style.zIndex = String(++zCounter);
  Store.setActiveApp(appId);
  renderShelf();
- syncCompactIsolation();
+ }
+ syncIsolation();
  if (updateRoute) setRoute(appId, 'push');
- setTimeout(() => item.el.focus({ preventScroll:true }), 0);
+ return item;
 }
 
-function syncCompactIsolation() {
- const activeId=Store.getState().activeApp;
- const active=activeId ? windows.get(activeId) : null;
- const isolated=layoutMode()==='compact' && Boolean(active && !active.minimized);
- for(const selector of ['.az-home-scroll','.az-task-shelf-wrap']){
- const node=document.querySelector(selector);
- if(node)node.inert=isolated;
+function focusWindowContent(appId) {
+ const item = windows.get(appId); if (!item || item.minimized) return;
+ const current = document.activeElement;
+ if (current && current !== item.el && item.el.contains(current) && !current.closest('[inert]')) return;
+ const saved = item.lastFocus;
+ if (saved && saved.isConnected && item.el.contains(saved) && !saved.closest('[inert]')) saved.focus({ preventScroll:true });
+ else item.el.focus({ preventScroll:true });
+}
+
+// Explicit switching/opening: activate, then move focus into the window.
+function focusWindow(appId, options = {}) {
+ if (!activateWindow(appId, options)) return;
+ setTimeout(() => focusWindowContent(appId), 0);
+}
+
+function isUsable(node) { return Boolean(node && node.isConnected && !node.closest('[inert]') && node.getClientRects().length); }
+
+function focusIsLost(item = null) {
+ const current = document.activeElement;
+ return !current || current === document.body || !current.isConnected || Boolean(item && item.el.contains(current)) || !isUsable(current);
+}
+
+function focusHomeTarget(appId = null) {
+ const id = appId && globalThis.CSS?.escape ? CSS.escape(appId) : '';
+ const candidates = id ? [`[data-dock-app="${id}"]`, `[data-task-app="${id}"]`, `.az-desktop-shortcut[data-app="${id}"]`] : [];
+ for (const selector of candidates) {
+ const node = document.querySelector(selector);
+ if (isUsable(node)) { node.focus({ preventScroll:true }); return; }
  }
+ const home = document.querySelector('.az-desktop, .az-home');
+ if (home && isUsable(home)) { if (!home.hasAttribute('tabindex')) home.tabIndex = -1; home.focus({ preventScroll:true }); return; }
+ document.querySelector('.az-brand-button')?.focus({ preventScroll:true });
+}
+
+function topVisibleWindow(excludeId = null) {
+ let best = null;
+ for (const [id, item] of windows) {
+ if (id === excludeId || item.minimized || item.fullscreen) continue;
+ if (!best || Number(item.el.style.zIndex) > Number(best.el.style.zIndex)) best = item;
+ }
+ return best ? best.app.id : null;
 }
 
 function setRoute(appId, mode='replace') {
@@ -399,7 +479,8 @@ async function openAppInstance(appId, app, options, generation) {
  await ensureAppsStyle();
  if(appGenerations.get(appId)!==generation)return null;
  const el = app.fullscreen ? createFullscreenSurface(app) : createWindow(app);
- const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null, generation, fullscreen: Boolean(app.fullscreen) };
+ const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null, generation, fullscreen: Boolean(app.fullscreen), lastFocus:null, closing:false };
+ el.addEventListener('focusin', (event) => { if (event.target !== el) item.lastFocus = event.target; });
  windows.set(appId, item);
  Store.markAppOpen(appId);
  renderShelf();
@@ -440,10 +521,17 @@ export function openApp(requestedAppId, options={}) {
  focusWindow(appId,{ updateRoute:!options.fromHistory });
  // Give already-running apps a chance to react to new open options
  // (e.g. Notepad loading a different file, Winamp playing a track).
- try { item.onOpen?.(options); } catch (error) { console.error(`AizanoiOS onOpen failed: ${appId}`, error); }
- return Promise.resolve(item.el);
+ return Promise.resolve().then(() => item.onOpen?.(options)).then(() => item.el, (error) => {
+ console.error(`AizanoiOS onOpen failed: ${appId}`, error);
+ if (windows.get(appId) === item) notify(`${app.label} could not complete that request`, error?.message || 'Try again.', 'error');
+ return item.el;
+ });
  }
  if(openingApps.has(appId))return openingApps.get(appId);
+ if(windows.size+openingApps.size>=Store.MAX_OPEN_APPS){
+ notify('Too many open apps',`Close an app before opening ${app.label}. AizanoiOS keeps up to ${Store.MAX_OPEN_APPS} apps open.`,'warning');
+ return Promise.resolve(null);
+ }
  const generation=nextAppGeneration(appId);
  const promise=openAppInstance(appId,app,options,generation).finally(()=>{
  if(openingApps.get(appId)===promise)openingApps.delete(appId);
@@ -460,33 +548,46 @@ export function closeApp(appId, { updateRoute=true } = {}) {
  openingApps.delete(appId);
  return true;
  }
+ // One pending close per instance.
+ if (item.closing) return true;
  // Apps can veto closing (e.g. Notepad with unsaved changes) via beforeClose.
  if (typeof item.beforeClose === 'function') {
- let verdict = item.beforeClose();
+ let verdict;
+ try { verdict = item.beforeClose(); } catch (error) { console.error(`AizanoiOS beforeClose failed: ${appId}`, error); return false; }
  if (verdict && typeof verdict.then === 'function') {
- verdict.then((allowed) => { if (allowed) finalizeClose(appId, { updateRoute }); }).catch(() => {});
+ item.closing = true;
+ const generation = item.generation;
+ Promise.resolve(verdict).then((allowed) => {
+ // The verdict only applies to the instance that asked for it.
+ if (allowed && windows.get(appId) === item && item.generation === generation && appGenerations.get(appId) === generation) finalizeClose(appId, { updateRoute, expected:item });
+ }).catch((error) => console.error(`AizanoiOS beforeClose failed: ${appId}`, error)).finally(() => { item.closing = false; });
  return true;
  }
  if (!verdict) return false;
  }
- finalizeClose(appId, { updateRoute });
+ finalizeClose(appId, { updateRoute, expected:item });
  return true;
 }
 
-function finalizeClose(appId, { updateRoute=true } = {}) {
+async function askBeforeClose(item) {
+ if (typeof item.beforeClose !== 'function') return true;
+ try { return Boolean(await item.beforeClose()); } catch (_) { return false; }
+}
+
+function finalizeClose(appId, { updateRoute=true, expected=null } = {}) {
  const item = windows.get(appId);
- if (!item) return false;
+ if (!item || (expected && item !== expected)) return false;
+ const lost = focusIsLost(item);
  nextAppGeneration(appId);
  try { item.cleanup?.(); } catch (_) {}
  item.el.remove();
  windows.delete(appId);
  Store.markAppClosed(appId);
- renderShelf();
- const state = Store.getState();
- const next = state.activeApp && windows.has(state.activeApp) ? state.activeApp : [...windows.keys()].at(-1) || null;
- if (next) focusWindow(next,{ updateRoute:false }); else Store.setActiveApp(null);
- syncCompactIsolation();
+ const next = topVisibleWindow();
+ if (next) activateWindow(next,{ updateRoute:false }); else { Store.setActiveApp(null); renderShelf(); }
+ syncIsolation();
  if (updateRoute) setRoute(next,'replace');
+ if (lost) { if (next) focusWindowContent(next); else focusHomeTarget(appId); }
  Store.recordActivity(`Closed ${item.app.label}`,'','app');
  announce(`${item.app.label} closed`);
  return true;
@@ -494,13 +595,15 @@ function finalizeClose(appId, { updateRoute=true } = {}) {
 
 function minimizeApp(appId) {
  const item = windows.get(appId); if (!item) return;
+ const lost = focusIsLost(item);
  item.minimized = true;
  item.el.classList.add('is-minimized');
  item.el.classList.remove('is-active');
- Store.setActiveApp(null);
- renderShelf();
- syncCompactIsolation();
- setRoute(null,'replace');
+ const next = topVisibleWindow(appId);
+ if (next) activateWindow(next, { updateRoute:false }); else { Store.setActiveApp(null); renderShelf(); }
+ syncIsolation();
+ setRoute(next,'replace');
+ if (lost) { if (next) focusWindowContent(next); else focusHomeTarget(appId); }
  announce(`${item.app.label} minimized`);
 }
 
@@ -508,10 +611,13 @@ function syncMaximizeControl(item) {
  const button=item.el.querySelector('.az-window-control[data-action="maximize"]'); if(!button)return;
  button.innerHTML=item.maximized?WINDOW_GLYPHS.restore:WINDOW_GLYPHS.maximize;
  button.title=item.maximized?'Restore':'Maximize';
+ const allowed=canMaximize();
+ button.hidden=!allowed;
+ button.disabled=!allowed;
 }
 
 function maximizeApp(appId) {
- const item = windows.get(appId); if (!item) return;
+ const item = windows.get(appId); if (!item || !canMaximize()) return;
  item.maximized = !item.maximized;
  item.el.classList.toggle('is-maximized', item.maximized);
  syncMaximizeControl(item);
@@ -519,6 +625,7 @@ function maximizeApp(appId) {
 }
 
 function showHome({ push=true } = {}) {
+ const lost = focusIsLost() || [...windows.values()].some((item) => item.el.contains(document.activeElement));
  for (const item of windows.values()) {
  item.minimized = true;
  item.el.classList.add('is-minimized');
@@ -526,9 +633,10 @@ function showHome({ push=true } = {}) {
  }
  Store.setActiveApp(null);
  renderShelf();
- syncCompactIsolation();
+ syncIsolation();
  setRoute(null, push ? 'push' : 'replace');
  document.querySelector('.az-home-scroll')?.scrollTo({ top:0, behavior:Store.getState().reduceMotion ? 'auto' : 'smooth' });
+ if (lost) focusHomeTarget(null);
 }
 
 function showSnapGhost(side) {
@@ -550,9 +658,15 @@ function showSnapGhost(side) {
  return side;
 }
 
+// Snap detection and geometry live only here (the AizanoiOS adapter may merely animate the result).
+const SNAP_EDGE = 10;
+
 function snapRect(side) {
- if (side === 'left') return { left: 12, top: 8, width: Math.max(360, Math.floor(innerWidth / 2) - 18), height: Math.max(260, innerHeight - 140) };
- if (side === 'right') return { left: Math.ceil(innerWidth / 2) + 6, top: 8, width: Math.max(360, Math.floor(innerWidth / 2) - 18), height: Math.max(260, innerHeight - 140) };
+ const layer = layerBox();
+ const width = Math.max(WINDOW_MIN.width, Math.floor(layer.width / 2) - 18);
+ const height = Math.max(WINDOW_MIN.height, Math.round(layer.height - WINDOW_MARGIN.top - WINDOW_MARGIN.bottom));
+ if (side === 'left') return { left:12, top:WINDOW_MARGIN.top, width, height };
+ if (side === 'right') return { left:Math.round(layer.width - 12 - width), top:WINDOW_MARGIN.top, width, height };
  return null;
 }
 
@@ -562,7 +676,7 @@ function snapWindow(appId, side) {
  item.maximized = false;
  item.el.classList.remove('is-maximized');
  syncMaximizeControl(item);
- Object.assign(item.el.style, { left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px` });
+ applyRect(item.el, rect);
  Store.saveWindowRect(appId, rect);
  announce(`${item.app.label} snapped ${side}`);
  return true;
@@ -572,15 +686,17 @@ function pointerDrag(event, appId, edge=null) {
  if (layoutMode() !== 'large') return;
  const item = windows.get(appId); if (!item || item.maximized || event.button !== 0) return;
  event.preventDefault();
- focusWindow(appId,{updateRoute:false});
+ activateWindow(appId,{updateRoute:false});
  let pendingSnap = null;
- const start = { x:event.clientX, y:event.clientY, rect:item.el.getBoundingClientRect() };
+ const layer = layerBox();
+ const start = { x:event.clientX, y:event.clientY, rect:windowRectOf(item.el) };
  const move = (e) => {
  const dx=e.clientX-start.x, dy=e.clientY-start.y;
- let rect={ left:start.rect.left, top:start.rect.top, width:start.rect.width, height:start.rect.height };
+ let rect={ ...start.rect };
  if (!edge) {
  rect.left += dx; rect.top += dy;
- pendingSnap = e.clientX <= 10 ? 'left' : e.clientX >= innerWidth - 10 ? 'right' : null;
+ const localX = e.clientX - layer.left;
+ pendingSnap = localX <= SNAP_EDGE ? 'left' : localX >= layer.width - SNAP_EDGE ? 'right' : null;
  showSnapGhost(pendingSnap);
  }
  else {
@@ -589,8 +705,7 @@ function pointerDrag(event, appId, edge=null) {
  if (edge.includes('w')) { rect.left += dx; rect.width -= dx; }
  if (edge.includes('n')) { rect.top += dy; rect.height -= dy; }
  }
- rect=clampRect(rect);
- Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
+ applyRect(item.el, clampRect(rect));
  };
  const finish = () => {
  document.removeEventListener('pointermove',move);
@@ -599,7 +714,7 @@ function pointerDrag(event, appId, edge=null) {
  showSnapGhost(null);
  if (!item.el.isConnected) return;
  if (pendingSnap && !edge) { snapWindow(appId, pendingSnap); return; }
- Store.saveWindowRect(appId,item.el.getBoundingClientRect());
+ Store.saveWindowRect(appId,windowRectOf(item.el));
  };
  document.addEventListener('pointermove',move);
  document.addEventListener('pointerup',finish,{once:true});
@@ -608,7 +723,7 @@ function pointerDrag(event, appId, edge=null) {
 
 function startKeyboardWindowMode(appId, mode) {
  const item=windows.get(appId); if(!item) return;
- keyboardWindowMode={appId,mode,original:item.el.getBoundingClientRect()};
+ keyboardWindowMode={appId,mode,original:windowRectOf(item.el)};
  closeOverlay(false);
  item.el.focus();
  announce(`${mode} mode. Use arrow keys, Shift for larger steps, Enter to accept, Escape to cancel.`);
@@ -622,13 +737,13 @@ function handleKeyboardWindowMode(event) {
  if(event.key==='Enter'){
  event.preventDefault();
  keyboardWindowMode=null;
- Store.saveWindowRect(appId,item.el.getBoundingClientRect());
+ Store.saveWindowRect(appId,windowRectOf(item.el));
  announce(`${item.app.label} ${mode} complete`);
  return true;
  }
  if(event.key==='Escape'){
  event.preventDefault();
- Object.assign(item.el.style,{left:`${original.left}px`,top:`${original.top}px`,width:`${original.width}px`,height:`${original.height}px`});
+ applyRect(item.el,original);
  keyboardWindowMode=null;
  announce(`${mode} cancelled`);
  return true;
@@ -638,24 +753,30 @@ function handleKeyboardWindowMode(event) {
  event.preventDefault();
  const step=event.shiftKey?24:6;
  const [dx,dy]=map[event.key];
- const current=item.el.getBoundingClientRect();
- let rect={left:current.left,top:current.top,width:current.width,height:current.height};
+ let rect=windowRectOf(item.el);
  if(mode==='move'){rect.left+=dx*step;rect.top+=dy*step;} else {rect.width+=dx*step;rect.height+=dy*step;}
- rect=clampRect(rect);
- Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
+ applyRect(item.el,clampRect(rect));
  return true;
 }
 
 function openWindowMenu(appId, opener) {
  const item=windows.get(appId); if(!item)return;
  const body=document.querySelector('[data-window-menu-body]');
- body.innerHTML=`<div class="az-simple-grid az-window-menu-grid"><button class="az-button" type="button" data-window-command="move">Move with keyboard</button><button class="az-button" type="button" data-window-command="resize">Resize with keyboard</button><button class="az-button" type="button" data-window-command="snap-left">Snap left</button><button class="az-button" type="button" data-window-command="snap-right">Snap right</button><button class="az-button" type="button" data-window-command="minimize">Minimize</button><button class="az-button" type="button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button class="az-button az-button-danger" type="button" data-window-command="close">Close</button></div>`;
+ const large=layoutMode()==='large';
+ const btn=(command,label,danger='')=>`<button class="az-button${danger}" type="button" data-window-command="${command}">${label}</button>`;
+ const commands=[];
+ if(large&&!item.maximized)commands.push(btn('move','Move with keyboard'),btn('resize','Resize with keyboard'));
+ if(large)commands.push(btn('snap-left','Snap left'),btn('snap-right','Snap right'));
+ commands.push(btn('minimize','Minimize'));
+ if(canMaximize())commands.push(btn('maximize',item.maximized?'Restore':'Maximize'));
+ commands.push(btn('close','Close',' az-button-danger'));
+ body.innerHTML=`<div class="az-simple-grid az-window-menu-grid">${commands.join('')}</div>`;
  body.dataset.appId=appId;
  openOverlay('az-window-menu-overlay',opener);
 }
 
 function wireWindow(el, appId) {
- el.addEventListener('pointerdown',()=>focusWindow(appId,{updateRoute:false}));
+ el.addEventListener('pointerdown',()=>activateWindow(appId,{updateRoute:false}));
  el.querySelector('[data-window-drag]').addEventListener('pointerdown',(event)=>{if(event.target.closest('button'))return;pointerDrag(event,appId);});
  el.querySelector('[data-window-drag]').addEventListener('dblclick',(event)=>{if(!event.target.closest('button'))maximizeApp(appId);});
  el.querySelectorAll('.az-resize-handle').forEach((handle)=>handle.addEventListener('pointerdown',(event)=>pointerDrag(event,appId,handle.dataset.edge)));
@@ -687,7 +808,7 @@ function renderSettings() {
  const wallpapers=[['morning','Morning','Bright temple sunrise'],['blue-hour','Blue hour','Evening light over the river'],['aurora','Aurora','The original night sky']];
  const wallpaper=state.wallpaper||'morning';
  const picker=`<fieldset class="az-wallpaper-picker"><legend>Wallpaper</legend>${wallpapers.map(([id,label,hint])=>`<label class="az-wallpaper-choice" data-wallpaper-choice="${id}"><input type="radio" name="az-wallpaper" value="${id}" ${wallpaper===id?'checked':''}><span class="az-wallpaper-thumb" aria-hidden="true"></span><strong>${label}</strong><small>${hint}</small></label>`).join('')}</fieldset>`;
- body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card az-settings-wide"><h3>Desktop</h3>${picker}</div><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label><label class="az-setting-row"><input type="checkbox" data-setting="soundOn" ${state.soundOn!==false?'checked':''}> Interface sounds</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Aizanoi session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
+ body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card az-settings-wide"><h3>Desktop</h3>${picker}</div><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label><label class="az-setting-row"><input type="checkbox" data-setting="soundOn" ${state.soundOn!==false?'checked':''}> Interface sounds</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent items, notification history and window positions are stored in this browser. Resetting clears those and keeps your preferences, saved files and Aizanoi progress.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
 }
 
 function loadStaticSearchEntries() {
@@ -781,23 +902,50 @@ function visibleCommandRows(query='') {
  return ordered;
 }
 
-function renderCommands(query='') {
+const commandRowKey = (row) => `${row.type}:${row.id || row.href || row.label}`;
+
+function syncCommandSelection({ scroll=false } = {}) {
+ const host = document.querySelector('.az-command-results');
+ const input = document.getElementById('az-command-input');
+ if (!host || !input) return;
+ let current = null;
+ host.querySelectorAll('[role="option"]').forEach((node) => {
+ const selected = Number(node.dataset.commandIndex) === commandSelection;
+ node.classList.toggle('is-selected', selected);
+ node.setAttribute('aria-selected', String(selected));
+ if (selected) current = node;
+ });
+ if (current) { input.setAttribute('aria-activedescendant', current.id); if (scroll) current.scrollIntoView({ block:'nearest' }); }
+ else input.removeAttribute('aria-activedescendant');
+}
+
+function renderCommands(query='', { keepSelection=false } = {}) {
  const host=document.querySelector('.az-command-results'); if(!host)return;
+ const input=document.getElementById('az-command-input');
+ const empty=document.getElementById('az-command-empty');
  const rows=visibleCommandRows(query);
- commandSelection=Math.min(commandSelection,Math.max(0,rows.length-1));
- if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app or action.</div>';return;}
+ if (keepSelection && commandSelectedKey) { const found = rows.findIndex((row) => commandRowKey(row) === commandSelectedKey); commandSelection = found >= 0 ? found : Math.min(commandSelection, Math.max(0, rows.length - 1)); }
+ else commandSelection = Math.min(commandSelection, Math.max(0, rows.length - 1));
+ commandSelectedKey = rows[commandSelection] ? commandRowKey(rows[commandSelection]) : null;
+ if(empty)empty.hidden=rows.length>0;
+ input?.setAttribute('aria-expanded',String(rows.length>0 && Boolean(activeOverlay?.id==='az-command-overlay')));
+ if(!rows.length){host.innerHTML='';input?.removeAttribute('aria-activedescendant');return;}
  const groupOrder=[...new Set(rows.map((row)=>row.type))];
- const groups=[];
- for(const type of groupOrder){
- const subset=rows.filter((row)=>row.type===type);
- if(subset.length)groups.push({type,subset});
- }
+ const seen=new Set();
  let index=0;
- host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='content'?'Content':'Apps'}</div>${subset.map((row)=>{
+ host.innerHTML=groupOrder.map((type)=>{
+ const label=type==='action'?'Actions':type==='content'?'Content':'Apps';
+ const options=rows.filter((row)=>row.type===type).map((row)=>{
  const current=index++;
  const image=row.type==='app'?appById(row.id)?.icon:row.type==='content'?row.icon:'/assets/branding/aizanoi-logo-mark.svg';
- return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.kind||row.type)}</span></button>`;
- }).join('')}`).join('');
+ let id=`az-cmd-${commandRowKey(row).replace(/[^a-z0-9_-]+/gi,'-')}`;
+ while(seen.has(id))id+='-x';
+ seen.add(id);
+ return `<div class="az-command-row${current===commandSelection?' is-selected':''}" id="${escapeHtml(id)}" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.kind||row.type)}</span></div>`;
+ }).join('');
+ return `<div role="group" aria-label="${label}"><div class="az-command-group" aria-hidden="true">${label}</div>${options}</div>`;
+ }).join('');
+ syncCommandSelection();
 }
 
 function toggleFps() {
@@ -855,15 +1003,29 @@ function executeCommand(index) {
  }
 }
 
+async function resetLocalState() {
+ // Close the dialog first so app-owned unsaved-work prompts are not trapped behind inert shell regions.
+ closeOverlay(false);
+ for (const item of [...windows.values()]) {
+ if (await askBeforeClose(item)) continue;
+ if (windows.get(item.app.id) === item) focusWindow(item.app.id);
+ notify('Reset cancelled', `${item.app.label} still has unsaved changes. Nothing was reset.`, 'warning');
+ return;
+ }
+ Store.resetWorkspace();
+ location.reload();
+}
+
 function openCommand(opener) {
  commandSelection=0;
+ commandSelectedKey=null;
  const input=document.getElementById('az-command-input');
  if(input)input.value='';
- renderCommands('');
  openOverlay('az-command-overlay',opener);
+ renderCommands('');
  loadStaticSearchEntries().then(()=>{
  if(activeOverlay?.id!=='az-command-overlay')return;
- renderCommands(document.getElementById('az-command-input')?.value||'');
+ renderCommands(document.getElementById('az-command-input')?.value||'',{keepSelection:true});
  });
 }
 
@@ -910,7 +1072,8 @@ function handleRootClick(event) {
  return;
  }
  if(event.target.closest('[data-clear-activity]')){Store.clearActivity();renderNotifications();return;}
- if(event.target.closest('[data-reset-workspace]')){Store.resetWorkspace();location.reload();return;}
+ if(event.target.closest('[data-reset-workspace]')){confirmReturnOpener=overlayOpener;openOverlay('az-confirm-overlay',event.target.closest('button'),'[data-confirm-cancel]');return;}
+ if(event.target.closest('[data-confirm-reset]')){resetLocalState();return;}
  if(event.target.matches('input[type="radio"][name="az-wallpaper"]')){if(Store.setPreference('wallpaper',event.target.value))applyWallpaper(event.target.value);return;}
  const settingToggle=event.target.matches('input[type="checkbox"][data-setting]')?event.target:null;
  if(settingToggle){
@@ -934,8 +1097,8 @@ function handleKeydown(event) {
  if(event.key==='ArrowDown')commandSelection=(commandSelection+1)%rows.length;
  else if(event.key==='ArrowUp')commandSelection=(commandSelection-1+rows.length)%rows.length;
  else {executeCommand(commandSelection);return;}
- renderCommands(document.getElementById('az-command-input')?.value||'');
- document.getElementById('az-command-input')?.focus();
+ commandSelectedKey=commandRowKey(rows[commandSelection]);
+ syncCommandSelection({scroll:true});
  return;
  }
  trapOverlayKey(event);
@@ -980,18 +1143,22 @@ async function restoreWorkspace() {
 }
 
 function resizeAll() {
- document.querySelector('.az-shell')?.setAttribute('data-layout',layoutMode());
+ const mode=layoutMode();
+ document.querySelector('.az-shell')?.setAttribute('data-layout',mode);
  for(const [id,item] of windows){
- if(layoutMode()!=='large'){
+ if(item.fullscreen)continue;
+ if(!canMaximize()&&item.maximized){
  item.el.classList.remove('is-maximized');
  item.maximized=false;
+ }
  syncMaximizeControl(item);
+ // Free-form geometry only applies to the large layout; other layouts are CSS-driven and keep the stored desktop rect untouched.
+ if(mode!=='large')continue;
+ const rect=clampRect(windowRectOf(item.el));
+ applyRect(item.el,rect);
+ Store.saveWindowRect(id,rect);
  }
- const rect=clampRect(item.el.getBoundingClientRect());
- Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
- if(layoutMode()==='large')Store.saveWindowRect(id,rect);
- }
- syncCompactIsolation();
+ syncIsolation();
 }
 
 const appApi=Object.freeze({
@@ -1013,7 +1180,7 @@ export function mountShell() {
  renderClock();
  setInterval(renderClock,30000);
  root.addEventListener('click',handleRootClick);
- root.addEventListener('input',(event)=>{if(event.target.id==='az-command-input'){commandSelection=0;renderCommands(event.target.value);}});
+ root.addEventListener('input',(event)=>{if(event.target.id==='az-command-input'){commandSelection=0;commandSelectedKey=null;renderCommands(event.target.value);}});
  document.addEventListener('keydown',handleKeydown,true);
  window.addEventListener('popstate',syncFromHistory);
  window.addEventListener('resize',()=>requestAnimationFrame(resizeAll));
