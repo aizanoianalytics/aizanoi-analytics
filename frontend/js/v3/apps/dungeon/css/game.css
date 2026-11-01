@@ -72,6 +72,7 @@
 .az-dungeon-begin,
 .az-dungeon-menu-option,
 .az-dungeon-settings-fab,
+.az-dungeon-pick-reopen,
 .az-play-anyway,
 .az-touch-action {
   border: 1px solid var(--az-bronze-bright);
@@ -109,6 +110,9 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
   padding: 0.7rem 1rem;
 }
 .az-dungeon-exit-arrow { color: var(--az-bronze-bright); font-size: 1.25rem; }
@@ -351,9 +355,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .aizanoi-dungeon3d-app-root, .aizanoi-dungeon3d-app-root *, .aizanoi-dungeon3d-app-root *::before, .aizanoi-dungeon3d-app-root *::after,
+  .aizanoi-standalone-body, .aizanoi-standalone-body *, .aizanoi-standalone-body *::before, .aizanoi-standalone-body *::after { scroll-behavior: auto !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
   .az-hud-damage-vignette.is-active { opacity: 0.35; }
 }
+
+/* Local (in-game) reduced motion mirrors the OS rule, scoped to the app root. */
+.aizanoi-dungeon3d-app-root.is-reduced-motion, .aizanoi-dungeon3d-app-root.is-reduced-motion *, .aizanoi-dungeon3d-app-root.is-reduced-motion *::before, .aizanoi-dungeon3d-app-root.is-reduced-motion *::after { scroll-behavior: auto !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
 
 /* Runtime feedback and terminal states. */
 .az-dungeon-effects {
@@ -445,6 +453,11 @@
 .az-dungeon-settings-row input[type="checkbox"] { width: 1.4rem; height: 1.4rem; accent-color: var(--az-bronze-bright); }
 .az-dungeon-settings-row select { background: #1a140d; color: var(--az-ivory); border: 1px solid var(--az-bronze-dark); padding: 0.45rem 0.6rem; font: inherit; }
 
+.aizanoi-dungeon3d-app-root input:focus-visible, .aizanoi-dungeon3d-app-root select:focus-visible { outline: 3px solid var(--az-focus); outline-offset: 3px; }
+.az-dungeon-settings-option { min-height: 44px; }
+.az-dungeon-settings-row input[type="range"] { min-height: 44px; }
+.az-dungeon-pick-reopen { position: absolute; bottom: calc(5rem + env(safe-area-inset-bottom)); left: 50%; z-index: 44; transform: translateX(-50%); min-height: 44px; padding: 0.7rem 1.4rem; }
+
 /* Menu descent variants read as one row of choices. */
 .az-dungeon-daily, .az-dungeon-new-seed, .az-dungeon-settings-open { padding: 0.7rem 1.9rem; font-size: 0.95rem; opacity: 0.92; }
 
@@ -474,3 +487,10 @@
 .aizanoi-dungeon3d-app-root.is-left-handed .az-touch-actions { right: auto; left: calc(1.25rem + env(safe-area-inset-left)); }
 .aizanoi-dungeon3d-app-root.is-left-handed .az-hud-assist { left: auto; right: calc(1rem + env(safe-area-inset-right)); }
 .aizanoi-dungeon3d-app-root.is-left-handed .az-hud-special { left: auto; right: calc(1rem + env(safe-area-inset-right)); }
+
+/* Narrow screens: stack the draft cards and shop items so names, hints and
+   prices read in full instead of squeezing into three thin columns. */
+@media (max-width: 560px) {
+  .az-dungeon-pick-cards { grid-template-columns: 1fr; }
+  .az-dungeon-shop-items { grid-template-columns: 1fr; }
+}

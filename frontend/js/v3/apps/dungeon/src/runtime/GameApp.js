@@ -102,6 +102,10 @@ function makeTouchButton(className, label, action) {
   return button;
 }
 
+const NATIVE_CONTROL = 'input, select, textarea, button, [contenteditable="true"]';
+const TABBABLE = 'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const osReducedMotion = () => { try { return Boolean(globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches); } catch (_) { return false; } };
+
 export class GameApp {
   constructor({ container, api } = {}) {
     if (!container) throw new TypeError('GameApp requires a container');
@@ -708,27 +712,47 @@ export class GameApp {
   }
 
   installInput() {
+    try {
+      const query = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)');
+      if (query?.addEventListener) {
+        const changed = () => this.applySettings();
+        query.addEventListener('change', changed);
+        this.disposers.push(() => query.removeEventListener('change', changed));
+      }
+    } catch (_) {}
     const hasFocus = () => this.root.contains(document.activeElement) || document.activeElement === this.root;
     const keydown = (event) => {
-      if (!hasFocus() || !CONSUMED_KEYS.has(event.code)) return;
-      event.preventDefault();
+      if (!hasFocus()) return;
+      // Modal surfaces own Tab: keep focus inside the topmost one.
+      if (event.code === 'Tab' && this.modal) { this.trapTab(event); return; }
+      if (!CONSUMED_KEYS.has(event.code)) return;
+      // Native controls keep their own keys (range arrows, select options,
+      // button Space/Enter). Only Escape and the modal shortcuts get through.
+      const target = event.target instanceof Element ? event.target : null;
+      const native = Boolean(target?.matches?.(NATIVE_CONTROL));
+      if (native && (event.code === 'Space' || event.code === 'Enter')) return;
+      if (native && event.code.startsWith('Arrow') && target.matches('input, select, textarea')) return;
       if (this.settingsPanel) {
-        if (event.code === 'Escape' && !event.repeat) this.closeSettings();
+        if (event.code === 'Escape' && !event.repeat) { event.preventDefault(); this.closeSettings(); }
         return;
       }
       if (this.pickPanel) {
+        if (this.pickHidden) return;
+        event.preventDefault();
         if (!event.repeat && (event.code === 'Digit1' || event.code === 'Numpad1')) { this.pickChoice(0); return; }
         if (!event.repeat && (event.code === 'Digit2' || event.code === 'Numpad2')) { this.pickChoice(1); return; }
         if (!event.repeat && (event.code === 'Digit3' || event.code === 'Numpad3')) { this.pickChoice(2); return; }
         if (!event.repeat && event.code === 'KeyR') { this.pickReroll(); return; }
         // Escape never sells the pending blessing: the draft owns the modal
         // until the player chooses, rerolls, or explicitly skips for gold.
+        // It can only be set aside with "Decide later", which keeps it pending.
         if (event.code === 'Escape' && !event.repeat) {
-          this.hud?.announce?.('Choose a blessing, reroll, or Skip for gold');
+          this.hud?.announce?.('Choose a blessing, reroll, Skip for gold, or Decide later');
           return;
         }
         return;
       }
+      event.preventDefault();
       if (this.sceneState === 'defeat' && !event.repeat && event.code === 'KeyR') { this.retrySeed(); return; }
       if (event.code === 'Escape' && !event.repeat) this.togglePause();
       else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
@@ -751,7 +775,8 @@ export class GameApp {
       else if (MOVE_CODES.has(event.code)) this.keys.add(event.code);
     };
     const keyup = (event) => {
-      if (CONSUMED_KEYS.has(event.code) && hasFocus()) event.preventDefault();
+      const target = event.target instanceof Element ? event.target : null;
+      if (CONSUMED_KEYS.has(event.code) && hasFocus() && !target?.closest(NATIVE_CONTROL) && !this.settingsPanel) event.preventDefault();
       this.keys.delete(event.code);
       if (event.code === 'KeyJ') this.keys.delete('KeyJ');
       if (event.code === 'KeyK') this.keys.delete('KeyK');
@@ -854,6 +879,8 @@ export class GameApp {
     // state with its victory event suppressed by the restored event cursor.
     if (this.state.chapter > FINAL_CHAPTER) this.showVictory();
     else if (pendingPortal) this.spawnPortal(pendingPortal);
+    const draft = this.state.chests.find((chest) => chest.draftPending && chest.choices?.length);
+    if (draft) this.showPick(draft);
   }
 
   async begin(seed = 'aizo-awakens') {
@@ -931,13 +958,61 @@ export class GameApp {
   }
 
   /**
-   * Comfort settings surface: every persisted preference is reachable and
-   * takes effect immediately. Changes save to aizanoi.dungeon.settings.v1,
-   * separate from the run, so a reset never wipes them.
+   * Modal lifecycle for in-game dialogs: record the opener, make everything
+   * behind the panel inert (except the live announcer), move focus inside and
+   * remember how to hand focus back.
    */
+  openModal(panel, focusTarget, opener = document.activeElement) {
+    this.resetInput();
+    const inerted = [];
+    const hudRoot = this.hud?.root;
+    const mark = (element) => {
+      if (!element || element === panel || element.inert) return;
+      element.inert = true;
+      inerted.push(element);
+    };
+    for (const child of this.root.children) {
+      if (child === panel) continue;
+      if (child === hudRoot) {
+        for (const part of child.children) {
+          if (part !== this.hud?.elements?.announcer && part !== this.hud?.elements?.lootFeed) mark(part);
+        }
+      } else mark(child);
+    }
+    this.modal = { panel, opener, inerted };
+    const target = focusTarget || panel.querySelector(TABBABLE) || panel;
+    if (target === panel) panel.tabIndex = -1;
+    target.focus?.();
+    return this.modal;
+  }
+
+  closeModal(record, { restore = true } = {}) {
+    if (!record) return;
+    for (const element of record.inerted) element.inert = false;
+    if (this.modal === record) this.modal = undefined;
+    if (!restore || this.destroyed) return;
+    const opener = record.opener;
+    const usable = opener && opener !== document.body && opener.isConnected && !opener.closest?.('[inert]');
+    (usable ? opener : this.root)?.focus?.();
+  }
+
+  trapTab(event) {
+    const panel = this.modal?.panel;
+    if (!panel) return;
+    const items = [...panel.querySelectorAll(TABBABLE)].filter((item) => !item.closest('[hidden]'));
+    if (!items.length) { event.preventDefault(); return; }
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+    if (!panel.contains(active)) { event.preventDefault(); first.focus(); }
+    else if (event.shiftKey && active === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && active === last) { event.preventDefault(); first.focus(); }
+  }
+
   showSettings() {
-    if (this.settingsPanel) return { opened: false };
+    if (this.settingsPanel || this.modal) return { opened: false };
     this.settingsReturnToPaused = this.paused;
+    const settingsOpener = document.activeElement;
     if (this.sceneState === 'playing' && !this.pickPanel) this.paused = true;
     const panel = node('section', 'az-hud-panel az-dungeon-settings');
     panel.setAttribute('role', 'dialog');
@@ -951,12 +1026,15 @@ export class GameApp {
       rows.append(wrapper);
       return wrapper;
     };
-    const select = (className, options, current, onPick) => {
+    const select = (className, options, current, onPick, key, label) => {
       const group = node('div', className);
       group.setAttribute('role', 'group');
+      group.setAttribute('aria-label', label);
+      group.dataset.setting = key;
       for (const value of options) {
         const button = node('button', `az-dungeon-settings-option${String(value) === String(current) ? ' is-selected' : ''}`, String(value));
         button.type = 'button';
+        button.dataset.value = String(value);
         button.setAttribute('aria-pressed', String(String(value) === String(current)));
         button.addEventListener('click', () => onPick(value));
         group.append(button);
@@ -972,7 +1050,7 @@ export class GameApp {
       this.refreshSettings();
       this.hud?.announce?.(`Assist mode: ${value.toUpperCase()}`);
       this.updateHud();
-    }));
+    }, 'assistMode', 'Assist mode'));
     rows.append(assistLabel);
     const reserveLabel = node('span', 'az-dungeon-settings-label', 'Auto-fire reserve');
     reserveLabel.append(select('az-dungeon-settings-group', [0, 25, 50], this.settings.autoFireReserve, (value) => {
@@ -981,16 +1059,16 @@ export class GameApp {
       this.saveAndApplySettings();
       this.refreshSettings();
       this.updateHud();
-    }));
+    }, 'autoFireReserve', 'Auto-fire reserve'));
     rows.append(reserveLabel);
-    for (const [key, label] of [['masterVolume', 'Master volume'], ['musicVolume', 'Music volume'], ['sfxVolume', 'Effects volume'], ['shake', 'Screen shake']]) {
+    for (const [key, label] of [['masterVolume', 'Master volume'], ['sfxVolume', 'Effects volume'], ['shake', 'Screen shake']]) {
       const input = document.createElement('input');
       input.type = 'range';
       input.min = '0';
       input.max = '100';
       input.value = String(Math.round(Number(this.settings[key] ?? (key === 'shake' ? 100 : 0.7)) * (key === 'shake' ? 1 : 100)));
       input.setAttribute('aria-label', label);
-      input.addEventListener('change', () => {
+      input.addEventListener('input', () => {
         const percent = Math.max(0, Math.min(100, Number(input.value)));
         this.settings[key] = key === 'shake' ? percent : percent / 100;
         this.saveAndApplySettings();
@@ -1009,7 +1087,7 @@ export class GameApp {
     quality.addEventListener('change', () => {
       this.settings.quality = quality.value;
       this.saveAndApplySettings();
-      this.refreshSettings();
+      this.hud?.announce?.(`Render quality: ${quality.value}`);
     });
     row('Render quality', quality);
     for (const [key, label] of [['damageNumbers', 'Damage numbers'], ['highContrast', 'High contrast'], ['leftHanded', 'Left-handed layout'], ['reducedMotion', 'Reduced motion']]) {
@@ -1028,13 +1106,21 @@ export class GameApp {
     this.settingsPanel = panel;
     this.root.append(panel);
     this.hud?.update?.({ paused: this.paused && !this.pickPanel, help: this.help && !this.pickPanel });
+    this.settingsModal = this.openModal(panel, null, settingsOpener);
     return { opened: true };
   }
 
+  /** Update the segmented controls in place so focus and identity survive. */
   refreshSettings() {
     if (!this.settingsPanel) return;
-    this.closeSettings();
-    this.showSettings();
+    for (const group of this.settingsPanel.querySelectorAll('[data-setting]')) {
+      const current = String(this.settings[group.dataset.setting]);
+      for (const button of group.querySelectorAll('button')) {
+        const on = button.dataset.value === current;
+        button.classList.toggle('is-selected', on);
+        button.setAttribute('aria-pressed', String(on));
+      }
+    }
   }
 
   closeSettings() {
@@ -1042,7 +1128,9 @@ export class GameApp {
     this.settingsPanel.remove();
     this.settingsPanel = undefined;
     if (this.sceneState === 'playing' && !this.pickPanel) this.paused = Boolean(this.settingsReturnToPaused);
-    if (!this.destroyed) this.root?.focus?.();
+    const record = this.settingsModal;
+    this.settingsModal = undefined;
+    this.closeModal(record);
     this.hud?.update?.({ paused: this.paused && !this.pickPanel, help: this.help && !this.pickPanel });
     return { closed: true };
   }
@@ -1057,9 +1145,13 @@ export class GameApp {
     const settings = this.settings || {};
     this.assistMode = settings.assistMode || this.assistMode || 'assist';
     if (this.state?.settings) this.state.settings.autoFireReserve = settings.autoFireReserve ?? 25;
-    try { this.audio?.setVolumes?.({ master: Number(settings.masterVolume ?? 0.7) }); } catch (_) {}
-    try { this.feedback?.setReducedMotion?.(Boolean(settings.reducedMotion)); } catch (_) {}
+    try { this.audio?.setVolumes?.({ master: Number(settings.masterVolume ?? 0.7), sfx: Number(settings.sfxVolume ?? 0.7) }); } catch (_) {}
+    // Effective reduced motion is the OS preference OR the local toggle.
+    this.reducedMotion = osReducedMotion() || Boolean(settings.reducedMotion);
+    try { this.feedback?.setReducedMotion?.(this.reducedMotion); } catch (_) {}
+    if (this.reducedMotion) { this.shake = null; this.hitStopUntil = 0; this.slowMoUntil = 0; }
     try {
+      this.root?.classList?.toggle('is-reduced-motion', this.reducedMotion);
       this.root?.classList?.toggle('is-high-contrast', Boolean(settings.highContrast));
       this.root?.classList?.toggle('is-left-handed', Boolean(settings.leftHanded));
     } catch (_) {}
@@ -1299,8 +1391,8 @@ export class GameApp {
       this.lastHeroX = this.hero.position.x;
       this.lastHeroZ = this.hero.position.z;
       this.heroStride = (this.heroStride || 0) + (moving ? 0.35 : 0.06);
-      this.hero.position.y = moving ? Math.abs(Math.sin(this.heroStride)) * 0.09 : Math.sin(now / 900) * 0.02;
-      const lunge = this.lastMeleeAt && now - this.lastMeleeAt < 180 ? 1.1 : 1;
+      this.hero.position.y = this.reducedMotion ? 0 : moving ? Math.abs(Math.sin(this.heroStride)) * 0.09 : Math.sin(now / 900) * 0.02;
+      const lunge = !this.reducedMotion && this.lastMeleeAt && now - this.lastMeleeAt < 180 ? 1.1 : 1;
       this.hero.scale.set(lunge, 1 / Math.sqrt(lunge), lunge);
       if (!this.heroRing) {
         this.heroRing = new THREE.Mesh(this.telegraphResources().geometry, this.heroRingMaterial());
@@ -1330,7 +1422,7 @@ export class GameApp {
         this.enemyMeshes.set(enemy.id, mesh);
         this.dynamic.add(mesh);
       }
-      mesh.position.set(enemy.x, Math.abs(Math.sin(this.frames / 9 + (enemy.spawnIndex || 0) * 1.7)) * 0.05, enemy.z);
+      mesh.position.set(enemy.x, this.reducedMotion ? 0 : Math.abs(Math.sin(this.frames / 9 + (enemy.spawnIndex || 0) * 1.7)) * 0.05, enemy.z);
       mesh.lookAt(this.state.player.position.x, 0, this.state.player.position.z);
       if (enemy.elite) {
         elitesAlive.add(enemy.id);
@@ -1503,7 +1595,7 @@ export class GameApp {
         this.dynamic.add(mesh);
       }
       mesh.position.set(spawn.x, 0.1, spawn.z);
-      mesh.rotation.y += 0.03;
+      if (!this.reducedMotion) mesh.rotation.y += 0.03;
     }
   }
 
@@ -1526,7 +1618,7 @@ export class GameApp {
           this.hazardMeshes.set(key, mesh);
           this.dynamic.add(mesh);
         }
-        const urgency = 1 + 0.3 * Math.sin(performance.now() / 120);
+        const urgency = this.reducedMotion ? 1 : 1 + 0.3 * Math.sin(performance.now() / 120);
         mesh.position.set(tile.x, 0.07, tile.z);
         mesh.scale.setScalar(1.6 * urgency);
       });
@@ -1643,9 +1735,12 @@ export class GameApp {
    * skip-for-gold exit. The sim pauses while the screen is open; every grant
    * goes through chooseBlessing/rerollChest so the QA handle stays truthful.
    */
-  showPick(chest) {
-     this.closePick();
+  showPick(chest, { rebuild = false } = {}) {
+     const keptOpener = rebuild ? this.pickModal?.opener : undefined;
+     this.closePick({ restore: false });
      this.pickChestId = chest.id;
+     chest.draftPending = true;
+     this.persistRun();
      this.paused = true;
      const panel = node('section', 'az-hud-panel az-dungeon-pick');
      panel.setAttribute('role', 'dialog');
@@ -1669,12 +1764,40 @@ export class GameApp {
      const reroll = makeButton('az-dungeon-pick-reroll', `Reroll (${rerollCost} gold)`, () => this.pickReroll());
      reroll.setAttribute('aria-label', `Reroll blessings for ${rerollCost} gold`);
      const skip = makeButton('az-dungeon-pick-skip', 'Skip for gold', () => this.pickSkip());
-     actions.append(reroll, skip);
+     const later = makeButton('az-dungeon-pick-later', 'Decide later', () => this.hidePick());
+     later.setAttribute('aria-label', 'Decide later: keep this blessing draft pending');
+     actions.append(reroll, skip, later);
      panel.append(actions);
      panel.append(this.renderShop(chest));
      this.pickPanel = panel;
      this.root.append(panel);
+     this.pickModal = this.openModal(panel, rebuild ? panel.querySelector('.az-dungeon-pick-reroll') : panel.querySelector('.az-dungeon-pick-card'), keptOpener ?? document.activeElement);
      this.hud?.announce?.('Choose 1 of 3 blessings');
+     }
+
+     /** Set the draft aside without spending or selling it; the sim stays paused. */
+     hidePick() {
+       if (!this.pickPanel || this.pickHidden) return;
+       this.pickHidden = true;
+       const record = this.pickModal;
+       this.pickModal = undefined;
+       this.pickPanel.hidden = true;
+       this.closeModal(record, { restore: false });
+       this.pickReopen = makeButton('az-dungeon-pick-reopen', 'Reopen blessings', () => this.showHiddenPick());
+       this.pickReopen.setAttribute('aria-label', 'Reopen the pending blessing draft');
+       this.pickReopenOpener = record?.opener;
+       this.root.append(this.pickReopen);
+       this.pickReopen.focus();
+       this.hud?.announce?.('Blessing draft kept. Reopen it when ready');
+     }
+
+     showHiddenPick() {
+       if (!this.pickPanel || !this.pickHidden) return;
+       this.pickHidden = false;
+       this.pickReopen?.remove();
+       this.pickReopen = undefined;
+       this.pickPanel.hidden = false;
+       this.pickModal = this.openModal(this.pickPanel, this.pickPanel.querySelector('.az-dungeon-pick-card'), this.pickReopenOpener);
      }
 
      static SHOP_COPY = Object.freeze({
@@ -1721,7 +1844,14 @@ export class GameApp {
       // Refresh the shop in place: gold, sold states, nothing else moves.
       const fresh = this.state.chests.find((item) => item.id === this.pickChestId);
       const old = this.pickPanel?.querySelector('.az-dungeon-shop');
-      if (old && fresh) old.replaceWith(this.renderShop(fresh));
+      if (old && fresh) {
+        const hadFocus = old.contains(document.activeElement);
+        old.replaceWith(this.renderShop(fresh));
+        if (hadFocus) {
+          const next = this.pickPanel.querySelector(`.az-dungeon-shop-buy[data-slot="${slot}"]`);
+          (next && !next.disabled ? next : this.pickPanel.querySelector('.az-dungeon-shop-buy:not(:disabled), .az-dungeon-pick-card'))?.focus();
+        }
+      }
     } else {
       this.hud?.announce?.(result.reason === 'no-gold' ? 'Not enough gold for that toll' : 'That toll is already paid');
     }
@@ -1731,18 +1861,24 @@ export class GameApp {
    refreshPick() {
      const chest = this.state.chests.find((item) => item.id === this.pickChestId);
      if (!chest || !this.pickPanel) return;
-     this.showPick(chest);
+     this.showPick(chest, { rebuild: true });
    }
 
-   closePick() {
+   closePick({ restore = true } = {}) {
      this.pickPanel?.remove();
      this.pickPanel = undefined;
+     this.pickReopen?.remove();
+     this.pickReopen = undefined;
+     this.pickHidden = false;
+     const record = this.pickModal;
+     this.pickModal = undefined;
+     this.closeModal(record, { restore: false });
      this.pickChestId = undefined;
      if (this.sceneState === 'playing') this.paused = false;
      // The picked card had focus and is gone: return focus to the game root
      // so keyboard input (movement, Enter for the portal) keeps working for
      // mouse/touch players without an extra canvas click.
-     if (!this.destroyed) this.root?.focus?.();
+     if (restore && !this.destroyed) this.root?.focus?.();
    }
 
    pickChoice(index) {
@@ -1751,6 +1887,7 @@ export class GameApp {
      if (!choice) return { chosen: false };
      const result = chooseBlessing(this.state, choice.id);
      if (result.chosen) {
+       chest.draftPending = false;
        this.feedback.emit('loot', { label: `${result.label} ${'◆'.repeat(result.level)}` });
        this.hud?.announce?.(`${result.label}, level ${result.level}`);
        this.closePick();
@@ -1764,6 +1901,7 @@ export class GameApp {
    pickReroll() {
      const result = rerollChest(this.state, this.pickChestId);
      if (result.rerolled) {
+       this.persistRun();
        this.feedback.emit('bow', { position: { x: 0, y: 1, z: 0 } });
        this.refreshPick();
        this.updateHud();
@@ -1774,6 +1912,9 @@ export class GameApp {
    }
 
    pickSkip() {
+     const chest = this.state.chests.find((item) => item.id === this.pickChestId);
+     if (!chest?.draftPending) return { skipped: false };
+     chest.draftPending = false;
      const bonus = 10 + this.state.chapter * 2;
      this.state.player.gold += bonus;
      this.feedback.emit('loot', { label: `Skipped · +${bonus} gold` });
@@ -1952,7 +2093,7 @@ export class GameApp {
 
   updateCamera(dt, time) {
     const target = this.sceneState === 'menu' ? new THREE.Vector3(0, 0.8, 0) : new THREE.Vector3(this.state.player.position.x, 0.8, this.state.player.position.z);
-    const angle = this.sceneState === 'menu' ? time * 0.00012 : 0.72;
+    const angle = this.sceneState === 'menu' && !this.reducedMotion ? time * 0.00012 : 0.72;
     const offset = new THREE.Vector3(Math.sin(angle) * 12, 10, Math.cos(angle) * 12);
     this.cameraTarget.lerp(target, Math.min(1, dt * 8));
     const desired = this.cameraTarget.clone().add(offset);
@@ -1978,7 +2119,7 @@ export class GameApp {
       for (let i = 0; i < steps; i += 1) this.fixedTick();
     }
     this.updateEffects(scaledDt);
-    if (this.portal) this.portal.rotation.y += dt * 0.7;
+    if (this.portal && !this.reducedMotion) this.portal.rotation.y += dt * 0.7;
     this.updateCamera(dt, time);
     this.renderer.render(this.scene, this.camera);
     this.frames += 1;
@@ -2011,6 +2152,7 @@ export class GameApp {
     clearTimeout(this.damageTimer);
     this.resizeObserver?.disconnect();
     this.resetInput();
+    this.modal = undefined;
     this.disposers.splice(0).forEach((dispose) => { try { dispose(); } catch (_) {} });
     this.effects.forEach((effect) => { clearTimeout(effect.timer); effect.value?.remove?.(); effect.value?.removeFromParent?.(); });
     this.feedback?.clear();

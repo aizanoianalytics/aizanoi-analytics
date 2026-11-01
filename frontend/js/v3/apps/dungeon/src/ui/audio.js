@@ -23,9 +23,14 @@ export function createAudioManager(options = {}) {
   const Context = options.AudioContext === undefined
     ? (globalThis.AudioContext || globalThis.webkitAudioContext)
     : options.AudioContext;
-  const masterVolume = Math.max(0, Math.min(1, Number(options.volume ?? 0.7)));
+  // Requested levels live outside the AudioContext so a volume set before the
+  // first gesture-driven resume() still applies once the graph exists.
+  const clamp01 = (value) => Math.max(0, Math.min(1, value));
+  const levels = { master: clamp01(Number(options.volume ?? 0.7)), sfx: 1 };
   let context = null;
   let master = null;
+  let sfxBus = null;
+
   let enabled = true;
   let destroyed = false;
 
@@ -35,12 +40,20 @@ export function createAudioManager(options = {}) {
     try {
       context = new Context();
       master = context.createGain();
-      master.gain.value = masterVolume;
+      sfxBus = context.createGain();
+
+      master.gain.value = levels.master;
+      sfxBus.gain.value = levels.sfx;
+
+      sfxBus.connect(master);
+
       master.connect(context.destination);
       return true;
     } catch (_) {
       context = null;
       master = null;
+      sfxBus = null;
+
       return false;
     }
   }
@@ -56,7 +69,7 @@ export function createAudioManager(options = {}) {
   }
 
   function synth(cue, intensity, variant = 0) {
-    if (!context || !master || context.state === 'suspended' || destroyed || !enabled) return false;
+    if (!context || !sfxBus || context.state === 'suspended' || destroyed || !enabled) return false;
     try {
       const now = context.currentTime;
       const amount = Math.max(0.2, Math.min(2, Number(intensity) || 1));
@@ -70,7 +83,7 @@ export function createAudioManager(options = {}) {
       envelope.gain.setValueAtTime(Math.max(0.0001, cue.gain * amount), now);
       envelope.gain.exponentialRampToValueAtTime(0.0001, now + cue.duration);
       oscillator.connect(envelope);
-      envelope.connect(master);
+      envelope.connect(sfxBus);
       oscillator.start(now);
       oscillator.stop(now + cue.duration + 0.01);
       return true;
@@ -90,12 +103,19 @@ export function createAudioManager(options = {}) {
 
   function setEnabled(value) { enabled = Boolean(value); return enabled; }
 
-  function setVolumes({ master: masterVolume, music, sfx } = {}) {
-    void music; void sfx;
-    if (finite(masterVolume) && master) {
-      try { master.gain.value = Math.max(0, Math.min(1, masterVolume)); return true; } catch (_) { return false; }
-    }
-    return false;
+  // This synth only produces effects; there is no music track or music slider.
+  function setVolumes({ master: masterVolume, sfx } = {}) {
+    let changed = false;
+    if (finite(masterVolume)) { levels.master = clamp01(masterVolume); changed = true; }
+
+    if (finite(sfx)) { levels.sfx = clamp01(sfx); changed = true; }
+    if (!changed) return false;
+    try {
+      if (master) master.gain.value = levels.master;
+
+      if (sfxBus) sfxBus.gain.value = levels.sfx;
+    } catch (_) { return false; }
+    return true;
   }
 
   const finite = (value) => typeof value === 'number' && Number.isFinite(value);
@@ -103,9 +123,12 @@ export function createAudioManager(options = {}) {
   async function destroy() {
     if (destroyed) return;
     destroyed = true;
+    try { sfxBus?.disconnect(); } catch (_) {}
     try { master?.disconnect(); } catch (_) {}
     try { await context?.close?.(); } catch (_) {}
     master = null;
+    sfxBus = null;
+
     context = null;
   }
 
@@ -113,6 +136,7 @@ export function createAudioManager(options = {}) {
     get available() { return Boolean(Context); },
     get active() { return Boolean(context && context.state !== 'suspended' && !destroyed); },
     cues: Object.keys(CUES),
+    get volumes() { return { ...levels }; },
     resume,
     play,
     setEnabled,
