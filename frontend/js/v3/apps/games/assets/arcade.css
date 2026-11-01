@@ -1,0 +1,144 @@
+/* Aizanoi Arcade cabinets. Loaded by games/src/app.js while Arcade is open and removed on close.
+   Every rule is scoped to .az-arcade; nothing here may touch :root, html, body or *. */
+.az-arcade .ag-cab {
+  --ag-accent: #7ff0c8;
+  --ag-accent-ink: #052a1f;
+  --ag-edge: rgba(157, 178, 220, .22);
+  --ag-text: #eef3ff;
+  --ag-muted: #9aaac6;
+  width: min(100%, 460px);
+  max-width: 100%;
+  min-width: 0;
+  margin: 0 auto;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--ag-edge);
+  border-radius: 20px;
+  background: linear-gradient(160deg, #18233d, #0d1426 78%);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .28), inset 0 1px rgba(255, 255, 255, .06);
+  color: var(--ag-text);
+  font-family: var(--az-font-ui, system-ui, sans-serif);
+}
+.az-arcade .ag-cab[data-game="mines"] { --ag-accent: #ffc15f; --ag-accent-ink: #321f00; width: fit-content; }
+.az-arcade .ag-cab[data-game="brick"] { --ag-accent: #7cc7ff; --ag-accent-ink: #04233d; }
+.az-arcade .ag-cab[data-game="blockfall"] { --ag-accent: #c7a2ff; --ag-accent-ink: #25104a; width: min(100%, 500px); }
+
+.az-arcade .ag-hud { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+.az-arcade .ag-stat {
+  flex: 1 1 88px;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--ag-edge);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .04);
+}
+.az-arcade .ag-stat > span { color: var(--ag-muted); font: 650 11px/1.2 var(--az-font-ui, system-ui, sans-serif); letter-spacing: .08em; text-transform: uppercase; }
+.az-arcade .ag-stat > output {
+  color: var(--ag-accent);
+  font: 750 22px/1.1 var(--az-font-mono, ui-monospace, "SFMono-Regular", Consolas, monospace);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+
+.az-arcade .ag-screen {
+  position: relative;
+  border: 1px solid var(--ag-edge);
+  border-radius: 14px;
+  background: #050a12;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .03), 0 0 28px color-mix(in srgb, var(--ag-accent) 14%, transparent);
+}
+.az-arcade .ag-screen canvas { display: block; width: 100%; height: auto; touch-action: none; }
+.az-arcade .ag-screen canvas:focus-visible { outline: 3px solid var(--ag-accent); outline-offset: -3px; }
+
+.az-arcade .ag-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--ag-muted); font: 600 12px/1.2 var(--az-font-ui, system-ui, sans-serif); }
+.az-arcade .ag-best b { margin-right: 4px; color: var(--ag-muted); font-weight: 650; letter-spacing: .06em; text-transform: uppercase; font-size: 11px; }
+.az-arcade .ag-best [data-game-best] { color: var(--ag-text); font: 700 14px var(--az-font-mono, ui-monospace, Consolas, monospace); }
+.az-arcade .ag-spacer { flex: 1 1 0; }
+
+.az-arcade .ag-btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--ag-edge);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .07);
+  color: var(--ag-text);
+  font: 700 13px/1 var(--az-font-ui, system-ui, sans-serif);
+  cursor: pointer;
+  transition: background var(--az-motion-fast, .15s), border-color var(--az-motion-fast, .15s), transform var(--az-motion-fast, .15s);
+}
+.az-arcade .ag-btn:hover { border-color: var(--ag-accent); background: rgba(255, 255, 255, .12); }
+.az-arcade .ag-btn:active { transform: translateY(1px); }
+.az-arcade .ag-btn:focus-visible { outline: 3px solid var(--ag-accent); outline-offset: 2px; }
+.az-arcade .ag-btn[aria-pressed="true"] { background: var(--ag-accent); border-color: var(--ag-accent); color: var(--ag-accent-ink); }
+
+.az-arcade .ag-status { margin: 0; padding: 9px 12px; border-radius: 12px; background: rgba(255, 255, 255, .05); color: var(--ag-muted); font: 500 13px/1.45 var(--az-font-ui, system-ui, sans-serif); }
+.az-arcade .ag-status strong { color: var(--ag-text); }
+.az-arcade .ag-status[data-tone="good"] strong { color: #7ff0c8; }
+.az-arcade .ag-status[data-tone="bad"] strong { color: #ff9b8f; }
+.az-arcade .ag-cab kbd {
+  display: inline-block; min-width: 1.6em; padding: 1px 5px; border: 1px solid var(--ag-edge); border-bottom-width: 2px; border-radius: 6px;
+  background: rgba(255, 255, 255, .06); color: var(--ag-text); font: 600 11px/1.4 var(--az-font-mono, ui-monospace, Consolas, monospace); text-align: center;
+}
+.az-arcade .ag-hint { margin: 0; color: var(--ag-muted); font: 500 12px/1.5 var(--az-font-ui, system-ui, sans-serif); text-align: center; }
+.az-arcade .ag-live { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+.az-arcade .ag-loading { display: grid; place-items: center; min-height: 220px; color: var(--ag-muted, #9aaac6); font: 600 14px var(--az-font-ui, system-ui, sans-serif); }
+
+/* Survey Mines */
+.az-arcade .ag-mines-board { max-width: 100%; overflow: auto; padding: 6px; border: 1px solid var(--ag-edge); border-radius: 14px; background: #0a1020; overscroll-behavior: contain; }
+.az-arcade .ag-mines-grid { --ag-cell: 34px; display: grid; grid-template-columns: repeat(var(--ag-cols), var(--ag-cell)); gap: 3px; width: max-content; margin: 0 auto; touch-action: manipulation; }
+@media (pointer: coarse) { .az-arcade .ag-mines-grid { --ag-cell: 44px; } }
+.az-arcade .ag-cell {
+  width: var(--ag-cell); height: var(--ag-cell); padding: 0; display: grid; place-items: center;
+  border: 1px solid rgba(157, 178, 220, .28); border-radius: 8px; background: linear-gradient(160deg, #31405f, #222e48);
+  color: #ff8a7a; font: 800 17px/1 var(--az-font-mono, ui-monospace, Consolas, monospace); cursor: pointer; user-select: none; -webkit-user-select: none;
+}
+.az-arcade .ag-cell:hover:not([data-open]) { border-color: var(--ag-accent); background: linear-gradient(160deg, #3b4c70, #28365a); }
+.az-arcade .ag-cell:focus-visible { outline: 3px solid var(--ag-accent); outline-offset: 1px; z-index: 1; }
+.az-arcade .ag-cell[data-flag] { background: linear-gradient(160deg, #5b4720, #3c2f15); border-color: #ffc15f; }
+.az-arcade .ag-cell[data-open] { background: #0f1729; border-color: rgba(157, 178, 220, .1); cursor: default; }
+.az-arcade .ag-cell[data-mine] { background: radial-gradient(circle, #ff7770 0, #b32231 78%); border-color: #ff9b8f; color: #2a0509; }
+.az-arcade .ag-cell[data-n="1"] { color: #6db5ff; }
+.az-arcade .ag-cell[data-n="2"] { color: #6ee59b; }
+.az-arcade .ag-cell[data-n="3"] { color: #ff8a7a; }
+.az-arcade .ag-cell[data-n="4"] { color: #b9a4ff; }
+.az-arcade .ag-cell[data-n="5"] { color: #ffb86b; }
+.az-arcade .ag-cell[data-n="6"] { color: #5fe3e3; }
+.az-arcade .ag-cell[data-n="7"] { color: #e6ecf8; }
+.az-arcade .ag-cell[data-n="8"] { color: #9aaac6; }
+
+/* Blockfall */
+.az-arcade .ag-bf { display: grid; grid-template-columns: minmax(0, calc(min(52vh, 520px) / 2)) minmax(104px, 128px); justify-content: center; gap: 12px; align-items: start; }
+.az-arcade .ag-side { display: grid; gap: 8px; align-content: start; }
+.az-arcade .ag-next { padding: 8px; border: 1px solid var(--ag-edge); border-radius: 12px; background: rgba(255, 255, 255, .04); display: grid; gap: 6px; justify-items: center; }
+.az-arcade .ag-next > span { color: var(--ag-muted); font: 650 11px/1.2 var(--az-font-ui, system-ui, sans-serif); letter-spacing: .08em; text-transform: uppercase; }
+.az-arcade .ag-next canvas { width: 80px; height: 80px; }
+.az-arcade .ag-side .ag-btn { width: 100%; padding: 0 8px; }
+.az-arcade .ag-side .ag-stat { flex: none; }
+@media (max-width: 420px) {
+  .az-arcade .ag-cab { padding: 10px; border-radius: 16px; }
+  .az-arcade .ag-bf { grid-template-columns: minmax(0, calc(min(52vh, 520px) / 2)) 96px; gap: 8px; }
+  .az-arcade .ag-btn { padding: 0 12px; }
+  .az-arcade .ag-next canvas { width: 64px; height: 64px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .az-arcade .ag-btn { transition: none; }
+  .az-arcade .ag-btn:active { transform: none; }
+}
+
+/* Library: links to the AI arenas */
+.az-arcade .az-arcade-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.az-arcade .az-arcade-links a {
+  flex: 1 1 220px; min-height: 44px; display: grid; gap: 2px; padding: 10px 14px; border: 1px solid rgba(157, 178, 220, .2); border-radius: 14px;
+  background: rgba(255, 255, 255, .04); color: #eef3ff; text-decoration: none; font-family: var(--az-font-ui, system-ui, sans-serif);
+}
+.az-arcade .az-arcade-links a strong { font-size: 14px; }
+.az-arcade .az-arcade-links a strong::after { content: " 97"; color: #7ff0c8; }
+.az-arcade .az-arcade-links a span { color: #9aaac6; font-size: 12px; }
+.az-arcade .az-arcade-links a:hover, .az-arcade .az-arcade-links a:focus-visible { border-color: #7ff0c8; outline: none; }
+.az-arcade .az-arcade-links a:focus-visible { box-shadow: 0 0 0 3px rgba(127, 240, 200, .4); }

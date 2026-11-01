@@ -58,7 +58,7 @@ function renderSet(container, set) {
         <section class="az-hr-spotlight">
           <div class="az-hr-spotlight-copy">
             <p class="az-kicker">${esc(set.eyebrow)}</p>
-            <h2>${esc(set.title)}<br><span>${esc(set.accent)}</span></h2>
+            <h2 tabindex="-1" data-analytics-detail-title>${esc(set.title)}<br><span>${esc(set.accent)}</span></h2>
             <p class="az-hr-lede">${esc(set.summary)}</p>
             <div class="az-hr-actions">
               <button class="az-button az-hr-primary" type="button" data-analytics-dashboard-list>Explore all dashboards</button>
@@ -81,25 +81,31 @@ function renderSet(container, set) {
     </div>`;
 }
 
+// Effective motion = shell preference (body.az-reduce-motion, also seeded from the OS) or the OS setting.
+const reducedMotion = () => document.body.classList.contains('az-reduce-motion') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function createAnalyticsApp() {
   return {
     async mount(container) {
+      let lastSetId = '';
       renderCatalog(container);
 
       function handleClick(event) {
         const setId = event.target.closest('[data-analytics-set]')?.dataset.analyticsSet;
         if (setId) {
           const set = analyticsSetById(setId);
-          if (set) renderSet(container, set);
+          if (set) { lastSetId = setId; renderSet(container, set); container.querySelector('[data-analytics-detail-title]')?.focus({ preventScroll:true }); }
           return;
         }
         if (event.target.closest('[data-analytics-back]')) {
           renderCatalog(container);
+          const card = [...container.querySelectorAll('[data-analytics-set]')].find((node) => node.dataset.analyticsSet === lastSetId);
+          (card || container.querySelector('[data-analytics-set]'))?.focus();
           return;
         }
         if (event.target.closest('[data-analytics-dashboard-list]')) {
           const inventory = container.querySelector('[data-analytics-dashboard-inventory]');
-          inventory?.scrollIntoView({ behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start' });
+          inventory?.scrollIntoView({ behavior:reducedMotion() ? 'auto' : 'smooth', block:'start' });
         }
       }
 
