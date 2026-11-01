@@ -43,7 +43,7 @@
     box-shadow: 0 0 0 2px var(--az-surface-solid), 0 0 0 5px var(--az-focus);
   }
   :is(h1,h2,h3,h4) { letter-spacing: -.02em; text-wrap: balance; }
-  :is(.az-kpi,.az-markets,[data-numeric],time,.az-clock) {
+  :is([data-numeric],time,.az-clock) {
     font-variant-numeric: tabular-nums lining-nums;
   }
   ::selection { background: rgba(89,105,220,.22); color: var(--az-text); }
@@ -67,11 +67,6 @@
   }
   .az-hidden { display: none !important; }
 
-  /* Keep the airy light theme while maintaining WCAG AA contrast for compact metadata. */
-  .az-collection-nav h3,
-  .az-metadata-form > label,
-  .az-meta-list dt { color: #5f6b7c; }
-  .az-record-kind { color: #8f622d; }
 
   @media (max-width: 599px), (max-height: 500px) and (max-width: 899px) {
     /* A phone should read as a compact OS, not a horizontally cropped desktop. */
@@ -81,24 +76,13 @@
       justify-items: center;
     }
     .az-desktop-shortcut { width: 100%; max-width: 112px; }
-    .az-session-widget { width: 100%; max-width: 100%; overflow: hidden; }
 
-    /* Keep the mobile dock centered and expose the primary apps plus Applications. */
-    [data-dock-app="data-lab"],
-    [data-dock-app="projects"] { display: none; }
+    /* Keep the mobile dock centered. */
     .az-task-shelf { justify-content: center; overflow: hidden; }
 
-    /* Archive becomes a single-column reading surface instead of a squeezed desktop grid. */
+    /* App surfaces never widen past a phone screen. */
     .az-app-shell,
-    .az-archive-layout,
-    .az-app-toolbar,
-    .az-record-stage,
-    .az-record-grid { min-width: 0; width: 100%; max-width: 100%; }
+    .az-app-toolbar { min-width: 0; width: 100%; max-width: 100%; }
     .az-app-shell { overflow-x: hidden; }
-    .az-archive-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .az-archive-toolbar > * { min-width: 0 !important; max-width: 100%; }
-    .az-record-grid { grid-template-columns: 1fr !important; }
-    .az-record-card { min-width: 0; width: 100%; }
-    .az-collection-nav { width: 100%; max-width: 100%; }
   }
 }

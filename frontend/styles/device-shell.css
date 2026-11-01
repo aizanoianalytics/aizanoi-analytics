@@ -90,7 +90,6 @@
     }
     .az-desktop-signature,
     .az-desktop-shortcuts,
-    .az-session-widget,
     .az-desktop-aizo-card,
     .az-phone-home { display:none; }
     .az-tablet-home .az-tablet-aizo-card { position:static;width:100%;display:block; }
@@ -110,7 +109,6 @@
       gap:16px;
     }
     .az-tablet-brand-card,
-    .az-tablet-widget,
     .az-tablet-main {
       border:1px solid rgba(255,255,255,.72);
       background:rgba(249,252,255,.46);
@@ -153,30 +151,6 @@
       margin-top:18px;
     }
     .az-tablet-quick-actions .az-button { min-height:44px; }
-
-    .az-tablet-widget {
-      min-height:178px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:16px;
-      padding:19px;
-      border-radius:22px;
-    }
-    .az-tablet-widget h2 {
-      margin:5px 0 5px;
-      color:#1f2c43;
-      font-size:20px;
-      line-height:1.08;
-      letter-spacing:-.025em;
-    }
-    .az-tablet-widget p {
-      margin:0;
-      color:#617087;
-      font-size:12px;
-      line-height:1.48;
-    }
-    .az-tablet-widget .az-device-widget-action { align-self:flex-start; }
 
     .az-tablet-main {
       min-width:0;
@@ -288,7 +262,6 @@
     }
     .az-desktop-signature,
     .az-desktop-shortcuts,
-    .az-session-widget,
     .az-desktop-aizo-card,
     .az-tablet-home { display:none; }
     .az-phone-home .az-phone-aizo-card { position:static;width:auto;display:flex;grid-column:1/-1;flex-direction:column; }
@@ -473,7 +446,6 @@
       max-height:calc(100dvh - 88px);
     }
     .az-launchpad-grid { grid-template-columns:repeat(4,minmax(110px,1fr)); }
-    .az-launchpad-worlds { grid-template-columns:repeat(3,minmax(130px,1fr)); }
   }
 
   @media (max-width:599px), (max-height:500px) and (max-width:899px) {
@@ -492,7 +464,6 @@
     .az-launchpad .az-dialog-header { min-height:54px; }
     .az-launchpad .az-dialog-body { padding:14px 13px max(24px,env(safe-area-inset-bottom)); }
     .az-launchpad-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px 2px; }
-    .az-launchpad-worlds { grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
     .az-launchpad-item {
       min-height:96px;
       padding:8px 3px;

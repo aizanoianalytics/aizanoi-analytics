@@ -28,17 +28,8 @@
   .az-desktop-shortcut:active { transform:scale(.97); }
   .az-desktop-icon { width:58px; height:58px; display:grid; place-items:center; border:1px solid rgba(255,255,255,.72); border-radius:17px; background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(235,242,251,.66)); box-shadow:0 10px 24px rgba(45,60,86,.15),inset 0 1px rgba(255,255,255,.75); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
   .az-desktop-icon img { width:36px; height:36px; filter:drop-shadow(0 3px 4px rgba(30,40,60,.1)); }
-  .az-world-shortcut .az-desktop-icon[data-accent="brass"] { background:linear-gradient(145deg,rgba(255,242,213,.94),rgba(231,190,126,.76)); }
-  .az-world-shortcut .az-desktop-icon[data-accent="rust"] { background:linear-gradient(145deg,rgba(255,227,216,.94),rgba(221,142,112,.76)); }
-  .az-world-shortcut .az-desktop-icon[data-accent="teal"] { background:linear-gradient(145deg,rgba(219,248,246,.94),rgba(111,192,190,.76)); }
   .az-desktop-label { max-width:88px; padding:2px 6px; border-radius:7px; background:var(--az-wall-label-bg); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); color:var(--az-wall-ink); font-size:11px; font-weight:650; line-height:1.2; text-shadow:var(--az-wall-ink-glow); }
-  .az-session-widget { position:absolute; left:28px; bottom:22px; width:min(360px,calc(100vw - 290px)); min-height:132px; display:grid; grid-template-columns:54px minmax(0,1fr); gap:14px; padding:16px 17px; border:1px solid rgba(255,255,255,.7); border-radius:21px; background:rgba(250,252,255,.46); box-shadow:var(--az-shadow-soft); backdrop-filter:blur(28px) saturate(145%); -webkit-backdrop-filter:blur(28px) saturate(145%); }
-  .az-session-orb { width:50px; height:50px; border-radius:17px; background:radial-gradient(circle at 33% 28%,rgba(255,255,255,.96) 0 5%,transparent 6%),linear-gradient(145deg,#7081ef 0%,#63a8d4 46%,#efa98f 100%); box-shadow:inset 0 1px rgba(255,255,255,.82),0 10px 24px rgba(62,79,132,.18); }
-  .az-session-copy { min-width:0; }
   .az-eyebrow { display:block; color:#65748a; font:700 11px/1.3 var(--az-font-mono); letter-spacing:.07em; text-transform:uppercase; }
-  .az-session-widget h1 { margin:4px 0 3px; color:#1a2740; font:660 18px/1.15 var(--az-font-ui); letter-spacing:-.02em; }
-  .az-session-widget p { margin:0; color:#536178; font-size:12px; line-height:1.45; }
-  .az-session-actions { display:flex; gap:7px; flex-wrap:wrap; margin-top:10px; }
   .az-aizo-card {
     position:absolute;
     left:28px;
@@ -138,7 +129,6 @@
     .az-shell { grid-template-rows:42px minmax(0,1fr) 82px; }
     .az-system-bar { padding-inline:12px; }
     .az-desktop-shortcuts { top:20px; right:18px; grid-template-columns:repeat(2,90px); }
-    .az-session-widget { left:20px; bottom:22px; width:min(360px,calc(100vw - 240px)); }
     .az-window { left:3% !important; top:3% !important; width:94% !important; height:94% !important; min-width:0; min-height:0; }
     .az-window-bar { height:var(--az-titlebar-touch); flex-basis:var(--az-titlebar-touch); }
     .az-resize-handle { display:none; }
@@ -149,7 +139,6 @@
     .az-desktop { min-height:max(100%,700px); padding:18px 18px 110px; }
     .az-desktop-signature { position:static; margin:6px 4px 18px; }
     .az-desktop-shortcuts { position:static; display:grid; grid-template-columns:repeat(3,minmax(84px,1fr)); grid-auto-rows:auto; gap:8px; justify-items:center; }
-    .az-session-widget { position:static; width:min(100%,500px); margin:24px auto 0; }
   }
   @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-shell { grid-template-rows:48px minmax(0,1fr) var(--az-bottom-nav); }
@@ -166,10 +155,6 @@
     .az-desktop-shortcuts { grid-template-columns:repeat(3,minmax(84px,1fr)); }
     .az-desktop-shortcut { width:88px; min-height:88px; }
     .az-desktop-icon { width:54px; height:54px; }
-    .az-session-widget { grid-template-columns:46px minmax(0,1fr); gap:12px; padding:14px; border-radius:18px; }
-    .az-session-orb { width:44px; height:44px; border-radius:15px; }
-    .az-session-widget h1 { font-size:17px; }
-    .az-session-widget p { font-size:12px; }
     .az-task-shelf-wrap { padding:4px 8px max(6px,env(safe-area-inset-bottom)); }
     .az-task-shelf { width:100%; min-height:58px; max-width:none; gap:1px; padding:4px 5px; border-radius:17px; overflow-x:auto; justify-content:flex-start; scrollbar-width:none; }
     .az-task-shelf::-webkit-scrollbar { display:none; }
@@ -189,7 +174,6 @@
     .az-window-control[data-action="menu"] { top:5px; right:4px; width:44px; height:44px; }
     .az-desktop-context { display:none !important; }
   }
-
 
   /* Per-app shell finalization previously lived in tool-windows.css; it is part of shell ownership. */
 
@@ -417,7 +401,6 @@
     .az-arcade-cabinet { align-items:start; }
   }
 
-
 /* Calculator: compact, predictable four-column keypad. Window geometry is owned by shell.js. */
   .az-window[data-app-id="calculator"] .az-calculator-shell {
     display:grid;
@@ -491,7 +474,6 @@
     color:#fff;
   }
 
-
   /* Camera startup/privacy state. */
   .az-window[data-app-id="camera"] .az-camera-privacy {
     display:flex;
@@ -509,7 +491,6 @@
     flex:0 0 auto;
     color:#4053bd;
   }
-
 
   /* Winamp remains intentionally player-like without another title bar. */
   .az-window[data-app-id="winamp"] .az-winamp-shell {
@@ -534,14 +515,12 @@
   .az-window[data-app-id="winamp"] .az-winamp-brand strong { font-size:13px;letter-spacing:.14em; }
   .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#a8b8ce;letter-spacing:0; }
 
-
   /* Recycle Bin uses one clean toolbar inside the OS window. */
   .az-window[data-app-id="recycle-bin"] .az-recycle-actions > strong {
     margin-right:4px;
     color:#25334a;
     font-size:12px;
   }
-
 
   /* Analytics Sets: catalog first, collection detail second. */
   .az-window[data-app-id="analytics"] .az-analytics-app {

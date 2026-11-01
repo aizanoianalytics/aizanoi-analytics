@@ -27,7 +27,7 @@ test('global controls use spring feedback and a double focus ring', () => {
 
 test('data and KPI surfaces use tabular numeric alignment', () => {
   assert.match(base, /font-variant-numeric:\s*tabular-nums/);
-  assert.match(base, /\.az-kpi|\.az-markets|\[data-numeric\]/);
+  assert.match(base, /\[data-numeric\]/);
 });
 
 test('app loading placeholder is a stable shimmer skeleton', () => {
