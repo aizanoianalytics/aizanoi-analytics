@@ -412,6 +412,7 @@
       return;
     }
     const my = ++token;
+    $('mc-canvas').focus({ preventScroll: true });
     cleanup();
     const humans = entries.filter(entry => entry.human);
     const speed = Number($('mc-speed').value);
@@ -489,8 +490,6 @@
   function bindControls() {
     $('mc-form').addEventListener('submit', event => {
       event.preventDefault();
-      const focused = document.activeElement;
-      if (focused instanceof HTMLElement) focused.blur();
       start();
     });
     ['runner', 'ghost'].forEach(role => {

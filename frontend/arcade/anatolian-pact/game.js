@@ -714,7 +714,40 @@
     }
   });
   $('ap-submit-orders').addEventListener('click', () => commit(structuredClone(draft)));
-  $('ap-pass').addEventListener('cancel', event => event.preventDefault());
+  function resetPassEnd() {
+    $('ap-pass-end').textContent = 'End match';
+    $('ap-pass-end').dataset.armed = '';
+  }
+  function endMatch() {
+    generation++;
+    running = false;
+    match?.stop();
+    clearTimeout(sleepTimer);
+    wake?.();
+    sleepTimer = null;
+    wake = null;
+    $('ap-pass').close();
+    $('ap-pass-confirm').onclick = null;
+    resetPassEnd();
+    clearPrivate();
+    lock(false);
+    draw();
+    ticker('Match ended. No private plans were shown. Press Start for a new match.');
+    $('ap-start').focus({ preventScroll: true });
+  }
+  $('ap-pass-end').addEventListener('click', () => {
+    if ($('ap-pass-end').dataset.armed) endMatch();
+    else {
+      $('ap-pass-end').dataset.armed = '1';
+      $('ap-pass-end').textContent = 'Confirm: end match';
+    }
+  });
+  // Escape never reveals a plan or closes the curtain; it only disarms End match.
+  $('ap-pass').addEventListener('cancel', event => {
+    event.preventDefault();
+    resetPassEnd();
+    $('ap-pass-confirm').focus();
+  });
   $('ap-order-panel').addEventListener('keydown', event => {
     if (event.key === 'Escape') {
       selected = null;
