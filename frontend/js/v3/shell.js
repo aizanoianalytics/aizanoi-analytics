@@ -345,7 +345,7 @@ function defaultRect(appId) {
  const layer = layerBox();
  const index = Math.max(0, APPS.findIndex((app) => app.id === appId));
  const width = Math.min(980, Math.max(620, layer.width * .66));
- const height = Math.min(700, Math.max(460, layer.height * .78));
+ const height = Math.min(700, Math.max(460, layer.height * .82));
  return clampRect({ width, height, left:(layer.width-width)/2 + (index%4)*14, top:(layer.height-height)/2 + (index%4)*10 });
 }
 
