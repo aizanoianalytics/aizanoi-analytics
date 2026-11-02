@@ -98,9 +98,11 @@ test('holdem: uploaded bot completes an Instant tournament against samples under
   );
   await assertFullRoster(page, 'holdem');
 
-  // All-in is legal while this seat has chips and avoids any assumptions
-  // about the shape of the engine's bot-state legal-action metadata.
-  const code = 'module.exports = { act: function () { return { type: "allin" }; } };';
+  // A checking/calling station: check is legal exactly when there is nothing
+  // to call, otherwise call is always legal, so this bot can never produce a
+  // fallback error. (An always-all-in bot is rejected whenever betting is not
+  // reopened, which made this test depend on the unseeded deck.)
+  const code = 'module.exports = { act: function (state) { return state && state.canCheck ? { type: "check" } : { type: "call" }; } };';
 
   const chooserPromise = page.waitForEvent('filechooser');
   await page.locator('#ph-seats select').first().selectOption('custom');
