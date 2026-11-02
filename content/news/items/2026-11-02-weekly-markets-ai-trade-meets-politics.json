@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-02-weekly-markets-ai-trade-meets-politics",
+  "title": "The AI trade now has to survive an election, an oil price and Beijing",
+  "summary": "Markets enter the week with three variables that no model release controls. Friday's 3.5% fall in the Nasdaq 100 was the sharpest since June and the semiconductor index lost 7.2%, with futures only partly recovering in Asia. Tuesday's US midterms add policy risk, and Brent's slide to $110.19 rests on a diplomatic pause rather than a settlement with Iran. In China, regulators convened banks to widen buyback funding after the Shanghai Composite's 6.3% October decline. The correction, in other words, is being priced against politics and energy as much as against earnings.",
+  "category": "economy-markets",
+  "priority": 50,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "markets",
+    "oil",
+    "china",
+    "midterms"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+      "publishedAt": "2026-11-02T04:25:00Z"
+    },
+    {
+      "publisher": "South China Morning Post",
+      "url": "https://www.scmp.com/business/china-business/article/3372889/chinas-banks-regulators-meet-measures-arrest-stock-slide",
+      "publishedAt": "2026-11-01T19:15:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W45"
+}

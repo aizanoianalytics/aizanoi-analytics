@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-02-apple-retakes-most-valuable-company",
+  "title": "Apple edges past Nvidia as investors favour the lighter spender",
+  "summary": "Apple closed Friday with a market value of $5.03 trillion, overtaking Nvidia at $4.93 trillion to reclaim the title of the world's most valuable listed company for the first time since late July. Apple fell 1.2% and Nvidia 4.2% in a session that punished AI-linked names after disappointing results from Intel, Amazon, Alphabet and Meta. Apple's shares are up 27% this year, the strongest of the largest US technology groups, on comparatively restrained capital spending.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "nvidia",
+    "market-cap",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Business Standard",
+      "url": "https://www.business-standard.com/world-news/apple-overtakes-nvidia-to-become-world-s-most-valuable-company-at-5-03-trn-126103100103_1.html",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "TASS",
+      "url": "https://tass.com/economy/2211315",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

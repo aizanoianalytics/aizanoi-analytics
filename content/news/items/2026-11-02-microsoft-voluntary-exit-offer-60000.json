@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-02-microsoft-voluntary-exit-offer-60000",
+  "title": "Microsoft offers buyouts to about 60,000 staff to protect AI spending",
+  "summary": "Microsoft opened a Voluntary Exit Offer to about 60,000 employees in participating teams in the United States, Canada, the United Kingdom and India, roughly 27% of a workforce of 223,000, chief people officer Amy Coleman said in a memo. The package matches standard severance but omits the extended healthcare that drew staff to April's retirement programme; eligible employees decide in early December and leave on 31 December. Microsoft said the offer does not replace layoffs.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "workforce",
+    "ai-capex",
+    "buyouts"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft",
+      "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html",
+      "publishedAt": "2026-10-26T17:52:00Z"
+    },
+    {
+      "publisher": "GeekWire",
+      "url": "https://www.geekwire.com/2026/microsoft-makes-new-voluntary-exit-offer-to-more-than-a-quarter-of-its-workforce-including-some-execs",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

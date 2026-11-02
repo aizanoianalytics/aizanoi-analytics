@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-02-weekly-ai-consent-gets-a-syntax",
+  "title": "The training-data argument has moved from principle to syntax",
+  "summary": "Two disclosures this week show the AI industry negotiating consent by syntax. Google, OpenAI, Microsoft and Anthropic backed one robots.txt policy token so a publisher can refuse training once for every participating provider, though implementation dates run from months away to February 2027. Anthropic separately described self-assessment, in which Claude grades its own conversations. Both are narrow: the token does not stop crawling, and the monitor does not block misuse. They are still the shape of the coming settlement — machine-readable, auditable, and run by the party being audited.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "consent",
+    "robots-txt",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Search Central",
+      "url": "https://developers.google.com/search/blog/2026/10/ai-training-control",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Anthropic Safeguards",
+      "url": "https://safeguards.anthropic.com/2026/self-assessment",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W45"
+}

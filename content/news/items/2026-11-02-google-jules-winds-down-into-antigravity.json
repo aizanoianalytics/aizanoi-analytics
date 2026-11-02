@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-02-google-jules-winds-down-into-antigravity",
+  "title": "Google sets a two-stage shutdown for its Jules coding agent",
+  "summary": "Google will retire Jules, its asynchronous coding agent, on 31 December: sessions can be finished until 11 November, after which the product turns read-only. Google says lessons from Jules are being folded into Antigravity, the agent-first platform it launched with Gemini 3. Export covers account settings, environment variables, scheduled tasks, connected repositories, memories, setup scripts and session logs, but there is no automatic migration and code already on GitHub is unaffected.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "jules",
+    "antigravity",
+    "coding-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Jules",
+      "url": "https://jules.google/docs/changelog/2026-10-29",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://theverge.com/ai-artificial-intelligence/1022729/google-is-sunsetting-its-ai-coding-agent-jules",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-02-anthropic-s1-revenue-and-margin",
+  "title": "Anthropic's filing shows $16.3bn of half-year revenue and an 85% margin",
+  "summary": "Anthropic's public S-1 reports first-half 2026 revenue of $16.3 billion against $1.16 billion a year earlier, a second-quarter operating profit of $974 million on $11.6 billion of sales, and an implied gross margin of about 85%. More than 11,900 customers now spend at least $100,000 a year, up from roughly 950, although the top five account for about a quarter of revenue. The filing sets no price range for the Nasdaq listing under the ticker ANT.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "revenue",
+    "ai-economics"
+  ],
+  "sources": [
+    {
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/anthropic-ipo-filing-nasdaq-ant-s-1",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

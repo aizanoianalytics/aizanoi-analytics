@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-02-arsenal-win-at-anfield-holds-liverpool-off",
+  "title": "Arsenal end a 14-year wait at Anfield and stretch their lead",
+  "summary": "Kai Havertz scored on 16 minutes from Declan Rice's low cross and Arsenal held on for a 1-0 win at Anfield, their first there in 14 years and their 300th Premier League away victory. Liverpool had most of the ball but could not equalise, with Ezri Konsa and Gabriel resisting sustained pressure in front of David Raya. The defeat leaves Liverpool fifth, nine points behind Arsenal.",
+  "category": "football",
+  "priority": 74,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "liverpool",
+    "anfield"
+  ],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/match/2645281/liverpool-vs-arsenal",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    },
+    {
+      "publisher": "Arsenal",
+      "url": "https://www.arsenal.com/news/report-liverpool-0-1-arsenal-a1JIG2e3jPpA",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-01",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

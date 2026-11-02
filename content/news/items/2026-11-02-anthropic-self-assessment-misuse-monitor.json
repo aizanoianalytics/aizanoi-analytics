@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-02-anthropic-self-assessment-misuse-monitor",
+  "title": "Anthropic lets Claude grade its own conversations for misuse",
+  "summary": "Anthropic described self-assessment, a technique that appends a short hidden instruction after each Claude response so the model scores the conversation it just held, returning a few tokens of JSON with a category, refusal status and review priority. On Claude Fable 5 it flags 78% of conversations that a stronger prompted classifier marks harmful, and 94% of high-priority ones, at a 1% false-positive rate for under 2% extra inference compute. It runs as a passive monitor, not a blocker.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "safety",
+    "monitoring"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic Safeguards",
+      "url": "https://safeguards.anthropic.com/2026/self-assessment",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

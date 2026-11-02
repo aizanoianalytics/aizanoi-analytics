@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-01T05:20:00.000Z",
+  "generatedAt": "2026-11-02T05:45:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-02",
+      "path": "/news/2026-11-02/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-01",
       "path": "/news/2026-11-01/",
@@ -361,6 +366,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-11-02",
+      "week": "2026-W45",
+      "path": "/news/weekly/2026-11-02/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-10-26",
       "week": "2026-W44",
       "path": "/news/weekly/2026-10-26/",
@@ -416,6 +427,753 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-02-asia-stocks-steady-after-nasdaq-rout",
+      "kind": "daily",
+      "title": "Asian shares steady after Wall Street's worst session since June",
+      "summary": "Asian equities fell less than Wall Street on Monday and US futures turned higher after the Nasdaq 100 slid 3.5% on Friday, its worst day since June, while the Philadelphia Semiconductor Index dropped 7.2%. The MSCI Asia Pacific index lost 0.5%, Tokyo's Topix 0.8% and Australia's ASX 200 0.7%, with South Korea and Hong Kong higher. S&P 500 and Nasdaq 100 futures each rose at least 0.4% before the US open.",
+      "category": "economy-markets",
+      "priority": 86,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "asia",
+        "nasdaq",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+          "publishedAt": "2026-11-02T04:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-deepseek-open-sources-super-agent",
+      "kind": "daily",
+      "title": "DeepSeek publishes a coding agent built to need less supervision",
+      "summary": "DeepSeek's Harness team released dsh-superagent on GitHub under the MIT licence, a research prototype in which a resident Router hands requests from an authorised person to isolated Worker sessions that reply in the original thread, often with a pull request. It listens to GitHub events and optionally Feishu, opens a work item per request and shows a panel of items that need a human. DeepSeek calls it research code rather than an official product, and says parts of its design write-up are not implemented.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepseek",
+        "coding-agents",
+        "open-source",
+        "china"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-01/deepseek-drops-enhanced-coding-agent-with-aim-to-rival-anthropic",
+          "publishedAt": "2026-11-01T03:48:00.000Z"
+        },
+        {
+          "publisher": "GitHub",
+          "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+          "publishedAt": "2026-10-31T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/deepseek-super-agent-open-source-coding-agent",
+          "publishedAt": "2026-11-01T11:13:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-shared-robots-token-for-ai-training",
+      "kind": "daily",
+      "title": "Four AI labs back one robots.txt switch for training opt-outs",
+      "summary": "Google, OpenAI, Microsoft and Anthropic backed a shared robots.txt policy token, __usage_ai-training, that lets a site state one AI-training preference for every participating provider instead of naming each crawler. OpenAI aims to implement it in the coming months, Google plans to read an opt-out as a Google-Extended disallow, and Microsoft will honour it from 1 February 2027. The draft, written by an Anthropic engineer, adds no new grammar and does not limit crawling.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "robots-txt",
+        "ai-training",
+        "ietf",
+        "publishers"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Search Central",
+          "url": "https://developers.google.com/search/blog/2026/10/ai-training-control",
+          "publishedAt": "2026-10-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+          "publishedAt": "2026-10-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://unite.ai/openai-to-honor-shared-robots-txt-signal-for-ai-training-preferences",
+          "publishedAt": "2026-10-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-apple-retakes-most-valuable-company",
+      "kind": "daily",
+      "title": "Apple edges past Nvidia as investors favour the lighter spender",
+      "summary": "Apple closed Friday with a market value of $5.03 trillion, overtaking Nvidia at $4.93 trillion to reclaim the title of the world's most valuable listed company for the first time since late July. Apple fell 1.2% and Nvidia 4.2% in a session that punished AI-linked names after disappointing results from Intel, Amazon, Alphabet and Meta. Apple's shares are up 27% this year, the strongest of the largest US technology groups, on comparatively restrained capital spending.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "nvidia",
+        "market-cap",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Business Standard",
+          "url": "https://www.business-standard.com/world-news/apple-overtakes-nvidia-to-become-world-s-most-valuable-company-at-5-03-trn-126103100103_1.html",
+          "publishedAt": "2026-10-31T00:00:00.000Z"
+        },
+        {
+          "publisher": "TASS",
+          "url": "https://tass.com/economy/2211315",
+          "publishedAt": "2026-10-31T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-china-regulators-bank-meeting-buybacks",
+      "kind": "daily",
+      "title": "China's regulators convene banks to widen stock support tools",
+      "summary": "The People's Bank of China, the securities regulator and the banking regulator were due to meet major banks on Monday to study improvements to a relending facility that finances share buybacks and stake purchases, according to mainland media reports. The Shanghai Composite closed at 3,599.00 on Friday, down 6.3% in October and below 3,600 for the first time this year, while the Shenzhen Component fell 15.9% over the month.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "equities",
+        "policy",
+        "buybacks"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-01/china-to-convene-meeting-on-supporting-stock-market-reports-say",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "South China Morning Post",
+          "url": "https://www.scmp.com/business/china-business/article/3372889/chinas-banks-regulators-meet-measures-arrest-stock-slide",
+          "publishedAt": "2026-11-01T19:15:00.000Z"
+        },
+        {
+          "publisher": "The Standard",
+          "url": "https://www.thestandard.com.hk/finance/article/347145/China-regulators-act-to-support-stocks-after-October-slump-mainland-media-reports",
+          "publishedAt": "2026-11-02T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-arsenal-win-at-anfield-holds-liverpool-off",
+      "kind": "daily",
+      "title": "Arsenal end a 14-year wait at Anfield and stretch their lead",
+      "summary": "Kai Havertz scored on 16 minutes from Declan Rice's low cross and Arsenal held on for a 1-0 win at Anfield, their first there in 14 years and their 300th Premier League away victory. Liverpool had most of the ball but could not equalise, with Ezri Konsa and Gabriel resisting sustained pressure in front of David Raya. The defeat leaves Liverpool fifth, nine points behind Arsenal.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "arsenal",
+        "liverpool",
+        "anfield"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/match/2645281/liverpool-vs-arsenal",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        },
+        {
+          "publisher": "Arsenal",
+          "url": "https://www.arsenal.com/news/report-liverpool-0-1-arsenal-a1JIG2e3jPpA",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-01",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-anthropic-s1-revenue-and-margin",
+      "kind": "daily",
+      "title": "Anthropic's filing shows $16.3bn of half-year revenue and an 85% margin",
+      "summary": "Anthropic's public S-1 reports first-half 2026 revenue of $16.3 billion against $1.16 billion a year earlier, a second-quarter operating profit of $974 million on $11.6 billion of sales, and an implied gross margin of about 85%. More than 11,900 customers now spend at least $100,000 a year, up from roughly 950, although the top five account for about a quarter of revenue. The filing sets no price range for the Nasdaq listing under the ticker ANT.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "revenue",
+        "ai-economics"
+      ],
+      "sources": [
+        {
+          "publisher": "SEC EDGAR",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/anthropic-ipo-filing-nasdaq-ant-s-1",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-microsoft-voluntary-exit-offer-60000",
+      "kind": "daily",
+      "title": "Microsoft offers buyouts to about 60,000 staff to protect AI spending",
+      "summary": "Microsoft opened a Voluntary Exit Offer to about 60,000 employees in participating teams in the United States, Canada, the United Kingdom and India, roughly 27% of a workforce of 223,000, chief people officer Amy Coleman said in a memo. The package matches standard severance but omits the extended healthcare that drew staff to April's retirement programme; eligible employees decide in early December and leave on 31 December. Microsoft said the offer does not replace layoffs.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "workforce",
+        "ai-capex",
+        "buyouts"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft",
+          "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html",
+          "publishedAt": "2026-10-26T17:52:00.000Z"
+        },
+        {
+          "publisher": "GeekWire",
+          "url": "https://www.geekwire.com/2026/microsoft-makes-new-voluntary-exit-offer-to-more-than-a-quarter-of-its-workforce-including-some-execs",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-oil-slides-on-iran-diplomacy-signal",
+      "kind": "daily",
+      "title": "Oil falls as Washington signals more time for Iran diplomacy",
+      "summary": "Brent crude dropped 2.9% to $110.19 a barrel and West Texas Intermediate fell 3% to $100.99 after reports that President Donald Trump wants to give diplomacy more time before deciding whether to resume strikes on Iran following Tuesday's midterm elections. Spot gold rose 0.6% to $3,899.61 an ounce after closing at its lowest level in more than a year on Friday, and the dollar was little changed against major peers.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "iran",
+        "commodities",
+        "geopolitics"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+          "publishedAt": "2026-11-02T04:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-google-jules-winds-down-into-antigravity",
+      "kind": "daily",
+      "title": "Google sets a two-stage shutdown for its Jules coding agent",
+      "summary": "Google will retire Jules, its asynchronous coding agent, on 31 December: sessions can be finished until 11 November, after which the product turns read-only. Google says lessons from Jules are being folded into Antigravity, the agent-first platform it launched with Gemini 3. Export covers account settings, environment variables, scheduled tasks, connected repositories, memories, setup scripts and session logs, but there is no automatic migration and code already on GitHub is unaffected.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "jules",
+        "antigravity",
+        "coding-agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Jules",
+          "url": "https://jules.google/docs/changelog/2026-10-29",
+          "publishedAt": "2026-10-29T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://theverge.com/ai-artificial-intelligence/1022729/google-is-sunsetting-its-ai-coding-agent-jules",
+          "publishedAt": "2026-10-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-kioxia-shares-slide-on-memory-outlook",
+      "kind": "daily",
+      "title": "Kioxia drops as much as 17% on a cautious memory outlook",
+      "summary": "Kioxia shares fell as much as 17% in Tokyo on Monday after the Japanese memory maker gave a cautious outlook, reviving concern that the profit surge driven by AI data-centre demand may be levelling off. The move followed a 7.2% fall in the Philadelphia Semiconductor Index on Friday and extends a month in which memory pricing has reshaped costs across servers, PCs and handsets.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "kioxia",
+        "memory",
+        "semiconductors",
+        "japan"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+          "publishedAt": "2026-11-02T04:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-anthropic-self-assessment-misuse-monitor",
+      "kind": "daily",
+      "title": "Anthropic lets Claude grade its own conversations for misuse",
+      "summary": "Anthropic described self-assessment, a technique that appends a short hidden instruction after each Claude response so the model scores the conversation it just held, returning a few tokens of JSON with a category, refusal status and review priority. On Claude Fable 5 it flags 78% of conversations that a stronger prompted classifier marks harmful, and 94% of high-priority ones, at a 1% false-positive rate for under 2% extra inference compute. It runs as a passive monitor, not a blocker.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "safety",
+        "monitoring"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic Safeguards",
+          "url": "https://safeguards.anthropic.com/2026/self-assessment",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-github-octoverse-agents-start-pull-requests",
+      "kind": "daily",
+      "title": "Agents started more than 40% of GitHub pull requests in September",
+      "summary": "GitHub's Octoverse report puts agent-started pull requests above 40% in September, up from 17% in March, or about 110 million in the month alone. Developers made 34.3 billion commits and merged 1.3 billion pull requests in the year to 30 September, and 55% of Copilot's monthly active users now use agentic features. Repositories created this year with an agent configuration file averaged eight times the commits of those without one.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "github",
+        "agents",
+        "developers",
+        "octoverse"
+      ],
+      "sources": [
+        {
+          "publisher": "GitHub Blog",
+          "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents",
+          "publishedAt": "2026-10-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "Visual Studio Magazine",
+          "url": "https://visualstudiomagazine.com/articles/2026/10/29/github-octoverse-agents-started-more-than-40-percent-of-september-pull-requests.aspx",
+          "publishedAt": "2026-10-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-bundesliga-matchday-eight-closes",
+      "kind": "daily",
+      "title": "Frankfurt beat Hamburg as the Bundesliga's top two stay level",
+      "summary": "Eintracht Frankfurt beat Hamburger SV 3-1 and Union Berlin drew 1-1 with Köln as Bundesliga matchday eight finished on Sunday. Bayern Munich and Borussia Dortmund, who drew 2-2 in Saturday's Klassiker, remain unbeaten and level on points at the top. Promoted Elversberg produced the weekend's most emphatic result, a 4-1 win over Mainz on Friday, while Leverkusen lost 4-2 at home to Stuttgart.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "frankfurt",
+        "union-berlin",
+        "elversberg"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-01",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-champions-league-matchday-four-preview",
+      "kind": "daily",
+      "title": "Champions League returns with Atlético-Bayern and United-Roma",
+      "summary": "The Champions League league phase resumes with matchday four across Tuesday and Wednesday. Atlético Madrid host Bayern Munich, Manchester United meet Roma and Villarreal face Paris Saint-Germain on Tuesday, while Liverpool travel to Fenerbahçe, Arsenal go to Slavia Praha and Manchester City visit RB Leipzig on Wednesday. Borussia Dortmund host Real Betis and Real Madrid are away at AEK Athens in the same round.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "uefa",
+        "fixtures"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/fixtures-results",
+          "publishedAt": "2026-11-02T04:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-weekly-ai-agents-move-into-the-org-chart",
+      "kind": "weekly",
+      "title": "Agentic coding is becoming a staffing decision, not a feature",
+      "summary": "Three releases this week point the same way. GitHub measures agents starting more than 40% of pull requests, DeepSeek's Harness team published a router-worker prototype built to consume as little human attention as possible, and Google is retiring Jules to concentrate on Antigravity. The common thread is organisational rather than technical: the constraint has moved from whether a model can write a patch to who authorises it, who reviews it and how much supervision a team can afford. Each of those questions now has a vendor-shaped answer.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "week": "2026-W45",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "agents",
+        "coding",
+        "github",
+        "deepseek"
+      ],
+      "sources": [
+        {
+          "publisher": "GitHub Blog",
+          "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents",
+          "publishedAt": "2026-10-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "GitHub",
+          "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+          "publishedAt": "2026-10-31T00:00:00.000Z"
+        },
+        {
+          "publisher": "Google Jules",
+          "url": "https://jules.google/docs/changelog/2026-10-29",
+          "publishedAt": "2026-10-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-weekly-ai-consent-gets-a-syntax",
+      "kind": "weekly",
+      "title": "The training-data argument has moved from principle to syntax",
+      "summary": "Two disclosures this week show the AI industry negotiating consent by syntax. Google, OpenAI, Microsoft and Anthropic backed one robots.txt policy token so a publisher can refuse training once for every participating provider, though implementation dates run from months away to February 2027. Anthropic separately described self-assessment, in which Claude grades its own conversations. Both are narrow: the token does not stop crawling, and the monitor does not block misuse. They are still the shape of the coming settlement — machine-readable, auditable, and run by the party being audited.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "week": "2026-W45",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "consent",
+        "robots-txt",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Search Central",
+          "url": "https://developers.google.com/search/blog/2026/10/ai-training-control",
+          "publishedAt": "2026-10-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+          "publishedAt": "2026-10-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic Safeguards",
+          "url": "https://safeguards.anthropic.com/2026/self-assessment",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-weekly-football-margins-and-the-calendar",
+      "kind": "weekly",
+      "title": "Small margins, heavy calendars: the season starts to bite",
+      "summary": "Arsenal's 1-0 win at Anfield was decided by one cut-back and defended by two centre-backs, and it left Liverpool nine points adrift in fifth. In Germany, Bayern and Dortmund remain level after a 2-2 Klassiker in which both lost players to injury, while promoted Elversberg sit among the weekend's biggest winners. The Champions League resumes on Tuesday with Atlético-Bayern and United-Roma. With domestic races tight and European fixtures stacking up, squad depth rather than peak performance is becoming the variable that separates the contenders.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "week": "2026-W45",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "premier-league",
+        "bundesliga",
+        "champions-league"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/match/2645281/liverpool-vs-arsenal",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8",
+          "publishedAt": "2026-11-01T18:30:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/fixtures-results",
+          "publishedAt": "2026-11-02T04:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-weekly-markets-ai-trade-meets-politics",
+      "kind": "weekly",
+      "title": "The AI trade now has to survive an election, an oil price and Beijing",
+      "summary": "Markets enter the week with three variables that no model release controls. Friday's 3.5% fall in the Nasdaq 100 was the sharpest since June and the semiconductor index lost 7.2%, with futures only partly recovering in Asia. Tuesday's US midterms add policy risk, and Brent's slide to $110.19 rests on a diplomatic pause rather than a settlement with Iran. In China, regulators convened banks to widen buyback funding after the Shanghai Composite's 6.3% October decline. The correction, in other words, is being priced against politics and energy as much as against earnings.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "week": "2026-W45",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "markets",
+        "oil",
+        "china",
+        "midterms"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+          "publishedAt": "2026-11-02T04:25:00.000Z"
+        },
+        {
+          "publisher": "South China Morning Post",
+          "url": "https://www.scmp.com/business/china-business/article/3372889/chinas-banks-regulators-meet-measures-arrest-stock-slide",
+          "publishedAt": "2026-11-01T19:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-02-weekly-technology-compute-prices-set-the-agenda",
+      "kind": "weekly",
+      "title": "Memory and compute prices, not model scores, are setting the agenda",
+      "summary": "The week's technology stories were mostly about cost. Kioxia fell as much as 17% on a cautious outlook, a reminder that memory has become the swing input for servers, PCs and handsets. Microsoft offered buyouts to about 27% of its workforce while funding an AI build-out, and Apple retook the title of most valuable listed company largely by spending less than its peers. Capex discipline is now a product feature: the companies that are cheapest to believe in are being rewarded for restraint, at least until the next earnings cycle tests it.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-11-02T05:40:00.000Z",
+      "updatedAt": "2026-11-02T05:40:00.000Z",
+      "retrievedAt": "2026-11-02T05:45:00.000Z",
+      "week": "2026-W45",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "memory",
+        "capex",
+        "microsoft",
+        "apple"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+          "publishedAt": "2026-11-02T04:25:00.000Z"
+        },
+        {
+          "publisher": "Microsoft",
+          "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer",
+          "publishedAt": "2026-10-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html",
+          "publishedAt": "2026-10-26T17:52:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-01-apple-qwen-apple-intelligence-china",
       "kind": "daily",

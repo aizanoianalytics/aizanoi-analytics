@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-02-weekly-ai-agents-move-into-the-org-chart",
+  "title": "Agentic coding is becoming a staffing decision, not a feature",
+  "summary": "Three releases this week point the same way. GitHub measures agents starting more than 40% of pull requests, DeepSeek's Harness team published a router-worker prototype built to consume as little human attention as possible, and Google is retiring Jules to concentrate on Antigravity. The common thread is organisational rather than technical: the constraint has moved from whether a model can write a patch to who authorises it, who reviews it and how much supervision a team can afford. Each of those questions now has a vendor-shaped answer.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "agents",
+    "coding",
+    "github",
+    "deepseek"
+  ],
+  "sources": [
+    {
+      "publisher": "GitHub Blog",
+      "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents",
+      "publishedAt": "2026-10-28T00:00:00Z"
+    },
+    {
+      "publisher": "GitHub",
+      "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "Google Jules",
+      "url": "https://jules.google/docs/changelog/2026-10-29",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W45"
+}
