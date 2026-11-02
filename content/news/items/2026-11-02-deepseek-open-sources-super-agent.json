@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-02-deepseek-open-sources-super-agent",
+  "title": "DeepSeek publishes a coding agent built to need less supervision",
+  "summary": "DeepSeek's Harness team released dsh-superagent on GitHub under the MIT licence, a research prototype in which a resident Router hands requests from an authorised person to isolated Worker sessions that reply in the original thread, often with a pull request. It listens to GitHub events and optionally Feishu, opens a work item per request and shows a panel of items that need a human. DeepSeek calls it research code rather than an official product, and says parts of its design write-up are not implemented.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "deepseek",
+    "coding-agents",
+    "open-source",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-01/deepseek-drops-enhanced-coding-agent-with-aim-to-rival-anthropic",
+      "publishedAt": "2026-11-01T03:48:00Z"
+    },
+    {
+      "publisher": "GitHub",
+      "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+      "publishedAt": "2026-10-31T00:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/deepseek-super-agent-open-source-coding-agent",
+      "publishedAt": "2026-11-01T11:13:00Z"
+    }
+  ],
+  "kind": "daily"
+}

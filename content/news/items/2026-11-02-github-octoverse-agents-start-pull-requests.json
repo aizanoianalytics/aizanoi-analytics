@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-02-github-octoverse-agents-start-pull-requests",
+  "title": "Agents started more than 40% of GitHub pull requests in September",
+  "summary": "GitHub's Octoverse report puts agent-started pull requests above 40% in September, up from 17% in March, or about 110 million in the month alone. Developers made 34.3 billion commits and merged 1.3 billion pull requests in the year to 30 September, and 55% of Copilot's monthly active users now use agentic features. Repositories created this year with an agent configuration file averaged eight times the commits of those without one.",
+  "category": "ai",
+  "priority": 56,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "github",
+    "agents",
+    "developers",
+    "octoverse"
+  ],
+  "sources": [
+    {
+      "publisher": "GitHub Blog",
+      "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents",
+      "publishedAt": "2026-10-28T00:00:00Z"
+    },
+    {
+      "publisher": "Visual Studio Magazine",
+      "url": "https://visualstudiomagazine.com/articles/2026/10/29/github-octoverse-agents-started-more-than-40-percent-of-september-pull-requests.aspx",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

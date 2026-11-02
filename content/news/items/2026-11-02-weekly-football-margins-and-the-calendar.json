@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-02-weekly-football-margins-and-the-calendar",
+  "title": "Small margins, heavy calendars: the season starts to bite",
+  "summary": "Arsenal's 1-0 win at Anfield was decided by one cut-back and defended by two centre-backs, and it left Liverpool nine points adrift in fifth. In Germany, Bayern and Dortmund remain level after a 2-2 Klassiker in which both lost players to injury, while promoted Elversberg sit among the weekend's biggest winners. The Champions League resumes on Tuesday with Atlético-Bayern and United-Roma. With domestic races tight and European fixtures stacking up, squad depth rather than peak performance is becoming the variable that separates the contenders.",
+  "category": "football",
+  "priority": 50,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "premier-league",
+    "bundesliga",
+    "champions-league"
+  ],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/match/2645281/liverpool-vs-arsenal",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    },
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/fixtures-results",
+      "publishedAt": "2026-11-02T04:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W45"
+}

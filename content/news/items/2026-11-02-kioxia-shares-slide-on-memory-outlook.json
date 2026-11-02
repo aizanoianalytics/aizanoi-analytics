@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-02-kioxia-shares-slide-on-memory-outlook",
+  "title": "Kioxia drops as much as 17% on a cautious memory outlook",
+  "summary": "Kioxia shares fell as much as 17% in Tokyo on Monday after the Japanese memory maker gave a cautious outlook, reviving concern that the profit surge driven by AI data-centre demand may be levelling off. The move followed a 7.2% fall in the Philadelphia Semiconductor Index on Friday and extends a month in which memory pricing has reshaped costs across servers, PCs and handsets.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "kioxia",
+    "memory",
+    "semiconductors",
+    "japan"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+      "publishedAt": "2026-11-02T04:25:00Z"
+    }
+  ],
+  "kind": "daily"
+}

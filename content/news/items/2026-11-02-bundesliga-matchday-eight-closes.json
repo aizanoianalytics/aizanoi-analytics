@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-02-bundesliga-matchday-eight-closes",
+  "title": "Frankfurt beat Hamburg as the Bundesliga's top two stay level",
+  "summary": "Eintracht Frankfurt beat Hamburger SV 3-1 and Union Berlin drew 1-1 with Köln as Bundesliga matchday eight finished on Sunday. Bayern Munich and Borussia Dortmund, who drew 2-2 in Saturday's Klassiker, remain unbeaten and level on points at the top. Promoted Elversberg produced the weekend's most emphatic result, a 4-1 win over Mainz on Friday, while Leverkusen lost 4-2 at home to Stuttgart.",
+  "category": "football",
+  "priority": 54,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "frankfurt",
+    "union-berlin",
+    "elversberg"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/8",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-01",
+      "publishedAt": "2026-11-01T18:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

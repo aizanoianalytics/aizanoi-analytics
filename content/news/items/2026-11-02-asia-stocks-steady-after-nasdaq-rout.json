@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-02-asia-stocks-steady-after-nasdaq-rout",
+  "title": "Asian shares steady after Wall Street's worst session since June",
+  "summary": "Asian equities fell less than Wall Street on Monday and US futures turned higher after the Nasdaq 100 slid 3.5% on Friday, its worst day since June, while the Philadelphia Semiconductor Index dropped 7.2%. The MSCI Asia Pacific index lost 0.5%, Tokyo's Topix 0.8% and Australia's ASX 200 0.7%, with South Korea and Hong Kong higher. S&P 500 and Nasdaq 100 futures each rose at least 0.4% before the US open.",
+  "category": "economy-markets",
+  "priority": 86,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "asia",
+    "nasdaq",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+      "publishedAt": "2026-11-02T04:25:00Z"
+    }
+  ],
+  "kind": "daily"
+}

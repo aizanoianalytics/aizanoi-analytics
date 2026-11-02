@@ -7,6 +7,10 @@ const daily = read('frontend/news/2026-10-11/index.html');
 const weekly = read('frontend/news/weekly/2026-09-07/index.html');
 const story = read('frontend/news/2026-10-11/telecom-selloff-spacex-spectrum-deal/index.html');
 const css = read('frontend/news/news.css');
+const feed = JSON.parse(read('frontend/news/index.json'));
+// The "latest weekly" link must point at whatever the feed currently publishes,
+// so this assertion follows each new Monday edition instead of a frozen date.
+const latestWeeklyPath = feed.weeklyEditions[0].path;
 
 test('news pages expose a skip link and a focusable main landmark', () => {
   for (const html of [daily, weekly, story, read('frontend/news/index.html'), read('frontend/news/about/index.html')]) {
@@ -20,7 +24,7 @@ test('editions link to previous, next and latest editions', () => {
   assert.match(daily, /rel="next" href="\/news\/2026-10-12\/"/);
   assert.match(daily, /class="edition-latest" href="\/news\/"/);
   assert.match(weekly, /rel="prev" href="\/news\/weekly\/2026-08-31\/"/);
-  assert.match(weekly, /class="edition-latest" href="\/news\/weekly\/2026-10-26\/"/);
+  assert.match(weekly, new RegExp(`class="edition-latest" href="${latestWeeklyPath}"`));
   assert.match(story, /aria-label="More from this edition"/);
 });
 

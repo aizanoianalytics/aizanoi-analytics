@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-02-weekly-technology-compute-prices-set-the-agenda",
+  "title": "Memory and compute prices, not model scores, are setting the agenda",
+  "summary": "The week's technology stories were mostly about cost. Kioxia fell as much as 17% on a cautious outlook, a reminder that memory has become the swing input for servers, PCs and handsets. Microsoft offered buyouts to about 27% of its workforce while funding an AI build-out, and Apple retook the title of most valuable listed company largely by spending less than its peers. Capex discipline is now a product feature: the companies that are cheapest to believe in are being rewarded for restraint, at least until the next earnings cycle tests it.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "memory",
+    "capex",
+    "microsoft",
+    "apple"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stock-selloff-eases-in-asian-trade%2C-crude-falls%3A-markets-wrap/92310840",
+      "publishedAt": "2026-11-02T04:25:00Z"
+    },
+    {
+      "publisher": "Microsoft",
+      "url": "https://blogs.microsoft.com/blog/2026/10/26/introducing-a-voluntary-exit-offer",
+      "publishedAt": "2026-10-26T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/26/microsoft-msft-voluntary-buyouts.html",
+      "publishedAt": "2026-10-26T17:52:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W45"
+}

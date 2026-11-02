@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-02-champions-league-matchday-four-preview",
+  "title": "Champions League returns with Atlético-Bayern and United-Roma",
+  "summary": "The Champions League league phase resumes with matchday four across Tuesday and Wednesday. Atlético Madrid host Bayern Munich, Manchester United meet Roma and Villarreal face Paris Saint-Germain on Tuesday, while Liverpool travel to Fenerbahçe, Arsenal go to Slavia Praha and Manchester City visit RB Leipzig on Wednesday. Borussia Dortmund host Real Betis and Real Madrid are away at AEK Athens in the same round.",
+  "category": "football",
+  "priority": 50,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "uefa",
+    "fixtures"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/fixtures-results",
+      "publishedAt": "2026-11-02T04:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

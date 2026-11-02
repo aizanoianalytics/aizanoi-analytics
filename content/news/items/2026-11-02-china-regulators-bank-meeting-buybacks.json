@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-02-china-regulators-bank-meeting-buybacks",
+  "title": "China's regulators convene banks to widen stock support tools",
+  "summary": "The People's Bank of China, the securities regulator and the banking regulator were due to meet major banks on Monday to study improvements to a relending facility that finances share buybacks and stake purchases, according to mainland media reports. The Shanghai Composite closed at 3,599.00 on Friday, down 6.3% in October and below 3,600 for the first time this year, while the Shenzhen Component fell 15.9% over the month.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "china",
+    "equities",
+    "policy",
+    "buybacks"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-01/china-to-convene-meeting-on-supporting-stock-market-reports-say",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    },
+    {
+      "publisher": "South China Morning Post",
+      "url": "https://www.scmp.com/business/china-business/article/3372889/chinas-banks-regulators-meet-measures-arrest-stock-slide",
+      "publishedAt": "2026-11-01T19:15:00Z"
+    },
+    {
+      "publisher": "The Standard",
+      "url": "https://www.thestandard.com.hk/finance/article/347145/China-regulators-act-to-support-stocks-after-October-slump-mainland-media-reports",
+      "publishedAt": "2026-11-02T02:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

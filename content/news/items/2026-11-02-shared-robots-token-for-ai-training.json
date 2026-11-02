@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-02-shared-robots-token-for-ai-training",
+  "title": "Four AI labs back one robots.txt switch for training opt-outs",
+  "summary": "Google, OpenAI, Microsoft and Anthropic backed a shared robots.txt policy token, __usage_ai-training, that lets a site state one AI-training preference for every participating provider instead of naming each crawler. OpenAI aims to implement it in the coming months, Google plans to read an opt-out as a Google-Extended disallow, and Microsoft will honour it from 1 February 2027. The draft, written by an Anthropic engineer, adds no new grammar and does not limit crawling.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-11-02T05:40:00Z",
+  "updatedAt": "2026-11-02T05:40:00Z",
+  "retrievedAt": "2026-11-02T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "robots-txt",
+    "ai-training",
+    "ietf",
+    "publishers"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Search Central",
+      "url": "https://developers.google.com/search/blog/2026/10/ai-training-control",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/helping-websites-express-ai-training-preferences",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://unite.ai/openai-to-honor-shared-robots-txt-signal-for-ai-training-preferences",
+      "publishedAt": "2026-10-30T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
