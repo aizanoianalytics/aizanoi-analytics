@@ -38,7 +38,7 @@ test('every shipped roster worker initializes under production CSP and arbitrary
       return Promise.all([...roster.bots.map(bot => bot.file), 'https://example.com/evil.js'].map(load));
     });
     const evil = loaded.pop();
-    assert.equal(loaded.length,13);
+    assert.equal(loaded.length,14);
     for (const worker of loaded) assert.equal(worker.ok,true,JSON.stringify(worker));
     assert.equal(evil.ok,false); assert.match(evil.error,/Unknown shipped strategy/);
     assert.deepEqual(errors,[]);
@@ -121,7 +121,7 @@ for (const width of [390,768,1440]) test(`independent shell launcher and frame t
     await page.goto(base + '/?app=trade-arena');
     const frame = page.frameLocator('iframe.ta-shell-frame');
     await frame.locator('#go').waitFor({timeout:30000});
-    assert.equal(await frame.locator('#roster input').count(),13);
+    assert.equal(await frame.locator('#roster input').count(),14);
     const overflow = await frame.locator('html').evaluate(el => el.scrollWidth - el.clientWidth);
     assert.ok(overflow<=1, `frame overflow at ${width}px: ${overflow}`);
     await frame.locator('#go').click();

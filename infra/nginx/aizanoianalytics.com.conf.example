@@ -50,6 +50,9 @@ server {
     location ^~ /styles/ { try_files $uri =404; expires -1; }
     location ^~ /js/ { try_files $uri =404; expires -1; }
     location ^~ /assets/ { try_files $uri =404; expires 7d; }
+    # Arcade bundles (Trade Arena UI, bot strategies, workers, roster/league JSON) are unversioned:
+    # without an explicit policy browsers apply heuristic caching and can mix an old app.js with a new roster.
+    location ^~ /arcade/ { try_files $uri $uri/ =404; expires -1; }
 
     # Fly World is static except for one narrow, read-only telemetry stream.
     # The loopback service owns simulation authority; browsers cannot submit
@@ -82,5 +85,6 @@ server {
     location = /ancient-cities { return 301 /worlds/; }
     location = /ancient-cities/ { return 301 /worlds/; }
 
-    location / { try_files $uri $uri/ =404; }
+    # Everything else (News, TV, Journal, Labs, Forge pages and their scripts) is unversioned too: revalidate with ETag.
+    location / { try_files $uri $uri/ =404; expires -1; }
 }

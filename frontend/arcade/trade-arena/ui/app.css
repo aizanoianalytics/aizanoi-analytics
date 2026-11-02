@@ -475,6 +475,8 @@ table.stats th button:focus-visible { outline: 2px solid var(--focus); outline-o
 [data-color="#ffcc4d"]{--c:#ffcc4d}[data-bg="#ffcc4d"]{background:#ffcc4d}[data-ink="#ffcc4d"]{color:#ffcc4d}
 [data-color="#ffd54a"]{--c:#ffd54a}[data-bg="#ffd54a"]{background:#ffd54a}[data-ink="#ffd54a"]{color:#ffd54a}
 [data-color="#ffffff"]{--c:#ffffff}[data-bg="#ffffff"]{background:#ffffff}[data-ink="#ffffff"]{color:#ffffff}
+[data-color="#11734a"]{--c:#11734a}[data-bg="#11734a"]{background:#11734a}[data-ink="#11734a"]{color:#11734a}
+[data-color="#5ee0a0"]{--c:#5ee0a0}[data-bg="#5ee0a0"]{background:#5ee0a0}[data-ink="#5ee0a0"]{color:#5ee0a0}
 [data-color="var(--accent)"]{--c:var(--accent)}
 [data-short="true"]{background-image:repeating-linear-gradient(135deg,transparent,transparent 4px,var(--panel-solid) 4px,var(--panel-solid) 7px)}
 [data-width="0"]{width:0%}[data-left="0"]{left:0%}

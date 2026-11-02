@@ -57,6 +57,11 @@
       "sourceSha256": "a7a48e962b3d19aee9840c9e7c0c7e020c915a5e341775d4b4e8f0cf5bfa455f"
     },
     {
+      "path": "bots/house/basket.js",
+      "sha256": "12621adb25485823d08d94209ee47e27be77a48d2e8cdc59c50168bca618b7e9",
+      "sourceSha256": "12621adb25485823d08d94209ee47e27be77a48d2e8cdc59c50168bca618b7e9"
+    },
+    {
       "path": "bots/house/hodl.js",
       "sha256": "9bebef3b7de03380b0dea0fb2e8055b3ba0ddaaac2a51301db59f6d74d17f319",
       "sourceSha256": "9bebef3b7de03380b0dea0fb2e8055b3ba0ddaaac2a51301db59f6d74d17f319"
@@ -73,8 +78,8 @@
     },
     {
       "path": "bots/roster.json",
-      "sha256": "247575f891d5aee7155d9b0c8087ca859389bc309aa3a48244017cb2386e327a",
-      "sourceSha256": "247575f891d5aee7155d9b0c8087ca859389bc309aa3a48244017cb2386e327a"
+      "sha256": "91bfa7b8ef4ce7e4578183e4e1676a5786945c3864ab35c24f10a3444f2e0824",
+      "sourceSha256": "91bfa7b8ef4ce7e4578183e4e1676a5786945c3864ab35c24f10a3444f2e0824"
     },
     {
       "path": "data/catalog.json",
@@ -83,8 +88,8 @@
     },
     {
       "path": "data/league.json",
-      "sha256": "87c25ac1097ae491ae61a3cf8e5f1f219f3f456e9251645a15c5259f3e805b01",
-      "sourceSha256": "87c25ac1097ae491ae61a3cf8e5f1f219f3f456e9251645a15c5259f3e805b01"
+      "sha256": "4ac6a96bba94c2ec63f82d6bdf7d048cb8f26fec51e30286edd52a1d6303b396",
+      "sourceSha256": "4ac6a96bba94c2ec63f82d6bdf7d048cb8f26fec51e30286edd52a1d6303b396"
     },
     {
       "path": "data/raw/context/1d/DXY.json",
@@ -1158,7 +1163,7 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "b98a402d59362f21f5d5da065e3ef0e11f9d914d80388d76980ac9103fe41520",
+      "sha256": "87dfa5d5ab01c13486716f30324aeb534e343cf0ce37d2d8faa600cc3aa92ef2",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
@@ -1168,7 +1173,7 @@
     },
     {
       "path": "ui/bot-worker.js",
-      "sha256": "82a021b966fa854f07e10cf655a2a3a2cd7043ba4c03da299a952a6b8dd8b942",
+      "sha256": "e95f95dcbf48cc958dc98141963fa09e1f1a8d413f492defcff7777f81e5ba3e",
       "sourceSha256": "8c17f093eaf15e8eecff258e1c085d2d60cbbed2f3de11e93d977af68e95975f"
     },
     {
@@ -1243,6 +1248,16 @@
         "bots/ai/gpt-5.6-sol.js",
         "bots/ai/gpt-5.6-terra.js",
         "bots/ai/gpt-5.6-luna.js",
+        "bots/roster.json",
+        "data/league.json"
+      ]
+    },
+    {
+      "date": "2026-11-02",
+      "note": "House bot Basket Builder (regime-scaled, inverse-volatility basket of up to 8 uptrending assets) written for Aizanoi after the cutoff, parameters not tuned on race results; Season 1 league recomputed with 14 bots, engine 1.1, run on an idle machine with zero bot errors.",
+      "source": "C:/Users/husey/oc-sandbox/trade-arena (owner workstation)",
+      "paths": [
+        "bots/house/basket.js",
         "bots/roster.json",
         "data/league.json"
       ]

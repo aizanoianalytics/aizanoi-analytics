@@ -32,7 +32,7 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
   }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
   assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.context.length, 7);
-  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'momentum', 'hodl', 'monkey']);
+  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'basket', 'momentum', 'hodl', 'monkey']);
   // Every roster strategy must be runnable by the strict-CSP worker, and nothing else.
   const allowed = read(root + 'ui/bot-worker.js').match(/new Set\(\[([^\]]*)\]\)/)[1].split(',').map(x => x.trim().slice(1, -1));
   assert.deepEqual(allowed.sort(), roster.bots.map(bot => bot.file).sort());
