@@ -134,3 +134,23 @@ for (const width of [390,768,1440]) test(`independent shell launcher and frame t
     assert.deepEqual(errors,[]);
   });
 });
+
+test('today’s basket builds the same holdings twice under strict CSP and a random race starts', {timeout:330000}, async () => {
+  await withPage({width:1280,height:900}, async (page,errors) => {
+    await page.goto(base + '/arcade/trade-arena/#/basket');
+    await page.locator('#bk-go').waitFor();
+    assert.match(await page.locator('.notice').first().innerText(), /Not investment advice/);
+    await page.locator('label:has(input[name=bk-bot][value="haiku-5-5"])').click();
+    await page.locator('#bk-market [data-v="stocks"]').click();
+    const build = async () => { await page.locator('#bk-go').click(); await page.locator('.basket-result').waitFor({timeout:150000}); return page.locator('.basket-result table').innerText(); };
+    const first = await build();
+    assert.ok((await page.locator('.basket-result tbody tr').count()) > 0, 'a fully invested bot shows holdings');
+    assert.equal(await build(), first, 'same bot, same archive, same basket');
+    await page.goto(base + '/arcade/trade-arena/#/');
+    await page.locator('label.preset:has(input[value=random])').click();
+    await page.locator('#go').click();
+    await page.locator('.race-head h1').waitFor();
+    assert.match(await page.locator('.race-head h1').innerText(), /^Random race #/);
+    assert.deepEqual(errors, []);
+  });
+});

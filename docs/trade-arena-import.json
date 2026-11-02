@@ -1153,7 +1153,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "173c5e99b21fbc3f8d7e9584522ed10428987211e1fded2828909199f3ec0f3c",
+      "sha256": "2634185349f77df6d1148386e32b39f83741ef6d178169ffa344efbe7f5edf79",
       "sourceSha256": "902c9cf8eaa7f66bdbaa9359c02c6621444028e68e39499e560aae2f6deabd69"
     },
     {
@@ -1163,13 +1163,18 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "87dfa5d5ab01c13486716f30324aeb534e343cf0ce37d2d8faa600cc3aa92ef2",
+      "sha256": "cf5bf5d91997e82fc63b195bbb3adcfb301dcafced258f8acebe3fbf9fd0ca3d",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "69db09c8fc03b865c3029d8e2eb02b315a23b66765f109a7b446f0db67f10bf4",
+      "sha256": "c95ae2c1126561add9dc052fb050b62375a081e87392d01a104370fc079639d2",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
+    },
+    {
+      "path": "ui/basket.js",
+      "sha256": "7f9f74018bcec4e46df7049a8a29e9b4b201534506cf10315fc2f05648f7fc02",
+      "sourceSha256": null
     },
     {
       "path": "ui/bot-worker.js",
@@ -1193,13 +1198,18 @@
     },
     {
       "path": "ui/race-view.js",
-      "sha256": "eaf2e05b450a4ec5f4ea270373a6ea55adfc61554735c5583444abb6b1440ec4",
+      "sha256": "89d72322c38b578363e5bc63e87d60e3bc007bd2ac9d733c970b9d5045300f47",
       "sourceSha256": "4f762ee58e9f977ea26a8bd0ee8ad143464777f170bb76a743a06f534778af64"
     },
     {
       "path": "ui/race-worker.js",
       "sha256": "12bb2663ffd2bac50cfa1c363792ca584009a135a3ea0329a34fd1072bf40e46",
       "sourceSha256": "7855727a79da8d1e7992da9382bf1d3255d402fff1ae6c8e0e9adb210d9b0780"
+    },
+    {
+      "path": "ui/random-race.js",
+      "sha256": "776ed03540ba25a82d7105f778bdd33217dfd12bd5ebf4f32ea6798a5bf52862",
+      "sourceSha256": null
     },
     {
       "path": "ui/theme.js",

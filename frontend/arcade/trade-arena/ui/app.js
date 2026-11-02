@@ -2,6 +2,8 @@ import { widthStep } from './layout.js';
 import { $, $$, esc, html, pct, usd, cls, avatar, getJSON, PRESETS, ok, BASE } from './util.js';
 import { startRace, renderRace, rethemeRace, releaseRaceView } from './race-view.js';
 import { renderData, releaseData } from './explorer.js';
+import { renderBasket, releaseBasket } from './basket.js';
+import { randomRace } from './random-race.js';
 import { getTheme, setTheme, applyBotColors, css, reducedMotion } from './theme.js';
 
 const DATA_START = '2017-08-17', DATA_END = '2026-10-30', CUTOFF = '2024-12-31';
@@ -24,12 +26,12 @@ async function boot() {
 }
 function paintThemeSwitch() { const t = getTheme(); $$('[data-theme-set]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeSet === t))); }
 
-const TITLES = { '': 'Arena', race: 'Race', league: 'League', bots: 'Bots', data: 'Market data' };
+const TITLES = { '': 'Arena', race: 'Race', basket: 'Today’s basket', league: 'League', bots: 'Bots', data: 'Market data' };
 function route(focus = true) {
   const r = location.hash.replace(/^#\/?/, '').split('/')[0];
   $$('.nav a').forEach(a => (a.dataset.r === r ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));
   $$('dialog.results').forEach(d => { d.close?.(); d.remove(); }); // a results dialog never outlives its page
-  releaseRaceView(); releaseData();
+  releaseRaceView(); releaseData(); releaseBasket();
   const view = $('#view');
   view.innerHTML = '';
   scrollTo(0, 0);
@@ -37,6 +39,7 @@ function route(focus = true) {
   if (r === 'race') renderRace(view);
   else if (r === 'data') renderData(view, state.catalog);
   else if (r === 'bots') renderBots(view);
+  else if (r === 'basket') renderBasket(view, { roster: state.roster, dataEnd: DATA_END, pick: state.pick, save: savePick });
   else if (r === 'league') renderLeague(view);
   else renderLobby(view);
   if (focus) view.focus({ preventScroll: true });
@@ -73,6 +76,7 @@ function renderLobby(view) {
       <span class="tag">${p.oos ? '<span class="chip oos">after cutoff</span>' : '<span class="chip">inside bot data</span>'}</span>
       <span class="icon" aria-hidden="true">${p.icon}</span><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p>
       <span class="meta"><span class="chip">${p.market}</span><span class="chip">${p.tf} bars</span><span class="chip">${p.start} → ${p.end}</span>${p.blind ? '<span class="chip blind">blind</span>' : ''}</span></label>`)}
+      <label class="panel preset"><input type="radio" name="preset" value="random" ${pick.preset === 'random' ? 'checked' : ''}><span class="tag"><span class="chip oos">after cutoff</span></span><span class="icon" aria-hidden="true">🎲</span><h3>Random race</h3><p>A new market, bar size, window and seed every time you press Start. Same bots, different battle.</p><span class="meta"><span class="chip">surprise</span></span></label>
       <label class="panel preset"><input type="radio" name="preset" value="custom" ${pick.preset === 'custom' ? 'checked' : ''}><span class="icon" aria-hidden="true">🛠</span><h3>Custom race</h3><p>Any market, bar size and period from ${DATA_START} to ${DATA_END}.</p><span class="meta"><span class="chip">your rules</span></span></label>
     </div>
   </fieldset>
@@ -108,6 +112,7 @@ function renderLobby(view) {
     const errs = validate();
     for (const id of ['go-err', 'go-top-err']) { const el = $('#' + id); el.hidden = !errs.length || id !== which; el.textContent = errs.join(' '); }
     if (errs.length) { announce(errs.join(' ')); return; }
+    if (pick.preset === 'random') { const r = randomRace({ cutoff: CUTOFF, dataEnd: DATA_END }); startRace({ ...r, bots: [...pick.bots], short: pick.short, gross: pick.gross }, state.roster); return; }
     const pr = PRESETS.find(p => p.id === pick.preset);
     const cfg = pr ? { ...pr } : { title: 'Custom race', market: pick.market, tf: pick.tf, start: pick.start, end: pick.end };
     startRace({ ...cfg, bots: [...pick.bots], blind: pick.blind, short: pick.short, gross: pick.gross, seed: 7 }, state.roster);
@@ -121,6 +126,7 @@ function validate() {
   if (!pick.bots.length) errs.push('Pick at least one bot.');
   const chosenPreset = PRESETS.find(preset => preset.id === pick.preset);
   const selected = chosenPreset || pick;
+  if (pick.preset === 'random') return errs;
   if (selected.market !== 'crypto' && selected.tf !== '1d') errs.push('Stock intraday races are unavailable until session-close timing is audited. Use daily bars.');
   if (pick.preset === 'custom') {
     if (!pick.start || !pick.end) errs.push('Enter a start and an end date.');
@@ -137,7 +143,8 @@ function renderOpts() {
   pick.market ??= 'crypto'; pick.tf ??= '1d'; pick.start ??= '2025-01-01'; pick.end ??= DATA_END;
   const seg = (k, vals, fmt = v => v, dis = () => false) => `<div class="seg" role="group" data-k="${k}">${vals.map(v => `<button type="button" data-v="${v}" aria-pressed="${String(pick[k]) === String(v)}" ${dis(v) ? 'disabled title="Not available for this market"' : ''}>${fmt(v)}</button>`).join('')}</div>`;
   $('#opts').innerHTML = html`
-    ${pr ? `<div class="opt"><span class="l">Battlefield</span><div data-layout="ta-s4">${pr.icon} ${esc(pr.title)}</div><div class="muted num" data-layout="ta-s2">${pr.market} · ${pr.tf} bars · ${pr.start} → ${pr.end}</div></div>`
+    ${pick.preset === 'random' ? '<div class="opt"><span class="l">Battlefield</span><div data-layout="ta-s4">🎲 Random race</div><div class="muted" data-layout="ta-s2">Drawn when you press Start: crypto, stocks or both · daily or 4-hour crypto bars · a 3–12 month window after the bots’ data cutoff · named or blind · a fresh random seed. The race header shows what was drawn.</div></div>'
+    : pr ? `<div class="opt"><span class="l">Battlefield</span><div data-layout="ta-s4">${pr.icon} ${esc(pr.title)}</div><div class="muted num" data-layout="ta-s2">${pr.market} · ${pr.tf} bars · ${pr.start} → ${pr.end}</div></div>`
     : `<div class="opt"><span class="l" id="l-market">Market</span>${seg('market', ['crypto', 'stocks', 'mixed'])}</div>
        <div class="opt"><span class="l">Bar size</span>${seg('tf', ['1d', '4h', '1h'], v => v, v => pick.market !== 'crypto' && v !== '1d')}${pick.market === 'mixed' ? '<p class="muted" data-layout="ta-s5">Mixed crypto + stock races use daily bars: the two markets keep different hours.</p>' : ''}</div>
        <div class="opt"><span class="l">Period (UTC)</span><div class="opt-row"><label class="sr-only" for="d1">Start date</label><input type="date" id="d1" value="${pick.start}" min="${DATA_START}" max="${DATA_END}"> <span aria-hidden="true">→</span> <label class="sr-only" for="d2">End date</label><input type="date" id="d2" value="${pick.end}" min="${DATA_START}" max="${DATA_END}"></div>
@@ -166,6 +173,7 @@ function renderVs() {
   $('#bot-count').textContent = `${pick.bots.length} of 6 selected${full ? ' · maximum reached' : ''}`;
   const pr = PRESETS.find(p => p.id === pick.preset);
   const c = pr || { market: pick.market, tf: pick.tf, start: pick.start, end: pick.end };
+  if (pick.preset === 'random') { $('#terms').textContent = `random battlefield · drawn at start · ${pick.short ? 'shorts allowed' : 'long only'} · ${pick.gross}× gross · $100,000 each`; return; }
   $('#terms').textContent = `${c.market} · ${c.tf} bars · ${c.start} → ${c.end} · ${pick.blind ? 'blind' : 'named'} · ${pick.short ? 'shorts allowed' : 'long only'} · ${pick.gross}× gross · $100,000 each`;
 }
 

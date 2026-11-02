@@ -112,3 +112,31 @@ test('every roster and benchmark colour has CSP-safe colour rules (inline style 
     for (const attr of ['data-color', 'data-bg', 'data-ink']) assert.ok(css.includes('[' + attr + '="' + colour + '"]'), attr + ' rule missing for ' + colour);
   }
 });
+
+test('random races draw a fresh, legal battlefield after the cutoff', async () => {
+  const { randomRace } = await import('../frontend/arcade/trade-arena/ui/random-race.js');
+  const seen = new Set();
+  for (let i = 0; i < 400; i++) {
+    const r = randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' });
+    assert.ok(['crypto', 'stocks', 'mixed'].includes(r.market));
+    assert.ok(r.market === 'crypto' || r.tf === '1d', 'stock and mixed races stay on daily bars: ' + JSON.stringify(r));
+    assert.ok(r.start > '2024-12-31' && r.end <= '2026-10-30' && r.start < r.end, JSON.stringify(r));
+    assert.ok(Number.isInteger(r.seed) && r.seed > 0);
+    seen.add(`${r.market}|${r.tf}|${r.start}|${r.seed}`);
+  }
+  assert.ok(seen.size > 390, 'every press draws a different race');
+  // Same draws, same race: a random race is reproducible from its numbers.
+  const fixed = () => { let x = 0.1; return () => (x = (x * 9301 + 0.49297) % 1); };
+  assert.deepEqual(randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' }, fixed()), randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' }, fixed()));
+});
+
+test('today’s basket page is wired, labelled as not investment advice and immune to time-limit noise', () => {
+  const app = read(root + 'ui/app.js'), page = read(root + 'ui/basket.js'), index = read(root + 'index.html');
+  assert.match(index, /href="#\/basket" data-r="basket"/);
+  assert.match(app, /r === 'basket'\) renderBasket/);
+  assert.match(app, /releaseBasket\(\)/);
+  assert.match(page, /Not investment advice/);
+  assert.match(page, /new Worker\(new URL\('\.\/race-worker\.js', import\.meta\.url\)/);
+  assert.match(page, /barMs: 3000/);
+  assert.doesNotMatch(page, /style=|innerHTML\s*=\s*[^`'"]*\+/);
+});

@@ -72,7 +72,7 @@ export function renderRace(view) {
     <div class="chips">
       <span class="chip">${cfg.market}</span><span class="chip">${cfg.tf} bars</span>
       <span class="chip">${cfg.start} → ${cfg.end} UTC</span>
-      ${cfg.blind ? '<span class="chip blind">BLIND</span>' : ''}${cfg.short ? '<span class="chip">shorts</span>' : ''}${(cfg.gross || 1) > 1 ? `<span class="chip">${cfg.gross}× gross</span>` : ''}
+      ${cfg.blind ? '<span class="chip blind">BLIND</span>' : ''}${cfg.short ? '<span class="chip">shorts</span>' : ''}${(cfg.gross || 1) > 1 ? `<span class="chip">${cfg.gross}× gross</span>` : ''}${cfg.seed && cfg.seed !== 7 ? `<span class="chip" title="Random seed: seeds the bots’ Math.random and blind aliases">seed ${cfg.seed}</span>` : ''}
     </div>
     <div class="controls">
       ${cfg.blind ? `<label class="toggle"><input type="checkbox" id="reveal" ${R.reveal ? 'checked' : ''}><i aria-hidden="true"></i>Show real names (viewer only)</label>` : ''}

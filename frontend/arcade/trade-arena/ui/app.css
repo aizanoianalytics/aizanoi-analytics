@@ -340,6 +340,12 @@ table.stats th button:focus-visible { outline: 2px solid var(--focus); outline-o
 .code { max-height: 300px; overflow: auto; background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; font: 11.5px/1.55 var(--mono); white-space: pre; color: var(--text); }
 .lb td .bar { height: 6px; border-radius: 9px; background: var(--c); min-width: 2px; }
 .empty { padding: 40px; text-align: center; color: var(--muted); }
+.basket-result { margin-top: 18px; }
+.basket-result .panel-h h2 { display: flex; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; font-size: 15px; color: var(--text); }
+.basket-result .stats th.l .muted { font-weight: 400; }
+.basket-foot { padding: 12px 16px 16px; font-size: 13px; display: grid; gap: 4px; }
+.basket-foot p { margin: 0; }
+.basket-setup .roster { max-height: 420px; overflow-y: auto; }
 
 /* ---------- theme switch ---------- */
 .theme-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; padding: 2px; background: var(--panel); }
