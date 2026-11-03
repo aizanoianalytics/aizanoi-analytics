@@ -44,3 +44,6 @@ frontend/analytics/markets/data/
 
 # Local agent workspaces are intentionally outside the canonical repository
 /gelistirmeler/
+
+# Trade Arena live tails are published by scripts/trade-arena/update_live.py on the server
+/frontend/arcade/trade-arena/live/raw/

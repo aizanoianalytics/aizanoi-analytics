@@ -28,11 +28,17 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
   for (const entry of inventory.files) {
     const hash = createHash('sha256').update(readFileSync(new URL('../' + root + entry.path, import.meta.url))).digest('hex');
     assert.equal(hash, entry.sha256, entry.path);
-    if (/^(bots|data)\//.test(entry.path)) assert.equal(hash, entry.sourceSha256, 'unchanged owner payload ' + entry.path);
+    if (entry.path === 'bots/ai/flint-40b.js') {
+      // Reviewed integration repair: only make the reassigned binding mutable. Reversing that
+      // exact token must recover the supplied bytes; no other strategy edits are admitted.
+      assert.equal(entry.sourceSha256, '49d0a9fb25fdbd1c83ac3aaafbbbda5b78edbba02d01d0914937467709e63aa0');
+      const supplied = read(root + entry.path).replace('let longs = cands.filter', 'const longs = cands.filter');
+      assert.equal(createHash('sha256').update(supplied).digest('hex'), entry.sourceSha256);
+    } else if (/^(bots|data)\//.test(entry.path)) assert.equal(hash, entry.sourceSha256, 'unchanged owner payload ' + entry.path);
   }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
-  assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.context.length, 7);
-  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'momentum', 'hodl', 'monkey']);
+  assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.bist.length, 30); assert.equal(catalog.context.length, 8);
+  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'opus-5-5', 'muse-spark-1-3', 'deepseek-v4-1-flash', 'glm-5-3-flash', 'beam', 'iceman', 'mimo-v2-6-flash', 'nemotron-3-5-super', 'nemotron-3-5-lightning', 'flint-40b', 'basket', 'aizo', 'momentum', 'hodl', 'monkey']);
   // Every roster strategy must be runnable by the strict-CSP worker, and nothing else.
   const allowed = read(root + 'ui/bot-worker.js').match(/new Set\(\[([^\]]*)\]\)/)[1].split(',').map(x => x.trim().slice(1, -1));
   assert.deepEqual(allowed.sort(), roster.bots.map(bot => bot.file).sort());
@@ -111,4 +117,34 @@ test('every roster and benchmark colour has CSP-safe colour rules (inline style 
   for (const colour of colours) {
     for (const attr of ['data-color', 'data-bg', 'data-ink']) assert.ok(css.includes('[' + attr + '="' + colour + '"]'), attr + ' rule missing for ' + colour);
   }
+});
+
+test('random races draw a fresh, legal battlefield after the cutoff', async () => {
+  const { randomRace } = await import('../frontend/arcade/trade-arena/ui/random-race.js');
+  const seen = new Set();
+  for (let i = 0; i < 400; i++) {
+    const r = randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' });
+    assert.ok(['crypto', 'stocks', 'mixed', 'bist'].includes(r.market));
+    assert.ok(r.market === 'crypto' || r.tf === '1d', 'stock and mixed races stay on daily bars: ' + JSON.stringify(r));
+    assert.ok(r.start > '2024-12-31' && r.end <= '2026-10-30' && r.start < r.end, JSON.stringify(r));
+    assert.ok(Number.isInteger(r.seed) && r.seed > 0);
+    seen.add(`${r.market}|${r.tf}|${r.start}|${r.seed}`);
+  }
+  assert.ok(seen.size > 390, 'every press draws a different race');
+  // Same draws, same race: a random race is reproducible from its numbers.
+  const fixed = () => { let x = 0.1; return () => (x = (x * 9301 + 0.49297) % 1); };
+  assert.deepEqual(randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' }, fixed()), randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' }, fixed()));
+});
+
+test('today’s basket page is wired, labelled as not investment advice and immune to time-limit noise', () => {
+  const app = read(root + 'ui/app.js'), page = read(root + 'ui/basket.js'), index = read(root + 'index.html');
+  assert.match(index, /href="#\/basket" data-r="basket"/);
+  assert.match(app, /r === 'basket'\) renderBasket/);
+  assert.match(app, /releaseBasket\(\)/);
+  assert.match(page, /Not investment advice/);
+  const client = read(root + 'ui/sim-client.js');
+  assert.match(page, /import \{ simulate, yearBefore \} from '\.\/sim-client\.js'/);
+  assert.match(client, /new Worker\(new URL\('\.\/race-worker\.js', import\.meta\.url\)/);
+  assert.match(client, /barMs = 3000/);
+  assert.doesNotMatch(page, /style=|innerHTML\s*=\s*[^`'"]*\+/);
 });

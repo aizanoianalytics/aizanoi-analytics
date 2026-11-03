@@ -3,8 +3,32 @@
   "files": [
     {
       "path": "BOT_API.md",
-      "sha256": "3b7da2a88c21197afeaea17795be149c23af6acc1a48e3cfcb1c440cb6752fde",
+      "sha256": "a0cd703f5b1c5f1d4b133a140c56318322a4b004fb8cd00cc5246b986eaddc7b",
       "sourceSha256": "3b7da2a88c21197afeaea17795be149c23af6acc1a48e3cfcb1c440cb6752fde"
+    },
+    {
+      "path": "bots/ai/beam.js",
+      "sha256": "9216a8099e0d2afcf749fdff593e06f47e7bf08a31c5d195879bba8bf2f9a980",
+      "sourceSha256": "9216a8099e0d2afcf749fdff593e06f47e7bf08a31c5d195879bba8bf2f9a980",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/deepseek-v4-1-flash.js",
+      "sha256": "b2990546f8b08c33d721994f1de39ecf26acfc8e0c979847c771557c96dbe565",
+      "sourceSha256": "b2990546f8b08c33d721994f1de39ecf26acfc8e0c979847c771557c96dbe565",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/flint-40b.js",
+      "sha256": "50143fc0d1cece385a324d9e813d203356c7b3e686ce5e117c42bf51eb8dfc9a",
+      "sourceSha256": "49d0a9fb25fdbd1c83ac3aaafbbbda5b78edbba02d01d0914937467709e63aa0",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/glm-5-3-flash.js",
+      "sha256": "417ccacd54437b0325f263c63f7d0a4ce0336a1349ae2e3717ca3fcd83b1c934",
+      "sourceSha256": "417ccacd54437b0325f263c63f7d0a4ce0336a1349ae2e3717ca3fcd83b1c934",
+      "added": "2026-11-03"
     },
     {
       "path": "bots/ai/gpt-5.6-luna.js",
@@ -52,9 +76,56 @@
       "sourceSha256": "74b3df9ee7f81c2aaf7db8f030ae53fede1ae8fdc83f0a87f2a740916b319da5"
     },
     {
+      "path": "bots/ai/iceman.js",
+      "sha256": "054c9bace9b1dacde2117e58fd18be7c9128328af064a0aaef373731e7c3058e",
+      "sourceSha256": "054c9bace9b1dacde2117e58fd18be7c9128328af064a0aaef373731e7c3058e",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/mimo-v2-6-flash.js",
+      "sha256": "1e68c5d0eb74758da32ede072025b9f4393dadfafcf72ced961ff115ad1b0646",
+      "sourceSha256": "1e68c5d0eb74758da32ede072025b9f4393dadfafcf72ced961ff115ad1b0646",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/muse-spark-1-3.js",
+      "sha256": "7bae3f6019e8dad14376a7ee472dc17e01f52e04163e6d2ea29cb88208550ab9",
+      "sourceSha256": "7bae3f6019e8dad14376a7ee472dc17e01f52e04163e6d2ea29cb88208550ab9",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/nemotron-3-5-lightning.js",
+      "sha256": "a2cbd3f0c690cb378a1cc96c78cd561ed7bc308fda2c03ccf6c29f5329e4509d",
+      "sourceSha256": "a2cbd3f0c690cb378a1cc96c78cd561ed7bc308fda2c03ccf6c29f5329e4509d",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/nemotron-3-5-super.js",
+      "sha256": "293c15faf8688d02cafdd0aa68f154b1dbb3e4dc5fcd61189c093919b8b4f05d",
+      "sourceSha256": "293c15faf8688d02cafdd0aa68f154b1dbb3e4dc5fcd61189c093919b8b4f05d",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/ai/opus-5-5.js",
+      "sha256": "7be74f25d6b8fb9e32491a57b787eb958a049653ad30f73d03a791680ebea427",
+      "sourceSha256": "7be74f25d6b8fb9e32491a57b787eb958a049653ad30f73d03a791680ebea427",
+      "added": "2026-11-03"
+    },
+    {
       "path": "bots/ai/sonnet-5-5.js",
       "sha256": "a7a48e962b3d19aee9840c9e7c0c7e020c915a5e341775d4b4e8f0cf5bfa455f",
       "sourceSha256": "a7a48e962b3d19aee9840c9e7c0c7e020c915a5e341775d4b4e8f0cf5bfa455f"
+    },
+    {
+      "path": "bots/house/aizo.js",
+      "sha256": "8bca26815613deaae0b08aa0b75f709d6c8b44f8f9dcf01d139ed0198003ef0f",
+      "sourceSha256": "8bca26815613deaae0b08aa0b75f709d6c8b44f8f9dcf01d139ed0198003ef0f",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "bots/house/basket.js",
+      "sha256": "12621adb25485823d08d94209ee47e27be77a48d2e8cdc59c50168bca618b7e9",
+      "sourceSha256": "12621adb25485823d08d94209ee47e27be77a48d2e8cdc59c50168bca618b7e9"
     },
     {
       "path": "bots/house/hodl.js",
@@ -73,18 +144,204 @@
     },
     {
       "path": "bots/roster.json",
-      "sha256": "247575f891d5aee7155d9b0c8087ca859389bc309aa3a48244017cb2386e327a",
-      "sourceSha256": "247575f891d5aee7155d9b0c8087ca859389bc309aa3a48244017cb2386e327a"
+      "sha256": "55e0342956a0b2f4bced434ab1736b84a0d7130bc934633226916e3a544dfc70",
+      "sourceSha256": "55e0342956a0b2f4bced434ab1736b84a0d7130bc934633226916e3a544dfc70"
     },
     {
       "path": "data/catalog.json",
-      "sha256": "3ce6ddf57d7bf9b6108c75e6779338b6e91f0f912274c2e13f4644c8fec3944e",
-      "sourceSha256": "3ce6ddf57d7bf9b6108c75e6779338b6e91f0f912274c2e13f4644c8fec3944e"
+      "sha256": "0f84df15468d666287c2ecb4d43e76dfa4e8e28e311b8b6ccfa39d9bbdb6c786",
+      "sourceSha256": "0f84df15468d666287c2ecb4d43e76dfa4e8e28e311b8b6ccfa39d9bbdb6c786"
+    },
+    {
+      "path": "data/league-ls.json",
+      "sha256": "2bd68b2fd7f602d4efc1a353f1fc7c0360523af0c6d590f5e9fbb61b34c279aa",
+      "sourceSha256": "2bd68b2fd7f602d4efc1a353f1fc7c0360523af0c6d590f5e9fbb61b34c279aa",
+      "added": "2026-11-03"
     },
     {
       "path": "data/league.json",
-      "sha256": "87c25ac1097ae491ae61a3cf8e5f1f219f3f456e9251645a15c5259f3e805b01",
-      "sourceSha256": "87c25ac1097ae491ae61a3cf8e5f1f219f3f456e9251645a15c5259f3e805b01"
+      "sha256": "e535db059c9cf15416ea132a0a4267e5260e906eba126b56a7e974edd7bdd262",
+      "sourceSha256": "e535db059c9cf15416ea132a0a4267e5260e906eba126b56a7e974edd7bdd262"
+    },
+    {
+      "path": "data/raw/bist/1d/AEFES.json",
+      "sha256": "f9d6f3dcabaa494e1a0da9bc7cf2677196393dbe4b5fd9c8d05bfcd5ab389a59",
+      "sourceSha256": "f9d6f3dcabaa494e1a0da9bc7cf2677196393dbe4b5fd9c8d05bfcd5ab389a59",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/AKBNK.json",
+      "sha256": "59c89f7f71397c1a0b2af5e67dbad121670b7e8a40180ba05be3b98d1be6db8c",
+      "sourceSha256": "59c89f7f71397c1a0b2af5e67dbad121670b7e8a40180ba05be3b98d1be6db8c",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/ARCLK.json",
+      "sha256": "b8373b5c4477b374e655d2405b997c0f45c1c563dc62bb9fa115d7b841c4a899",
+      "sourceSha256": "b8373b5c4477b374e655d2405b997c0f45c1c563dc62bb9fa115d7b841c4a899",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/ASELS.json",
+      "sha256": "27483d4213f5b285bfa0d83af4996e8987c40901e04fe19095760755d6a8568d",
+      "sourceSha256": "27483d4213f5b285bfa0d83af4996e8987c40901e04fe19095760755d6a8568d",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/ASTOR.json",
+      "sha256": "ead9b0c3af4b0e0d27b38bdca0a8f2917f9750e0c35d00c8d1a0b60d67b7c186",
+      "sourceSha256": "ead9b0c3af4b0e0d27b38bdca0a8f2917f9750e0c35d00c8d1a0b60d67b7c186",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/BIMAS.json",
+      "sha256": "8eb0a9727165b6a35cb6f57cd7bfa9a7b31de0c2c8791a8916fb5ef4960e4a81",
+      "sourceSha256": "8eb0a9727165b6a35cb6f57cd7bfa9a7b31de0c2c8791a8916fb5ef4960e4a81",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/CCOLA.json",
+      "sha256": "de04007f5bcdbaa4cc0abbb22812ab0dd347fba929d9f4fa09e36e701229318d",
+      "sourceSha256": "de04007f5bcdbaa4cc0abbb22812ab0dd347fba929d9f4fa09e36e701229318d",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/EKGYO.json",
+      "sha256": "929b507f03b3a78009f28a6470f50c834c77824538cbea4711dade2a2e1f7517",
+      "sourceSha256": "929b507f03b3a78009f28a6470f50c834c77824538cbea4711dade2a2e1f7517",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/ENKAI.json",
+      "sha256": "a46ae9e2c26c832893b8812389bb122cfb1f7f4440ec339ef13eafd12e35753d",
+      "sourceSha256": "a46ae9e2c26c832893b8812389bb122cfb1f7f4440ec339ef13eafd12e35753d",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/EREGL.json",
+      "sha256": "cc31a3e1a4e0387dbd1e9873b355413c2da2a082a1fa5f055d216cce87b4f09c",
+      "sourceSha256": "cc31a3e1a4e0387dbd1e9873b355413c2da2a082a1fa5f055d216cce87b4f09c",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/FROTO.json",
+      "sha256": "43b879e7c6e7b98998e7b042e07ddcaea674f2e34734f294732730adf6ada6e7",
+      "sourceSha256": "43b879e7c6e7b98998e7b042e07ddcaea674f2e34734f294732730adf6ada6e7",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/GARAN.json",
+      "sha256": "388aeec1a0af6b0a47641301acb2ec0cd55dcddb5421cff60cc8f92fea10c2a5",
+      "sourceSha256": "388aeec1a0af6b0a47641301acb2ec0cd55dcddb5421cff60cc8f92fea10c2a5",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/ISCTR.json",
+      "sha256": "3e854576191804e97c82fc7eba8cbd5b6a529d08d6e756e3b738672964eef821",
+      "sourceSha256": "3e854576191804e97c82fc7eba8cbd5b6a529d08d6e756e3b738672964eef821",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/KCHOL.json",
+      "sha256": "d9cdcf8bdae429f1585b6e60473f5ecc7a58b8fbba7677c1e614595593767b41",
+      "sourceSha256": "d9cdcf8bdae429f1585b6e60473f5ecc7a58b8fbba7677c1e614595593767b41",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/MGROS.json",
+      "sha256": "e3180dce289ea9240d2ea782f10beda2367381701326f12e2afc5089f1f13bae",
+      "sourceSha256": "e3180dce289ea9240d2ea782f10beda2367381701326f12e2afc5089f1f13bae",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/PETKM.json",
+      "sha256": "90bfbf8614e634283a38c56626a239b2275ecf1c2e38e7f1d65c710daed93fe8",
+      "sourceSha256": "90bfbf8614e634283a38c56626a239b2275ecf1c2e38e7f1d65c710daed93fe8",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/PGSUS.json",
+      "sha256": "e19b0efd3f36bfa401bd49d8b0cfbe0ec98b41eccd8ee04ec97f24f6d3780d07",
+      "sourceSha256": "e19b0efd3f36bfa401bd49d8b0cfbe0ec98b41eccd8ee04ec97f24f6d3780d07",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/SAHOL.json",
+      "sha256": "b0c34eabc0a9f50513dc7f4154085f6546656fa4b5c1ab776f6c65ceb4490377",
+      "sourceSha256": "b0c34eabc0a9f50513dc7f4154085f6546656fa4b5c1ab776f6c65ceb4490377",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/SASA.json",
+      "sha256": "bdb6621b4f58e6287a7fd4c569f54376065124c731d623ab16e18fd46a964e90",
+      "sourceSha256": "bdb6621b4f58e6287a7fd4c569f54376065124c731d623ab16e18fd46a964e90",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/SISE.json",
+      "sha256": "ed12f96945bda55fd32e1973d393ebedeed6f11fb1d1cd8ea7b9f8da3eb3b4c4",
+      "sourceSha256": "ed12f96945bda55fd32e1973d393ebedeed6f11fb1d1cd8ea7b9f8da3eb3b4c4",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/TAVHL.json",
+      "sha256": "525f26f86e0533e326a29067f666257170019055074b7231bce20d78caf68beb",
+      "sourceSha256": "525f26f86e0533e326a29067f666257170019055074b7231bce20d78caf68beb",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/TCELL.json",
+      "sha256": "0d1cb0f4af17315c5f512f84981c3b16cb893d4e7517193db3be981de5f5d816",
+      "sourceSha256": "0d1cb0f4af17315c5f512f84981c3b16cb893d4e7517193db3be981de5f5d816",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/THYAO.json",
+      "sha256": "55df3f7d1d1ecf085df6093ed287c74a1d132515c64c53b69c66ebf8c08ce4af",
+      "sourceSha256": "55df3f7d1d1ecf085df6093ed287c74a1d132515c64c53b69c66ebf8c08ce4af",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/TOASO.json",
+      "sha256": "35973efad36093a59486be8adaf9abcdea701cc5e0e0feae38d4ce887554596d",
+      "sourceSha256": "35973efad36093a59486be8adaf9abcdea701cc5e0e0feae38d4ce887554596d",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/TRALT.json",
+      "sha256": "8cad67e2963d103dc2306332a184d24ce551688f6ef32cb34046dacc5c8d0280",
+      "sourceSha256": "8cad67e2963d103dc2306332a184d24ce551688f6ef32cb34046dacc5c8d0280",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/TTKOM.json",
+      "sha256": "ded0844ac876bf635129267b35d192190d97b6549eac94372a4224d2a06b62b0",
+      "sourceSha256": "ded0844ac876bf635129267b35d192190d97b6549eac94372a4224d2a06b62b0",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/TUPRS.json",
+      "sha256": "a1366399cc2aaec70be61ab490fd90bebccb57a980cc845511b52f94927f7158",
+      "sourceSha256": "a1366399cc2aaec70be61ab490fd90bebccb57a980cc845511b52f94927f7158",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/ULKER.json",
+      "sha256": "c92cd22b67628d981339ae9864d8aefe3eaf705744bb14e59b9de8afa3677e6f",
+      "sourceSha256": "c92cd22b67628d981339ae9864d8aefe3eaf705744bb14e59b9de8afa3677e6f",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/VAKBN.json",
+      "sha256": "7aacb486e5f6914cfadf0ce99487b37f076f64fd40b957525207663ec2ea2bc8",
+      "sourceSha256": "7aacb486e5f6914cfadf0ce99487b37f076f64fd40b957525207663ec2ea2bc8",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "data/raw/bist/1d/YKBNK.json",
+      "sha256": "97192ab3a3c1494fea17db06024bc929c22e7e758acc41aa17f0c3ea18cfe2b5",
+      "sourceSha256": "97192ab3a3c1494fea17db06024bc929c22e7e758acc41aa17f0c3ea18cfe2b5",
+      "added": "2026-11-03"
     },
     {
       "path": "data/raw/context/1d/DXY.json",
@@ -120,6 +377,12 @@
       "path": "data/raw/context/1d/VIX.json",
       "sha256": "622c94c096d08621079f42640b5244a21017728449076273d351f847c80d5fce",
       "sourceSha256": "622c94c096d08621079f42640b5244a21017728449076273d351f847c80d5fce"
+    },
+    {
+      "path": "data/raw/context/1d/XU100.json",
+      "sha256": "e036fff5b158224e816011ff345e21d140b1b8b08b92f0c92facbbd178a9a7c4",
+      "sourceSha256": "e036fff5b158224e816011ff345e21d140b1b8b08b92f0c92facbbd178a9a7c4",
+      "added": "2026-11-03"
     },
     {
       "path": "data/raw/crypto/1d/AAVE.json",
@@ -1133,47 +1396,58 @@
     },
     {
       "path": "engine/market.js",
-      "sha256": "a6b12c5f8e5fdec59d4d2c12cc459f84cc98593a2507674fe0c146045dde8874",
+      "sha256": "f1cb8700340c28e03f1fe4e6f7b7c3256bd4d47074ffd27217da907474456c6a",
       "sourceSha256": "20f6aa9c3018c832944e55a9badfc9e26028ebc8f5a48b15fb63573c76251428"
     },
     {
       "path": "engine/sim.js",
-      "sha256": "fa67afc43bf5d8ffd573d467b92c222fc172c2af760747dc1b3a374ceb37d372",
+      "sha256": "e5afddf70129071bd6de412a5fef2f9e21f48ac51f1a7cc7a504ec400c21ca3b",
       "sourceSha256": "4844e6baefdaf190aa2b3d6eeadd93115b8e44c60f050bff3285e812abdb67b0"
     },
     {
       "path": "engine/universe.js",
-      "sha256": "82ef0bb7a74e29d5c679c4d85b16086fb332f84ee225606196eb1659dbb55125",
+      "sha256": "393d13e4ca131ab560c1cef8911bc1a0b0d5d3b91e82e2d8cf503683530bb6a9",
       "sourceSha256": "a88f4dc6bbf6526d4a2c5f4c92ebdace557576d2629ca1acb68ce70328e20d19"
     },
     {
       "path": "index.html",
-      "sha256": "173c5e99b21fbc3f8d7e9584522ed10428987211e1fded2828909199f3ec0f3c",
+      "sha256": "e9f143b45bf6c02d7a98c6c9cb49a0b169febadeaa65ada99836db1d9def86a4",
       "sourceSha256": "902c9cf8eaa7f66bdbaa9359c02c6621444028e68e39499e560aae2f6deabd69"
     },
     {
       "path": "index.md",
-      "sha256": "2860f68bae86e3d93fca46f9c7796a19e501ecc0a8ec03d78eaa713649b752c0",
+      "sha256": "9e42852c5855735cf25e73bfb1bc9688c2876b7a40841b9b244fcb59600f29df",
       "sourceSha256": null
     },
     {
+      "path": "ui/advisor.js",
+      "sha256": "2503c373ed8f13866f175f20d2d73b30bf3e257e68c6b52ee0e5158fdc18eebf",
+      "sourceSha256": "da5cf4cf9e1ee5f607b65c3eda11d283be814d0f66bac19eff2af97ed51a55e0",
+      "added": "2026-11-03"
+    },
+    {
       "path": "ui/app.css",
-      "sha256": "b98a402d59362f21f5d5da065e3ef0e11f9d914d80388d76980ac9103fe41520",
+      "sha256": "9d6501db4af824fea4ef3604a31d2ade55041ac0f294769772d221c0fb61f6ae",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "69db09c8fc03b865c3029d8e2eb02b315a23b66765f109a7b446f0db67f10bf4",
+      "sha256": "1f0402d4aa914d90ae9dfdf0966991904358073171b449569f307f2fc540ee8f",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
+      "path": "ui/basket.js",
+      "sha256": "c1375fd94085bf8864eebb521f402f8115a31b47444a5229935c5d11f79d7cdc",
+      "sourceSha256": null
+    },
+    {
       "path": "ui/bot-worker.js",
-      "sha256": "82a021b966fa854f07e10cf655a2a3a2cd7043ba4c03da299a952a6b8dd8b942",
+      "sha256": "70bb555e29df75651a3bb50107f57f51d4b86bdb6d80e41e23185cf5a595cfa2",
       "sourceSha256": "8c17f093eaf15e8eecff258e1c085d2d60cbbed2f3de11e93d977af68e95975f"
     },
     {
       "path": "ui/explorer.js",
-      "sha256": "466ee51ecde5dbfef4634f9f81cc8fc7539505579ad779b0fc906b8b18b36d31",
+      "sha256": "abde51b1ef8cdb9a11a7b47aa12ef20a7b5a1bb50c1b9da1fc6ddc28da390d3b",
       "sourceSha256": "a3022b212c2ad250d0ca82895f86b07f64f055b167408aa08ae1ad9537980fac"
     },
     {
@@ -1182,19 +1456,42 @@
       "sourceSha256": null
     },
     {
+      "path": "ui/live.js",
+      "sha256": "917a6e8f328cd5c2d2f344c08ca1cc4d9ec6f6215d7f9a0d7143785147930758",
+      "sourceSha256": "9afbbd64a19de271e7dfbe403a9b43e6100284e68fbae63baf688d4a7989ab07",
+      "added": "2026-11-03"
+    },
+    {
+      "path": "ui/monte-carlo.js",
+      "sha256": "269353e7c61dfe0b66fe16469deb856327d742062747d0b6308ca7615d17dafa",
+      "sourceSha256": "3b62b72bbe74ef7baae2d15e05e87a69ebf9475e31d8464957cc3720d337df5a",
+      "added": "2026-11-03"
+    },
+    {
       "path": "ui/race-chart.js",
       "sha256": "65828a9d00a5c020edbb94bc458447455c8d51715b5291c6b9d4c2842fdd0789",
       "sourceSha256": "4d0588d664bf7711cd25494130f4bf9f15609c3b9c64c6ec065e33d95c3b6454"
     },
     {
       "path": "ui/race-view.js",
-      "sha256": "eaf2e05b450a4ec5f4ea270373a6ea55adfc61554735c5583444abb6b1440ec4",
+      "sha256": "542282fa4b03c2e3c6a8389fc8f3d153665cc9f75eeed5d5e79caac5cda47b76",
       "sourceSha256": "4f762ee58e9f977ea26a8bd0ee8ad143464777f170bb76a743a06f534778af64"
     },
     {
       "path": "ui/race-worker.js",
-      "sha256": "12bb2663ffd2bac50cfa1c363792ca584009a135a3ea0329a34fd1072bf40e46",
+      "sha256": "42296c30589b229a745720871df346398be9bd35db3a9461178e037996aad3fc",
       "sourceSha256": "7855727a79da8d1e7992da9382bf1d3255d402fff1ae6c8e0e9adb210d9b0780"
+    },
+    {
+      "path": "ui/random-race.js",
+      "sha256": "ce0b23317dc7b66496c8f5a810b0bb90c97f4f7d474a97bec1c51313249db26f",
+      "sourceSha256": null
+    },
+    {
+      "path": "ui/sim-client.js",
+      "sha256": "b4bbf572e6695df954a437e1e6c1cdb16c0ea4cc9be691f85567820126647bc6",
+      "sourceSha256": "9b1102b18a5277c1461d13d5b9f05b6e08ab428068a3b4c697ad35b6610384e4",
+      "added": "2026-11-03"
     },
     {
       "path": "ui/theme.js",
@@ -1203,7 +1500,7 @@
     },
     {
       "path": "ui/util.js",
-      "sha256": "d53a668d1fd70b9759ba9d15a1b9eaf2f504b6687ce1e8a0687bcd0488c4a455",
+      "sha256": "4db0f42cff22e341c0472960bd50e8a6d6b2a84a3912d71aac2ed16d44528ef7",
       "sourceSha256": "b2258e971ee051bbf7a421fe626cf18776f945523c8c0e8acd231d394060d26f"
     },
     {
@@ -1213,15 +1510,15 @@
       "sourceUrl": "https://raw.githubusercontent.com/tradingview/lightweight-charts/v4.2.0/LICENSE"
     },
     {
+      "path": "ui/vendor/lightweight-charts.js",
+      "sha256": "46fc69534ec098f095bbcd1d9a26d693d39a8b9eeff7343536765b3dd28c2bdf",
+      "sourceSha256": "46fc69534ec098f095bbcd1d9a26d693d39a8b9eeff7343536765b3dd28c2bdf"
+    },
+    {
       "path": "ui/vendor/NOTICE",
       "sha256": "a6e5f48204b03e2acd95e8ad98715d5cdeb3679bff4b73d62714859dd4f95984",
       "sourceSha256": null,
       "sourceUrl": "https://raw.githubusercontent.com/tradingview/lightweight-charts/v4.2.0/NOTICE"
-    },
-    {
-      "path": "ui/vendor/lightweight-charts.js",
-      "sha256": "46fc69534ec098f095bbcd1d9a26d693d39a8b9eeff7343536765b3dd28c2bdf",
-      "sourceSha256": "46fc69534ec098f095bbcd1d9a26d693d39a8b9eeff7343536765b3dd28c2bdf"
     },
     {
       "path": "ui/web-host.js",
@@ -1245,6 +1542,42 @@
         "bots/ai/gpt-5.6-luna.js",
         "bots/roster.json",
         "data/league.json"
+      ]
+    },
+    {
+      "date": "2026-11-02",
+      "note": "House bot Basket Builder (regime-scaled, inverse-volatility basket of up to 8 uptrending assets) written for Aizanoi after the cutoff, parameters not tuned on race results; Season 1 league recomputed with 14 bots, engine 1.1, run on an idle machine with zero bot errors.",
+      "source": "C:/Users/husey/oc-sandbox/trade-arena (owner workstation)",
+      "paths": [
+        "bots/house/basket.js",
+        "bots/roster.json",
+        "data/league.json"
+      ]
+    },
+    {
+      "date": "2026-11-03",
+      "note": "Engine 1.2 / bot contract v2 (long/short carrying costs, margin call, 1× books never borrow; long-only cash races unchanged), ten contract-v2 AI bots (Claude Opus 5.5 via Claude Code; Muse Spark 1.3 via OpenCode Go, owner-approved; eight free OpenCode models) written under the 2024-12-31 cutoff and 45-minute budget, 30 Borsa Istanbul stocks plus the BIST 100 index (Yahoo .IS, TRY, 2014+, CCOLA 2024 split corrected), live-tail loader with an archive-only placeholder manifest, the Basket advisor, Season 1 recomputed with 24 bots and Season 2 (long/short 1.5× + Borsa Istanbul) on an idle machine with zero bot errors or timeouts; optional seeded market noise and a ten-run luck check (official league races stay noise-free); house bot Aizo Bot written to the owner rules (25 bots); the GLM bot renamed Dragon Rider by the owner.",
+      "source": "C:/Users/husey/oc-sandbox/trade-arena (owner workstation)",
+      "paths": [
+        "BOT_API.md",
+        "bots/roster.json",
+        "bots/ai/opus-5-5.js",
+        "bots/ai/muse-spark-1-3.js",
+        "bots/ai/deepseek-v4-1-flash.js",
+        "bots/ai/glm-5-3-flash.js",
+        "bots/ai/beam.js",
+        "bots/ai/iceman.js",
+        "bots/ai/mimo-v2-6-flash.js",
+        "bots/ai/nemotron-3-5-super.js",
+        "bots/ai/nemotron-3-5-lightning.js",
+        "bots/ai/flint-40b.js",
+        "data/catalog.json",
+        "data/league.json",
+        "data/league-ls.json",
+        "data/raw/bist/1d/*.json",
+        "data/raw/context/1d/XU100.json",
+        "live/manifest.json",
+        "bots/house/aizo.js"
       ]
     }
   ]

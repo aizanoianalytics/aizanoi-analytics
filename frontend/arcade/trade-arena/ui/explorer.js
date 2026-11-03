@@ -3,6 +3,15 @@ import { $, $$, esc, html, pct, price, compact, cls, sparkline, fmtDate, ok, BAS
 import { computeFeatures, FEATURE_GROUPS, FEATURE_NAMES } from '../engine/features.js';
 import { to4h } from '../engine/bars.js';
 import { css } from './theme.js';
+import { appendTail } from './live.js';
+
+let LIVE = null; // live/manifest.json (see live.js); the chart shows the archive plus recent closed bars
+export function setExplorerLive(m) { LIVE = m || null; }
+const withTail = async (raw, key, signal) => {
+  if (!LIVE?.series?.[key]?.bars) return raw;
+  try { return appendTail(raw, await fetch(new URL(`live/raw/${key}.json`, BASE), { signal, cache: 'no-store' }).then(r => (r.ok ? r.json() : null))); }
+  catch (err) { if (err?.name === 'AbortError') throw err; return raw; } // the archive alone is still a correct chart
+};
 
 const OVERLAYS = {
   sma20: ['SMA 20', '#ffcc4d'], sma50: ['SMA 50', '#7c8cff'], sma200: ['SMA 200', '#ff8a4c'], ema21: ['EMA 21', '#2ee6d6'],
@@ -23,7 +32,7 @@ export function renderData(view, catalog) {
   <div class="explorer">
     <aside class="panel alist">
       <div class="tools">
-        <div class="seg" id="mk">${['crypto', 'stocks', 'context'].map(m => `<button data-v="${m}" class="${S.market === m ? 'on' : ''}">${m === 'context' ? 'macro' : m}</button>`).join('')}</div>
+        <div class="seg" id="mk">${['crypto', 'stocks', 'bist', 'context'].map(m => `<button data-v="${m}" class="${S.market === m ? 'on' : ''}">${m === 'context' ? 'macro' : m === 'bist' ? 'BIST' : m}</button>`).join('')}</div>
         <label for="q" class="sr-only">Search assets</label><input type="search" id="q" placeholder="Search symbol or name" value="${esc(S.q)}" aria-describedby="q-count">
         <span class="count" id="q-count" role="status"></span>
       </div>
@@ -82,6 +91,7 @@ export function renderData(view, catalog) {
     let raw, funding;
     try {
       raw = await fetch(new URL(`data/raw/${S.market}/${file}/${S.sym}.json`, BASE), { signal: abort.signal }).then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); });
+      raw = await withTail(raw, `${S.market}/${file}/${S.sym}`, abort.signal);
       if (S.tf === '4h' && S.market === 'stocks') raw = to4h(raw);
       funding = S.market === 'crypto' ? await fetch(new URL(`data/raw/crypto/funding/${S.sym}.json`, BASE), { signal: abort.signal }).then(r => (r.ok ? r.json() : null)).catch(() => null) : null;
     } catch (err) {

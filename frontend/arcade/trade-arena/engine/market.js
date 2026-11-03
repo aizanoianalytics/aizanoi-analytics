@@ -18,7 +18,7 @@ export function rng(seed) { // mulberry32
 
 export const RANKED = ['ret5', 'ret20', 'ret60', 'ret120', 'rsi14', 'vol20', 'relVolume', 'distSma50', 'sharpe60', 'dollarVolume'];
 export const EXTRA_FEATURES = {
-  beta60: 'Beta of returns vs the market benchmark (BTC for crypto, SPY for stocks), 60 bars',
+  beta60: 'Beta of returns vs the market benchmark (BTC for crypto, SPY for US stocks, BIST 100 for Borsa Istanbul), 60 bars',
   corr60: 'Correlation of returns vs the benchmark, 60 bars',
   fundingRate: 'Crypto: latest perpetual funding rate per 8h (NaN when no perpetual)',
   funding7d: 'Crypto: average funding rate over the last 7 days',
@@ -39,6 +39,7 @@ export const CONTEXT_FIELDS = {
   qqqRet20: 'Nasdaq-100 ETF 20-day return', vix: 'VIX level', vixChg5: 'VIX 5-day change (points)',
   tnx: 'US 10Y yield in %', tnxChg20: '10Y yield 20-day change (points)', dxyRet20: 'US Dollar Index 20-day return',
   gldRet20: 'Gold ETF 20-day return', tltRet20: '20Y+ Treasury ETF 20-day return',
+  xu100Ret20: 'Borsa Istanbul BIST 100 index 20-day return (in TRY)',
 };
 
 function lastIndexAtOrBefore(t, x) { // binary search: last i with t[i] <= x
@@ -97,12 +98,15 @@ export function prepareMarket(series, cfg, context = {}, funding = {}) {
     const F = computeFeatures(cols, tf, s.market);
     const idx = new Map(); cols.t.forEach((t, i) => idx.set(t, i));
     assets.push({ symbol: s.symbol, id: blind ? alias.get(s.symbol) : s.symbol, name: s.name, market: s.market, sector: s.sector,
+      exchange: s.exchange || null, currency: s.currency || 'USD',
       cols, F, idx, scale, firstT: s.cols.t[0], funding: funding[s.symbol] });
   }
 
   // Benchmarks for beta/correlation.
   const bench = { crypto: assets.find(a => a.symbol === 'BTC'), stocks: null };
-  if (context.SPY && tf === '1d') bench.stocks = { cols: context.SPY };
+  // Borsa Istanbul stocks (TRY) are measured against the BIST 100 index, US stocks against SPY.
+  if (series.some(s => s.exchange === 'BIST') && context.XU100 && tf === '1d') bench.stocks = { cols: context.XU100 };
+  else if (context.SPY && tf === '1d') bench.stocks = { cols: context.SPY };
   else bench.stocks = assets.find(a => a.symbol === 'MSFT') || null; // intraday: no SPY hourly; use a mega-cap proxy
   for (const a of assets) {
     const b = bench[a.market];
@@ -179,7 +183,7 @@ export function snapshot(m, k) {
     Object.assign(context, {
       spyRet1: at('SPY', 'ret1'), spyRet20: at('SPY', 'ret20'), spyDistSma200: at('SPY', 'distSma200'), qqqRet20: at('QQQ', 'ret20'),
       vix: at('VIX', 'close'), vixChg5: chg('VIX', 5), tnx: at('TNX', 'close'), tnxChg20: chg('TNX', 20), // Yahoo ^TNX is quoted in percent
-      dxyRet20: at('DXY', 'ret20'), gldRet20: at('GLD', 'ret20'), tltRet20: at('TLT', 'ret20'),
+      dxyRet20: at('DXY', 'ret20'), gldRet20: at('GLD', 'ret20'), tltRet20: at('TLT', 'ret20'), xu100Ret20: at('XU100', 'ret20'),
     });
   }
   const d = new Date(T);

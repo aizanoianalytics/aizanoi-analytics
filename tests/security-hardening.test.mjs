@@ -111,6 +111,9 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.match(nginx,/location \^~ \/web-editor-preview\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/worlds\/aizanoi-225\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/assets\/[\s\S]*expires 7d;/);
+  // Unversioned arcade bundles and the generic fallback must revalidate, or browsers mix stale and new files (heuristic caching).
+  assert.match(nginx,/^\s*location \^~ \/arcade\/ \{[^}]*expires -1; \}/m);
+  assert.match(nginx,/^\s*location \/ \{[^}]*expires -1; \}/m);
   assert.match(staticHeaders,/X-Content-Type-Options/);
   assert.match(staticHeaders,/Content-Security-Policy/);
   assert.match(webEditorPreviewHeaders,/X-Content-Type-Options/);

@@ -46,6 +46,7 @@ export async function getJSON(url) { const r = await fetch(new URL(url.replace(/
 export const PRESETS = [
   { id: 'crypto-season', icon: '₿', title: 'Crypto Season', desc: 'All 35 crypto assets of the Markets tab, every day since January 2025.', market: 'crypto', tf: '1d', start: '2025-01-01', end: '2026-10-30', oos: true },
   { id: 'wall-street', icon: '🏛', title: 'Wall Street', desc: '30 US mega-caps from NVIDIA to Coca-Cola. Daily bars since January 2025.', market: 'stocks', tf: '1d', start: '2025-01-01', end: '2026-10-30', oos: true },
+  { id: 'borsa-istanbul', icon: '🇹🇷', title: 'Borsa Istanbul', desc: '30 BIST stocks from THY to Aselsan, priced in Turkish lira. Daily bars since January 2025; benchmark BIST 100.', market: 'bist', tf: '1d', start: '2025-01-01', end: '2026-10-30', oos: true },
   { id: 'blind-gauntlet', icon: '🕶', title: 'Blind Gauntlet', desc: 'Crypto and stocks together; the bots see aliases instead of names and no dates.', market: 'mixed', tf: '1d', start: '2025-01-01', end: '2026-10-30', blind: true, oos: true },
   { id: 'sprint-4h', icon: '⚡', title: '4-Hour Sprint', desc: 'Crypto on 4-hour bars over the last six months. More decisions, more fees.', market: 'crypto', tf: '4h', start: '2026-05-01', end: '2026-10-30', oos: true },
   { id: 'hourly-duel', icon: '⏱', title: 'Hourly Duel', desc: 'Two months of hourly crypto bars. A scalper’s nightmare.', market: 'crypto', tf: '1h', start: '2026-09-01', end: '2026-10-30', oos: true },
