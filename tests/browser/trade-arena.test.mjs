@@ -158,6 +158,21 @@ test('today’s basket builds the same holdings twice under strict CSP and a ran
   });
 });
 
+test('BIST race charts load their warm-up from the BIST archive without failed requests', {timeout:120000}, async () => {
+  await withPage({width:1440,height:1000}, async (page,errors) => {
+    const failed = [];
+    page.on('response', response => { if (response.status() >= 400) failed.push(response.url()); });
+    await page.goto(base + '/arcade/trade-arena/');
+    await page.locator('label.preset:has(input[value="borsa-istanbul"])').click();
+    await page.locator('#go').click();
+    await page.locator('#speeds [data-v="Infinity"]').click();
+    await page.locator('dialog.results[open]').waitFor({timeout:100000});
+    assert.match(await page.locator('dialog.results').innerText(), /BIST 100 hold/);
+    assert.deepEqual(failed, [], 'BIST chart must not request an absent US-stock archive');
+    assert.deepEqual(errors, []);
+  });
+});
+
 test('basket advisor answers a pasted basket with per-bot actions and a consensus under strict CSP', {timeout:180000}, async () => {
   await withPage({width:1440,height:1000}, async (page,errors) => {
     await page.addInitScript(() => { try { localStorage.removeItem('trade-arena:my-basket'); localStorage.setItem('trade-arena:pick', JSON.stringify({ advisorBots: ['sonnet-5-5', 'opus-5-5'] })); } catch {} });
