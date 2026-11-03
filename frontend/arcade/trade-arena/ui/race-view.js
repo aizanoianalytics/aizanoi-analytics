@@ -2,11 +2,15 @@ import { widthStep } from './layout.js';
 // Live race page: runs a race in a worker, plays the streamed frames back as a broadcast.
 import { $, $$, esc, html, pct, usd, compact, price, cls, fmtDate, avatar, ok, BASE } from './util.js';
 import { RaceChart } from './race-chart.js';
+import { monteCarlo, summarise, renderMonteCarlo } from './monte-carlo.js';
 import { css, reducedMotion } from './theme.js';
 
 const SPEEDS = [[1, '1'], [4, '4'], [12, '12'], [40, '40'], [150, '150'], [Infinity, 'Max']]; // bars per second
 const CASH = 100000;
 let R = null; // current race state
+let LIVE = null; // live/manifest.json when the server publishes recent bars (see live.js)
+export function setLiveManifest(m) { LIVE = m || null; }
+const VERB = { open: 'bought', add: 'bought', reduce: 'sold', close: 'sold', short: 'shorted', cover: 'covered', flip: 'flipped', liquidated: 'margin-called' };
 
 export function currentRace() { return R; }
 
@@ -41,7 +45,8 @@ export async function startRace(cfg, roster) {
   worker.postMessage({
     cfg: { market: cfg.market, tf: cfg.tf, start: Date.parse(cfg.start), end: Date.parse(cfg.end) + 86399999, blind: !!cfg.blind, seed: cfg.seed || 7 },
     bots: bots.map(b => ({ id: b.id, name: b.name, file: b.file })),
-    rules: { allowShort: !!cfg.short, maxGross: cfg.gross || 1 },
+    rules: { allowShort: !!cfg.short, maxGross: cfg.gross || 1, noise: cfg.noise ? 1 : 0, noiseSeed: cfg.seed || 7 },
+    live: LIVE,
   });
   location.hash = '#/race';
 }
@@ -70,9 +75,9 @@ export function renderRace(view) {
       <h1>${esc(title(cfg))}</h1>
     </div>
     <div class="chips">
-      <span class="chip">${cfg.market}</span><span class="chip">${cfg.tf} bars</span>
+      <span class="chip">${cfg.market === 'bist' ? 'Borsa Istanbul · TRY' : cfg.market}</span><span class="chip">${cfg.tf} bars</span>
       <span class="chip">${cfg.start} → ${cfg.end} UTC</span>
-      ${cfg.blind ? '<span class="chip blind">BLIND</span>' : ''}${cfg.short ? '<span class="chip">shorts</span>' : ''}${(cfg.gross || 1) > 1 ? `<span class="chip">${cfg.gross}× gross</span>` : ''}${cfg.seed && cfg.seed !== 7 ? `<span class="chip" title="Random seed: seeds the bots’ Math.random and blind aliases">seed ${cfg.seed}</span>` : ''}
+      ${cfg.blind ? '<span class="chip blind">BLIND</span>' : ''}${cfg.short ? '<span class="chip">shorts</span>' : ''}${(cfg.gross || 1) > 1 ? `<span class="chip">${cfg.gross}× gross</span>` : ''}${cfg.noise ? '<span class="chip" title="Market noise: fill prices move inside each bar, slippage varies and some fills slip a bar. Same seed, same race.">market noise</span>' : ''}${cfg.seed && cfg.seed !== 7 ? `<span class="chip" title="Random seed: seeds market noise, the bots’ Math.random and blind aliases">seed ${cfg.seed}</span>` : ''}
     </div>
     <div class="controls">
       ${cfg.blind ? `<label class="toggle"><input type="checkbox" id="reveal" ${R.reveal ? 'checked' : ''}><i aria-hidden="true"></i>Show real names (viewer only)</label>` : ''}
@@ -349,7 +354,7 @@ function frameEvents(k) {
     for (const n of a.notes) pushFeed({ bot: b, when, html: `<q>${esc(n)}</q>` });
     if (!fast && a.trades.length && !a.notes.length) {
       const big = [...a.trades].sort((x, y) => y.value - x.value).slice(0, 3);
-      const txt = big.map(t => `<span class="${t.side === 'buy' ? 'up' : 'down'}">${t.side === 'buy' ? 'bought' : 'sold'}</span> ${esc(name(t.s))} ${usd(t.value)}`).join(', ');
+      const txt = big.map(t => `<span class="${t.side === 'buy' ? 'up' : 'down'}">${VERB[t.kind] || (t.side === 'buy' ? 'bought' : 'sold')}</span> ${esc(name(t.s))} ${usd(t.value)}`).join(', ');
       pushFeed({ bot: b, when, html: `${esc(b.short)} ${txt}${a.trades.length > 3 ? ` +${a.trades.length - 3} more` : ''}` });
     }
     const ret = a.e / CASH - 1;
@@ -434,15 +439,17 @@ function showResults() {
     ${multi ? `<div class="podium" aria-hidden="true">${order.map(s => `<div class="step s${place(s)}">${avatar(s.b, 'lg')}<b>${esc(s.b.short)}</b><div class="ret ${cls(s.totalReturn)}">${pct(s.totalReturn)}</div><div class="block">${place(s)}</div></div>`).join('')}</div>` : ''}
     <div class="table-wrap"><table class="stats"><caption>All bots and buy-and-hold benchmarks over the same bars, after costs. Sharpe and CAGR are annualised; treat them with care on short periods.</caption>
     <thead><tr><th scope="col">Bot</th><th scope="col">Place</th><th scope="col">Final</th><th scope="col">Return</th><th scope="col">Max DD</th><th scope="col">Fees</th><th scope="col">Sharpe</th><th scope="col">Sortino</th><th scope="col">CAGR</th><th scope="col">Trades</th><th scope="col">Win rate (net)</th><th scope="col">Turnover</th><th scope="col">Errors</th></tr></thead><tbody>
-    ${st.map(s => `<tr><th scope="row" class="l" data-layout="ta-s15"><span class="dot" data-bg="${s.b.color}"></span> ${esc(s.b.name)}</th><td>${place(s)}</td><td>${usd(s.final)}</td><td class="${cls(s.totalReturn)}">${pct(s.totalReturn)}</td><td class="down">${pct(s.maxDrawdown)}</td><td>${usd(s.fees)}</td><td>${s.sharpe.toFixed(2)}</td><td>${s.sortino.toFixed(2)}</td><td>${pct(s.cagr)}</td><td>${s.trades}</td><td>${pct(s.winRate, 0, false)}</td><td>${s.turnover.toFixed(1)}×</td><td>${s.errors}${s.retired ? ' · ' + esc(s.retired) : ''}</td></tr>`)}
+    ${st.map(s => `<tr><th scope="row" class="l" data-layout="ta-s15"><span class="dot" data-bg="${s.b.color}"></span> ${esc(s.b.name)}</th><td>${place(s)}</td><td>${usd(s.final)}</td><td class="${cls(s.totalReturn)}">${pct(s.totalReturn)}</td><td class="down">${pct(s.maxDrawdown)}</td><td>${usd(s.fees)}${s.carry > 0.5 ? `<span class="faint" data-layout="ta-s2"> +${usd(s.carry)} carry</span>` : ''}</td><td>${s.sharpe.toFixed(2)}</td><td>${s.sortino.toFixed(2)}</td><td>${pct(s.cagr)}</td><td>${s.trades}</td><td>${pct(s.winRate, 0, false)}</td><td>${s.turnover.toFixed(1)}×</td><td>${s.errors}${s.retired ? ' · ' + esc(s.retired) : ''}</td></tr>`)}
     ${bench.map(b => `<tr class="bench"><th scope="row" class="l" data-layout="ta-s29"><span class="dot" data-bg="${b.color}"></span> ${esc(b.n)}</th><td>—</td><td>${usd(CASH * (1 + b.ret))}</td><td class="${cls(b.ret)}">${pct(b.ret)}</td><td colspan="9" data-layout="ta-s30">buy and hold from the bots’ first fill, same costs</td></tr>`)}
     </tbody></table></div>
     ${R.cfg.blind ? `<div data-layout="ta-s31"><div class="eyebrow">Blind reveal: the bots saw only these aliases</div><div class="reveal">${R.meta.assets.map(a => `<span>${a.id} = <b>${esc(a.symbol)}</b></span>`).join('')}</div></div>` : ''}
     ${R.done.errors.some(Boolean) ? `<p class="muted" data-layout="ta-s2">Last bot errors: ${R.done.errors.map((e, j) => e ? `${esc(R.bots[j].short)}: ${esc(e)}` : '').filter(Boolean).join(' · ')}</p>` : ''}
+    <div id="mc-out" aria-live="polite"></div>
     <p class="muted" data-layout="ta-s32">First place means best final value among these bots in this period. It is not a measure of the model in general and not investment advice.</p>
     <div data-layout="ta-s33">
       <button class="btn primary" type="button" data-replay>Replay from the start</button>
       <button class="btn" type="button" data-x>Inspect the race</button>
+      ${R.bots.length > 1 ? '<button class="btn" type="button" data-mc>Luck check: 10 noisy replays</button>' : ''}
       <a class="btn" href="#/">New race</a>
       <a class="btn" href="#/league">League table</a>
     </div>`;
@@ -451,6 +458,16 @@ function showResults() {
   d.addEventListener('click', e => {
     if (e.target === d || e.target.closest('[data-x]')) d.close();
     if (e.target.closest('[data-replay]')) { d.close(); restart(); }
+    const mcBtn = e.target.closest('[data-mc]');
+    if (mcBtn) {
+      mcBtn.disabled = true;
+      const out = d.querySelector('#mc-out');
+      out.innerHTML = '<p class="muted" data-layout="ta-s2">Replaying with random market noise… 0/10</p>';
+      const job = monteCarlo(R.cfg, R.bots, { runs: 10, live: LIVE }, (i, n) => { out.firstElementChild && (out.firstElementChild.textContent = `Replaying with random market noise… ${i}/${n}`); });
+      d.addEventListener('close', () => job.cancel(), { once: true });
+      job.promise.then(results => { if (d.isConnected) { renderMonteCarlo(out, summarise(results, R.bots), results.length); mcBtn.disabled = false; } },
+        err => { if (d.isConnected) { out.innerHTML = `<p class="field-err">Replays stopped: ${esc(String(err.message || err))}</p>`; mcBtn.disabled = false; } });
+    }
     if (e.target.closest('a')) d.close();
   });
   d.showModal();

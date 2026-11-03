@@ -1,20 +1,38 @@
 import { widthStep } from './layout.js';
 import { $, $$, esc, html, pct, usd, cls, avatar, getJSON, PRESETS, ok, BASE } from './util.js';
-import { startRace, renderRace, rethemeRace, releaseRaceView } from './race-view.js';
-import { renderData, releaseData } from './explorer.js';
+import { startRace, renderRace, rethemeRace, releaseRaceView, setLiveManifest } from './race-view.js';
+import { loadLive, liveEnd } from './live.js';
+import { renderAdvisor, releaseAdvisor } from './advisor.js';
+import { renderData, releaseData, setExplorerLive } from './explorer.js';
 import { renderBasket, releaseBasket } from './basket.js';
 import { randomRace } from './random-race.js';
 import { getTheme, setTheme, applyBotColors, css, reducedMotion } from './theme.js';
 
-const DATA_START = '2017-08-17', DATA_END = '2026-10-30', CUTOFF = '2024-12-31';
+// The shipped archive ends on ARCHIVE_END; when the server publishes live tails, DATA_END moves to their last closed day.
+const DATA_START = '2017-08-17', ARCHIVE_END = '2026-10-30', CUTOFF = '2024-12-31';
+let DATA_END = ARCHIVE_END;
 const state = { roster: null, catalog: null, league: null, leagueSort: null, pick: { preset: 'crypto-season', bots: ['sonnet-5-5', 'haiku-5-5'], blind: false, short: false, gross: 1 } };
 try { Object.assign(state.pick, JSON.parse(localStorage.getItem('trade-arena:pick') || '{}')); } catch { /* storage blocked */ }
+if (!(+state.pick.gross >= 1 && +state.pick.gross <= 2)) state.pick.gross = 1; // contract v2 allows 1×–2× gross
 const savePick = () => { try { localStorage.setItem('trade-arena:pick', JSON.stringify(state.pick)); } catch { /* storage blocked */ } };
 export const announce = text => { const a = $('#announcer'); if (a) { a.textContent = ''; setTimeout(() => { a.textContent = text; }, 30); } };
 
 async function boot() {
   [state.roster, state.catalog] = await Promise.all([getJSON('bots/roster.json'), getJSON('data/catalog.json')]);
   state.league = await getJSON('data/league.json').catch(() => null);
+  state.leagueLS = await getJSON('data/league-ls.json').catch(() => null);
+  state.live = await loadLive(BASE);
+  DATA_END = liveEnd(state.live, ARCHIVE_END);
+  setLiveManifest(DATA_END > ARCHIVE_END ? state.live : null);
+  setExplorerLive(DATA_END > ARCHIVE_END ? state.live : null);
+  // After-cutoff presets run to the latest closed day.
+  for (const p of PRESETS) if (p.oos && p.end === ARCHIVE_END) p.end = DATA_END;
+  const pill = $('#data-pill');
+  if (pill) {
+    pill.textContent = DATA_END > ARCHIVE_END ? `Paper · data to ${DATA_END}` : `Paper · archive to ${ARCHIVE_END}`;
+    pill.title = `${DATA_END > ARCHIVE_END ? `Archive to ${ARCHIVE_END}, topped up with closed bars from public market data (updated ${state.live.generated}).` : 'Historical archive only; no live top-up is published on this server.'} Paper money: no real money, no live orders.`;
+    pill.dataset.live = String(DATA_END > ARCHIVE_END);
+  }
   const theme = getTheme();
   setTheme(theme); applyBotColors(state.roster, theme); paintThemeSwitch();
   $$('[data-theme-set]').forEach(b => b.addEventListener('click', () => {
@@ -26,12 +44,12 @@ async function boot() {
 }
 function paintThemeSwitch() { const t = getTheme(); $$('[data-theme-set]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeSet === t))); }
 
-const TITLES = { '': 'Arena', race: 'Race', basket: 'Today’s basket', league: 'League', bots: 'Bots', data: 'Market data' };
+const TITLES = { '': 'Arena', race: 'Race', basket: 'Today’s basket', advisor: 'Basket advisor', league: 'League', bots: 'Bots', data: 'Market data' };
 function route(focus = true) {
   const r = location.hash.replace(/^#\/?/, '').split('/')[0];
   $$('.nav a').forEach(a => (a.dataset.r === r ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));
   $$('dialog.results').forEach(d => { d.close?.(); d.remove(); }); // a results dialog never outlives its page
-  releaseRaceView(); releaseData(); releaseBasket();
+  releaseRaceView(); releaseData(); releaseBasket(); releaseAdvisor();
   const view = $('#view');
   view.innerHTML = '';
   scrollTo(0, 0);
@@ -39,7 +57,8 @@ function route(focus = true) {
   if (r === 'race') renderRace(view);
   else if (r === 'data') renderData(view, state.catalog);
   else if (r === 'bots') renderBots(view);
-  else if (r === 'basket') renderBasket(view, { roster: state.roster, dataEnd: DATA_END, pick: state.pick, save: savePick });
+  else if (r === 'basket') renderBasket(view, { roster: state.roster, dataEnd: DATA_END, live: DATA_END > ARCHIVE_END ? state.live : null, pick: state.pick, save: savePick });
+  else if (r === 'advisor') renderAdvisor(view, { roster: state.roster, catalog: state.catalog, dataEnd: DATA_END, live: DATA_END > ARCHIVE_END ? state.live : null, pick: state.pick, save: savePick });
   else if (r === 'league') renderLeague(view);
   else renderLobby(view);
   if (focus) view.focus({ preventScroll: true });
@@ -48,17 +67,17 @@ function route(focus = true) {
 // ---------------- Lobby ----------------
 function renderLobby(view) {
   const { roster, catalog, pick } = state;
-  const bars = [...catalog.crypto, ...catalog.stocks].reduce((s, a) => s + Object.values(a.series).reduce((t, x) => t + (x.bars || 0), 0), 0);
+  const bars = [...catalog.crypto, ...catalog.stocks, ...(catalog.bist || [])].reduce((s, a) => s + Object.values(a.series).reduce((t, x) => t + (x.bars || 0), 0), 0);
   const ai = roster.bots.filter(b => b.kind === 'ai');
   view.innerHTML = html`
   <section class="hero" aria-labelledby="hero-h">
     <div class="hero-copy">
       <div class="eyebrow">Historical simulation · paper money · AI-written bots</div>
       <h1 id="hero-h">Compare <span class="grad">AI-written trading bots</span> on real market history.</h1>
-      <p>${ai.map(b => esc(b.name)).join(' and ')} are the archive’s authorship labels for one trading bot each (not independently verified). Pick a period, pick the bots, and replay the market bar by bar with $100,000 of paper money each.</p>
+      <p>${ai.length} AI models, from ${[...new Set(ai.map(b => b.lab))].slice(0, 4).map(esc).join(', ')} and more, are the archive’s authorship labels for one trading bot each (not independently verified; see Bots). Some can short in long/short races. Pick a period, pick the bots, and replay the market bar by bar with $100,000 of paper money each.</p>
       <p class="honest"><b>What this is and is not.</b> The supplied archive says bots were written with data that ended ${CUTOFF}; races marked <span class="chip oos">after cutoff</span> use later data. The models’ own pre-training knowledge is not controlled, and one bot per model is not a measure of a model’s intelligence. No real money, no live orders.</p>
       <div class="hero-stats">
-        <div><b>${catalog.crypto.length + catalog.stocks.length}</b><span>tradable assets</span></div>
+        <div><b>${catalog.crypto.length + catalog.stocks.length + (catalog.bist?.length || 0)}</b><span>tradable assets</span></div>
         <div><b>${(bars / 1e6).toFixed(1)}M</b><span>price bars</span></div>
         <div><b>140</b><span>features per asset and bar</span></div>
         <div><b>${roster.bots.length}</b><span>bots</span></div>
@@ -112,10 +131,12 @@ function renderLobby(view) {
     const errs = validate();
     for (const id of ['go-err', 'go-top-err']) { const el = $('#' + id); el.hidden = !errs.length || id !== which; el.textContent = errs.join(' '); }
     if (errs.length) { announce(errs.join(' ')); return; }
-    if (pick.preset === 'random') { const r = randomRace({ cutoff: CUTOFF, dataEnd: DATA_END }); startRace({ ...r, bots: [...pick.bots], short: pick.short, gross: pick.gross }, state.roster); return; }
+    if (pick.preset === 'random') { const r = randomRace({ cutoff: CUTOFF, dataEnd: DATA_END }); startRace({ ...r, bots: [...pick.bots], short: pick.short, gross: pick.gross, noise: !!pick.noise }, state.roster); return; }
     const pr = PRESETS.find(p => p.id === pick.preset);
     const cfg = pr ? { ...pr } : { title: 'Custom race', market: pick.market, tf: pick.tf, start: pick.start, end: pick.end };
-    startRace({ ...cfg, bots: [...pick.bots], blind: pick.blind, short: pick.short, gross: pick.gross, seed: 7 }, state.roster);
+    // Without noise a race is exactly reproducible (seed 7). With noise every start draws a new seed.
+    const seed = pick.noise ? 1 + (crypto.getRandomValues(new Uint32Array(1))[0] % 2147483646) : 7;
+    startRace({ ...cfg, bots: [...pick.bots], blind: pick.blind, short: pick.short, gross: pick.gross, noise: !!pick.noise, seed }, state.roster);
   };
   $('#go').onclick = () => go('go-err'); $('#go-top').onclick = () => go('go-top-err');
   renderOpts(); renderVs();
@@ -134,6 +155,7 @@ function validate() {
     else if (pick.start < DATA_START || pick.end > DATA_END) errs.push(`Dates must be between ${DATA_START} and ${DATA_END}.`);
     if (pick.market === 'mixed' && pick.tf !== '1d') errs.push('Mixed races use daily bars only.');
     if (pick.market === 'stocks' && pick.tf !== '1d' && pick.start < '2023-12-04') errs.push('Hourly stock data starts on 2023-12-04.');
+    if (pick.market === 'bist' && pick.start < '2015-01-01') errs.push('Borsa Istanbul races start on 2015-01-01 or later (data from 2014, one year of warm-up).');
   }
   return errs;
 }
@@ -145,14 +167,16 @@ function renderOpts() {
   $('#opts').innerHTML = html`
     ${pick.preset === 'random' ? '<div class="opt"><span class="l">Battlefield</span><div data-layout="ta-s4">🎲 Random race</div><div class="muted" data-layout="ta-s2">Drawn when you press Start: crypto, stocks or both · daily or 4-hour crypto bars · a 3–12 month window after the bots’ data cutoff · named or blind · a fresh random seed. The race header shows what was drawn.</div></div>'
     : pr ? `<div class="opt"><span class="l">Battlefield</span><div data-layout="ta-s4">${pr.icon} ${esc(pr.title)}</div><div class="muted num" data-layout="ta-s2">${pr.market} · ${pr.tf} bars · ${pr.start} → ${pr.end}</div></div>`
-    : `<div class="opt"><span class="l" id="l-market">Market</span>${seg('market', ['crypto', 'stocks', 'mixed'])}</div>
+    : `<div class="opt"><span class="l" id="l-market">Market</span>${seg('market', ['crypto', 'stocks', 'mixed', 'bist'], v => (v === 'bist' ? 'BIST (TRY)' : v))}${pick.market === 'bist' ? '<p class="muted" data-layout="ta-s5">Borsa Istanbul: 30 stocks in Turkish lira (nominal), daily bars from 2014, benchmark BIST 100. Never mixed with USD assets.</p>' : ''}</div>
        <div class="opt"><span class="l">Bar size</span>${seg('tf', ['1d', '4h', '1h'], v => v, v => pick.market !== 'crypto' && v !== '1d')}${pick.market === 'mixed' ? '<p class="muted" data-layout="ta-s5">Mixed crypto + stock races use daily bars: the two markets keep different hours.</p>' : ''}</div>
        <div class="opt"><span class="l">Period (UTC)</span><div class="opt-row"><label class="sr-only" for="d1">Start date</label><input type="date" id="d1" value="${pick.start}" min="${DATA_START}" max="${DATA_END}"> <span aria-hidden="true">→</span> <label class="sr-only" for="d2">End date</label><input type="date" id="d2" value="${pick.end}" min="${DATA_START}" max="${DATA_END}"></div>
          <p class="muted" data-layout="ta-s5">Daily crypto from 2017, hourly stocks from Dec 2023. Before ${CUTOFF} is inside the data the bots were written with.</p></div>`}
     <div class="opt"><span class="l">Options</span><div class="opt-row" data-layout="ta-s6">
       <label class="toggle"><input type="checkbox" id="o-blind" ${pick.blind ? 'checked' : ''}><i aria-hidden="true"></i>Blind: hide names and dates from bots</label>
-      <label class="toggle"><input type="checkbox" id="o-short" ${pick.short ? 'checked' : ''}><i aria-hidden="true"></i>Allow shorts</label></div></div>
-    <div class="opt"><span class="l">Max gross exposure</span>${seg('gross', [1, 1.5, 2, 3], v => `${v}×`)}${+pick.gross > 1 || pick.short ? '<p class="muted" data-layout="ta-s5">Simplified: no borrow cost, funding or margin calls are modelled. The official league is long-only at 1×.</p>' : ''}</div>`;
+      <label class="toggle"><input type="checkbox" id="o-short" ${pick.short ? 'checked' : ''}><i aria-hidden="true"></i>Allow shorts</label>
+      <label class="toggle"><input type="checkbox" id="o-noise" ${pick.noise ? 'checked' : ''}><i aria-hidden="true"></i>Market noise</label></div>
+      <p class="muted" data-layout="ta-s5">${pick.noise ? 'On: fill prices move inside each bar, slippage varies and some orders miss a bar; every bot meets the same noise, and every Start draws a new seed, so results change from run to run.' : 'Off: the same race always gives exactly the same result (same data, same rules, seed 7). Turn on market noise, or use “Luck check” on the results, to see how much of a win is luck.'}</p></div>
+    <div class="opt"><span class="l">Max gross exposure</span>${seg('gross', [1, 1.5, 2], v => `${v}×`)}${+pick.gross > 1 || pick.short ? '<p class="muted" data-layout="ta-s5">Shorts pay a borrow fee (8 %/yr crypto, 3 %/yr stocks), borrowed cash pays 6 %/yr, and a position book that runs past twice the gross limit is closed by a margin call. Bots written before contract v2 never short.</p>' : ''}</div>`;
   $$('#opts .seg').forEach(s => s.onclick = e => {
     const b = e.target.closest('button'); if (!b || b.disabled) return;
     const k = s.dataset.k; pick[k] = k === 'gross' ? +b.dataset.v : b.dataset.v;
@@ -162,6 +186,7 @@ function renderOpts() {
   for (const [id, key] of [['d1', 'start'], ['d2', 'end']]) $('#' + id)?.addEventListener('change', e => { pick[key] = e.target.value; savePick(); const bad = validate().some(x => /date/i.test(x)); $('#d1').setAttribute('aria-invalid', bad); $('#d2').setAttribute('aria-invalid', bad); renderVs(); });
   $('#o-blind').onchange = e => { pick.blind = e.target.checked; savePick(); renderVs(); };
   $('#o-short').onchange = e => { pick.short = e.target.checked; savePick(); renderOpts(); renderVs(); };
+  $('#o-noise').onchange = e => { pick.noise = e.target.checked; savePick(); renderOpts(); renderVs(); };
 }
 
 function renderVs() {
@@ -174,7 +199,7 @@ function renderVs() {
   const pr = PRESETS.find(p => p.id === pick.preset);
   const c = pr || { market: pick.market, tf: pick.tf, start: pick.start, end: pick.end };
   if (pick.preset === 'random') { $('#terms').textContent = `random battlefield · drawn at start · ${pick.short ? 'shorts allowed' : 'long only'} · ${pick.gross}× gross · $100,000 each`; return; }
-  $('#terms').textContent = `${c.market} · ${c.tf} bars · ${c.start} → ${c.end} · ${pick.blind ? 'blind' : 'named'} · ${pick.short ? 'shorts allowed' : 'long only'} · ${pick.gross}× gross · $100,000 each`;
+  $('#terms').textContent = `${c.market} · ${c.tf} bars · ${c.start} → ${c.end} · ${pick.blind ? 'blind' : 'named'} · ${pick.short ? 'shorts allowed' : 'long only'} · ${pick.gross}× gross${pick.noise ? ' · market noise' : ''} · $100,000 each`;
 }
 
 // Decorative hero: synthetic lines (labelled as illustration). Static when the viewer prefers reduced motion.
@@ -218,7 +243,7 @@ function renderBots(view) {
     return `<article class="panel bot-profile" data-color="${b.color}">
       <header>${avatar(b, 'lg')}<div><div class="eyebrow">${esc(b.kind === 'ai' ? 'AI-written bot' : 'House bot · baseline')}</div><h2 data-layout="ta-s9">${esc(b.botName || b.name)}</h2><div class="muted">${b.kind === 'ai' ? `by <b data-layout="ta-s10">${esc(b.name)}</b> (${esc(b.model)})` : esc(b.lab)}</div></div></header>
       <p>${esc(b.strategy)}</p>
-      ${b.session ? `<div class="hold-meta" aria-label="Production log"><span>supplied session label: ${Math.round(b.session.secs / 60)} min, ${b.session.toolCalls != null ? `${b.session.toolCalls} tool calls` : `${b.session.turns} agent turns`} (observed, not a budget)</span><span>bot-writing data ended ${CUTOFF}</span></div>` : ''}
+      ${b.session ? `<div class="hold-meta" aria-label="Production log"><span>supplied session label: ${b.session.secs ? `${Math.round(b.session.secs / 60)} min` : 'time n/a'}${b.session.toolCalls != null ? `, ${b.session.toolCalls} tool calls` : b.session.turns != null ? `, ${b.session.turns} agent turns` : b.session.provider ? ` via ${esc(b.session.provider)}` : ''} (observed, not a budget)</span><span>bot-writing data ended ${CUTOFF}</span>${b.contract >= 2 ? '<span>contract v2 · long/short aware</span>' : ''}</div>` : ''}
       ${row ? `<div class="kpis" data-layout="ta-s11"><div><span>League pts</span><b>${row.points}</b></div><div><span>Wins</span><b>${row.wins}/${row.races}</b></div><div><span>Avg return</span><b class="${cls(row.avgReturn)}">${pct(row.avgReturn)}</b></div><div><span>Avg Sharpe</span><b>${row.avgSharpe.toFixed(2)}</b></div></div>` : ''}
       <details data-code="${esc(b.file)}"><summary class="muted" data-layout="ta-s12">Source code</summary><div class="code" data-layout="ta-s13">Loading…</div></details>
       <div><button class="btn" type="button" data-solo="${b.id}">Solo race: Crypto Season</button></div>
@@ -239,7 +264,10 @@ function renderBots(view) {
 // ---------------- League ----------------
 const LCOLS = [['points', 'Points', -1], ['wins', 'Wins', -1], ['podiums', 'Podiums', -1], ['avgPlace', 'Avg place', 1], ['avgReturn', 'Avg return', -1], ['avgSharpe', 'Avg Sharpe', -1], ['worstDD', 'Worst drawdown', -1]];
 function renderLeague(view) {
-  const { league, roster } = state;
+  const { roster } = state;
+  // Season 1: the original long-only 1× table. Season 2: long/short (1.5× gross) and Borsa Istanbul races.
+  const s2 = state.leagueView === 's2' && !!state.leagueLS;
+  const league = s2 ? state.leagueLS : state.league;
   const bot = id => roster.bots.find(b => b.id === id) || { name: id, color: '#888', initials: '?' };
   let hist = [];
   try { hist = JSON.parse(localStorage.getItem('trade-arena:history') || localStorage.getItem('arena-history') || '[]'); } catch { /* storage blocked */ }
@@ -253,8 +281,9 @@ function renderLeague(view) {
   const rows = league ? [...league.standings] : [];
   if (sort) { const [k, dir] = sort; rows.sort((a, b) => (a[k] - b[k]) * dir); }
   view.innerHTML = html`
-  <div class="section-h" data-layout="ta-s7"><div><div class="eyebrow">Season 1 · imported owner results</div><h1 data-layout="ta-s8">League table</h1></div>${league ? `<span class="muted" data-layout="ta-s1">${league.races.length} races · engine ${esc(league.engine || '1.0')} · long only, 1×</span>` : ''}</div>
-  ${league ? `<div class="notice" data-layout="ta-s14"><span aria-hidden="true">ⓘ</span><span><b>Ranked by league points</b> (25 / 18 / 15 / 12 / 10 / 8 / 6 / 4 / 2 / 1 for places 1–10 in each race). Sorting by another column changes the view, not the official order. Race windows overlap, so 17 races are not 17 independent tests.${league.engineNotes ? ` ${esc(league.engineNotes)}` : ''}</span></div>
+  <div class="section-h" data-layout="ta-s7"><div><div class="eyebrow">${s2 ? 'Season 2 · long/short + Borsa Istanbul' : 'Season 1'} · imported owner results</div><h1 data-layout="ta-s8">League table</h1></div>${league ? `<span class="muted" data-layout="ta-s1">${league.races.length} races · engine ${esc(league.engine || '1.0')} · ${s2 ? 'shorts allowed, up to 1.5× gross' : 'long only, 1×'}</span>` : ''}</div>
+  ${state.leagueLS ? `<div class="seg" role="group" aria-label="Season" id="season-seg"><button type="button" data-s="s1" aria-pressed="${!s2}">Season 1 · long only</button><button type="button" data-s="s2" aria-pressed="${s2}">Season 2 · long/short + BIST</button></div>` : ''}
+  ${league ? `<div class="notice" data-layout="ta-s14"><span aria-hidden="true">ⓘ</span><span><b>Ranked by league points</b> (25 / 18 / 15 / 12 / 10 / 8 / 6 / 4 / 2 / 1 for places 1–10 in each race). Sorting by another column changes the view, not the official order. Race windows overlap, so ${league.races.length} races are not ${league.races.length} independent tests.${league.engineNotes ? ` ${esc(league.engineNotes)}` : ''}</span></div>
   <div class="panel table-wrap"><table class="stats lb"><caption>Imported standings${sort ? ` · sorted by ${esc(LCOLS.find(c => c[0] === sort[0])[1].toLowerCase())}` : ' · by league points'}</caption><thead><tr><th scope="col">#</th><th scope="col" class="l">Bot</th>
     ${LCOLS.map(([k, label, def]) => `<th scope="col" aria-sort="${sort?.[0] === k ? (sort[1] > 0 ? 'ascending' : 'descending') : 'none'}"><button type="button" data-sort="${k}" data-def="${def}">${label}${sort?.[0] === k ? (sort[1] > 0 ? ' ▲' : ' ▼') : ''}</button></th>`).join('')}<th scope="col"><span class="sr-only">Points bar</span></th></tr></thead><tbody>
     ${rows.map(s => { const b = bot(s.id), rank = league.standings.indexOf(s) + 1; return `<tr data-color="${b.color}"><td>${rank}</td><th scope="row" class="l" data-layout="ta-s15"><span data-layout="ta-s16">${avatar(b, 'sm')}${esc(b.name)}</span></th><td><b>${s.points}</b></td><td>${s.wins}</td><td>${s.podiums}</td><td>${s.avgPlace.toFixed(2)}</td><td class="${cls(s.avgReturn)}">${pct(s.avgReturn)}</td><td>${s.avgSharpe.toFixed(2)}</td><td class="down">${pct(s.worstDD)}</td><td data-layout="ta-s17"><div class="bar" data-width="${widthStep(s.points / league.standings[0].points * 100)}"></div></td></tr>`; }).join('')}
@@ -266,6 +295,8 @@ function renderLeague(view) {
   <div class="section-h"><div><div class="eyebrow">Stored only in this browser</div><h2>Simulations completed here</h2></div>${hist.length ? '<button class="btn ghost" type="button" id="clear-hist">Clear this browser’s history</button>' : ''}</div>
   ${myRows.length ? `<div class="panel table-wrap"><table class="stats"><caption>Head-to-head races finished in this browser (not part of the official league)</caption><thead><tr><th scope="col" class="l">Bot</th><th scope="col">Races</th><th scope="col">Wins</th><th scope="col">Avg return</th></tr></thead><tbody>${myRows.map(m => { const b = bot(m.id); return `<tr><th scope="row" class="l" data-layout="ta-s15"><span data-layout="ta-s16">${avatar(b, 'sm')}${esc(b.name)}</span></th><td>${m.races}</td><td>${m.wins}</td><td class="${cls(m.ret / m.races)}">${pct(m.ret / m.races)}</td></tr>`; }).join('')}</tbody></table></div>` : '<div class="panel empty">Head-to-head races you run in the Arena are tallied here.</div>'}`;
   view.onclick = e => {
+    const season = e.target.closest('[data-s]');
+    if (season) { state.leagueView = season.dataset.s; state.leagueSort = null; renderLeague(view); $(`[data-s="${state.leagueView}"]`)?.focus(); return; }
     const s = e.target.closest('[data-sort]');
     if (s) { const k = s.dataset.sort, cur = state.leagueSort; state.leagueSort = [k, cur?.[0] === k ? -cur[1] : +s.dataset.def]; renderLeague(view); $(`[data-sort="${k}"]`)?.focus(); return; }
     if (e.target.closest('[data-sort-reset]')) { state.leagueSort = null; renderLeague(view); return; }

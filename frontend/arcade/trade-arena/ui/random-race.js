@@ -2,7 +2,7 @@
 // Stock intraday stays excluded (session timing not audited) and the window keeps 4-hour races small.
 export function randomRace({ cutoff, dataEnd }, rand = () => crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32) {
   const pickOne = list => list[Math.floor(rand() * list.length)];
-  const market = pickOne(['crypto', 'crypto', 'stocks', 'mixed']);
+  const market = pickOne(['crypto', 'crypto', 'stocks', 'mixed', 'bist']);
   const tf = market === 'crypto' && rand() < 0.35 ? '4h' : '1d';
   const days = tf === '4h' ? 60 + Math.floor(rand() * 120) : 90 + Math.floor(rand() * 276);
   const first = Date.parse(cutoff) + 86400000, last = Date.parse(dataEnd) - days * 86400000;

@@ -1,0 +1,12 @@
+[Unit]
+Description=Aizanoi Trade Arena live tails refresh timer
+
+[Timer]
+# Hourly at minute 12: after the hourly crypto close and outside the Markets jobs (:05).
+# Daily US bars appear after 16:15 New York, Borsa Istanbul after 18:30 Istanbul.
+OnCalendar=*-*-* *:12:00
+Persistent=true
+RandomizedDelaySec=0
+
+[Install]
+WantedBy=timers.target

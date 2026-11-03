@@ -53,6 +53,14 @@ server {
     # Arcade bundles (Trade Arena UI, bot strategies, workers, roster/league JSON) are unversioned:
     # without an explicit policy browsers apply heuristic caching and can mix an old app.js with a new roster.
     location ^~ /arcade/ { try_files $uri $uri/ =404; expires -1; }
+    # Trade Arena live tails: recent closed bars published by the private updater
+    # (scripts/trade-arena/update_live.py, aizanoi-trade-arena-live.timer). Static JSON only,
+    # same strict shared headers; a missing directory simply means archive-only races.
+    location ^~ /arcade/trade-arena/live/ {
+        alias /var/lib/aizanoi-trade-arena/live/;
+        default_type application/json;
+        expires -1;
+    }
 
     # Fly World is static except for one narrow, read-only telemetry stream.
     # The loopback service owns simulation authority; browsers cannot submit

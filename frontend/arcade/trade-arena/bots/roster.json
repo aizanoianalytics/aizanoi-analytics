@@ -182,6 +182,196 @@
       }
     },
     {
+      "id": "opus-5-5",
+      "name": "Claude Opus 5.5",
+      "short": "Opus",
+      "initials": "O5",
+      "lab": "Anthropic",
+      "kind": "ai",
+      "model": "claude-opus-5-5",
+      "color": "#ff6b6b",
+      "colorLight": "#b42323",
+      "file": "bots/ai/opus-5-5.js",
+      "botName": "Tide Rider",
+      "contract": 2,
+      "strategy": "Builds its own equal-weight index of everything listed and reads the market 'tide' from its 50/100-day averages, 60-day momentum and breadth, with hysteresis. Rising tide: a broad, volatility-adjusted basket of uptrending assets tilted to momentum, up to 1.3× when leverage is allowed. Ebbing tide: cash in long-only races, otherwise about half the equity in volatility-weighted shorts on the weakest downtrends with 25 % stops. Rebalances about weekly with a drift threshold.",
+      "session": {
+        "secs": null,
+        "provider": "claude-code"
+      }
+    },
+    {
+      "id": "muse-spark-1-3",
+      "name": "Muse Spark 1.3",
+      "short": "Muse",
+      "initials": "MS",
+      "lab": "OpenCode Go",
+      "kind": "ai",
+      "model": "opencode-go/muse-spark-1.3-contributor",
+      "color": "#f25cf0",
+      "colorLight": "#8f1b8d",
+      "file": "bots/ai/muse-spark-1-3.js",
+      "botName": "Tidewalker",
+      "contract": 2,
+      "strategy": "Every ~2 weeks buys the strongest risk-adjusted momentum names in an uptrend, sized by inverse volatility and conviction, and scales total exposure with a multi-signal regime gauge (breadth, trend, macro). In long/short races it shorts confirmed downtrends while the regime is fearful. Every bar it runs only cheap exits: per-position stops, a market-crash gate and a portfolio trailing stop.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "deepseek-v4-1-flash",
+      "name": "DeepSeek V4.1 Flash",
+      "short": "DeepSeek",
+      "initials": "DS",
+      "lab": "DeepSeek",
+      "kind": "ai",
+      "model": "opencode/deepseek-v4.1-flash-free",
+      "color": "#4d7cff",
+      "colorLight": "#1f45c2",
+      "file": "bots/ai/deepseek-v4-1-flash.js",
+      "botName": "Regime Rig",
+      "contract": 2,
+      "strategy": "Holds the strongest five momentum names (60-bar momentum rank) that trade above their 200-bar average, equal-weighted with a cap. When breadth and the equal-weight 20-bar return turn weak and shorts are allowed, it shorts laggards below their 50- and 200-bar averages with negative 20-bar returns. Rebalances about weekly.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "glm-5-3-flash",
+      "name": "GLM 5.3 Flash",
+      "short": "GLM",
+      "initials": "GL",
+      "lab": "Zhipu",
+      "kind": "ai",
+      "model": "opencode/glm-5.3-flash-free",
+      "color": "#d8d84a",
+      "colorLight": "#6a6a00",
+      "file": "bots/ai/glm-5-3-flash.js",
+      "botName": "Dragon Rider",
+      "contract": 2,
+      "strategy": "Throttled cross-sectional momentum: ranks assets above their 200-bar average by 60-bar return and holds a fixed top five. Gross exposure is graded by a smoothed share of assets above SMA200 with a quick crash brake; per-position hard stops with a cooldown before re-entry. Adds a short sleeve in weak markets when the race allows shorts.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "beam",
+      "name": "Beam",
+      "short": "Beam",
+      "initials": "BM",
+      "lab": "OpenCode",
+      "kind": "ai",
+      "model": "opencode-go/beam-free",
+      "color": "#fff36b",
+      "colorLight": "#7d7000",
+      "file": "bots/ai/beam.js",
+      "botName": "TrendRider",
+      "contract": 2,
+      "strategy": "Trend-following cross-sectional momentum. Every rebalance (about weekly) ranks assets by a blend of 20/60/120-bar returns, Sharpe and trend filters. In bull markets it holds the top five leaders; in bear markets it shorts the weakest five when shorts are allowed (otherwise cash); in sideways markets it runs a small long/short book. Gross exposure follows the race limit.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "iceman",
+      "name": "Iceman",
+      "short": "Iceman",
+      "initials": "IC",
+      "lab": "OpenCode Go",
+      "kind": "ai",
+      "model": "opencode-go/iceman-contributor-free",
+      "color": "#e4f4ff",
+      "colorLight": "#3a5f7a",
+      "file": "bots/ai/iceman.js",
+      "botName": "Apex",
+      "contract": 2,
+      "strategy": "Adaptive cross-sectional momentum with a regime switch from breadth, VIX and the SPY trend: aggressive trend-following in bull regimes, defensive cash in severe bear regimes. Picks top assets on a multi-factor score (returns, moving averages, RSI, ADX, cross-sectional ranks) with a volatility penalty and diversification limits; in long/short races it hedges downtrends with shorts while keeping relative-strength longs.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "mimo-v2-6-flash",
+      "name": "MiMo V2.6 Flash",
+      "short": "MiMo",
+      "initials": "MI",
+      "lab": "Xiaomi",
+      "kind": "ai",
+      "model": "opencode/mimo-v2.6-flash-free",
+      "color": "#ff4f8b",
+      "colorLight": "#a8124a",
+      "file": "bots/ai/mimo-v2-6-flash.js",
+      "botName": "Compass",
+      "contract": 2,
+      "strategy": "Regime-aware cross-sectional momentum with a trend filter. A regime score built from breadth, average RSI, the equal-weight 20-bar return and macro context (SPY trend, VIX change) sets total exposure; it rotates into the top-ranked uptrending assets every ~10 bars. Shorts are coded but in practice it stays long-only.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "nemotron-3-5-super",
+      "name": "Nemotron 3.5 Super",
+      "short": "Nemo Super",
+      "initials": "NS",
+      "lab": "NVIDIA",
+      "kind": "ai",
+      "model": "opencode/nemotron-3.5-super-vl-free",
+      "color": "#c08552",
+      "colorLight": "#6e3e14",
+      "file": "bots/ai/nemotron-3-5-super.js",
+      "botName": "TrendCrew",
+      "contract": 2,
+      "strategy": "Concentrated cross-sectional trend following: holds the strongest in-trend assets (60-bar momentum rank, 20-bar return, trend checks via SMA200, Supertrend or SAR) until momentum or trend breaks, with a minimum hold to avoid churn. Exposure is cut by breadth, VIX and drawdown; in long/short races it shorts the weakest broken-trend assets. (The shipped file keeps one debug log line for the first three bars.)",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "nemotron-3-5-lightning",
+      "name": "Nemotron 3.5 Lightning",
+      "short": "Nemo Light",
+      "initials": "NL",
+      "lab": "NVIDIA",
+      "kind": "ai",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "color": "#8fd400",
+      "colorLight": "#3f6600",
+      "file": "bots/ai/nemotron-3-5-lightning.js",
+      "botName": "CrossMomentum",
+      "contract": 2,
+      "strategy": "Scores every tradable, liquid asset by 60-bar return adjusted for RSI (penalising overbought and oversold readings) and volume, and rebalances every five bars. Long-only: the top 30 % equal-weight. In long/short races during a bear regime (low share above SMA200, falling S&P 500) it holds the top 20 % long and the bottom 20 % short at the full gross limit.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
+      "id": "flint-40b",
+      "name": "Flint 40B",
+      "short": "Flint",
+      "initials": "FL",
+      "lab": "OpenCode",
+      "kind": "ai",
+      "model": "opencode/flint-40b-free",
+      "color": "#c8c2b4",
+      "colorLight": "#5e584c",
+      "file": "bots/ai/flint-40b.js",
+      "botName": "TrendRider",
+      "contract": 2,
+      "strategy": "Regime-aware momentum rider: screens assets above their 200-bar average, ranks them by 60-bar return and holds the top five equal-weight, sized by a risk score from breadth, the 20-bar equal-weight return, SPY versus its 200-day average and VIX. In bearish readings it stops adding longs and is coded to short up to two rolled-over former winners; an urgent exit fires when a long breaks 12 % below its 50-bar average. Rebalances about every two weeks.",
+      "session": {
+        "secs": null,
+        "provider": "opencode"
+      }
+    },
+    {
       "id": "basket",
       "name": "Basket Builder",
       "short": "Basket",
@@ -192,6 +382,19 @@
       "file": "bots/house/basket.js",
       "strategy": "Every ~2 weeks reads the market regime (breadth, average trend, SPY trend and VIX when present) and rebuilds a basket of up to 8 uptrending assets ranked by risk-adjusted momentum. Inverse-volatility weights capped at 20%, at most 3 per sector, total exposure 20-95% by regime; drops a holding that falls 8% below its 50-bar average.",
       "colorLight": "#11734a"
+    },
+    {
+      "id": "aizo",
+      "name": "Aizo Bot",
+      "short": "Aizo",
+      "initials": "AZ",
+      "lab": "House bot · Aizanoi",
+      "kind": "house",
+      "color": "#00b4d8",
+      "colorLight": "#006d82",
+      "file": "bots/house/aizo.js",
+      "contract": 2,
+      "strategy": "Owner rules (Aizanoi). Shorts an asset when its close is above EMA 7, 21, 50, 100 and 200, RSI(14) is above 70 and the price is above its level 1 week, 1 month, 6 months, 1 year and 3 years ago (unseen 1y/3y levels are skipped); buys the mirror case (below every EMA, RSI under 30, below every past level). Every signal opens a fresh lot of 10 % of equity. Long lots have no stop: at +20 % the principal is sold and the rest is kept forever, growing lot by lot. Short lots close at +20 % profit or a 20 % loss."
     },
     {
       "id": "momentum",
@@ -233,11 +436,13 @@
   "benchmarks": {
     "Equal weight": "#e8edf9",
     "BTC hold": "#f7931a",
-    "S&P 500 hold": "#5aa9ff"
+    "S&P 500 hold": "#5aa9ff",
+    "BIST 100 hold": "#e30a17"
   },
   "benchmarksLight": {
     "Equal weight": "#26313c",
     "BTC hold": "#a65d00",
-    "S&P 500 hold": "#3158c7"
+    "S&P 500 hold": "#3158c7",
+    "BIST 100 hold": "#b0000f"
   }
 }

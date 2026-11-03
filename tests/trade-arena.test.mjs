@@ -31,8 +31,8 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
     if (/^(bots|data)\//.test(entry.path)) assert.equal(hash, entry.sourceSha256, 'unchanged owner payload ' + entry.path);
   }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
-  assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.context.length, 7);
-  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'basket', 'momentum', 'hodl', 'monkey']);
+  assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.bist.length, 30); assert.equal(catalog.context.length, 8);
+  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'opus-5-5', 'muse-spark-1-3', 'deepseek-v4-1-flash', 'glm-5-3-flash', 'beam', 'iceman', 'mimo-v2-6-flash', 'nemotron-3-5-super', 'nemotron-3-5-lightning', 'flint-40b', 'basket', 'aizo', 'momentum', 'hodl', 'monkey']);
   // Every roster strategy must be runnable by the strict-CSP worker, and nothing else.
   const allowed = read(root + 'ui/bot-worker.js').match(/new Set\(\[([^\]]*)\]\)/)[1].split(',').map(x => x.trim().slice(1, -1));
   assert.deepEqual(allowed.sort(), roster.bots.map(bot => bot.file).sort());
@@ -118,7 +118,7 @@ test('random races draw a fresh, legal battlefield after the cutoff', async () =
   const seen = new Set();
   for (let i = 0; i < 400; i++) {
     const r = randomRace({ cutoff: '2024-12-31', dataEnd: '2026-10-30' });
-    assert.ok(['crypto', 'stocks', 'mixed'].includes(r.market));
+    assert.ok(['crypto', 'stocks', 'mixed', 'bist'].includes(r.market));
     assert.ok(r.market === 'crypto' || r.tf === '1d', 'stock and mixed races stay on daily bars: ' + JSON.stringify(r));
     assert.ok(r.start > '2024-12-31' && r.end <= '2026-10-30' && r.start < r.end, JSON.stringify(r));
     assert.ok(Number.isInteger(r.seed) && r.seed > 0);
@@ -136,7 +136,9 @@ test('today’s basket page is wired, labelled as not investment advice and immu
   assert.match(app, /r === 'basket'\) renderBasket/);
   assert.match(app, /releaseBasket\(\)/);
   assert.match(page, /Not investment advice/);
-  assert.match(page, /new Worker\(new URL\('\.\/race-worker\.js', import\.meta\.url\)/);
-  assert.match(page, /barMs: 3000/);
+  const client = read(root + 'ui/sim-client.js');
+  assert.match(page, /import \{ simulate, yearBefore \} from '\.\/sim-client\.js'/);
+  assert.match(client, /new Worker\(new URL\('\.\/race-worker\.js', import\.meta\.url\)/);
+  assert.match(client, /barMs = 3000/);
   assert.doesNotMatch(page, /style=|innerHTML\s*=\s*[^`'"]*\+/);
 });

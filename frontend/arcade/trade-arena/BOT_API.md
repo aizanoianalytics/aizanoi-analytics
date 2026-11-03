@@ -1,6 +1,6 @@
 # Trade Arena bot contract
 
-Contract version 1. This file is the complete integration guide for an AI-written trading bot.
+Contract version 2 (adds long/short races; every version-1 bot still works unchanged). This file is the complete integration guide for an AI-written trading bot.
 
 Trade Arena is a paper-trading race. Several bots get the same starting cash, see exactly the same
 market data bar by bar, and trade the same assets. The bot with the highest final equity wins.
@@ -41,7 +41,8 @@ module.exports = {
 - `targets` is the **whole** portfolio. A symbol you omit is a target of 0 (it is sold).
 - Weights are fractions of current equity: `0.25` = 25 %. Cash is whatever is left.
 - Sum of |weights| must be ≤ `info.rules.maxGross` (default 1). If it is larger, all weights are scaled down proportionally.
-- Negative weights (shorts) are only allowed when `info.rules.allowShort` is true; otherwise they are ignored.
+- Negative weights are **short positions** (`-0.2` = short 20 % of equity). They are only allowed when
+  `info.rules.allowShort` is true; otherwise they are ignored. See "Long/short races" below.
 - Unknown symbols and non-finite weights are ignored.
 - `note` (≤ 140 chars) is shown live to viewers as your bot's commentary. Use it sparingly — only when you trade
   or something notable happens. Make it short and human ("Rotating into SOL and AVAX, BTC trend broke").
@@ -59,7 +60,30 @@ module.exports = {
 6. Fractional quantities are allowed. Positions are marked to market at every close.
 7. A bot whose equity falls below 1 % of starting cash is retired ("busted").
 
+8. Optional **market noise** (`info.rules.noise` 0..1, off by default and in official league races): the fill price
+   moves inside the bar's high–low range, slippage varies between 0.5× and 2.5× and about 5 % of (bar, asset) fills
+   slip to the next bar. The noise is seeded and identical for every bot in the race.
+
 Every trade costs money. A bot that rebalances every bar pays fees every bar. Doing nothing is a valid move.
+
+## Long/short races
+
+Some races allow shorting (`info.rules.allowShort === true`) and some also allow leverage (`info.rules.maxGross`
+up to 2). Long-only cash races (`allowShort: false, maxGross: 1`) remain the default.
+
+- A negative target weight opens or keeps a short: you sell borrowed units and profit when the price falls.
+  `targets: { BTC: 0.5, DOGE: -0.25 }` = 50 % long BTC, 25 % short DOGE, gross exposure 0.75.
+- Going from a long to a short (or back) in one decision is allowed; it trades through zero at the same open.
+- Short proceeds are credited to cash, so cash can exceed equity. With `maxGross > 1` cash can go negative (borrowing).
+- **Carrying costs**, charged pro rata to elapsed time at every close and reported as `carry`:
+  short borrow fee `info.rules.borrowBps` per year on the market value of each short (crypto 800 bps, stocks
+  300 bps) and margin interest `info.rules.marginBps` (600 bps) per year on a negative cash balance.
+- Losses on a short are unbounded. If gross exposure ever exceeds twice the race limit (`2 × max(1, maxGross)`)
+  at a close, a **margin call** closes every position at that close (with slippage and fees). Equity below 1 %
+  of starting cash retires the bot as usual.
+- `state.portfolio.positions[sym]` has `side: 'long' | 'short'`, a negative `qty`/`value`/`weight` for shorts,
+  and `pnlPct` that is positive when the short is in profit.
+- A bot that never returns a negative weight simply stays long-only in long/short races.
 
 ## init(info)
 
@@ -70,13 +94,18 @@ info = {
   steps: 668,            // number of bars in the race
   periodsPerYear: 365,   // bars per year for annualising (crypto 365/2190/8760, stocks 252/504/1764)
   start, end,            // ms timestamps of first/last bar (null when blind)
-  rules: { cash: 100000, feeBps: { crypto, stocks }, slippageBps: { crypto, stocks }, maxGross: 1, allowShort: false, minTradeValue: 25, barMs: 250 },
-  assets: [ { symbol: 'BTC', market: 'crypto' | 'stocks', name: 'Bitcoin', sector: 'Crypto' }, ... ],  // name/sector null when blind
+  rules: { cash: 100000, feeBps: { crypto, stocks }, slippageBps: { crypto, stocks }, maxGross: 1, allowShort: false, minTradeValue: 25, barMs: 250,
+           borrowBps: { crypto: 800, stocks: 300 }, marginBps: 600 },
+  assets: [ { symbol: 'BTC', market: 'crypto' | 'stocks', name: 'Bitcoin', sector: 'Crypto', exchange: null | 'BIST', currency: 'USD' | 'TRY' }, ... ],  // name/sector/exchange null when blind
   history: { BTC: { t: [...], o: [...], h: [...], l: [...], c: [...], v: [...] }, ... }               // up to 250 bars before the start
 }
 ```
 
-Races can be crypto only, stocks only, or mixed; daily, 4-hour or hourly. Never assume a particular asset exists.
+Races can be crypto only, US stocks only, mixed (crypto + US stocks), or Borsa Istanbul (30 Turkish stocks, daily
+bars, prices in Turkish lira); daily, 4-hour or hourly. Never assume a particular asset exists.
+Borsa Istanbul assets have `market: 'stocks'` (stock fees and slippage apply), `exchange: 'BIST'` and `currency: 'TRY'`;
+their beta/correlation benchmark is the BIST 100 index. They never share a race with USD assets. Lira prices
+are nominal, so long-run returns include Turkish inflation.
 Use `info.assets` and `state.assets`.
 
 ## onBar(state)
@@ -100,7 +129,7 @@ state = {
   portfolio: {
     cash, equity,                // in USD
     exposure,                    // gross position value / equity
-    positions: { BTC: { qty, value, weight, avgPrice, pnlPct } }   // pnlPct = unrealised return of the open position
+    positions: { BTC: { qty, side, value, weight, avgPrice, pnlPct } }   // side 'long'|'short'; pnlPct = unrealised return of the open position
   }
 }
 ```
@@ -294,7 +323,7 @@ Your bot must work in both kinds of race. Do not hard-code symbols, dates or pri
 
 | field | meaning |
 |---|---|
-| `beta60` | Beta of returns vs the market benchmark (BTC for crypto, SPY for stocks), 60 bars |
+| `beta60` | Beta of returns vs the market benchmark (BTC for crypto, SPY for US stocks, BIST 100 for Borsa Istanbul), 60 bars |
 | `corr60` | Correlation of returns vs the benchmark, 60 bars |
 | `fundingRate` | Crypto: latest perpetual funding rate per 8h (NaN when no perpetual) |
 | `funding7d` | Crypto: average funding rate over the last 7 days |
@@ -337,12 +366,21 @@ Your bot must work in both kinds of race. Do not hard-code symbols, dates or pri
 | `dxyRet20` | US Dollar Index 20-day return |
 | `gldRet20` | Gold ETF 20-day return |
 | `tltRet20` | 20Y+ Treasury ETF 20-day return |
+| `xu100Ret20` | Borsa Istanbul BIST 100 index 20-day return (in TRY) |
 
 ## Scoring
 
-The ranking in a race is by final equity. Sharpe ratio, max drawdown, fees, turnover, trades and win rate
-of closed trades are reported on the scoreboard. Tournaments run many races across markets, timeframes and
-periods the bot has never seen, including blind ones, and award points by finishing place.
+The ranking in a race is by final equity. Sharpe ratio, max drawdown, fees, carrying costs, turnover, trades and win
+rate of closed trades are reported on the scoreboard. Tournaments run many races across markets, timeframes and
+periods the bot has never seen, including blind ones and long/short ones, and award points by finishing place.
+
+## Advice mode ("review my basket")
+
+Viewers can ask a bot to review a portfolio. The bot first runs normally over recent history, then on the final
+bar `state.portfolio` is replaced by the viewer's own holdings (same shape as above, possibly including shorts).
+Whatever `targets` the bot returns are shown as advice: positions to close, trim, add, open or flip.
+Nothing special is required, but a bot that sizes from `state.portfolio` (rather than from its own memory of what
+it bought) gives better advice. Advice is paper only and never investment advice.
 
 ## Local testing
 
@@ -353,6 +391,7 @@ node tools/race.mjs --bot bot.js --market mixed --tf 1d --blind
 node tools/race.mjs --bot bot.js --market crypto --tf 1h --start 2024-10-01
 ```
 
-Options: `--market crypto|stocks|mixed`, `--tf 1d|4h|1h`, `--start/--end YYYY-MM-DD` (default: last 365 days),
+Options: `--market crypto|stocks|mixed|bist`, `--tf 1d|4h|1h`, `--start/--end YYYY-MM-DD` (default: last 365 days),
 `--blind`, `--seed N`, `--short` (allow shorts), `--gross 2` (2x gross exposure), `--symbols BTC,ETH,SOL`.
+Long/short example: `node tools/race.mjs --bot bot.js --market crypto --tf 1d --start 2022-01-01 --end 2022-12-31 --short --gross 1.5`.
 House bots for comparison: `bots/house/hodl.js` (equal-weight buy and hold), `momentum.js`, `monkey.js` (random).

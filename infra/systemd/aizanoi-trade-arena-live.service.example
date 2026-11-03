@@ -1,0 +1,14 @@
+[Unit]
+Description=Aizanoi Trade Arena live tails (Binance, Yahoo/Fintable, Borsa Istanbul)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/aizanoi-analytics-public
+# Reads the immutable archive of the deployed release and writes only post-archive bars.
+ExecStart=/usr/bin/python3 /opt/aizanoi-analytics-public/scripts/trade-arena/update_live.py --archive /opt/aizanoi-analytics-public/frontend/arcade/trade-arena/data/raw --out /var/lib/aizanoi-trade-arena/live --allow-partial
+TimeoutStartSec=1800
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aizanoi-trade-arena-live
