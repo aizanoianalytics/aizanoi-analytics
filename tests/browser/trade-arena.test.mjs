@@ -22,7 +22,7 @@ async function withPage(size, run) {
   });
   // unrouteAll can wait forever on a route.fetch issued by a worker the page already terminated; the browser
   // is closed right after, so teardown never blocks a test for longer than two seconds.
-  try { await run(page, errors); } finally { await Promise.race([context.unrouteAll({ behavior:'ignoreErrors' }), new Promise(resolve => setTimeout(resolve, 2000))]); await browser.close(); }
+  try { await run(page, errors); } finally { await Promise.race([context.unrouteAll({ behavior:'ignoreErrors' }), new Promise(resolve => { setTimeout(resolve, 2000); })]); await browser.close(); }
 }
 
 test('every shipped roster worker initializes under production CSP and arbitrary paths are rejected', async () => {

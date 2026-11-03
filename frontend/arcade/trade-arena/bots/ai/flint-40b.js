@@ -53,7 +53,7 @@ function plan(state) {
     cands.push({ s, ret60: f.ret60, distSma50: ok(f.distSma50) ? f.distSma50 : 0 });
   }
   cands.sort((x, y) => y.ret60 - x.ret60);
-  const longs = cands.filter(c => !exits[c.s]).slice(0, 5);
+  let longs = cands.filter(c => !exits[c.s]).slice(0, 5);
   const shorts = [];
   if (useShorts) {
     for (const c of cands) {

@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import vm from 'node:vm';
 import { prepareMarket } from '../frontend/arcade/trade-arena/engine/market.js';
 import { runRace, DEFAULT_RULES, advicePortfolio, benchmarks, noiseDraw } from '../frontend/arcade/trade-arena/engine/sim.js';
 import { UNIVERSE } from '../frontend/arcade/trade-arena/engine/universe.js';
@@ -11,6 +12,16 @@ import { diffBaskets } from '../frontend/arcade/trade-arena/ui/sim-client.js';
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
 const root = 'frontend/arcade/trade-arena/';
 const DAY = 86400000;
+
+test('Flint emits a short target when a bearish regime selects a candidate', () => {
+  const context = vm.createContext({ module: { exports: {} } });
+  vm.runInContext(read(root + 'bots/ai/flint-40b.js'), context);
+  const bot = context.module.exports;
+  bot.init({ rules: { allowShort: true, maxGross: 1.5 }, periodsPerYear: 252 });
+  const answer = bot.onBar({ step: 0, steps: 100, market: { ewRet20: -0.03 }, context: {}, portfolio: { positions: {} },
+    assets: { A: { tradable: true, f: { ret60: 0.1, distSma200: 0.1, distSma50: -0.1 } } } });
+  assert.ok(answer?.targets?.A < 0, 'bearish short decision must not silently become null');
+});
 
 // Synthetic two-asset market: A rises 1 % a day, B falls 1 % a day.
 function synthetic(days = 120) {

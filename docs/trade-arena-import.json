@@ -20,7 +20,7 @@
     },
     {
       "path": "bots/ai/flint-40b.js",
-      "sha256": "49d0a9fb25fdbd1c83ac3aaafbbbda5b78edbba02d01d0914937467709e63aa0",
+      "sha256": "50143fc0d1cece385a324d9e813d203356c7b3e686ce5e117c42bf51eb8dfc9a",
       "sourceSha256": "49d0a9fb25fdbd1c83ac3aaafbbbda5b78edbba02d01d0914937467709e63aa0",
       "added": "2026-11-03"
     },
