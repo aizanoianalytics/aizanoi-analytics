@@ -113,6 +113,11 @@ test('partial live manifests fall back instead of mixing fresh and stale series'
   await assert.rejects(loader('data/raw/crypto/1d/C.json'), /live .*missing/);
 });
 
+test('context indices from different exchanges may have different last closed sessions', async () => {
+  const loader = liveLoader('https://example.com/', { series: { 'context/1d/SPY': { bars: 0, last: 1 }, 'context/1d/XU100': { bars: 1, last: 2 } } }, async () => ({ t: [1], c: [10] }));
+  assert.deepEqual((await loader('data/raw/context/1d/SPY.json')).t, [1]);
+});
+
 test('funding tails use the same injected live loader as price and context bars', async () => {
   const originalFetch = globalThis.fetch;
   try {

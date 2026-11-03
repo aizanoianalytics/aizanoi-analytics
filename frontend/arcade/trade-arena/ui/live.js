@@ -66,9 +66,10 @@ export function liveLoader(base, live, get) {
     const entry = live.series?.[key];
     if (!entry) throw new Error(`live ${key}: missing manifest series`);
     // A zero-bar or stale tail must not silently freeze one asset beside fresh peers.
-    // Funding schedules differ by asset, so only OHLC timeframes share a coverage boundary.
+    // Funding and context-index schedules differ by asset/exchange; tradable OHLC peers
+    // within one market/timeframe alone share a coverage boundary.
     const prefix = key.slice(0, key.lastIndexOf('/') + 1);
-    if (!prefix.endsWith('/funding/')) {
+    if (!prefix.endsWith('/funding/') && !prefix.startsWith('context/')) {
       const latest = Math.max(...Object.entries(live.series).filter(([k]) => k.startsWith(prefix)).map(([, v]) => v.last));
       if (entry.last < latest) throw new Error(`live ${key}: incomplete coverage`);
     }
