@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-03-openai-grid-protectors",
+  "title": "OpenAI offers utilities a switch it can flick when the grid strains",
+  "summary": "OpenAI's Grid Protectors Program commits future compute campuses to cut electricity demand when local grids are under pressure, starting at its planned Effingham County site in Georgia, where an agreement with Georgia Power covers up to 1,000 megawatts of flexible load. OpenAI says it will pay the full infrastructure and electric-service costs of that campus. Georgia Power projects about $950 million a year in customer savings from 2029 across its large-load portfolio.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-11-03T05:37:00Z",
+  "updatedAt": "2026-11-03T05:37:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "data-centres",
+    "energy",
+    "grid"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/grid-protectors-program/",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    },
+    {
+      "publisher": "Georgia Power",
+      "url": "https://www.georgiapower.com/news-hub/press-releases/contract-openai-approved-part-portfolio-delivering-950-million-annual-savings.html",
+      "publishedAt": "2026-08-26T21:00:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/openai-launches-grid-protectors-program-for-compute-campuses/",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

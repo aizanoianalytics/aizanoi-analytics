@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-02T05:45:00.000Z",
+  "generatedAt": "2026-11-03T05:15:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-03",
+      "path": "/news/2026-11-03/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-02",
       "path": "/news/2026-11-02/",
@@ -427,6 +432,542 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-03-marvell-lumentum-optical-bet",
+      "kind": "daily",
+      "title": "Marvell bets $115 billion of stock on optical links for AI clusters",
+      "summary": "Marvell will acquire Lumentum in an all-stock deal carrying an implied enterprise value of $115 billion, or about $1,132 per Lumentum share, a 23.9% premium to the undisturbed price on 28 October. Lumentum holders receive 4.5 Marvell shares each and would own roughly 33% of the combined company. Marvell frames lasers and optical circuit switching as the scarce half of AI networking, citing a $550 billion addressable market, more than $1 billion of targeted cost synergies and a close in the first half of 2028.",
+      "category": "technology",
+      "priority": 88,
+      "publishedAt": "2026-11-03T05:45:00.000Z",
+      "updatedAt": "2026-11-03T05:45:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "marvell",
+        "lumentum",
+        "semiconductors",
+        "ai-infrastructure",
+        "mergers"
+      ],
+      "sources": [
+        {
+          "publisher": "Marvell Technology",
+          "url": "https://investor.marvell.com/news-events/press-releases/detail/1040/marvell-and-lumentum-to-combine-creating-a-category-leader-in-ai-connectivity",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/02/in-one-of-the-largest-deals-in-tech-history-marvell-buys-lumentum-for-115b/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-us-midterms-election-day",
+      "kind": "daily",
+      "title": "Washington's balance of power goes to voters with 53 million ballots already cast",
+      "summary": "All 435 House seats, 35 Senate seats and governorships in 36 states are on Tuesday's ballot, with control of Congress deciding how much of the president's remaining agenda can pass. University of Florida tracking counted 53.14 million early votes by Sunday morning out of roughly 210 million registered voters, a record pace. The first polls close at 6 p.m. Eastern, and markets have spent the past week cutting technology exposure rather than positioning for a clear result.",
+      "category": "economy-markets",
+      "priority": 84,
+      "publishedAt": "2026-11-03T05:44:00.000Z",
+      "updatedAt": "2026-11-03T05:44:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-politics",
+        "midterms",
+        "elections",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/1/more-than-50-million-votes-cast-in-us-midterm-elections-what-does-it-mean",
+          "publishedAt": "2026-11-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/graphics/2026-us-election-results",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-nyt-brave-scraping-lawsuit",
+      "kind": "daily",
+      "title": "Publishers sue Brave, casting the browser as a fence for scraped news",
+      "summary": "The New York Times sued Brave Software in Manhattan federal court on Monday, alleging the browser's index of more than 30 billion pages was copied without permission and sold to AI developers including Anthropic, Perplexity, Mistral, xAI and Cohere. The Daily News, Chicago Tribune and Orlando Sentinel filed a parallel complaint the same day. Both suits also target Brave's paywall-bypass feature and seek injunctions and damages; none of the AI companies named is a defendant.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-11-03T05:43:00.000Z",
+      "updatedAt": "2026-11-03T05:43:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "copyright",
+        "publishing",
+        "brave",
+        "new-york-times",
+        "ai-training"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/02/new-york-times-and-other-outlets-sue-web-browser-brave-over-alleged-content-scraping/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/tech/1024588/brave-lawsuit-ai-scraping-new-york-times",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "The New York Times Company (court filing)",
+          "url": "https://nytco-assets.nytimes.com/2026/11/new-york-times-brave-complaint-11-2-26.pdf",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-anthropic-amended-s1-commitments",
+      "kind": "daily",
+      "title": "Anthropic's amended filing puts its compute bill at $895 billion",
+      "summary": "Anthropic's first S-1 amendment fills in the third quarter: revenue of $17.0 billion, more than eleven times the year-earlier figure, and a net loss of $23.3 billion that the filing ties largely to revaluing convertible notes. Purchase commitments and leases total $895.4 billion, substantially all for compute and infrastructure, with $447.5 billion due before 2031 and $69.8 billion inside twelve months. Nine-month revenue reached $33.2 billion against a $1.3 billion operating loss.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-11-03T05:42:00.000Z",
+      "updatedAt": "2026-11-03T05:42:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "compute",
+        "finance"
+      ],
+      "sources": [
+        {
+          "publisher": "SEC EDGAR",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/anthropicpbc-sx1ax1.htm",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/news/anthropics-amended-ipo-paperwork-reveals-153730799.html",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-apple-memory-cost-guidance",
+      "kind": "daily",
+      "title": "Apple's record quarter arrives with a memory bill it cannot yet price",
+      "summary": "Apple reported September-quarter revenue of $114.5 billion, up 12%, earnings per share of $2.10 and a 47.9% gross margin that included about a point of tariff refunds. The guidance carries the warning: a 45% to 46% margin for the December quarter, compressed by what chief executive John Ternus called unprecedented memory pricing. Inventory rose to $14.54 billion, up 154% year on year, and manufacturing purchase obligations grew by $33 billion in three months.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-03T05:41:00.000Z",
+      "updatedAt": "2026-11-03T05:41:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "earnings",
+        "memory",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple",
+          "url": "https://www.apple.com/newsroom/2026/11/apple-reports-fourth-quarter-results/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/02/apples-inventory-surges-154-as-memory-chip-costs-climb/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-champions-league-matchday-four",
+      "kind": "daily",
+      "title": "The Champions League table has already split before matchday four",
+      "summary": "Nine fixtures run on Tuesday, opening with Galatasaray against Stuttgart and Shakhtar against Sporting at 18:45 CET, then seven more including Barcelona against Aston Villa. Stuttgart have seven points from three games and have conceded twice; Galatasaray have three points and have conceded nine. Paris, Aston Villa, Liverpool, Real Madrid and Betis lead on nine points, with Arsenal and Stuttgart on seven, leaving the unbeaten sides already clear of the chasing pack.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-11-03T05:40:00.000Z",
+      "updatedAt": "2026-11-03T05:40:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "football",
+        "stuttgart",
+        "galatasaray"
+      ],
+      "sources": [
+        {
+          "publisher": "ANSA",
+          "url": "https://www.ansa.it/sito/notizie/sport/2026/11/02/champions-league-programma-quarta-giornata-le-classifiche_0d8c4c49-516b-4833-a98a-e6be6d52014e.html",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-seoul-asia-tech-selloff",
+      "kind": "daily",
+      "title": "Seoul leads an Asian retreat as the AI spending trade loses its floor",
+      "summary": "The KOSPI fell 145.02 points, or 2.48%, to 5,714.06 by late Tuesday morning in Seoul, with Samsung Electronics down 2.95% and SK hynix down 3.8% as investors re-priced the cost of AI infrastructure. The move followed a weaker Wall Street session in which the S&P 500 lost 0.5% and the Nasdaq 1.1%, while the Dow added 0.46% to close at 52,008 as chip and energy names absorbed the selling.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-11-03T05:39:00.000Z",
+      "updatedAt": "2026-11-03T05:39:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "kospi",
+        "markets",
+        "semiconductors",
+        "asia"
+      ],
+      "sources": [
+        {
+          "publisher": "Yonhap News Agency",
+          "url": "https://en.yna.co.kr/view/AEN20261103005900320?section=economy-finance/economy",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/united-states/stock-market",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-south-korea-ai-budget",
+      "kind": "daily",
+      "title": "South Korea doubles its chip and AI bet inside a record budget",
+      "summary": "President Lee Jae-myung told the National Assembly that 2027 spending will rise 12.8% to 820.9 trillion won, the largest budget on record, with 21.3 trillion won, nearly double this year's figure, going to semiconductors, physical AI and AI data centres. A separate 4.6 trillion won is earmarked for a sovereign frontier model and 13.8 trillion won for ten strategic technologies. Parliament, where his party holds a majority, still has to pass the bill.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-11-03T05:38:00.000Z",
+      "updatedAt": "2026-11-03T05:38:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "south-korea",
+        "budget",
+        "ai-policy",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Yonhap News Agency",
+          "url": "https://en.yna.co.kr/view/AEN20261102000952315",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/02/south-korea-ai-spending-budget.html",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-openai-grid-protectors",
+      "kind": "daily",
+      "title": "OpenAI offers utilities a switch it can flick when the grid strains",
+      "summary": "OpenAI's Grid Protectors Program commits future compute campuses to cut electricity demand when local grids are under pressure, starting at its planned Effingham County site in Georgia, where an agreement with Georgia Power covers up to 1,000 megawatts of flexible load. OpenAI says it will pay the full infrastructure and electric-service costs of that campus. Georgia Power projects about $950 million a year in customer savings from 2029 across its large-load portfolio.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-03T05:37:00.000Z",
+      "updatedAt": "2026-11-03T05:37:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "data-centres",
+        "energy",
+        "grid"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/grid-protectors-program/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Georgia Power",
+          "url": "https://www.georgiapower.com/news-hub/press-releases/contract-openai-approved-part-portfolio-delivering-950-million-annual-savings.html",
+          "publishedAt": "2026-08-26T21:00:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/openai-launches-grid-protectors-program-for-compute-campuses/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-taiwan-chip-export-crimes",
+      "kind": "daily",
+      "title": "Taiwan moves to make AI chip smuggling a crime in its own right",
+      "summary": "An amendment heard in the Legislative Yuan's economics committee on Monday would criminalise exporting specified advanced chips, wafer materials and equipment to China without approval, with penalties of up to ten years in prison and fines of NT$5 million to NT$10 million, including for shipments routed through a third country. The loophole it closes surfaced in a Keelung case where 74 Nvidia B300 servers reached Chinese buyers but no one could be charged with an export offence.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-03T05:36:00.000Z",
+      "updatedAt": "2026-11-03T05:36:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "taiwan",
+        "export-controls",
+        "nvidia",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Asia Times",
+          "url": "https://asiatimes.com/2026/11/taiwan-to-criminalize-nvidia-ai-chip-smuggling-to-china/",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-meituan-longcat-2-5",
+      "kind": "daily",
+      "title": "Meituan ships a 1.6-trillion-parameter agent model without the weights",
+      "summary": "LongCat-2.5 is live on Meituan's API platform, keeping the 1.6-trillion-parameter mixture-of-experts shape of LongCat-2.0 with roughly 48 billion parameters active per token. The pitch has moved from writing code to finishing projects: native image and video input, long-horizon reinforcement learning built from real agent failures, and support for Claude Code, Codex and other harnesses. Pricing is $0.30 per million input tokens and $1.20 per million output; no open-weight release has been announced.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-03T05:35:00.000Z",
+      "updatedAt": "2026-11-03T05:35:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meituan",
+        "longcat",
+        "open-weights",
+        "china",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "LongCat API Platform",
+          "url": "https://longcat.chat/platform/docs/change-log",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "eesel",
+          "url": "https://www.eesel.ai/blog/longcat-2-5",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-langflow-critical-flaws",
+      "kind": "daily",
+      "title": "Langflow's default login left a 9.8-rated door open until 1.13.0",
+      "summary": "IBM's bulletin covers four Langflow flaws in every release from 1.0.0 through 1.12.8, two of them rated 9.8: an authentication bypass tracked as CVE-2026-93680 and unauthenticated code execution through code generation, CVE-2026-110186. Automatic login, which signs users in as superusers, is enabled by default in 1.12.8 and disabled in 1.13.0. IBM lists no workaround, and a public Metasploit module already enumerates tools on unpatched MCP endpoints.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-11-03T05:34:00.000Z",
+      "updatedAt": "2026-11-03T05:34:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "langflow",
+        "cve",
+        "ai-tooling"
+      ],
+      "sources": [
+        {
+          "publisher": "IBM",
+          "url": "https://www.ibm.com/support/pages/node/7294467",
+          "publishedAt": "2026-10-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "NIST NVD",
+          "url": "https://nvd.nist.gov/vuln/detail/cve-2026-93680",
+          "publishedAt": "2026-10-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-udinese-dismiss-runjaic",
+      "kind": "daily",
+      "title": "Udinese cut Runjaic loose after eight winless matches",
+      "summary": "Udinese dismissed Kosta Runjaic on Monday, ending a tenure of more than two years after a run of eight matches without a win and a 5-2 home defeat by Roma that left the club on five points from ten games, just above the relegation places on goal difference. The club thanked Runjaic and his two assistants in a two-paragraph statement. Paolo Zanetti, out of work since February, was reported to be closing on the job; Udinese had not confirmed an appointment.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-11-03T05:33:00.000Z",
+      "updatedAt": "2026-11-03T05:33:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "serie-a",
+        "udinese",
+        "management"
+      ],
+      "sources": [
+        {
+          "publisher": "Udinese Calcio",
+          "url": "https://www.udinese.it/news/squad/official-statement-kosta-runjaic",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Football Italia",
+          "url": "https://football-italia.net/official-udinese-sack-runjaic-with-zanetti/",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-claude-code-game-clones",
+      "kind": "daily",
+      "title": "Anthropic edits Claude Code to stop it rebuilding other people's games",
+      "summary": "Anthropic added two sentences to the Claude Code system prompt on Opus 5.5 telling the model to build original games and games within a genre, but not to recreate a specific existing title even when it is relabelled as original. Staff member Addy Osmani confirmed the change, saying use of Claude to infringe intellectual property breaches the company's usage policy and that projects built from a user's own designs should keep working.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-11-03T05:32:00.000Z",
+      "updatedAt": "2026-11-03T05:32:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude-code",
+        "copyright",
+        "gaming"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1024632/anthropic-claude-ai-video-game-clones",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-03-avispa-fukuoka-tsukahara",
+      "kind": "daily",
+      "title": "Bottom club Fukuoka part with Tsukahara thirteen games into the season",
+      "summary": "Avispa Fukuoka terminated Shinya Tsukahara's contract on Tuesday with the club bottom of J1 on seven points from thirteen matches, two wins and ten defeats, after a 0-3 loss at JEF United Chiba extended the run to four straight league defeats. Head coach Yusuke Murakami will take the team for Saturday's home game against V-Varen Nagasaki while the club works through a search for a permanent appointment.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-11-03T05:31:00.000Z",
+      "updatedAt": "2026-11-03T05:31:00.000Z",
+      "retrievedAt": "2026-11-03T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "j1-league",
+        "avispa-fukuoka",
+        "management"
+      ],
+      "sources": [
+        {
+          "publisher": "Avispa Fukuoka",
+          "url": "https://www.avispa.co.jp/news/post-94145",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "Sanspo",
+          "url": "https://www.sanspo.com/article/20261103-E2XKVNWHBFNRRKRBD6XW6NT54U/",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-02-asia-stocks-steady-after-nasdaq-rout",
       "kind": "daily",

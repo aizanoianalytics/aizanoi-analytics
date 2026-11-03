@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-03-marvell-lumentum-optical-bet",
+  "title": "Marvell bets $115 billion of stock on optical links for AI clusters",
+  "summary": "Marvell will acquire Lumentum in an all-stock deal carrying an implied enterprise value of $115 billion, or about $1,132 per Lumentum share, a 23.9% premium to the undisturbed price on 28 October. Lumentum holders receive 4.5 Marvell shares each and would own roughly 33% of the combined company. Marvell frames lasers and optical circuit switching as the scarce half of AI networking, citing a $550 billion addressable market, more than $1 billion of targeted cost synergies and a close in the first half of 2028.",
+  "category": "technology",
+  "priority": 88,
+  "publishedAt": "2026-11-03T05:45:00Z",
+  "updatedAt": "2026-11-03T05:45:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "marvell",
+    "lumentum",
+    "semiconductors",
+    "ai-infrastructure",
+    "mergers"
+  ],
+  "sources": [
+    {
+      "publisher": "Marvell Technology",
+      "url": "https://investor.marvell.com/news-events/press-releases/detail/1040/marvell-and-lumentum-to-combine-creating-a-category-leader-in-ai-connectivity",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/02/in-one-of-the-largest-deals-in-tech-history-marvell-buys-lumentum-for-115b/",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

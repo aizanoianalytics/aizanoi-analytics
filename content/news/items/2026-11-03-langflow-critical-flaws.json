@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-03-langflow-critical-flaws",
+  "title": "Langflow's default login left a 9.8-rated door open until 1.13.0",
+  "summary": "IBM's bulletin covers four Langflow flaws in every release from 1.0.0 through 1.12.8, two of them rated 9.8: an authentication bypass tracked as CVE-2026-93680 and unauthenticated code execution through code generation, CVE-2026-110186. Automatic login, which signs users in as superusers, is enabled by default in 1.12.8 and disabled in 1.13.0. IBM lists no workaround, and a public Metasploit module already enumerates tools on unpatched MCP endpoints.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-11-03T05:34:00Z",
+  "updatedAt": "2026-11-03T05:34:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "langflow",
+    "cve",
+    "ai-tooling"
+  ],
+  "sources": [
+    {
+      "publisher": "IBM",
+      "url": "https://www.ibm.com/support/pages/node/7294467",
+      "publishedAt": "2026-10-28T00:00:00Z"
+    },
+    {
+      "publisher": "NIST NVD",
+      "url": "https://nvd.nist.gov/vuln/detail/cve-2026-93680",
+      "publishedAt": "2026-10-29T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-03-champions-league-matchday-four",
+  "title": "The Champions League table has already split before matchday four",
+  "summary": "Nine fixtures run on Tuesday, opening with Galatasaray against Stuttgart and Shakhtar against Sporting at 18:45 CET, then seven more including Barcelona against Aston Villa. Stuttgart have seven points from three games and have conceded twice; Galatasaray have three points and have conceded nine. Paris, Aston Villa, Liverpool, Real Madrid and Betis lead on nine points, with Arsenal and Stuttgart on seven, leaving the unbeaten sides already clear of the chasing pack.",
+  "category": "football",
+  "priority": 68,
+  "publishedAt": "2026-11-03T05:40:00Z",
+  "updatedAt": "2026-11-03T05:40:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "football",
+    "stuttgart",
+    "galatasaray"
+  ],
+  "sources": [
+    {
+      "publisher": "ANSA",
+      "url": "https://www.ansa.it/sito/notizie/sport/2026/11/02/champions-league-programma-quarta-giornata-le-classifiche_0d8c4c49-516b-4833-a98a-e6be6d52014e.html",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
