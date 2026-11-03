@@ -1416,12 +1416,12 @@
     },
     {
       "path": "index.md",
-      "sha256": "2860f68bae86e3d93fca46f9c7796a19e501ecc0a8ec03d78eaa713649b752c0",
+      "sha256": "9e42852c5855735cf25e73bfb1bc9688c2876b7a40841b9b244fcb59600f29df",
       "sourceSha256": null
     },
     {
       "path": "ui/advisor.js",
-      "sha256": "da5cf4cf9e1ee5f607b65c3eda11d283be814d0f66bac19eff2af97ed51a55e0",
+      "sha256": "2503c373ed8f13866f175f20d2d73b30bf3e257e68c6b52ee0e5158fdc18eebf",
       "sourceSha256": "da5cf4cf9e1ee5f607b65c3eda11d283be814d0f66bac19eff2af97ed51a55e0",
       "added": "2026-11-03"
     },
@@ -1432,7 +1432,7 @@
     },
     {
       "path": "ui/app.js",
-      "sha256": "3f59b6859c4eb351fb7341814203695c15b0ee2ecec12a1c75aec68c278a3674",
+      "sha256": "1f0402d4aa914d90ae9dfdf0966991904358073171b449569f307f2fc540ee8f",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
@@ -1457,13 +1457,13 @@
     },
     {
       "path": "ui/live.js",
-      "sha256": "9afbbd64a19de271e7dfbe403a9b43e6100284e68fbae63baf688d4a7989ab07",
+      "sha256": "ae6aaaed89c71f20096fe3ad5e70c79d6bf1096a032529d8de897d885c958a5c",
       "sourceSha256": "9afbbd64a19de271e7dfbe403a9b43e6100284e68fbae63baf688d4a7989ab07",
       "added": "2026-11-03"
     },
     {
       "path": "ui/monte-carlo.js",
-      "sha256": "3b62b72bbe74ef7baae2d15e05e87a69ebf9475e31d8464957cc3720d337df5a",
+      "sha256": "269353e7c61dfe0b66fe16469deb856327d742062747d0b6308ca7615d17dafa",
       "sourceSha256": "3b62b72bbe74ef7baae2d15e05e87a69ebf9475e31d8464957cc3720d337df5a",
       "added": "2026-11-03"
     },
@@ -1484,7 +1484,7 @@
     },
     {
       "path": "ui/random-race.js",
-      "sha256": "6890c91c6d34c16fa47082f8d856c171c70c72d3d4460e80465d673cc502711e",
+      "sha256": "ce0b23317dc7b66496c8f5a810b0bb90c97f4f7d474a97bec1c51313249db26f",
       "sourceSha256": null
     },
     {

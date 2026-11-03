@@ -1,7 +1,7 @@
 // Basket advisor: the viewer enters a basket, chosen bots trade the last 12 months, then on the latest close each
 // bot sees the viewer's basket instead of its own book and answers with a target portfolio. The difference is
 // shown as close / trim / add / open / flip actions plus a consensus across bots. Paper only, never sent anywhere.
-import { $, $$, esc, html, pct, usd, avatar, fmtDate, price, cls } from './util.js';
+import { $, $$, esc, html, pct, avatar, fmtDate, price, cls } from './util.js';
 import { simulate, diffBaskets, yearBefore, ACTION_LABEL } from './sim-client.js';
 
 const KEY = 'trade-arena:my-basket';
@@ -191,12 +191,13 @@ function render(out, { res, bots, mine, market, value, B }) {
   }).filter(r => Math.abs(r.mine) > 1e-4 || r.long || r.short).sort((x, y) => Math.abs(y.avg) - Math.abs(x.avg));
   const consDiff = diffBaskets(mine, Object.fromEntries(cons.map(r => [r.s, r.avg])), 0.02);
   const verb = s => consDiff.find(r => r.s === s);
-  const money = d => (market === 'bist' ? usd(Math.abs(d) * value).replace('$', '₺') : usd(Math.abs(d) * value));
+  const money = d => new Intl.NumberFormat('en-US', { style: 'currency', currency: market === 'bist' ? 'TRY' : 'USD', currencyDisplay: 'narrowSymbol', maximumFractionDigits: 0 }).format(Math.abs(d) * value);
 
   out.innerHTML = html`
   <div class="section-h"><div><div class="eyebrow">Answers on the ${esc(asOf)} close · ${esc(market)} · ${meta.live?.used ? 'includes live closed bars' : 'archive data'}</div><h2 tabindex="-1">What the bots would do with your basket</h2></div></div>
   ${answers.length > 1 ? `<div class="panel advisor-consensus">
     <div class="panel-h"><h3>Consensus of ${answers.length} bots</h3><span class="muted" data-layout="ta-s2">average target weight · actions ignore changes under 2 points</span></div>
+    <p class="muted">Comparison, not a joint recommendation: ${answers.filter(({ a }) => a?.source !== 'decision').length} bot(s) gave no new decision; their own current baskets are included as disclosed comparisons, not reactions to your holdings.</p>
     <div class="table-wrap"><table class="stats"><caption class="sr-only">Average target weight per asset across the selected bots</caption>
       <thead><tr><th scope="col" class="l">Asset</th><th scope="col">You</th><th scope="col">Bots (avg)</th><th scope="col">Long / short votes</th><th scope="col">Consensus</th><th scope="col">≈ Amount</th><th scope="col">12-month move</th></tr></thead><tbody>
       ${cons.map(r => { const d = verb(r.s) || (r.mine ? { action: 'keep' } : null), m = move(r.s); return `<tr><th scope="row" class="l"><b>${esc(asset(r.s).symbol)}</b> <span class="muted">${esc(asset(r.s).name || '')}</span></th><td class="num">${pct(r.mine, 1)}</td><td class="num ${cls(r.avg)}"><b>${pct(r.avg, 1)}</b></td><td class="num">${r.long} / ${r.short}</td><td>${d ? `<span class="act" data-act="${d.action}">${ACTION_LABEL[d.action]}</span>` : '<span class="faint">—</span>'}</td><td class="num">${d && d.action !== 'keep' ? money(d.delta) : '—'}</td><td class="num ${cls(m)}">${pct(m)}</td></tr>`; }).join('')}

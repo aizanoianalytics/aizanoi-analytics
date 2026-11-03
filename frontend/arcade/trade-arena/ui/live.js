@@ -11,7 +11,7 @@ export async function loadLive(base) {
     const r = await fetch(new URL('live/manifest.json', base), { cache: 'no-store' });
     if (!r.ok) return null;
     const m = await r.json();
-    if (m?.version !== 1 || typeof m.series !== 'object' || !m.end) return null;
+    if (m?.version !== 1 || typeof m.series !== 'object' || !m.end || m.failed?.length) return null;
     return m;
   } catch { return null; }
 }
@@ -62,7 +62,17 @@ export function liveLoader(base, live, get) {
   return async url => {
     const cols = await get(url);
     const key = tailKey(url);
-    if (!live || !key || !(live.series?.[key]?.bars > 0)) return cols;
+    if (!live || !key) return cols;
+    const entry = live.series?.[key];
+    if (!entry) throw new Error(`live ${key}: missing manifest series`);
+    // A zero-bar or stale tail must not silently freeze one asset beside fresh peers.
+    // Funding schedules differ by asset, so only OHLC timeframes share a coverage boundary.
+    const prefix = key.slice(0, key.lastIndexOf('/') + 1);
+    if (!prefix.endsWith('/funding/')) {
+      const latest = Math.max(...Object.entries(live.series).filter(([k]) => k.startsWith(prefix)).map(([, v]) => v.last));
+      if (entry.last < latest) throw new Error(`live ${key}: incomplete coverage`);
+    }
+    if (!(entry.bars > 0)) return cols;
     return appendTail(cols, await tail(key));
   };
 }

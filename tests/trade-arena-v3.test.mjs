@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import { prepareMarket } from '../frontend/arcade/trade-arena/engine/market.js';
 import { runRace, DEFAULT_RULES, advicePortfolio, benchmarks, noiseDraw } from '../frontend/arcade/trade-arena/engine/sim.js';
 import { UNIVERSE } from '../frontend/arcade/trade-arena/engine/universe.js';
-import { appendTail, tailKey, liveEnd } from '../frontend/arcade/trade-arena/ui/live.js';
+import { appendTail, tailKey, liveEnd, loadLive, liveLoader } from '../frontend/arcade/trade-arena/ui/live.js';
 import { diffBaskets } from '../frontend/arcade/trade-arena/ui/sim-client.js';
 
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
@@ -98,6 +98,30 @@ test('live tails append only newer bars and never touch dividends, splits or the
   assert.equal(liveEnd(null, '2026-10-30'), '2026-10-30');
   assert.equal(liveEnd({ end: { crypto: '2026-11-02', stocks: '2026-10-31' } }, '2026-10-30'), '2026-11-02');
   assert.equal(liveEnd({ end: { crypto: 'garbage' } }, '2026-10-30'), '2026-10-30');
+});
+
+test('partial live manifests fall back instead of mixing fresh and stale series', async () => {
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => ({ ok: true, json: async () => ({ version: 1, end: { crypto: '2026-11-02' }, series: {}, failed: [{ series: 'crypto/1d/BTC' }] }) });
+    assert.equal(await loadLive('https://example.com/'), null);
+  } finally { globalThis.fetch = originalFetch; }
+  const manifest = { series: { 'crypto/1d/A': { bars: 1, last: 2 }, 'crypto/1d/B': { bars: 0, last: 1 } } };
+  const loader = liveLoader('https://example.com/', manifest, async () => ({ t: [1], c: [10] }));
+  await assert.rejects(loader('data/raw/crypto/1d/B.json'), /live .*coverage/);
+  await assert.rejects(loader('data/raw/crypto/1d/C.json'), /live .*missing/);
+});
+
+test('funding tails use the same injected live loader as price and context bars', async () => {
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => ({ ok: true, json: async () => ({ t: [2], rate: [0.02] }) });
+    const loader = liveLoader('https://example.com/', { series: { 'crypto/funding/BTC': { bars: 1, last: 2 } } }, async () => ({ t: [1], rate: [0.01] }));
+    assert.deepEqual((await loader('data/raw/crypto/funding/BTC.json')).rate, [0.01, 0.02]);
+    const worker = read(root + 'ui/race-worker.js');
+    assert.match(worker, /async function loadUniverse\(market, tf, progress, get\)/);
+    assert.match(worker, /const f = await get\(url\)/);
+  } finally { globalThis.fetch = originalFetch; }
 });
 
 test('the race worker uses live tails all-or-nothing and the server side is documented', () => {

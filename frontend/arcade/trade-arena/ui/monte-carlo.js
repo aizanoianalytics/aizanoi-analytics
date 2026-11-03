@@ -4,7 +4,7 @@
 import { esc, pct, avatar, cls } from './util.js';
 import { simulate } from './sim-client.js';
 
-const randomSeed = () => 1 + (crypto.getRandomValues(new Uint32Array(1))[0] % 2147483646);
+const randomSeed = () => 1 + Math.floor(Math.random() * 2147483646);
 
 /** Run `runs` replays one after another; onProgress(i, runs) after each. Returns { promise, cancel }. */
 export function monteCarlo(cfg, bots, { runs = 10, live = null } = {}, onProgress = () => {}) {

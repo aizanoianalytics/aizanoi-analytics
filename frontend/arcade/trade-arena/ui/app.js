@@ -135,7 +135,7 @@ function renderLobby(view) {
     const pr = PRESETS.find(p => p.id === pick.preset);
     const cfg = pr ? { ...pr } : { title: 'Custom race', market: pick.market, tf: pick.tf, start: pick.start, end: pick.end };
     // Without noise a race is exactly reproducible (seed 7). With noise every start draws a new seed.
-    const seed = pick.noise ? 1 + (crypto.getRandomValues(new Uint32Array(1))[0] % 2147483646) : 7;
+    const seed = pick.noise ? 1 + Math.floor(Math.random() * 2147483646) : 7;
     startRace({ ...cfg, bots: [...pick.bots], blind: pick.blind, short: pick.short, gross: pick.gross, noise: !!pick.noise, seed }, state.roster);
   };
   $('#go').onclick = () => go('go-err'); $('#go-top').onclick = () => go('go-top-err');
