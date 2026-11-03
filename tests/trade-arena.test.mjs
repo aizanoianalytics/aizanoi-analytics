@@ -28,7 +28,13 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
   for (const entry of inventory.files) {
     const hash = createHash('sha256').update(readFileSync(new URL('../' + root + entry.path, import.meta.url))).digest('hex');
     assert.equal(hash, entry.sha256, entry.path);
-    if (/^(bots|data)\//.test(entry.path)) assert.equal(hash, entry.sourceSha256, 'unchanged owner payload ' + entry.path);
+    if (entry.path === 'bots/ai/flint-40b.js') {
+      // Reviewed integration repair: only make the reassigned binding mutable. Reversing that
+      // exact token must recover the supplied bytes; no other strategy edits are admitted.
+      assert.equal(entry.sourceSha256, '49d0a9fb25fdbd1c83ac3aaafbbbda5b78edbba02d01d0914937467709e63aa0');
+      const supplied = read(root + entry.path).replace('let longs = cands.filter', 'const longs = cands.filter');
+      assert.equal(createHash('sha256').update(supplied).digest('hex'), entry.sourceSha256);
+    } else if (/^(bots|data)\//.test(entry.path)) assert.equal(hash, entry.sourceSha256, 'unchanged owner payload ' + entry.path);
   }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
   assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.bist.length, 30); assert.equal(catalog.context.length, 8);
