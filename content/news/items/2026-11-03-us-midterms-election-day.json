@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-03-us-midterms-election-day",
+  "title": "Washington's balance of power goes to voters with 53 million ballots already cast",
+  "summary": "All 435 House seats, 35 Senate seats and governorships in 36 states are on Tuesday's ballot, with control of Congress deciding how much of the president's remaining agenda can pass. University of Florida tracking counted 53.14 million early votes by Sunday morning out of roughly 210 million registered voters, a record pace. The first polls close at 6 p.m. Eastern, and markets have spent the past week cutting technology exposure rather than positioning for a clear result.",
+  "category": "economy-markets",
+  "priority": 84,
+  "publishedAt": "2026-11-03T05:44:00Z",
+  "updatedAt": "2026-11-03T05:44:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-politics",
+    "midterms",
+    "elections",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/11/1/more-than-50-million-votes-cast-in-us-midterm-elections-what-does-it-mean",
+      "publishedAt": "2026-11-01T00:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/graphics/2026-us-election-results",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

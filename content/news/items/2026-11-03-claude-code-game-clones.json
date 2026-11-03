@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-03-claude-code-game-clones",
+  "title": "Anthropic edits Claude Code to stop it rebuilding other people's games",
+  "summary": "Anthropic added two sentences to the Claude Code system prompt on Opus 5.5 telling the model to build original games and games within a genre, but not to recreate a specific existing title even when it is relabelled as original. Staff member Addy Osmani confirmed the change, saying use of Claude to infringe intellectual property breaches the company's usage policy and that projects built from a user's own designs should keep working.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-11-03T05:32:00Z",
+  "updatedAt": "2026-11-03T05:32:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude-code",
+    "copyright",
+    "gaming"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1024632/anthropic-claude-ai-video-game-clones",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

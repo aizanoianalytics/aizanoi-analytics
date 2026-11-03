@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-03-south-korea-ai-budget",
+  "title": "South Korea doubles its chip and AI bet inside a record budget",
+  "summary": "President Lee Jae-myung told the National Assembly that 2027 spending will rise 12.8% to 820.9 trillion won, the largest budget on record, with 21.3 trillion won, nearly double this year's figure, going to semiconductors, physical AI and AI data centres. A separate 4.6 trillion won is earmarked for a sovereign frontier model and 13.8 trillion won for ten strategic technologies. Parliament, where his party holds a majority, still has to pass the bill.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-11-03T05:38:00Z",
+  "updatedAt": "2026-11-03T05:38:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "south-korea",
+    "budget",
+    "ai-policy",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Yonhap News Agency",
+      "url": "https://en.yna.co.kr/view/AEN20261102000952315",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/02/south-korea-ai-spending-budget.html",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-03-apple-memory-cost-guidance",
+  "title": "Apple's record quarter arrives with a memory bill it cannot yet price",
+  "summary": "Apple reported September-quarter revenue of $114.5 billion, up 12%, earnings per share of $2.10 and a 47.9% gross margin that included about a point of tariff refunds. The guidance carries the warning: a 45% to 46% margin for the December quarter, compressed by what chief executive John Ternus called unprecedented memory pricing. Inventory rose to $14.54 billion, up 154% year on year, and manufacturing purchase obligations grew by $33 billion in three months.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-11-03T05:41:00Z",
+  "updatedAt": "2026-11-03T05:41:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "earnings",
+    "memory",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple",
+      "url": "https://www.apple.com/newsroom/2026/11/apple-reports-fourth-quarter-results/",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/02/apples-inventory-surges-154-as-memory-chip-costs-climb/",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

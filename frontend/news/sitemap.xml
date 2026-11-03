@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/marvell-lumentum-optical-bet/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:45:00.000Z</news:publication_date>
+      <news:title>Marvell bets $115 billion of stock on optical links for AI clusters</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/us-midterms-election-day/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:44:00.000Z</news:publication_date>
+      <news:title>Washington&#39;s balance of power goes to voters with 53 million ballots already cast</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/nyt-brave-scraping-lawsuit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:43:00.000Z</news:publication_date>
+      <news:title>Publishers sue Brave, casting the browser as a fence for scraped news</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/anthropic-amended-s1-commitments/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:42:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s amended filing puts its compute bill at $895 billion</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/apple-memory-cost-guidance/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:41:00.000Z</news:publication_date>
+      <news:title>Apple&#39;s record quarter arrives with a memory bill it cannot yet price</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/champions-league-matchday-four/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:40:00.000Z</news:publication_date>
+      <news:title>The Champions League table has already split before matchday four</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/seoul-asia-tech-selloff/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:39:00.000Z</news:publication_date>
+      <news:title>Seoul leads an Asian retreat as the AI spending trade loses its floor</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/south-korea-ai-budget/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:38:00.000Z</news:publication_date>
+      <news:title>South Korea doubles its chip and AI bet inside a record budget</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/openai-grid-protectors/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:37:00.000Z</news:publication_date>
+      <news:title>OpenAI offers utilities a switch it can flick when the grid strains</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/taiwan-chip-export-crimes/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:36:00.000Z</news:publication_date>
+      <news:title>Taiwan moves to make AI chip smuggling a crime in its own right</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/meituan-longcat-2-5/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:35:00.000Z</news:publication_date>
+      <news:title>Meituan ships a 1.6-trillion-parameter agent model without the weights</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/langflow-critical-flaws/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:34:00.000Z</news:publication_date>
+      <news:title>Langflow&#39;s default login left a 9.8-rated door open until 1.13.0</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/udinese-dismiss-runjaic/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:33:00.000Z</news:publication_date>
+      <news:title>Udinese cut Runjaic loose after eight winless matches</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/claude-code-game-clones/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:32:00.000Z</news:publication_date>
+      <news:title>Anthropic edits Claude Code to stop it rebuilding other people&#39;s games</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-03/avispa-fukuoka-tsukahara/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-03T05:31:00.000Z</news:publication_date>
+      <news:title>Bottom club Fukuoka part with Tsukahara thirteen games into the season</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-02/asia-stocks-steady-after-nasdaq-rout/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -158,126 +278,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-02T05:40:00.000Z</news:publication_date>
       <news:title>Memory and compute prices, not model scores, are setting the agenda</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/apple-qwen-apple-intelligence-china/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Apple hands Apple Intelligence in China to Alibaba&#39;s Qwen</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/binance-hack-north-korea-recovery/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Binance says it has replaced 90% of the $6.3bn taken in record hack</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/sp-meta-outlook-negative/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>S&amp;P cuts its Meta outlook to negative over AI cash burn</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/ibm-quantum-processor-interconnect/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>IBM links two 120-qubit processors with four metre-scale cables</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/bayern-dortmund-klassiker-draw/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Dortmund salvage a 2-2 draw in Munich as Silva strikes late</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/google-suncatcher-orbital-tpu/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Google&#39;s orbital TPU returns its first AI answer from space</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/man-city-brighton-etihad/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Brighton win at the Etihad for the first time and close on City</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/chelsea-man-utd-carrick-pressure/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Ten-man United lose at Chelsea as Carrick&#39;s winless run reaches nine</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/china-manufacturing-pmi-october/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>China&#39;s factory gauge slips back into contraction at 49.3</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/ai-labs-shared-training-opt-out/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>AI labs agree to read one robots.txt training opt-out</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/altman-samsung-memory-talks/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Altman takes OpenAI&#39;s memory squeeze to Samsung&#39;s boardroom</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/meta-humanoid-max-fourier/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Meta built a humanoid prototype with China&#39;s Fourier, report says</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/hermantown-google-data-centre-approved/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Hermantown council clears Google&#39;s 1.7m sq ft Minnesota data centre</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/altman-openai-science-blitz/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Altman says OpenAI will keep publishing faster than academia can check</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-01/apple-m6-macbook-pro-memory-premium/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-01T05:20:00.000Z</news:publication_date>
-      <news:title>Apple&#39;s 2nm M6 reaches the MacBook Pro with memory-driven storage premiums</news:title>
     </news:news>
   </url>
 </urlset>

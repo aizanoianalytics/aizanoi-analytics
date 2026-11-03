@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-03-taiwan-chip-export-crimes",
+  "title": "Taiwan moves to make AI chip smuggling a crime in its own right",
+  "summary": "An amendment heard in the Legislative Yuan's economics committee on Monday would criminalise exporting specified advanced chips, wafer materials and equipment to China without approval, with penalties of up to ten years in prison and fines of NT$5 million to NT$10 million, including for shipments routed through a third country. The loophole it closes surfaced in a Keelung case where 74 Nvidia B300 servers reached Chinese buyers but no one could be charged with an export offence.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-11-03T05:36:00Z",
+  "updatedAt": "2026-11-03T05:36:00Z",
+  "retrievedAt": "2026-11-03T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "taiwan",
+    "export-controls",
+    "nvidia",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Asia Times",
+      "url": "https://asiatimes.com/2026/11/taiwan-to-criminalize-nvidia-ai-chip-smuggling-to-china/",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
