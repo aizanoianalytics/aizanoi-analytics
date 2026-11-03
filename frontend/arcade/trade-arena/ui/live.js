@@ -41,7 +41,7 @@ export function appendTail(baseCols, tail) {
 
 /** Latest UTC day covered for a market, preferring live data. */
 export function liveEnd(live, archiveEnd) {
-  const days = [live?.end?.crypto, live?.end?.stocks].filter(d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d));
+  const days = [live?.end?.crypto, live?.end?.stocks, live?.end?.bist].filter(d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d));
   const best = days.sort().pop();
   return best && best > archiveEnd ? best : archiveEnd;
 }

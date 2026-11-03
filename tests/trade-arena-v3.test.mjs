@@ -97,6 +97,7 @@ test('live tails append only newer bars and never touch dividends, splits or the
   assert.equal(tailKey('bots/roster.json'), null);
   assert.equal(liveEnd(null, '2026-10-30'), '2026-10-30');
   assert.equal(liveEnd({ end: { crypto: '2026-11-02', stocks: '2026-10-31' } }, '2026-10-30'), '2026-11-02');
+  assert.equal(liveEnd({ end: { crypto: '2026-11-02', stocks: '2026-11-02', bist: '2026-11-03' } }, '2026-10-30'), '2026-11-03', 'BIST closes before the US and must not lose its latest session');
   assert.equal(liveEnd({ end: { crypto: 'garbage' } }, '2026-10-30'), '2026-10-30');
 });
 
