@@ -214,7 +214,8 @@ async function buildAssetChart() {
   const a = R.assetsById[R.asset];
   const tfFile = a.market === 'stocks' && R.cfg.tf === '4h' ? '1h' : R.cfg.tf;
   try {
-    const raw = await fetch(new URL(`data/raw/${a.market}/${tfFile}/${a.symbol}.json`, BASE)).then(r => r.json());
+    const archiveMarket = a.exchange === 'BIST' ? 'bist' : a.market;
+    const raw = await fetch(new URL(`data/raw/${archiveMarket}/${tfFile}/${a.symbol}.json`, BASE)).then(r => r.json());
     if (R !== mine || R.ac !== ac) return;
     const t0 = R.meta.timeline[0], pre = [];
     const tfStep = { '1d': 86400000, '4h': 14400000, '1h': 3600000 }[R.cfg.tf];
