@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-03T05:15:00.000Z",
+  "generatedAt": "2026-11-04T05:35:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-04",
+      "path": "/news/2026-11-04/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-03",
       "path": "/news/2026-11-03/",
@@ -432,6 +437,524 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-04-anthropic-flashprove-provable-inference",
+      "kind": "daily",
+      "title": "Anthropic ships an open prototype that proves which model answered",
+      "summary": "Anthropic published FlashProve, an Apache-2.0 prototype that lets a user check that a reply came from the model it claims to have come from. On Llama 4 Maverick, a 400-billion-parameter mixture of experts quantised to four bits, one H100 produced proofs at about 110 tokens per second, roughly 70 to 95 times the GPU time vLLM needed for the same work, with an 18.8 MB proof per 1,024-token request. Anthropic calls the result intermediate progress, not a finished product.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-11-04T05:45:00.000Z",
+      "updatedAt": "2026-11-04T05:45:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "provable-inference",
+        "cryptography",
+        "open-source"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/provable-inference",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic (technical report)",
+          "url": "https://www.anthropic.com/document/flashprove-technical-report",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-google-schools-ai-default-off",
+      "kind": "daily",
+      "title": "Google turns its school AI defaults off, and Search goes with them",
+      "summary": "Google will switch Gemini, Gemini Notebook, Gemini in Classroom and Google Search off by default for K-12 student accounts, leaving administrators to opt each service in. The company paired the change with Guided Learning, a step-by-step tutoring mode that arrives in Classroom globally and in a Search pilot at selected U.S. schools this month. Because AI features now sit inside Search, a school that wants no AI also gives up student Search, a trade-off critics seized on.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "education",
+        "search",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/products-and-platforms/products/education/ai-learning-era-updates-2026",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/03/google-will-let-schools-disable-its-ai-tools-but-not-without-sacrificing-search/",
+          "publishedAt": "2026-11-03T16:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-psg-villarreal-six-record-start",
+      "kind": "daily",
+      "title": "PSG score four in 17 minutes and bury Villarreal 6-0",
+      "summary": "Paris Saint-Germain scored four times inside 17 minutes at Villarreal and finished with a 6-0 win that kept its perfect Champions League record. Joao Neves, Desire Doue, Senny Mayulu and Fabian Ruiz scored before the 18th minute, the fastest any side has reached four goals in the competition, according to UEFA, beating Real Madrid's 20-minute start against Dinamo Zagreb in 2011. Ruiz added a fifth and 17-year-old David Boly marked his debut with the sixth.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "psg",
+        "villarreal",
+        "record"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cm0ld2p49xx0t",
+          "publishedAt": "2026-11-03T22:30:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/psg-villarreal-champions-league-7b5b3f4ad2e21f5639b8678d17056498",
+          "publishedAt": "2026-11-03T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-openai-cathedral-security-sprint",
+      "kind": "daily",
+      "title": "OpenAI brings in outside attackers and raises its bug bounty",
+      "summary": "OpenAI's next internal security sprint will bring in researchers from Cathedral, a startup founded by former DOGE staff, to attack its systems with OpenAI's own models. The company also said it is more than quadrupling rewards for critical bug-bounty findings. Its previous sprint put a quarter of product engineers on vulnerability hunting with Codex. Gizmodo reported that Cathedral had earlier reached parts of Anthropic's systems during a bounty test, which Anthropic said went beyond the agreed scope.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "security",
+        "bug-bounty",
+        "cathedral"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/preparing-our-next-security-sprint-to-harden-openai",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Gizmodo",
+          "url": "https://gizmodo.com/openai-hires-doge-alumni-who-hacked-into-anthropic-to-strengthen-security-2000834432",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-sk-hynix-solidigm-new-york-stall",
+      "kind": "daily",
+      "title": "SK hynix's New York memory plan waits on a China export licence",
+      "summary": "U.S. officials have not approved export licences SK hynix needs to equip its Dalian plant in China, complicating the memory maker's plan to build two NAND fabs at Marcy, New York, through Solidigm. Reuters reported the New York project at about $45 billion initially and as much as $100 billion over time. Solidigm executives have met Commerce Department officials about ten times since late August; the company says it is still weighing sites worldwide and has made no decision.",
+      "category": "technology",
+      "priority": 69,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "sk-hynix",
+        "solidigm",
+        "export-controls",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "The Korea Times (Reuters)",
+          "url": "https://www.koreatimes.co.kr/world/20261104/sk-hynixs-new-york-chip-plans-hit-snag-over-us-restrictions-on-china-sources-say",
+          "publishedAt": "2026-11-03T18:55:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-amd-record-quarter-seventeen-billion-guide",
+      "kind": "daily",
+      "title": "AMD's data-center sales nearly double and the outlook jumps to $17 billion",
+      "summary": "AMD reported third-quarter revenue of $13.4 billion, up 45% from a year earlier and above the top of its own guidance, with data-center sales of $8.5 billion nearly double the year-earlier figure. Non-GAAP earnings per share were $2.09. The chipmaker guided the fourth quarter to about $17 billion, implying 66% growth, as it ramps Helios rack systems and its Venice server processors. Gaming revenue fell 40% to $773 million.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "amd",
+        "earnings",
+        "data-center",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "AMD",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1303/amd-reports-third-quarter-2026-financial-results",
+          "publishedAt": "2026-11-03T21:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-man-united-roma-cunha-comeback",
+      "kind": "daily",
+      "title": "Cunha rescues Manchester United from two down, then gets sent off",
+      "summary": "Manchester United came from two goals down to beat Roma 3-2 at Old Trafford, ending a run of nine matches without a win. Matias Soule and a Donyell Malen penalty put Roma ahead; Bruno Fernandes converted a retaken penalty, Matheus Cunha equalised in the 83rd minute and scored the winner in the 86th. Cunha was sent off in stoppage time for a second booking. Carlos Baleba went off with a hamstring injury.",
+      "category": "football",
+      "priority": 67,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "manchester-united",
+        "roma",
+        "cunha"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/man-utd-vs-roma/report/577657",
+          "publishedAt": "2026-11-03T22:50:00.000Z"
+        },
+        {
+          "publisher": "The Analyst",
+          "url": "https://theanalyst.com/articles/manchester-united-vs-roma-stats-uefa-champions-league-11-2026",
+          "publishedAt": "2026-11-03T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-wall-street-split-chips-apple",
+      "kind": "daily",
+      "title": "Chips rebound, Apple drags the Dow as Wall Street splits",
+      "summary": "Wall Street split on election day: the Nasdaq Composite rose 0.83% to 25,372.01 and the S&P 500 added 0.36% to 7,568.92 as chip shares rebounded, while the Dow fell 0.38% to 51,786.72 after Apple's margin guidance. The 10-year Treasury yield climbed to 4.952% and Brent settled 1.12% lower at $103.60 a barrel. The CBOE volatility index held above 20 through the session.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "nasdaq",
+        "oil",
+        "treasuries"
+      ],
+      "sources": [
+        {
+          "publisher": "Investrade",
+          "url": "https://investrade.com/market-review-november-03-2026",
+          "publishedAt": "2026-11-03T21:30:00.000Z"
+        },
+        {
+          "publisher": "Vistap Global",
+          "url": "https://vistapglobal.com/stock-market-today-november-3-2026-nasdaq-leads-as-chips-rebound-dow-falls-and-treasury-yields-rise-amd-aapl-amwl-eprx-googl-modd-nvda-ser",
+          "publishedAt": "2026-11-03T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-wired-cloaked-deepfake-app-network",
+      "kind": "daily",
+      "title": "Hundreds of ordinary-looking apps hid deepfake tools, WIRED finds",
+      "summary": "An investigation by WIRED and researchers at AI Forensics traced more than 400 apps and domains that present themselves as pet-portrait, language or fitness tools but can load a hidden interface for generating sexual deepfakes. Apple removed 19 apps, including Viefur, after WIRED shared the domains; Google had already pulled most of the Play Store listings. Meta said it acted on 11,600 ad accounts and blocked 209 apps from advertising. The EU's ban on nudifier apps takes effect next month.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepfakes",
+        "app-store",
+        "trust-and-safety",
+        "meta"
+      ],
+      "sources": [
+        {
+          "publisher": "WIRED",
+          "url": "https://www.wired.com/story/hundreds-of-mundane-ai-apps-are-hiding-abusive-deepfake-features",
+          "publishedAt": "2026-11-02T10:00:00.000Z"
+        },
+        {
+          "publisher": "Digital Trends",
+          "url": "https://www.digitaltrends.com/computing/hidden-network-of-sexual-deepfake-generators-inside-harmless-ai-apps/",
+          "publishedAt": "2026-11-02T23:40:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-palantir-third-quarter-two-billion",
+      "kind": "daily",
+      "title": "Palantir clears $2 billion a quarter and lifts its full-year target",
+      "summary": "Palantir's third-quarter revenue rose 96% to $2.31 billion, the first quarter above $2 billion, as U.S. commercial sales climbed 148% to $984 million and overtook U.S. government revenue for the first time. GAAP operating margin reached 47%. The company raised full-year revenue guidance to $8.53 billion to $8.534 billion and pointed to $2.649 billion to $2.653 billion for the fourth quarter.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "palantir",
+        "earnings",
+        "enterprise-ai"
+      ],
+      "sources": [
+        {
+          "publisher": "Palantir (Business Wire)",
+          "url": "https://finance.yahoo.com/markets/stocks/article/palantir-reports-q3-2026-u-210500819.html",
+          "publishedAt": "2026-11-02T21:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-champions-league-matchday-four-results",
+      "kind": "daily",
+      "title": "Bayern and Inter win away as the Champions League's fourth round opens",
+      "summary": "Bayern Munich won 2-0 at Atletico Madrid through Lennart Karl and Konrad Laimer, Barcelona beat Aston Villa 3-0 with two Raphinha goals, and Inter won 3-0 at Feyenoord on a night of away wins. LASK routed Slovan Bratislava 4-0, Galatasaray beat Stuttgart 2-0 and Sporting won 1-0 at Shakhtar Donetsk. Bodo/Glimt and Lille drew 0-0, while Manchester United and Paris Saint-Germain completed the visitors' sweep.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "bayern",
+        "barcelona",
+        "inter"
+      ],
+      "sources": [
+        {
+          "publisher": "AS (Opta)",
+          "url": "https://en.as.com/resultados/futbol/champions/jornada/",
+          "publishedAt": "2026-11-03T23:30:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-03",
+          "publishedAt": "2026-11-03T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-crowdstrike-fiddler-dreadnode",
+      "kind": "daily",
+      "title": "CrowdStrike buys observability and red-teaming for its agent push",
+      "summary": "CrowdStrike agreed to buy two AI-security startups announced at its Fal.Con Europe conference: Fiddler AI, whose agent observability tools will become Falcon Observe, and Dreadnode, which stress-tests models and agents before deployment. The Wall Street Journal put the combined price at $495 million, about $400 million for Fiddler and $95 million for Dreadnode; CrowdStrike did not disclose terms. Both deals are expected to close in its fiscal fourth quarter.",
+      "category": "technology",
+      "priority": 59,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "crowdstrike",
+        "acquisitions",
+        "ai-security",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "CrowdStrike",
+          "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-to-acquire-fiddler/",
+          "publishedAt": "2026-11-03T13:00:00.000Z"
+        },
+        {
+          "publisher": "CyberScoop",
+          "url": "https://cyberscoop.com/crowdstrike-acquires-fiddler-dreadnode-ai-security",
+          "publishedAt": "2026-11-03T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-super-micro-ai-server-forecast",
+      "kind": "daily",
+      "title": "Super Micro's AI server demand outruns its own forecast again",
+      "summary": "Super Micro Computer reported first-quarter revenue of $19.95 billion, well above the $16.39 billion analysts expected, and guided the current quarter to $19.5 billion to $21.5 billion against a $17.14 billion consensus. Gross margin came in at 12.7%, above its own preliminary range of 12.0% to 12.5%. The AI-server maker's shares rose more than 9% in extended trading, Reuters reported.",
+      "category": "technology",
+      "priority": 57,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "super-micro",
+        "ai-servers",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/super-micro-forecasts-quarterly-revenue-above-estimates-strong-ai-server-demand-2026-11-03/",
+          "publishedAt": "2026-11-03T21:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-snowflake-business-ontology-gateway",
+      "kind": "daily",
+      "title": "Snowflake puts a governed dictionary in front of enterprise agents",
+      "summary": "At its Expedition conference, Snowflake introduced Business Ontology, a governed glossary that supplies approved definitions to AI agents, and expanded Cortex AI Gateway into a single control plane for agent traffic: policy checks on tool calls, abuse detection, spend limits and model routing. Cortex Sandboxes entered private preview. Business Ontology is due in public preview soon, while the gateway is already in public preview.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "snowflake",
+        "enterprise-ai",
+        "governance",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Snowflake",
+          "url": "https://www.snowflake.com/en/blog/ai-agents-governance-ai-security-cost-control",
+          "publishedAt": "2026-11-03T13:00:00.000Z"
+        },
+        {
+          "publisher": "Business Wire",
+          "url": "https://finance.yahoo.com/technology/ai/articles/snowflake-helps-enterprises-deploy-ai-140400455.html",
+          "publishedAt": "2026-11-03T14:04:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-04-apple-age-ratings-dating-ai-companions",
+      "kind": "daily",
+      "title": "Apple puts dating apps and AI companions behind an 18+ rating",
+      "summary": "Apple will add two content descriptors to its App Store age-rating questionnaire from November 16: one for dating and relationship features, including virtual companions that engage users in sexual or romantic content, and one for sharing a user's real-world location. Apps declaring the first will carry a minimum 18+ rating. All apps must complete the declarations by January 12, 2027. Brazil applies its own A16 and A18 thresholds.",
+      "category": "technology",
+      "priority": 54,
+      "publishedAt": "2026-11-04T05:40:00.000Z",
+      "updatedAt": "2026-11-04T05:40:00.000Z",
+      "retrievedAt": "2026-11-04T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "app-store",
+        "age-ratings",
+        "ai-companions"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Developer",
+          "url": "https://developer.apple.com/news/?id=yxkh08us",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/03/apple-restricts-dating-apps-and-ai-companions-to-users-18-and-up/",
+          "publishedAt": "2026-11-03T15:38:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-03-marvell-lumentum-optical-bet",
       "kind": "daily",

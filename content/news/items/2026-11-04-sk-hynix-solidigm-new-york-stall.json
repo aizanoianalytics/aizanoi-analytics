@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-04-sk-hynix-solidigm-new-york-stall",
+  "title": "SK hynix's New York memory plan waits on a China export licence",
+  "summary": "U.S. officials have not approved export licences SK hynix needs to equip its Dalian plant in China, complicating the memory maker's plan to build two NAND fabs at Marcy, New York, through Solidigm. Reuters reported the New York project at about $45 billion initially and as much as $100 billion over time. Solidigm executives have met Commerce Department officials about ten times since late August; the company says it is still weighing sites worldwide and has made no decision.",
+  "category": "technology",
+  "priority": 69,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "sk-hynix",
+    "solidigm",
+    "export-controls",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "The Korea Times (Reuters)",
+      "url": "https://www.koreatimes.co.kr/world/20261104/sk-hynixs-new-york-chip-plans-hit-snag-over-us-restrictions-on-china-sources-say",
+      "publishedAt": "2026-11-03T18:55:00Z"
+    }
+  ],
+  "kind": "daily"
+}

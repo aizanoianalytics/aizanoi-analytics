@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-google-schools-ai-default-off",
+  "title": "Google turns its school AI defaults off, and Search goes with them",
+  "summary": "Google will switch Gemini, Gemini Notebook, Gemini in Classroom and Google Search off by default for K-12 student accounts, leaving administrators to opt each service in. The company paired the change with Guided Learning, a step-by-step tutoring mode that arrives in Classroom globally and in a Search pilot at selected U.S. schools this month. Because AI features now sit inside Search, a school that wants no AI also gives up student Search, a trade-off critics seized on.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "education",
+    "search",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/products-and-platforms/products/education/ai-learning-era-updates-2026",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/03/google-will-let-schools-disable-its-ai-tools-but-not-without-sacrificing-search/",
+      "publishedAt": "2026-11-03T16:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

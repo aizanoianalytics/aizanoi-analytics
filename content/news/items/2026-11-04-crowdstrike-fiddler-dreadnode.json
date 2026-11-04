@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-crowdstrike-fiddler-dreadnode",
+  "title": "CrowdStrike buys observability and red-teaming for its agent push",
+  "summary": "CrowdStrike agreed to buy two AI-security startups announced at its Fal.Con Europe conference: Fiddler AI, whose agent observability tools will become Falcon Observe, and Dreadnode, which stress-tests models and agents before deployment. The Wall Street Journal put the combined price at $495 million, about $400 million for Fiddler and $95 million for Dreadnode; CrowdStrike did not disclose terms. Both deals are expected to close in its fiscal fourth quarter.",
+  "category": "technology",
+  "priority": 59,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "crowdstrike",
+    "acquisitions",
+    "ai-security",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "CrowdStrike",
+      "url": "https://www.crowdstrike.com/en-us/blog/crowdstrike-to-acquire-fiddler/",
+      "publishedAt": "2026-11-03T13:00:00Z"
+    },
+    {
+      "publisher": "CyberScoop",
+      "url": "https://cyberscoop.com/crowdstrike-acquires-fiddler-dreadnode-ai-security",
+      "publishedAt": "2026-11-03T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

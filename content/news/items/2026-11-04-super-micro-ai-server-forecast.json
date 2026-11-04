@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-04-super-micro-ai-server-forecast",
+  "title": "Super Micro's AI server demand outruns its own forecast again",
+  "summary": "Super Micro Computer reported first-quarter revenue of $19.95 billion, well above the $16.39 billion analysts expected, and guided the current quarter to $19.5 billion to $21.5 billion against a $17.14 billion consensus. Gross margin came in at 12.7%, above its own preliminary range of 12.0% to 12.5%. The AI-server maker's shares rose more than 9% in extended trading, Reuters reported.",
+  "category": "technology",
+  "priority": 57,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "super-micro",
+    "ai-servers",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/super-micro-forecasts-quarterly-revenue-above-estimates-strong-ai-server-demand-2026-11-03/",
+      "publishedAt": "2026-11-03T21:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

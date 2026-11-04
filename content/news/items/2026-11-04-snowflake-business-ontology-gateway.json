@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-snowflake-business-ontology-gateway",
+  "title": "Snowflake puts a governed dictionary in front of enterprise agents",
+  "summary": "At its Expedition conference, Snowflake introduced Business Ontology, a governed glossary that supplies approved definitions to AI agents, and expanded Cortex AI Gateway into a single control plane for agent traffic: policy checks on tool calls, abuse detection, spend limits and model routing. Cortex Sandboxes entered private preview. Business Ontology is due in public preview soon, while the gateway is already in public preview.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "snowflake",
+    "enterprise-ai",
+    "governance",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Snowflake",
+      "url": "https://www.snowflake.com/en/blog/ai-agents-governance-ai-security-cost-control",
+      "publishedAt": "2026-11-03T13:00:00Z"
+    },
+    {
+      "publisher": "Business Wire",
+      "url": "https://finance.yahoo.com/technology/ai/articles/snowflake-helps-enterprises-deploy-ai-140400455.html",
+      "publishedAt": "2026-11-03T14:04:00Z"
+    }
+  ],
+  "kind": "daily"
+}
