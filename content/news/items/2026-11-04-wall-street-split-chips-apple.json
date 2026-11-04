@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-wall-street-split-chips-apple",
+  "title": "Chips rebound, Apple drags the Dow as Wall Street splits",
+  "summary": "Wall Street split on election day: the Nasdaq Composite rose 0.83% to 25,372.01 and the S&P 500 added 0.36% to 7,568.92 as chip shares rebounded, while the Dow fell 0.38% to 51,786.72 after Apple's margin guidance. The 10-year Treasury yield climbed to 4.952% and Brent settled 1.12% lower at $103.60 a barrel. The CBOE volatility index held above 20 through the session.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nasdaq",
+    "oil",
+    "treasuries"
+  ],
+  "sources": [
+    {
+      "publisher": "Investrade",
+      "url": "https://investrade.com/market-review-november-03-2026",
+      "publishedAt": "2026-11-03T21:30:00Z"
+    },
+    {
+      "publisher": "Vistap Global",
+      "url": "https://vistapglobal.com/stock-market-today-november-3-2026-nasdaq-leads-as-chips-rebound-dow-falls-and-treasury-yields-rise-amd-aapl-amwl-eprx-googl-modd-nvda-ser",
+      "publishedAt": "2026-11-03T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

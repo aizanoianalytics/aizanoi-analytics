@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-champions-league-matchday-four-results",
+  "title": "Bayern and Inter win away as the Champions League's fourth round opens",
+  "summary": "Bayern Munich won 2-0 at Atletico Madrid through Lennart Karl and Konrad Laimer, Barcelona beat Aston Villa 3-0 with two Raphinha goals, and Inter won 3-0 at Feyenoord on a night of away wins. LASK routed Slovan Bratislava 4-0, Galatasaray beat Stuttgart 2-0 and Sporting won 1-0 at Shakhtar Donetsk. Bodo/Glimt and Lille drew 0-0, while Manchester United and Paris Saint-Germain completed the visitors' sweep.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "bayern",
+    "barcelona",
+    "inter"
+  ],
+  "sources": [
+    {
+      "publisher": "AS (Opta)",
+      "url": "https://en.as.com/resultados/futbol/champions/jornada/",
+      "publishedAt": "2026-11-03T23:30:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-03",
+      "publishedAt": "2026-11-03T23:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

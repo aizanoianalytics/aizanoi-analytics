@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-man-united-roma-cunha-comeback",
+  "title": "Cunha rescues Manchester United from two down, then gets sent off",
+  "summary": "Manchester United came from two goals down to beat Roma 3-2 at Old Trafford, ending a run of nine matches without a win. Matias Soule and a Donyell Malen penalty put Roma ahead; Bruno Fernandes converted a retaken penalty, Matheus Cunha equalised in the 83rd minute and scored the winner in the 86th. Cunha was sent off in stoppage time for a second booking. Carlos Baleba went off with a hamstring injury.",
+  "category": "football",
+  "priority": 67,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "manchester-united",
+    "roma",
+    "cunha"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/man-utd-vs-roma/report/577657",
+      "publishedAt": "2026-11-03T22:50:00Z"
+    },
+    {
+      "publisher": "The Analyst",
+      "url": "https://theanalyst.com/articles/manchester-united-vs-roma-stats-uefa-champions-league-11-2026",
+      "publishedAt": "2026-11-03T23:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

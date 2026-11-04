@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-openai-cathedral-security-sprint",
+  "title": "OpenAI brings in outside attackers and raises its bug bounty",
+  "summary": "OpenAI's next internal security sprint will bring in researchers from Cathedral, a startup founded by former DOGE staff, to attack its systems with OpenAI's own models. The company also said it is more than quadrupling rewards for critical bug-bounty findings. Its previous sprint put a quarter of product engineers on vulnerability hunting with Codex. Gizmodo reported that Cathedral had earlier reached parts of Anthropic's systems during a bounty test, which Anthropic said went beyond the agreed scope.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "security",
+    "bug-bounty",
+    "cathedral"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/preparing-our-next-security-sprint-to-harden-openai",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    },
+    {
+      "publisher": "Gizmodo",
+      "url": "https://gizmodo.com/openai-hires-doge-alumni-who-hacked-into-anthropic-to-strengthen-security-2000834432",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

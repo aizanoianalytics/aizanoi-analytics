@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-wired-cloaked-deepfake-app-network",
+  "title": "Hundreds of ordinary-looking apps hid deepfake tools, WIRED finds",
+  "summary": "An investigation by WIRED and researchers at AI Forensics traced more than 400 apps and domains that present themselves as pet-portrait, language or fitness tools but can load a hidden interface for generating sexual deepfakes. Apple removed 19 apps, including Viefur, after WIRED shared the domains; Google had already pulled most of the Play Store listings. Meta said it acted on 11,600 ad accounts and blocked 209 apps from advertising. The EU's ban on nudifier apps takes effect next month.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "deepfakes",
+    "app-store",
+    "trust-and-safety",
+    "meta"
+  ],
+  "sources": [
+    {
+      "publisher": "WIRED",
+      "url": "https://www.wired.com/story/hundreds-of-mundane-ai-apps-are-hiding-abusive-deepfake-features",
+      "publishedAt": "2026-11-02T10:00:00Z"
+    },
+    {
+      "publisher": "Digital Trends",
+      "url": "https://www.digitaltrends.com/computing/hidden-network-of-sexual-deepfake-generators-inside-harmless-ai-apps/",
+      "publishedAt": "2026-11-02T23:40:00Z"
+    }
+  ],
+  "kind": "daily"
+}

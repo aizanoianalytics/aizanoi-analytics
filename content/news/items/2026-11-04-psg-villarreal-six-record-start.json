@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-04-psg-villarreal-six-record-start",
+  "title": "PSG score four in 17 minutes and bury Villarreal 6-0",
+  "summary": "Paris Saint-Germain scored four times inside 17 minutes at Villarreal and finished with a 6-0 win that kept its perfect Champions League record. Joao Neves, Desire Doue, Senny Mayulu and Fabian Ruiz scored before the 18th minute, the fastest any side has reached four goals in the competition, according to UEFA, beating Real Madrid's 20-minute start against Dinamo Zagreb in 2011. Ruiz added a fifth and 17-year-old David Boly marked his debut with the sixth.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-11-04T05:40:00Z",
+  "updatedAt": "2026-11-04T05:40:00Z",
+  "retrievedAt": "2026-11-04T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "psg",
+    "villarreal",
+    "record"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cm0ld2p49xx0t",
+      "publishedAt": "2026-11-03T22:30:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/psg-villarreal-champions-league-7b5b3f4ad2e21f5639b8678d17056498",
+      "publishedAt": "2026-11-03T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
