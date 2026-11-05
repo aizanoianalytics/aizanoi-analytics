@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/post-election-relief-rally/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Wall Street&#39;s best day of 2026 follows an election-night slide in Asia</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/oracle-cancels-tencent-chip-lease/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Oracle drops a $7 billion chip lease that would have put 100,000 accelerators in Tencent&#39;s hands</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/como-nine-lens-record/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Como put nine past Lens to match the biggest win in Champions League history</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/qualcomm-handset-slump-outlook/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Qualcomm&#39;s phone business shrinks 26% and the profit outlook comes in light</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/tencent-hy4-vision-computer-use/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Tencent puts vision and a computer-use mode inside its 770B Hy4</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/real-madrid-aek-valverde-winner/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Valverde&#39;s 92nd-minute strike keeps Real Madrid perfect in Athens</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/fenerbahce-liverpool-comeback/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Fenerbahce end Liverpool&#39;s perfect start with two goals in six minutes</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/xen-grant-copy-guest-escape/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>A Claude-assisted audit finds a two-flaw guest escape in Xen&#39;s grant copy</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/isomorphic-labs-five-billion-round/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Isomorphic Labs chases $5 billion for AI drug discovery at a $50 billion mark</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/apple-siri-ai-developer-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Apple hands every developer a way into Siri AI, months before customers get it</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/nvidia-cloud-china-cap/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Nvidia tells its cloud partners to keep Chinese customers under half the business</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/amadeus-breach-singapore-airlines/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>An Amadeus booking flaw exposes 46,000 Singapore Airlines records</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/snap-third-quarter-user-miss/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Snap grows revenue 14% but misses on users and the shares slide</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/cognition-swe-2-flash/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Cognition&#39;s budget coding model trades frontier scores for a fifth of the price</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-05/ai2-statebench-long-state-tracking/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
+      <news:title>Ai2&#39;s StateBench shows frontier models losing the thread on long assignments</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-04/anthropic-flashprove-provable-inference/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>

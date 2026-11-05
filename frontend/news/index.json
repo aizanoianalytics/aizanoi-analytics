@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-04T05:35:00.000Z",
+  "generatedAt": "2026-11-05T04:55:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-05",
+      "path": "/news/2026-11-05/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-04",
       "path": "/news/2026-11-04/",
@@ -437,6 +442,529 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-05-post-election-relief-rally",
+      "kind": "daily",
+      "title": "Wall Street's best day of 2026 follows an election-night slide in Asia",
+      "summary": "The Dow rose 3%, more than 1,500 points, its best session since April 2025, and the S&P 500 added 1.6% as investors priced a divided Washington after Democrats swept Congress. Apple closed with a market value above $5 trillion and Microsoft set a record. The relief came after an Asian selloff in which the Nikkei fell 2.85%, SoftBank dropped 8% and bitcoin touched a seven-week low near $75,700 before recovering.",
+      "category": "economy-markets",
+      "priority": 84,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "midterms",
+        "dow",
+        "bitcoin",
+        "asia"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-dow-rallies-1500-points-sp-500-nasdaq-midterm-elections-democrats-sweep-201207340.html",
+          "publishedAt": "2026-11-04T21:51:00.000Z"
+        },
+        {
+          "publisher": "Euronews",
+          "url": "https://www.euronews.com/2026/11/04/asian-stocks-and-dollar-fall-as-democrats-gain-ground-in-us-midterms",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-oracle-cancels-tencent-chip-lease",
+      "kind": "daily",
+      "title": "Oracle drops a $7 billion chip lease that would have put 100,000 accelerators in Tencent's hands",
+      "summary": "Oracle cancelled a five-year contract worth an estimated $7 billion that would have leased about 100,000 advanced AI chips to Tencent across Southeast Asian data centres, the Financial Times reported. US officials raised concerns about the arrangement, and officials in Guangdong pressed Tencent to buy domestically made silicon. Neither company has confirmed the cancellation and Reuters could not verify it. Tencent had been due to pay roughly 30% of the value upfront.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oracle",
+        "tencent",
+        "export-controls",
+        "ai-chips",
+        "data-centers"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/oracle-cancels-tencent-ai-chip-lease",
+          "publishedAt": "2026-11-04T11:10:00.000Z"
+        },
+        {
+          "publisher": "The Business Times",
+          "url": "https://www.businesstimes.com.sg/companies-markets/oracle-scraps-us7-billion-deal-lease-chips-tencent-under-trump-pressure-ft-reports",
+          "publishedAt": "2026-11-04T06:47:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-como-nine-lens-record",
+      "kind": "daily",
+      "title": "Como put nine past Lens to match the biggest win in Champions League history",
+      "summary": "Como beat Lens 9-1 in northern France, equalling Bayern Munich's nine goals against Dinamo Zagreb in 2024 and recording the largest away win in the competition's history. Tasos Douvikas scored a hat-trick to reach six for the campaign; Nico Paz, Lucas Da Cunha, Marc-Oliver Kempf, Mattia Liberali, Martin Baturina and Matteo Papaccioli also scored, with Ruben Aguilar replying for Lens. Como sit fourth in the league phase.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "como",
+        "lens",
+        "record"
+      ],
+      "sources": [
+        {
+          "publisher": "DPA (via Yahoo Sports)",
+          "url": "https://sports.yahoo.com/articles/como-break-records-9-1-223333126.html",
+          "publishedAt": "2026-11-04T22:33:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/sports/soccer/como-equal-champions-league-record-with-stunning-9-1-win-lens-2026-11-04",
+          "publishedAt": "2026-11-04T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-qualcomm-handset-slump-outlook",
+      "kind": "daily",
+      "title": "Qualcomm's phone business shrinks 26% and the profit outlook comes in light",
+      "summary": "Qualcomm reported fiscal fourth-quarter non-GAAP revenue of $10.44 billion, down 7%, with handset chip sales down 26% to $5.14 billion while automotive rose 89% to $1.99 billion. It guided the December quarter to $10.4-11.2 billion of revenue and non-GAAP earnings of $2.15-2.35 a share, a profit range that disappointed, and flagged broad increases in wafer, packaging and memory costs. The shares slid in extended trading.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "qualcomm",
+        "earnings",
+        "semiconductors",
+        "smartphones"
+      ],
+      "sources": [
+        {
+          "publisher": "Qualcomm (SEC filing)",
+          "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+          "publishedAt": "2026-11-04T21:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/04/qualcomm-qcom-earnings-report-q4-2026.html",
+          "publishedAt": "2026-11-04T21:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-tencent-hy4-vision-computer-use",
+      "kind": "daily",
+      "title": "Tencent puts vision and a computer-use mode inside its 770B Hy4",
+      "summary": "Tencent released Hy4, the finished version of its flagship model, at 770 billion total parameters in a mixture-of-experts design with a 1M-token context. It is the Hy line's first model that reads images and the first that can drive both command-line and graphical software, with targeted training on Blender and CAD. Weights and a system card are promised in the coming days; API pricing is unchanged at roughly $0.90 per million input tokens and $2.70 per million output.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tencent",
+        "hunyuan",
+        "hy4",
+        "open-weights",
+        "computer-use"
+      ],
+      "sources": [
+        {
+          "publisher": "Tencent",
+          "url": "https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechNode",
+          "url": "https://technode.com/2026/11/04/tencent-launches-hy4-with-vision-and-computer-use-capabilities",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-real-madrid-aek-valverde-winner",
+      "kind": "daily",
+      "title": "Valverde's 92nd-minute strike keeps Real Madrid perfect in Athens",
+      "summary": "Real Madrid came from behind twice to beat AEK Athens 3-2 and stay unbeaten after four league-phase games. Aboubakary Koita put the hosts ahead after 12 minutes, Jude Bellingham equalised with a back-heel, Stavros Pilios restored the lead on 75 minutes, Kylian Mbappe levelled three minutes later and Federico Valverde won it from distance in stoppage time. Koita was sent off after the final whistle.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "real-madrid",
+        "aek-athens",
+        "valverde"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cm70pvdg5wvrt",
+          "publishedAt": "2026-11-04T21:55:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/report/_/gameId/401915383",
+          "publishedAt": "2026-11-04T20:22:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-fenerbahce-liverpool-comeback",
+      "kind": "daily",
+      "title": "Fenerbahce end Liverpool's perfect start with two goals in six minutes",
+      "summary": "Fenerbahce came from behind twice to beat Liverpool 3-2 in Istanbul, their first win in the Champions League proper since 2008. Trey Nyoni scored his first Liverpool goal, Mason Greenwood equalised with a deflected free-kick, Alexander Isak restored the lead with his first touch on 69 minutes, Archie Brown levelled on 73 and substitute Vedat Muriqi headed the winner on 79. Liverpool, beaten for the first time in Europe this season, drop to fifth.",
+      "category": "football",
+      "priority": 66,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "fenerbahce",
+        "liverpool",
+        "istanbul"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13607129/fenerbahce-3-2-liverpool-andoni-iraolas-side-lose-two-leads-in-istanbul-as-perfect-champions-league-start-ends",
+          "publishedAt": "2026-11-04T20:05:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.co.uk/football/match/_/gameId/401915382/liverpool-fenerbahce",
+          "publishedAt": "2026-11-04T20:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-xen-grant-copy-guest-escape",
+      "kind": "daily",
+      "title": "A Claude-assisted audit finds a two-flaw guest escape in Xen's grant copy",
+      "summary": "The Xen Project published advisory XSA-523 for CVE-2026-102703 and CVE-2026-102704, two validation errors in the grant-copy path that let a malicious guest read and write memory belonging to other domains, including Dom0. Every Xen release from 4.6 onward is affected; 4.5 and earlier are not. The advisory credits Anthropic, using Claude, with the discovery. Patches exist for 4.17 through unstable and there is no known mitigation short of applying them.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "xen",
+        "hypervisor",
+        "vulnerability",
+        "anthropic"
+      ],
+      "sources": [
+        {
+          "publisher": "Xen Project",
+          "url": "https://xenbits.xen.org/xsa/advisory-523.html",
+          "publishedAt": "2026-11-03T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-isomorphic-labs-five-billion-round",
+      "kind": "daily",
+      "title": "Isomorphic Labs chases $5 billion for AI drug discovery at a $50 billion mark",
+      "summary": "Alphabet's Isomorphic Labs is in talks to raise roughly $5 billion at a valuation of about $50 billion, Bloomberg reported, citing people familiar with the round, which has not closed and could still change. The London company spun out of Google DeepMind in 2021 to build on AlphaFold and raised $2.1 billion in May in a round led by Thrive Capital. Its president, Max Jaderberg, said the drug-discovery effort is still preclinical.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "isomorphic-labs",
+        "alphabet",
+        "deepmind",
+        "biotech",
+        "funding"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg (via Yahoo Finance)",
+          "url": "https://uk.finance.yahoo.com/news/isomorphic-labs-talks-5-billion-225144910.html",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-apple-siri-ai-developer-preview",
+      "kind": "daily",
+      "title": "Apple hands every developer a way into Siri AI, months before customers get it",
+      "summary": "Apple opened a Siri AI developer preview in the iOS, iPadOS, macOS and visionOS 27.3 betas, letting any app route its content and actions through App Intents into the assistant's personal-context, onscreen-awareness and natural-language features. Developers can also write skills that chain several actions into one request. The integrations reach customers in a few months, App Store submissions open in spring, and Siri AI stays unavailable in the EU on iPhone, iPad and Apple Watch.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "siri",
+        "app-intents",
+        "developers",
+        "apple-intelligence"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Developer",
+          "url": "https://developer.apple.com/news/?id=gdk2umrf",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/tech/1025694/apple-siri-ai-third-party-apps",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-nvidia-cloud-china-cap",
+      "kind": "daily",
+      "title": "Nvidia tells its cloud partners to keep Chinese customers under half the business",
+      "summary": "Nvidia has told data-centre partners that at least 51% of the cloud services they sell must go to non-Chinese companies, capping Chinese business at 49%, the Financial Times reported, citing five people. The requirement was passed on verbally by sales and regional teams, applies worldwide and covers new contracts only, so existing leases stand. Nvidia had no such cap before, and no published method exists for measuring compliance.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "export-controls",
+        "cloud",
+        "china",
+        "ai-chips"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/nvidia-cloud-partners-cap-china-business",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-amadeus-breach-singapore-airlines",
+      "kind": "daily",
+      "title": "An Amadeus booking flaw exposes 46,000 Singapore Airlines records",
+      "summary": "Singapore Airlines said data from about 46,000 booking records was accessed without authorisation on Amadeus's reservation platform, which supports part of its booking process. Names, booking references, itineraries and cabin classes were exposed, plus email, phone, travel-document and KrisFlyer details on about 620 records. No card data was involved and the airline says its own systems were not breached. Cathay Pacific, Japan Airlines and other carriers reported the same incident.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "amadeus",
+        "singapore-airlines",
+        "data-breach",
+        "travel"
+      ],
+      "sources": [
+        {
+          "publisher": "CNA",
+          "url": "https://www.channelnewsasia.com/singapore/sia-singapore-airlines-amadeus-data-breach-booking-records-6517151",
+          "publishedAt": "2026-11-03T14:05:00.000Z"
+        },
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/singapore/46000-sia-booking-records-accessed-illegally-in-data-breach-affecting-software-provider-amadeus",
+          "publishedAt": "2026-11-03T12:51:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-snap-third-quarter-user-miss",
+      "kind": "daily",
+      "title": "Snap grows revenue 14% but misses on users and the shares slide",
+      "summary": "Snap posted third-quarter revenue of $1.72 billion, up 14% from a year earlier, with net income of $56 million and adjusted EBITDA of $383 million. Global daily active users reached 495 million, short of the 499 million analysts expected, and revenue also came in just below consensus. The shares fell more than 10%. From the first quarter of 2027 Snap plans to report monthly actives rather than daily ones as its primary audience metric.",
+      "category": "economy-markets",
+      "priority": 56,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "snap",
+        "earnings",
+        "advertising",
+        "social-media"
+      ],
+      "sources": [
+        {
+          "publisher": "Snap Inc. (SEC filing)",
+          "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000063/snap-20261104xexx991pressr.htm",
+          "publishedAt": "2026-11-04T21:05:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/04/snap-q3-earnings-report-2026.html",
+          "publishedAt": "2026-11-04T21:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-cognition-swe-2-flash",
+      "kind": "daily",
+      "title": "Cognition's budget coding model trades frontier scores for a fifth of the price",
+      "summary": "Cognition released SWE-2 Flash, a 276-billion-parameter mixture-of-experts coding model with 12 billion active parameters, post-trained from Thinking Machines' Inkling-Small. The company says a new mid-training stage lifted Terminal-Bench 4.0 from 0.9% to 20.0% and FrontierCode 2.0 from 3.2% to 24.0%, and that Flash runs three times faster than SWE-2 at one-fifth the price. It ships inside Devin, while the weights stay behind a gated partner programme.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cognition",
+        "devin",
+        "coding-models",
+        "open-weights"
+      ],
+      "sources": [
+        {
+          "publisher": "Cognition",
+          "url": "https://cognition.com/blog/swe-2-flash",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-05-ai2-statebench-long-state-tracking",
+      "kind": "daily",
+      "title": "Ai2's StateBench shows frontier models losing the thread on long assignments",
+      "summary": "The Allen Institute for AI released StateBench, a four-tier benchmark for tracking how variables change across long documents, from fixed values up to assignment by reference. Gemini 3.8 Flash, Claude Opus 5.5 and both GPT-6 variants handled the easy tiers but fell to 13% accuracy or lower on the longest general-finite problems. Small Gated DeltaNet models trained on the task generalised far beyond their training length; transformers never learned the hardest tier.",
+      "category": "ai",
+      "priority": 48,
+      "publishedAt": "2026-11-05T05:30:00.000Z",
+      "updatedAt": "2026-11-05T05:30:00.000Z",
+      "retrievedAt": "2026-11-05T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai2",
+        "benchmark",
+        "long-context",
+        "evaluation"
+      ],
+      "sources": [
+        {
+          "publisher": "Allen Institute for AI",
+          "url": "https://allenai.org/blog/statebench",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-04-anthropic-flashprove-provable-inference",
       "kind": "daily",

@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-05-isomorphic-labs-five-billion-round",
+  "title": "Isomorphic Labs chases $5 billion for AI drug discovery at a $50 billion mark",
+  "summary": "Alphabet's Isomorphic Labs is in talks to raise roughly $5 billion at a valuation of about $50 billion, Bloomberg reported, citing people familiar with the round, which has not closed and could still change. The London company spun out of Google DeepMind in 2021 to build on AlphaFold and raised $2.1 billion in May in a round led by Thrive Capital. Its president, Max Jaderberg, said the drug-discovery effort is still preclinical.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "isomorphic-labs",
+    "alphabet",
+    "deepmind",
+    "biotech",
+    "funding"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg (via Yahoo Finance)",
+      "url": "https://uk.finance.yahoo.com/news/isomorphic-labs-talks-5-billion-225144910.html",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

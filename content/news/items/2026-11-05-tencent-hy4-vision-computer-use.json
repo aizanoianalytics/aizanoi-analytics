@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-05-tencent-hy4-vision-computer-use",
+  "title": "Tencent puts vision and a computer-use mode inside its 770B Hy4",
+  "summary": "Tencent released Hy4, the finished version of its flagship model, at 770 billion total parameters in a mixture-of-experts design with a 1M-token context. It is the Hy line's first model that reads images and the first that can drive both command-line and graphical software, with targeted training on Blender and CAD. Weights and a system card are promised in the coming days; API pricing is unchanged at roughly $0.90 per million input tokens and $2.70 per million output.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tencent",
+    "hunyuan",
+    "hy4",
+    "open-weights",
+    "computer-use"
+  ],
+  "sources": [
+    {
+      "publisher": "Tencent",
+      "url": "https://www.tencent.com/tencent-launches-hy4-joining-the-ranks-of-the-worlds-leading-open-source-ai-models",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    },
+    {
+      "publisher": "TechNode",
+      "url": "https://technode.com/2026/11/04/tencent-launches-hy4-with-vision-and-computer-use-capabilities",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

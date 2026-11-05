@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-05-real-madrid-aek-valverde-winner",
+  "title": "Valverde's 92nd-minute strike keeps Real Madrid perfect in Athens",
+  "summary": "Real Madrid came from behind twice to beat AEK Athens 3-2 and stay unbeaten after four league-phase games. Aboubakary Koita put the hosts ahead after 12 minutes, Jude Bellingham equalised with a back-heel, Stavros Pilios restored the lead on 75 minutes, Kylian Mbappe levelled three minutes later and Federico Valverde won it from distance in stoppage time. Koita was sent off after the final whistle.",
+  "category": "football",
+  "priority": 68,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "real-madrid",
+    "aek-athens",
+    "valverde"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cm70pvdg5wvrt",
+      "publishedAt": "2026-11-04T21:55:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/report/_/gameId/401915383",
+      "publishedAt": "2026-11-04T20:22:00Z"
+    }
+  ],
+  "kind": "daily"
+}

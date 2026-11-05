@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-05-oracle-cancels-tencent-chip-lease",
+  "title": "Oracle drops a $7 billion chip lease that would have put 100,000 accelerators in Tencent's hands",
+  "summary": "Oracle cancelled a five-year contract worth an estimated $7 billion that would have leased about 100,000 advanced AI chips to Tencent across Southeast Asian data centres, the Financial Times reported. US officials raised concerns about the arrangement, and officials in Guangdong pressed Tencent to buy domestically made silicon. Neither company has confirmed the cancellation and Reuters could not verify it. Tencent had been due to pay roughly 30% of the value upfront.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oracle",
+    "tencent",
+    "export-controls",
+    "ai-chips",
+    "data-centers"
+  ],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/oracle-cancels-tencent-ai-chip-lease",
+      "publishedAt": "2026-11-04T11:10:00Z"
+    },
+    {
+      "publisher": "The Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/oracle-scraps-us7-billion-deal-lease-chips-tencent-under-trump-pressure-ft-reports",
+      "publishedAt": "2026-11-04T06:47:00Z"
+    }
+  ],
+  "kind": "daily"
+}
