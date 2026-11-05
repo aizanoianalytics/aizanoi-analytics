@@ -66,6 +66,28 @@ module.exports = {
 
 Every trade costs money. A bot that rebalances every bar pays fees every bar. Doing nothing is a valid move.
 
+### Daily mixed BIST + US + crypto races
+
+The daily decision follows all sessions' closes at the next UTC midnight. Fills wait for
+each asset's next real session, in crypto (UTC open), Istanbul, then New York order.
+Sells execute before buys **within each venue**, not before earlier venues' buys.
+At a venue open, equity marks that venue at its current open, earlier venues at their
+already-observed opens, and unopened/closed venues at prior completed closes. Later
+US opening gaps or sale proceeds cannot influence/fund an earlier BIST fill.
+
+All mixed prices/history/features, cash, fees and positions are USD. BIST TRY prices
+are converted using the last ECB reference cross-rate available at that UTC day's
+start; each fixing becomes usable only at 00:00 UTC on the following calendar day
+and is held for the entire day. No interpolation or future fixing is used. Closed
+BIST holdings still revalue with known FX, but do not acquire synthetic tradable bars.
+Cached features remain those of the last actual session. Macro `xu100Ret20` remains
+the native TRY index return. Pure BIST races remain TRY. Reference FX is not an
+executable transaction quote; missing/malformed or over-7-day-old FX stops a race.
+
+Mixed margin calls observed after all closes queue liquidation at each position's
+next actual open; new decisions are suspended until that liquidation completes.
+This daily paper model does not model settlement delays, FX spreads or intraday prices.
+
 ## Long/short races
 
 Some races allow shorting (`info.rules.allowShort === true`) and some also allow leverage (`info.rules.maxGross`

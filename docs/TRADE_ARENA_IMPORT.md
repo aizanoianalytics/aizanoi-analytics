@@ -44,6 +44,56 @@ Historical JSON is intentionally retained for all supplied timeframes and strate
 - Every selected-market, context and funding file must load. A missing or malformed historical download fails the race; failed downloads are removed from the worker cache. Failed initialization/retirement never creates an ordinary persisted result.
 - Strategy hosts have one outstanding request and an absolute hard timeout, with timers and promises settled on close. Race worker error/messageerror and bootstrap deadline surface failure. Starts no longer await source downloads, removing the reentrant-start fetch race. Explorer fetches are aborted and invalidated on routing; replaced charts and their ResizeObservers are explicitly released.
 
+## Mixed daily markets and diagnostic preservation
+
+The current `mixed` race includes BIST, US stocks and crypto. Its numeraire is USD;
+standalone `bist` remains nominal TRY. No owner OHLCV, strategy or imported league bytes
+were rewritten, and imported league tables have **not** been recomputed for this engine.
+
+ECB historical reference source: <https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip>.
+The committed derived artifact has 5,592 modern TRY fixings, 2005-01-03–2026-11-04,
+from ZIP SHA256 `971a5cbf650f9e96663cf1218801c3054249e2bb57070d427db5a44931393f59`.
+`scripts/trade-arena/update_fx.py` reproducibly derives TRY per USD as TRY per EUR / USD
+per EUR. ECB attribution and its [reuse/disclaimer](https://www.ecb.europa.eu/services/disclaimer/html/index.en.html)
+are retained. This is a derived reference cross-rate, **not** an official executable USD/TRY quote.
+ECB rates are information-purpose references published around 16:00 CET on working days;
+our conservative availability is the following calendar day at 00:00 UTC. Use only the
+last reference available at the simulated UTC day's start and hold it for the entire day,
+including the close. Weekends/holidays carry the reference; over 7 days fails closed.
+This deliberately lagged convention never interpolates or backfills future fixings.
+
+Daily bars are session-date labels, not simultaneous exchange opens. Decisions see all
+completed daily closes at the following UTC midnight. The next available bar of each asset
+is eligible to fill; there are no invented weekend/holiday stock fills. Mixed target notionals
+mark the current venue at its open, earlier venues at their already-observed opens,
+and unopened/closed venues at prior closes, all at that day's known FX.
+Execution order is crypto UTC open, Istanbul, New York, with sells before buys **within**
+a session. A later US sale cannot fund an earlier BIST buy in a cash account. Costs, borrow
+and margin accounting remain in the common numeraire. This is a daily reference-price paper
+model, not intraday matching, settlement, FX spread, holiday-calendar or market-impact modelling.
+Available source bars define sessions; unaudited stock intraday racing stays disabled.
+Mixed margin calls are observed after all daily closes and queue forced liquidation at
+each asset's next available open; closed stocks are never liquidated at a stale quote.
+Basket/Advisor retain their existing USD-only crypto + US scope (or separate TRY BIST)
+through an explicit `usdAssetsOnly` request flag; their basket-entry currency contract is unchanged.
+
+OHLCV price features/history and BIST-100 beta use per-session lagged USD conversions;
+US stocks use SPY, BIST uses XU100, crypto uses BTC. Both stock hold benchmarks appear
+when both exchanges participate and follow their own actual session bars/fees/FX. Closed
+BIST holdings still revalue with known FX on the union calendar. Cached feature rows remain
+the last completed session's features while closed (the current valuation may differ).
+Macro `xu100Ret20` intentionally remains a native TRY index return. Chart warm-up uses
+the same converted bars as the worker; non-tradable revaluations are not synthetic candles.
+
+The worker host now retains the **first** fatal cause across later calls and cleanup;
+hard deadlines still have the same timing and are classified as timeouts. The failed-race
+finalization waits for any still-running soft-timed-out request to settle or reach its
+original absolute hard deadline, rather than certifying a short race by cancelling it.
+The failed-race
+screen names affected bot IDs/names and their actual initialization/retirement cause.
+This fixes proven diagnostic loss, **not** an unobserved spontaneous-crash root cause.
+All selected bots continue to run concurrently; no cap, pool or deadline loosening was added.
+
 ## Verification
 
 Focused Node contracts: tests/trade-arena.test.mjs. Real browser suite: tests/browser/trade-arena.test.mjs, including strict production CSP, shipped worker startup, historical computation, chart/explorer, responsive and shell teardown. Routine CI runs it in the existing fail-closed arcade matrix, owned by Aizanoi CI. This document does not claim production deployment.

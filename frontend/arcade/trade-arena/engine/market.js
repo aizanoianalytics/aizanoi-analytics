@@ -1,6 +1,7 @@
 // Builds the shared market for one race: aligned timeline, per-asset features, cross-sectional ranks,
 // benchmark beta/correlation, crypto funding and daily macro context. Pure ES module (browser + Node).
 import { computeFeatures, betaCorr, FEATURE_NAMES } from './features.js';
+import { validateFx, usdCols, assetPrice, fxAt } from './fx.js';
 
 const ok = Number.isFinite;
 export const DAY = 86400000;
@@ -60,9 +61,11 @@ function sliceCols(cols, from, to) {
  * funding: { SYMBOL: { t, rate } } (optional)
  * cfg: { tf, start, end, blind, seed, warmup }
  */
-export function prepareMarket(series, cfg, context = {}, funding = {}) {
+export function prepareMarket(series, cfg, context = {}, funding = {}, fx = null) {
   if (cfg.market !== 'crypto' && cfg.tf !== '1d') throw new Error('Stock intraday races are unavailable: session-close and terminal-quote timing has not been audited. Use daily bars.');
   const { tf, start, end, blind = false, seed = 1, warmup = 250 } = cfg;
+  const convert = cfg.market === 'mixed' && series.some(s => s.currency === 'TRY' || s.exchange === 'BIST');
+  if (convert) { validateFx(fx); fxAt(fx, end); }
   // Stock hourly bars open at :30 and crypto at :00, so intraday mixed timelines would interleave two clocks.
   if (tf !== '1d' && series.some(s => s.market === 'crypto') && series.some(s => s.market === 'stocks')) throw new Error('Mixed crypto + stock races are daily (1d) only');
   const rand = rng(seed ^ 0x5eed);
@@ -81,6 +84,8 @@ export function prepareMarket(series, cfg, context = {}, funding = {}) {
     const first = Math.max(0, lastIndexAtOrBefore(s.cols.t, start - 1) - Math.max(warmup, 400) + 1);
     const last = lastIndexAtOrBefore(s.cols.t, end);
     let cols = sliceCols(s.cols, first, last + 1);
+    const converted = convert && (s.currency === 'TRY' || s.exchange === 'BIST');
+    if (converted) cols = usdCols(cols, fx);
     let scale = 1, vscale = 1;
     if (blind) {
       // Rebase so the last pre-race close is 100 (or the first bar if listed mid-race); volumes to a 1M median.
@@ -98,18 +103,21 @@ export function prepareMarket(series, cfg, context = {}, funding = {}) {
     const F = computeFeatures(cols, tf, s.market);
     const idx = new Map(); cols.t.forEach((t, i) => idx.set(t, i));
     assets.push({ symbol: s.symbol, id: blind ? alias.get(s.symbol) : s.symbol, name: s.name, market: s.market, sector: s.sector,
-      exchange: s.exchange || null, currency: s.currency || 'USD',
+      exchange: s.exchange || null, currency: converted ? 'USD' : (s.currency || 'USD'), fx: converted,
       cols, F, idx, scale, firstT: s.cols.t[0], funding: funding[s.symbol] });
   }
 
   // Benchmarks for beta/correlation.
-  const bench = { crypto: assets.find(a => a.symbol === 'BTC'), stocks: null };
-  // Borsa Istanbul stocks (TRY) are measured against the BIST 100 index, US stocks against SPY.
-  if (series.some(s => s.exchange === 'BIST') && context.XU100 && tf === '1d') bench.stocks = { cols: context.XU100 };
-  else if (context.SPY && tf === '1d') bench.stocks = { cols: context.SPY };
-  else bench.stocks = assets.find(a => a.symbol === 'MSFT') || null; // intraday: no SPY hourly; use a mega-cap proxy
+  const bench = { BTC: assets.find(a => a.symbol === 'BTC') };
+  for (const key of ['SPY','XU100']) if (context[key] && tf === '1d') {
+    const from = Math.max(0,lastIndexAtOrBefore(context[key].t,start-1)-Math.max(warmup,400)+1);
+    const raw = sliceCols(context[key],from,lastIndexAtOrBefore(context[key].t,end)+1);
+    const converted = key === 'XU100' && convert;
+    bench[key] = { id:'__'+key, market:'stocks', exchange:key === 'XU100' ? 'BIST' : null, cols:converted ? usdCols(raw,fx) : raw, fx:converted };
+  }
   for (const a of assets) {
-    const b = bench[a.market];
+    a.benchmark = a.market === 'crypto' ? 'BTC' : a.exchange === 'BIST' ? 'XU100' : 'SPY';
+    const b = bench[a.benchmark];
     if (b && b !== a) { const bc = betaCorr(a.cols.t, a.F.ret1, b.cols.t, b.cols.c); a.F.beta60 = bc.beta; a.F.corr60 = bc.corr; }
     else { a.F.beta60 = new Float64Array(a.cols.t.length).fill(a === b ? 1 : NaN); a.F.corr60 = new Float64Array(a.cols.t.length).fill(a === b ? 1 : NaN); }
   }
@@ -126,7 +134,7 @@ export function prepareMarket(series, cfg, context = {}, funding = {}) {
     const F = computeFeatures(cols, '1d', 'stocks');
     ctx[k] = { cols, F };
   }
-  return { cfg: { ...cfg, step }, assets, timeline, ctx, aliases: blind ? Object.fromEntries(assets.map(a => [a.id, a.symbol])) : null };
+  return { cfg: { ...cfg, step }, assets, timeline, ctx, bench, fx: convert ? fx : null, aliases: blind ? Object.fromEntries(assets.map(a => [a.id, a.symbol])) : null };
 }
 
 // Close time of the bar opening at t (stocks hourly bars at :30 last 60 min, the final one 30 min).
@@ -140,7 +148,7 @@ export function snapshot(m, k) {
     if (a.firstT > T) continue;
     const i = lastIndexAtOrBefore(a.cols.t, T);
     if (i < 0) continue;
-    const bar = { t: m.cfg.blind ? null : a.cols.t[i], o: a.cols.o[i], h: a.cols.h[i], l: a.cols.l[i], c: a.cols.c[i], v: a.cols.v[i] };
+    const bar = { t: m.cfg.blind ? null : a.cols.t[i], ...Object.fromEntries(['o','h','l','c'].map(field => [field,assetPrice(m,a,i,T,field)])), v: a.cols.v[i] };
     const f = {};
     for (const name of FEATURE_NAMES) f[name] = a.F[name][i];
     f.beta60 = a.F.beta60[i]; f.corr60 = a.F.corr60[i];

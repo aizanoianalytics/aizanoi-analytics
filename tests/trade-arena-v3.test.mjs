@@ -125,7 +125,7 @@ test('funding tails use the same injected live loader as price and context bars'
     const loader = liveLoader('https://example.com/', { series: { 'crypto/funding/BTC': { bars: 1, last: 2 } } }, async () => ({ t: [1], rate: [0.01] }));
     assert.deepEqual((await loader('data/raw/crypto/funding/BTC.json')).rate, [0.01, 0.02]);
     const worker = read(root + 'ui/race-worker.js');
-    assert.match(worker, /async function loadUniverse\(market, tf, progress, get\)/);
+    assert.match(worker, /async function loadUniverse\(market, tf, progress, get, usdAssetsOnly = false\)/);
     assert.match(worker, /const f = await get\(url\)/);
   } finally { globalThis.fetch = originalFetch; }
 });
@@ -160,7 +160,7 @@ test('Borsa Istanbul is a separate TRY market benchmarked against BIST 100', asy
   const bench = benchmarks(m);
   assert.ok(bench['BIST 100 hold'] && !bench['S&P 500 hold']);
   const worker = read(root + 'ui/race-worker.js');
-  assert.match(worker, /market === 'bist'\) for \(const a of UNIVERSE\.bist\)/);
+  assert.ok(worker.includes("market === 'bist' || (market === 'mixed' && !usdAssetsOnly)"));
   assert.match(read(root + 'ui/advisor.js'), /cannot share a basket with USD/);
 });
 

@@ -25,6 +25,61 @@ async function withPage(size, run) {
   try { await run(page, errors); } finally { await Promise.race([context.unrouteAll({ behavior:'ignoreErrors' }), new Promise(resolve => { setTimeout(resolve, 2000); })]); await browser.close(); }
 }
 
+test('mixed daily races include BIST, US and crypto in USD with both benchmarks and real concurrent workers', {timeout:180000}, async () => {
+  await withPage({width:1440,height:1000}, async (page,errors) => {
+    const failed=[];
+    page.on('response',r=>{if(r.status()>=400)failed.push(r.url());});
+    await page.goto(base+'/arcade/trade-arena/');
+    await page.locator('label.preset:has(input[value="custom"])').click();
+    await page.locator('#opts [data-k="market"] [data-v="mixed"]').click();
+    await page.locator('#d1').fill('2025-01-01'); await page.locator('#d1').dispatchEvent('change');
+    await page.locator('#d2').fill('2025-06-30'); await page.locator('#d2').dispatchEvent('change');
+    for (const label of await page.locator('#roster label').all()) if (!await label.locator('input').isChecked()) await label.click();
+    const cdp=await page.context().browser().newBrowserCDPSession();
+    await page.evaluate(async()=>{globalThis.raceProbe=await import('/arcade/trade-arena/ui/race-view.js');});
+    await page.locator('#go').click();
+    await page.waitForFunction(()=>!!globalThis.raceProbe.currentRace()?.meta,null,{timeout:30000});
+    let active=0;
+    for (const deadline=Date.now()+30000;Date.now()<deadline;) {
+      const targets=await cdp.send('Target.getTargets');
+      active=targets.targetInfos.filter(t=>t.type==='worker' && t.url.endsWith('/ui/bot-worker.js')).length;
+      if (active===rosterSize) break;
+      await page.waitForTimeout(50);
+    }
+    assert.equal(active,rosterSize);
+    const meta=await page.evaluate(()=>globalThis.raceProbe.currentRace().meta);
+    assert.equal(meta.assets.length,94, 'all window-overlapping assets (GRAM has no bars in 2025)');
+    assert.equal(meta.assets.filter(a=>a.exchange==='BIST').length,30);
+    assert.ok(meta.assets.every(a=>a.currency==='USD'));
+    assert.ok(meta.bench['BIST 100 hold'] && meta.bench['S&P 500 hold'] && meta.bench['BTC hold']);
+    assert.match(await page.locator('.race-head').innerText(),/USD/);
+    await page.locator('#asset').selectOption('THYAO');
+    await page.waitForFunction(()=>globalThis.raceProbe.currentRace().ac?.warm?.length===120);
+    assert.equal(await page.locator('#rows').evaluate(el=>el.getBoundingClientRect().height),29*64);
+    await page.locator('#speeds [data-v="Infinity"]').click();
+    await page.locator('dialog.results[open]').waitFor({timeout:140000});
+    const done=await page.evaluate(()=>globalThis.raceProbe.currentRace().done);
+    assert.ok(done.stats.every(s=>!s.retired && s.trades>0));
+    assert.equal(done.stats.length,rosterSize);
+    await cdp.detach();
+    assert.deepEqual(failed,[]); assert.deepEqual(errors,[]);
+  });
+});
+
+test('non-race USD basket simulations retain their explicit two-market scope', async () => {
+  await withPage({width:1280,height:900},async page=>{
+    await page.goto(base+'/arcade/trade-arena/'); await page.locator('#go').waitFor();
+    const assets=await page.evaluate(async()=>{
+      const {simulate}=await import('/arcade/trade-arena/ui/sim-client.js');
+      const roster=await fetch('bots/roster.json').then(r=>r.json());
+      const job=simulate({market:'mixed',usdAssetsOnly:true,start:'2025-01-01',end:'2025-01-08',bots:[roster.bots.find(b=>b.id==='hodl')]});
+      return (await job.promise).meta.assets;
+    });
+    assert.ok(assets.every(a=>a.exchange!=='BIST' && a.currency==='USD'));
+    assert.ok(assets.some(a=>a.market==='crypto') && assets.some(a=>a.market==='stocks'));
+  });
+});
+
 test('every shipped roster worker initializes under production CSP and arbitrary paths are rejected', async () => {
   await withPage({width:1280,height:900}, async (page,errors) => {
     await page.goto(base + '/arcade/trade-arena/');
@@ -135,11 +190,32 @@ test('an incomplete historical download fails closed without saving a race', asy
   });
 });
 
+test('a deliberately stalled real strategy reports the bot and hard-timeout cause without saving results', {timeout:60000}, async () => {
+  await withPage({width:1280,height:900},async page=>{
+    await page.route('**/bots/ai/sonnet-5-5.js',route=>route.fulfill({status:200,contentType:'text/javascript',body:'module.exports={init(){},onBar(){while(true){}}};'}));
+    await page.goto(base+'/arcade/trade-arena/');
+    await page.locator('label.preset:has(input[value="custom"])').click();
+    await page.locator('#d1').fill('2025-01-01'); await page.locator('#d1').dispatchEvent('change');
+    await page.locator('#d2').fill('2025-01-08'); await page.locator('#d2').dispatchEvent('change');
+    for (const label of await page.locator('#roster label').all()) {
+      const input=label.locator('input');
+      if (await input.isChecked() && await input.getAttribute('value')!=='sonnet-5-5') await label.click();
+    }
+    await page.locator('#go').click();
+    await page.waitForFunction(()=>document.querySelector('#vtext')?.textContent.includes('hard timeout'),null,{timeout:45000});
+    assert.match(await page.locator('#vtext').innerText(),/\[sonnet-5-5\]: timed out — hard timeout/);
+    assert.equal(await page.locator('dialog.results').count(),0);
+    assert.equal(await page.evaluate(()=>localStorage.getItem('trade-arena:history')),null);
+  });
+});
+
 test('failed strategy startup cannot be tallied or persisted as a successful race', async () => {
   await withPage({width:1280,height:900}, async(page) => {
     await page.route('**/bots/ai/*.js', route => route.fulfill({status:404,body:'missing'}));
     await page.goto(base + '/arcade/trade-arena/'); await page.locator('#go').click();
     await page.waitForFunction(() => document.querySelector('#vtext')?.textContent.includes('Strategy initialization failed'), null, {timeout:30000});
+    const diagnostics=await page.locator('#vtext').innerText();
+    assert.ok(diagnostics.includes('[sonnet-5-5]') && diagnostics.includes('[haiku-5-5]'), 'all failed bot identities remain visible, without a character-count cutoff');
     assert.equal(await page.locator('dialog.results').count(),0);
     assert.equal(await page.evaluate(() => localStorage.getItem('trade-arena:history')),null);
   });

@@ -36,6 +36,10 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
       assert.equal(createHash('sha256').update(supplied).digest('hex'), entry.sourceSha256);
     } else if (/^(bots|data)\//.test(entry.path)) assert.equal(hash, entry.sourceSha256, 'unchanged owner payload ' + entry.path);
   }
+  for (const entry of inventory.derived || []) {
+    assert.equal(entry.sourceSha256,null,'derived additions are not unchanged owner payloads');
+    assert.equal(createHash('sha256').update(readFileSync(new URL('../' + entry.path,import.meta.url))).digest('hex'),entry.sha256,entry.path);
+  }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
   assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.bist.length, 30); assert.equal(catalog.context.length, 8);
   assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'opus-5-5', 'muse-spark-1-3', 'deepseek-v4-1-flash', 'glm-5-3-flash', 'beam', 'iceman', 'mimo-v2-6-flash', 'nemotron-3-5-super', 'nemotron-3-5-lightning', 'flint-40b', 'basket', 'aizo', 'momentum', 'hodl', 'monkey']);
@@ -83,12 +87,32 @@ test('a non-responsive strategy has one absolute hard deadline and close settles
     const host = new WebHost('bots/house/hodl.js',7,10,10);
     assert.equal((await host.init({})).ok,true);
     const first = await host.onBar({}); assert.equal(first.timeout,true);
+    const finishing = host.finish();
     for (let i=0;i<10;i++) { assert.equal((await host.onBar({})).timeout,true); await new Promise(resolve => { setTimeout(resolve,180); }); }
     await new Promise(resolve => { setTimeout(resolve,350); });
     assert.equal(host.dead,true); assert.equal(instances[0].sent,3); assert.equal(instances[0].stopped,true);
+    assert.deepEqual(await finishing, {ok:false,error:'hard timeout',fatal:true,timeout:true});
+    assert.deepEqual(await host.onBar({}), { ok:false, error:'hard timeout', fatal:true, timeout:true });
+    host.close();
+    assert.equal((await host.onBar({})).error, 'hard timeout', 'cleanup must not overwrite the first fatal cause');
     const second = new WebHost('bots/house/hodl.js',7,10,10); second.close();
     assert.equal((await second.loaded).fatal,true); assert.equal(second.pending,null);
   } finally { globalThis.Worker = original; }
+});
+
+test('failed race diagnostics name each bot and preserve initialization and retirement causes', async () => {
+  const { raceFailure } = await import('../frontend/arcade/trade-arena/engine/sim.js');
+  assert.equal(raceFailure([{ id:'ok', name:'Healthy', retired:null }]), null);
+  const message = raceFailure([
+    { id:'slow', name:'Slow Bot', retired:'timed out', lastError:'hard timeout\nworker stack' },
+    { id:'broken', name:'Broken Bot', initError:'missing export', retired:'init failed' },
+    { id:'bust', name:'Busted Bot', retired:'busted' },
+  ]);
+  assert.match(message, /Slow Bot \[slow\]: timed out — hard timeout/);
+  assert.match(message, /Broken Bot \[broken\]: init failed — missing export/);
+  assert.match(message, /Busted Bot \[bust\]: busted/);
+  assert.match(message, /no result recorded/);
+  assert.ok(!message.includes('\n'), 'all failed bots must survive the error UI first-line extraction');
 });
 
 test('all supplied strategies trade through the actual historical market and simulation engine', async () => {
