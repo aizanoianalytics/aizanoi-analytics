@@ -260,6 +260,7 @@ input[type=search] { font-family: var(--sans); width: 100%; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .loading-veil { position: absolute; inset: 0; display: grid; place-items: center; background: var(--veil); z-index: 3; padding: 20px; }
 .loader { text-align: center; color: var(--muted); max-width: 520px; }
+#vtext { max-height: min(40vh, 240px); overflow: auto; overflow-wrap: anywhere; }
 .loader .ring { width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 50%; border: 3px solid var(--line2); border-top-color: var(--accent); animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader .pbar { width: 240px; height: 4px; border-radius: 9px; background: var(--line); margin: 12px auto 0; overflow: hidden; }
@@ -646,6 +647,7 @@ table.stats th button:focus-visible { outline: 2px solid var(--focus); outline-o
 [data-rank="26"]{transform:translateY(1664px)}[data-rows="26"]{position:relative;height:1664px}
 [data-rank="27"]{transform:translateY(1728px)}[data-rows="27"]{position:relative;height:1728px}
 [data-rank="28"]{transform:translateY(1792px)}[data-rows="28"]{position:relative;height:1792px}
+[data-rows="29"]{position:relative;height:1856px}
 [hidden]{display:none!important}
 .provenance-note{max-width:1440px;margin:14px auto;padding:0 20px;font-size:12px;color:var(--muted)}
 @media(pointer:coarse){button,select,.btn{min-height:44px}}

@@ -1,6 +1,7 @@
 // Portfolio simulation and race loop. Orders are decided on bar close and filled at the next bar's open.
 import { snapshot, history, TF_MS, EXTRA_FEATURES, MARKET_FIELDS, CONTEXT_FIELDS } from './market.js';
 import { FEATURE_GROUPS, periodsPerYear } from './features.js';
+import { assetPrice } from './fx.js';
 
 const ok = Number.isFinite;
 
@@ -33,11 +34,11 @@ function priceMap(m, k, field) { // latest price per alias at timeline[k] using 
   const T = m.timeline[k], out = {}, fresh = {};
   for (const a of m.assets) {
     const i = a.idx.get(T);
-    if (i !== undefined) { out[a.id] = a.cols[field][i]; fresh[a.id] = true; continue; }
+    if (i !== undefined && field !== 'prior') { out[a.id] = assetPrice(m,a,i,T,field); fresh[a.id] = true; continue; }
     // last close before T
     let lo = 0, hi = a.cols.t.length - 1, j = -1;
     while (lo <= hi) { const mid = (lo + hi) >> 1; if (a.cols.t[mid] < T) { j = mid; lo = mid + 1; } else hi = mid - 1; }
-    if (j >= 0) out[a.id] = a.cols.c[j];
+    if (j >= 0) out[a.id] = assetPrice(m,a,j,T,'c');
   }
   return { px: out, fresh };
 }
@@ -90,59 +91,84 @@ function noisyOpen(m, k, rules, px, fresh) {
 }
 
 function execute(acc, m, k, rules, market) {
+  if (acc.liquidating) {
+    const { px, fresh } = priceMap(m,k,'o');
+    for (const [s,q] of Object.entries(acc.qty)) {
+      if (!fresh[s]) continue;
+      const mk=market(s), price=px[s]*(1+(q>0?-1:1)*rules.slippageBps[mk]/1e4);
+      const value=Math.abs(q)*price, fee=value*rules.feeBps[mk]/1e4;
+      acc.cash+=q*price-fee; acc.fees+=fee; acc.turnover+=value;
+      acc.realized.push(q*(price-acc.cost[s])-fee);
+      acc.trades.push({k,s,side:q>0?'sell':'buy',kind:'liquidated',qty:-q,price,value,fee});
+      delete acc.qty[s]; delete acc.cost[s];
+    }
+    acc.liquidating=Object.keys(acc.qty).length>0;
+    return;
+  }
   if (!acc.pending) return;
   const { px, fresh } = priceMap(m, k, 'o');
   if (rules.noise > 0) noisyOpen(m, k, rules, px, fresh);
-  const E = equityAt(acc, px);
-  if (E <= 0) return;
+  // Mark each venue at its own open, carrying prior closes for unopened venues.
+  const mixed = m.cfg.market === 'mixed';
   const want = acc.pending;
   const syms = new Set([...Object.keys(acc.qty).filter(s => acc.qty[s]), ...Object.keys(want)]);
-  const orders = [];
+  const sessions = new Map(m.assets.map(a=>[a.id,a.market === 'crypto' ? 0 : a.exchange === 'BIST' ? 1 : 2]));
+  const valuation = mixed ? priceMap(m,k,'prior').px : px;
   let waiting = false;
-  for (const s of syms) {
-    if (acc.filled?.has(s)) continue; // already rebalanced for this decision; only closed markets still wait
-    if (!fresh[s]) { if ((want[s] || 0) !== 0 || acc.qty[s]) waiting = true; continue; }
-    const target = (want[s] || 0) * E / px[s];
-    const dq = target - (acc.qty[s] || 0);
-    if (Math.abs(dq * px[s]) < rules.minTradeValue && target !== 0) continue;
-    if (dq !== 0) orders.push([s, dq]);
+  for (const group of mixed ? [0,1,2] : [null]) {
+    if (mixed) for (const [s,rank] of sessions) if (rank === group && fresh[s]) valuation[s]=px[s];
+    const E = equityAt(acc,valuation);
+    if (E <= 0) return;
+    const orders = [];
+    for (const s of syms) {
+      if (mixed && sessions.get(s) !== group) continue;
+      if (acc.filled?.has(s)) continue; // already rebalanced for this decision; only closed markets still wait
+      if (!fresh[s]) { if ((want[s] || 0) !== 0 || acc.qty[s]) waiting = true; continue; }
+      const target = (want[s] || 0) * E / px[s];
+      const dq = target - (acc.qty[s] || 0);
+      if (Math.abs(dq * px[s]) < rules.minTradeValue && target !== 0) continue;
+      if (dq !== 0) orders.push([s, dq]);
+    }
+
+    // Crypto UTC open, then Istanbul, then New York. Sells fund buys only within
+    // their own or later sessions, never an earlier exchange's order.
+    orders.sort((a, b) => a[1] - b[1]);
+    for (const [s, dq0] of orders) {
+      const mk = market(s), fee = rules.feeBps[mk] / 1e4;
+      // With noise, slippage varies between 0.5× and 2.5× of the nominal rate (same draw for every bot).
+      const slip = rules.slippageBps[mk] / 1e4 * (rules.noise > 0 ? 1 + rules.noise * (noiseDraw(rules.noiseSeed, k, s, 1) * 2 - 0.5) : 1);
+      const price = px[s] * (dq0 > 0 ? 1 + slip : 1 - slip);
+      let dq = dq0;
+      if (dq > 0 && rules.maxGross <= 1) { // 1× gross: never borrow (short proceeds count as cash)
+        const affordable = acc.cash / (price * (1 + fee));
+        if (dq > affordable) dq = Math.max(0, affordable);
+        if (dq <= 0 || dq * price < rules.minTradeValue) continue;
+      }
+      const value = Math.abs(dq) * price, cost = value * fee;
+      const before = acc.qty[s] || 0, after = before + dq;
+      // Realised P&L for the closed part of a position (FIFO-free average cost).
+      if (before !== 0 && Math.sign(dq) !== Math.sign(before)) {
+        const closed = Math.min(Math.abs(dq), Math.abs(before)) * Math.sign(before);
+        const pnl = closed * (price - acc.cost[s]);
+        acc.realized.push(pnl - cost);
+      }
+      if (after === 0 || Math.abs(after * price) < 1e-6) { delete acc.qty[s]; delete acc.cost[s]; }
+      else {
+        // Cost basis includes the entry commission, so realised P&L and win rate are net of both fees.
+        const basis = price * (1 + Math.sign(dq) * fee);
+        if (before === 0 || Math.sign(after) !== Math.sign(before)) acc.cost[s] = basis;
+        else if (Math.abs(after) > Math.abs(before)) acc.cost[s] = (acc.cost[s] * before + basis * dq) / after;
+        acc.qty[s] = after;
+      }
+      acc.cash -= dq * price + cost;
+      acc.fees += cost; acc.turnover += value;
+      const kind = before >= 0 && after >= 0 ? (dq > 0 ? (before ? 'add' : 'open') : (after ? 'reduce' : 'close'))
+        : before <= 0 && after <= 0 ? (dq < 0 ? (before ? 'add' : 'short') : (after ? 'reduce' : 'cover'))
+        : 'flip';
+      acc.trades.push({ k, s, side: dq > 0 ? 'buy' : 'sell', kind, qty: dq, price, value, fee: cost });
+    }
+    for (const [s] of orders) (acc.filled ??= new Set()).add(s);
   }
-  orders.sort((a, b) => a[1] - b[1]); // sells first
-  for (const [s, dq0] of orders) {
-    const mk = market(s), fee = rules.feeBps[mk] / 1e4;
-    // With noise, slippage varies between 0.5× and 2.5× of the nominal rate (same draw for every bot).
-    const slip = rules.slippageBps[mk] / 1e4 * (rules.noise > 0 ? 1 + rules.noise * (noiseDraw(rules.noiseSeed, k, s, 1) * 2 - 0.5) : 1);
-    const price = px[s] * (dq0 > 0 ? 1 + slip : 1 - slip);
-    let dq = dq0;
-    if (dq > 0 && rules.maxGross <= 1) { // 1× gross: never borrow (short proceeds count as cash)
-      const affordable = acc.cash / (price * (1 + fee));
-      if (dq > affordable) dq = Math.max(0, affordable);
-      if (dq * price < rules.minTradeValue) continue;
-    }
-    const value = Math.abs(dq) * price, cost = value * fee;
-    const before = acc.qty[s] || 0, after = before + dq;
-    // Realised P&L for the closed part of a position (FIFO-free average cost).
-    if (before !== 0 && Math.sign(dq) !== Math.sign(before)) {
-      const closed = Math.min(Math.abs(dq), Math.abs(before)) * Math.sign(before);
-      const pnl = closed * (price - acc.cost[s]);
-      acc.realized.push(pnl - cost);
-    }
-    if (after === 0 || Math.abs(after * price) < 1e-6) { delete acc.qty[s]; delete acc.cost[s]; }
-    else {
-      // Cost basis includes the entry commission, so realised P&L and win rate are net of both fees.
-      const basis = price * (1 + Math.sign(dq) * fee);
-      if (before === 0 || Math.sign(after) !== Math.sign(before)) acc.cost[s] = basis;
-      else if (Math.abs(after) > Math.abs(before)) acc.cost[s] = (acc.cost[s] * before + basis * dq) / after;
-      acc.qty[s] = after;
-    }
-    acc.cash -= dq * price + cost;
-    acc.fees += cost; acc.turnover += value;
-    const kind = before >= 0 && after >= 0 ? (dq > 0 ? (before ? 'add' : 'open') : (after ? 'reduce' : 'close'))
-      : before <= 0 && after <= 0 ? (dq < 0 ? (before ? 'add' : 'short') : (after ? 'reduce' : 'cover'))
-      : 'flip';
-    acc.trades.push({ k, s, side: dq > 0 ? 'buy' : 'sell', kind, qty: dq, price, value, fee: cost });
-  }
-  for (const [s] of orders) (acc.filled ??= new Set()).add(s);
   for (const s of syms) if (fresh[s]) (acc.filled ??= new Set()).add(s);
   if (!waiting) { acc.pending = null; acc.filled = null; }
 }
@@ -178,8 +204,15 @@ function mark(acc, m, k, rules, market) {
   acc.net = acc.equity > 0 ? net / acc.equity : 0;
   acc.positions = pos;
   if (acc.equity <= rules.cash * 0.01 && !acc.retired) { acc.retired = 'busted'; acc.pending = null; }
-  // Margin call: positions are closed at this close when gross exposure runs far past the race limit (a short squeeze).
-  else if (!acc.retired && rules.allowShort && acc.exposure > Math.max(1, rules.maxGross) * 2) {
+  // Mixed daily risk is observed only after ALL closes: queue liquidation at each
+  // exchange's next genuine open, not an earlier close or a carried weekend quote.
+  else if (!acc.retired && rules.allowShort && acc.exposure > Math.max(1, rules.maxGross) * 2 && !acc.liquidating) {
+    if (m.cfg.market === 'mixed') {
+      acc.liquidating = true; acc.pending = null;
+      acc.marginCalls = (acc.marginCalls || 0) + 1;
+      acc.notes.push({k,text:'Margin call: liquidation queued for next available sessions',system:true});
+      return pos;
+    }
     for (const [s, q] of Object.entries(acc.qty)) {
       const mk = market(s), price = px[s] * (q > 0 ? 1 - rules.slippageBps[mk] / 1e4 : 1 + rules.slippageBps[mk] / 1e4), value = Math.abs(q) * price, fee = value * rules.feeBps[mk] / 1e4;
       acc.realized.push(q * (price - acc.cost[s]) - fee);
@@ -243,7 +276,7 @@ export async function runRace(m, bots, rulesIn = {}, onStep = null, opts = {}) {
     const last = k === m.timeline.length - 1;
     if (!last) await Promise.all(bots.map(async (b, i) => {
       const acc = accounts[i];
-      if (acc.retired) return;
+      if (acc.retired || acc.liquidating) return;
       const state = { ...snap, portfolio: { cash: acc.cash, equity: acc.equity, exposure: acc.exposure, positions: acc.positions } };
       const r = await b.host.onBar(state);
       if (r.timeout) acc.timeouts++;
@@ -259,7 +292,7 @@ export async function runRace(m, bots, rulesIn = {}, onStep = null, opts = {}) {
     // A bot without a new opinion (null) is read as "hold my current basket".
     if (last && opts.advice) await Promise.all(bots.map(async (b, i) => {
       const acc = accounts[i];
-      if (acc.retired) return;
+      if (acc.retired || acc.liquidating) return;
       // An order still waiting for a closed market is part of the bot's intended basket.
       const own = acc.pending ? { ...acc.pending } : Object.fromEntries(Object.entries(acc.positions || {}).map(([s, p]) => [s, p.weight]));
       const r = await b.host.onBar({ ...snap, portfolio: advicePortfolio(opts.advice, snap) });
@@ -273,6 +306,14 @@ export async function runRace(m, bots, rulesIn = {}, onStep = null, opts = {}) {
   }
   await Promise.all(bots.map(b => b.host.close?.()));
   return { accounts, rules, stats: accounts.map(a => stats(a, m, rules)) };
+}
+
+export function raceFailure(accounts) {
+  const failed = accounts.filter(a => a.initError || a.retired);
+  if (!failed.length) return null;
+  return 'Strategy initialization failed or strategy retired; no result recorded. ' + failed.map(a =>
+    `${a.name} [${a.id}]: ${a.retired || 'init failed'}${a.initError || a.lastError ? ' — ' + String(a.initError || a.lastError).replace(/\s+/g, ' ') : ''}`
+  ).join('; ');
 }
 
 export function stats(acc, m, rules) {
@@ -320,7 +361,7 @@ export function benchmarks(m, rules = DEFAULT_RULES) {
       for (const a of members) {
         const u = units[a.id];
         if (!u || T < u.from) { e += part; continue; }   // still cash until its first fill
-        e += u.q * a.cols.c[Math.max(0, lastAt(a.cols, T))];
+        e += u.q * assetPrice(m,a,Math.max(0, lastAt(a.cols,T)),T,'c');
       }
       return e;
     });
@@ -328,10 +369,7 @@ export function benchmarks(m, rules = DEFAULT_RULES) {
   const atStart = m.assets.filter(a => a.firstT <= m.timeline[0]);
   out['Equal weight'] = curveFor(atStart);
   const btc = m.assets.find(a => a.symbol === 'BTC'); if (btc) out['BTC hold'] = curveFor([btc]);
-  const bist = m.assets.some(a => a.exchange === 'BIST');
-  const idxCols = bist ? m.ctx.XU100?.cols : m.ctx.SPY?.cols;
-  if (idxCols && m.assets.some(a => a.market === 'stocks') && m.cfg.tf === '1d') {
-    out[bist ? 'BIST 100 hold' : 'S&P 500 hold'] = curveFor([{ id: bist ? '__XU100' : '__SPY', market: 'stocks', cols: idxCols, idx: new Map(idxCols.t.map((t, i) => [t, i])) }]);
-  }
+  for (const [key,label,bist] of [['XU100','BIST 100 hold',true],['SPY','S&P 500 hold',false]])
+    if (m.bench[key] && m.assets.some(a => a.market === 'stocks' && (a.exchange === 'BIST') === bist)) out[label] = curveFor([m.bench[key]]);
   return out;
 }

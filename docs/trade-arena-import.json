@@ -3,7 +3,7 @@
   "files": [
     {
       "path": "BOT_API.md",
-      "sha256": "a0cd703f5b1c5f1d4b133a140c56318322a4b004fb8cd00cc5246b986eaddc7b",
+      "sha256": "47eb071e6992cf5f156a0e4c2dc04b81cfee59118097678f4095e8b3e9712552",
       "sourceSha256": "3b7da2a88c21197afeaea17795be149c23af6acc1a48e3cfcb1c440cb6752fde"
     },
     {
@@ -1396,12 +1396,12 @@
     },
     {
       "path": "engine/market.js",
-      "sha256": "f1cb8700340c28e03f1fe4e6f7b7c3256bd4d47074ffd27217da907474456c6a",
+      "sha256": "24b701e0450485abb1071f082d82442afdddcd3582cbadcb629e8fea50dd01b5",
       "sourceSha256": "20f6aa9c3018c832944e55a9badfc9e26028ebc8f5a48b15fb63573c76251428"
     },
     {
       "path": "engine/sim.js",
-      "sha256": "e5afddf70129071bd6de412a5fef2f9e21f48ac51f1a7cc7a504ec400c21ca3b",
+      "sha256": "aa8cad36869ec43e34905ab5432305cef92185020cad522ea9e33efe5cbf04b3",
       "sourceSha256": "4844e6baefdaf190aa2b3d6eeadd93115b8e44c60f050bff3285e812abdb67b0"
     },
     {
@@ -1416,28 +1416,28 @@
     },
     {
       "path": "index.md",
-      "sha256": "9e42852c5855735cf25e73bfb1bc9688c2876b7a40841b9b244fcb59600f29df",
+      "sha256": "1619c5f8944b6b33bdb764aa4c5b748c7dfa6ca0ffa888f8162e5b7796893fc0",
       "sourceSha256": null
     },
     {
       "path": "ui/advisor.js",
-      "sha256": "2503c373ed8f13866f175f20d2d73b30bf3e257e68c6b52ee0e5158fdc18eebf",
+      "sha256": "65a8253824fc2ba5fb0772903a76be8764f68f7c8282cc6007b485997a829dc5",
       "sourceSha256": "da5cf4cf9e1ee5f607b65c3eda11d283be814d0f66bac19eff2af97ed51a55e0",
       "added": "2026-11-03"
     },
     {
       "path": "ui/app.css",
-      "sha256": "83d1cb0ede160c45220c828941083414e5dd4cb2b7ab0b16b7b2ee5a71be77aa",
+      "sha256": "b47ec37d3d1ad7466a04f82cc805d4d1d6539a1c74f60b32ddce8a2d01b6d693",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "dbcd5592e70615119f0a24744dc1c806808582abd2fef095c4ec9de3f5d06fab",
+      "sha256": "6d2dfada83b0b608aba89434979d4c5e97fc1fee5eab4c65e4635abbae5178f0",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
       "path": "ui/basket.js",
-      "sha256": "c1375fd94085bf8864eebb521f402f8115a31b47444a5229935c5d11f79d7cdc",
+      "sha256": "6af9f8f76b7c3255d0cb1b3b2f2df1a1f71247f9dc5c65736123cd1b96d5b138",
       "sourceSha256": null
     },
     {
@@ -1474,12 +1474,12 @@
     },
     {
       "path": "ui/race-view.js",
-      "sha256": "2db8454fa29ac66a4e6d27b16f53d339b7956b9d7ab4b3ddaf17e9d98555cd92",
+      "sha256": "199ce8de104f9434c35cc5230b5697e0a3bc2053840453bf0b12b5b970cdb911",
       "sourceSha256": "4f762ee58e9f977ea26a8bd0ee8ad143464777f170bb76a743a06f534778af64"
     },
     {
       "path": "ui/race-worker.js",
-      "sha256": "42296c30589b229a745720871df346398be9bd35db3a9461178e037996aad3fc",
+      "sha256": "ce39d13304a17a1d2eded079235231665dda75c322f5609735005fc737f5b08b",
       "sourceSha256": "7855727a79da8d1e7992da9382bf1d3255d402fff1ae6c8e0e9adb210d9b0780"
     },
     {
@@ -1489,7 +1489,7 @@
     },
     {
       "path": "ui/sim-client.js",
-      "sha256": "b4bbf572e6695df954a437e1e6c1cdb16c0ea4cc9be691f85567820126647bc6",
+      "sha256": "91cb53e0bee0580a7d643a1456eaebe2281507eaf95c410670844e28ebb0f941",
       "sourceSha256": "9b1102b18a5277c1461d13d5b9f05b6e08ab428068a3b4c697ad35b6610384e4",
       "added": "2026-11-03"
     },
@@ -1522,7 +1522,24 @@
     },
     {
       "path": "ui/web-host.js",
-      "sha256": "0aae583180d88845f2b505892b4dd0845f7700d5086ee55cd1e21cfe9ac6a1ac",
+      "sha256": "0a68c1a740e29e38bf0186719badbdfa5347290266164acdcdd1025c782420e3",
+      "sourceSha256": null
+    },
+    {
+      "path": "engine/fx.js",
+      "sha256": "0367bda134a87501991a8afaeb7c05e77665913044aa4ed2b1ddc9ade33973bd",
+      "sourceSha256": null
+    }
+  ],
+  "derived": [
+    {
+      "path": "frontend/arcade/trade-arena/data/fx-usdtry.json",
+      "sha256": "f2dde434dace7f4f4c88b9585fcee8d845627f2f8f7b20eda7852b1985894df2",
+      "sourceSha256": null
+    },
+    {
+      "path": "scripts/trade-arena/update_fx.py",
+      "sha256": "994a103d561898709416e9658affc07aa1d671547c4b100355a44a53a34f819a",
       "sourceSha256": null
     }
   ],

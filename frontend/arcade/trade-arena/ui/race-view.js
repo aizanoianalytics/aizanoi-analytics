@@ -1,6 +1,6 @@
 import { widthStep } from './layout.js';
 // Live race page: runs a race in a worker, plays the streamed frames back as a broadcast.
-import { $, $$, esc, html, pct, usd, compact, price, cls, fmtDate, avatar, ok, BASE } from './util.js';
+import { $, $$, esc, html, pct, compact, price, cls, fmtDate, avatar, ok, BASE } from './util.js';
 import { RaceChart } from './race-chart.js';
 import { monteCarlo, summarise, renderMonteCarlo } from './monte-carlo.js';
 import { css, reducedMotion } from './theme.js';
@@ -8,6 +8,13 @@ import { css, reducedMotion } from './theme.js';
 const SPEEDS = [[1, '1'], [4, '4'], [12, '12'], [40, '40'], [150, '150'], [Infinity, 'Max']]; // bars per second
 const CASH = 100000;
 let R = null; // current race state
+const moneyFormats = new Map();
+const usd = (value, digits = 0) => {
+  if (!ok(value)) return '—';
+  const currency = R?.cfg.market === 'bist' ? 'TRY' : 'USD', key = currency + digits;
+  if (!moneyFormats.has(key)) moneyFormats.set(key,new Intl.NumberFormat('en-US', { style:'currency', currency, minimumFractionDigits:digits, maximumFractionDigits:digits }));
+  return moneyFormats.get(key).format(value);
+};
 let LIVE = null; // live/manifest.json when the server publishes recent bars (see live.js)
 export function setLiveManifest(m) { LIVE = m || null; }
 const VERB = { open: 'bought', add: 'bought', reduce: 'sold', close: 'sold', short: 'shorted', cover: 'covered', flip: 'flipped', liquidated: 'margin-called' };
@@ -75,8 +82,9 @@ export function renderRace(view) {
       <h1>${esc(title(cfg))}</h1>
     </div>
     <div class="chips">
-      <span class="chip">${cfg.market === 'bist' ? 'Borsa Istanbul · TRY' : cfg.market}</span><span class="chip">${cfg.tf} bars</span>
+      <span class="chip">${cfg.market === 'bist' ? 'Borsa Istanbul · TRY' : cfg.market === 'mixed' ? 'BIST + US + crypto · USD' : cfg.market}</span><span class="chip">${cfg.tf} bars</span>
       <span class="chip">${cfg.start} → ${cfg.end} UTC</span>
+      ${cfg.market === 'mixed' ? '<span class="chip" title="ECB reference cross-rate, available the following UTC day and held all day. Daily decisions after all closes; next available session fills in crypto, Istanbul, New York order. Closed-session prices carry forward with FX revaluation. Not executable FX quotes.">Lagged historical FX · daily sessions</span>' : ''}
       ${cfg.blind ? '<span class="chip blind">BLIND</span>' : ''}${cfg.short ? '<span class="chip">shorts</span>' : ''}${(cfg.gross || 1) > 1 ? `<span class="chip">${cfg.gross}× gross</span>` : ''}${cfg.noise ? '<span class="chip" title="Market noise: fill prices move inside each bar, slippage varies and some fills slip a bar. Same seed, same race.">market noise</span>' : ''}${cfg.seed && cfg.seed !== 7 ? `<span class="chip" title="Random seed: seeds market noise, the bots’ Math.random and blind aliases">seed ${cfg.seed}</span>` : ''}
     </div>
     <div class="controls">
@@ -159,7 +167,7 @@ function renderStatus() {
     $('#veil').hidden = false;
     $('#vring').hidden = true; $('#vpbar').hidden = true; $('#verr').hidden = false;
     const short = String(R.error).split('\n')[0].replace(/^Error:\s*/, '');
-    $('#vtext').innerHTML = `<b class="down" data-layout="ta-s24">The race stopped before it finished</b><br><span>${esc(short).slice(0, 220)}</span><br><span class="faint" data-layout="ta-s2">No result was recorded. Your settings are kept.</span>`;
+    $('#vtext').innerHTML = `<b class="down" data-layout="ta-s24">The race stopped before it finished</b><br><span>${esc(short)}</span><br><span class="faint" data-layout="ta-s2">No result was recorded. Your settings are kept.</span>`;
     return;
   }
   $('#vtext').textContent = R.status.text;
@@ -215,12 +223,12 @@ async function buildAssetChart() {
   const tfFile = a.market === 'stocks' && R.cfg.tf === '4h' ? '1h' : R.cfg.tf;
   try {
     const archiveMarket = a.exchange === 'BIST' ? 'bist' : a.market;
-    const raw = await fetch(new URL(`data/raw/${archiveMarket}/${tfFile}/${a.symbol}.json`, BASE)).then(r => r.json());
+    const raw = a.fx ? { t:[], o:[], h:[], l:[], c:[] } : await fetch(new URL(`data/raw/${archiveMarket}/${tfFile}/${a.symbol}.json`, BASE)).then(r => r.json());
     if (R !== mine || R.ac !== ac) return;
     const t0 = R.meta.timeline[0], pre = [];
     const tfStep = { '1d': 86400000, '4h': 14400000, '1h': 3600000 }[R.cfg.tf];
     if (tfFile === R.cfg.tf) for (let i = 0; i < raw.t.length && raw.t[i] < t0; i++) pre.push(i);
-    R.ac.warm = pre.slice(-120).map(i => ({ time: raw.t[i] / 1000, open: raw.o[i] * a.scale, high: raw.h[i] * a.scale, low: raw.l[i] * a.scale, close: raw.c[i] * a.scale }));
+    R.ac.warm = a.warm || pre.slice(-120).map(i => ({ time: raw.t[i] / 1000, open: raw.o[i] * a.scale, high: raw.h[i] * a.scale, low: raw.l[i] * a.scale, close: raw.c[i] * a.scale }));
     R.ac.step = tfStep;
   } catch { if (R !== mine || R.ac !== ac) return; R.ac.warm = []; }
   if (R !== mine || R.ac !== ac) return;
@@ -232,7 +240,7 @@ function assetBars(upto) {
   const out = [...(R.ac.warm || [])], tl = R.meta.timeline;
   let lastT = -1;
   for (let k = 0; k <= upto && k < R.frames.length; k++) {
-    const p = R.frames[k].prices[R.ac.id]; if (!p) continue;
+    const p = R.frames[k].prices[R.ac.id]; if (!p || p[5] === false) continue;
     const t = tl[k] / 1000; if (t <= lastT) continue;
     // only bars where this asset traded (stock bars repeat on weekends in mixed races)
     if (k > 0) { const q = R.frames[k - 1].prices[R.ac.id]; if (q && q[3] === p[3] && q[0] === p[0] && q[1] === p[1]) continue; }
@@ -248,7 +256,7 @@ function syncAssetChart(force = false) {
     ac.series.setData(assetBars(k));
   } else {
     for (let j = ac.shown + 1; j <= k; j++) {
-      const p = R.frames[j]?.prices[ac.id]; if (!p) continue;
+      const p = R.frames[j]?.prices[ac.id]; if (!p || p[5] === false) continue;
       try { ac.series.update({ time: R.meta.timeline[j] / 1000, open: p[0], high: p[1], low: p[2], close: p[3] }); } catch { /* weekend duplicate */ }
     }
   }

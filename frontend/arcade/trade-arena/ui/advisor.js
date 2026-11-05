@@ -162,7 +162,7 @@ function ask({ B, bySym, roster, chosen, dataEnd, start, live }) {
   const mine = Object.fromEntries(rows.map(r => [r.s, r.w / 100]));
   const advice = { equity: +B.value || 100000, positions: Object.fromEntries(rows.map(r => [r.s, r.px ? { weight: r.w / 100, avgPrice: r.px } : r.w / 100])) };
   go.disabled = true; out.innerHTML = ''; status.textContent = 'Starting…';
-  const me = simulate({ market, start, end: dataEnd, bots, short: B.shorts, gross: B.shorts ? 1.5 : 1, live, advice }, t => { status.textContent = t; });
+  const me = simulate({ market, start, end: dataEnd, bots, short: B.shorts, gross: B.shorts ? 1.5 : 1, live, advice, usdAssetsOnly:true }, t => { status.textContent = t; });
   job = me;
   me.promise.then(res => {
     if (job !== me) return;

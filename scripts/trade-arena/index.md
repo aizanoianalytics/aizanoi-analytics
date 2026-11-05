@@ -40,3 +40,14 @@ python3 scripts/trade-arena/update_live.py --out ... --no-yahoo                 
 
 Schedule with `infra/systemd/aizanoi-trade-arena-live.{service,timer}.example` (hourly at :12).
 Python 3.10+ standard library only.
+
+## Historical FX artifact
+
+`update_fx.py` derives `frontend/arcade/trade-arena/data/fx-usdtry.json` from the official
+ECB historical CSV ZIP (no provider calls from the browser). Run without arguments to fetch a
+new snapshot, or `--zip <saved-eurofxref-hist.zip>` to reproduce an exact source hash;
+`--out <path>` supports isolated verification. The artifact embeds the ZIP SHA256, fixing
+range, units, derivation, ECB attribution/reuse notice and following-day UTC availability.
+Review/commit the artifact through the normal green-PR/exact-SHA deployment path. This is
+not a mutable tail or a new scheduled writer. Mixed races stop on absent/malformed FX or
+a reference older than 7 days; update the artifact before extending mixed races beyond it.

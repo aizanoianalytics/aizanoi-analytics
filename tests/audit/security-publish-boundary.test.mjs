@@ -44,6 +44,7 @@ const TRADE_ARENA_JSON = new Set([
   "frontend/arcade/trade-arena/bots/roster.json",
   "frontend/arcade/trade-arena/live/manifest.json",
   "frontend/arcade/trade-arena/data/catalog.json",
+  "frontend/arcade/trade-arena/data/fx-usdtry.json",
   "frontend/arcade/trade-arena/data/league.json",
   "frontend/arcade/trade-arena/data/league-ls.json",
   "frontend/arcade/trade-arena/data/raw/bist/1d/AEFES.json",

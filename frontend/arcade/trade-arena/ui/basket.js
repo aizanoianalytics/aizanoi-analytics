@@ -49,7 +49,7 @@ function build(bot, market, dataEnd, live, short) {
   const go = $('#bk-go'), status = $('#bk-status'), out = $('#bk-out'), err = $('#bk-err');
   go.disabled = true; err.hidden = true; out.innerHTML = ''; status.textContent = 'Starting…';
   const start = yearBefore(dataEnd);
-  const me = simulate({ market, start, end: dataEnd, bots: [bot], short, gross: short ? 1.5 : 1, live }, t => { status.textContent = t; });
+  const me = simulate({ market, start, end: dataEnd, bots: [bot], short, gross: short ? 1.5 : 1, live, usdAssetsOnly:true }, t => { status.textContent = t; });
   job = me;
   me.promise.then(res => {
     if (job !== me) return;

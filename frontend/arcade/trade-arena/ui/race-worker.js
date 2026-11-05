@@ -1,7 +1,7 @@
 import { WebHost } from './web-host.js';
 // Race worker: loads data, prepares the market, runs the bots (each in its own nested worker) and streams frames.
 import { prepareMarket } from '../engine/market.js';
-import { runRace, benchmarks, stats, DEFAULT_RULES, noiseDraw } from '../engine/sim.js';
+import { runRace, benchmarks, stats, DEFAULT_RULES, noiseDraw, raceFailure } from '../engine/sim.js';
 import { to4h } from '../engine/bars.js';
 import { UNIVERSE, requireSeries, requireFunding } from '../engine/universe.js';
 import { liveLoader } from './live.js';
@@ -13,13 +13,13 @@ async function get(url) {
   return cache.get(url);
 }
 
-async function loadUniverse(market, tf, progress, get) {
+async function loadUniverse(market, tf, progress, get, usdAssetsOnly = false) {
   const jobs = [];
   const crypto = market === 'crypto' || market === 'mixed';
   if (crypto) for (const a of UNIVERSE.crypto) jobs.push(['crypto', a, `data/raw/crypto/${tf}/${a.ticker}.json`]);
   if (market === 'stocks' || market === 'mixed') for (const a of UNIVERSE.stocks) jobs.push(['stocks', a, `data/raw/stocks/${tf === '4h' ? '1h' : tf}/${a.ticker}.json`]);
-  // Borsa Istanbul: daily TRY stocks, traded under stock rules, never mixed with USD assets.
-  if (market === 'bist') for (const a of UNIVERSE.bist) jobs.push(['stocks', a, `data/raw/bist/1d/${a.ticker}.json`]);
+  // BIST archive remains TRY. Mixed races convert causally in prepareMarket.
+  if (market === 'bist' || (market === 'mixed' && !usdAssetsOnly)) for (const a of UNIVERSE.bist) jobs.push(['stocks', a, `data/raw/bist/1d/${a.ticker}.json`]);
   let done = 0;
   const total = jobs.length + UNIVERSE.context.length + (crypto ? UNIVERSE.crypto.length : 0);
   const tick = () => progress(++done / total);
@@ -42,13 +42,13 @@ self.onmessage = async ({ data: { cfg, bots, rules: rulesIn, live = null, advice
     post('status', { text: 'Loading market data…', progress: 0 });
     const progress = p => post('status', { text: 'Loading market data…', progress: p });
     let data, liveUsed = !!live;
-    try { data = await loadUniverse(cfg.market, cfg.tf, progress, liveLoader(BASE, live, get)); }
+    try { data = await loadUniverse(cfg.market, cfg.tf, progress, liveLoader(BASE, live, get), cfg.usdAssetsOnly); }
     catch (err) {
       if (!live || !String(err?.message).startsWith('live ')) throw err;
       // Never mix fresh and stale assets: one missing tail means the whole race runs on the archive.
       liveUsed = false;
       post('status', { text: 'Live top-up unavailable, using the archive…', progress: 0 });
-      data = await loadUniverse(cfg.market, cfg.tf, progress, get);
+      data = await loadUniverse(cfg.market, cfg.tf, progress, get, cfg.usdAssetsOnly);
     }
     let { series, context, funding } = data;
     // Monte Carlo replays race a seeded random subset of the assets (at least two).
@@ -58,19 +58,21 @@ self.onmessage = async ({ data: { cfg, bots, rules: rulesIn, live = null, advice
     }
     const liveBars = series.reduce((s, x) => Math.max(s, x.cols.liveBars || 0), 0);
     post('status', { text: 'Computing 140 features per asset…', progress: 1 });
-    const m = prepareMarket(series, cfg, context, funding);
+    const fx = cfg.market === 'mixed' && !cfg.usdAssetsOnly ? await get('data/fx-usdtry.json') : null;
+    const m = prepareMarket(series, cfg, context, funding, fx);
     if (m.timeline.length < 2) throw new Error('No bars in this period for this market.');
     const rules = { ...DEFAULT_RULES, ...rulesIn };
     const bench = benchmarks(m, rules);
     hosts = bots.map((b, i) => new WebHost(b.file, (cfg.seed * 7919 + i) >>> 0, rules.initMs, rules.barMs));
-    const assets = m.assets.map(a => ({ id: a.id, symbol: a.symbol, name: a.name, market: a.market, sector: a.sector, scale: a.scale, exchange: a.exchange, currency: a.currency }));
+    const assets = m.assets.map(a => ({ id: a.id, symbol: a.symbol, name: a.name, market: a.market, sector: a.sector, scale: a.scale, exchange: a.exchange, currency: a.currency,
+      fx: a.fx, warm: a.fx ? a.cols.t.map((t,i)=>({t,i})).filter(x=>x.t<cfg.start).slice(-120).map(({t,i})=>({time:t/1000,open:a.cols.o[i],high:a.cols.h[i],low:a.cols.l[i],close:a.cols.c[i]})) : null }));
     post('meta', { timeline: m.timeline, assets, bench, blind: !!cfg.blind, live: { used: liveUsed && liveBars > 0, bars: liveBars, generated: live?.generated || null } });
     let lastTrades = bots.map(() => 0), lastNotes = bots.map(() => 0);
     let buffer = [];
     const flush = () => { if (buffer.length) { post('frames', { frames: buffer }); buffer = []; } };
     const res = await runRace(m, bots.map((b, i) => ({ id: b.id, name: b.name, host: hosts[i] })), rules, async (k, snap, accounts) => {
       const prices = {};
-      for (const [id, a] of Object.entries(snap.assets)) prices[id] = [a.bar.o, a.bar.h, a.bar.l, a.bar.c, a.f.ret1];
+      for (const [id, a] of Object.entries(snap.assets)) prices[id] = [a.bar.o, a.bar.h, a.bar.l, a.bar.c, a.f.ret1, a.tradable];
       buffer.push({
         k, prices, breadth: snap.market.breadth50,
         acc: accounts.map((a, i) => {
@@ -85,7 +87,8 @@ self.onmessage = async ({ data: { cfg, bots, rules: rulesIn, live = null, advice
       if (buffer.length >= 40) { flush(); await new Promise(r => { setTimeout(r, 0); }); }
     }, { advice });
     flush();
-    if (res.accounts.some(account => account.initError || account.retired)) throw new Error('Strategy initialization failed or strategy retired; no result recorded.');
+    const failure = raceFailure(res.accounts);
+    if (failure) throw new Error(failure);
     post('done', { stats: res.stats, logs: hosts.map(h => h.logs.slice(0, 50)), names: hosts.map(h => h.meta?.name || null),
       errors: res.accounts.map(a => a.initError || a.lastError || null) });
   } catch (err) {

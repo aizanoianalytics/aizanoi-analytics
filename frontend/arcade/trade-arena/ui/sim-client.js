@@ -7,7 +7,7 @@ export const yearBefore = day => { const d = new Date(day + 'T00:00:00Z'); d.set
  * Run bots over [start, end] (daily bars) and resolve with { meta, first, last, stats, done, lastTradeK, notes }.
  * onStatus(text) receives progress lines. Returns { promise, cancel }.
  */
-export function simulate({ market, start, end, bots, short = false, gross = 1, live = null, advice = null, seed = 7, tf = '1d', blind = false, noise = 0, sample = 1, barMs = 3000 }, onStatus = () => {}) {
+export function simulate({ market, start, end, bots, short = false, gross = 1, live = null, advice = null, seed = 7, tf = '1d', blind = false, noise = 0, sample = 1, barMs = 3000, usdAssetsOnly = false }, onStatus = () => {}) {
   const worker = new Worker(new URL('./race-worker.js', import.meta.url), { type: 'module' });
   let timer = 0, settled = false;
   const cancel = () => { clearTimeout(timer); worker.terminate(); };
@@ -35,7 +35,7 @@ export function simulate({ market, start, end, bots, short = false, gross = 1, l
     };
   });
   worker.postMessage({
-    cfg: { market, tf, start: Date.parse(start), end: Date.parse(end) + 86399999, blind, seed, sample },
+    cfg: { market, tf, start: Date.parse(start), end: Date.parse(end) + 86399999, blind, seed, sample, usdAssetsOnly },
     bots: bots.map(b => ({ id: b.id, name: b.name, file: b.file })),
     // Not a contest: a generous time budget so a busy device cannot skip bars and change the answer.
     rules: { allowShort: !!short, maxGross: gross, initMs: 20000, barMs, noise, noiseSeed: seed },
