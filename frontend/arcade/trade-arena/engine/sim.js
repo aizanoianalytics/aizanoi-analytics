@@ -304,6 +304,15 @@ export async function runRace(m, bots, rulesIn = {}, onStep = null, opts = {}) {
     }));
     if (onStep) await onStep(k, snap, accounts);
   }
+  await Promise.all(bots.map(async (b,i) => {
+    const failure = await b.host.finish?.();
+    const acc = accounts[i];
+    if (failure?.fatal && !acc.retired) {
+      acc.errors++; acc.lastError = failure.error;
+      if (failure.timeout) acc.timeouts++;
+      acc.retired = failure.timeout ? 'timed out' : 'crashed';
+    }
+  }));
   await Promise.all(bots.map(b => b.host.close?.()));
   return { accounts, rules, stats: accounts.map(a => stats(a, m, rules)) };
 }

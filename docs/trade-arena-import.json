@@ -1401,7 +1401,7 @@
     },
     {
       "path": "engine/sim.js",
-      "sha256": "aa8cad36869ec43e34905ab5432305cef92185020cad522ea9e33efe5cbf04b3",
+      "sha256": "e1b789b87092130c93ff597bea6c4e4ae31214e4325b4a72c6f86c66ec83fc94",
       "sourceSha256": "4844e6baefdaf190aa2b3d6eeadd93115b8e44c60f050bff3285e812abdb67b0"
     },
     {
@@ -1522,7 +1522,7 @@
     },
     {
       "path": "ui/web-host.js",
-      "sha256": "0a68c1a740e29e38bf0186719badbdfa5347290266164acdcdd1025c782420e3",
+      "sha256": "794f7fc556f86bd9232e90b370a0342aed42c33f09b94137bb11cf0d356814fa",
       "sourceSha256": null
     },
     {

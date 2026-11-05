@@ -87,9 +87,11 @@ test('a non-responsive strategy has one absolute hard deadline and close settles
     const host = new WebHost('bots/house/hodl.js',7,10,10);
     assert.equal((await host.init({})).ok,true);
     const first = await host.onBar({}); assert.equal(first.timeout,true);
+    const finishing = host.finish();
     for (let i=0;i<10;i++) { assert.equal((await host.onBar({})).timeout,true); await new Promise(resolve => { setTimeout(resolve,180); }); }
     await new Promise(resolve => { setTimeout(resolve,350); });
     assert.equal(host.dead,true); assert.equal(instances[0].sent,3); assert.equal(instances[0].stopped,true);
+    assert.deepEqual(await finishing, {ok:false,error:'hard timeout',fatal:true,timeout:true});
     assert.deepEqual(await host.onBar({}), { ok:false, error:'hard timeout', fatal:true, timeout:true });
     host.close();
     assert.equal((await host.onBar({})).error, 'hard timeout', 'cleanup must not overwrite the first fatal cause');

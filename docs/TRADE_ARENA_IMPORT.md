@@ -87,6 +87,9 @@ the same converted bars as the worker; non-tradable revaluations are not synthet
 
 The worker host now retains the **first** fatal cause across later calls and cleanup;
 hard deadlines still have the same timing and are classified as timeouts. The failed-race
+finalization waits for any still-running soft-timed-out request to settle or reach its
+original absolute hard deadline, rather than certifying a short race by cancelling it.
+The failed-race
 screen names affected bot IDs/names and their actual initialization/retirement cause.
 This fixes proven diagnostic loss, **not** an unobserved spontaneous-crash root cause.
 All selected bots continue to run concurrently; no cap, pool or deadline loosening was added.

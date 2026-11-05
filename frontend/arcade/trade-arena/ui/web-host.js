@@ -9,6 +9,7 @@ export class WebHost {
       if (!pending || pending.id !== data.id) return;
       clearTimeout(pending.soft); clearTimeout(pending.hard); this.pending = null;
       if (!pending.expired) pending.resolve(data);
+      pending.complete();
     };
     this.worker.onerror = event => { event.preventDefault?.(); this.kill(String(event.message || 'worker error')); };
     this.worker.onmessageerror = () => this.kill('Invalid worker message');
@@ -22,6 +23,7 @@ export class WebHost {
     if (pending) {
       clearTimeout(pending.soft); clearTimeout(pending.hard);
       if (!pending.expired) pending.resolve({ ...this.failure });
+      pending.complete();
     }
   }
   call(type, payload, ms) {
@@ -29,7 +31,9 @@ export class WebHost {
     if (this.pending) return Promise.resolve({ ok:false,error:'previous request still running',timeout:true });
     const id = ++this.seq;
     return new Promise(resolve => {
-      const pending = { id, resolve, expired:false };
+      let complete;
+      const settled = new Promise(done => { complete = done; });
+      const pending = { id, resolve, expired:false, complete, settled };
       pending.soft = setTimeout(() => {
         pending.expired = true;
         resolve({ ok:false,error:`timed out after ${ms} ms`,timeout:true });
@@ -46,5 +50,11 @@ export class WebHost {
     return this.call('init', info, this.initMs);
   }
   onBar(state) { return this.call('bar', state, this.barMs); }
+  async finish() {
+    // A soft-timed-out request may still be running when a short/fast race ends.
+    // Keep its original absolute hard deadline; never certify it by cancelling it.
+    if (this.pending) await this.pending.settled;
+    return this.failure || null;
+  }
   close() { this.kill('host closed'); }
 }

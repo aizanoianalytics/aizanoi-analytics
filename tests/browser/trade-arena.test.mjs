@@ -194,6 +194,9 @@ test('a deliberately stalled real strategy reports the bot and hard-timeout caus
   await withPage({width:1280,height:900},async page=>{
     await page.route('**/bots/ai/sonnet-5-5.js',route=>route.fulfill({status:200,contentType:'text/javascript',body:'module.exports={init(){},onBar(){while(true){}}};'}));
     await page.goto(base+'/arcade/trade-arena/');
+    await page.locator('label.preset:has(input[value="custom"])').click();
+    await page.locator('#d1').fill('2025-01-01'); await page.locator('#d1').dispatchEvent('change');
+    await page.locator('#d2').fill('2025-01-08'); await page.locator('#d2').dispatchEvent('change');
     for (const label of await page.locator('#roster label').all()) {
       const input=label.locator('input');
       if (await input.isChecked() && await input.getAttribute('value')!=='sonnet-5-5') await label.click();
