@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-05-ai2-statebench-long-state-tracking",
+  "title": "Ai2's StateBench shows frontier models losing the thread on long assignments",
+  "summary": "The Allen Institute for AI released StateBench, a four-tier benchmark for tracking how variables change across long documents, from fixed values up to assignment by reference. Gemini 3.8 Flash, Claude Opus 5.5 and both GPT-6 variants handled the easy tiers but fell to 13% accuracy or lower on the longest general-finite problems. Small Gated DeltaNet models trained on the task generalised far beyond their training length; transformers never learned the hardest tier.",
+  "category": "ai",
+  "priority": 48,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai2",
+    "benchmark",
+    "long-context",
+    "evaluation"
+  ],
+  "sources": [
+    {
+      "publisher": "Allen Institute for AI",
+      "url": "https://allenai.org/blog/statebench",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

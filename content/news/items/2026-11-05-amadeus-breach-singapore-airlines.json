@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-05-amadeus-breach-singapore-airlines",
+  "title": "An Amadeus booking flaw exposes 46,000 Singapore Airlines records",
+  "summary": "Singapore Airlines said data from about 46,000 booking records was accessed without authorisation on Amadeus's reservation platform, which supports part of its booking process. Names, booking references, itineraries and cabin classes were exposed, plus email, phone, travel-document and KrisFlyer details on about 620 records. No card data was involved and the airline says its own systems were not breached. Cathay Pacific, Japan Airlines and other carriers reported the same incident.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "amadeus",
+    "singapore-airlines",
+    "data-breach",
+    "travel"
+  ],
+  "sources": [
+    {
+      "publisher": "CNA",
+      "url": "https://www.channelnewsasia.com/singapore/sia-singapore-airlines-amadeus-data-breach-booking-records-6517151",
+      "publishedAt": "2026-11-03T14:05:00Z"
+    },
+    {
+      "publisher": "The Straits Times",
+      "url": "https://www.straitstimes.com/singapore/46000-sia-booking-records-accessed-illegally-in-data-breach-affecting-software-provider-amadeus",
+      "publishedAt": "2026-11-03T12:51:00Z"
+    }
+  ],
+  "kind": "daily"
+}

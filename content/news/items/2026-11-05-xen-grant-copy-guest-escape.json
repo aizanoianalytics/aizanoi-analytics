@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-05-xen-grant-copy-guest-escape",
+  "title": "A Claude-assisted audit finds a two-flaw guest escape in Xen's grant copy",
+  "summary": "The Xen Project published advisory XSA-523 for CVE-2026-102703 and CVE-2026-102704, two validation errors in the grant-copy path that let a malicious guest read and write memory belonging to other domains, including Dom0. Every Xen release from 4.6 onward is affected; 4.5 and earlier are not. The advisory credits Anthropic, using Claude, with the discovery. Patches exist for 4.17 through unstable and there is no known mitigation short of applying them.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "xen",
+    "hypervisor",
+    "vulnerability",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "Xen Project",
+      "url": "https://xenbits.xen.org/xsa/advisory-523.html",
+      "publishedAt": "2026-11-03T12:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

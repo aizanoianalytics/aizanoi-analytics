@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-05-apple-siri-ai-developer-preview",
+  "title": "Apple hands every developer a way into Siri AI, months before customers get it",
+  "summary": "Apple opened a Siri AI developer preview in the iOS, iPadOS, macOS and visionOS 27.3 betas, letting any app route its content and actions through App Intents into the assistant's personal-context, onscreen-awareness and natural-language features. Developers can also write skills that chain several actions into one request. The integrations reach customers in a few months, App Store submissions open in spring, and Siri AI stays unavailable in the EU on iPhone, iPad and Apple Watch.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "siri",
+    "app-intents",
+    "developers",
+    "apple-intelligence"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple Developer",
+      "url": "https://developer.apple.com/news/?id=gdk2umrf",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/tech/1025694/apple-siri-ai-third-party-apps",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

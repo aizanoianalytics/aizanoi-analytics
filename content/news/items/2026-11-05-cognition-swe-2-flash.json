@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-05-cognition-swe-2-flash",
+  "title": "Cognition's budget coding model trades frontier scores for a fifth of the price",
+  "summary": "Cognition released SWE-2 Flash, a 276-billion-parameter mixture-of-experts coding model with 12 billion active parameters, post-trained from Thinking Machines' Inkling-Small. The company says a new mid-training stage lifted Terminal-Bench 4.0 from 0.9% to 20.0% and FrontierCode 2.0 from 3.2% to 24.0%, and that Flash runs three times faster than SWE-2 at one-fifth the price. It ships inside Devin, while the weights stay behind a gated partner programme.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cognition",
+    "devin",
+    "coding-models",
+    "open-weights"
+  ],
+  "sources": [
+    {
+      "publisher": "Cognition",
+      "url": "https://cognition.com/blog/swe-2-flash",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

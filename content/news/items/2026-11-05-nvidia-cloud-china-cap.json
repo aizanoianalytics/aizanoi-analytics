@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-05-nvidia-cloud-china-cap",
+  "title": "Nvidia tells its cloud partners to keep Chinese customers under half the business",
+  "summary": "Nvidia has told data-centre partners that at least 51% of the cloud services they sell must go to non-Chinese companies, capping Chinese business at 49%, the Financial Times reported, citing five people. The requirement was passed on verbally by sales and regional teams, applies worldwide and covers new contracts only, so existing leases stand. Nvidia had no such cap before, and no published method exists for measuring compliance.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "export-controls",
+    "cloud",
+    "china",
+    "ai-chips"
+  ],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/nvidia-cloud-partners-cap-china-business",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

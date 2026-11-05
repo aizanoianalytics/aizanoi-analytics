@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-05-fenerbahce-liverpool-comeback",
+  "title": "Fenerbahce end Liverpool's perfect start with two goals in six minutes",
+  "summary": "Fenerbahce came from behind twice to beat Liverpool 3-2 in Istanbul, their first win in the Champions League proper since 2008. Trey Nyoni scored his first Liverpool goal, Mason Greenwood equalised with a deflected free-kick, Alexander Isak restored the lead with his first touch on 69 minutes, Archie Brown levelled on 73 and substitute Vedat Muriqi headed the winner on 79. Liverpool, beaten for the first time in Europe this season, drop to fifth.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "fenerbahce",
+    "liverpool",
+    "istanbul"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13607129/fenerbahce-3-2-liverpool-andoni-iraolas-side-lose-two-leads-in-istanbul-as-perfect-champions-league-start-ends",
+      "publishedAt": "2026-11-04T20:05:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/match/_/gameId/401915382/liverpool-fenerbahce",
+      "publishedAt": "2026-11-04T20:07:00Z"
+    }
+  ],
+  "kind": "daily"
+}

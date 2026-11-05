@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-05-qualcomm-handset-slump-outlook",
+  "title": "Qualcomm's phone business shrinks 26% and the profit outlook comes in light",
+  "summary": "Qualcomm reported fiscal fourth-quarter non-GAAP revenue of $10.44 billion, down 7%, with handset chip sales down 26% to $5.14 billion while automotive rose 89% to $1.99 billion. It guided the December quarter to $10.4-11.2 billion of revenue and non-GAAP earnings of $2.15-2.35 a share, a profit range that disappointed, and flagged broad increases in wafer, packaging and memory costs. The shares slid in extended trading.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "qualcomm",
+    "earnings",
+    "semiconductors",
+    "smartphones"
+  ],
+  "sources": [
+    {
+      "publisher": "Qualcomm (SEC filing)",
+      "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+      "publishedAt": "2026-11-04T21:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/04/qualcomm-qcom-earnings-report-q4-2026.html",
+      "publishedAt": "2026-11-04T21:06:00Z"
+    }
+  ],
+  "kind": "daily"
+}

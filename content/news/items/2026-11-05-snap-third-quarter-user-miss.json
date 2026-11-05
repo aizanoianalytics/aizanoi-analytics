@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-05-snap-third-quarter-user-miss",
+  "title": "Snap grows revenue 14% but misses on users and the shares slide",
+  "summary": "Snap posted third-quarter revenue of $1.72 billion, up 14% from a year earlier, with net income of $56 million and adjusted EBITDA of $383 million. Global daily active users reached 495 million, short of the 499 million analysts expected, and revenue also came in just below consensus. The shares fell more than 10%. From the first quarter of 2027 Snap plans to report monthly actives rather than daily ones as its primary audience metric.",
+  "category": "economy-markets",
+  "priority": 56,
+  "publishedAt": "2026-11-05T05:30:00Z",
+  "updatedAt": "2026-11-05T05:30:00Z",
+  "retrievedAt": "2026-11-05T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "snap",
+    "earnings",
+    "advertising",
+    "social-media"
+  ],
+  "sources": [
+    {
+      "publisher": "Snap Inc. (SEC filing)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000063/snap-20261104xexx991pressr.htm",
+      "publishedAt": "2026-11-04T21:05:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/04/snap-q3-earnings-report-2026.html",
+      "publishedAt": "2026-11-04T21:05:00Z"
+    }
+  ],
+  "kind": "daily"
+}
