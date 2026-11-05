@@ -104,7 +104,7 @@ function renderLobby(view) {
     <fieldset class="panel" aria-labelledby="h-step2">
       <div class="panel-h"><h2 id="h-step2">Step 2 · Contestants</h2><span class="muted" id="bot-count" data-layout="ta-s2"></span></div>
       <div class="roster" id="roster">${roster.bots.map(b => `<label class="bot-card" data-color="${b.color}"><input type="checkbox" name="bot" value="${b.id}" ${pick.bots.includes(b.id) ? 'checked' : ''}><span class="check" aria-hidden="true">✓</span>${avatar(b)}<span><b>${esc(b.name)}</b><span>${esc(b.kind === 'ai' ? `${b.botName || 'AI bot'} · ${b.lab}` : b.lab)}</span></span></label>`)}</div>
-      <p class="muted" data-layout="ta-s3">One bot races the benchmarks alone; up to six race head to head.</p>
+      <p class="muted" data-layout="ta-s3">One bot races the benchmarks alone; select the full roster to race head to head. Every selected bot runs in its own worker; larger races can slow your device.</p>
     </fieldset>
     <section class="panel" aria-labelledby="opts-h">
       <div class="panel-h"><h2 id="opts-h">Step 3 · Rules</h2></div>
@@ -193,9 +193,7 @@ function renderVs() {
   const { pick } = state;
   const bots = pick.bots.map(id => state.roster.bots.find(b => b.id === id)).filter(Boolean);
   $('#vs').innerHTML = bots.length ? bots.map(b => `${avatar(b, 'sm')}<b data-layout="ta-s1">${esc(b.short)}</b>`).join('<em>VS</em>') + (bots.length === 1 ? '<em>VS</em><span class="muted" data-layout="ta-s1">the benchmarks</span>' : '') : '<span class="muted">No bot selected</span>';
-  const full = pick.bots.length >= 6;
-  $$('#roster input').forEach(i => { i.disabled = full && !i.checked; });
-  $('#bot-count').textContent = `${pick.bots.length} of 6 selected${full ? ' · maximum reached' : ''}`;
+  $('#bot-count').textContent = `${pick.bots.length} of ${state.roster.bots.length} selected`;
   const pr = PRESETS.find(p => p.id === pick.preset);
   const c = pr || { market: pick.market, tf: pick.tf, start: pick.start, end: pick.end };
   if (pick.preset === 'random') { $('#terms').textContent = `random battlefield · drawn at start · ${pick.short ? 'shorts allowed' : 'long only'} · ${pick.gross}× gross · $100,000 each`; return; }
