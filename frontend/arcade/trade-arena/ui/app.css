@@ -628,6 +628,24 @@ table.stats th button:focus-visible { outline: 2px solid var(--focus); outline-o
 [data-rank="9"]{transform:translateY(576px)}[data-rows="9"]{position:relative;height:576px}
 [data-rank="10"]{transform:translateY(640px)}[data-rows="10"]{position:relative;height:640px}
 [data-rank="11"]{transform:translateY(704px)}[data-rows="11"]{position:relative;height:704px}
+/* Full shipped roster plus the three possible benchmarks. */
+[data-rank="12"]{transform:translateY(768px)}[data-rows="12"]{position:relative;height:768px}
+[data-rank="13"]{transform:translateY(832px)}[data-rows="13"]{position:relative;height:832px}
+[data-rank="14"]{transform:translateY(896px)}[data-rows="14"]{position:relative;height:896px}
+[data-rank="15"]{transform:translateY(960px)}[data-rows="15"]{position:relative;height:960px}
+[data-rank="16"]{transform:translateY(1024px)}[data-rows="16"]{position:relative;height:1024px}
+[data-rank="17"]{transform:translateY(1088px)}[data-rows="17"]{position:relative;height:1088px}
+[data-rank="18"]{transform:translateY(1152px)}[data-rows="18"]{position:relative;height:1152px}
+[data-rank="19"]{transform:translateY(1216px)}[data-rows="19"]{position:relative;height:1216px}
+[data-rank="20"]{transform:translateY(1280px)}[data-rows="20"]{position:relative;height:1280px}
+[data-rank="21"]{transform:translateY(1344px)}[data-rows="21"]{position:relative;height:1344px}
+[data-rank="22"]{transform:translateY(1408px)}[data-rows="22"]{position:relative;height:1408px}
+[data-rank="23"]{transform:translateY(1472px)}[data-rows="23"]{position:relative;height:1472px}
+[data-rank="24"]{transform:translateY(1536px)}[data-rows="24"]{position:relative;height:1536px}
+[data-rank="25"]{transform:translateY(1600px)}[data-rows="25"]{position:relative;height:1600px}
+[data-rank="26"]{transform:translateY(1664px)}[data-rows="26"]{position:relative;height:1664px}
+[data-rank="27"]{transform:translateY(1728px)}[data-rows="27"]{position:relative;height:1728px}
+[data-rank="28"]{transform:translateY(1792px)}[data-rows="28"]{position:relative;height:1792px}
 [hidden]{display:none!important}
 .provenance-note{max-width:1440px;margin:14px auto;padding:0 20px;font-size:12px;color:var(--muted)}
 @media(pointer:coarse){button,select,.btn{min-height:44px}}

@@ -48,17 +48,43 @@ test('every shipped roster worker initializes under production CSP and arbitrary
   });
 });
 
-test('historical race computes real trades for every bot, paints charts, and reaches results under strict CSP', {timeout:120000}, async () => {
+test('the full roster races in concurrent workers, computes real trades, and paints results under strict CSP', {timeout:180000}, async () => {
   await withPage({width:1440,height:1000}, async (page,errors) => {
     await page.goto(base + '/arcade/trade-arena/');
     await page.locator('#go').waitFor();
-    // The UI allows six contestants per race; fill the field from the top of the roster.
     for (const label of await page.locator('#roster label').all()) { const input = label.locator('input'); if (!await input.isChecked() && await input.isEnabled()) await label.click(); }
+    assert.equal(await page.locator('#roster input:checked').count(),rosterSize, 'every roster bot can be selected');
+    assert.equal(await page.locator('#roster input:disabled').count(),0);
+    assert.equal(await page.locator('#bot-count').innerText(),`${rosterSize} of ${rosterSize} selected`);
+    // Read Chromium's real worker targets, not a fake host or a completion marker.
+    const cdp = await page.context().browser().newBrowserCDPSession();
     await page.locator('#go').click();
+    let concurrent = 0;
+    for (const deadline = Date.now() + 30000; Date.now() < deadline;) {
+      const { targetInfos } = await cdp.send('Target.getTargets');
+      concurrent = targetInfos.filter(target => target.type === 'worker' && target.url.endsWith('/ui/bot-worker.js')).length;
+      if (concurrent === rosterSize) break;
+      await page.waitForTimeout(50);
+    }
+    assert.equal(concurrent,rosterSize, 'one live worker per contestant, with the entire roster active together');
+    await page.waitForFunction(count => document.querySelectorAll('#rows .row:not(.bench)').length === count,rosterSize);
+    const board = await page.locator('#rows').evaluate(box => ({
+      height:box.getBoundingClientRect().height,
+      count:box.children.length,
+      offsets:[...box.children].map(row => Math.round(row.getBoundingClientRect().top - box.getBoundingClientRect().top)),
+    }));
+    assert.equal(board.height,board.count * 64, 'standings contain the full roster plus benchmarks');
+    assert.deepEqual(board.offsets.sort((a,b) => a-b),Array.from({length:board.count},(_,i) => i*64), 'every standings row has its own rank position');
     await page.locator('#speeds [data-v="Infinity"]').click();
-    await page.locator('dialog.results[open]').waitFor({timeout:100000});
+    await page.locator('dialog.results[open]').waitFor({timeout:150000});
     const rows = page.locator('dialog.results table.stats tbody tr:not(.bench)');
-    assert.equal(await rows.count(),6);
+    assert.equal(await rows.count(),rosterSize);
+    const savedIds = await page.evaluate(() => JSON.parse(localStorage.getItem('trade-arena:history'))[0].stats.map(stat => stat.id));
+    const selectedIds = await page.evaluate(() => JSON.parse(localStorage.getItem('trade-arena:pick')).bots);
+    assert.deepEqual(savedIds.sort(),selectedIds.sort(), 'every selected bot finishes and is recorded');
+    const { targetInfos } = await cdp.send('Target.getTargets');
+    assert.equal(targetInfos.filter(target => target.type === 'worker' && target.url.endsWith('/ui/bot-worker.js')).length,0, 'completed race releases every bot worker');
+    await cdp.detach();
     for (const row of await rows.all()) {
       const values = await row.locator('td').allTextContents();
       assert.ok(Number(values[8]) > 0, 'real executed trade count: ' + values.join('|'));
@@ -127,13 +153,34 @@ for (const width of [390,768,1440]) test(`independent shell launcher and frame t
     assert.equal(await frame.locator('#roster input').count(),rosterSize);
     const overflow = await frame.locator('html').evaluate(el => el.scrollWidth - el.clientWidth);
     assert.ok(overflow<=1, `frame overflow at ${width}px: ${overflow}`);
+    for (const label of await frame.locator('#roster label').all()) { const input = label.locator('input'); if (!await input.isChecked()) await label.click(); }
+    assert.equal(await frame.locator('#roster input:checked').count(),rosterSize);
+    const cdp = await page.context().browser().newBrowserCDPSession();
     await frame.locator('#go').click();
     await frame.locator('#racecv').waitFor();
+    let active = [];
+    for (const deadline = Date.now() + 30000; Date.now() < deadline;) {
+      const { targetInfos } = await cdp.send('Target.getTargets');
+      active = targetInfos.filter(target => target.type === 'worker' && target.url.endsWith('/ui/bot-worker.js'));
+      if (active.length === rosterSize) break;
+      await page.waitForTimeout(50);
+    }
+    assert.equal(active.length,rosterSize, 'close during a real full-roster race');
     // Closing the canonical shell window must detach the document while workers are active.
     const win = page.locator('.az-window').filter({has:page.locator('iframe.ta-shell-frame')});
     await win.locator('[data-window-close], [data-action="close"], [aria-label^="Close"]').first().click();
     assert.equal(await page.locator('iframe.ta-shell-frame').count(),0);
     assert.equal(await page.locator('link[href="/js/v3/apps/trade-arena/src/app.css"]').count(),0);
+    let remaining = [];
+    for (const deadline = Date.now() + 10000; Date.now() < deadline;) {
+      const { targetInfos } = await cdp.send('Target.getTargets');
+      remaining = targetInfos.filter(target => target.type === 'worker' && /\/ui\/(bot|race)-worker\.js$/.test(target.url));
+      if (!remaining.length) break;
+      await page.waitForTimeout(50);
+    }
+    assert.equal(remaining.length,0, 'cancellation terminates the race worker and all nested contestants');
+    await cdp.detach();
+    assert.equal(await page.evaluate(() => localStorage.getItem('trade-arena:history')),null, 'cancelled race is not recorded');
     assert.deepEqual(errors,[]);
   });
 });

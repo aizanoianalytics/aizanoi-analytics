@@ -1427,12 +1427,12 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "9d6501db4af824fea4ef3604a31d2ade55041ac0f294769772d221c0fb61f6ae",
+      "sha256": "83d1cb0ede160c45220c828941083414e5dd4cb2b7ab0b16b7b2ee5a71be77aa",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "1f0402d4aa914d90ae9dfdf0966991904358073171b449569f307f2fc540ee8f",
+      "sha256": "dbcd5592e70615119f0a24744dc1c806808582abd2fef095c4ec9de3f5d06fab",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
