@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-06-new-york-times-letterboxd-talks",
+  "title": "New York Times in talks to buy Letterboxd for $330 million",
+  "summary": "The New York Times is reported to be in talks to acquire Letterboxd, the film-logging and review platform, for $330 million. Letterboxd grew from 3 million users in January 2021 to 28 million by April this year, and more than half of its users are under 35. Its projected earnings for 2026 are about $15 million, so the reported price is roughly 22 times that figure.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "media",
+    "acquisitions",
+    "new-york-times",
+    "letterboxd"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/05/the-new-york-times-reportedly-in-talks-to-buy-letterboxd-for-330-million",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

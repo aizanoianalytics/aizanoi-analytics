@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-06-dropbox-tigris-data-acquisition",
+  "title": "Dropbox buys Tigris Data for $350 million to build an agent storage cloud",
+  "summary": "Dropbox agreed to acquire cloud storage company Tigris Data for $350 million, which it describes as its largest acquisition. The deal is expected to close in the fourth quarter and supports DBX Agent Cloud, a storage platform for companies building AI models and agents that will first sell S3-compatible object storage as a standalone product. Dropbox said it has no plans to cut jobs as part of the purchase, after cutting 9 percent of staff last month.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "dropbox",
+    "acquisition",
+    "cloud-storage",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/05/dropbox-acquires-tigris-data-for-350m-to-bolster-its-ai-iinfrastructure",
+      "publishedAt": "2026-11-05T15:19:00Z"
+    }
+  ],
+  "kind": "daily"
+}

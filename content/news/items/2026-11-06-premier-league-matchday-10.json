@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-06-premier-league-matchday-10",
+  "title": "Arsenal take a three-point lead into Premier League matchday 10",
+  "summary": "Arsenal lead the Premier League on 24 points after nine matches, three clear of Manchester City, following their 1-0 win at Liverpool on Sunday. Matchday 10 opens on Friday with Everton hosting Coventry City, then Leeds United play Tottenham Hotspur in Saturday's early kick-off, Arsenal meet Hull City and Nottingham Forest host City. Sunday brings Crystal Palace against Liverpool, Sunderland against Chelsea and Manchester United against Aston Villa.",
+  "category": "football",
+  "priority": 56,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "fixtures",
+    "matchday"
+  ],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/news/4675097/all-380-fixtures-for-202627-season",
+      "publishedAt": "2026-10-19T00:00:00Z"
+    },
+    {
+      "publisher": "Sport News Africa",
+      "url": "https://www.sportnewsafrica.com/en/fixtures/premier-league",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

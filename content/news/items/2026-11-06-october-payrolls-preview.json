@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-06-october-payrolls-preview",
+  "title": "October payrolls due with forecasts pointing to a 65,000 gain",
+  "summary": "The US October employment report is scheduled for 8:30 a.m. Eastern on Friday. FactSet's median of 24 estimates puts nonfarm payrolls at 65,000, up from 29,000 in September, with forecasts ranging from 50,000 to 125,000, while the unemployment rate is expected to hold at 4.2 percent. The release follows a session in which investors cut exposure to chip stocks and trimmed bets on further Federal Reserve tightening.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-economy",
+    "jobs-report",
+    "federal-reserve",
+    "labour-market"
+  ],
+  "sources": [
+    {
+      "publisher": "FactSet Insight",
+      "url": "https://insight.factset.com/total-nonfarm-payrolls-for-october-2026-are-projected-to-rise-by-65000",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
