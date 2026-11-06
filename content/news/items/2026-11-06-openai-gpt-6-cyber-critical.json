@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-06-openai-gpt-6-cyber-critical",
+  "title": "OpenAI rates GPT-6 Cyber Critical after a sharper exploitation benchmark",
+  "summary": "OpenAI released GPT-6 Cyber, a security-focused model it classifies as Critical under its Preparedness Framework, one level above GPT-5.6 Cyber. On ExploitGym it scored 48.5 percent against 32.1 percent for its predecessor, and it helped find 81 previously unknown vulnerabilities in Firefox. OpenAI says the model stayed out of bounds in under 1 percent of tests, down from about 5 percent, and limits access to Daybreak Red customers doing authorised defensive work.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "cybersecurity",
+    "model-release",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1027599/openai-gpt-6-cyber-launch",
+      "publishedAt": "2026-11-05T17:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-05T04:55:00.000Z",
+  "generatedAt": "2026-11-06T05:15:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-06",
+      "path": "/news/2026-11-06/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-05",
       "path": "/news/2026-11-05/",
@@ -442,6 +447,495 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-06-ai-selloff-nasdaq-asia",
+      "kind": "daily",
+      "title": "AI trade cracks as the Nasdaq drops 5.5 percent and Asia follows",
+      "summary": "Wall Street's chip-led rally broke on Thursday after Democratic gains in the midterms raised the prospect of tighter AI and data centre policy. The Nasdaq fell about 5.5 percent and the S&P 500 4.4 percent, with the Philadelphia Semiconductor Index down more than 12 percent as Nvidia and Qualcomm led losses. In Asia on Friday the Kospi slid as much as 8.8 percent and tripped a circuit breaker, the Nikkei fell 5.5 percent and Taiwan's TAIEX dropped more than 8 percent.",
+      "category": "economy-markets",
+      "priority": 88,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "semiconductors",
+        "nasdaq",
+        "asia"
+      ],
+      "sources": [
+        {
+          "publisher": "Deutsche Welle",
+          "url": "https://dw.com/en/asian-stocks-slump-after-us-tech-rout-amid-ai-jitters-following-us-midterm-elections/a-79871504",
+          "publishedAt": "2026-11-06T03:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg via SWI swissinfo.ch",
+          "url": "https://swissinfo.ch/eng/asian-stocks-join-us-selloff-as-ai-slump-deepens%3A-markets-wrap/92336450",
+          "publishedAt": "2026-11-06T03:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-ferencvaros-win-at-milan",
+      "kind": "daily",
+      "title": "Ferencvaros leave San Siro with four wins from four as Milan stall",
+      "summary": "Lenny Joseph scored twice as Ferencvaros won 2-0 at Milan to stay perfect in the Europa League league phase. Milan's 21-year-old goalkeeper Lorenzo Torriani made five saves from Joseph alone on his full debut before the striker broke through early in the second half and added a second on the break. Bamidele Yusuf was sent off late for the visitors, but Milan could not capitalise and remain on three points from four matches.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "europa-league",
+        "ac-milan",
+        "ferencvaros",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/c69vz2ey82grt",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/europa-league-scores-fixtures",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-openai-gpt-6-cyber-critical",
+      "kind": "daily",
+      "title": "OpenAI rates GPT-6 Cyber Critical after a sharper exploitation benchmark",
+      "summary": "OpenAI released GPT-6 Cyber, a security-focused model it classifies as Critical under its Preparedness Framework, one level above GPT-5.6 Cyber. On ExploitGym it scored 48.5 percent against 32.1 percent for its predecessor, and it helped find 81 previously unknown vulnerabilities in Firefox. OpenAI says the model stayed out of bounds in under 1 percent of tests, down from about 5 percent, and limits access to Daybreak Red customers doing authorised defensive work.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "cybersecurity",
+        "model-release",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1027599/openai-gpt-6-cyber-launch",
+          "publishedAt": "2026-11-05T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-openai-ipo-ready-2027",
+      "kind": "daily",
+      "title": "Brockman says OpenAI could be ready to list in 2027",
+      "summary": "OpenAI president Greg Brockman told a Wall Street Journal conference that the company could be ready for an initial public offering in 2027, answering \"I think so\" when asked. He said enterprise customers now provide the majority of revenue, up from roughly 30 percent, and that annualised revenue grew 70 percent quarter on quarter in the third quarter as the enterprise business doubled. No filing, valuation or listing date has been announced.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "ipo",
+        "enterprise",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/05/openai-president-greg-brockman-says-company-could-be-ipo-ready-in-2027/",
+          "publishedAt": "2026-11-05T18:02:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-october-payrolls-preview",
+      "kind": "daily",
+      "title": "October payrolls due with forecasts pointing to a 65,000 gain",
+      "summary": "The US October employment report is scheduled for 8:30 a.m. Eastern on Friday. FactSet's median of 24 estimates puts nonfarm payrolls at 65,000, up from 29,000 in September, with forecasts ranging from 50,000 to 125,000, while the unemployment rate is expected to hold at 4.2 percent. The release follows a session in which investors cut exposure to chip stocks and trimmed bets on further Federal Reserve tightening.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-economy",
+        "jobs-report",
+        "federal-reserve",
+        "labour-market"
+      ],
+      "sources": [
+        {
+          "publisher": "FactSet Insight",
+          "url": "https://insight.factset.com/total-nonfarm-payrolls-for-october-2026-are-projected-to-rise-by-65000",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-openai-data-centre-commitments",
+      "kind": "daily",
+      "title": "OpenAI drops NDAs with officials and promises to pay full power costs",
+      "summary": "After midterm elections in which data centre opposition drew broad support, OpenAI announced commitments for communities hosting its projects. The company said it will not use non-disclosure agreements with public officials beyond narrow protections for security information, trade secrets and competitively sensitive material. It also promised to pay the full cost of the electricity and infrastructure it uses, publish the jobs it expects to create, and attach a local compact to every compute campus it owns and operates.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "data-centres",
+        "policy",
+        "energy"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1028454/openai-data-center-nda",
+          "publishedAt": "2026-11-06T00:37:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-claude-personal-finance-plaid",
+      "kind": "daily",
+      "title": "Claude links bank accounts through Plaid, read-only and US-only for now",
+      "summary": "Anthropic opened a beta of Personal Finance in Claude for Pro, Max and Ultra subscribers in the United States. Users connect bank and card accounts through Plaid and ask about balances, spending and upcoming bills; Claude can see account names, types, last four digits, balances, credit limits and up to two years of transactions. Access is read-only, the feature carries no ads or sponsored recommendations, and conversations in the finance hub are not used to train models.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "fintech",
+        "plaid"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://claude.com/resources/articles/introducing-personal-finance-in-claude",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1027652/anthropic-claude-plaid-personal-finance",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-celtic-besiktas-comeback",
+      "kind": "daily",
+      "title": "Celtic's substitutes rescue a 3-2 win over Besiktas",
+      "summary": "Celtic beat Besiktas 3-2 at Celtic Park for their first Europa League win of the campaign after Martin O'Neill turned to his bench. Junior Olaitan put the visitors ahead from a rebound after Sam Johnstone saved his penalty, but Callum Osmand equalised with his first touch and set up Camilo Duran to make it 2-1. Orkun Kokcu levelled from 25 yards with five minutes left, and Duran scored again 84 seconds later.",
+      "category": "football",
+      "priority": 63,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "europa-league",
+        "celtic",
+        "besiktas",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/celtic-vs-besiktas/report/577800",
+          "publishedAt": "2026-11-05T22:24:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-perplexity-teammates-agents",
+      "kind": "daily",
+      "title": "Perplexity's Teammates turn always-on agents into a $200-a-month colleague",
+      "summary": "Perplexity launched Teammates, agents that own ongoing work rather than answer a single prompt. Each teammate carries over projects, skills and memory from Perplexity Computer, runs in its own desktop and browser, and can split a goal into parallel tasks or hand work to other agents. Progress is tracked in individual threads and through Slack. The feature is a research preview on the web for Max subscribers, who pay $200 a month.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "perplexity",
+        "agents",
+        "enterprise"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://theverge.com/ai-artificial-intelligence/1028302/perplexity-teammates-ai-agents-work",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-micron-taoyuan-plant-paused",
+      "kind": "daily",
+      "title": "Micron halts work on its $4.5 billion Taoyuan memory plant",
+      "summary": "Micron has all but stopped construction of a memory chip plant in Taoyuan, Taiwan, after a protracted labour dispute, Bloomberg reported. The Fab 11E project, budgeted at $3 billion to $4.5 billion and previously due to start production in 2028, was meant to make DRAM and high-bandwidth memory with top-end ASML equipment. Micron said its existing Taiwan operations continue normally. Taiwan produces three-fifths of the company's conventional chips.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "micron",
+        "semiconductors",
+        "taiwan",
+        "memory"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg via The Edge Malaysia",
+          "url": "https://www.theedgemarkets.com/node/824699",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/micron-pauses-work-45-billion-taiwan-plant-bloomberg-news-reports-2026-11-05/",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-gemini-omni-1-2-flash",
+      "kind": "daily",
+      "title": "Gemini Omni 1.2 Flash stretches AI video to 15 seconds and cuts the price",
+      "summary": "Google made Gemini Omni 1.2 Flash generally available with native 15-second clips, up from 10 seconds in version 1.1, and cut the price 30 percent to $0.07 per second for 720p video. The model supports multi-turn conversational edits, stronger reference adherence for products and characters, and durations set in one-second steps from three to 15 seconds. It is available through the Gemini API, Google Cloud, Google Vids and Gemini for business.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "video",
+        "generative-ai",
+        "pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-premier-league-matchday-10",
+      "kind": "daily",
+      "title": "Arsenal take a three-point lead into Premier League matchday 10",
+      "summary": "Arsenal lead the Premier League on 24 points after nine matches, three clear of Manchester City, following their 1-0 win at Liverpool on Sunday. Matchday 10 opens on Friday with Everton hosting Coventry City, then Leeds United play Tottenham Hotspur in Saturday's early kick-off, Arsenal meet Hull City and Nottingham Forest host City. Sunday brings Crystal Palace against Liverpool, Sunderland against Chelsea and Manchester United against Aston Villa.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "arsenal",
+        "fixtures",
+        "matchday"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4675097/all-380-fixtures-for-202627-season",
+          "publishedAt": "2026-10-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "Sport News Africa",
+          "url": "https://www.sportnewsafrica.com/en/fixtures/premier-league",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-dropbox-tigris-data-acquisition",
+      "kind": "daily",
+      "title": "Dropbox buys Tigris Data for $350 million to build an agent storage cloud",
+      "summary": "Dropbox agreed to acquire cloud storage company Tigris Data for $350 million, which it describes as its largest acquisition. The deal is expected to close in the fourth quarter and supports DBX Agent Cloud, a storage platform for companies building AI models and agents that will first sell S3-compatible object storage as a standalone product. Dropbox said it has no plans to cut jobs as part of the purchase, after cutting 9 percent of staff last month.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "dropbox",
+        "acquisition",
+        "cloud-storage",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/05/dropbox-acquires-tigris-data-for-350m-to-bolster-its-ai-iinfrastructure",
+          "publishedAt": "2026-11-05T15:19:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-discord-rust-client-rewrite",
+      "kind": "daily",
+      "title": "Discord is replacing Electron and React Native with a Rust client",
+      "summary": "Discord is moving its desktop client off Electron and its mobile apps off React Native, rebuilding shared code in Rust on top of GPUI, chief technology officer Stanislav Vishnevskiy said. He posted an image of the Windows client idling at 290MB of memory, well below what the current Electron build can consume. Discord has used Rust in its infrastructure and voice stack since 2018. The company says it hopes to put the new client into user testing soon.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "discord",
+        "rust",
+        "desktop-apps",
+        "performance"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/1027379/discord-ditching-electron-web-app",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-06-new-york-times-letterboxd-talks",
+      "kind": "daily",
+      "title": "New York Times in talks to buy Letterboxd for $330 million",
+      "summary": "The New York Times is reported to be in talks to acquire Letterboxd, the film-logging and review platform, for $330 million. Letterboxd grew from 3 million users in January 2021 to 28 million by April this year, and more than half of its users are under 35. Its projected earnings for 2026 are about $15 million, so the reported price is roughly 22 times that figure.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-11-06T05:40:00.000Z",
+      "updatedAt": "2026-11-06T05:40:00.000Z",
+      "retrievedAt": "2026-11-06T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "media",
+        "acquisitions",
+        "new-york-times",
+        "letterboxd"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/05/the-new-york-times-reportedly-in-talks-to-buy-letterboxd-for-330-million",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-05-post-election-relief-rally",
       "kind": "daily",

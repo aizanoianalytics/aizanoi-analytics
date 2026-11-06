@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-06-perplexity-teammates-agents",
+  "title": "Perplexity's Teammates turn always-on agents into a $200-a-month colleague",
+  "summary": "Perplexity launched Teammates, agents that own ongoing work rather than answer a single prompt. Each teammate carries over projects, skills and memory from Perplexity Computer, runs in its own desktop and browser, and can split a goal into parallel tasks or hand work to other agents. Progress is tracked in individual threads and through Slack. The feature is a research preview on the web for Max subscribers, who pay $200 a month.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "perplexity",
+    "agents",
+    "enterprise"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://theverge.com/ai-artificial-intelligence/1028302/perplexity-teammates-ai-agents-work",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-06-ai-selloff-nasdaq-asia",
+  "title": "AI trade cracks as the Nasdaq drops 5.5 percent and Asia follows",
+  "summary": "Wall Street's chip-led rally broke on Thursday after Democratic gains in the midterms raised the prospect of tighter AI and data centre policy. The Nasdaq fell about 5.5 percent and the S&P 500 4.4 percent, with the Philadelphia Semiconductor Index down more than 12 percent as Nvidia and Qualcomm led losses. In Asia on Friday the Kospi slid as much as 8.8 percent and tripped a circuit breaker, the Nikkei fell 5.5 percent and Taiwan's TAIEX dropped more than 8 percent.",
+  "category": "economy-markets",
+  "priority": 88,
+  "publishedAt": "2026-11-06T05:40:00Z",
+  "updatedAt": "2026-11-06T05:40:00Z",
+  "retrievedAt": "2026-11-06T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "semiconductors",
+    "nasdaq",
+    "asia"
+  ],
+  "sources": [
+    {
+      "publisher": "Deutsche Welle",
+      "url": "https://dw.com/en/asian-stocks-slump-after-us-tech-rout-amid-ai-jitters-following-us-midterm-elections/a-79871504",
+      "publishedAt": "2026-11-06T03:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg via SWI swissinfo.ch",
+      "url": "https://swissinfo.ch/eng/asian-stocks-join-us-selloff-as-ai-slump-deepens%3A-markets-wrap/92336450",
+      "publishedAt": "2026-11-06T03:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
