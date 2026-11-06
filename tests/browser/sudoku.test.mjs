@@ -27,7 +27,12 @@ for (const width of [1440, 820, 390, 320]) test(`Sudoku launcher, difficulty and
       const board = await getBoard(); assert.equal(solve(board).length, 1);
       await activate(page.getByRole('button', { name: 'New game', exact: true }));
       const fresh = await getBoard(); assert.notDeepEqual(fresh, board);
-      const open = fresh.indexOf(0), fixed = fresh.findIndex(Boolean);
+      // A unique puzzle can legitimately have an entirely empty row. Pick a
+      // blank sharing a row with a clue so this deliberately-invalid move has
+      // the precondition the conflict assertion needs; never constrain puzzles.
+      const open = fresh.findIndex((value, index) => !value && fresh.some((clue, peer) => clue && Math.floor(peer/9) === Math.floor(index/9)));
+      const fixed = fresh.findIndex(Boolean);
+      assert.ok(open >= 0, 'conflict fixture needs a blank with a fixed row peer');
       await activate(cells.nth(fixed));
       await activate(page.getByRole('button', { name: 'Erase', exact: true }));
       assert.deepEqual(await getBoard(), fresh, 'fixed clues protected');
