@@ -131,6 +131,25 @@
   .az-arcade .ag-btn:active { transform: none; }
 }
 
+/* Sudoku: a compact, semantic 9×9 board with a separate large touch keypad. */
+.az-arcade .sd-cab { width: min(100%, 500px); }
+.az-arcade .sd-toolbar, .az-arcade .sd-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.az-arcade .sd-toolbar label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: #eef3ff; font-size: 14px; }
+.az-arcade .sd-toolbar select { min-height: 44px; background: #18233d; color: #eef3ff; border: 1px solid #9aaac6; border-radius: 10px; padding: 0 8px; font: inherit; }
+.az-arcade .sd-board { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); border: 3px solid #b9c9eb; width: 100%; aspect-ratio: 1; background: #fff; }
+.az-arcade .sd-row { display: contents; }
+.az-arcade .sd-cell { position: relative; min-width: 0; min-height: 0; padding: 0; border: 0; border-right: 1px solid #aebcce; border-bottom: 1px solid #aebcce; border-radius: 0; background: #f8fbff; color: #174b9d; font: 600 clamp(16px, 3vw, 25px)/1 system-ui, sans-serif; cursor: pointer; touch-action: manipulation; }
+.az-arcade .sd-cell[data-fixed="true"] { background: #dfe8f4; color: #172b46; font-weight: 800; }
+.az-arcade .sd-cell.sd-right { border-right: 3px solid #536a89; }
+.az-arcade .sd-cell.sd-bottom { border-bottom: 3px solid #536a89; }
+.az-arcade .sd-cell[aria-selected="true"] { background: #c8dcff; box-shadow: inset 0 0 0 3px #2161bb; }
+.az-arcade .sd-cell:focus-visible { outline: 3px solid #174b9d; outline-offset: -3px; z-index: 1; }
+.az-arcade .sd-cell[aria-invalid="true"] { background: #ffe0dc; color: #951e23; }
+.az-arcade .sd-cell[aria-invalid="true"]::after { content: "×"; position: absolute; right: 1px; top: 0; font: 700 12px/1 system-ui, sans-serif; }
+.az-arcade .sd-pad { display: grid; grid-template-columns: repeat(9, minmax(0,1fr)); gap: 4px; }
+.az-arcade .sd-pad .ag-btn { min-width: 0; padding: 0; font-size: 18px; }
+@media (max-width: 600px) { .az-arcade .sd-pad { grid-template-columns: repeat(5,minmax(44px,1fr)); } }
+
 /* Library: links to the AI arenas */
 .az-arcade .az-arcade-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .az-arcade .az-arcade-links a {
