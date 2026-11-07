@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-openai-11b-funding-round",
+  "title": "OpenAI closes $11 billion at a $1.25 trillion valuation as the listing race sharpens",
+  "summary": "OpenAI has completed the first $11 billion portion of a new round that values the company at $1.25 trillion, Bloomberg reported, with the total round potentially reaching $20 billion. The figure sits below the $1.4 trillion OpenAI had earlier targeted. The close lands in the same week that Anthropic began marketing its own Nasdaq listing, putting the two frontier labs' valuations in direct comparison for the first time.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "funding",
+    "valuation",
+    "ipo"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1029380/openai-1-25-trillion-investment-valuation",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-06/openai-completes-11-billion-portion-of-funding-at-1-25-trillion-value",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

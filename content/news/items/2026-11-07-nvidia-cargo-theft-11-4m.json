@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-nvidia-cargo-theft-11-4m",
+  "title": "Six pallets of Nvidia hardware vanish between Oakland and Texas",
+  "summary": "A shipment of Nvidia hardware valued at $11.4 million disappeared after leaving Oakland on 29 August for Fort Worth, Texas. Six pallets were collected as scheduled by a truck carrying the logo of a food transport company, and investigators lost the vehicle in San Bernardino County; Oakland police confirmed a grand theft report filed on 13 September. No arrests or recovery have been announced, and police have not said what the equipment was.",
+  "category": "technology",
+  "priority": 52,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "cargo-theft",
+    "supply-chain",
+    "hardware"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/gadgets/2026/11/nvidia-hardware-worth-11-4m-vanished-between-oakland-and-texas/",
+      "publishedAt": "2026-11-06T15:05:00Z"
+    },
+    {
+      "publisher": "Los Angeles Times",
+      "url": "https://www.latimes.com/california/story/2026-11-06/11-million-in-nvidia-cargo-reportedly-stolen-in-oakland-heist",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-wall-street-week-after-ai-rout",
+  "title": "Wall Street steadies after the rout but still posts a bruising week",
+  "summary": "The S&P 500 rose 0.3 percent to 7,376.86 on Friday and the Nasdaq Composite gained more than 1 percent, while the Dow fell 0.4 percent, leaving the S&P 500 with its worst week since June. The rebound followed a Thursday session in which the index fell more than 4 percent and about $3 trillion of market value disappeared, the sharpest drop since April 2025. Chip shares led the recovery as investors weighed the midterm result and the pace of data-centre spending.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-markets",
+    "nasdaq",
+    "ai-trade",
+    "midterms"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "Capital Brief",
+      "url": "https://www.capitalbrief.com/newsletter/anthropic-investors-trim-ipo-valuation-after-tech-rout-ae5ee7b4-0d90-4f8c-a1f3-b84c68c28810/",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

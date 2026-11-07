@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-tsmc-3d-dram-nvidia",
+  "title": "TSMC weighs making 3D DRAM at Nvidia's request",
+  "summary": "TSMC has begun drafting plans to produce 3D DRAM, an advanced memory that stacks cells vertically, after a request from Nvidia, The Information reported. The chipmaker is weighing new factories against buying an existing plant and converting it, and the effort is led by advanced-packaging vice president Hsu Kuo-chin. No production date has been given. A move into memory would put TSMC in direct competition with Samsung, SK Hynix and Micron.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tsmc",
+    "nvidia",
+    "dram",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-06/tsmc-mulls-making-advanced-ai-memory-chips-information-says",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/tsmc-considers-making-advanced-memory-chips-the-information-reports-5008786",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

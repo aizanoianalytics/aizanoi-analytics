@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-tencent-hy4-vision-computer-use",
+  "title": "Tencent's Hy4 adds vision and computer control to a 770-billion-parameter model",
+  "summary": "Tencent released the full version of Hunyuan Hy4, a 770-billion-parameter mixture-of-experts model with a one-million-token context that can read charts, screenshots and documents and operate command-line and graphical interfaces. Tencent says it trained the model on professional tools including Blender and CAD software. Hy4 is live through Tencent Cloud and third-party gateways at unchanged pricing, while the weights and a fuller system card are promised in the coming days.",
+  "category": "ai",
+  "priority": 54,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tencent",
+    "hunyuan",
+    "computer-use",
+    "model-release"
+  ],
+  "sources": [
+    {
+      "publisher": "Tencent Hunyuan",
+      "url": "https://hy.tencent.ai/research/hy4?langVersion=en",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    },
+    {
+      "publisher": "TechNode",
+      "url": "https://technode.com/2026/11/04/tencent-launches-hy4-with-vision-and-computer-use-capabilities",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-october-payrolls-165000",
+  "title": "US payrolls rise 165,000 in October as unemployment slips to 4.1 percent",
+  "summary": "US nonfarm payroll employment rose by 165,000 in October, well above the 48,000 average monthly gain of the previous year, the Bureau of Labor Statistics reported. The unemployment rate edged down to 4.1 percent, with 7.1 million people out of work. Health care added 42,000 jobs, professional and business services 70,000 and manufacturing 19,000, while average hourly earnings rose 0.4 percent on the month and 3.1 percent on the year. Revisions added 84,000 jobs to the August and September figures.",
+  "category": "economy-markets",
+  "priority": 88,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-economy",
+    "jobs-report",
+    "labour-market",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "US Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "publishedAt": "2026-11-06T13:30:00Z"
+    },
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/united-states/non-farm-payrolls",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
