@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-06T05:15:00.000Z",
+  "generatedAt": "2026-11-07T05:20:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-07",
+      "path": "/news/2026-11-07/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-06",
       "path": "/news/2026-11-06/",
@@ -447,6 +452,531 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-07-october-payrolls-165000",
+      "kind": "daily",
+      "title": "US payrolls rise 165,000 in October as unemployment slips to 4.1 percent",
+      "summary": "US nonfarm payroll employment rose by 165,000 in October, well above the 48,000 average monthly gain of the previous year, the Bureau of Labor Statistics reported. The unemployment rate edged down to 4.1 percent, with 7.1 million people out of work. Health care added 42,000 jobs, professional and business services 70,000 and manufacturing 19,000, while average hourly earnings rose 0.4 percent on the month and 3.1 percent on the year. Revisions added 84,000 jobs to the August and September figures.",
+      "category": "economy-markets",
+      "priority": 88,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-economy",
+        "jobs-report",
+        "labour-market",
+        "federal-reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "US Bureau of Labor Statistics",
+          "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+          "publishedAt": "2026-11-06T13:30:00.000Z"
+        },
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/united-states/non-farm-payrolls",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-anthropic-ipo-valuation-cut",
+      "kind": "daily",
+      "title": "Anthropic IPO valuation talks slide to $1.2-1.3 trillion after AI rout",
+      "summary": "Prospective Anthropic investors are discussing a $1.2 trillion to $1.3 trillion valuation for the Claude maker's initial public offering, down from the $1.4 trillion to $1.5 trillion range they gave bankers in October, Bloomberg reported. The reset followed a 6.4 percent one-day fall in the Nasdaq 100 that erased $2.3 trillion in market value. Formal marketing is due to begin next week, and Anthropic has not set a price range or share count.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "valuation",
+        "ai-markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-06/anthropic-ipo-valuation-expectations-pressured-after-ai-rout",
+          "publishedAt": "2026-11-06T13:12:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance (Bloomberg)",
+          "url": "https://finance.yahoo.com/technology/ai/articles/anthropic-ipo-valuation-expectations-pressured-131257414.html",
+          "publishedAt": "2026-11-06T13:12:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-openai-11b-funding-round",
+      "kind": "daily",
+      "title": "OpenAI closes $11 billion at a $1.25 trillion valuation as the listing race sharpens",
+      "summary": "OpenAI has completed the first $11 billion portion of a new round that values the company at $1.25 trillion, Bloomberg reported, with the total round potentially reaching $20 billion. The figure sits below the $1.4 trillion OpenAI had earlier targeted. The close lands in the same week that Anthropic began marketing its own Nasdaq listing, putting the two frontier labs' valuations in direct comparison for the first time.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "funding",
+        "valuation",
+        "ipo"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1029380/openai-1-25-trillion-investment-valuation",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-06/openai-completes-11-billion-portion-of-funding-at-1-25-trillion-value",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-wall-street-week-after-ai-rout",
+      "kind": "daily",
+      "title": "Wall Street steadies after the rout but still posts a bruising week",
+      "summary": "The S&P 500 rose 0.3 percent to 7,376.86 on Friday and the Nasdaq Composite gained more than 1 percent, while the Dow fell 0.4 percent, leaving the S&P 500 with its worst week since June. The rebound followed a Thursday session in which the index fell more than 4 percent and about $3 trillion of market value disappeared, the sharpest drop since April 2025. Chip shares led the recovery as investors weighed the midterm result and the pace of data-centre spending.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-markets",
+        "nasdaq",
+        "ai-trade",
+        "midterms"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-6-dow-sp-500-nasdaq-jobs-report-earnings-135953863.html",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Capital Brief",
+          "url": "https://www.capitalbrief.com/newsletter/anthropic-investors-trim-ipo-valuation-after-tech-rout-ae5ee7b4-0d90-4f8c-a1f3-b84c68c28810/",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-tsmc-3d-dram-nvidia",
+      "kind": "daily",
+      "title": "TSMC weighs making 3D DRAM at Nvidia's request",
+      "summary": "TSMC has begun drafting plans to produce 3D DRAM, an advanced memory that stacks cells vertically, after a request from Nvidia, The Information reported. The chipmaker is weighing new factories against buying an existing plant and converting it, and the effort is led by advanced-packaging vice president Hsu Kuo-chin. No production date has been given. A move into memory would put TSMC in direct competition with Samsung, SK Hynix and Micron.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "nvidia",
+        "dram",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-11-06/tsmc-mulls-making-advanced-ai-memory-chips-information-says",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Investing.com",
+          "url": "https://www.investing.com/news/stock-market-news/tsmc-considers-making-advanced-memory-chips-the-information-reports-5008786",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-microsoft-oracle-ai-capacity",
+      "kind": "daily",
+      "title": "Microsoft winds down its rented Oracle AI capacity",
+      "summary": "Microsoft has stopped renewing a contract to rent AI computing from Oracle and has been switching the capacity off over recent months, Bloomberg reported. People familiar with the arrangement said the rented hardware used older-generation Nvidia chips and no longer met Microsoft's specifications, while Oracle said demand for its AI infrastructure, including earlier-generation GPUs, remains strong. The 2023 deal supported an AI-assisted version of Bing and its value was never disclosed.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "oracle",
+        "cloud",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg Law",
+          "url": "https://news.bloomberglaw.com/artificial-intelligence/microsoft-winding-down-oracle-deal-to-rent-ai-cloud-capacity-2",
+          "publishedAt": "2026-11-06T18:16:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Investing.com",
+          "url": "https://www.investing.com/news/stock-market-news/microsoft-is-winding-down-oracle-deal-to-rent-ai-cloud-capacity-bloomberg-news-reports-5008946",
+          "publishedAt": "2026-11-06T12:53:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-hamburg-gladbach-bundesliga",
+      "kind": "daily",
+      "title": "Hamburg climb to eighth as two long-range strikes sink ten-man Gladbach",
+      "summary": "Hamburg beat Borussia Mönchengladbach 3-1 at the Volksparkstadion to open matchday 9, ending their own poor run and leaving Gladbach bottom with a seventh defeat in nine games. Miro Muheim struck from about 30 metres in the 11th minute, Joe Scally equalised before half-time, and Kō Itakura's second yellow card three minutes after the restart tilted the game. Shafiq Nandja scored on 60 minutes and Albert Grønbæk added a long-range third on 70.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "hamburg",
+        "gladbach",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://bundesliga.com/en/bundesliga/news/hamburg-borussia-monchengladbach-match-report-highlights-matchday-9-39907",
+          "publishedAt": "2026-11-06T21:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-valencia-real-madrid-preview",
+      "kind": "daily",
+      "title": "Mourinho's Madrid chase an eighth straight win at Mestalla",
+      "summary": "Real Madrid visit Valencia on Saturday bidding for an eighth consecutive win in all competitions; a victory would draw them level with Barcelona on 30 points before the leaders face Atlético Madrid on Sunday. Madrid have scored 21 goals and conceded eight during a seven-match run that includes a Clásico win at Camp Nou and a 3-2 success at AEK Athens, with Kylian Mbappé scoring in six straight games. Valencia are 19th with nine points from 11 matches.",
+      "category": "football",
+      "priority": 62,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "la-liga",
+        "real-madrid",
+        "valencia",
+        "mourinho"
+      ],
+      "sources": [
+        {
+          "publisher": "Real Madrid",
+          "url": "https://www.realmadrid.com/en-US/news/football/first-team/fixtures/previa-valencia-real-madrid-j12-liga-07-11-2026",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        },
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/sports/2026/11/6/valencia-vs-real-madrid-la-liga-preview-team-news",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-cloudflare-q3-2026",
+      "kind": "daily",
+      "title": "Cloudflare grows 39 percent and lifts its full-year outlook",
+      "summary": "Cloudflare reported third-quarter revenue of $782.5 million, up 39 percent from a year earlier and its fastest growth in nearly four years, crossing $3 billion in annualised revenue. Non-GAAP operating income was $137.1 million, a 17.5 percent margin, while the GAAP operating loss widened to $67.9 million. The company guided fourth-quarter revenue to $845-846 million and raised its full-year revenue outlook to about $2.96 billion.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cloudflare",
+        "earnings",
+        "cloud",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Cloudflare",
+          "url": "https://cloudflare.com/en-gb/press/press-releases/2026/cloudflare-announces-third-quarter-2026-financial-results",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/cloudflare-q3-2026-earnings-39-percent-growth-raises-outlook",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-airbnb-q3-ai-travel-agent",
+      "kind": "daily",
+      "title": "Airbnb books its fastest growth in three years and dates an AI travel agent",
+      "summary": "Airbnb reported third-quarter revenue of $4.87 billion, up 19 percent, with gross booking value of $27.7 billion and net income of $1.9 billion. Adjusted EBITDA was $2.51 billion at a 52 percent margin. The company said an in-house AI travel agent that assembles a custom planning interface from maps, photos and itineraries will reach guests in the first half of 2027, and that about 40 percent of support issues were resolved without a human in the quarter.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "airbnb",
+        "earnings",
+        "ai-agents",
+        "travel"
+      ],
+      "sources": [
+        {
+          "publisher": "Airbnb",
+          "url": "https://news.airbnb.com/airbnb-q3-2026-financial-results",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "StockStory",
+          "url": "https://stockstory.org/us/stocks/nasdaq/abnb/news/earnings-call/abnb-q3-2026-deep-dive-ai-driven-product-expansion-accelerates-growth-and-margin-gains",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-kimi-k3-1-pro-open-weights",
+      "kind": "daily",
+      "title": "Moonshot publishes Kimi K3.1 Pro weights at 2.8 trillion parameters",
+      "summary": "Moonshot AI has published the full weights of Kimi K3.1 Pro on Hugging Face, a 2.8-trillion-parameter mixture-of-experts model that activates about 104 billion parameters per token with a context window of roughly one million tokens. The checkpoint ships in MXFP4 across 96 shards totalling about 1.56 terabytes under a custom licence, and the model card recommends vLLM, SGLang or TokenSpeed to serve it. It handles text and image input.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "moonshot",
+        "open-weights",
+        "kimi",
+        "mixture-of-experts"
+      ],
+      "sources": [
+        {
+          "publisher": "Hugging Face",
+          "url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "publisher": "ArtificialWatch",
+          "url": "https://artificialwatch.com/wire/kimi-k3-1-pro-open-weights-out",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-thinking-machines-inkling-2-small",
+      "kind": "daily",
+      "title": "Thinking Machines ships a 594-billion-parameter model and dates its open weights",
+      "summary": "Thinking Machines released Inkling 2 Small, a mixture-of-experts model with 594 billion total parameters and 17 billion active, image input and adjustable reasoning effort. The lab reports 86.3 percent on SWE-Bench Pro v2 Hard and a score of 31 on the Artificial Analysis Intelligence Index. It is initially available only through Tinker with closed weights; the company says full Apache 2.0 weights follow next week after external safety testing.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "thinking-machines",
+        "open-weights",
+        "model-release",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Thinking Machines Lab",
+          "url": "https://thinkingmachines.ai/news/inkling-2-small/",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-tencent-hy4-vision-computer-use",
+      "kind": "daily",
+      "title": "Tencent's Hy4 adds vision and computer control to a 770-billion-parameter model",
+      "summary": "Tencent released the full version of Hunyuan Hy4, a 770-billion-parameter mixture-of-experts model with a one-million-token context that can read charts, screenshots and documents and operate command-line and graphical interfaces. Tencent says it trained the model on professional tools including Blender and CAD software. Hy4 is live through Tencent Cloud and third-party gateways at unchanged pricing, while the weights and a fuller system card are promised in the coming days.",
+      "category": "ai",
+      "priority": 54,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tencent",
+        "hunyuan",
+        "computer-use",
+        "model-release"
+      ],
+      "sources": [
+        {
+          "publisher": "Tencent Hunyuan",
+          "url": "https://hy.tencent.ai/research/hy4?langVersion=en",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechNode",
+          "url": "https://technode.com/2026/11/04/tencent-launches-hy4-with-vision-and-computer-use-capabilities",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-nvidia-cargo-theft-11-4m",
+      "kind": "daily",
+      "title": "Six pallets of Nvidia hardware vanish between Oakland and Texas",
+      "summary": "A shipment of Nvidia hardware valued at $11.4 million disappeared after leaving Oakland on 29 August for Fort Worth, Texas. Six pallets were collected as scheduled by a truck carrying the logo of a food transport company, and investigators lost the vehicle in San Bernardino County; Oakland police confirmed a grand theft report filed on 13 September. No arrests or recovery have been announced, and police have not said what the equipment was.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "cargo-theft",
+        "supply-chain",
+        "hardware"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/gadgets/2026/11/nvidia-hardware-worth-11-4m-vanished-between-oakland-and-texas/",
+          "publishedAt": "2026-11-06T15:05:00.000Z"
+        },
+        {
+          "publisher": "Los Angeles Times",
+          "url": "https://www.latimes.com/california/story/2026-11-06/11-million-in-nvidia-cargo-reportedly-stolen-in-oakland-heist",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-07-bundesliga-matchday-9-saturday",
+      "kind": "daily",
+      "title": "Bayern head to Mainz with a thinner squad as Dortmund lose Guirassy",
+      "summary": "Bayern Munich visit Mainz on Saturday without Luis Díaz, Serge Gnabry, Jamal Musiala, Ndiaye and Saibari, with Harry Kane leading the line. Borussia Dortmund confirmed Serhou Guirassy will miss the visit of Elversberg with a muscular problem, joining Emre Can and Konstantelias on the sidelines. Leipzig host Augsburg, Paderborn welcome Eintracht Frankfurt and Stuttgart meet Werder Bremen in the late game, with Köln against Leverkusen and Freiburg against Union to follow on Sunday.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-11-07T05:40:00.000Z",
+      "updatedAt": "2026-11-07T05:40:00.000Z",
+      "retrievedAt": "2026-11-07T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "bayern",
+        "dortmund",
+        "team-news"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/news/team-news-line-ups-2026-27-bayern-dortmund-fantasy-20707",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-06-ai-selloff-nasdaq-asia",
       "kind": "daily",

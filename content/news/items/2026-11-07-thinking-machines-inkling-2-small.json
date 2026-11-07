@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-07-thinking-machines-inkling-2-small",
+  "title": "Thinking Machines ships a 594-billion-parameter model and dates its open weights",
+  "summary": "Thinking Machines released Inkling 2 Small, a mixture-of-experts model with 594 billion total parameters and 17 billion active, image input and adjustable reasoning effort. The lab reports 86.3 percent on SWE-Bench Pro v2 Hard and a score of 31 on the Artificial Analysis Intelligence Index. It is initially available only through Tinker with closed weights; the company says full Apache 2.0 weights follow next week after external safety testing.",
+  "category": "ai",
+  "priority": 56,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "thinking-machines",
+    "open-weights",
+    "model-release",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Thinking Machines Lab",
+      "url": "https://thinkingmachines.ai/news/inkling-2-small/",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

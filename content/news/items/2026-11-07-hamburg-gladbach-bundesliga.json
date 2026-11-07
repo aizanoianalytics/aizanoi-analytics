@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-07-hamburg-gladbach-bundesliga",
+  "title": "Hamburg climb to eighth as two long-range strikes sink ten-man Gladbach",
+  "summary": "Hamburg beat Borussia Mönchengladbach 3-1 at the Volksparkstadion to open matchday 9, ending their own poor run and leaving Gladbach bottom with a seventh defeat in nine games. Miro Muheim struck from about 30 metres in the 11th minute, Joe Scally equalised before half-time, and Kō Itakura's second yellow card three minutes after the restart tilted the game. Shafiq Nandja scored on 60 minutes and Albert Grønbæk added a long-range third on 70.",
+  "category": "football",
+  "priority": 64,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "hamburg",
+    "gladbach",
+    "match-report"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga",
+      "url": "https://bundesliga.com/en/bundesliga/news/hamburg-borussia-monchengladbach-match-report-highlights-matchday-9-39907",
+      "publishedAt": "2026-11-06T21:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

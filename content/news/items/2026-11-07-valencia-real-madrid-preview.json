@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-valencia-real-madrid-preview",
+  "title": "Mourinho's Madrid chase an eighth straight win at Mestalla",
+  "summary": "Real Madrid visit Valencia on Saturday bidding for an eighth consecutive win in all competitions; a victory would draw them level with Barcelona on 30 points before the leaders face Atlético Madrid on Sunday. Madrid have scored 21 goals and conceded eight during a seven-match run that includes a Clásico win at Camp Nou and a 3-2 success at AEK Athens, with Kylian Mbappé scoring in six straight games. Valencia are 19th with nine points from 11 matches.",
+  "category": "football",
+  "priority": 62,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "la-liga",
+    "real-madrid",
+    "valencia",
+    "mourinho"
+  ],
+  "sources": [
+    {
+      "publisher": "Real Madrid",
+      "url": "https://www.realmadrid.com/en-US/news/football/first-team/fixtures/previa-valencia-real-madrid-j12-liga-07-11-2026",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    },
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/sports/2026/11/6/valencia-vs-real-madrid-la-liga-preview-team-news",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

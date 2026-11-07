@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-kimi-k3-1-pro-open-weights",
+  "title": "Moonshot publishes Kimi K3.1 Pro weights at 2.8 trillion parameters",
+  "summary": "Moonshot AI has published the full weights of Kimi K3.1 Pro on Hugging Face, a 2.8-trillion-parameter mixture-of-experts model that activates about 104 billion parameters per token with a context window of roughly one million tokens. The checkpoint ships in MXFP4 across 96 shards totalling about 1.56 terabytes under a custom licence, and the model card recommends vLLM, SGLang or TokenSpeed to serve it. It handles text and image input.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "moonshot",
+    "open-weights",
+    "kimi",
+    "mixture-of-experts"
+  ],
+  "sources": [
+    {
+      "publisher": "Hugging Face",
+      "url": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    },
+    {
+      "publisher": "ArtificialWatch",
+      "url": "https://artificialwatch.com/wire/kimi-k3-1-pro-open-weights-out",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

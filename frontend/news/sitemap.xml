@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/october-payrolls-165000/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>US payrolls rise 165,000 in October as unemployment slips to 4.1 percent</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/anthropic-ipo-valuation-cut/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Anthropic IPO valuation talks slide to $1.2-1.3 trillion after AI rout</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/openai-11b-funding-round/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>OpenAI closes $11 billion at a $1.25 trillion valuation as the listing race sharpens</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/wall-street-week-after-ai-rout/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Wall Street steadies after the rout but still posts a bruising week</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/tsmc-3d-dram-nvidia/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>TSMC weighs making 3D DRAM at Nvidia&#39;s request</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/microsoft-oracle-ai-capacity/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Microsoft winds down its rented Oracle AI capacity</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/hamburg-gladbach-bundesliga/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Hamburg climb to eighth as two long-range strikes sink ten-man Gladbach</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/valencia-real-madrid-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Mourinho&#39;s Madrid chase an eighth straight win at Mestalla</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/cloudflare-q3-2026/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Cloudflare grows 39 percent and lifts its full-year outlook</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/airbnb-q3-ai-travel-agent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Airbnb books its fastest growth in three years and dates an AI travel agent</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/kimi-k3-1-pro-open-weights/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Moonshot publishes Kimi K3.1 Pro weights at 2.8 trillion parameters</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/thinking-machines-inkling-2-small/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Thinking Machines ships a 594-billion-parameter model and dates its open weights</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/tencent-hy4-vision-computer-use/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Tencent&#39;s Hy4 adds vision and computer control to a 770-billion-parameter model</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/nvidia-cargo-theft-11-4m/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Six pallets of Nvidia hardware vanish between Oakland and Texas</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-07/bundesliga-matchday-9-saturday/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
+      <news:title>Bayern head to Mainz with a thinner squad as Dortmund lose Guirassy</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-06/ai-selloff-nasdaq-asia/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,246 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
       <news:title>New York Times in talks to buy Letterboxd for $330 million</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/post-election-relief-rally/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Wall Street&#39;s best day of 2026 follows an election-night slide in Asia</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/oracle-cancels-tencent-chip-lease/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Oracle drops a $7 billion chip lease that would have put 100,000 accelerators in Tencent&#39;s hands</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/como-nine-lens-record/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Como put nine past Lens to match the biggest win in Champions League history</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/qualcomm-handset-slump-outlook/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Qualcomm&#39;s phone business shrinks 26% and the profit outlook comes in light</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/tencent-hy4-vision-computer-use/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Tencent puts vision and a computer-use mode inside its 770B Hy4</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/real-madrid-aek-valverde-winner/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Valverde&#39;s 92nd-minute strike keeps Real Madrid perfect in Athens</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/fenerbahce-liverpool-comeback/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Fenerbahce end Liverpool&#39;s perfect start with two goals in six minutes</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/xen-grant-copy-guest-escape/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>A Claude-assisted audit finds a two-flaw guest escape in Xen&#39;s grant copy</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/isomorphic-labs-five-billion-round/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Isomorphic Labs chases $5 billion for AI drug discovery at a $50 billion mark</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/apple-siri-ai-developer-preview/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Apple hands every developer a way into Siri AI, months before customers get it</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/nvidia-cloud-china-cap/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Nvidia tells its cloud partners to keep Chinese customers under half the business</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/amadeus-breach-singapore-airlines/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>An Amadeus booking flaw exposes 46,000 Singapore Airlines records</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/snap-third-quarter-user-miss/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Snap grows revenue 14% but misses on users and the shares slide</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/cognition-swe-2-flash/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Cognition&#39;s budget coding model trades frontier scores for a fifth of the price</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-05/ai2-statebench-long-state-tracking/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-05T05:30:00.000Z</news:publication_date>
-      <news:title>Ai2&#39;s StateBench shows frontier models losing the thread on long assignments</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/anthropic-flashprove-provable-inference/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:45:00.000Z</news:publication_date>
-      <news:title>Anthropic ships an open prototype that proves which model answered</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/google-schools-ai-default-off/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Google turns its school AI defaults off, and Search goes with them</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/psg-villarreal-six-record-start/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>PSG score four in 17 minutes and bury Villarreal 6-0</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/openai-cathedral-security-sprint/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>OpenAI brings in outside attackers and raises its bug bounty</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/sk-hynix-solidigm-new-york-stall/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>SK hynix&#39;s New York memory plan waits on a China export licence</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/amd-record-quarter-seventeen-billion-guide/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>AMD&#39;s data-center sales nearly double and the outlook jumps to $17 billion</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/man-united-roma-cunha-comeback/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Cunha rescues Manchester United from two down, then gets sent off</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/wall-street-split-chips-apple/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Chips rebound, Apple drags the Dow as Wall Street splits</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/wired-cloaked-deepfake-app-network/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Hundreds of ordinary-looking apps hid deepfake tools, WIRED finds</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/palantir-third-quarter-two-billion/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Palantir clears $2 billion a quarter and lifts its full-year target</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/champions-league-matchday-four-results/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Bayern and Inter win away as the Champions League&#39;s fourth round opens</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/crowdstrike-fiddler-dreadnode/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>CrowdStrike buys observability and red-teaming for its agent push</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/super-micro-ai-server-forecast/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Super Micro&#39;s AI server demand outruns its own forecast again</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/snowflake-business-ontology-gateway/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Snowflake puts a governed dictionary in front of enterprise agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-04/apple-age-ratings-dating-ai-companions/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-04T05:40:00.000Z</news:publication_date>
-      <news:title>Apple puts dating apps and AI companions behind an 18+ rating</news:title>
     </news:news>
   </url>
 </urlset>

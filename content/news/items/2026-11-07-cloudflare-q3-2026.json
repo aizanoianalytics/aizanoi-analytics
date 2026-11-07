@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-07-cloudflare-q3-2026",
+  "title": "Cloudflare grows 39 percent and lifts its full-year outlook",
+  "summary": "Cloudflare reported third-quarter revenue of $782.5 million, up 39 percent from a year earlier and its fastest growth in nearly four years, crossing $3 billion in annualised revenue. Non-GAAP operating income was $137.1 million, a 17.5 percent margin, while the GAAP operating loss widened to $67.9 million. The company guided fourth-quarter revenue to $845-846 million and raised its full-year revenue outlook to about $2.96 billion.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-11-07T05:40:00Z",
+  "updatedAt": "2026-11-07T05:40:00Z",
+  "retrievedAt": "2026-11-07T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cloudflare",
+    "earnings",
+    "cloud",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Cloudflare",
+      "url": "https://cloudflare.com/en-gb/press/press-releases/2026/cloudflare-announces-third-quarter-2026-financial-results",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/cloudflare-q3-2026-earnings-39-percent-growth-raises-outlook",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
