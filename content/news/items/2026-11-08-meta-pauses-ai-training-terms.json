@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-08-meta-pauses-ai-training-terms",
+  "title": "Meta shelves commercial terms that would have forced AI training on linked sites",
+  "summary": "Meta has indefinitely delayed commercial terms that would have required business account holders to allow AI training on external websites linked from Facebook, saying existing terms remain in force while it consults stakeholders. The update had already slipped from 30 October to 20 November under pressure from courts in Brazil and Norway, a UK Competition and Markets Authority investigation and letters from two US senators. Publishers objected that the wording let Meta ignore robots.txt preferences.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "ai-training",
+    "publishers",
+    "regulation",
+    "copyright"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/11/does-meta-think-we-cant-read-meta-abandons-sketchy-commercial-terms-update",
+      "publishedAt": "2026-11-06T12:43:00Z"
+    }
+  ],
+  "kind": "daily"
+}

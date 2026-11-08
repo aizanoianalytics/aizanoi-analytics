@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-08-google-adk-2-14",
+  "title": "Google's agent kit graduates its runtime and adds multi-run evaluation",
+  "summary": "Google released Agent Development Kit 2.14.0, promoting execution environments, the A2A integration, evaluation modules and core runtime out of experimental, alongside 26 auth, environment, app, CLI and cache modules and 16 toolset features. The release adds MultiRunConfig with parallelism for repeated evaluation runs, a semantic tool-argument matcher, a TeamsRunner for Microsoft Teams and a 23 percent faster 200-turn workflow at 9 percent lower peak memory.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "agents",
+    "developer-tools",
+    "open-source",
+    "evaluation"
+  ],
+  "sources": [
+    {
+      "publisher": "Google (GitHub)",
+      "url": "https://github.com/google/adk-python/releases/tag/v2.14.0",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

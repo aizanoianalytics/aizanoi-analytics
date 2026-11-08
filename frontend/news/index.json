@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-07T05:20:00.000Z",
+  "generatedAt": "2026-11-08T05:15:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-08",
+      "path": "/news/2026-11-08/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-07",
       "path": "/news/2026-11-07/",
@@ -452,6 +457,517 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-08-brent-worst-week-since-2020",
+      "kind": "daily",
+      "title": "Brent posts its steepest weekly fall since 2020 as the Iran war premium unwinds",
+      "summary": "Brent crude for January settled at $98.32 a barrel on Friday, up 3 cents, but about 17 percent lower on the week, its steepest weekly percentage decline since the start of the COVID-19 pandemic and its biggest in absolute terms in LSEG data going back to 1988. WTI finished at $90.83 and lost roughly 13 percent. Traders read the Democratic midterm sweep as raising the odds of a US-Iran de-escalation, while attacks on tankers in the Gulf kept a floor under prices.",
+      "category": "economy-markets",
+      "priority": 86,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "brent",
+        "commodities",
+        "iran",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://live.euronext.com/en/financial-news/brent-oil-price-benchmark-set-biggest-weekly-drop-2020",
+          "publishedAt": "2026-11-06T22:47:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-openai-linux-kernel-948",
+      "kind": "daily",
+      "title": "OpenAI's agent pipeline finds 948 Linux privilege-escalation flaws for $1.2 million",
+      "summary": "OpenAI says an autonomous discovery, exploitation and patching pipeline audited about seven percent of the Linux kernel, 5,034 targets and roughly 2.8 million lines, and validated 948 distinct local privilege-escalation flaws with candidate patches. The mid-October run reproduced 1,724 of 2,308 candidate findings and cost $1,213,430 in API credits, about $1,279 per flaw. Reports have gone to maintainers; how many patches land upstream is a separate and still unpublished count.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "security",
+        "linux",
+        "agents",
+        "vulnerability-research"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/a-thousand-fewer-paths-to-root",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "publisher": "Decrypt",
+          "url": "https://decrypt.co/382632/openai-linux-security-flaws-exploit",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-forest-man-city",
+      "kind": "daily",
+      "title": "Delap double hands Forest a first home win and City a third straight defeat",
+      "summary": "Nottingham Forest beat Manchester City 3-1 at the City Ground for their first home win and first home goals of the season, Jair Cunha pouncing on a sixth-minute error and Liam Delap scoring either side of Rayan Cherki's second-half volley. The result lifts Forest out of the bottom three to 16th and leaves City with three consecutive league defeats, six points behind Arsenal at the top of the table.",
+      "category": "football",
+      "priority": 78,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "nottingham-forest",
+        "manchester-city",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13593200/nottingham-forest-3-1-man-city-liam-delap-ends-city-ground-goal-drought-as-city-lose-three-on-the-bounce",
+          "publishedAt": "2026-11-07T19:42:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.co.uk/football/match/_/gameId/401878757/manchester-city-nottingham-forest",
+          "publishedAt": "2026-11-07T19:39:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-apiiro-claude-code-secrets",
+      "kind": "daily",
+      "title": "Claude Code's approval file left 2,539 secrets in public repositories",
+      "summary": "Apiiro counted 1,122 of 104,185 public copies of Claude Code's .claude/settings.local.json holding at least one real secret, 1,379 distinct values, and put the wider total at 2,539 secrets across 1,994 repositories at 63 organisations once git history, shared settings files and agent transcripts are included. Picking “Yes, and don't ask again” stores the approved command verbatim, password included, and the file is added to the developer's global git excludes rather than the project's .gitignore.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude-code",
+        "security",
+        "secrets",
+        "github"
+      ],
+      "sources": [
+        {
+          "publisher": "Apiiro",
+          "url": "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/claude-codes-dont-ask-again-file.html",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-metr-anthropic-acceleration",
+      "kind": "daily",
+      "title": "METR puts Anthropic's research acceleration at roughly double its historical pace",
+      "summary": "An independent METR assessment covering 12 August to 29 October concludes Anthropic is probably improving model capabilities on well-specified tasks at about twice the rate it managed between March 2024 and October 2025, with a 1.5x to 2.8x interval on its benchmark trend and roughly 80 percent of the acceleration attributed to AI itself. METR calls the estimate highly uncertain and says the real rate could be closer to 1.3x or 3x.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "metr",
+        "evaluation",
+        "ai-research",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "METR",
+          "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-arsenal-hull-odegaard",
+      "kind": "daily",
+      "title": "Odegaard's late poke keeps Arsenal six points clear at the top",
+      "summary": "Martin Odegaard scored with about 20 minutes left, turning in the rebound after Noni Madueke's shot was parried, to give Arsenal a 1-0 win over Hull City at the Emirates and a fifth consecutive league victory. It was the champions' seventh Premier League clean sheet of the season and leaves them six points clear of Manchester City going into the international break, with nine wins from their opening ten matches.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "arsenal",
+        "hull-city",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "Arsenal",
+          "url": "https://www.arsenal.com/news/report-arsenal-1-0-hull-city-abDCp4r4zNDM",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/match/2645285/arsenal-vs-hull-city",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-fed-december-hike-odds",
+      "kind": "daily",
+      "title": "December hike odds jump to 76.8 percent after a 165,000 payroll print",
+      "summary": "CME FedWatch put the probability of a quarter-point rate rise at the December 8-9 meeting at 76.8 percent on Friday, up from 66.9 percent a week earlier, after October payrolls rose 165,000 and unemployment slipped to 4.1 percent. Futures priced no chance of a half-point move and only one further hike beyond December; a quarter-point rise would lift the target range to 4.00-4.25 percent. October CPI, due on November 10, is the next test before the meeting.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "rates",
+        "payrolls",
+        "inflation",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "ING Think",
+          "url": "https://think.ing.com/downloads/pdf/article/robust-us-jobs-market-boosts-december-rate-hike-chances",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "InvestmentNews",
+          "url": "https://investmentnews.com/fixed-income/october-jobs-report-beats-forecasts-lifting-december-fed-hike-odds/268915",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-fox-completes-roku",
+      "kind": "daily",
+      "title": "Fox closes its $22 billion purchase of Roku six months early",
+      "summary": "Fox completed its $22 billion acquisition of Roku, a deal announced in June and originally projected to finish in the first half of 2027. Fox says the combined company is now the third-largest US television business by viewership and gains access to more than 100 million households, which it expects to use for advertising targeting and to reduce reliance on traditional distribution. The Justice Department had issued a second request for information two months before closing.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "fox",
+        "roku",
+        "streaming",
+        "acquisition",
+        "media"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/06/fox-completes-its-22b-acquisition-of-roku/",
+          "publishedAt": "2026-11-06T16:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-meta-pauses-ai-training-terms",
+      "kind": "daily",
+      "title": "Meta shelves commercial terms that would have forced AI training on linked sites",
+      "summary": "Meta has indefinitely delayed commercial terms that would have required business account holders to allow AI training on external websites linked from Facebook, saying existing terms remain in force while it consults stakeholders. The update had already slipped from 30 October to 20 November under pressure from courts in Brazil and Norway, a UK Competition and Markets Authority investigation and letters from two US senators. Publishers objected that the wording let Meta ignore robots.txt preferences.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "ai-training",
+        "publishers",
+        "regulation",
+        "copyright"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/tech-policy/2026/11/does-meta-think-we-cant-read-meta-abandons-sketchy-commercial-terms-update",
+          "publishedAt": "2026-11-06T12:43:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-doj-super-intelligence-task-force",
+      "kind": "daily",
+      "title": "US Justice Department stands up a Super Intelligence Task Force",
+      "summary": "The Justice Department created a Super Intelligence Task Force co-chaired by Associate Attorney General Stanley Woodward and Associate Deputy Attorney General Stephen Weiss. Its stated targets are foreign state and state-sponsored actors, transnational criminal organisations and fraud, and it will serve as the department's main channel to the SI Force announced by the White House. It absorbs January's AI Litigation Task Force and will set enforcement priorities and prosecution guidance for unlawful AI conduct.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "policy",
+        "justice-department",
+        "regulation",
+        "law-enforcement"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Department of Justice",
+          "url": "https://www.justice.gov/opa/pr/department-justice-launches-super-intelligence-task-force",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Nextgov/FCW",
+          "url": "https://www.nextgov.com/artificial-intelligence/2026/11/department-justice-forms-ai-task-force/417074/",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-real-madrid-valencia",
+      "kind": "daily",
+      "title": "Real Madrid's eighth straight win takes them level with Barcelona",
+      "summary": "Real Madrid won 3-0 at Valencia through Federico Valverde, Arda Guler and Kylian Mbappe, an eighth consecutive victory across La Liga and the Champions League that leaves them on 30 points, level with Barcelona, who have a game in hand and visit Atletico Madrid on Sunday. Valencia captain Jose Gaya was sent off late for a foul on Mbappe; the hosts remain second from bottom with nine points from 12 matches.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "la-liga",
+        "real-madrid",
+        "valencia",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "Real Madrid",
+          "url": "https://www.realmadrid.com/en-US/news/football/first-team/reports/cronica-valencia-real-madrid-j12-liga-07-11-2026",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        },
+        {
+          "publisher": "Channel NewsAsia (AFP)",
+          "url": "https://www.channelnewsasia.com/sport/real-madrid-sweep-aside-valencia-move-level-barcelona-6533566",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-google-adk-2-14",
+      "kind": "daily",
+      "title": "Google's agent kit graduates its runtime and adds multi-run evaluation",
+      "summary": "Google released Agent Development Kit 2.14.0, promoting execution environments, the A2A integration, evaluation modules and core runtime out of experimental, alongside 26 auth, environment, app, CLI and cache modules and 16 toolset features. The release adds MultiRunConfig with parallelism for repeated evaluation runs, a semantic tool-argument matcher, a TeamsRunner for Microsoft Teams and a 23 percent faster 200-turn workflow at 9 percent lower peak memory.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "agents",
+        "developer-tools",
+        "open-source",
+        "evaluation"
+      ],
+      "sources": [
+        {
+          "publisher": "Google (GitHub)",
+          "url": "https://github.com/google/adk-python/releases/tag/v2.14.0",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-google-buys-crusoe-wyoming",
+      "kind": "daily",
+      "title": "Google takes over Crusoe's stalled Wyoming data-centre campus",
+      "summary": "Crusoe confirmed it sold an unfinished data-centre project in southeastern Wyoming to Google, which plans to invest $17 billion to develop the campus after concerns about cost and construction timeline under Crusoe's management. The project was announced last year with Tallgrass and designed to scale to 10 gigawatts of capacity. Google did not disclose the purchase price and remains a Crusoe customer on a separate site near Amarillo, Texas.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "crusoe",
+        "data-centres",
+        "ai-infrastructure",
+        "energy"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/06/crusoe-sells-troubled-wyoming-data-center-project-to-google/",
+          "publishedAt": "2026-11-07T01:40:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-nvidia-memory-codesign",
+      "kind": "daily",
+      "title": "Nvidia argues the memory wall needs a whole-stack fix, not more HBM",
+      "summary": "Nvidia says HBM capacity per GPU rose only about 3 percent between Blackwell Ultra and Vera Rubin while cost-adjusted agentic throughput rose up to 30 times on SemiAnalysis's AgentX benchmark, and that the gain comes from system design rather than memory volume. The levers it lists are spreading model weights across up to 72 GPUs, storing the KV cache in NVFP4 and pushing inactive context into cheaper storage tiers. The performance figures are vendor-reported and not independently verified.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "hbm",
+        "inference",
+        "ai-infrastructure",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA",
+          "url": "https://blogs.nvidia.com/blog/memory-full-stack-codesign",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-08-india-fpi-ai-selloff",
+      "kind": "daily",
+      "title": "Foreign investors return to India as the AI sell-off makes it a non-AI trade",
+      "summary": "Foreign portfolio investors bought a net 38,971 crore rupees of Indian equities this week, according to NSDL data, reversing an outflow that had followed the global rotation into AI-linked markets. The Nifty gained 7.58 percent over the week as foreign buying concentrated in financials, IT, automobiles and telecom while domestic institutions sold every session. Strategists attribute the swing to the US data-centre sell-off and to Indian earnings and valuations.",
+      "category": "economy-markets",
+      "priority": 56,
+      "publishedAt": "2026-11-08T05:00:00.000Z",
+      "updatedAt": "2026-11-08T05:00:00.000Z",
+      "retrievedAt": "2026-11-08T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "india",
+        "equities",
+        "flows",
+        "nifty",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "The Indian Economic Observer",
+          "url": "https://indianeconomicobserver.com/news/global-ai-sell-off-triggers-fpi-return-to-indian-markets-rs-38971-crore-equity-inflows-this-week20261108083923",
+          "publishedAt": "2026-11-08T04:41:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-07-october-payrolls-165000",
       "kind": "daily",

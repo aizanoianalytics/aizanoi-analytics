@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-08-brent-worst-week-since-2020",
+  "title": "Brent posts its steepest weekly fall since 2020 as the Iran war premium unwinds",
+  "summary": "Brent crude for January settled at $98.32 a barrel on Friday, up 3 cents, but about 17 percent lower on the week, its steepest weekly percentage decline since the start of the COVID-19 pandemic and its biggest in absolute terms in LSEG data going back to 1988. WTI finished at $90.83 and lost roughly 13 percent. Traders read the Democratic midterm sweep as raising the odds of a US-Iran de-escalation, while attacks on tankers in the Gulf kept a floor under prices.",
+  "category": "economy-markets",
+  "priority": 86,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "brent",
+    "commodities",
+    "iran",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://live.euronext.com/en/financial-news/brent-oil-price-benchmark-set-biggest-weekly-drop-2020",
+      "publishedAt": "2026-11-06T22:47:00Z"
+    }
+  ],
+  "kind": "daily"
+}

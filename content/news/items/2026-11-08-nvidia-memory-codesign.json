@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-08-nvidia-memory-codesign",
+  "title": "Nvidia argues the memory wall needs a whole-stack fix, not more HBM",
+  "summary": "Nvidia says HBM capacity per GPU rose only about 3 percent between Blackwell Ultra and Vera Rubin while cost-adjusted agentic throughput rose up to 30 times on SemiAnalysis's AgentX benchmark, and that the gain comes from system design rather than memory volume. The levers it lists are spreading model weights across up to 72 GPUs, storing the KV cache in NVFP4 and pushing inactive context into cheaper storage tiers. The performance figures are vendor-reported and not independently verified.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "hbm",
+    "inference",
+    "ai-infrastructure",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/memory-full-stack-codesign",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
