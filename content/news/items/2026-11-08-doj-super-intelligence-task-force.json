@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-08-doj-super-intelligence-task-force",
+  "title": "US Justice Department stands up a Super Intelligence Task Force",
+  "summary": "The Justice Department created a Super Intelligence Task Force co-chaired by Associate Attorney General Stanley Woodward and Associate Deputy Attorney General Stephen Weiss. Its stated targets are foreign state and state-sponsored actors, transnational criminal organisations and fraud, and it will serve as the department's main channel to the SI Force announced by the White House. It absorbs January's AI Litigation Task Force and will set enforcement priorities and prosecution guidance for unlawful AI conduct.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "policy",
+    "justice-department",
+    "regulation",
+    "law-enforcement"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Department of Justice",
+      "url": "https://www.justice.gov/opa/pr/department-justice-launches-super-intelligence-task-force",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    },
+    {
+      "publisher": "Nextgov/FCW",
+      "url": "https://www.nextgov.com/artificial-intelligence/2026/11/department-justice-forms-ai-task-force/417074/",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

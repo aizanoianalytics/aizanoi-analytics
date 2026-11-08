@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-08-openai-linux-kernel-948",
+  "title": "OpenAI's agent pipeline finds 948 Linux privilege-escalation flaws for $1.2 million",
+  "summary": "OpenAI says an autonomous discovery, exploitation and patching pipeline audited about seven percent of the Linux kernel, 5,034 targets and roughly 2.8 million lines, and validated 948 distinct local privilege-escalation flaws with candidate patches. The mid-October run reproduced 1,724 of 2,308 candidate findings and cost $1,213,430 in API credits, about $1,279 per flaw. Reports have gone to maintainers; how many patches land upstream is a separate and still unpublished count.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "security",
+    "linux",
+    "agents",
+    "vulnerability-research"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/a-thousand-fewer-paths-to-root",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    },
+    {
+      "publisher": "Decrypt",
+      "url": "https://decrypt.co/382632/openai-linux-security-flaws-exploit",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

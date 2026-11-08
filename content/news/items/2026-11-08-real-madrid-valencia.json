@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-08-real-madrid-valencia",
+  "title": "Real Madrid's eighth straight win takes them level with Barcelona",
+  "summary": "Real Madrid won 3-0 at Valencia through Federico Valverde, Arda Guler and Kylian Mbappe, an eighth consecutive victory across La Liga and the Champions League that leaves them on 30 points, level with Barcelona, who have a game in hand and visit Atletico Madrid on Sunday. Valencia captain Jose Gaya was sent off late for a foul on Mbappe; the hosts remain second from bottom with nine points from 12 matches.",
+  "category": "football",
+  "priority": 64,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "la-liga",
+    "real-madrid",
+    "valencia",
+    "match-report"
+  ],
+  "sources": [
+    {
+      "publisher": "Real Madrid",
+      "url": "https://www.realmadrid.com/en-US/news/football/first-team/reports/cronica-valencia-real-madrid-j12-liga-07-11-2026",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    },
+    {
+      "publisher": "Channel NewsAsia (AFP)",
+      "url": "https://www.channelnewsasia.com/sport/real-madrid-sweep-aside-valencia-move-level-barcelona-6533566",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

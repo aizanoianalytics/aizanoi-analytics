@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-08-india-fpi-ai-selloff",
+  "title": "Foreign investors return to India as the AI sell-off makes it a non-AI trade",
+  "summary": "Foreign portfolio investors bought a net 38,971 crore rupees of Indian equities this week, according to NSDL data, reversing an outflow that had followed the global rotation into AI-linked markets. The Nifty gained 7.58 percent over the week as foreign buying concentrated in financials, IT, automobiles and telecom while domestic institutions sold every session. Strategists attribute the swing to the US data-centre sell-off and to Indian earnings and valuations.",
+  "category": "economy-markets",
+  "priority": 56,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "india",
+    "equities",
+    "flows",
+    "nifty",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "The Indian Economic Observer",
+      "url": "https://indianeconomicobserver.com/news/global-ai-sell-off-triggers-fpi-return-to-indian-markets-rs-38971-crore-equity-inflows-this-week20261108083923",
+      "publishedAt": "2026-11-08T04:41:00Z"
+    }
+  ],
+  "kind": "daily"
+}

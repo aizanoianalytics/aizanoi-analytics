@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-08-fed-december-hike-odds",
+  "title": "December hike odds jump to 76.8 percent after a 165,000 payroll print",
+  "summary": "CME FedWatch put the probability of a quarter-point rate rise at the December 8-9 meeting at 76.8 percent on Friday, up from 66.9 percent a week earlier, after October payrolls rose 165,000 and unemployment slipped to 4.1 percent. Futures priced no chance of a half-point move and only one further hike beyond December; a quarter-point rise would lift the target range to 4.00-4.25 percent. October CPI, due on November 10, is the next test before the meeting.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "federal-reserve",
+    "rates",
+    "payrolls",
+    "inflation",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "ING Think",
+      "url": "https://think.ing.com/downloads/pdf/article/robust-us-jobs-market-boosts-december-rate-hike-chances",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "InvestmentNews",
+      "url": "https://investmentnews.com/fixed-income/october-jobs-report-beats-forecasts-lifting-december-fed-hike-odds/268915",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

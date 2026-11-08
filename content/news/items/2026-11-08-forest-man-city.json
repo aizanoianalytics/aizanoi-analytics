@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-08-forest-man-city",
+  "title": "Delap double hands Forest a first home win and City a third straight defeat",
+  "summary": "Nottingham Forest beat Manchester City 3-1 at the City Ground for their first home win and first home goals of the season, Jair Cunha pouncing on a sixth-minute error and Liam Delap scoring either side of Rayan Cherki's second-half volley. The result lifts Forest out of the bottom three to 16th and leaves City with three consecutive league defeats, six points behind Arsenal at the top of the table.",
+  "category": "football",
+  "priority": 78,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "nottingham-forest",
+    "manchester-city",
+    "match-report"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13593200/nottingham-forest-3-1-man-city-liam-delap-ends-city-ground-goal-drought-as-city-lose-three-on-the-bounce",
+      "publishedAt": "2026-11-07T19:42:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/match/_/gameId/401878757/manchester-city-nottingham-forest",
+      "publishedAt": "2026-11-07T19:39:00Z"
+    }
+  ],
+  "kind": "daily"
+}

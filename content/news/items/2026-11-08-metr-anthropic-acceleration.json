@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-08-metr-anthropic-acceleration",
+  "title": "METR puts Anthropic's research acceleration at roughly double its historical pace",
+  "summary": "An independent METR assessment covering 12 August to 29 October concludes Anthropic is probably improving model capabilities on well-specified tasks at about twice the rate it managed between March 2024 and October 2025, with a 1.5x to 2.8x interval on its benchmark trend and roughly 80 percent of the acceleration attributed to AI itself. METR calls the estimate highly uncertain and says the real rate could be closer to 1.3x or 3x.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "metr",
+    "evaluation",
+    "ai-research",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "METR",
+      "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

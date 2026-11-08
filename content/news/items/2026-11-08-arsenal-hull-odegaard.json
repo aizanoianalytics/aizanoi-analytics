@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-08-arsenal-hull-odegaard",
+  "title": "Odegaard's late poke keeps Arsenal six points clear at the top",
+  "summary": "Martin Odegaard scored with about 20 minutes left, turning in the rebound after Noni Madueke's shot was parried, to give Arsenal a 1-0 win over Hull City at the Emirates and a fifth consecutive league victory. It was the champions' seventh Premier League clean sheet of the season and leaves them six points clear of Manchester City going into the international break, with nine wins from their opening ten matches.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-11-08T05:00:00Z",
+  "updatedAt": "2026-11-08T05:00:00Z",
+  "retrievedAt": "2026-11-08T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "hull-city",
+    "match-report"
+  ],
+  "sources": [
+    {
+      "publisher": "Arsenal",
+      "url": "https://www.arsenal.com/news/report-arsenal-1-0-hull-city-abDCp4r4zNDM",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/match/2645285/arsenal-vs-hull-city",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
