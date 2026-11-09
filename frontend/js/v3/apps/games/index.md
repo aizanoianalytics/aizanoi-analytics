@@ -23,6 +23,7 @@ None. Arcade is a zero-capability module. It uses browser-local DOM, Canvas, ani
 - `assets/brick.js` — Strata Breaker.
 - `assets/blockfall.js` — Blockfall.
 - `assets/sudoku.js` — Sudoku: bounded local puzzle bank, game state and mount/cleanup factory. See [Sudoku validation](../../../../../tests/sudoku.test.mjs).
+- `assets/solitaire.js` — Klondike Solitaire: seeded 52-card deal, stock/waste/foundation/tableau rules, undo, win/dead-end detection and mount/cleanup factory. See [Solitaire validation](../../../../../tests/solitaire.test.mjs).
 - `manifest.json` — installation identity.
 
 ## Sudoku
@@ -34,6 +35,14 @@ Difficulty is a collection-relative technique/search proxy, not a universal rati
 Controls: select a cell; 1–9 or the large keypad enters; Delete/Backspace/Erase clears; arrows and Home/End move; Undo or Ctrl/⌘+Z restores a move. Fixed clues are protected, duplicates receive both × and accessible conflict labels, and only a complete valid grid wins. New game and changing difficulty start fresh. No persistence or hints are implied. The board fits narrow phones with compact cells; the separate keypad and actions retain 44px touch targets.
 
 `tests/browser/sudoku.test.mjs` is routine CI acceptance: actual launcher clicks, four levels/new games, desktop keyboard solves, mobile touchscreen solve, protected clues/conflicts/undo, responsive layout and teardown.
+
+## Solitaire
+
+Solitaire lives in this existing module, not a second app or shell. It has its own cabinet tile and public landing card. Klondike draw-1/draw-3 from a seeded shuffle; tableau builds down in alternating colours, only kings fill gaps, foundations build up by suit from aces, exposed tableau cards flip, every mutation is undoable, and the status line reports win, dead-end (no legal move with empty stock), or cards-home progress.
+
+Controls: tap/click the stock to draw or recycle; select a card then its destination; double-tap/double-click sends a card home; Auto-home, Undo (or `U`), draw with `S`, auto-home with `F`, new game with `N`, `Esc` deselects. No persistence beyond the score toolbar; the seven columns collapse gracefully to 320px phones with 44px action targets.
+
+`tests/browser/solitaire.test.mjs` is routine CI acceptance: actual launcher clicks, stock draw/undo round-trip, keyboard draw/undo, redeal validity, responsive layout and teardown.
 
 ## Storage
 
