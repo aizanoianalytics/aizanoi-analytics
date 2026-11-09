@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-artex-exposed-deployments",
+  "title": "Hundreds of Artex AI attack kits are sitting open on the public internet",
+  "summary": "Censys found more than 800 distinct deployments of Artex, an open-source autonomous penetration-testing framework, reachable from the web without a password. Security firms have linked Artex to attacks on South Korean financial companies in September and on ConnectWise in October, where Microsoft said intruders moved from reconnaissance to data theft faster than defenders could respond. Researchers stress that not every instance is malicious, but note the software never needed public exposure. Artex has since moved to closed source.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "ai-agents",
+    "censys",
+    "open-source"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/06/hundreds-of-artex-ai-hacking-tools-found-publicly-exposed-to-the-web/",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "Microsoft Security Blog",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

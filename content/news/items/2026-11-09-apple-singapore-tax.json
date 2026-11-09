@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-09-apple-singapore-tax",
+  "title": "Apple routed up to $50 billion of profit through Singapore to save $2.7 billion",
+  "summary": "Apple has made Singapore its largest tax shelter, attributing up to $50 billion of profits to its hub there and saving about $2.7 billion in tax, the Financial Times reported. That is slightly more than the $2.6 billion the company saved through its Irish headquarters, the arrangement at the centre of a long-running European state-aid dispute. The disclosure comes as governments look for revenue to fund infrastructure and industrial policy, and as scrutiny of large technology companies' effective tax rates widens.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "tax",
+    "singapore",
+    "regulation"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/tech/1029522/apple-dodged-2-7-billion-in-taxes-by-funneling-profits-through-singapore",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-09-grid-ups-frequency",
+  "title": "Synchronised data-centre batteries are leaving a 60-second fingerprint on power grids",
+  "summary": "Researchers traced a once-a-minute frequency dip observed on grids in several countries to internet-synchronised batteries and uninterruptible power supplies that check their state of charge on the minute. More than 80 power-quality meters at a German research campus tied the signal to a battery-backed transformer. On Ireland's grid, where data centres reached 18 percent of load by 2022, the dip quadrupled from 3 millihertz in 2016 to 12 millihertz in 2021, with some readings above 20. Randomising the check schedule would remove the effect.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "data-centers",
+    "grid",
+    "energy",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/08/coordinated-disturbances-haunt-grids-worldwide-heres-how-researchers-solved-the-mystery/",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

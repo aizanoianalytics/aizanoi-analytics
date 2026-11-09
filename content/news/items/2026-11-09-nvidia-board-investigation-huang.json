@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-nvidia-board-investigation-huang",
+  "title": "Nvidia's board opens an independent investigation into its chief executive",
+  "summary": "Nvidia's board said on Sunday it had begun an independent investigation after reports that founder and CEO Jensen Huang was the target of a foreign intelligence effort, adding that it has no reason to believe US national security or company secrets were compromised. Huang told staff he had been unfaithful to his wife and said he would cooperate fully. Three House committee chairs have asked him to brief them behind closed doors on 18 November, the day after Nvidia reports quarterly results.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "governance",
+    "export-controls",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/us-news/2026/nov/08/nvidia-jensen-huang-investigation",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1029595/full-text-jensen-huang-affair-memo-nvidia",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

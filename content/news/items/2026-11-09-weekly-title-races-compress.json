@@ -1,0 +1,48 @@
+{
+  "id": "2026-11-09-weekly-title-races-compress",
+  "title": "Two title races are compressing into the same international break",
+  "summary": "Bayern and Dortmund are level on 21 points after nine matchdays, Arsenal lead the Premier League on 27 with Brighton and Manchester City within six, and both leagues now pause for a fortnight of international fixtures. The pattern at the top is narrow wins rather than statements: Arsenal 1-0 against Hull, Bayern 2-1 at Mainz, Dortmund 2-1 over Elversberg, Freiburg 2-0 against Union. With the break removing recovery time and squads already carrying injuries, the clubs that rotate without losing shape over the next three weeks are the ones most likely to still be there in spring.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "bundesliga",
+    "premier-league",
+    "calendar"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/table",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/tables/premier-league",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-08",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-14",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W46"
+}

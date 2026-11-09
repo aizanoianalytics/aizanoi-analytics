@@ -1,0 +1,41 @@
+{
+  "id": "2026-11-09-sunderland-chelsea-penalty",
+  "title": "Sunderland's penalty ends their winless run but leaves them 19th",
+  "summary": "Enzo Le Fee's 36th-minute penalty gave Sunderland a 1-0 win over Chelsea at the Stadium of Light, ending a seven-match winless run and taking them to eight points, still 19th in the table. Chelsea, who felt Cole Palmer had been fouled outside the box before the award, remain fifth on 16 after a second defeat in three league games. They struggled to create clear chances, with substitute Danny Welbeck heading their best opening over in stoppage time.",
+  "category": "football",
+  "priority": 56,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "sunderland",
+    "chelsea"
+  ],
+  "sources": [
+    {
+      "publisher": "Chelsea FC",
+      "url": "https://www.chelseafc.com/en/news/article/match-report-sunderland-1-0-chelsea",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/match/2645294/sunderland-vs-chelsea",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/tables/premier-league",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

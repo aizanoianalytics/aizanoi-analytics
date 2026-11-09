@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-09-weekly-power-and-memory",
+  "title": "Compute is no longer the scarce input; power and memory are",
+  "summary": "Anthropic's $3.4 billion generator purchase, TSMC's study of 3D DRAM at Nvidia's request and a Senate bill that would make data centres pay for grid upgrades describe one bottleneck from three directions. Power equipment and advanced memory are both multi-year lead-time items, and buying them outright moves capital from operating expense onto the balance sheet. Nvidia's argument that the memory wall needs a whole-stack fix points the same way. For 2027 planning, the constraint that decides schedules may be interconnection queues and DRAM allocation rather than accelerators.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "infrastructure",
+    "memory",
+    "power"
+  ],
+  "sources": [
+    {
+      "publisher": "The Energy Mag",
+      "url": "https://theenergymag.com/news/market-news/anthropic-gas-generation-acquisition-ai-data-center",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/tsmc-considers-making-advanced-memory-chips-information-reports-2026-11-06",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/policy/1028228/energy-infrastructure-permitting-reform-bill-congress-vote",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W46"
+}

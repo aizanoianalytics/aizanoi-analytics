@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-deepseek-harness-daily-users",
+  "title": "DeepSeek's Harness agent passes 1.5 million daily users in under three months",
+  "summary": "DeepSeek said its open-source agent application Harness reached 1.54 million daily active users on 4 November, up from about 271,000 at the end of September, counting only traffic that runs through its own API. The company put consumption at roughly 92 trillion tokens a day, about 60 million per active user, and said around 35,000 third-party plugins exist, with 60 percent of users having installed or created one. A plugin marketplace and a developer support programme are in preparation. The figures are company disclosures, not independently audited.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "deepseek",
+    "agents",
+    "open-source",
+    "usage"
+  ],
+  "sources": [
+    {
+      "publisher": "Seeking Alpha",
+      "url": "https://tradingview.com/news/seekingalpha:df5e95257094b:0-deepseek-says-agent-app-tops-1-5m-daily-users-plans-plugin-marketplace",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "AI Weekly",
+      "url": "https://aiweekly.co/alerts/deepseeks-open-source-harness-agent-hits-154m-daily-users-in-under-three-months",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

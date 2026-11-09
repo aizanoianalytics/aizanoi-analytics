@@ -1,6 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/nvidia-board-investigation-huang/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Nvidia&#39;s board opens an independent investigation into its chief executive</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/nvidia-chips-empty-office/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Washington cleared Nvidia chip buyers whose offices were empty, report finds</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-11-09/weekly-agentic-attack-surface/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>The agentic attack surface is being built faster than the defences around it</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/anthropic-gas-generators/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic takes over 1.7 gigawatts of gas generators for $3.4 billion</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-11-09/weekly-power-and-memory/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Compute is no longer the scarce input; power and memory are</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/taiwan-short-selling-curbs/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Taiwan&#39;s short-selling curbs and stabilisation fund lift the Taiex</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-11-09/weekly-political-risk-premium/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>The AI trade has met its political risk premium</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/deepseek-harness-daily-users/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>DeepSeek&#39;s Harness agent passes 1.5 million daily users in under three months</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-11-09/weekly-grid-participants/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Data centres are becoming grid participants whether regulators say so or not</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/man-utd-villa-four-four/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Manchester United&#39;s 4-4 with Villa leaves them in the bottom three</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/tsmc-3d-dram/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>TSMC studies 3D DRAM at Nvidia&#39;s request, The Information reports</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/grid-ups-frequency/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Synchronised data-centre batteries are leaving a 60-second fingerprint on power grids</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/oil-iran-diplomacy/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Oil slips as Trump calls fresh strikes on Iran &#39;highly unlikely&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/artex-exposed-deployments/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Hundreds of Artex AI attack kits are sitting open on the public internet</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/bundesliga-matchday-nine-wrap/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Bayern and Dortmund go into the break level on 21 points</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/openai-hacktron-security/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI gives Hacktron wider frontier-model access to probe its integrations</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/ai-equity-supply-300bn/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>AI companies have already priced $300 billion of equity this year</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-11-09/weekly-title-races-compress/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Two title races are compressing into the same international break</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/apple-singapore-tax/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Apple routed up to $50 billion of profit through Singapore to save $2.7 billion</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-09/sunderland-chelsea-penalty/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-09T05:00:00.000Z</news:publication_date>
+      <news:title>Sunderland&#39;s penalty ends their winless run but leaves them 19th</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-08/brent-worst-week-since-2020/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,126 +398,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-07T05:40:00.000Z</news:publication_date>
       <news:title>Bayern head to Mainz with a thinner squad as Dortmund lose Guirassy</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/ai-selloff-nasdaq-asia/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>AI trade cracks as the Nasdaq drops 5.5 percent and Asia follows</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/ferencvaros-win-at-milan/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Ferencvaros leave San Siro with four wins from four as Milan stall</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/openai-gpt-6-cyber-critical/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>OpenAI rates GPT-6 Cyber Critical after a sharper exploitation benchmark</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/openai-ipo-ready-2027/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Brockman says OpenAI could be ready to list in 2027</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/october-payrolls-preview/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>October payrolls due with forecasts pointing to a 65,000 gain</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/openai-data-centre-commitments/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>OpenAI drops NDAs with officials and promises to pay full power costs</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/claude-personal-finance-plaid/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Claude links bank accounts through Plaid, read-only and US-only for now</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/celtic-besiktas-comeback/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Celtic&#39;s substitutes rescue a 3-2 win over Besiktas</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/perplexity-teammates-agents/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Perplexity&#39;s Teammates turn always-on agents into a $200-a-month colleague</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/micron-taoyuan-plant-paused/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Micron halts work on its $4.5 billion Taoyuan memory plant</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/gemini-omni-1-2-flash/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Gemini Omni 1.2 Flash stretches AI video to 15 seconds and cuts the price</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/premier-league-matchday-10/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Arsenal take a three-point lead into Premier League matchday 10</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/dropbox-tigris-data-acquisition/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Dropbox buys Tigris Data for $350 million to build an agent storage cloud</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/discord-rust-client-rewrite/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>Discord is replacing Electron and React Native with a Rust client</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-06/new-york-times-letterboxd-talks/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-06T05:40:00.000Z</news:publication_date>
-      <news:title>New York Times in talks to buy Letterboxd for $330 million</news:title>
     </news:news>
   </url>
 </urlset>

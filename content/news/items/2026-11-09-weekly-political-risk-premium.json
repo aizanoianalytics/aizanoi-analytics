@@ -1,0 +1,48 @@
+{
+  "id": "2026-11-09-weekly-political-risk-premium",
+  "title": "The AI trade has met its political risk premium",
+  "summary": "A week that began with Democrats winning both chambers of Congress ended with the Nasdaq roughly $2 trillion below its peak, Taiwan's Taiex in a bear market and then up as much as 5 percent on short-selling curbs, and SoftBank's five-year credit default swaps at 466 basis points, the widest since 2022. AI companies have priced more than $300 billion of equity this year with about $100 billion queued, while OpenAI settled for $11 billion at a $1.25 trillion valuation. The repricing is not about demand for models. It is about who pays for the build-out, and what regulation will cost.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "markets",
+    "regulation",
+    "credit"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/us-news/2026/nov/08/nvidia-jensen-huang-investigation",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via StreetInsider)",
+      "url": "https://www.streetinsider.com/Reuters/SoftBank+credit+risk+jumps+to+4-year+high%2C+shares+tumble+as+AI+fears+roil+market/27302231.html",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "AI Weekly (summarising The Information)",
+      "url": "https://aiweekly.co/alerts/the-information-ai-firms-have-priced-300b-of-stock-in-2026-with-100b-more-on",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W46"
+}

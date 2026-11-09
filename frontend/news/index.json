@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-08T05:15:00.000Z",
+  "generatedAt": "2026-11-09T05:40:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-09",
+      "path": "/news/2026-11-09/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-08",
       "path": "/news/2026-11-08/",
@@ -396,6 +401,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-11-09",
+      "week": "2026-W46",
+      "path": "/news/weekly/2026-11-09/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-11-02",
       "week": "2026-W45",
       "path": "/news/weekly/2026-11-02/",
@@ -457,6 +468,754 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-09-nvidia-board-investigation-huang",
+      "kind": "daily",
+      "title": "Nvidia's board opens an independent investigation into its chief executive",
+      "summary": "Nvidia's board said on Sunday it had begun an independent investigation after reports that founder and CEO Jensen Huang was the target of a foreign intelligence effort, adding that it has no reason to believe US national security or company secrets were compromised. Huang told staff he had been unfaithful to his wife and said he would cooperate fully. Three House committee chairs have asked him to brief them behind closed doors on 18 November, the day after Nvidia reports quarterly results.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "governance",
+        "export-controls",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/us-news/2026/nov/08/nvidia-jensen-huang-investigation",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1029595/full-text-jensen-huang-affair-memo-nvidia",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-nvidia-chips-empty-office",
+      "kind": "daily",
+      "title": "Washington cleared Nvidia chip buyers whose offices were empty, report finds",
+      "summary": "The Commerce Department has approved Chinese firms to handle Nvidia's H200 accelerators even where the companies have little visible presence, according to a New York Times investigation summarised by The Verge. Reporters found New Matrix's listed office empty, with no directory entry for the 17-month-old company at its address or at the industrial park's property manager. Its owners are tied to a private equity firm blacklisted by Washington since 2024. The report describes the case as part of a pattern rather than a single lapse.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "export-controls",
+        "china",
+        "commerce-department"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1029483/nvidia-ai-chips-china-blacklist-government",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-weekly-agentic-attack-surface",
+      "kind": "weekly",
+      "title": "The agentic attack surface is being built faster than the defences around it",
+      "summary": "Three disclosures this week describe one shift. Censys found over 800 Artex deployments reachable without a password; Apiiro counted 2,539 live secrets in 1,122 public repositories exposed by saved agent approvals; OpenAI's own pipeline surfaced 948 Linux privilege-escalation flaws for $1.2 million. OpenAI then gave Hacktron expanded model access to probe its third-party integrations. The thread is custody, not capability: agents hold credentials, touch production systems and leave configuration behind. The organisations that cope are those that can inventory what their agents can reach.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "week": "2026-W46",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "security",
+        "agents",
+        "credentials"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/06/hundreds-of-artex-ai-hacking-tools-found-publicly-exposed-to-the-web/",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Apiiro",
+          "url": "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/a-thousand-fewer-paths-to-root",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-anthropic-gas-generators",
+      "kind": "daily",
+      "title": "Anthropic takes over 1.7 gigawatts of gas generators for $3.4 billion",
+      "summary": "Anthropic agreed in late September to take over commitments for 1.7 gigawatts of heavy-duty gas generators from San Antonio-based OnePWR Solutions for about $3.4 billion, the Financial Times reported. OnePWR had ordered the Caterpillar units two years earlier and needed financing to complete the purchase; the deal includes engineering and construction work but no staff transfer. It is the largest known single purchase of power equipment by an AI lab, alongside Anthropic's plan to spend more than $895 billion on computing capacity and infrastructure.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "energy",
+        "data-centers",
+        "infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "The Energy Mag",
+          "url": "https://theenergymag.com/news/market-news/anthropic-gas-generation-acquisition-ai-data-center",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Silicon Report",
+          "url": "https://siliconreport.com/anthropic-strikes-about-3-4b-generator-deal-ft-reports",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-weekly-power-and-memory",
+      "kind": "weekly",
+      "title": "Compute is no longer the scarce input; power and memory are",
+      "summary": "Anthropic's $3.4 billion generator purchase, TSMC's study of 3D DRAM at Nvidia's request and a Senate bill that would make data centres pay for grid upgrades describe one bottleneck from three directions. Power equipment and advanced memory are both multi-year lead-time items, and buying them outright moves capital from operating expense onto the balance sheet. Nvidia's argument that the memory wall needs a whole-stack fix points the same way. For 2027 planning, the constraint that decides schedules may be interconnection queues and DRAM allocation rather than accelerators.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "week": "2026-W46",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "infrastructure",
+        "memory",
+        "power"
+      ],
+      "sources": [
+        {
+          "publisher": "The Energy Mag",
+          "url": "https://theenergymag.com/news/market-news/anthropic-gas-generation-acquisition-ai-data-center",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/tsmc-considers-making-advanced-memory-chips-information-reports-2026-11-06",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/policy/1028228/energy-infrastructure-permitting-reform-bill-congress-vote",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-taiwan-short-selling-curbs",
+      "kind": "daily",
+      "title": "Taiwan's short-selling curbs and stabilisation fund lift the Taiex",
+      "summary": "Taiwan's Taiex rose as much as 5 percent on Monday, its best session since 31 July, ending a seven-session decline that had pushed the technology-heavy benchmark into bear territory. The Financial Supervisory Commission capped intraday short sales of borrowed shares at 3 percent of a stock's 30-day average daily volume, down from 30 percent, and raised the minimum short-sale margin to 130 percent from 90 percent, both effective Monday. The finance ministry authorised the NT$500 billion stabilisation fund to intervene as needed.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "taiwan",
+        "markets",
+        "short-selling",
+        "ai-selloff"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg (via Mint)",
+          "url": "https://livemint.com/market/taiwan-stocks-jump-as-authorities-move-to-stem-market-rout-11794190420004.html",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg (via Yahoo Finance)",
+          "url": "https://finance.yahoo.com/news/taiwan-imposes-short-selling-limit-033609378.html",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-weekly-political-risk-premium",
+      "kind": "weekly",
+      "title": "The AI trade has met its political risk premium",
+      "summary": "A week that began with Democrats winning both chambers of Congress ended with the Nasdaq roughly $2 trillion below its peak, Taiwan's Taiex in a bear market and then up as much as 5 percent on short-selling curbs, and SoftBank's five-year credit default swaps at 466 basis points, the widest since 2022. AI companies have priced more than $300 billion of equity this year with about $100 billion queued, while OpenAI settled for $11 billion at a $1.25 trillion valuation. The repricing is not about demand for models. It is about who pays for the build-out, and what regulation will cost.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "week": "2026-W46",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "markets",
+        "regulation",
+        "credit"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/us-news/2026/nov/08/nvidia-jensen-huang-investigation",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via StreetInsider)",
+          "url": "https://www.streetinsider.com/Reuters/SoftBank+credit+risk+jumps+to+4-year+high%2C+shares+tumble+as+AI+fears+roil+market/27302231.html",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "AI Weekly (summarising The Information)",
+          "url": "https://aiweekly.co/alerts/the-information-ai-firms-have-priced-300b-of-stock-in-2026-with-100b-more-on",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-deepseek-harness-daily-users",
+      "kind": "daily",
+      "title": "DeepSeek's Harness agent passes 1.5 million daily users in under three months",
+      "summary": "DeepSeek said its open-source agent application Harness reached 1.54 million daily active users on 4 November, up from about 271,000 at the end of September, counting only traffic that runs through its own API. The company put consumption at roughly 92 trillion tokens a day, about 60 million per active user, and said around 35,000 third-party plugins exist, with 60 percent of users having installed or created one. A plugin marketplace and a developer support programme are in preparation. The figures are company disclosures, not independently audited.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepseek",
+        "agents",
+        "open-source",
+        "usage"
+      ],
+      "sources": [
+        {
+          "publisher": "Seeking Alpha",
+          "url": "https://tradingview.com/news/seekingalpha:df5e95257094b:0-deepseek-says-agent-app-tops-1-5m-daily-users-plans-plugin-marketplace",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "AI Weekly",
+          "url": "https://aiweekly.co/alerts/deepseeks-open-source-harness-agent-hits-154m-daily-users-in-under-three-months",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-weekly-grid-participants",
+      "kind": "weekly",
+      "title": "Data centres are becoming grid participants whether regulators say so or not",
+      "summary": "Three stories this week converge. Researchers linked a global once-a-minute frequency dip to synchronised battery and UPS charge checks, with Ireland's dip quadrupling between 2016 and 2021 as data centres reached 18 percent of load. Operators are installing converted jet engines to bypass interconnection queues that run for years. And a Senate bill would force large data centres to pay for the grid upgrades they cause. Each is a private workaround for a public problem: a grid never designed for loads that arrive in gigawatt steps and behave like synchronous machines.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "week": "2026-W46",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "grid",
+        "data-centers",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/08/coordinated-disturbances-haunt-grids-worldwide-heres-how-researchers-solved-the-mystery/",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Dataconomy",
+          "url": "https://dataconomy.com/2026/11/05/ai-data-centers-turn-to-old-jet-engines-for-power/",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/policy/1028228/energy-infrastructure-permitting-reform-bill-congress-vote",
+          "publishedAt": "2026-11-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-man-utd-villa-four-four",
+      "kind": "daily",
+      "title": "Manchester United's 4-4 with Villa leaves them in the bottom three",
+      "summary": "Manchester United and Aston Villa shared eight goals at Old Trafford on Sunday, a result that leaves United 18th with eight points from ten games, above only Sunderland and Crystal Palace. Villa stay tenth on 13. Arsenal lead the table on 27 after beating Hull 1-0, with Brighton on 22 and Manchester City on 21. It is United's fifth draw of the campaign and leaves them with one win from ten league matches.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "manchester-united",
+        "aston-villa"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-08",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/tables/premier-league",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-tsmc-3d-dram",
+      "kind": "daily",
+      "title": "TSMC studies 3D DRAM at Nvidia's request, The Information reports",
+      "summary": "TSMC is weighing a move into advanced memory production, starting with 3D DRAM, after Nvidia asked its largest supplier to examine the technology, The Information reported, citing two people with direct knowledge. The chipmaker could build new fabs or convert an existing plant for memory output, as Micron did this year for DRAM. TSMC and Nvidia did not immediately respond to requests for comment. Memory supply and pricing have become the tightest constraint in AI hardware, with demand still outpacing capacity.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "nvidia",
+        "memory",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/tsmc-considers-making-advanced-memory-chips-information-reports-2026-11-06",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/1029248/tsmc-is-apparently-considering-getting-into-the-ram-business-at-the-request-of-nvidia",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-grid-ups-frequency",
+      "kind": "daily",
+      "title": "Synchronised data-centre batteries are leaving a 60-second fingerprint on power grids",
+      "summary": "Researchers traced a once-a-minute frequency dip observed on grids in several countries to internet-synchronised batteries and uninterruptible power supplies that check their state of charge on the minute. More than 80 power-quality meters at a German research campus tied the signal to a battery-backed transformer. On Ireland's grid, where data centres reached 18 percent of load by 2022, the dip quadrupled from 3 millihertz in 2016 to 12 millihertz in 2021, with some readings above 20. Randomising the check schedule would remove the effect.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "data-centers",
+        "grid",
+        "energy",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/08/coordinated-disturbances-haunt-grids-worldwide-heres-how-researchers-solved-the-mystery/",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-oil-iran-diplomacy",
+      "kind": "daily",
+      "title": "Oil slips as Trump calls fresh strikes on Iran 'highly unlikely'",
+      "summary": "Brent fell 64 cents, or 0.64 percent, to $97.67 a barrel by 11:34 GMT and West Texas Intermediate lost 0.40 percent to $90.51 after President Donald Trump told CNN that renewed attacks on Iran were highly unlikely while talks to end the conflict progress. Both sides reported shipping hit in or near the Strait of Hormuz. Monday's move extends a sharp reversal: crude recorded its steepest weekly fall since April 2020 last week as the war premium unwound.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "iran",
+        "commodities",
+        "energy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Euronext)",
+          "url": "https://live.euronext.com/en/financial-news/oil-falls-open-trump-says-fresh-iran-attacks-unlikely",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Economic Times",
+          "url": "https://m.economictimes.com/markets/commodities/news/oil-price-today-november-9-crude-oil-falls-below-100-again-as-trump-says-fresh-attacks-highly-unlikely-what-are-experts-saying/articleshow/135668247.cms",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-artex-exposed-deployments",
+      "kind": "daily",
+      "title": "Hundreds of Artex AI attack kits are sitting open on the public internet",
+      "summary": "Censys found more than 800 distinct deployments of Artex, an open-source autonomous penetration-testing framework, reachable from the web without a password. Security firms have linked Artex to attacks on South Korean financial companies in September and on ConnectWise in October, where Microsoft said intruders moved from reconnaissance to data theft faster than defenders could respond. Researchers stress that not every instance is malicious, but note the software never needed public exposure. Artex has since moved to closed source.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "ai-agents",
+        "censys",
+        "open-source"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/06/hundreds-of-artex-ai-hacking-tools-found-publicly-exposed-to-the-web/",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Microsoft Security Blog",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/11/05/threat-actors-use-agentic-ai-tooling-to-find-and-abuse-exposed-secrets/",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-bundesliga-matchday-nine-wrap",
+      "kind": "daily",
+      "title": "Bayern and Dortmund go into the break level on 21 points",
+      "summary": "Bayern won 2-1 at Mainz and Dortmund beat Elversberg 2-1 to leave the two clubs level on 21 points after nine matchdays, with Bayern ahead on goal difference at 29:9 against 16:7. Freiburg moved third on 19 after a 2-0 win over Union Berlin, and Leipzig stayed fourth on 18 by beating Augsburg 5-2. Hoffenheim's 2-1 win over Schalke left the promoted club 17th, while Gladbach are bottom after a 3-1 defeat in Hamburg.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "bayern",
+        "dortmund",
+        "matchday"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/table",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-openai-hacktron-security",
+      "kind": "daily",
+      "title": "OpenAI gives Hacktron wider frontier-model access to probe its integrations",
+      "summary": "OpenAI said it has partnered with security firm Hacktron to test how its systems interact with third-party services, expanding the startup's access to frontier models through the Daybreak Red programme. Hacktron builds AI agents for code review, penetration testing and red teaming, and its researchers previously chained a flaw in OpenAI's community forum with a single sign-on weakness to reach ChatGPT and Codex accounts. The partnership follows higher bug bounty rewards and a security sprint involving researchers from Cathedral.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "security",
+        "agents",
+        "bug-bounty"
+      ],
+      "sources": [
+        {
+          "publisher": "Hacktron",
+          "url": "https://hacktron.ai/blog/openai-partnership",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tech in Asia",
+          "url": "https://techinasia.com/news/openai-taps-ai-security-startup-hacktron-test-systems",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-ai-equity-supply-300bn",
+      "kind": "daily",
+      "title": "AI companies have already priced $300 billion of equity this year",
+      "summary": "AI companies sold or priced more than $300 billion of stock and mandatory convertibles in 2026, excluding Anthropic's coming IPO, with roughly $100 billion more in the pipeline, The Information reported. The tally follows a week in which AI shares swung violently and talk of Anthropic's valuation slid from about $2 trillion toward $1.1-1.3 trillion. The question the market now faces is how much additional paper it can absorb at current prices, and at what discount the next tranche clears.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "equities",
+        "ai-capex",
+        "anthropic",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "AI Weekly (summarising The Information)",
+          "url": "https://aiweekly.co/alerts/the-information-ai-firms-have-priced-300b-of-stock-in-2026-with-100b-more-on",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Techmeme",
+          "url": "https://www.techmeme.com/261108/p10",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-weekly-title-races-compress",
+      "kind": "weekly",
+      "title": "Two title races are compressing into the same international break",
+      "summary": "Bayern and Dortmund are level on 21 points after nine matchdays, Arsenal lead the Premier League on 27 with Brighton and Manchester City within six, and both leagues now pause for a fortnight of international fixtures. The pattern at the top is narrow wins rather than statements: Arsenal 1-0 against Hull, Bayern 2-1 at Mainz, Dortmund 2-1 over Elversberg, Freiburg 2-0 against Union. With the break removing recovery time and squads already carrying injuries, the clubs that rotate without losing shape over the next three weeks are the ones most likely to still be there in spring.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "week": "2026-W46",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "bundesliga",
+        "premier-league",
+        "calendar"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/table",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/tables/premier-league",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-08",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-11-14",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-apple-singapore-tax",
+      "kind": "daily",
+      "title": "Apple routed up to $50 billion of profit through Singapore to save $2.7 billion",
+      "summary": "Apple has made Singapore its largest tax shelter, attributing up to $50 billion of profits to its hub there and saving about $2.7 billion in tax, the Financial Times reported. That is slightly more than the $2.6 billion the company saved through its Irish headquarters, the arrangement at the centre of a long-running European state-aid dispute. The disclosure comes as governments look for revenue to fund infrastructure and industrial policy, and as scrutiny of large technology companies' effective tax rates widens.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "tax",
+        "singapore",
+        "regulation"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/tech/1029522/apple-dodged-2-7-billion-in-taxes-by-funneling-profits-through-singapore",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-09-sunderland-chelsea-penalty",
+      "kind": "daily",
+      "title": "Sunderland's penalty ends their winless run but leaves them 19th",
+      "summary": "Enzo Le Fee's 36th-minute penalty gave Sunderland a 1-0 win over Chelsea at the Stadium of Light, ending a seven-match winless run and taking them to eight points, still 19th in the table. Chelsea, who felt Cole Palmer had been fouled outside the box before the award, remain fifth on 16 after a second defeat in three league games. They struggled to create clear chances, with substitute Danny Welbeck heading their best opening over in stoppage time.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-11-09T05:00:00.000Z",
+      "updatedAt": "2026-11-09T05:00:00.000Z",
+      "retrievedAt": "2026-11-09T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "sunderland",
+        "chelsea"
+      ],
+      "sources": [
+        {
+          "publisher": "Chelsea FC",
+          "url": "https://www.chelseafc.com/en/news/article/match-report-sunderland-1-0-chelsea",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/match/2645294/sunderland-vs-chelsea",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/tables/premier-league",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-08-brent-worst-week-since-2020",
       "kind": "daily",

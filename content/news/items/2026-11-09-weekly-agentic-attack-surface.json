@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-09-weekly-agentic-attack-surface",
+  "title": "The agentic attack surface is being built faster than the defences around it",
+  "summary": "Three disclosures this week describe one shift. Censys found over 800 Artex deployments reachable without a password; Apiiro counted 2,539 live secrets in 1,122 public repositories exposed by saved agent approvals; OpenAI's own pipeline surfaced 948 Linux privilege-escalation flaws for $1.2 million. OpenAI then gave Hacktron expanded model access to probe its third-party integrations. The thread is custody, not capability: agents hold credentials, touch production systems and leave configuration behind. The organisations that cope are those that can inventory what their agents can reach.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "security",
+    "agents",
+    "credentials"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/06/hundreds-of-artex-ai-hacking-tools-found-publicly-exposed-to-the-web/",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "Apiiro",
+      "url": "https://apiiro.com/blog/coding-agents-leaking-secrets-github-dont-ask-again",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/a-thousand-fewer-paths-to-root",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W46"
+}

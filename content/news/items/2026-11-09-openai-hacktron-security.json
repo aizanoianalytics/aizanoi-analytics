@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-openai-hacktron-security",
+  "title": "OpenAI gives Hacktron wider frontier-model access to probe its integrations",
+  "summary": "OpenAI said it has partnered with security firm Hacktron to test how its systems interact with third-party services, expanding the startup's access to frontier models through the Daybreak Red programme. Hacktron builds AI agents for code review, penetration testing and red teaming, and its researchers previously chained a flaw in OpenAI's community forum with a single sign-on weakness to reach ChatGPT and Codex accounts. The partnership follows higher bug bounty rewards and a security sprint involving researchers from Cathedral.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "security",
+    "agents",
+    "bug-bounty"
+  ],
+  "sources": [
+    {
+      "publisher": "Hacktron",
+      "url": "https://hacktron.ai/blog/openai-partnership",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "Tech in Asia",
+      "url": "https://techinasia.com/news/openai-taps-ai-security-startup-hacktron-test-systems",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
