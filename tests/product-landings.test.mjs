@@ -89,10 +89,10 @@ test('secondary product placeholders state their current status honestly', () =>
   assert.match(analytics, /href="\/analytics\/markets\/"/);
 });
 
-test('Arcade landing matches the six-game module catalog', () => {
+test('Arcade landing matches the seven-game module catalog', () => {
   const html = read('frontend/arcade/index.html');
-  for (const title of ['Sudoku', 'Solitaire', 'Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(title));
-  assert.match(html, /Fifteen experiences that run locally in your browser/i);
+  for (const title of ['Sudoku', 'Solitaire', 'Marble Serpent', 'Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(title));
+  assert.match(html, /Sixteen experiences that run locally in your browser/i);
   assert.match(html, /AI Trade Arena/);
   assert.match(html, /href="\/arcade\/trade-arena\/"/);
   assert.match(html, /href="\/\?app=trade-arena"/);

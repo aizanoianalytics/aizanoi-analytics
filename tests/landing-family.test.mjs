@@ -20,15 +20,15 @@ test('landing pages share skip link, tokens, current-page nav, main target and p
   }
 });
 
-test('Arcade is English and its share metadata matches the fifteen-experience catalog', () => {
+test('Arcade is English and its share metadata matches the sixteen-experience catalog', () => {
   const html = read('frontend/arcade/index.html');
   assert.doesNotMatch(html, /Hemen Oyna|Uyanışı|Antik|mahzen/);
   assert.match(html, /Aizanoi Dungeon: Aizo’s Awakening/);
   for (const m of html.match(/<meta (?:property="og:description"|name="twitter:description"|name="description") content="[^"]*"/g)) {
     assert.doesNotMatch(m, /\bfour\b/i, m);
-    assert.match(m, /[Ff]ifteen/, m);
+    assert.match(m, /[Ss]ixteen/, m);
   }
-  for (const game of ['Sudoku', 'Solitaire', 'Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(`aria-label="Play ${game} in the AizanoiOS Arcade"`));
+  for (const game of ['Sudoku', 'Solitaire', 'Marble Serpent', 'Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(`aria-label="Play ${game} in the AizanoiOS Arcade"`));
 });
 
 test('error pages expose an h1 and no h3', () => {

@@ -24,6 +24,7 @@ None. Arcade is a zero-capability module. It uses browser-local DOM, Canvas, ani
 - `assets/blockfall.js` — Blockfall.
 - `assets/sudoku.js` — Sudoku: bounded local puzzle bank, game state and mount/cleanup factory. See [Sudoku validation](../../../../../tests/sudoku.test.mjs).
 - `assets/solitaire.js` — Klondike Solitaire: seeded 52-card deal, stock/waste/foundation/tableau rules, undo, win/dead-end detection and mount/cleanup factory. See [Solitaire validation](../../../../../tests/solitaire.test.mjs).
+- `assets/zuma.js` — Marble Serpent: procedural spiral track, chain physics, 3+ color-match pops with combos, five chambers, lives, and a polished canvas renderer (gradient orbs, sanctum glow, particles, floaters, shake). See [Marble Serpent validation](../../../../../tests/zuma.test.mjs).
 - `manifest.json` — installation identity.
 
 ## Sudoku
@@ -43,6 +44,14 @@ Solitaire lives in this existing module, not a second app or shell. It has its o
 Controls: tap/click the stock to draw or recycle; select a card then its destination; double-tap/double-click sends a card home; Auto-home, Undo (or `U`), draw with `S`, auto-home with `F`, new game with `N`, `Esc` deselects. No persistence beyond the score toolbar; the seven columns collapse gracefully to 320px phones with 44px action targets.
 
 `tests/browser/solitaire.test.mjs` is routine CI acceptance: actual launcher clicks, stock draw/undo round-trip, keyboard draw/undo, redeal validity, responsive layout and teardown.
+
+## Marble Serpent
+
+Marble Serpent lives in this existing module, not a second app or shell. It has its own cabinet tile and public landing card. A Zuma-like marble shooter on a procedural spiral track: the coil advances from the rim to the inner sanctum, the central idol fires orbs (aim with mouse, touch-drag, or arrow keys; fire with tap, click, or Space), inserted orbs join the chain, runs of 3+ burst with combo-multiplied scoring and cascades, and each cleared chamber quickens the coil and adds colours. Three guards: a breach costs one and resets the chamber; zero guards ends the run; clearing chamber five wins it.
+
+Visuals are procedural canvas paint only — radial-gradient orbs with specular dots, groove track with gold edging, glowing entry portal, animated exit vortex, starfield plus sanctum glow, additive pop particles, floating score text, breach shake/flash, and DPR-aware rendering. No external assets or network calls.
+
+`tests/browser/zuma.test.mjs` is routine CI acceptance: actual launcher clicks, rendered-scene colour-variety proof, trusted mouse/touch firing, pause/resume, keyboard fire, new-run reset, responsive layout and teardown.
 
 ## Storage
 
