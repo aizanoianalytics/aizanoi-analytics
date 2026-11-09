@@ -173,6 +173,11 @@
 .az-arcade .ag-draw { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
 .az-arcade .ag-draw select { min-height: 44px; background: #18233d; color: #eef3ff; border: 1px solid #9aaac6; border-radius: 10px; padding: 0 8px; font: inherit; }
 
+/* Marble Serpent: portrait canvas cabinet; all art is procedural canvas paint. */
+.az-arcade .ag-cab[data-game="zuma"] { --ag-accent: #ffd47e; --ag-accent-ink: #3a2404; width: min(100%, 520px); }
+.az-arcade .ag-cab[data-game="zuma"] .ag-screen { background: #050b14; }
+.az-arcade .ag-cab[data-game="zuma"] canvas { cursor: crosshair; }
+
 /* Library: links to the AI arenas */
 .az-arcade .az-arcade-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .az-arcade .az-arcade-links a {

@@ -118,6 +118,9 @@ jobs:
           - arena: solitaire
             suites: >-
               tests/browser/solitaire.test.mjs
+          - arena: zuma
+            suites: >-
+              tests/browser/zuma.test.mjs
           - arena: trade-arena
             suites: >-
               tests/browser/trade-arena.test.mjs
