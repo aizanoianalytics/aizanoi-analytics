@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-taiwan-short-selling-curbs",
+  "title": "Taiwan's short-selling curbs and stabilisation fund lift the Taiex",
+  "summary": "Taiwan's Taiex rose as much as 5 percent on Monday, its best session since 31 July, ending a seven-session decline that had pushed the technology-heavy benchmark into bear territory. The Financial Supervisory Commission capped intraday short sales of borrowed shares at 3 percent of a stock's 30-day average daily volume, down from 30 percent, and raised the minimum short-sale margin to 130 percent from 90 percent, both effective Monday. The finance ministry authorised the NT$500 billion stabilisation fund to intervene as needed.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "taiwan",
+    "markets",
+    "short-selling",
+    "ai-selloff"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg (via Mint)",
+      "url": "https://livemint.com/market/taiwan-stocks-jump-as-authorities-move-to-stem-market-rout-11794190420004.html",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg (via Yahoo Finance)",
+      "url": "https://finance.yahoo.com/news/taiwan-imposes-short-selling-limit-033609378.html",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

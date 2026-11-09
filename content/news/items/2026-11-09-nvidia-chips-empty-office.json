@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-09-nvidia-chips-empty-office",
+  "title": "Washington cleared Nvidia chip buyers whose offices were empty, report finds",
+  "summary": "The Commerce Department has approved Chinese firms to handle Nvidia's H200 accelerators even where the companies have little visible presence, according to a New York Times investigation summarised by The Verge. Reporters found New Matrix's listed office empty, with no directory entry for the 17-month-old company at its address or at the industrial park's property manager. Its owners are tied to a private equity firm blacklisted by Washington since 2024. The report describes the case as part of a pattern rather than a single lapse.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "export-controls",
+    "china",
+    "commerce-department"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1029483/nvidia-ai-chips-china-blacklist-government",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

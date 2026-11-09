@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-tsmc-3d-dram",
+  "title": "TSMC studies 3D DRAM at Nvidia's request, The Information reports",
+  "summary": "TSMC is weighing a move into advanced memory production, starting with 3D DRAM, after Nvidia asked its largest supplier to examine the technology, The Information reported, citing two people with direct knowledge. The chipmaker could build new fabs or convert an existing plant for memory output, as Micron did this year for DRAM. TSMC and Nvidia did not immediately respond to requests for comment. Memory supply and pricing have become the tightest constraint in AI hardware, with demand still outpacing capacity.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tsmc",
+    "nvidia",
+    "memory",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/tsmc-considers-making-advanced-memory-chips-information-reports-2026-11-06",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/news/1029248/tsmc-is-apparently-considering-getting-into-the-ram-business-at-the-request-of-nvidia",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-09-weekly-grid-participants",
+  "title": "Data centres are becoming grid participants whether regulators say so or not",
+  "summary": "Three stories this week converge. Researchers linked a global once-a-minute frequency dip to synchronised battery and UPS charge checks, with Ireland's dip quadrupling between 2016 and 2021 as data centres reached 18 percent of load. Operators are installing converted jet engines to bypass interconnection queues that run for years. And a Senate bill would force large data centres to pay for the grid upgrades they cause. Each is a private workaround for a public problem: a grid never designed for loads that arrive in gigawatt steps and behave like synchronous machines.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "grid",
+    "data-centers",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/08/coordinated-disturbances-haunt-grids-worldwide-heres-how-researchers-solved-the-mystery/",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    },
+    {
+      "publisher": "Dataconomy",
+      "url": "https://dataconomy.com/2026/11/05/ai-data-centers-turn-to-old-jet-engines-for-power/",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/policy/1028228/energy-infrastructure-permitting-reform-bill-congress-vote",
+      "publishedAt": "2026-11-02T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W46"
+}

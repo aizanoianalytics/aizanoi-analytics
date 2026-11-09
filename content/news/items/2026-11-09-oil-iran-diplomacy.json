@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-09-oil-iran-diplomacy",
+  "title": "Oil slips as Trump calls fresh strikes on Iran 'highly unlikely'",
+  "summary": "Brent fell 64 cents, or 0.64 percent, to $97.67 a barrel by 11:34 GMT and West Texas Intermediate lost 0.40 percent to $90.51 after President Donald Trump told CNN that renewed attacks on Iran were highly unlikely while talks to end the conflict progress. Both sides reported shipping hit in or near the Strait of Hormuz. Monday's move extends a sharp reversal: crude recorded its steepest weekly fall since April 2020 last week as the war premium unwound.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-11-09T05:00:00Z",
+  "updatedAt": "2026-11-09T05:00:00Z",
+  "retrievedAt": "2026-11-09T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "iran",
+    "commodities",
+    "energy"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Euronext)",
+      "url": "https://live.euronext.com/en/financial-news/oil-falls-open-trump-says-fresh-iran-attacks-unlikely",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "The Economic Times",
+      "url": "https://m.economictimes.com/markets/commodities/news/oil-price-today-november-9-crude-oil-falls-below-100-again-as-trump-says-fresh-attacks-highly-unlikely-what-are-experts-saying/articleshow/135668247.cms",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
