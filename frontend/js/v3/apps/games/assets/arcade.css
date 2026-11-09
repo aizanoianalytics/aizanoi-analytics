@@ -150,6 +150,29 @@
 .az-arcade .sd-pad .ag-btn { min-width: 0; padding: 0; font-size: 18px; }
 @media (max-width: 600px) { .az-arcade .sd-pad { grid-template-columns: repeat(5,minmax(44px,1fr)); } }
 
+/* Solitaire: felt-top Klondike layout; cards are native buttons for keyboard/touch. */
+.az-arcade .ag-cab[data-game="solitaire"] { --ag-accent: #8fd6a4; --ag-accent-ink: #0a2e18; width: min(100%, 640px); }
+.az-arcade .ag-sol-top { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.az-arcade .ag-sol-table { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; align-items: start; }
+.az-arcade .ag-sol-col { display: grid; gap: 0; justify-items: stretch; }
+.az-arcade .ag-pile { display: grid; }
+.az-arcade .ag-card, .az-arcade .ag-slot {
+  min-width: 0; width: 100%; min-height: 44px; padding: 6px 2px; border-radius: 8px;
+  border: 1px solid #b9c9eb; background: #f8fbff; color: #172b46;
+  font: 700 clamp(13px, 2.4vw, 18px)/1.2 system-ui, sans-serif; text-align: center;
+  cursor: pointer; touch-action: manipulation;
+}
+.az-arcade .ag-card.is-red { color: #b01e28; }
+.az-arcade .ag-card.is-back { background: repeating-linear-gradient(45deg, #274b73, #274b73 4px, #1b3a5e 4px, #1b3a5e 8px); color: transparent; border-color: #536a89; }
+.az-arcade .ag-card.is-selected { outline: 3px solid var(--ag-accent); outline-offset: -1px; background: #e4f6ea; }
+.az-arcade .ag-card:focus-visible, .az-arcade .ag-slot:focus-visible { outline: 3px solid var(--ag-accent); outline-offset: -1px; }
+.az-arcade .ag-slot { background: transparent; border-style: dashed; color: var(--ag-muted); }
+.az-arcade .ag-sol-col .ag-card:not(:first-child) { margin-top: -22px; }
+.az-arcade .ag-sol-col .ag-card.is-back:not(:first-child) { margin-top: -30px; }
+.az-arcade .ag-stock.is-empty { background: transparent; color: var(--ag-accent); border-style: dashed; }
+.az-arcade .ag-draw { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+.az-arcade .ag-draw select { min-height: 44px; background: #18233d; color: #eef3ff; border: 1px solid #9aaac6; border-radius: 10px; padding: 0 8px; font: inherit; }
+
 /* Library: links to the AI arenas */
 .az-arcade .az-arcade-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .az-arcade .az-arcade-links a {
