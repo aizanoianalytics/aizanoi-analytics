@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-10-anthropic-fable-mythos-5-2",
+  "title": "Anthropic cuts prices with Fable 5.2 and Mythos 5.2 ahead of its IPO",
+  "summary": "Anthropic released Claude Fable 5.2 and Mythos 5.2 on 9 November, priced at $8 per million input tokens and $40 per million output, 20 percent below the 5.1 generation and cheaper than OpenAI's GPT-6 Astra. The company says outputs arrive up to 30 percent faster and that Fable targets coding, reasoning and agent work while Mythos is restricted to vetted cybersecurity and life-sciences organisations. It is Anthropic's first model release since a METR assessment found AI accelerating the lab's own research.",
+  "category": "ai",
+  "priority": 88,
+  "tags": [
+    "anthropic",
+    "claude",
+    "models",
+    "pricing",
+    "ipo"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://finance.yahoo.com/news/anthropic-unveils-fable-mythos-models-202049363.html",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/09/anthropic-releases-new-mythos-and-fable-models-amid-rsi-concerns",
+      "publishedAt": "2026-11-09T19:24:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/09/anthropic-claude-fable-5-2-mythos-5-2.html",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-10-wall-street-relief-rally",
+  "title": "Wall Street stages a broad relief rally as chips rebound and oil slides",
+  "summary": "The S&P 500 rose 2.35 percent to 7,549.94 on 9 November, the Nasdaq Composite gained 2.74 percent to 25,253.14 and the Dow added 1,104.02 points to 52,389.75 as investors bought back last week's heavy losses. Chip names led the rebound: AMD rose 13.3 percent and the Philadelphia semiconductor index nearly 7 percent. Nvidia was the only S&P 500 decliner, falling 4.27 percent to $178.67 after its board opened an investigation into a foreign intelligence approach to chief executive Jensen Huang. The VIX fell 22 percent to 19.92.",
+  "category": "economy-markets",
+  "priority": 76,
+  "tags": [
+    "stocks",
+    "s-p-500",
+    "nasdaq",
+    "semiconductors",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Xinhua",
+      "url": "https://english.news.cn/20261110/9c54bf60d27542b5a3a8c2c6a8a42f58/c.html",
+      "publishedAt": "2026-11-09T21:14:00Z"
+    },
+    {
+      "publisher": "Cboe",
+      "url": "https://cboe.com/insights/posts/stocks-stage-a-broad-based-relief-rally",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Swingfolio Research",
+      "url": "https://swingfolio.com/daily/us/2026-11-09/afternoon",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-10-nvidia-rebellions-sk-telecom",
+  "title": "Nvidia links Korean AI chips to NVLink Fusion in sovereign-AI deal",
+  "summary": "Nvidia said on 9 November that Rebellions will adopt NVLink Fusion to connect its next-generation R200 neural processing units to Nvidia's rack-scale inference platform, and that SK Telecom plans to deploy those systems in its AI data centre. The companies frame the collaboration as a sovereign-AI stack that pairs Korean silicon and models with Nvidia's interconnect and MGX infrastructure. Nvidia chief executive Jensen Huang said Korea has the talent and industrial ambition to become a world leader in AI.",
+  "category": "technology",
+  "priority": 60,
+  "tags": [
+    "nvidia",
+    "rebellions",
+    "sk-telecom",
+    "korea",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA",
+      "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Rebellions-and-SK-Telecom-Announce-Collaboration-to-Advance-Sovereign-AI-Infrastructure-With-NVIDIA-NVLink-Fusion/default.aspx",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
