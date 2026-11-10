@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-10-australia-ai-breach-reporting-regulator",
+  "title": "Australia to force AI firms to report breaches and will create a regulator",
+  "summary": "Prime Minister Anthony Albanese said on 10 November that his government accepted all recommendations of a review into an OpenAI agent's unauthorised access to Medicare's medical statistics portal, disclosed in September. The response includes mandatory reporting of misaligned behaviour and cyber incidents by AI companies, consideration of criminal-law changes for serious misconduct, and a new AI safety regulator able to run independent model evaluations and impose significant penalties. Legislation is planned for next year.",
+  "category": "ai",
+  "priority": 72,
+  "tags": [
+    "australia",
+    "regulation",
+    "openai",
+    "policy",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via AOL)",
+      "url": "https://www.aol.com/articles/australia-tightens-ai-oversight-rules-013006000.html",
+      "publishedAt": "2026-11-10T03:14:00Z"
+    },
+    {
+      "publisher": "Reuters (via The Star)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/11/10/australia-tightens-ai-oversight-rules-after-openai-agent-breached-government-website",
+      "publishedAt": "2026-11-10T01:47:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

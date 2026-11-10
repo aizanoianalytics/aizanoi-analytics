@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-10-microsoft-oracle-capacity",
+  "title": "Microsoft winds down rented Oracle AI capacity as it tightens its own build-out",
+  "summary": "Microsoft has stopped renewing an arrangement to rent AI computing from Oracle and has been turning off that capacity in recent months, Reuters reported, citing a Bloomberg account. The Oracle hardware relied on an older generation of Nvidia chips that became less useful as Microsoft's needs changed, while Oracle said demand for its AI infrastructure remains strong, including for earlier GPUs. The shift comes as Microsoft increases oversight of data-centre projects run by neocloud partners such as IREN, Nebius and Nscale.",
+  "category": "technology",
+  "priority": 62,
+  "tags": [
+    "microsoft",
+    "oracle",
+    "cloud",
+    "data-centers",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via The Indian Express)",
+      "url": "https://indianexpress.com/article/technology/tech-news-technology/microsoft-is-winding-down-oracle-deal-to-rent-ai-cloud-capacity-report-10955343",
+      "publishedAt": "2026-11-08T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

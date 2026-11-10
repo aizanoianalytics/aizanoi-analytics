@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-10-democrats-ai-bills-data-centers",
+  "title": "Democrats prepare AI bills and data-centre limits after midterm sweep",
+  "summary": "After winning control of Congress in last week's midterms, Democrats are drafting legislation to shield consumers from electricity costs tied to data centres, require independent testing of advanced AI systems and clarify corporate liability for AI harm, Reuters reported. Party leaders have also pressed for restrictions on new data-centre construction. CNBC's voter poll found 56 percent of voters called AI and data centres a crucial or major factor in their vote, and the agenda is already weighing on AI-infrastructure shares.",
+  "category": "ai",
+  "priority": 66,
+  "tags": [
+    "regulation",
+    "midterms",
+    "data-centers",
+    "congress",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/media-telecom/democrats-planning-flood-ai-bills-when-they-take-control-congress-2026-11-06/",
+      "publishedAt": "2026-11-06T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/05/democrats-data-center-restrictions-midterms.html",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

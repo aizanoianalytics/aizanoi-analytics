@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-10-metr-anthropic-rd-acceleration",
+  "title": "METR finds AI is doubling the pace of Anthropic's own model progress",
+  "summary": "An 11-week assessment published on 5 November by the safety nonprofit METR concludes that Anthropic is probably improving model capabilities on well-specified tasks at about twice the rate it managed between March 2024 and October 2025, with benchmark scores growing 1.9 times faster since October 2025, a 95 percent interval of 1.5 to 2.8 times. METR said it was confident the acceleration was not driven by more training compute and that most of it came from AI-assisted research, though it cautioned that Anthropic redacted much of the underlying evidence.",
+  "category": "ai",
+  "priority": 68,
+  "tags": [
+    "metr",
+    "anthropic",
+    "research",
+    "safety",
+    "benchmarks"
+  ],
+  "sources": [
+    {
+      "publisher": "METR",
+      "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/anthropic-metr-ai-claude-acceleration-9cf8c590ffc1abdb489179bdccc69c23",
+      "publishedAt": "2026-11-05T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

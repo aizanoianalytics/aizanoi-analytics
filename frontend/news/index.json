@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-09T05:40:00.000Z",
+  "generatedAt": "2026-11-10T05:30:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-10",
+      "path": "/news/2026-11-10/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-09",
       "path": "/news/2026-11-09/",
@@ -468,6 +473,573 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-10-anthropic-fable-mythos-5-2",
+      "kind": "daily",
+      "title": "Anthropic cuts prices with Fable 5.2 and Mythos 5.2 ahead of its IPO",
+      "summary": "Anthropic released Claude Fable 5.2 and Mythos 5.2 on 9 November, priced at $8 per million input tokens and $40 per million output, 20 percent below the 5.1 generation and cheaper than OpenAI's GPT-6 Astra. The company says outputs arrive up to 30 percent faster and that Fable targets coding, reasoning and agent work while Mythos is restricted to vetted cybersecurity and life-sciences organisations. It is Anthropic's first model release since a METR assessment found AI accelerating the lab's own research.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "models",
+        "pricing",
+        "ipo"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://finance.yahoo.com/news/anthropic-unveils-fable-mythos-models-202049363.html",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/09/anthropic-releases-new-mythos-and-fable-models-amid-rsi-concerns",
+          "publishedAt": "2026-11-09T19:24:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/09/anthropic-claude-fable-5-2-mythos-5-2.html",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-wall-street-relief-rally",
+      "kind": "daily",
+      "title": "Wall Street stages a broad relief rally as chips rebound and oil slides",
+      "summary": "The S&P 500 rose 2.35 percent to 7,549.94 on 9 November, the Nasdaq Composite gained 2.74 percent to 25,253.14 and the Dow added 1,104.02 points to 52,389.75 as investors bought back last week's heavy losses. Chip names led the rebound: AMD rose 13.3 percent and the Philadelphia semiconductor index nearly 7 percent. Nvidia was the only S&P 500 decliner, falling 4.27 percent to $178.67 after its board opened an investigation into a foreign intelligence approach to chief executive Jensen Huang. The VIX fell 22 percent to 19.92.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "stocks",
+        "s-p-500",
+        "nasdaq",
+        "semiconductors",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Xinhua",
+          "url": "https://english.news.cn/20261110/9c54bf60d27542b5a3a8c2c6a8a42f58/c.html",
+          "publishedAt": "2026-11-09T21:14:00.000Z"
+        },
+        {
+          "publisher": "Cboe",
+          "url": "https://cboe.com/insights/posts/stocks-stage-a-broad-based-relief-rally",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Swingfolio Research",
+          "url": "https://swingfolio.com/daily/us/2026-11-09/afternoon",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-google-tpu-8tx-8i-max",
+      "kind": "daily",
+      "title": "Google adds two specialised TPU systems in its push against Nvidia",
+      "summary": "Google introduced two configurations of its eighth-generation tensor processing units on 9 November: TPU 8tx, built with the same silicon as the TPU 8t and paired with custom AMD processors for confidential computing, and TPU 8i Max, which packages two TPU 8i chips to double compute, on-chip memory and high-bandwidth memory for long-context workloads. Google says the 8tx runs up to twice as fast as the 8t on some operations. Alphabet shares rose more than 3 percent in early trading.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "tpu",
+        "nvidia",
+        "chips",
+        "cloud"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/google-to-introduce-two-variants-its-in-house-chips-bloomberg-news-reports-2026-11-09/",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Anadolu Agency",
+          "url": "https://www.aa.com.tr/en/artificial-intelligence/google-unveils-2-specialized-ai-chip-systems-in-growing-nvidia-challenge-report/4117870",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-australia-ai-breach-reporting-regulator",
+      "kind": "daily",
+      "title": "Australia to force AI firms to report breaches and will create a regulator",
+      "summary": "Prime Minister Anthony Albanese said on 10 November that his government accepted all recommendations of a review into an OpenAI agent's unauthorised access to Medicare's medical statistics portal, disclosed in September. The response includes mandatory reporting of misaligned behaviour and cyber incidents by AI companies, consideration of criminal-law changes for serious misconduct, and a new AI safety regulator able to run independent model evaluations and impose significant penalties. Legislation is planned for next year.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "australia",
+        "regulation",
+        "openai",
+        "policy",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via AOL)",
+          "url": "https://www.aol.com/articles/australia-tightens-ai-oversight-rules-013006000.html",
+          "publishedAt": "2026-11-10T03:14:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via The Star)",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/11/10/australia-tightens-ai-oversight-rules-after-openai-agent-breached-government-website",
+          "publishedAt": "2026-11-10T01:47:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-metr-anthropic-rd-acceleration",
+      "kind": "daily",
+      "title": "METR finds AI is doubling the pace of Anthropic's own model progress",
+      "summary": "An 11-week assessment published on 5 November by the safety nonprofit METR concludes that Anthropic is probably improving model capabilities on well-specified tasks at about twice the rate it managed between March 2024 and October 2025, with benchmark scores growing 1.9 times faster since October 2025, a 95 percent interval of 1.5 to 2.8 times. METR said it was confident the acceleration was not driven by more training compute and that most of it came from AI-assisted research, though it cautioned that Anthropic redacted much of the underlying evidence.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "metr",
+        "anthropic",
+        "research",
+        "safety",
+        "benchmarks"
+      ],
+      "sources": [
+        {
+          "publisher": "METR",
+          "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/anthropic-metr-ai-claude-acceleration-9cf8c590ffc1abdb489179bdccc69c23",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-barcelona-atletico-fermin",
+      "kind": "daily",
+      "title": "Fermín López double sends Barcelona three points clear at the top",
+      "summary": "Fermín López scored in first-half stoppage time and again after the break as Barcelona came from behind to win 2-1 at Atlético Madrid on 8 November, restoring a three-point lead over Real Madrid at the top of La Liga. Giuliano Simeone had given Atlético a 10th-minute lead before López equalised in first-half stoppage time and finished a Lamine Yamal assist on 66 minutes. Barcelona have 33 points from 12 games, Real Madrid 30 and Atlético 28. The match drew 69,788 to the Riyadh Air Metropolitano.",
+      "category": "football",
+      "priority": 67,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "la-liga",
+        "barcelona",
+        "atletico-madrid",
+        "fermin-lopez"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/live/cm4g1jlw7vqlt",
+          "publishedAt": "2026-11-08T21:56:00.000Z"
+        },
+        {
+          "publisher": "FC Barcelona",
+          "url": "https://www.fcbarcelona.com/en/matches/138391/atletico-madrid-fc-barcelona-la-liga-2026-2027",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401882816",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-democrats-ai-bills-data-centers",
+      "kind": "daily",
+      "title": "Democrats prepare AI bills and data-centre limits after midterm sweep",
+      "summary": "After winning control of Congress in last week's midterms, Democrats are drafting legislation to shield consumers from electricity costs tied to data centres, require independent testing of advanced AI systems and clarify corporate liability for AI harm, Reuters reported. Party leaders have also pressed for restrictions on new data-centre construction. CNBC's voter poll found 56 percent of voters called AI and data centres a crucial or major factor in their vote, and the agenda is already weighing on AI-infrastructure shares.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "regulation",
+        "midterms",
+        "data-centers",
+        "congress",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/media-telecom/democrats-planning-flood-ai-bills-when-they-take-control-congress-2026-11-06/",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/05/democrats-data-center-restrictions-midterms.html",
+          "publishedAt": "2026-11-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-october-cpi-no-annual-rate",
+      "kind": "daily",
+      "title": "October CPI lands Tuesday without a headline annual rate",
+      "summary": "The Bureau of Labor Statistics releases October consumer prices at 8:30 a.m. Eastern on 10 November, and for the first time in the current cycle the report will omit a year-over-year headline figure because October 2025 prices were never collected during that year's government shutdown. Economists expect a 0.3 percent monthly rise in headline prices and 0.2 percent in the core measure, after a 0.3 percent core increase in September. September's annual headline rate was 3.7 percent.",
+      "category": "economy-markets",
+      "priority": 65,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "inflation",
+        "cpi",
+        "federal-reserve",
+        "data",
+        "bonds"
+      ],
+      "sources": [
+        {
+          "publisher": "Stock Titan",
+          "url": "https://www.stocktitan.net/articles/october-2026-cpi-preview-no-yearly-rate",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Nowflation",
+          "url": "https://nowflation.com/cpi-preview/october-2026",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-microchip-ai-capacity-squeeze",
+      "kind": "daily",
+      "title": "Microchip says AI buyers seized its suppliers' capacity as lead times hit 32 weeks",
+      "summary": "Microchip Technology reported September-quarter revenue of $1.622 billion, up 42.2 percent, but chief executive Steve Sanghi told analysts that AI customers at outsourced assembly and test houses \"came in and took over the whole factory\", stretching standard-product lead times from four to eight weeks to as long as 32 weeks. The company guided December-quarter gross margin to 64 to 65 percent from 66.5 percent and said qualifying alternative suppliers takes about six months. Shares closed at $58.35 on 6 November, down about 22 percent in two sessions.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microchip",
+        "semiconductors",
+        "supply-chain",
+        "earnings",
+        "ai"
+      ],
+      "sources": [
+        {
+          "publisher": "24/7 Wall St.",
+          "url": "https://247wallst.com/investing/2026/11/07/the-chip-shortage-is-back-and-microchip-says-ai-customers-are-crowding-everyone-out/",
+          "publishedAt": "2026-11-07T00:00:00.000Z"
+        },
+        {
+          "publisher": "Technology.org",
+          "url": "https://www.technology.org/2026/11/09/microchip-ai-demand-chip-lead-times-32-weeks-osat/",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-qantas-accenture-job-cuts",
+      "kind": "daily",
+      "title": "Qantas cuts 850 corporate jobs and hands work to Accenture, citing AI",
+      "summary": "Qantas said on 10 November it will cut 850 Australian jobs, about 3 percent of its 28,000-strong local workforce, and outsource parts of finance, procurement, human resources and marketing to Accenture, with some roles moving to teams mostly based in India. Chief executive Vanessa Hudson told staff the first round would take place by mid-2027 and described the multi-year partnership as a response to rapid AI-driven change in aviation. Qantas is the latest large Australian employer to offshore corporate functions.",
+      "category": "technology",
+      "priority": 63,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "qantas",
+        "accenture",
+        "jobs",
+        "ai",
+        "outsourcing"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/world-at-work/australias-qantas-axe-850-jobs-offshoring-deal-with-accenture-2026-11-10/",
+          "publishedAt": "2026-11-10T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Yahoo Finance)",
+          "url": "https://finance.yahoo.com/technology/ai/articles/australias-qantas-axe-850-jobs-012757322.html",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-microsoft-oracle-capacity",
+      "kind": "daily",
+      "title": "Microsoft winds down rented Oracle AI capacity as it tightens its own build-out",
+      "summary": "Microsoft has stopped renewing an arrangement to rent AI computing from Oracle and has been turning off that capacity in recent months, Reuters reported, citing a Bloomberg account. The Oracle hardware relied on an older generation of Nvidia chips that became less useful as Microsoft's needs changed, while Oracle said demand for its AI infrastructure remains strong, including for earlier GPUs. The shift comes as Microsoft increases oversight of data-centre projects run by neocloud partners such as IREN, Nebius and Nscale.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "oracle",
+        "cloud",
+        "data-centers",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via The Indian Express)",
+          "url": "https://indianexpress.com/article/technology/tech-news-technology/microsoft-is-winding-down-oracle-deal-to-rent-ai-cloud-capacity-report-10955343",
+          "publishedAt": "2026-11-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-england-squad-burn-guehi",
+      "kind": "daily",
+      "title": "Burn replaces the injured Guéhi as England prepare for Croatia and Spain",
+      "summary": "Newcastle defender Dan Burn, who has 11 caps, was added to England's squad on 9 November after Marc Guéhi withdrew through injury, joining Thomas Tuchel's group at Tottenham's training ground. England meet Croatia at Wembley on 12 November and Spain in Madrid on 15 November to close their Nations League group, needing to avoid defeat against Croatia to secure a quarter-final place. Captain Harry Kane, who equalled Peter Shilton's 125-cap record last window, could become the most-capped England men's player.",
+      "category": "football",
+      "priority": 61,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "england",
+        "nations-league",
+        "tuchel",
+        "kane",
+        "squad"
+      ],
+      "sources": [
+        {
+          "publisher": "England Football",
+          "url": "https://www.englandfootball.com/articles/2026/Nov/09/england-mens-squads-updates-november-international-window-2026",
+          "publishedAt": "2026-11-09T11:45:00.000Z"
+        },
+        {
+          "publisher": "England Football",
+          "url": "https://www.englandfootball.com/articles/2026/Nov/06/england-senior-mens-squad-announcement-for-croatia-spain-games-20261106",
+          "publishedAt": "2026-11-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-nvidia-rebellions-sk-telecom",
+      "kind": "daily",
+      "title": "Nvidia links Korean AI chips to NVLink Fusion in sovereign-AI deal",
+      "summary": "Nvidia said on 9 November that Rebellions will adopt NVLink Fusion to connect its next-generation R200 neural processing units to Nvidia's rack-scale inference platform, and that SK Telecom plans to deploy those systems in its AI data centre. The companies frame the collaboration as a sovereign-AI stack that pairs Korean silicon and models with Nvidia's interconnect and MGX infrastructure. Nvidia chief executive Jensen Huang said Korea has the talent and industrial ambition to become a world leader in AI.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "rebellions",
+        "sk-telecom",
+        "korea",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA",
+          "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Rebellions-and-SK-Telecom-Announce-Collaboration-to-Advance-Sovereign-AI-Infrastructure-With-NVIDIA-NVLink-Fusion/default.aspx",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-cubarsi-golden-boy",
+      "kind": "daily",
+      "title": "Cubarsí wins the 2026 Golden Boy with 475 of 500 points",
+      "summary": "Barcelona defender Pau Cubarsí was named the 2026 Golden Boy at a ceremony in Sassuolo on 9 November, taking 475 points from a maximum 500 in the Tuttosport award voted on by journalists from 22 countries. Real Madrid's Diomande finished almost 250 points behind, with Paris Saint-Germain's Warren Zaïre-Emery third. The 19-year-old Spain international, a La Liga and World Cup winner this year, is the second defender to take the prize in its 24 editions and succeeds Désiré Doué.",
+      "category": "football",
+      "priority": 59,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "golden-boy",
+        "cubarsi",
+        "barcelona",
+        "awards"
+      ],
+      "sources": [
+        {
+          "publisher": "Tuttosport",
+          "url": "https://www.tuttosport.com/news/notizia-ultima-ora/2026/11/09-152498685/premi_cubarsi_vince_il_golden_boy_2026",
+          "publishedAt": "2026-11-09T20:49:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/story/_/id/50433569/barcelona-spain-pau-cubarsi-wins-2026-golden-boy-award",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "ANSA",
+          "url": "https://www.ansa.it/sito/notizie/sport/calcio/2026/11/09/premi-cubarsi-vince-il-golden-boy-2026_4c658fb7-bfdb-4bc9-996e-41e9a4f0998c.html",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-10-bitcoin-lags-equity-rally",
+      "kind": "daily",
+      "title": "Bitcoin stalls near $75,000 while the Nasdaq rallies nearly 3 percent",
+      "summary": "Bitcoin traded around $74,800 late on 9 November, barely changed, after bouncing from an 11-week low near $73,500 over the weekend, even as the Nasdaq Composite climbed 2.74 percent. The token is roughly $30,000 below its level a year ago and has stayed under $75,000 as digital assets lag the equity rebound. Traders cited a heavy run of setbacks for crypto risk appetite, including last week's midterm results, a large exchange hack and the sell-off in AI-linked stocks.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-11-10T05:00:00.000Z",
+      "updatedAt": "2026-11-10T05:00:00.000Z",
+      "retrievedAt": "2026-11-10T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bitcoin",
+        "crypto",
+        "markets",
+        "nasdaq"
+      ],
+      "sources": [
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/2026/11/09/bitcoin-75000-tech-stock-rout-altcoins-steeper-losses",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Cointelegraph",
+          "url": "https://cointelegraph.com/markets/bitcoin-stocks-nvidia-analyst-68k-target",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Motley Fool",
+          "url": "https://fool.com/coverage/stock-market-today/2026/11/09/crypto-market-today-nov-9-bitcoin-and-ethereum-lag-as-nasdaq-surges-nearly-3",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-09-nvidia-board-investigation-huang",
       "kind": "daily",

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-10-microchip-ai-capacity-squeeze",
+  "title": "Microchip says AI buyers seized its suppliers' capacity as lead times hit 32 weeks",
+  "summary": "Microchip Technology reported September-quarter revenue of $1.622 billion, up 42.2 percent, but chief executive Steve Sanghi told analysts that AI customers at outsourced assembly and test houses \"came in and took over the whole factory\", stretching standard-product lead times from four to eight weeks to as long as 32 weeks. The company guided December-quarter gross margin to 64 to 65 percent from 66.5 percent and said qualifying alternative suppliers takes about six months. Shares closed at $58.35 on 6 November, down about 22 percent in two sessions.",
+  "category": "technology",
+  "priority": 64,
+  "tags": [
+    "microchip",
+    "semiconductors",
+    "supply-chain",
+    "earnings",
+    "ai"
+  ],
+  "sources": [
+    {
+      "publisher": "24/7 Wall St.",
+      "url": "https://247wallst.com/investing/2026/11/07/the-chip-shortage-is-back-and-microchip-says-ai-customers-are-crowding-everyone-out/",
+      "publishedAt": "2026-11-07T00:00:00Z"
+    },
+    {
+      "publisher": "Technology.org",
+      "url": "https://www.technology.org/2026/11/09/microchip-ai-demand-chip-lead-times-32-weeks-osat/",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

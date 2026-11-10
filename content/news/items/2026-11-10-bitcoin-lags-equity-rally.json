@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-10-bitcoin-lags-equity-rally",
+  "title": "Bitcoin stalls near $75,000 while the Nasdaq rallies nearly 3 percent",
+  "summary": "Bitcoin traded around $74,800 late on 9 November, barely changed, after bouncing from an 11-week low near $73,500 over the weekend, even as the Nasdaq Composite climbed 2.74 percent. The token is roughly $30,000 below its level a year ago and has stayed under $75,000 as digital assets lag the equity rebound. Traders cited a heavy run of setbacks for crypto risk appetite, including last week's midterm results, a large exchange hack and the sell-off in AI-linked stocks.",
+  "category": "economy-markets",
+  "priority": 58,
+  "tags": [
+    "bitcoin",
+    "crypto",
+    "markets",
+    "nasdaq"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/11/09/bitcoin-75000-tech-stock-rout-altcoins-steeper-losses",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Cointelegraph",
+      "url": "https://cointelegraph.com/markets/bitcoin-stocks-nvidia-analyst-68k-target",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "The Motley Fool",
+      "url": "https://fool.com/coverage/stock-market-today/2026/11/09/crypto-market-today-nov-9-bitcoin-and-ethereum-lag-as-nasdaq-surges-nearly-3",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

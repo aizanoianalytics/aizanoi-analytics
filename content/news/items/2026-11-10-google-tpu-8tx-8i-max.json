@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-10-google-tpu-8tx-8i-max",
+  "title": "Google adds two specialised TPU systems in its push against Nvidia",
+  "summary": "Google introduced two configurations of its eighth-generation tensor processing units on 9 November: TPU 8tx, built with the same silicon as the TPU 8t and paired with custom AMD processors for confidential computing, and TPU 8i Max, which packages two TPU 8i chips to double compute, on-chip memory and high-bandwidth memory for long-context workloads. Google says the 8tx runs up to twice as fast as the 8t on some operations. Alphabet shares rose more than 3 percent in early trading.",
+  "category": "ai",
+  "priority": 74,
+  "tags": [
+    "google",
+    "tpu",
+    "nvidia",
+    "chips",
+    "cloud"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/google-to-introduce-two-variants-its-in-house-chips-bloomberg-news-reports-2026-11-09/",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Anadolu Agency",
+      "url": "https://www.aa.com.tr/en/artificial-intelligence/google-unveils-2-specialized-ai-chip-systems-in-growing-nvidia-challenge-report/4117870",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

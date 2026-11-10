@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-10-qantas-accenture-job-cuts",
+  "title": "Qantas cuts 850 corporate jobs and hands work to Accenture, citing AI",
+  "summary": "Qantas said on 10 November it will cut 850 Australian jobs, about 3 percent of its 28,000-strong local workforce, and outsource parts of finance, procurement, human resources and marketing to Accenture, with some roles moving to teams mostly based in India. Chief executive Vanessa Hudson told staff the first round would take place by mid-2027 and described the multi-year partnership as a response to rapid AI-driven change in aviation. Qantas is the latest large Australian employer to offshore corporate functions.",
+  "category": "technology",
+  "priority": 63,
+  "tags": [
+    "qantas",
+    "accenture",
+    "jobs",
+    "ai",
+    "outsourcing"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/world-at-work/australias-qantas-axe-850-jobs-offshoring-deal-with-accenture-2026-11-10/",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Yahoo Finance)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/australias-qantas-axe-850-jobs-012757322.html",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-10T05:00:00Z",
+  "updatedAt": "2026-11-10T05:00:00Z",
+  "retrievedAt": "2026-11-10T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
