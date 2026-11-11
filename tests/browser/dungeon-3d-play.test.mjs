@@ -194,18 +194,20 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
     for (let attempt = 0; attempt < 14; attempt += 1) {
       const before = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
       await page.keyboard.press('k');
-      await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(20));
-      const after = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
-      if (after < before) bowSpentStamina = true;
+      // Read the first simulation tick, before stamina regenerates. Reading
+      // after twenty ticks can report 100 again even though a shot cost 8.
+      const afterShot = await page.evaluate(() => {
+        window.AIZANOI_DUNGEON_GAME.qaAdvance(1);
+        return window.AIZANOI_DUNGEON_GAME.stamina;
+      });
+      if (afterShot < before) bowSpentStamina = true;
+      await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(19));
       const hit = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
       if (hit.some((hp, i) => hp < enemyHpBeforeBow[i])) bowDamaged = true;
       if (bowSpentStamina && bowDamaged) break;
     }
     assert.ok(bowSpentStamina,
-      `the bow must spend stamina, stamina before was ${staminaBefore}`);
-    const staminaAfter = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
-    assert.ok(staminaAfter < staminaBefore,
-      `the bow must reduce the stamina bar (${staminaBefore} -> ${staminaAfter})`);
+      `the bow must spend stamina at the shot tick, stamina before was ${staminaBefore}`);
     assert.ok(bowDamaged,
       `the bow must damage an enemy, before ${enemyHpBeforeBow} after ${await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp))}`);
 
