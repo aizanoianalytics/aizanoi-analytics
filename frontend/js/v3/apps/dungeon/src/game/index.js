@@ -1239,7 +1239,15 @@ const fixedUpdate = (state, input, dt) => {
   const length = Math.hypot(rawX, rawZ);
   const vector = length > 0 ? { x: rawX / Math.max(1, length), z: rawZ / Math.max(1, length) }
     : { x: 0, z: 0 };
-  if (length > 0) player.facing = { ...vector };
+  // First-person aiming: the look direction owns facing. Without this the
+  // movement vector would overwrite it every step, so melee, the bow and the
+  // target picker would all aim where the player walks instead of where the
+  // camera looks. Inputs that carry no facing (tests, replays, the 2D style
+  // input path) keep the original behaviour untouched.
+  const look = input.facing;
+  const lookLength = look && finite(look.x) && finite(look.z) ? Math.hypot(look.x, look.z) : 0;
+  if (lookLength > 1e-6) player.facing = { x: look.x / lookLength, z: look.z / lookLength };
+  else if (length > 0) player.facing = { ...vector };
   const dashPressed = Boolean(input.dash) && !state.inputLatch.dash;
   state.inputLatch.dash = Boolean(input.dash);
   let speed = 5.2 * player.speedMultiplier;
