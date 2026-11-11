@@ -647,13 +647,16 @@ table.stats th button:focus-visible { outline: 2px solid var(--focus); outline-o
 [data-rank="26"]{transform:translateY(1664px)}[data-rows="26"]{position:relative;height:1664px}
 [data-rank="27"]{transform:translateY(1728px)}[data-rows="27"]{position:relative;height:1728px}
 [data-rank="28"]{transform:translateY(1792px)}[data-rows="28"]{position:relative;height:1792px}
-[data-rows="29"]{position:relative;height:1856px}
+[data-rank="29"]{transform:translateY(1856px)}[data-rows="29"]{position:relative;height:1856px}
+[data-rows="30"]{position:relative;height:1920px}
 [hidden]{display:none!important}
 .provenance-note{max-width:1440px;margin:14px auto;padding:0 20px;font-size:12px;color:var(--muted)}
 @media(pointer:coarse){button,select,.btn{min-height:44px}}
 /* v3 bots (2026-11-03) and the BIST 100 benchmark */
 [data-color="#ff6b6b"]{--c:#ff6b6b}[data-bg="#ff6b6b"]{background:#ff6b6b}[data-ink="#ff6b6b"]{color:#ff6b6b}
 [data-color="#b42323"]{--c:#b42323}[data-bg="#b42323"]{background:#b42323}[data-ink="#b42323"]{color:#b42323}
+[data-color="#d97757"]{--c:#d97757}[data-bg="#d97757"]{background:#d97757}[data-ink="#d97757"]{color:#d97757}
+[data-color="#9a3f22"]{--c:#9a3f22}[data-bg="#9a3f22"]{background:#9a3f22}[data-ink="#9a3f22"]{color:#9a3f22}
 [data-color="#f25cf0"]{--c:#f25cf0}[data-bg="#f25cf0"]{background:#f25cf0}[data-ink="#f25cf0"]{color:#f25cf0}
 [data-color="#8f1b8d"]{--c:#8f1b8d}[data-bg="#8f1b8d"]{background:#8f1b8d}[data-ink="#8f1b8d"]{color:#8f1b8d}
 [data-color="#fff36b"]{--c:#fff36b}[data-bg="#fff36b"]{background:#fff36b}[data-ink="#fff36b"]{color:#fff36b}

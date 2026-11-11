@@ -450,6 +450,16 @@
    "file": "bots/aiwar-gpt-6-luna.js",
    "bytes": 3174,
    "note": "AI WAR 2026-10-31 entry written by GPT-6 Luna. Snake Royale round robin: #22 of 22."
+  },
+  {
+   "id": "fable-5-2",
+   "name": "Claude Fable 5.2",
+   "botName": "Flavius Coil",
+   "lab": "Anthropic",
+   "color": "#d97757",
+   "file": "bots/fable-5-2.js",
+   "bytes": 17678,
+   "note": "Flavius Coil: paranoid alpha-beta over simultaneous moves against the nearest rival, exact engine turn model, storm-aware Voronoi territory, tail-aware space checks, hunger and length advantage."
   }
  ]
 }

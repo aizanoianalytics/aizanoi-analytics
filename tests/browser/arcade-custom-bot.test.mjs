@@ -182,5 +182,5 @@ test('every installed roster entry initializes in its real browser worker under 
     assert.deepEqual(records.filter(record => record.type !== 'ready'), [], `${game}: imported contestants must initialize`);
     checked += records.length;
   }
-  assert.equal(checked, 194, 'all installed entries, including 153 AI WAR submissions');
+  assert.equal(checked, 195, 'all installed entries, including 153 AI WAR submissions');
 });

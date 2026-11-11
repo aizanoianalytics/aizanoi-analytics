@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
-const rosterSize = JSON.parse(readFileSync(new URL('../../frontend/arcade/trade-arena/bots/roster.json', import.meta.url), 'utf8')).bots.length;
+const roster = JSON.parse(readFileSync(new URL('../../frontend/arcade/trade-arena/bots/roster.json', import.meta.url), 'utf8'));
+const rosterSize = roster.bots.length;
+const benchSize = Object.keys(roster.benchmarks).length;
 const policy = readFileSync(new URL('../../infra/nginx/snippets/aizanoi-static-security-headers.conf.example', import.meta.url), 'utf8').match(/Content-Security-Policy "([^"]+)"/)[1];
 
 async function withPage(size, run) {
@@ -55,7 +57,7 @@ test('mixed daily races include BIST, US and crypto in USD with both benchmarks 
     assert.match(await page.locator('.race-head').innerText(),/USD/);
     await page.locator('#asset').selectOption('THYAO');
     await page.waitForFunction(()=>globalThis.raceProbe.currentRace().ac?.warm?.length===120);
-    assert.equal(await page.locator('#rows').evaluate(el=>el.getBoundingClientRect().height),29*64);
+    assert.equal(await page.locator('#rows').evaluate(el=>el.getBoundingClientRect().height),(rosterSize+benchSize)*64);
     await page.locator('#speeds [data-v="Infinity"]').click();
     await page.locator('dialog.results[open]').waitFor({timeout:140000});
     const done=await page.evaluate(()=>globalThis.raceProbe.currentRace().done);
