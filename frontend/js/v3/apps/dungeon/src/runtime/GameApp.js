@@ -358,7 +358,7 @@ export class GameApp {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 0.94;
+    this.renderer.toneMappingExposure = 1.0;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.stage.append(this.renderer.domElement);
@@ -405,11 +405,11 @@ export class GameApp {
     this.scene.add(this.camera);
     // Cool sky fill against a warm ground bounce: the key/fill split gives the
     // stone a direction instead of a flat wash.
-    this.scene.add(new THREE.HemisphereLight(0x6f7f9b, 0x140d07, 0.3));
-    const moon = new THREE.DirectionalLight(0xffd9a4, 0.95);
+    this.scene.add(new THREE.HemisphereLight(0x6f7f9b, 0x140d07, 0.5));
+    const moon = new THREE.DirectionalLight(0xffd9a4, 1.3);
     moon.position.set(7, 14, 5);
     moon.castShadow = true;
-    moon.shadow.mapSize.set(1024, 1024);
+    moon.shadow.mapSize.set(512, 512);
     moon.shadow.camera.left = -22;
     moon.shadow.camera.right = 22;
     moon.shadow.camera.top = 22;
