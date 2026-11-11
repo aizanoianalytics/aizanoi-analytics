@@ -286,3 +286,590 @@ test('the ground telegraph uses the attack marker, not the enemy reach', () => {
   assert.doesNotMatch(source, /Math\.max\(0\.6, enemy\.windup\.range \|\| 1\.5\)/,
     'the ring must no longer be sized from the attack reach');
 });
+
+// --- Owned pointer-lock lifecycle -------------------------------------------
+// The dungeon owns the pointer lock only while it owns the canvas. Every
+// overlay (pick screen, settings, help, defeat, victory) has to take the
+// pointer back, and nothing may steal the lock from another app.
+
+class StubClassList {
+  constructor(owner) { this.owner = owner; }
+  toggle(name, force) {
+    const names = new Set(String(this.owner.className).split(/\s+/).filter(Boolean));
+    const present = force === undefined ? !names.has(name) : force;
+    if (present) names.add(name); else names.delete(name);
+    this.owner.className = [...names].join(' ');
+    return present;
+  }
+  add(...names) { names.forEach((name) => this.toggle(name, true)); }
+  remove(...names) { names.forEach((name) => this.toggle(name, false)); }
+  contains(name) { return String(this.owner.className).split(/\s+/).includes(name); }
+}
+
+const stripPseudo = (selector) => selector.replace(/:[a-z-]+(\([^)]*\))?/gi, '');
+
+const selectorMatches = (element, selector) => stripPseudo(selector).split(',').some((raw) => {
+  const part = raw.trim();
+  if (!part) return false;
+  const tokens = part.split(/(?=[.#[])/).filter(Boolean);
+  const head = tokens.shift() || '';
+  if (head && head !== '*' && element.tagName !== head.toUpperCase()) return false;
+  for (const token of tokens) {
+    if (token.startsWith('.')) {
+      if (!String(element.className).split(/\s+/).includes(token.slice(1))) return false;
+    } else if (token.startsWith('[')) {
+      const match = token.match(/^\[([^\]=]+)(?:=["']?([^\]"']*)["']?)?\]/);
+      if (!match) return false;
+      const actual = element.getAttribute(match[1]);
+      if (actual === null) return false;
+      if (match[2] !== undefined && actual !== match[2]) return false;
+    }
+  }
+  return true;
+});
+
+class StubElement {
+  constructor(tag = 'div') {
+    this.tagName = String(tag).toUpperCase();
+    this.className = '';
+    this.textContent = '';
+    this.dataset = {};
+    this.attributes = new Map();
+    this.children = [];
+    this.parent = null;
+    this.listeners = new Map();
+    this.hidden = false;
+    this.inert = false;
+    this.tabIndex = -1;
+    this.disabled = false;
+    this.checked = false;
+    this.selected = false;
+    this.value = '';
+    this.type = '';
+    this.classList = new StubClassList(this);
+  }
+  setAttribute(name, value) { this.attributes.set(name, String(value)); }
+  getAttribute(name) { return this.attributes.has(name) ? this.attributes.get(name) : null; }
+  hasAttribute(name) { return this.attributes.has(name); }
+  append(...nodes) { for (const node of nodes) { node.parent = this; this.children.push(node); } }
+  remove() {
+    if (this.parent) {
+      const index = this.parent.children.indexOf(this);
+      if (index >= 0) this.parent.children.splice(index, 1);
+      this.parent = null;
+    }
+    this.removed = true;
+  }
+  addEventListener(type, handler) {
+    if (!this.listeners.has(type)) this.listeners.set(type, new Set());
+    this.listeners.get(type).add(handler);
+  }
+  removeEventListener(type, handler) { this.listeners.get(type)?.delete(handler); }
+  dispatch(type, event = {}) {
+    const payload = { type, preventDefault() {}, stopPropagation() {}, ...event };
+    for (const handler of [...(this.listeners.get(type) || [])]) handler(payload);
+  }
+  focus() { if (globalThis.document) globalThis.document.activeElement = this; }
+  contains(node) {
+    if (node === this) return true;
+    return this.children.some((child) => child.contains(node));
+  }
+  closest() { return null; }
+  querySelector(selector) { return this.querySelectorAll(selector)[0] || null; }
+  querySelectorAll(selector) {
+    const found = [];
+    const visit = (node) => {
+      for (const child of node.children) {
+        if (selectorMatches(child, selector)) found.push(child);
+        visit(child);
+      }
+    };
+    visit(this);
+    return found;
+  }
+  getBoundingClientRect() { return { left: 0, top: 0, width: 100, height: 100 }; }
+  setPointerCapture() {}
+  releasePointerCapture() {}
+}
+
+const restoreDom = () => {
+  delete globalThis.document;
+  delete globalThis.window;
+  delete globalThis.Element;
+};
+
+const stubDom = () => {
+  const listeners = new Map();
+  const document = {
+    activeElement: null,
+    pointerLockElement: null,
+    exitPointerLockCalls: 0,
+    hidden: false,
+    body: new StubElement('body'),
+    head: new StubElement('head'),
+    createElement: (tag) => new StubElement(tag),
+    getElementById: () => null,
+    addEventListener(type, handler) {
+      if (!listeners.has(type)) listeners.set(type, new Set());
+      listeners.get(type).add(handler);
+    },
+    removeEventListener(type, handler) { listeners.get(type)?.delete(handler); },
+    dispatch(type, event = {}) {
+      for (const handler of [...(listeners.get(type) || [])]) handler({ type, ...event });
+    },
+    exitPointerLock() {
+      document.exitPointerLockCalls += 1;
+      document.pointerLockElement = null;
+      document.dispatch('pointerlockchange');
+    },
+  };
+  document.activeElement = document.body;
+  const window = { devicePixelRatio: 1, localStorage: null, addEventListener() {}, removeEventListener() {} };
+  globalThis.document = document;
+  globalThis.window = window;
+  globalThis.Element = StubElement;
+  return { document, window };
+};
+
+const stubApp = () => {
+  const dom = stubDom();
+  const app = new GameApp({ container: { append() {}, replaceChildren() {} } });
+  const canvas = new StubElement('canvas');
+  canvas.requestPointerLock = () => { dom.document.pointerLockElement = canvas; };
+  canvas.requestLockCalls = 0;
+  canvas.releasedPointers = [];
+  const originalRequest = canvas.requestPointerLock;
+  canvas.requestPointerLock = () => { canvas.requestLockCalls += 1; return originalRequest(); };
+  canvas.releasePointerCapture = (id) => { canvas.releasedPointers.push(id); };
+  app.renderer = { domElement: canvas, dispose() {}, info: { render: { calls: 0, triangles: 0 } } };
+  app.root = new StubElement('div');
+  app.hud = {
+    root: new StubElement('div'),
+    elements: {},
+    announce() {},
+    update() {},
+    setVisible() {},
+    addLoot() {},
+    destroy() {},
+  };
+  app.touchControls = { querySelector: () => new StubElement('div') };
+  app.feedback = { emit() {}, clear() {} };
+  app.syncWorld = () => {};
+  app.updateHud = () => {};
+  // The stub stands in for a desktop with a mouse: pointer lock is a
+  // fine-pointer contract.
+  app.hasFinePointer = true;
+  return { app, dom, canvas };
+};
+
+const playableApp = () => {
+  const harness = stubApp();
+  harness.app.sceneState = 'playing';
+  harness.app.paused = false;
+  harness.app.help = false;
+  harness.dom.document.pointerLockElement = harness.canvas;
+  return harness;
+};
+
+test('pointer lock is only requested by a live, unpaused, unlocked run', (t) => {
+  const { app, canvas } = stubApp();
+  t.after(restoreDom);
+  app.sceneState = 'playing';
+
+  assert.equal(app.requestLookLock(), true, 'a running game may take the pointer');
+  assert.equal(canvas.requestLockCalls, 1);
+
+  app.sceneState = 'menu';
+  assert.equal(app.requestLookLock(), false, 'the menu must not take the pointer');
+  app.sceneState = 'playing';
+
+  app.paused = true;
+  assert.equal(app.requestLookLock(), false, 'a paused game must not take the pointer');
+  app.paused = false;
+
+  app.help = true;
+  assert.equal(app.requestLookLock(), false, 'the help card must not take the pointer');
+  app.help = false;
+
+  app.modal = { panel: new StubElement('section') };
+  assert.equal(app.requestLookLock(), false, 'an open modal must not take the pointer');
+  app.modal = undefined;
+
+  app.destroyed = true;
+  assert.equal(app.requestLookLock(), false, 'a destroyed app must not take the pointer');
+  app.destroyed = false;
+
+  app.state.player.dead = true;
+  assert.equal(app.requestLookLock(), false, 'a fallen player must not take the pointer');
+  app.state.player.dead = false;
+
+  app.hasFinePointer = false;
+  assert.equal(app.requestLookLock(), false, 'a touch device must not take the pointer');
+
+  assert.equal(canvas.requestLockCalls, 1, 'refused requests must never reach the canvas');
+});
+
+test('the pointer lock check keeps the fine-pointer gate first', () => {
+  const source = read('src/runtime/GameApp.js');
+  const start = source.indexOf('requestLookLock() {');
+  assert.ok(start > 0, 'requestLookLock must exist');
+  const body = source.slice(start, source.indexOf('\n  }', start));
+  assert.ok(body.includes('hasFinePointer'), 'the fine-pointer gate must exist');
+  assert.ok(body.indexOf('hasFinePointer') < body.indexOf('sceneState'),
+    'the fine-pointer gate must be checked before the run state');
+});
+
+test('the pointer lock is released only when this canvas owns it', (t) => {
+  const { app, dom, canvas } = stubApp();
+  t.after(restoreDom);
+  const foreign = new StubElement('canvas');
+
+  dom.document.pointerLockElement = foreign;
+  app.exitLookLock();
+  assert.equal(dom.document.exitPointerLockCalls, 0, 'another app keeps its pointer lock');
+
+  dom.document.pointerLockElement = canvas;
+  app.exitLookLock();
+  assert.equal(dom.document.exitPointerLockCalls, 1, 'the owning canvas releases its lock');
+});
+
+test('opening a modal records the modal before it releases the pointer lock', (t) => {
+  const { app, dom, canvas } = stubApp();
+  t.after(restoreDom);
+  const seen = [];
+  dom.document.exitPointerLock = () => {
+    seen.push(app.modal ? app.modal.panel : null);
+    dom.document.pointerLockElement = null;
+  };
+  dom.document.pointerLockElement = canvas;
+  const panel = new StubElement('section');
+  app.openModal(panel);
+
+  assert.equal(seen.length, 1, 'the modal must take the pointer back');
+  assert.equal(seen[0], panel, 'the modal record must exist before the lock is released');
+  assert.equal(app.modal.panel, panel);
+});
+
+test('an overlay takes the pointer lock away from the run it owns', (t) => {
+  const { app, dom, canvas } = stubApp();
+  t.after(restoreDom);
+  app.sceneState = 'playing';
+
+  dom.document.pointerLockElement = canvas;
+  app.toggleHelp();
+  assert.equal(dom.document.exitPointerLockCalls, 1, 'the help card takes the pointer back');
+  assert.equal(app.help, true);
+});
+
+test('the pick screen takes the pointer lock and the choice never takes it back', (t) => {
+  const { app, dom, canvas } = stubApp();
+  t.after(restoreDom);
+  app.sceneState = 'playing';
+  const chest = {
+    id: 'chest-1',
+    choices: [{ id: 'fury', rarity: 'common', level: 1 }],
+    shop: [],
+    rerolls: 1,
+    gold: 10,
+    draftPending: false,
+    position: { x: 0, y: 0, z: 0 },
+  };
+  app.state.chests.push(chest);
+  dom.document.pointerLockElement = canvas;
+
+  app.showPick(chest);
+  assert.equal(dom.document.exitPointerLockCalls, 1, 'the pick screen takes the pointer back');
+  assert.ok(app.modal, 'the pick screen is a modal');
+
+  const before = canvas.requestLockCalls;
+  app.pickSkip();
+  assert.equal(canvas.requestLockCalls, before, 'closing the pick screen must not take the pointer back');
+});
+
+test('the settings panel takes the pointer lock and closing it never takes it back', (t) => {
+  const { app, dom, canvas } = stubApp();
+  t.after(restoreDom);
+  app.sceneState = 'playing';
+  dom.document.pointerLockElement = canvas;
+
+  app.showSettings();
+  assert.equal(dom.document.exitPointerLockCalls, 1, 'the settings panel takes the pointer back');
+  assert.ok(app.modal, 'the settings panel is a modal');
+
+  const before = canvas.requestLockCalls;
+  app.closeSettings();
+  assert.equal(canvas.requestLockCalls, before, 'closing the settings must not take the pointer back');
+});
+
+test('the settings panel never steals the pointer lock of another app', (t) => {
+  const { app, dom } = stubApp();
+  t.after(restoreDom);
+  app.sceneState = 'playing';
+  dom.document.pointerLockElement = new StubElement('canvas');
+
+  app.showSettings();
+  assert.equal(dom.document.exitPointerLockCalls, 0, 'another app keeps its pointer lock');
+});
+
+test('the defeat and the victory screen take the pointer lock away', (t) => {
+  const defeat = stubApp();
+  t.after(restoreDom);
+  defeat.app.sceneState = 'playing';
+  defeat.dom.document.pointerLockElement = defeat.canvas;
+  defeat.app.showDefeat();
+  assert.equal(defeat.dom.document.exitPointerLockCalls, 1, 'the defeat screen takes the pointer back');
+  assert.ok(defeat.app.modal, 'the defeat screen is a modal');
+
+  restoreDom();
+  const victory = stubApp();
+  victory.app.sceneState = 'playing';
+  victory.dom.document.pointerLockElement = victory.canvas;
+  victory.app.showVictory();
+  assert.equal(victory.dom.document.exitPointerLockCalls, 1, 'the victory screen takes the pointer back');
+  assert.ok(victory.app.modal, 'the victory screen is a modal');
+});
+
+test('losing the pointer lock pauses a live run once and never over an overlay', (t) => {
+  const { app, dom } = stubApp();
+  t.after(restoreDom);
+  app.installInput();
+  app.sceneState = 'playing';
+
+  app.hadLookLock = true;
+  dom.document.pointerLockElement = null;
+  dom.document.dispatch('pointerlockchange');
+  assert.equal(app.paused, true, 'a live run pauses when the pointer is taken away');
+
+  app.paused = false;
+  app.help = true;
+  app.hadLookLock = true;
+  dom.document.pointerLockElement = null;
+  dom.document.dispatch('pointerlockchange');
+  assert.equal(app.paused, false, 'the help card owns the pointer: no second pause');
+
+  app.help = false;
+  app.modal = { panel: new StubElement('section') };
+  app.hadLookLock = true;
+  dom.document.pointerLockElement = null;
+  dom.document.dispatch('pointerlockchange');
+  assert.equal(app.paused, false, 'a modal owns the pointer: no second pause');
+});
+
+test('a lock the game released on purpose never pauses the run', (t) => {
+  const { app, dom, canvas } = playableApp();
+  t.after(restoreDom);
+  app.installInput();
+  app.hadLookLock = true;
+
+  app.openModal(new StubElement('section'));
+  assert.equal(dom.document.exitPointerLockCalls, 1, 'the overlay takes the pointer back');
+
+  // The browser reports the release a tick later: the run must stay as it is.
+  app.hadLookLock = true;
+  dom.document.dispatch('pointerlockchange');
+  assert.equal(app.paused, false, 'a deliberate release must not pause the run');
+});
+
+test('resuming a paused run is the only path that may take the pointer back', (t) => {
+  const { app, canvas } = playableApp();
+  t.after(restoreDom);
+  app.paused = true;
+  app.togglePause();
+  assert.equal(app.paused, false);
+  assert.equal(canvas.requestLockCalls, 1, 'the resume gesture may take the pointer back');
+});
+
+test('resetting the input drops the drag, the pending flags, the touch move and the latches', (t) => {
+  const { app, canvas } = stubApp();
+  t.after(restoreDom);
+  app.lookDrag = { pointerId: 9, x: 1, y: 2, moved: 3, tap: true };
+  app.pendingAttack = true;
+  app.pendingDash = true;
+  app.pendingShoot = true;
+  app.pendingGuard = true;
+  app.pendingSpecial = true;
+  app.pendingInteract = true;
+  app.touchMove = { x: 1, z: 1 };
+  app.keys.add('KeyW');
+  for (const latch of Object.keys(app.state.inputLatch)) app.state.inputLatch[latch] = true;
+
+  app.resetInput();
+
+  assert.equal(app.lookDrag, null, 'the drag must be dropped');
+  assert.deepEqual(canvas.releasedPointers, [9], 'the drag must release its pointer capture');
+  assert.equal(app.pendingAttack, false);
+  assert.equal(app.pendingDash, false);
+  assert.equal(app.pendingShoot, false);
+  assert.equal(app.pendingGuard, false);
+  assert.equal(app.pendingSpecial, false);
+  assert.equal(app.pendingInteract, false);
+  assert.equal(app.touchMove, null);
+  assert.equal(app.keys.size, 0);
+  for (const latch of Object.keys(app.state.inputLatch)) {
+    assert.equal(app.state.inputLatch[latch], false, `${latch} latch must be cleared`);
+  }
+});
+
+test('a cancelled pointer never swings the sword', (t) => {
+  const { app, canvas } = playableApp();
+  t.after(restoreDom);
+  app.installInput();
+
+  canvas.dispatch('pointerdown', { pointerId: 3, pointerType: 'touch', clientX: 40, clientY: 40, buttons: 1 });
+  assert.ok(app.lookDrag, 'the touch starts a drag');
+  canvas.dispatch('pointercancel', { pointerId: 3 });
+
+  assert.equal(app.pendingAttack, false, 'a cancelled pointer must not attack');
+  assert.equal(app.pendingInteract, false, 'a cancelled pointer must not interact');
+  assert.equal(app.lookDrag, null, 'a cancelled pointer must drop the drag');
+});
+
+test('the drag look is ignored while the run is paused, helped or covered', (t) => {
+  const { app, dom, canvas } = playableApp();
+  t.after(restoreDom);
+  app.installInput();
+  app.hasFinePointer = false;
+  // Without pointer lock the drag is the only way to turn, so this is the
+  // path the guards have to cover.
+  dom.document.pointerLockElement = null;
+
+  const drag = () => {
+    canvas.dispatch('pointerdown', { pointerId: 4, pointerType: 'mouse', button: 0, clientX: 100, clientY: 100 });
+    const yaw = app.look.yaw;
+    canvas.dispatch('pointermove', { pointerId: 4, clientX: 160, clientY: 100 });
+    const turned = app.look.yaw !== yaw;
+    canvas.dispatch('pointerup', { pointerId: 4, clientX: 160, clientY: 100 });
+    return turned;
+  };
+
+  assert.equal(drag(), true, 'a live run turns with the drag');
+
+  app.paused = true;
+  assert.equal(drag(), false, 'a paused run must not turn');
+  app.paused = false;
+
+  app.help = true;
+  assert.equal(drag(), false, 'the help card must not turn the camera');
+  app.help = false;
+
+  app.modal = { panel: new StubElement('section') };
+  assert.equal(drag(), false, 'a modal must not turn the camera');
+});
+
+// --- Room resource ownership ------------------------------------------------
+// A room owns everything one arena build makes for itself: the instanced
+// fields, the materials cloned for them and the geometry generated in code
+// (the vault, the beams, the water, the dais). The loaded sculpts are shared
+// by every arena and belong to the templates, so a rebuild may never dispose
+// them.
+
+const roomApp = () => {
+  const app = new GameApp({ container: { append() {}, replaceChildren() {} } });
+  app.room = new THREE.Group();
+  app.dynamic = new THREE.Group();
+  for (const key of ['floor', 'wall', 'doorway', 'column', 'brazier']) {
+    const group = new THREE.Group();
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshStandardMaterial();
+    group.add(new THREE.Mesh(geometry, material));
+    app.templates.set(key, group);
+    app.groundOffsets.set(key, 0);
+    app.geometries.add(geometry);
+    app.materials.add(material);
+  }
+  return app;
+};
+
+test('a room rebuild disposes the instanced fields it replaces', () => {
+  const app = roomApp();
+  app.buildRoom('column-ring');
+  const fields = app.room.children.filter((child) => child.isInstancedMesh);
+  assert.ok(fields.length > 0, 'the room shell is drawn as instanced fields');
+  const disposed = [];
+  for (const field of fields) field.addEventListener('dispose', () => disposed.push(field));
+
+  app.buildRoom('column-ring');
+
+  assert.equal(disposed.length, fields.length, 'every replaced field must be disposed');
+  app.destroy();
+});
+
+test('a room rebuild releases the geometry the room owns and keeps the shared sculpts', () => {
+  const app = roomApp();
+  app.buildRoom('column-ring');
+  const owned = [...app.roomGeometries];
+  assert.ok(owned.length >= 2, 'the room owns its procedural ceiling geometry');
+  const disposed = new Set();
+  for (const geometry of owned) geometry.addEventListener('dispose', () => disposed.add(geometry));
+
+  const templateGeometry = app.templates.get('floor').children[0].geometry;
+  let templateDisposed = false;
+  templateGeometry.addEventListener('dispose', () => { templateDisposed = true; });
+
+  app.buildRoom('column-ring');
+
+  assert.equal(disposed.size, owned.length, 'the room-owned geometry must be disposed');
+  assert.equal(templateDisposed, false, 'the shared sculpt geometry must survive the rebuild');
+  assert.equal(app.roomGeometries.has(templateGeometry), false,
+    'a shared sculpt may never be registered as a room resource');
+  app.destroy();
+});
+
+test('repeated rebuilds of the same arena keep the global resource sets bounded', () => {
+  const app = roomApp();
+  app.buildRoom('column-ring');
+  const geometries = app.geometries.size;
+  const materials = app.materials.size;
+  const roomGeometries = app.roomGeometries.size;
+  const roomMaterials = app.roomMaterials.size;
+  assert.ok(roomGeometries >= 2, 'the room tracks the geometry it generated');
+
+  for (let index = 0; index < 4; index += 1) app.buildRoom('column-ring');
+
+  assert.equal(app.geometries.size, geometries, 'the global geometry set must not grow per rebuild');
+  assert.equal(app.materials.size, materials, 'the global material set must not grow per rebuild');
+  assert.equal(app.roomGeometries.size, roomGeometries, 'the room tracks only its own geometry');
+  assert.equal(app.roomMaterials.size, roomMaterials, 'the room tracks only its own materials');
+  app.destroy();
+});
+
+test('a room that fails to build releases the half-built room', () => {
+  const app = roomApp();
+  app.buildRoom('column-ring');
+  const ceiling = app.buildCeiling.bind(app);
+  app.buildCeiling = () => { throw new Error('the vault could not be built'); };
+
+  assert.throws(() => app.buildRoom('column-ring'), /the vault could not be built/);
+  app.buildCeiling = ceiling;
+
+  const shared = app.templateResources();
+  assert.equal(app.geometries.size, shared.geometries.size, 'the failed room must not leak geometry');
+  assert.equal(app.materials.size, shared.materials.size, 'the failed room must not leak materials');
+  assert.equal(app.roomGeometries.size, 0, 'the failed room keeps no geometry');
+  assert.equal(app.roomMaterials.size, 0, 'the failed room keeps no material');
+  app.destroy();
+});
+
+test('teardown releases the environment render target and the dust sprite', () => {
+  const app = new GameApp({ container: {} });
+  let targetDisposed = false;
+  let textureDisposed = false;
+  let dustDisposed = false;
+  app.environmentTarget = { texture: {}, dispose() { targetDisposed = true; } };
+  app.environment = { dispose() { textureDisposed = true; } };
+  app.dustTexture = { dispose() { dustDisposed = true; } };
+
+  app.destroy();
+
+  assert.equal(targetDisposed, true, 'the PMREM render target must be released');
+  assert.equal(textureDisposed, true, 'the environment texture must be released');
+  assert.equal(dustDisposed, true, 'the dust sprite must be released');
+});
+
+test('the runtime keeps the environment render target and the room resource sets', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /this\.environmentTarget\s*=/, 'the PMREM render target must be kept');
+  assert.match(source, /this\.dustTexture\s*=/, 'the dust sprite must be kept for teardown');
+  assert.match(source, /this\.roomGeometries\s*=\s*new Set\(\)/, 'the room must own its geometry');
+  assert.match(source, /this\.roomMaterials\s*=\s*new Set\(\)/, 'the room must own its materials');
+});

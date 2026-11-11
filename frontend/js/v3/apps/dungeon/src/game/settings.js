@@ -17,6 +17,10 @@ export const DEFAULT_SETTINGS = Object.freeze({
   quality: 'auto',
   leftHanded: false,
   trainingDone: false,
+  // First-person look controls. Kept with the other comfort options so a
+  // player who inverts or slows the camera never has to re-set it per run.
+  lookSensitivity: 1,
+  invertY: false,
 });
 
 const VALID_MODES = ['manual', 'assist', 'auto'];
@@ -42,6 +46,8 @@ export function parseSettings(raw) {
   if (VALID_QUALITY.includes(raw.quality)) settings.quality = raw.quality;
   if (typeof raw.leftHanded === 'boolean') settings.leftHanded = raw.leftHanded;
   if (typeof raw.trainingDone === 'boolean') settings.trainingDone = raw.trainingDone;
+  if (finite(raw.lookSensitivity)) settings.lookSensitivity = Math.max(0.25, Math.min(3, raw.lookSensitivity));
+  if (typeof raw.invertY === 'boolean') settings.invertY = raw.invertY;
   return settings;
 }
 

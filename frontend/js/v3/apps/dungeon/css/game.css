@@ -22,6 +22,15 @@
   --az-stamina: #4e966e;
   --az-xp: #7370b5;
   --az-focus: #ffe19a;
+  --az-signal: #ffb347;
+  --az-zeus: #38d9ff;
+  --az-rule: rgba(224, 182, 109, 0.34);
+  /* Typographic scale: a condensed display face for signage, a mono face for
+     live numbers, and the existing serif as the readable body face. All three
+     degrade gracefully — no webfont request, so the CSP stays self-only. */
+  --az-display: "Big Shoulders Display", "Cinzel", "Haettenschweiler", "Arial Narrow", Impact, sans-serif;
+  --az-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --az-serif: Cinzel, Georgia, "Times New Roman", serif;
   font-size: 16px;
 }
 /* Only the standalone page owns the page-level colour scheme. */
@@ -62,17 +71,36 @@
 
 .aizanoi-dungeon3d-app-root { position: relative; }
 .az-dungeon3d-stage { position: absolute; inset: 0; }
+/* Screen grade: a corner vignette and a faint film grain sit above the canvas
+   but below the HUD, so the frame reads as a lit scene instead of a viewport. */
+.az-dungeon3d-stage::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 78% 72% at 50% 46%, transparent 38%, rgba(0, 0, 0, 0.32) 78%, rgba(0, 0, 0, 0.62) 100%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
 #game-container canvas,
 .aizanoi-dungeon-app-root canvas,
 .az-dungeon3d-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+/* While the pointer is locked the cursor belongs to the game, not the page. */
+.aizanoi-dungeon3d-app-root.is-pointer-locked .az-dungeon3d-stage { cursor: none; }
 
 /* Shared engraved button language. */
 .az-fs-fab,
 .az-dungeon-exit,
 .az-dungeon-begin,
+.az-hud-resume,
 .az-dungeon-menu-option,
 .az-dungeon-settings-fab,
 .az-dungeon-pick-reopen,
+.az-dungeon-pick-reroll,
+.az-dungeon-pick-skip,
+.az-dungeon-pick-later,
+.az-dungeon-shop-buy,
 .az-play-anyway,
 .az-touch-action {
   border: 1px solid var(--az-bronze-bright);
@@ -89,8 +117,13 @@
 .az-fs-fab:hover,
 .az-dungeon-exit:hover,
 .az-dungeon-begin:hover,
+.az-hud-resume:hover,
 .az-dungeon-menu-option:hover,
 .az-dungeon-settings-fab:hover,
+.az-dungeon-pick-reroll:hover,
+.az-dungeon-pick-skip:hover,
+.az-dungeon-pick-later:hover,
+.az-dungeon-shop-buy:hover,
 .az-play-anyway:hover,
 .az-touch-action:hover { border-color: var(--az-focus); background: linear-gradient(180deg, #50391f, #22170d); }
 
@@ -129,33 +162,65 @@
   gap: 1.2rem;
   padding: calc(2rem + env(safe-area-inset-top)) calc(1.25rem + env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) calc(1.25rem + env(safe-area-inset-left));
   text-align: center;
-  background: radial-gradient(circle at center, rgba(39, 29, 17, 0.36), rgba(4, 5, 5, 0.84));
+  background: radial-gradient(circle at center, rgba(39, 29, 17, 0.22), rgba(4, 5, 5, 0.8));
   backdrop-filter: blur(3px);
 }
 .az-dungeon-menu::before {
-  content: "✦";
-  color: var(--az-bronze-bright);
-  font-size: 1.5rem;
-  text-shadow: 0 0 20px rgba(224, 182, 109, 0.6);
+  content: "";
+  display: block;
+  width: min(30rem, 70vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--az-bronze) 45%, transparent);
+  box-shadow: 0 0 18px rgba(224, 182, 109, 0.35);
 }
 .az-dungeon-menu-title {
   margin: 0;
   color: var(--az-ivory);
-  font-family: Cinzel, Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 7vw, 4.5rem);
-  line-height: 1;
-  letter-spacing: 0.09em;
+  font-family: var(--az-display);
+  font-size: clamp(2.4rem, 8.5vw, 5.2rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: 0.14em;
+  margin-right: -0.14em;
   text-transform: uppercase;
-  text-shadow: 0 3px #3d2814, 0 10px 30px #000;
+  text-shadow: 0 4px #3d2814, 0 12px 40px #000;
 }
-.az-dungeon-menu-sub { margin: 0; max-width: 38rem; color: var(--az-muted); font-size: 1rem; line-height: 1.65; }
-.az-dungeon-menu-note { margin: 0.25rem 0 0; max-width: 38rem; color: var(--az-muted); font-size: 0.85rem; line-height: 1.55; opacity: 0.85; }
+.az-dungeon-menu-sub {
+  margin: 0;
+  max-width: 38rem;
+  color: var(--az-muted);
+  font-family: var(--az-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+
+/* Wide screens: the title card moves to the left rail and the arena takes
+   the right of the frame, so the hero and the room are part of the menu
+   instead of being hidden behind it. */
+@media (min-width: 900px) {
+  .az-dungeon-menu {
+    align-items: flex-start;
+    text-align: left;
+    padding-left: clamp(2rem, 6vw, 6rem);
+    background: linear-gradient(100deg, rgba(4, 5, 5, 0.92) 0%, rgba(6, 7, 7, 0.74) 38%, rgba(6, 7, 7, 0.2) 62%, rgba(4, 5, 5, 0.45) 100%);
+  }
+  .az-dungeon-menu::before { width: min(24rem, 42vw); }
+  .az-dungeon-menu-title { font-size: clamp(2.6rem, 6vw, 4.8rem); }
+  .az-dungeon-menu-sub { max-width: 30rem; }
+  .az-dungeon-begin, .az-play-anyway { padding: 0.85rem 2.4rem; }
+}
+.az-dungeon-menu-note { margin: 0.25rem 0 0; max-width: 38rem; color: var(--az-muted); font-family: var(--az-mono); font-size: 0.75rem; line-height: 1.6; opacity: 0.8; }
 /* The Continue button is a secondary action: it must read as different from
    Begin, but still be obviously clickable. */
 .az-dungeon-continue { padding: 0.7rem 1.9rem; font-size: 0.95rem; opacity: 0.92; }
 .az-dungeon-begin, .az-play-anyway { padding: 0.9rem 2.75rem; font-size: 1.05rem; }
 
-/* HUD — passive by default, interactive children opt in. */
+/* HUD — passive by default, interactive children opt in. The layout follows
+   the first-person contract: nothing important sits in the middle of the
+   screen, the vitals gather in one plate in the lower left, and the run
+   ledger is a quiet stack in the upper right. */
 .az-hud {
   position: absolute;
   inset: 0;
@@ -167,49 +232,112 @@
 }
 .az-hud-top {
   position: absolute;
-  /* The exit control owns the top-left row; vitals start below it. */
-  top: calc(4.5rem + env(safe-area-inset-top));
-  left: calc(1rem + env(safe-area-inset-left));
+  /* The settings dial owns the very top right; the run ledger sits under it. */
+  top: calc(4.1rem + env(safe-area-inset-top));
   right: calc(1rem + env(safe-area-inset-right));
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
+  text-align: right;
 }
 .az-hud-vitals {
-  width: min(25rem, 44vw);
-  padding: 0.8rem;
-  border: 1px solid var(--az-bronze-dark);
-  border-radius: 0.35rem;
-  background: linear-gradient(135deg, rgba(29, 24, 18, 0.94), rgba(9, 10, 10, 0.78));
-  box-shadow: inset 0 0 0 1px rgba(221, 172, 93, 0.08), 0 8px 30px rgba(0, 0, 0, 0.35);
+  position: absolute;
+  left: calc(1.15rem + env(safe-area-inset-left));
+  bottom: calc(1.15rem + env(safe-area-inset-bottom));
+  width: min(20.5rem, 44vw);
+  padding: 0.7rem 0.85rem 0.8rem;
+  border: 1px solid rgba(224, 182, 109, 0.2);
+  border-left: 2px solid var(--az-bronze);
+  border-radius: 2px;
+  background:
+    linear-gradient(155deg, rgba(26, 21, 15, 0.86), rgba(7, 8, 8, 0.74)),
+    radial-gradient(120% 140% at 0% 0%, rgba(224, 182, 109, 0.09), transparent 62%);
+  backdrop-filter: blur(7px);
+  box-shadow: inset 0 1px 0 rgba(255, 232, 183, 0.06), 0 16px 42px rgba(0, 0, 0, 0.55);
 }
-.az-hud-meter { display: grid; grid-template-columns: 6.75rem 1fr auto; align-items: center; gap: 0.5rem; min-height: 1.7rem; }
-.az-hud-meter + .az-hud-meter { margin-top: 0.35rem; }
+/* Corner ticks: the plate reads as a mounted instrument, not a browser box. */
+.az-hud-vitals::after {
+  content: "";
+  position: absolute;
+  inset: 0.28rem;
+  border: 1px solid rgba(224, 182, 109, 0.13);
+  pointer-events: none;
+}
+.az-hud-meter { display: grid; grid-template-columns: 4.6rem 1fr 3.5rem; align-items: center; gap: 0.5rem; min-height: 1.25rem; }
+.az-hud-meter + .az-hud-meter { margin-top: 0.28rem; }
 .az-hud-health { --az-meter-accent: var(--az-blood); }
 .az-hud-stamina { --az-meter-accent: var(--az-stamina); }
 .az-hud-xp { --az-meter-accent: var(--az-xp); }
-.az-hud-meter-label { color: var(--az-muted); font-family: Georgia, serif; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
-.az-hud-meter-value { min-width: 5rem; text-align: right; color: var(--az-ivory); font-variant-numeric: tabular-nums; }
+.az-hud-meter-label {
+  color: var(--az-muted);
+  font-family: var(--az-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.az-hud-meter-value { min-width: 3.5rem; text-align: right; color: var(--az-ivory); font-family: var(--az-mono); font-size: 0.75rem; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; white-space: nowrap; }
 .az-hud-meter-track {
-  width: 100%; height: 0.75rem; overflow: hidden;
-  border: 1px solid #050505; border-radius: 0.15rem;
+  width: 100%; height: 0.52rem; overflow: hidden;
+  border: 1px solid #050505; border-radius: 0;
   appearance: none; background: #080808;
   box-shadow: inset 0 2px 4px #000;
 }
+/* Health reads first and reads biggest: it is the bar the player checks. */
+.az-hud-health .az-hud-meter-track { height: 0.95rem; }
 .az-hud-meter-track::-webkit-progress-bar { background: #080808; }
-.az-hud-meter-track::-webkit-progress-value { background: linear-gradient(90deg, #72211f, var(--az-blood)); }
-.az-hud-meter-track::-moz-progress-bar { background: linear-gradient(90deg, #72211f, var(--az-blood)); }
-.az-hud-stamina .az-hud-meter-track::-webkit-progress-value { background: linear-gradient(90deg, #315d48, var(--az-stamina)); }
-.az-hud-stamina .az-hud-meter-track::-moz-progress-bar { background: linear-gradient(90deg, #315d48, var(--az-stamina)); }
-.az-hud-xp .az-hud-meter-track::-webkit-progress-value { background: linear-gradient(90deg, #454271, var(--az-xp)); }
-.az-hud-xp .az-hud-meter-track::-moz-progress-bar { background: linear-gradient(90deg, #454271, var(--az-xp)); }
+.az-hud-meter-track::-webkit-progress-value {
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0 1px, transparent 1px 10%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0)),
+    var(--az-meter-accent, #b98445);
+}
+.az-hud-meter-track::-moz-progress-bar {
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.5) 0 1px, transparent 1px 10%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0)),
+    var(--az-meter-accent, #b98445);
+}
+.az-hud-health { --az-meter-accent: #c04a3a; }
+.az-hud-stamina .az-hud-meter-track::-webkit-progress-value { background: repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0 1px, transparent 1px 10%), linear-gradient(180deg, #5fae86, var(--az-stamina)); }
+.az-hud-stamina .az-hud-meter-track::-moz-progress-bar { background: repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0 1px, transparent 1px 10%), linear-gradient(180deg, #5fae86, var(--az-stamina)); }
+.az-hud-xp .az-hud-meter-track::-webkit-progress-value { background: repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0 1px, transparent 1px 10%), linear-gradient(180deg, #8d8ad2, var(--az-xp)); }
+.az-hud-xp .az-hud-meter-track::-moz-progress-bar { background: repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0 1px, transparent 1px 10%), linear-gradient(180deg, #8d8ad2, var(--az-xp)); }
+.az-hud-meter-track::-webkit-progress-value { transition: width 140ms ease-out; }
 
-.az-hud-run { padding: 0.65rem 0.85rem; border-right: 3px solid var(--az-bronze); background: linear-gradient(90deg, transparent, rgba(12, 10, 8, 0.84)); text-align: right; }
+.az-hud-run {
+  position: relative;
+  padding: 0.35rem 0 0.35rem 1.1rem;
+  border-left: 2px solid rgba(224, 182, 109, 0.35);
+  text-align: right;
+}
 .az-hud-run p { margin: 0; }
-.az-hud-chapter { color: var(--az-bronze-bright); font-family: Georgia, serif; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-.az-hud-wave { color: var(--az-muted); }
-.az-hud-gold { margin-top: 0.3rem !important; color: #f1c86f; font-weight: 800; }
+.az-hud-chapter {
+  color: var(--az-bronze-bright);
+  font-family: var(--az-display);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+.az-hud-wave {
+  margin-top: 0.1rem !important;
+  color: var(--az-muted);
+  font-family: var(--az-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.az-hud-gold {
+  margin-top: 0.2rem !important;
+  color: #f1c86f;
+  font-family: var(--az-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.az-hud-gold::before { content: "◈ "; color: var(--az-bronze); }
 
 .az-hud-boss {
   position: absolute;
@@ -226,13 +354,53 @@
   background: rgba(12, 8, 7, 0.92);
   box-shadow: 0 8px 30px #000;
 }
-.az-hud-boss-name { grid-column: 1 / -1; text-align: center; color: var(--az-bronze-bright); font-family: Georgia, serif; letter-spacing: 0.12em; text-transform: uppercase; }
-.az-hud-combo { position: absolute; top: 28%; right: calc(1.25rem + env(safe-area-inset-right)); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: clamp(1.25rem, 4vw, 2.5rem); font-weight: 900; transform: rotate(-3deg); }
+.az-hud-boss-name { grid-column: 1 / -1; text-align: center; color: var(--az-bronze-bright); font-family: var(--az-display); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+.az-hud-combo {
+  position: absolute;
+  top: calc(10.4rem + env(safe-area-inset-top));
+  right: calc(1.1rem + env(safe-area-inset-right));
+  color: var(--az-bronze-bright);
+  font-family: var(--az-display);
+  font-size: clamp(1.4rem, 3.6vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  transform: rotate(-3deg);
+  text-shadow: 0 3px 0 rgba(0,0,0,.6), 0 0 26px rgba(224,182,109,.35);
+}
 
-.az-hud-crosshair { position: absolute; top: 50%; left: 50%; width: 1.6rem; height: 1.6rem; transform: translate(-50%, -50%); opacity: 0.85; }
-.az-hud-crosshair::before, .az-hud-crosshair::after { content: ""; position: absolute; top: 50%; left: 50%; background: var(--az-ivory); box-shadow: 0 0 3px #000; transform: translate(-50%, -50%); }
-.az-hud-crosshair::before { width: 1.6rem; height: 2px; }
-.az-hud-crosshair::after { width: 2px; height: 1.6rem; }
+/* Reticle: a centre dot with four short ticks. Small and quiet, so it never
+   covers the enemy it points at; the locked state turns it gold. */
+.az-hud-crosshair {
+  position: absolute; top: 50%; left: 50%;
+  width: 1.1rem; height: 1.1rem;
+  transform: translate(-50%, -50%);
+  opacity: 0.82;
+}
+.az-hud-crosshair::before, .az-hud-crosshair::after {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.az-hud-crosshair::before {
+  width: 3px; height: 3px; border-radius: 50%;
+  background: var(--az-ivory); box-shadow: 0 0 5px #000;
+}
+.az-hud-crosshair::after {
+  width: 2px; height: 2px; background: transparent;
+  box-shadow:
+    0 -0.6rem 0 -0.5px var(--az-ivory),
+    0 0.6rem 0 -0.5px var(--az-ivory),
+    -0.6rem 0 0 -0.5px var(--az-ivory),
+    0.6rem 0 0 -0.5px var(--az-ivory);
+}
+.az-hud-crosshair.is-locked::before, .az-hud-crosshair.is-locked::after { background: var(--az-gold, #ffcf5a); }
+.az-hud-crosshair.is-locked::after {
+  box-shadow:
+    0 -0.6rem 0 -0.5px var(--az-gold, #ffcf5a),
+    0 0.6rem 0 -0.5px var(--az-gold, #ffcf5a),
+    -0.6rem 0 0 -0.5px var(--az-gold, #ffcf5a),
+    0.6rem 0 0 -0.5px var(--az-gold, #ffcf5a);
+}
+.az-hud-crosshair.is-locked { box-shadow: 0 0 0 1px rgba(255, 207, 90, 0.5); border-radius: 50%; }
 
 /* Claimed blessings, listed so the player can read their own build. The list
    is in flow inside the vitals panel (see hud.js): a long late-run build
@@ -243,16 +411,35 @@
 .az-hud-blessing--level-2 { border-left-color: var(--az-bronze-bright); }
 .az-hud-blessing--level-3 { border-left-color: var(--az-gold, #ffcf5a); font-weight: 700; }
 
-/* Assist mode chip + wrath charge bar. The chip is a button (the touch-mode
-   switch); the HUD root is pointer-transparent, so it opts back in. */
-.az-hud-assist { position: absolute; bottom: calc(1rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0.3rem 0.7rem; border: 1px solid var(--az-bronze); background: rgba(12, 8, 7, 0.85); color: var(--az-ivory); font-size: 0.75rem; letter-spacing: 0.18em; pointer-events: auto; cursor: pointer; }
+/* Assist mode chip + wrath charge. The chip is a button (the touch-mode
+   switch); the HUD root is pointer-transparent, so it opts back in. The wrath
+   charge lives inside the vitals plate: it is a resource, not an overlay. */
+.az-hud-assist {
+  position: absolute;
+  top: calc(4.1rem + env(safe-area-inset-top));
+  left: calc(1rem + env(safe-area-inset-left));
+  margin: 0; padding: 0.28rem 0.62rem;
+  border: 1px solid rgba(224, 182, 109, 0.45);
+  background: rgba(12, 8, 7, 0.72);
+  color: var(--az-ivory);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  pointer-events: auto;
+  cursor: pointer;
+}
 .az-hud-assist[data-mode="auto"] { border-color: var(--az-gold, #ffcf5a); color: var(--az-gold, #ffcf5a); }
-.az-hud-special { position: absolute; bottom: calc(3.2rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); width: min(12rem, 40vw); }
+.az-hud-special {
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(224, 182, 109, 0.16);
+  --az-meter-accent: #9a7bff;
+}
+.az-hud-special .az-hud-meter-track { height: 0.4rem; }
 .az-hud-special.is-ready .az-hud-meter-track { outline: 2px solid var(--az-gold, #ffcf5a); }
+.az-hud-special.is-ready .az-hud-meter-label { color: var(--az-gold, #ffcf5a); }
 .az-hud-stamina.is-low-reserve .az-hud-meter-track { outline: 1px dashed var(--az-gold, #ffcf5a); }
 .az-hud-stamina[data-reserve="25"] .az-hud-meter-track { border-right: 3px solid var(--az-gold, #ffcf5a); }
 .az-hud-stamina[data-reserve="50"] .az-hud-meter-track { border-right: 6px double var(--az-gold, #ffcf5a); }
-.az-hud-crosshair.is-locked::before, .az-hud-crosshair.is-locked::after { background: var(--az-gold, #ffcf5a); }
 
 /* Blessing pick screen: choice of 3, rarity glow, reroll + skip. The draft
    owns the modal while open, above the HUD pause and the touch controls. */
@@ -274,15 +461,96 @@
 .az-hud-damage-vignette.is-active { opacity: 1; animation: az-damage-pulse 260ms ease-out both; }
 @keyframes az-damage-pulse { 0% { opacity: 0; } 24% { opacity: 1; } 100% { opacity: 0; } }
 
-.az-hud-loot-feed { position: absolute; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(22rem, 45vw); margin: 0; padding: 0; list-style: none; text-align: right; }
-.az-hud-loot-item { margin-top: 0.35rem; padding: 0.5rem 0.7rem; border-right: 2px solid var(--az-bronze-bright); background: linear-gradient(90deg, transparent, rgba(18, 14, 9, 0.88)); color: var(--az-ivory); animation: az-loot-in 240ms ease-out both; }
-@keyframes az-loot-in { from { opacity: 0; transform: translateX(1rem); } }
-.az-hud-announcer { position: absolute; left: 50%; top: 30%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
+/* Loot feed: a toast queue that slides in from the right, newest on top. */
+.az-hud-loot-feed {
+  position: absolute;
+  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  width: min(22rem, 45vw);
+  margin: 0; padding: 0; list-style: none;
+  text-align: right;
+  display: flex; flex-direction: column-reverse; gap: 0.35rem;
+}
+.az-hud-loot-item {
+  padding: 0.5rem 0.75rem;
+  border-right: 2px solid var(--az-bronze-bright);
+  background: linear-gradient(270deg, rgba(24, 18, 12, 0.94), rgba(24, 18, 12, 0.55));
+  color: var(--az-ivory);
+  font-family: var(--az-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  animation: az-loot-in 240ms cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+@keyframes az-loot-in { from { opacity: 0; transform: translateX(1.25rem); } }
 
-.az-hud-panel { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: min(32rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); overflow-y: auto; transform: translate(-50%, -50%); padding: 2rem; border: 1px solid var(--az-bronze-bright); background: linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)); box-shadow: 0 20px 80px #000; text-align: center; }
-.az-hud-panel::before { content: ""; position: absolute; inset: 0.35rem; border: 1px solid var(--az-bronze-dark); pointer-events: none; }
-.az-hud-panel-title { margin: 0 0 1rem; color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 2rem; letter-spacing: 0.12em; text-transform: uppercase; }
-.az-hud-panel-copy { margin: 0; color: var(--az-muted); line-height: 1.6; }
+/* Announcer: a title-card banner with hairline rules and a letter-spacing
+   settle, so wave/chapter calls read as signage instead of a debug string. */
+.az-hud-announcer {
+  position: absolute;
+  left: 50%; top: 27%;
+  width: min(40rem, 88vw);
+  transform: translateX(-50%);
+  color: var(--az-bronze-bright);
+  font-family: var(--az-display);
+  font-size: clamp(1.3rem, 3.6vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.55rem 0;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9);
+}
+@keyframes az-announce {
+  0% { opacity: 0; letter-spacing: 0.55em; }
+  9% { opacity: 1; letter-spacing: 0.24em; }
+  16% { opacity: 0.4; }
+  24%, 78% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.az-hud-announcer:empty { display: none; }
+.az-hud-announcer.is-announcing { animation: az-announce 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* Low health: the frame closes in. A slow pulse, never a strobe. */
+.az-hud.is-low-health::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 76% 66% at 50% 50%, transparent 46%, rgba(120, 14, 10, 0.5) 100%);
+  animation: az-low-health 1.8s ease-in-out infinite;
+}
+@keyframes az-low-health { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.85; } }
+
+.az-hud-panel {
+  pointer-events: auto;
+  position: absolute; top: 50%; left: 50%;
+  width: min(32rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  overflow-y: auto;
+  transform: translate(-50%, -50%);
+  padding: 2.25rem 2rem 2rem;
+  border: 1px solid var(--az-bronze);
+  background:
+    linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)),
+    radial-gradient(120% 100% at 50% 0%, rgba(224, 182, 109, 0.1), transparent 65%);
+  box-shadow: 0 24px 90px #000;
+  text-align: center;
+}
+.az-hud-panel::before { content: ""; position: absolute; inset: 0.35rem; border: 1px solid rgba(224, 182, 109, 0.22); pointer-events: none; }
+.az-hud-panel-title {
+  margin: 0 0 1rem;
+  color: var(--az-bronze-bright);
+  font-family: var(--az-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.5);
+}
+.az-hud-panel-copy { margin: 0; color: var(--az-muted); line-height: 1.7; font-family: var(--az-mono); font-size: 0.82rem; }
+.az-hud-resume { margin-top: 1.1rem; padding: 0.7rem 2.2rem; font-size: 1.05rem; }
 .az-hud-help { top: auto; left: auto; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(28rem, calc(100% - 2rem)); transform: none; text-align: left; }
 
 /* Touch integration classes; controls can be added without inline coordinates. */
@@ -313,39 +581,61 @@
 @media (hover: hover) and (pointer: fine) { .az-touch-controls { display: none; } }
 @media (pointer: coarse) {
   .az-touch-controls { display: block; }
-  /* The movement pad owns the bottom-left corner: lift the wrath meter and
-     the assist-mode switch above it, with a 44px minimum switch target. */
-  .az-hud-special { bottom: calc(12rem + env(safe-area-inset-bottom)); }
-  .az-hud-assist { bottom: calc(9.75rem + env(safe-area-inset-bottom)); min-width: 44px; min-height: 44px; }
+  /* The movement pad owns the bottom-left corner: the vitals plate lifts
+     above it, and the assist switch keeps a 44px minimum target. */
+  .az-hud-vitals { bottom: calc(10.2rem + env(safe-area-inset-bottom)); width: min(19rem, 62vw); }
+  .az-hud-loot-feed { bottom: calc(11rem + env(safe-area-inset-bottom)); width: min(15rem, 54vw); }
+  .az-hud-boss { top: auto; bottom: calc(11rem + env(safe-area-inset-bottom)); width: min(34rem, calc(100% - 2rem)); }
+  /* The corners belong to the thumbsticks here, so the assist switch moves to
+     the top centre, between the exit control and the run ledger. */
+  .az-hud-assist {
+    top: calc(1rem + env(safe-area-inset-top));
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    min-width: 44px;
+    min-height: 44px;
+  }
   .az-fs-fab { padding: 1rem 1.25rem; }
 }
 
 /* Short landscape screens: the announcer drops below the crosshair instead
    of crossing the vitals, and the vitals stay compact. */
 @media (max-height: 520px) {
-  .az-hud-vitals { width: min(20rem, 38vw); padding: 0.5rem; }
-  .az-hud-meter { min-height: 1.4rem; }
-  .az-hud-blessings { max-height: 14vh; }
+  .az-hud-vitals { width: min(17.5rem, 38vw); padding: 0.45rem 0.6rem 0.5rem; }
+  .az-hud-meter { min-height: 1rem; }
+  /* Compact, but never below the 12px typography floor: the plate shrinks,
+     the readouts keep their size. */
+  .az-hud-meter-label { font-size: 0.75rem; letter-spacing: 0.12em; }
+  .az-hud-meter-value { font-size: 0.75rem; }
+  .az-hud-health .az-hud-meter-track { height: 0.7rem; }
+  .az-hud-blessings { max-height: 12vh; }
   .az-hud-announcer { top: 66%; width: min(30rem, 60vw); font-size: 1rem; }
+  .az-hud-combo { top: calc(8.6rem + env(safe-area-inset-top)); font-size: 1.5rem; }
 }
 
 @media (max-width: 840px) {
   .az-dungeon-exit-label { display: none; }
-  .az-hud-top { gap: 0.5rem; }
-  .az-hud-vitals { width: min(70vw, 24rem); padding: 0.55rem; }
-  .az-hud-meter { grid-template-columns: 1fr auto; gap: 0.35rem; }
-  .az-hud-meter-label { grid-column: 1 / -1; }
-  .az-hud-run { max-width: 28vw; }
+  .az-hud-vitals { width: min(16rem, 60vw); padding: 0.5rem 0.6rem 0.55rem; }
+  /* The label and value columns widen so 12px readouts fit without clipping. */
+  .az-hud-meter { grid-template-columns: 4.2rem 1fr 4rem; gap: 0.35rem; }
+  .az-hud-meter-label { font-size: 0.75rem; letter-spacing: 0.12em; }
+  .az-hud-meter-value { min-width: 4rem; font-size: 0.75rem; }
+  .az-hud-health .az-hud-meter-track { height: 0.72rem; }
+  .az-hud-run { max-width: 42vw; }
   .az-hud-boss { top: auto; bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(34rem, calc(100% - 2rem)); }
   .az-hud-loot-feed { bottom: calc(10rem + env(safe-area-inset-bottom)); width: 70vw; }
-  .az-hud-crosshair { width: 1.25rem; height: 1.25rem; }
+  .az-hud-crosshair { width: 1rem; height: 1rem; }
 }
 
 @media (orientation: portrait) {
   .az-dungeon-menu-title { font-size: clamp(2rem, 12vw, 3.5rem); }
-  .az-hud-top { flex-direction: column; right: auto; }
-  .az-hud-vitals { width: min(78vw, 24rem); }
-  .az-hud-run { align-self: flex-start; max-width: none; text-align: left; border-right: 0; border-left: 3px solid var(--az-bronze); background: linear-gradient(90deg, rgba(12, 10, 8, 0.84), transparent); }
+  .az-hud-vitals { width: min(74vw, 20rem); }
+  /* Portrait keeps the same 12px floor as the rest of the HUD. */
+  .az-hud-meter-label { font-size: 0.75rem; }
+  .az-hud-meter-value { font-size: 0.75rem; }
+  .az-hud-run { max-width: none; text-align: left; border-left: 0; border-right: 2px solid rgba(224, 182, 109, 0.35); padding: 0.35rem 1.1rem 0.35rem 0; }
   /* The chapter panel stacks below the vitals in portrait: drop the announcer
      beneath it so wave calls never overwrite the chapter line. */
   .az-hud-announcer { top: 52%; width: min(30rem, 78vw); font-size: 1.05rem; }
@@ -427,7 +717,7 @@
 }
 
 @media (forced-colors: active) {
-  .az-hud-meter-track, .az-touch-action, .az-dungeon-begin, .az-dungeon-exit { forced-color-adjust: none; border: 2px solid CanvasText; }
+  .az-hud-meter-track, .az-touch-action, .az-dungeon-begin, .az-hud-resume, .az-dungeon-exit { forced-color-adjust: none; border: 2px solid CanvasText; }
 }
 
 /* Ferryman's Toll shop, inside the reward draft. */
@@ -452,6 +742,14 @@
 .az-dungeon-settings-row input[type="range"] { width: min(10rem, 40vw); accent-color: var(--az-bronze-bright); }
 .az-dungeon-settings-row input[type="checkbox"] { width: 1.4rem; height: 1.4rem; accent-color: var(--az-bronze-bright); }
 .az-dungeon-settings-row select { background: #1a140d; color: var(--az-ivory); border: 1px solid var(--az-bronze-dark); padding: 0.45rem 0.6rem; font: inherit; }
+.az-dungeon-settings-readout {
+  min-width: 3.4rem;
+  color: var(--az-bronze-bright);
+  font-family: var(--az-mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
 
 .aizanoi-dungeon3d-app-root input:focus-visible, .aizanoi-dungeon3d-app-root select:focus-visible { outline: 3px solid var(--az-focus); outline-offset: 3px; }
 .az-dungeon-settings-option { min-height: 44px; }
