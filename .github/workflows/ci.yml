@@ -170,16 +170,69 @@ jobs:
           path: 'artifacts/diagnostics/*'
           retention-days: 3
 
+  dungeon-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - suite: dungeon-3d-play
+          - suite: dungeon-3d-ferryman
+          - suite: dungeon-3d-persistence
+          - suite: dungeon-3d-victory
+          - suite: dungeon-3d-shell-tokens
+          - suite: dungeon-3d-core-blockers
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Restore Playwright browser cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install pinned browser QA dependencies
+        run: |
+          mkdir -p artifacts/diagnostics
+          npm ci --ignore-scripts --no-fund
+          node scripts/ci/npm-audit-gate.mjs
+          npx playwright install chromium
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >"${RUNNER_TEMP}/dungeon-http.log" 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/dungeon/ >/dev/null && exit 0; sleep 0.5; done
+          cat "${RUNNER_TEMP}/dungeon-http.log"; exit 1
+      - name: Dungeon browser suite
+        env:
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+          DUNGEON_SUITE: '${{ matrix.suite }}'
+        run: |
+          set -euo pipefail
+          node --test "tests/browser/${DUNGEON_SUITE}.test.mjs" 2>&1 | tee "artifacts/diagnostics/${DUNGEON_SUITE}.log"
+      - name: Upload dungeon diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aizanoi-${{ matrix.suite }}-diagnostics
+          path: 'artifacts/diagnostics/*'
+          retention-days: 3
+
   browser-smoke:
-    # Preserve the required context while failing closed on every arena shard.
-    needs: arcade-browser
+    # Preserve the required context while failing closed on every arena and dungeon shard.
+    needs: [arcade-browser, dungeon-browser]
     if: always()
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     steps:
-      - name: Require successful arcade browser matrix
-        env: { ARCADE_RESULT: '${{ needs.arcade-browser.result }}' }
-        run: test "$ARCADE_RESULT" = success
+      - name: Require successful browser matrices
+        env:
+          ARCADE_RESULT: '${{ needs.arcade-browser.result }}'
+          DUNGEON_RESULT: '${{ needs.dungeon-browser.result }}'
+        run: test "$ARCADE_RESULT" = success && test "$DUNGEON_RESULT" = success
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
@@ -258,19 +311,6 @@ jobs:
           set -o pipefail
           status=0
           node --test tests/dungeon-3d-facade.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-facade.log || status=1
-          exit $status
-      - name: Dungeon 3D playable run QA
-        env:
-          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
-        run: |
-          set -o pipefail
-          status=0
-          node --test tests/browser/dungeon-3d-play.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-play.log || status=1
-          node --test tests/browser/dungeon-3d-ferryman.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-ferryman.log || status=1
-          node --test tests/browser/dungeon-3d-persistence.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-persistence.log || status=1
-          node --test tests/browser/dungeon-3d-victory.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-victory.log || status=1
-          node --test tests/browser/dungeon-3d-shell-tokens.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-shell-tokens.log || status=1
-          node --test tests/browser/dungeon-3d-core-blockers.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-core-blockers.log || status=1
           exit $status
       - name: AizanoiOS Arcade and TV surface QA
         env:

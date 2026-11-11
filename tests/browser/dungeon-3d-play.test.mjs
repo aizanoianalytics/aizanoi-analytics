@@ -203,7 +203,7 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
       if (afterShot < before) bowSpentStamina = true;
       await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(19));
       const hit = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
-      if (hit.some((hp, i) => hp < enemyHpBeforeBow[i])) bowDamaged = true;
+      if (hit.length < enemyHpBeforeBow.length || hit.some((hp, i) => hp < enemyHpBeforeBow[i])) bowDamaged = true;
       if (bowSpentStamina && bowDamaged) break;
     }
     assert.ok(bowSpentStamina,
