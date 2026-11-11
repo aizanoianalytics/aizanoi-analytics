@@ -163,7 +163,7 @@ test('routine CI stays small and the expensive suites are not required', () => {
 
 test('arcade browser matrix executes every arena suite and gates the existing required context', async () => {
   const { spawnSync } = await import('node:child_process');
-  const arcadeJob = workflows.ci.split('\n  arcade-browser:\n')[1]?.split('\n  browser-smoke:\n')[0];
+  const arcadeJob = workflows.ci.split('\n  arcade-browser:\n')[1]?.split('\n  dungeon-browser:\n')[0];
   assert.ok(arcadeJob, 'routine CI must have a dedicated arcade browser job');
   assert.match(arcadeJob, /fail-fast: false/);
   const arenas = [...arcadeJob.matchAll(/^\s+- arena: ([a-z-]+)$/gm)].map((match) => match[1]);
@@ -182,14 +182,27 @@ test('arcade browser matrix executes every arena suite and gates the existing re
   assert.ok(arcadeJob.includes('read -r -a suites <<< "$ARCADE_BROWSER_SUITES"'));
   assert.ok(arcadeJob.includes('node --test --test-concurrency=1 "${suites[@]}"'));
   assert.match(arcadeJob, /set -euo pipefail/);
+  const dungeonJob = workflows.ci.split('\n  dungeon-browser:\n')[1]?.split('\n  browser-smoke:\n')[0];
+  assert.ok(dungeonJob, 'routine CI must run every dungeon suite on an isolated runner');
+  const dungeonSuites = [...dungeonJob.matchAll(/^\s+- suite: (dungeon-3d-[a-z-]+\.test\.mjs)$/gm)].map((match) => match[1]);
+  assert.deepEqual(dungeonSuites.sort(), [
+    'dungeon-3d-core-blockers.test.mjs', 'dungeon-3d-ferryman.test.mjs',
+    'dungeon-3d-persistence.test.mjs', 'dungeon-3d-play.test.mjs',
+    'dungeon-3d-shell-tokens.test.mjs', 'dungeon-3d-victory.test.mjs',
+  ]);
+  assert.match(dungeonJob, /node --test "tests\/browser\/\$\{DUNGEON_SUITE\}"/);
   const smokeJob = workflows.ci.split('\n  browser-smoke:\n')[1]?.split('\n  lighthouse:\n')[0];
-  assert.match(smokeJob, /needs: arcade-browser\n\s+if: always\(\)/);
+  assert.match(smokeJob, /needs: \[arcade-browser, dungeon-browser\]\n\s+if: always\(\)/);
   assert.match(smokeJob, /ARCADE_RESULT: '\$\{\{ needs\.arcade-browser\.result \}\}'/);
-  const gate = smokeJob.match(/run: (test "\$ARCADE_RESULT" = success)/)?.[1];
-  assert.ok(gate, 'browser-smoke must explicitly reject a failed, skipped or cancelled matrix');
+  assert.match(smokeJob, /DUNGEON_RESULT: '\$\{\{ needs\.dungeon-browser\.result \}\}'/);
+  const gate = smokeJob.match(/run: (test "\$ARCADE_RESULT" = success && test "\$DUNGEON_RESULT" = success)/)?.[1];
+  assert.ok(gate, 'browser-smoke must explicitly reject failed, skipped or cancelled matrices');
   for (const result of ['success', 'failure', 'cancelled', 'skipped', '']) {
-    const run = spawnSync('bash', ['-c', gate], { env: { ...process.env, ARCADE_RESULT: result } });
-    assert.equal(run.status, result === 'success' ? 0 : 1, `required-context gate for ${result}`);
+    for (const dependency of ['ARCADE_RESULT', 'DUNGEON_RESULT']) {
+      const env = { ...process.env, ARCADE_RESULT: 'success', DUNGEON_RESULT: 'success', [dependency]: result };
+      const run = spawnSync('bash', ['-c', gate], { env });
+      assert.equal(run.status, result === 'success' ? 0 : 1, `required-context gate for ${dependency}=${result}`);
+    }
   }
 });
 
