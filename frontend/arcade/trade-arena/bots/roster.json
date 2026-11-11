@@ -372,6 +372,24 @@
       }
     },
     {
+      "id": "fable-5-2",
+      "name": "Claude Fable 5.2",
+      "short": "Fable",
+      "initials": "F5",
+      "lab": "Anthropic",
+      "kind": "ai",
+      "model": "claude-fable-5-2",
+      "color": "#d97757",
+      "file": "bots/ai/fable-5-2.js",
+      "strategy": "Regime-aware cross-sectional trend follower. Every few days it ranks assets by a blend of 20-, 60- and 120-bar return and Sharpe, keeps those above their SMA200 with positive momentum, confirms with Supertrend, golden cross and ADX, skips blow-off tops, and holds the top 4 to 6 between inverse-volatility and equal weight with a 30% cap. A 'tide' score from breadth, the equal-weight index, SPY vs SMA200 and VIX sets exposure, shrinking toward 25% when the tide turns; when shorts are allowed and the tide is out it shorts the weakest downtrends. ATR stops every bar, and it only trades when the book drifts more than 20%.",
+      "botName": "Flavius Tide",
+      "session": {
+        "secs": null,
+        "provider": "claude-code"
+      },
+      "colorLight": "#9a3f22"
+    },
+    {
       "id": "basket",
       "name": "Basket Builder",
       "short": "Basket",

@@ -50,6 +50,10 @@ const ASSETS = Object.freeze({
   tank: 'enemy_armored_centurion.glb', summoner: 'enemy_cult_sorcerer.glb',
   flanker: 'enemy_styx_ferryman.glb',
   boss: 'boss_marble_minotaur.glb',
+  // First-person viewmodel weapons. They are the same sculpts the hero
+  // carries, so the thing in the player's hands matches the thing on the
+  // title screen instead of a generic placeholder.
+  sword: 'weapon_sword.glb', bow: 'weapon_bow.glb',
 });
 const ENEMY_ASSET = Object.freeze({
   chaser: 'chaser', archer: 'archer', tank: 'tank', summoner: 'summoner',
@@ -63,6 +67,10 @@ const CONSUMED_KEYS = new Set([
 ]);
 let stylesheetRefs = 0;
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
+// Eye height in metres: the hero sculpt is 1.9m tall, so the camera sits at
+// human eye level and the avatar's body is hidden to avoid seeing its insides.
+const EYE_HEIGHT = 1.62;
+const LOOK_PITCH_LIMIT = Math.PI / 2 - 0.06;
 const COLORS = Object.freeze({ bronze: 0xc28a45, ember: 0xff5a22, gold: 0xffcf5a, mist: 0xb8d8e8, blood: 0xb52d2b, arcane: 0x936dff });
 
 function node(tag, className, text) {
@@ -70,6 +78,26 @@ function node(tag, className, text) {
   value.className = className;
   if (text !== undefined) value.textContent = text;
   return value;
+}
+
+/**
+ * How far a sculpt's lowest point sits below its own origin, in metres.
+ *
+ * Assets are modelled around a centre, so `position.y = 0` can bury a model by
+ * more than a metre. Measuring the bounding box once at load is cheaper and
+ * more reliable than hand-tuning a per-asset constant that silently rots when
+ * an asset is replaced.
+ */
+export function modelGroundOffset(root, { align = 'bottom' } = {}) {
+  try {
+    const box = new THREE.Box3().setFromObject(root);
+    if (!Number.isFinite(box.min.y) || !Number.isFinite(box.max.y)) return 0;
+    // 'bottom' rests the lowest point of the model on the floor; 'top' lifts
+    // it until its highest point is the floor, which is what a slab needs.
+    return align === 'top' ? -box.max.y : Math.max(0, -box.min.y);
+  } catch (_) {
+    return 0;
+  }
 }
 
 function makeButton(className, label, action) {
@@ -124,6 +152,9 @@ export class GameApp {
     this.saveAnnouncement = restored?.announcement || null;
     // Settings persist separately from the run so a reset never wipes them.
     const coarsePointer = (() => { try { return Boolean(globalThis.matchMedia?.('(pointer: coarse)').matches); } catch (_) { return false; } })();
+    // A fine pointer means a mouse: only then is pointer lock the right
+    // first-person input. Touch devices drag to look.
+    this.hasFinePointer = (() => { try { return Boolean(globalThis.matchMedia?.('(pointer: fine)').matches); } catch (_) { return !coarsePointer; } })();
     this.settings = loadSettings(this.storage, { coarsePointer });
     this.meta = loadMeta(this.storage);
     this.assistMode = this.settings.assistMode;
@@ -154,8 +185,25 @@ export class GameApp {
     this.disposers = [];
     this.geometries = new Set();
     this.materials = new Set();
+    // Room-owned resources: everything a single arena build makes for itself
+    // and releases again when the arena changes. The loaded sculpts are not
+    // among them: they are shared by every arena and owned by the templates.
+    this.roomGeometries = new Set();
+    this.roomMaterials = new Set();
+    this.roomFields = [];
     this.templates = new Map();
     this.particleResources = new Map();
+    // First-person look state. Yaw/pitch are the source of truth for aiming;
+    // the camera rotation is derived from them every frame.
+    this.look = { yaw: 0, pitch: -0.04 };
+    this.lookDelta = { x: 0, y: 0 };
+    this.lookDrag = null;
+    this.hadLookLock = false;
+    this.lookLockReleasedAt = 0;
+    this.pointerLockBlocked = false;
+    this.walkPhase = 0;
+    this.groundOffsets = new Map();
+    this.lockLostAt = 0;
     this.lastTime = performance.now();
   }
 
@@ -191,6 +239,7 @@ export class GameApp {
       if (this.destroyed || generation !== this.loadGeneration) return;
       this.buildRoom();
       this.buildAttractScene();
+      this.buildViewmodel();
       this.installInput();
       this.resize();
       this.applySettings();
@@ -228,6 +277,7 @@ export class GameApp {
     this.renderer = null;
     this.scene = null;
     this.camera = null;
+    this.releaseEnvironment();
   }
 
   buildDom() {
@@ -289,6 +339,11 @@ export class GameApp {
     this.root.append(this.stage, this.effectLayer, this.touchControls, this.exitButton, this.settingsFab, this.menu);
     this.container.append(this.root);
     this.hud = createHud({ container: this.root, onAssistMode: () => this.cycleAssistMode() });
+    // The pause panel needs a button of its own: Escape is not an option on
+    // a touch device, and a player who paused by losing the mouse pointer
+    // must be able to come back without a keyboard.
+    const resume = makeButton('az-hud-resume', 'Resume', () => this.togglePause());
+    this.hud.elements.pause.append(resume);
     this.audio = createAudioManager();
     this.feedback = createFeedbackBus({ audio: this.audio, hud: this.hud });
     this.disposers.push(this.feedback.on('effect', (effect) => this.renderEffect(effect)));
@@ -303,7 +358,7 @@ export class GameApp {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.05;
+    this.renderer.toneMappingExposure = 0.94;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.stage.append(this.renderer.domElement);
@@ -332,13 +387,26 @@ export class GameApp {
 
   buildScene() {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x080a0b);
-    this.scene.fog = new THREE.Fog(0x080a0b, 22, 48);
-    this.camera = new THREE.PerspectiveCamera(52, 1, 0.1, 80);
-    this.camera.position.set(10, 10, 12);
+    this.scene.background = new THREE.Color(0x070809);
+    // First-person fog starts a few paces out: the arena falls into the dark
+    // before its outer wall, which is what makes a dungeon read as enclosed
+    // instead of as a diorama on a table.
+    this.scene.fog = new THREE.Fog(0x0a0b0d, 11, 33);
+    // A first-person field of view. 74° keeps the room readable without the
+    // edge smear a 90° lens gives the colonnade.
+    this.camera = new THREE.PerspectiveCamera(74, 1, 0.06, 90);
+    // YXZ is the FPS order: yaw about world up, then pitch about the camera's
+    // own right axis, so the horizon never rolls while both are applied.
+    this.camera.rotation.order = 'YXZ';
+    this.camera.position.set(7, 7, 9);
     this.cameraTarget = new THREE.Vector3();
-    this.scene.add(new THREE.HemisphereLight(0x8fa0bd, 0x160e08, 0.75));
-    const moon = new THREE.DirectionalLight(0xffdfb0, 2.4);
+    // The camera is part of the graph: the viewmodel, the torch and the sway
+    // are its children, so it has to be in the scene to render them.
+    this.scene.add(this.camera);
+    // Cool sky fill against a warm ground bounce: the key/fill split gives the
+    // stone a direction instead of a flat wash.
+    this.scene.add(new THREE.HemisphereLight(0x6f7f9b, 0x140d07, 0.3));
+    const moon = new THREE.DirectionalLight(0xffd9a4, 0.95);
     moon.position.set(7, 14, 5);
     moon.castShadow = true;
     moon.shadow.mapSize.set(1024, 1024);
@@ -346,10 +414,213 @@ export class GameApp {
     moon.shadow.camera.right = 22;
     moon.shadow.camera.top = 22;
     moon.shadow.camera.bottom = -22;
+    moon.shadow.bias = -0.0012;
     this.scene.add(moon);
+    // A cold rim from the opposite side separates the hero and the enemies
+    // from the floor without washing the arena out.
+    const rim = new THREE.DirectionalLight(0x7fa8d8, 0.3);
+    rim.position.set(-9, 7, -8);
+    this.scene.add(rim);
+    // The player's own flame: a warm point light carried at hand height. It
+    // is what makes doorways and walls pop as you walk past them in first
+    // person, and it keeps the corridor ahead from being unreadable. It sits
+    // slightly ahead of the lens so the weapon in view is not blown out by it.
+    this.torch = new THREE.PointLight(0xffb070, 2.2, 16, 2);
+    this.torch.position.set(0.22, -0.06, -0.35);
+    this.camera.add(this.torch);
     this.room = new THREE.Group();
     this.dynamic = new THREE.Group();
     this.scene.add(this.room, this.dynamic);
+    this.buildEnvironment();
+    this.buildDust();
+  }
+
+  /**
+   * A procedural sky/ember environment, generated into a canvas and filtered
+   * with PMREM. No network request and no CDN: the dungeon has to keep
+   * working under the CSP that forbids remote assets.
+   */
+  buildEnvironment() {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      const sky = ctx.createLinearGradient(0, 0, 0, 256);
+      sky.addColorStop(0, '#1b2638');
+      sky.addColorStop(0.42, '#2a2b33');
+      sky.addColorStop(0.58, '#3a2a1c');
+      sky.addColorStop(1, '#120c07');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, 512, 256);
+      // Ember pools along the horizon stand in for the braziers, so polished
+      // stone picks up a warm bounce from the right direction.
+      const pools = [[90, 168, 46, 'rgba(255,138,48,0.55)'], [300, 172, 60, 'rgba(255,120,40,0.45)'], [430, 158, 38, 'rgba(255,170,80,0.4)']];
+      for (const [x, y, r, tint] of pools) {
+        const glow = ctx.createRadialGradient(x, y, 0, x, y, r);
+        glow.addColorStop(0, tint);
+        glow.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = glow;
+        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      }
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const pmrem = new THREE.PMREMGenerator(this.renderer);
+      pmrem.compileEquirectangularShader?.();
+      const target = pmrem.fromEquirectangular(texture);
+      pmrem.dispose();
+      texture.dispose();
+      // The render target owns the filtered environment texture, so the
+      // target has to be kept: releasing only the texture would leave the
+      // target's framebuffer on the GPU forever.
+      this.environmentTarget = target;
+      this.environment = target.texture;
+      this.scene.environment = this.environment;
+    } catch (error) {
+      console.warn('[Aizanoi Dungeon] Environment map unavailable:', error);
+    }
+  }
+
+  /**
+   * Release the generated environment map.
+   *
+   * The PMREM render target is not owned by the renderer, so it has to be
+   * released by hand together with the texture it carries.
+   */
+  releaseEnvironment() {
+    this.environmentTarget?.dispose?.();
+    this.environmentTarget = undefined;
+    this.environment?.dispose?.();
+    this.environment = undefined;
+    if (this.scene) this.scene.environment = null;
+  }
+
+  /**
+   * Slow dust in the air. A few hundred points are enough to make the volume
+   * of the room visible and to sell the torch light, and they cost one draw.
+   */
+  buildDust() {
+    const count = 260;
+    const positions = new Float32Array(count * 3);
+    const drift = new Float32Array(count * 3);
+    for (let i = 0; i < count; i += 1) {
+      positions[i * 3] = (Math.random() - 0.5) * 34;
+      positions[i * 3 + 1] = 0.15 + Math.random() * 4.4;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 34;
+      drift[i * 3] = (Math.random() - 0.5) * 0.09;
+      drift[i * 3 + 1] = 0.03 + Math.random() * 0.07;
+      drift[i * 3 + 2] = (Math.random() - 0.5) * 0.09;
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const sprite = document.createElement('canvas');
+    sprite.width = 32;
+    sprite.height = 32;
+    const ctx = sprite.getContext('2d');
+    if (ctx) {
+      const dot = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      dot.addColorStop(0, 'rgba(255,240,214,1)');
+      dot.addColorStop(0.45, 'rgba(255,222,170,0.55)');
+      dot.addColorStop(1, 'rgba(255,222,170,0)');
+      ctx.fillStyle = dot;
+      ctx.fillRect(0, 0, 32, 32);
+    }
+    const material = new THREE.PointsMaterial({
+      color: 0xffe6c0, size: 0.055, map: new THREE.CanvasTexture(sprite),
+      transparent: true, opacity: 0.38, depthWrite: false, sizeAttenuation: true,
+    });
+    material.map.colorSpace = THREE.SRGBColorSpace;
+    const dust = new THREE.Points(geometry, material);
+    dust.frustumCulled = false;
+    this.scene.add(dust);
+    this.dust = dust;
+    this.dustDrift = drift;
+    // The sprite is a texture the material carries: disposing the material
+    // does not release it, so the dust keeps its own handle for teardown.
+    this.dustTexture = material.map;
+    this.geometries.add(geometry);
+    this.materials.add(material);
+  }
+
+  /**
+   * First-person viewmodel: the hero's own sword and bow held low-right.
+   *
+   * The weapon is drawn in its own scene with its own lights and a slightly
+   * narrower lens, then composited over the world after the depth buffer is
+   * cleared. That is the standard first-person arrangement: the flame in the
+   * player's hand is a hand's breadth away from the blade, and a shared
+   * light would either blow the weapon out to white or leave the world
+   * pitch dark. Here the weapon is lit for the eye, not for the physics.
+   */
+  buildViewmodel() {
+    this.viewScene = new THREE.Scene();
+    this.viewCamera = new THREE.PerspectiveCamera(55, 1, 0.01, 6);
+    const rig = new THREE.Group();
+    rig.position.set(0.36, -0.34, -0.66);
+    const sword = new THREE.Group();
+    const blade = this.clone('sword');
+    blade.scale.setScalar(0.33);
+    blade.position.set(0.05, -0.02, 0.02);
+    blade.rotation.set(-0.16, -0.25, 0.1);
+    sword.add(blade);
+    const bow = new THREE.Group();
+    const arc = this.clone('bow');
+    arc.scale.setScalar(0.7);
+    arc.position.set(0.03, -0.03, -0.16);
+    arc.rotation.set(0, 0.1, -0.28);
+    bow.add(arc);
+    bow.visible = false;
+    // A simple wrapped forearm: procedural, so no extra asset has to load,
+    // and dark enough that it never competes with the blade.
+    const armGeometry = new THREE.BoxGeometry(0.06, 0.06, 0.32);
+    const armMaterial = new THREE.MeshStandardMaterial({ color: 0x2a1d14, roughness: 0.92, metalness: 0.05 });
+    const arm = new THREE.Mesh(armGeometry, armMaterial);
+    arm.position.set(0.07, -0.12, 0.18);
+    arm.rotation.set(0.44, -0.16, 0.16);
+    sword.add(arm);
+    this.geometries.add(armGeometry);
+    this.materials.add(armMaterial);
+    // The sculpt's own metal is nearly pure metal, which in a room this dark
+    // reads as a black cut-out. Pulling the metalness back and lifting the
+    // roughness keeps the blade legible without turning it into plastic.
+    const refine = (root) => root.traverse((object) => {
+      if (!object.isMesh) return;
+      const source = Array.isArray(object.material) ? object.material[0] : object.material;
+      if (!source) return;
+      const material = source.clone();
+      if (typeof material.metalness === 'number') material.metalness = Math.min(0.5, material.metalness);
+      if (typeof material.roughness === 'number') material.roughness = Math.max(0.32, material.roughness);
+      if ('envMapIntensity' in material) material.envMapIntensity = 0.3;
+      object.material = material;
+      this.materials.add(material);
+    });
+    refine(sword);
+    refine(bow);
+    rig.add(sword, bow);
+    // The holder carries the camera's pose; the rig inside it keeps the
+    // weapon's offset in camera space, so the blade stays in the player's
+    // hand no matter where the player turns.
+    this.viewHolder = new THREE.Group();
+    this.viewHolder.add(rig);
+    this.viewScene.add(this.viewHolder);
+    // The weapon's own three-point rig: a warm key from the flame, a cold
+    // rim from the dark and a soft fill so the leather keeps its form.
+    const key = new THREE.DirectionalLight(0xfff4e2, 3);
+    key.position.set(0.6, 0.9, 0.5);
+    this.viewScene.add(key);
+    const rim = new THREE.DirectionalLight(0x93a8c4, 0.9);
+    rim.position.set(-0.9, 0.3, -0.7);
+    this.viewScene.add(rim);
+    const flame = new THREE.PointLight(0xffb070, 1.6, 3.5, 2);
+    flame.position.set(0.24, -0.12, 0.1);
+    this.viewScene.add(flame);
+    this.viewScene.add(new THREE.HemisphereLight(0x7d8ea8, 0x241a12, 0.7));
+    this.viewmodel = rig;
+    this.viewmodelSword = sword;
+    this.viewmodelBow = bow;
+    this.viewmodelBase = rig.position.clone();
   }
 
   async loadAssets(generation) {
@@ -361,8 +632,39 @@ export class GameApp {
         return;
       }
       this.collectResources(gltf.scene);
+      // Measure the sculpt once: the height of its lowest point is the lift
+      // that puts its feet on the floor (see clone()). The floor slab is the
+      // exception — it is measured from the top, so the walking surface is
+      // exactly y=0 and nothing sinks into the stone.
+      this.groundOffsets.set(key, modelGroundOffset(gltf.scene, { align: key === 'floor' ? 'top' : 'bottom' }));
+      this.normalizeMaterials(gltf.scene);
       this.templates.set(key, gltf.scene);
     }));
+  }
+
+  /**
+   * Give every imported surface a common finish. The sculpts are hand-authored
+   * and arrive with wildly different roughness, so a single pass lands them on
+   * the same stone-with-candlelight look and lets the generated environment
+   * map do the work instead of adding more lights.
+   */
+  normalizeMaterials(root) {
+    const seen = new Set();
+    root.traverse((object) => {
+      if (!object.isMesh) return;
+      object.castShadow = true;
+      object.receiveShadow = true;
+      const list = Array.isArray(object.material) ? object.material : object.material ? [object.material] : [];
+      for (const material of list) {
+        if (!material || seen.has(material)) continue;
+        seen.add(material);
+        if ('envMapIntensity' in material) material.envMapIntensity = 0.6;
+        if (typeof material.roughness === 'number') material.roughness = Math.max(0.44, Math.min(1, material.roughness));
+        if (typeof material.metalness === 'number') material.metalness = Math.min(0.5, Math.max(0, material.metalness));
+        material.dithering = true;
+        material.needsUpdate = true;
+      }
+    });
   }
 
   disposeLoaded(root) {
@@ -388,18 +690,91 @@ export class GameApp {
   clone(key) {
     const model = this.templates.get(key)?.clone(true);
     if (!model) throw new Error(`Missing dungeon asset: ${key}`);
-    model.traverse((object) => {
-      if (object.isMesh) { object.castShadow = true; object.receiveShadow = true; }
-    });
-    return model;
+    // Each sculpt is authored around its own origin, not its feet: the wall
+    // block's centre sits 1.27m above its base, the column's 1.15m. Baking the
+    // measured lift into an inner node keeps every call site honest — a
+    // placement of y=0 now means "standing on the floor", not "half buried".
+    const lift = this.groundOffsets.get(key) || 0;
+    model.position.y += lift;
+    const wrapper = new THREE.Group();
+    wrapper.add(model);
+    wrapper.userData.asset = key;
+    wrapper.userData.groundY = lift;
+    return wrapper;
   }
 
   buildRoom(arenaId = this.state?.arena || 'column-ring') {
-    // A new arena is a new room: drop the old one so layouts never stack.
-    while (this.room.children.length) this.room.children[0].removeFromParent();
-    if (this.roomMaterials) for (const material of this.roomMaterials) material.dispose();
-    this.roomMaterials = new Set();
-    this.arenaBuilt = ARENA_IDS.includes(arenaId) ? arenaId : 'column-ring';
+    const arena = ARENA_IDS.includes(arenaId) ? arenaId : 'column-ring';
+    // A new arena is a new room: drop the old one so layouts never stack,
+    // and release everything the old one owned.
+    this.disposeRoom();
+    try {
+      this.buildRoomContents(arena);
+    } catch (error) {
+      // A half-built room leaks with extra steps: release the partial build
+      // so the next attempt starts from a clean slate instead of stacking a
+      // broken room on top of a broken one.
+      this.disposeRoom();
+      this.arenaBuilt = undefined;
+      throw error;
+    }
+    this.arenaBuilt = arena;
+  }
+
+  /**
+   * Release everything one room build owns.
+   *
+   * A room owns the instanced fields it drew, the materials it cloned for
+   * them and the geometry it generated itself (the vault, the beams, the
+   * water, the dais). The loaded sculpts do not belong to the room: every
+   * arena shares them and the templates own them, so they stay alive across
+   * rebuilds and are never disposed here.
+   */
+  disposeRoom() {
+    while (this.room?.children.length) this.room.children[0].removeFromParent();
+    for (const field of this.roomFields) {
+      // The field owns its instance buffers; the geometry it draws with
+      // belongs to the template and stays.
+      try { field.dispose(); } catch (_) {}
+    }
+    this.roomFields.length = 0;
+    const shared = this.templateResources();
+    for (const geometry of this.roomGeometries) {
+      if (shared.geometries.has(geometry)) continue;
+      geometry.dispose();
+      this.geometries.delete(geometry);
+    }
+    this.roomGeometries.clear();
+    for (const material of this.roomMaterials) {
+      if (shared.materials.has(material)) continue;
+      material.dispose();
+      this.materials.delete(material);
+    }
+    this.roomMaterials.clear();
+  }
+
+  /**
+   * Every geometry and material the loaded sculpts own.
+   *
+   * The room shares these resources, so nothing reachable from the templates
+   * may be disposed with a room. The check is by identity: a material cloned
+   * for a room is a different object and stays disposable.
+   */
+  templateResources() {
+    const geometries = new Set();
+    const materials = new Set();
+    for (const template of this.templates.values()) {
+      template.traverse((object) => {
+        if (object.geometry) geometries.add(object.geometry);
+        const owned = Array.isArray(object.material) ? object.material : object.material ? [object.material] : [];
+        owned.forEach((material) => materials.add(material));
+      });
+    }
+    return { geometries, materials };
+  }
+
+  /** Build one arena's room: the instanced shell, the doorway, the ceiling and the arena's own set pieces. */
+  buildRoomContents(arena) {
     // Floor value hierarchy: alternate two low-contrast tones so the room
     // reads as stone, not a buzzing checkerboard, with a per-arena cast.
     // Parity materials are shared across all tiles of a build (two clones per
@@ -408,55 +783,50 @@ export class GameApp {
       'column-ring': 0xffffff, 'broken-bridge': 0xbfd4dd,
       'brazier-court': 0xffd9b0, 'collapsing-tiles': 0xd8d2c4, 'ruined-stairs': 0xe2d6b8,
     };
-    const parityCache = new Map();
-    const parityMaterial = (source, even) => {
-      const key = `${source.uuid}:${even ? 'e' : 'o'}`;
-      let cloned = parityCache.get(key);
-      if (!cloned) {
-        cloned = source.clone();
-        parityCache.set(key, cloned);
-        this.roomMaterials.add(cloned);
-        this.materials.add(cloned);
-      }
-      return cloned;
-    };
-    const tileSize = 4;
-    for (let x = -5; x <= 5; x += 1) {
-      for (let z = -5; z <= 5; z += 1) {
-        const tile = this.clone('floor');
-        tile.position.set(x * tileSize, 0, z * tileSize);
-        tile.scale.set(2, 1, 2);
-        const even = (x + z) % 2 === 0;
-        const dim = even ? 0.62 : 0.78;
-        tile.traverse((object) => {
-          if (!object.isMesh) return;
-          const shared = parityMaterial(object.material, even);
-          if (shared.color && !shared.userData.toned) {
-            shared.color.multiplyScalar(dim).lerp(new THREE.Color(casts[this.arenaBuilt] || 0xffffff), 0.25);
-            shared.userData.toned = true;
-          }
-          object.material = shared;
+    // Floor and walls are placed as instanced fields. Every floor plate is
+    // ten meshes and every wall block is fifteen, so drawing them one by one
+    // cost well over a thousand draw calls per room and stretched the sculpts
+    // to twice their size to fit a wrong grid. Instancing keeps the original
+    // proportions, tints every plate individually, and draws the whole shell
+    // in a couple of dozen calls.
+    const cast = new THREE.Color(casts[arena] || 0xffffff);
+    const plateEven = new THREE.Color(0.78, 0.79, 0.83).lerp(cast, 0.12);
+    const plateOdd = new THREE.Color(0.58, 0.6, 0.66).lerp(cast, 0.12);
+    const plates = [];
+    // The plate is 2.4m square; seventeen plates per side cover the 38m room.
+    for (let x = -8; x <= 8; x += 1) {
+      for (let z = -8; z <= 8; z += 1) {
+        const jitter = Math.abs((x * 73856093) ^ (z * 19349663)) % 4;
+        plates.push({
+          x: x * 2.4, z: z * 2.4,
+          rotation: jitter * (Math.PI / 2),
+          y: (jitter % 3) * 0.004,
+          color: (x + z) % 2 === 0 ? plateEven : plateOdd,
         });
-        this.room.add(tile);
       }
     }
-    for (let i = -9; i <= 9; i += 1) {
-      for (const [x, z, rotation] of [[i * 2, -19, 0], [i * 2, 19, 0], [-19, i * 2, Math.PI / 2], [19, i * 2, Math.PI / 2]]) {
-        if (z === -19 && Math.abs(x) < 2.1) continue;
-        const wall = this.clone('wall');
-        wall.position.set(x, 0, z);
-        wall.rotation.y = rotation;
-        this.room.add(wall);
+    this.buildInstancedField('floor', plates);
+    // The wall block is 2.55m wide and 2.55m tall, so the ring steps 2.55m
+    // and the arcade is two tiers high: the room closes overhead instead of
+    // opening onto a black void.
+    const walls = [];
+    for (let i = -7; i <= 7; i += 1) {
+      for (const [x, z, rotation] of [[i * 2.55, -19.1, 0], [i * 2.55, 19.1, 0], [-19.1, i * 2.55, Math.PI / 2], [19.1, i * 2.55, Math.PI / 2]]) {
+        if (z === -19.1 && Math.abs(x) < 1.3) continue;
+        walls.push({ x, z, rotation });
+        walls.push({ x, z, rotation, y: 2.55 });
       }
     }
+    this.buildInstancedField('wall', walls);
     const doorway = this.clone('doorway');
-    doorway.position.set(0, 0, -19);
+    doorway.position.set(0, 0, -19.1);
     this.room.add(doorway);
+    this.buildCeiling();
     // Obstacles follow the simulation's arena layout, kind by kind.
     // Point lights are capped: the brazier court fields twenty braziers and
     // a forward renderer cannot afford a light per flame.
     let fires = 0;
-    for (const obstacle of arenaObstacles(this.arenaBuilt)) {
+    for (const obstacle of arenaObstacles(arena)) {
       if (obstacle.kind === 'column') {
         const column = this.clone('column');
         column.position.set(obstacle.x, 0, obstacle.z);
@@ -467,23 +837,27 @@ export class GameApp {
         this.room.add(brazier);
         if (fires < 4) {
           fires += 1;
-          const fire = new THREE.PointLight(0xff6b21, 8, 12, 2);
-          fire.position.set(obstacle.x, 2.1, obstacle.z);
+          // Tighter, warmer pools: the fire lights the brazier and its
+          // immediate ring, and leaves the rest of the floor in shadow. The
+          // flame sits just above the measured bowl height (1.3m).
+          const fire = new THREE.PointLight(0xff7a2e, 3.6, 8.5, 2);
+          fire.position.set(obstacle.x, 1.42, obstacle.z);
           this.room.add(fire);
         }
       } else if (obstacle.kind === 'rubble') {
         const block = this.clone('wall');
-        block.position.set(obstacle.x, -1.2, obstacle.z);
-        block.scale.setScalar(0.5);
+        block.position.set(obstacle.x, 0, obstacle.z);
+        block.rotation.y = (obstacle.x + obstacle.z) * 0.7;
+        block.scale.set(0.6, 0.34, 0.6);
         this.room.add(block);
       } else if (obstacle.kind === 'stair') {
         const step = this.clone('column');
-        step.position.set(obstacle.x, -0.9, obstacle.z);
+        step.position.set(obstacle.x, 0, obstacle.z);
         step.scale.set(1.4, 0.45, 1.4);
         this.room.add(step);
       }
     }
-    if (this.arenaBuilt === 'broken-bridge') {
+    if (arena === 'broken-bridge') {
       // Slow water across the middle band.
       const water = new THREE.Mesh(
         new THREE.PlaneGeometry(36, 7),
@@ -493,10 +867,14 @@ export class GameApp {
       water.position.set(0, 0.03, 0);
       water.receiveShadow = true;
       this.room.add(water);
+      // The water belongs to this room: it is released with the room and
+      // never outlives the arena that made it.
+      this.roomGeometries.add(water.geometry);
+      this.roomMaterials.add(water.material);
       this.geometries.add(water.geometry);
       this.materials.add(water.material);
     }
-    if (this.arenaBuilt === 'ruined-stairs') {
+    if (arena === 'ruined-stairs') {
       // The central dais: high ground worth holding.
       const dais = new THREE.Mesh(
         new THREE.CylinderGeometry(4.5, 5, 0.5, 24),
@@ -505,6 +883,8 @@ export class GameApp {
       dais.position.set(0, 0.22, 0);
       dais.receiveShadow = true;
       this.room.add(dais);
+      this.roomGeometries.add(dais.geometry);
+      this.roomMaterials.add(dais.material);
       this.geometries.add(dais.geometry);
       this.materials.add(dais.material);
     }
@@ -513,8 +893,114 @@ export class GameApp {
   /** Rebuild the room when the descent moves to a new arena. */
   rebuildRoom(arenaId) {
     if (!this.room || this.arenaBuilt === arenaId) return { rebuilt: false, arena: this.arenaBuilt };
-    this.buildRoom(arenaId);
+    try {
+      this.buildRoom(arenaId);
+    } catch (error) {
+      // A room that could not be built must not take the run down with it:
+      // the failure is reported and the next arena change tries again.
+      console.error('[Aizanoi Dungeon] Arena rebuild failed:', error);
+      return { rebuilt: false, arena: this.arenaBuilt, failed: true };
+    }
     return { rebuilt: true, arena: this.arenaBuilt };
+  }
+
+  /**
+   * Place a room asset as an instanced field.
+   *
+   * The asset's own node transforms are baked into the instance matrices, so
+   * the sculpt is drawn exactly as authored: no scaling, no stretching, no
+   * lost detail. Each placement may carry its own colour, which is how the
+   * floor keeps its checker of weathered stone without a second material.
+   */
+  buildInstancedField(key, placements) {
+    const template = this.templates.get(key);
+    if (!template || !placements.length) return 0;
+    template.updateMatrixWorld(true);
+    const rootInverse = new THREE.Matrix4().copy(template.matrixWorld).invert();
+    const lift = this.groundOffsets.get(key) || 0;
+    const parts = [];
+    template.traverse((node) => {
+      if (!node.isMesh || !node.geometry) return;
+      const material = Array.isArray(node.material) ? node.material[0] : node.material;
+      if (!material) return;
+      parts.push({
+        geometry: node.geometry,
+        material,
+        local: new THREE.Matrix4().multiplyMatrices(rootInverse, node.matrixWorld),
+      });
+    });
+    for (const part of parts) {
+      const material = part.material.clone();
+      material.envMapIntensity = 0.6;
+      // The clone belongs to the room and dies with it. The geometry it
+      // draws with is the template's and outlives every rebuild.
+      this.roomMaterials.add(material);
+      this.materials.add(material);
+      const field = new THREE.InstancedMesh(part.geometry, material, placements.length);
+      field.castShadow = true;
+      field.receiveShadow = true;
+      field.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+      const matrix = new THREE.Matrix4();
+      const quaternion = new THREE.Quaternion();
+      const euler = new THREE.Euler();
+      const position = new THREE.Vector3();
+      const scale = new THREE.Vector3();
+      placements.forEach((placement, index) => {
+        euler.set(0, placement.rotation || 0, 0);
+        quaternion.setFromEuler(euler);
+        position.set(placement.x || 0, (placement.y || 0) + lift, placement.z || 0);
+        scale.set(placement.scaleX || 1, placement.scaleY || 1, placement.scaleZ || 1);
+        matrix.compose(position, quaternion, scale);
+        matrix.multiply(part.local);
+        field.setMatrixAt(index, matrix);
+        if (placement.color) field.setColorAt(index, placement.color);
+      });
+      field.instanceMatrix.needsUpdate = true;
+      if (field.instanceColor) field.instanceColor.needsUpdate = true;
+      this.room.add(field);
+      // The field owns its instance buffers, so a rebuild has to release
+      // them: dropping the mesh alone would leak the per-instance attributes.
+      this.roomFields.push(field);
+    }
+    return parts.length;
+  }
+
+  /**
+   * Close the room overhead. A first-person camera spends half its frame
+   * looking up; without a ceiling that half is a black void with a hard edge
+   * where the walls stop. The vault sits above the two-tier arcade and the
+   * beams break the flat span.
+   */
+  buildCeiling() {
+    const height = 5.1;
+    const material = new THREE.MeshStandardMaterial({ color: 0x2e251c, roughness: 0.95, metalness: 0 });
+    const vault = new THREE.Mesh(new THREE.PlaneGeometry(44, 44), material);
+    vault.rotation.x = Math.PI / 2;
+    vault.position.y = height;
+    // The vault must not shadow the room: the moon still reaches the floor,
+    // and the braziers and the player's own flame do the rest.
+    vault.castShadow = false;
+    vault.receiveShadow = false;
+    this.room.add(vault);
+    // The vault and its beams are made in code, so the room owns them: they
+    // are released with the room instead of piling up in the global sets.
+    this.roomGeometries.add(vault.geometry);
+    this.roomMaterials.add(material);
+    this.geometries.add(vault.geometry);
+    this.materials.add(material);
+    const beamMaterial = new THREE.MeshStandardMaterial({ color: 0x3a2c1e, roughness: 0.85, metalness: 0.05 });
+    const beamGeometry = new THREE.BoxGeometry(42, 0.42, 0.5);
+    for (let i = -3; i <= 3; i += 1) {
+      const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+      beam.position.set(0, height - 0.26, i * 6.4);
+      beam.castShadow = true;
+      beam.receiveShadow = true;
+      this.room.add(beam);
+    }
+    this.roomGeometries.add(beamGeometry);
+    this.roomMaterials.add(beamMaterial);
+    this.geometries.add(beamGeometry);
+    this.materials.add(beamMaterial);
   }
 
   buildAttractScene() {
@@ -557,6 +1043,12 @@ export class GameApp {
       get seed() { return app.state.seed; },
       get dailySeed() { return app.dailySeed; },
       get settings() { return Object.freeze({ ...(app.settings || {}) }); },
+      // The first-person look state, read-only. A browser test can check that
+      // the camera answered the mouse without reaching into the runtime.
+      get look() { return Object.freeze({ yaw: app.look.yaw, pitch: app.look.pitch, pointerLocked: document.pointerLockElement === app.renderer?.domElement }); },
+      // Render counters, read-only. A browser test can check that the arena
+      // still draws in a sane number of calls after the room was rebuilt.
+      get render() { return Object.freeze({ calls: app.worldCalls ?? 0, triangles: app.worldTriangles ?? 0, geometries: app.renderer?.info?.memory?.geometries ?? 0, textures: app.renderer?.info?.memory?.textures ?? 0 }); },
       get arenaBuilt() { return app.arenaBuilt; },
       get slowMo() { return (app.slowMoUntil || 0) > performance.now(); },
       get spawnMarkers() { return app.spawnMeshes ? app.spawnMeshes.size : 0; },
@@ -759,7 +1251,15 @@ export class GameApp {
       }
       event.preventDefault();
       if (this.sceneState === 'defeat' && !event.repeat && event.code === 'KeyR') { this.retrySeed(); return; }
-      if (event.code === 'Escape' && !event.repeat) this.togglePause();
+      if (event.code === 'Escape' && !event.repeat) {
+        // The Escape that released the pointer lock also pauses the game.
+        // If that same keypress is delivered to the page it must not undo the
+        // pause, so it is swallowed inside a short window. A later Escape
+        // always resumes. A modal owns its own Escape handling, so the
+        // window never applies while one is open.
+        if (!this.modal && performance.now() - (this.lockLostAt || 0) < 250) return;
+        this.togglePause();
+      }
       else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
       else if (event.code === 'KeyT' && !event.repeat) this.cycleAssistMode();
       else if (event.code === 'KeyQ' && !event.repeat) {
@@ -787,20 +1287,217 @@ export class GameApp {
       if (event.code === 'KeyK') this.keys.delete('KeyK');
       if (event.code === 'KeyL') this.keys.delete('KeyL');
     };
-    const pointer = (event) => {
-      if (this.sceneState !== 'playing') return;
-      event.preventDefault();
-      this.root.focus();
-      this.pendingInteract = true;
-      this.pendingAttack = true;
+    const canvas = this.renderer.domElement;
+    const isLocked = () => document.pointerLockElement === canvas;
+    const mouseMove = (event) => {
+      if (!isLocked() || this.sceneState !== 'playing' || this.paused || this.help || this.modal) return;
+      // While locked the pointer is captured: movementX/Y is the whole input.
+      this.applyLook(event.movementX || 0, event.movementY || 0);
     };
+    const pointerMove = (event) => {
+      const drag = this.lookDrag;
+      if (!drag || drag.pointerId !== event.pointerId) return;
+      // A drag belongs to the running game: while an overlay owns the
+      // screen the camera must not turn behind it.
+      if (this.sceneState !== 'playing' || this.paused || this.help || this.modal) return;
+      // Under pointer lock the cursor has no screen position: the only
+      // meaningful delta is the movement the browser reports.
+      const locked = isLocked();
+      const dx = locked ? (event.movementX || 0) : event.clientX - drag.x;
+      const dy = locked ? (event.movementY || 0) : event.clientY - drag.y;
+      drag.x = event.clientX;
+      drag.y = event.clientY;
+      drag.moved += Math.hypot(dx, dy);
+      // Drag-look is the fallback when pointer lock is unavailable (iframes,
+      // denied gesture). Touch gets a slightly faster constant because a thumb
+      // travels a shorter distance than a mouse across the same view.
+      if (drag.moved > 4) this.applyLook(dx, dy, drag.tap ? 1.5 : 1);
+    };
+    const pointerUp = (event) => {
+      const drag = this.lookDrag;
+      if (!drag || drag.pointerId !== event.pointerId) return;
+      this.lookDrag = null;
+      try { canvas.releasePointerCapture?.(event.pointerId); } catch (_) {}
+      // A tap is still an attack; a drag was a look and must not swing.
+      if (drag.tap && drag.moved <= 4 && this.sceneState === 'playing' && !this.paused && !this.help && !this.modal) {
+        this.pendingAttack = true;
+        this.pendingInteract = true;
+      }
+    };
+    const pointerCancel = (event) => {
+      const drag = this.lookDrag;
+      if (!drag || drag.pointerId !== event.pointerId) return;
+      // A cancelled pointer is never a tap: the gesture was taken away
+      // (a system gesture, a context menu, the page losing focus), so it
+      // must never swing the sword.
+      this.lookDrag = null;
+      try { canvas.releasePointerCapture?.(event.pointerId); } catch (_) {}
+    };
+    const pointer = (event) => {
+      // An overlay owns the pointer while it is open: a click behind it must
+      // not queue an attack or start a drag for a run that is not playing.
+      if (this.sceneState !== 'playing' || this.modal || this.paused || this.help) return;
+      this.root.focus();
+      const mouse = event.pointerType === 'mouse';
+      if (mouse && event.button === 2) {
+        // Right button is the bow: the left hand swings, the right hand shoots.
+        event.preventDefault();
+        this.pendingShoot = true;
+        return;
+      }
+      if (mouse && event.button !== 0) return;
+      event.preventDefault();
+      if (mouse) {
+        this.pendingAttack = true;
+        this.pendingInteract = true;
+        if (isLocked()) return;
+        if (this.requestLookLock()) return;
+        // No pointer lock: hold the button and drag to turn.
+        this.lookDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: 0, tap: false };
+        try { canvas.setPointerCapture?.(event.pointerId); } catch (_) {}
+        return;
+      }
+      this.lookDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, moved: 0, tap: true };
+      try { canvas.setPointerCapture?.(event.pointerId); } catch (_) {}
+    };
+    const contextMenu = (event) => event.preventDefault();
+    const lockChange = () => {
+      if (this.destroyed) return;
+      const locked = isLocked();
+      const wasLocked = Boolean(this.hadLookLock);
+      this.hadLookLock = locked;
+      this.root.classList.toggle('is-pointer-locked', locked);
+      // A lock this game released on purpose (an overlay opened or closed)
+      // is not the player losing the pointer: it must not pause the run on
+      // top of the overlay that already owns the screen. The window keeps a
+      // stale release from swallowing a genuine lock loss later on.
+      const releasedAt = this.lookLockReleasedAt || 0;
+      const deliberate = releasedAt > 0 && performance.now() - releasedAt < 1000;
+      this.lookLockReleasedAt = 0;
+      if (wasLocked && !locked && !deliberate && this.sceneState === 'playing' && !this.paused && !this.modal && !this.help) {
+        // Escape released the pointer mid-run: pause instead of leaving the
+        // player with a camera that no longer answers the mouse.
+        this.lockLostAt = performance.now();
+        this.togglePause();
+      }
+    };    const lockError = () => { this.pointerLockBlocked = true; };
     this.root.addEventListener('keydown', keydown);
     this.root.addEventListener('keyup', keyup);
-    this.renderer.domElement.addEventListener('pointerdown', pointer);
+    canvas.addEventListener('pointerdown', pointer);
+    canvas.addEventListener('pointermove', pointerMove);
+    canvas.addEventListener('pointerup', pointerUp);
+    canvas.addEventListener('pointercancel', pointerCancel);
+    canvas.addEventListener('contextmenu', contextMenu);
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('pointerlockchange', lockChange);
+    document.addEventListener('pointerlockerror', lockError);
     this.installTouchPad();
     this.disposers.push(() => this.root.removeEventListener('keydown', keydown));
     this.disposers.push(() => this.root.removeEventListener('keyup', keyup));
     this.disposers.push(() => this.renderer?.domElement.removeEventListener('pointerdown', pointer));
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('pointermove', pointerMove));
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('pointerup', pointerUp));
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('pointercancel', pointerCancel));
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('contextmenu', contextMenu));
+    this.disposers.push(() => document.removeEventListener('mousemove', mouseMove));
+    this.disposers.push(() => document.removeEventListener('pointerlockchange', lockChange));
+    this.disposers.push(() => document.removeEventListener('pointerlockerror', lockError));
+  }
+
+  /**
+   * Ask the canvas for pointer lock. Returns false when the browser refuses
+   * (sandboxed frame, missing user gesture, or a device without a mouse) so the
+   * caller can fall back to drag-look instead of silently doing nothing.
+   *
+   * The lock belongs to the running game only. A paused, covered, helped or
+   * finished run has no business holding the pointer, and asking for it there
+   * would fight the overlay that just took the mouse.
+   */
+  requestLookLock() {
+    // Pointer lock is a mouse contract. A touch device has no cursor to
+    // lock, and asking for it there only freezes the touch coordinates the
+    // drag-look fallback depends on.
+    if (!this.hasFinePointer) return false;
+    if (this.destroyed) return false;
+    if (this.sceneState !== 'playing') return false;
+    if (this.paused) return false;
+    if (this.help) return false;
+    if (this.modal) return false;
+    if (this.state?.player?.dead) return false;
+    const canvas = this.renderer?.domElement;
+    if (!canvas || typeof canvas.requestPointerLock !== 'function' || this.pointerLockBlocked) return false;
+    // A new lock supersedes any pending release: the next lock change is
+    // about this lock, not about the one that was let go.
+    this.lookLockReleasedAt = 0;
+    try {
+      const pending = canvas.requestPointerLock();
+      if (pending && typeof pending.catch === 'function') {
+        pending.catch(() => { this.pointerLockBlocked = true; });
+        return true;
+      }
+      return true;
+    } catch (_) {
+      this.pointerLockBlocked = true;
+      return false;
+    }
+  }
+
+  /**
+   * Release the pointer without toggling pause (used when a modal opens).
+   *
+   * Only the lock this game owns is released: another app may be holding the
+   * pointer, and taking it from them would break their own input.
+   *
+   * The release is announced to the lock-change handler: a pointer this game
+   * gave up on purpose (an overlay opened) must not be read as the player
+   * losing the mouse.
+   */
+  exitLookLock() {
+    const canvas = this.renderer?.domElement;
+    if (!canvas) return false;
+    try {
+      if (document.pointerLockElement !== canvas) return false;
+      // The release is announced to the lock-change handler: a pointer this
+      // game gave up on purpose must not be read as the player losing it.
+      this.lookLockReleasedAt = performance.now();
+      document.exitPointerLock?.();
+      return true;
+    } catch (_) {
+      this.lookLockReleasedAt = 0;
+      return false;
+    }
+  }
+
+  /**
+   * Apply a raw mouse delta to the first-person camera.
+   *
+   * Yaw turns around world up; pitch is clamped short of straight up and down
+   * so the horizon never flips. `boost` lets the touch drag feel as responsive
+   * as a mouse without changing the player's saved sensitivity.
+   */
+  applyLook(dx, dy, boost = 1) {
+    if (!Number.isFinite(dx) || !Number.isFinite(dy)) return;
+    const sensitivity = Number(this.settings?.lookSensitivity) || 1;
+    const scale = 0.0022 * sensitivity * boost;
+    this.look.yaw -= dx * scale;
+    this.look.pitch -= dy * scale * (this.settings?.invertY ? -1 : 1);
+    if (this.look.yaw > Math.PI) this.look.yaw -= Math.PI * 2;
+    if (this.look.yaw < -Math.PI) this.look.yaw += Math.PI * 2;
+    this.look.pitch = Math.max(-LOOK_PITCH_LIMIT, Math.min(LOOK_PITCH_LIMIT, this.look.pitch));
+    this.lookDelta.x += dx;
+    this.lookDelta.y += dy;
+  }
+
+  /** Point the camera at the arena centre when a run starts. */
+  faceArenaCentre() {
+    const position = this.state?.player?.position || { x: 0, z: 0 };
+    const dx = -position.x;
+    const dz = -position.z;
+    const length = Math.hypot(dx, dz);
+    if (length < 1e-4) { this.look.yaw = 0; this.look.pitch = -0.05; return; }
+    // Camera forward is (-sin yaw, -cos yaw) under the YXZ order.
+    this.look.yaw = Math.atan2(-dx / length, -dz / length);
+    this.look.pitch = -0.05;
   }
 
   installTouchPad() {
@@ -870,6 +1567,7 @@ export class GameApp {
     this.menu.remove();
     this.hud.setVisible(true);
     this.root.focus();
+    this.faceArenaCentre();
     this.rebuildRoom(this.state.arena);
     this.syncWorld();
     this.updateHud();
@@ -906,11 +1604,15 @@ export class GameApp {
     this.menu.remove();
     this.hud.setVisible(true);
     this.root.focus();
+    this.faceArenaCentre();
     this.rebuildRoom(this.state.arena);
     spawnWave(this.state, 1);
     this.feedback.emit('portal', { position: { x: 0, y: 1, z: 0 } });
     this.syncWorld();
     this.updateHud();
+    // The run starts under the player's hand: take the mouse immediately so
+    // the first click is a swing, not a camera grab.
+    this.requestLookLock();
   }
 
   /** The daily descent: one shared seed per local date, no server. */
@@ -926,6 +1628,10 @@ export class GameApp {
     this.pendingGuard = false;
     this.pendingSpecial = false;
     this.pendingInteract = false;
+    // A drag that outlives the overlay that interrupted it would keep the
+    // pointer captured: the next click would be swallowed by the capture
+    // instead of reaching the game.
+    this.releaseLookDrag();
     this.touchMove = null;
     this.state.inputLatch.attack = false;
     this.state.inputLatch.dash = false;
@@ -934,11 +1640,25 @@ export class GameApp {
     this.state.inputLatch.special = false;
   }
 
+  /** Drop the drag-look gesture and give the pointer back to the browser. */
+  releaseLookDrag() {
+    const drag = this.lookDrag;
+    this.lookDrag = null;
+    if (!drag) return;
+    try { this.renderer?.domElement?.releasePointerCapture?.(drag.pointerId); } catch (_) {}
+  }
+
   togglePause() {
     if (this.sceneState !== 'playing') return;
     this.paused = !this.paused;
     this.resetInput();
+    // Pause and pointer lock are the same mode: the mouse must not keep
+    // turning a camera nobody can see, and resuming must hand it back.
+    if (this.paused) this.exitLookLock();
     this.hud.update({ paused: this.paused, help: this.help });
+    // Resuming is a gesture the player made, so it may take the pointer
+    // back. Every other path must wait for a click.
+    if (!this.paused) this.requestLookLock();
   }
 
   /**
@@ -959,6 +1679,8 @@ export class GameApp {
   toggleHelp() {
     if (this.sceneState === 'menu') return;
     this.help = !this.help;
+    // The help card is an overlay: it needs the mouse back to be read.
+    if (this.help) this.exitLookLock();
     this.hud.update({ paused: this.paused, help: this.help });
   }
 
@@ -966,9 +1688,17 @@ export class GameApp {
    * Modal lifecycle for in-game dialogs: record the opener, make everything
    * behind the panel inert (except the live announcer), move focus inside and
    * remember how to hand focus back.
+   *
+   * The panel owns the mouse while it is open, so the pointer lock this game
+   * holds is released here. The record is written first: the release fires a
+   * lock change, and the run must already know that an overlay is on screen
+   * so it does not pause on top of it.
    */
   openModal(panel, focusTarget, opener = document.activeElement) {
     this.resetInput();
+    // Only one modal may own the screen at a time: an earlier panel that is
+    // still open would keep the background inert and its own record alive.
+    if (this.modal && this.modal.panel !== panel) this.closeModal(this.modal, { restore: false });
     const inerted = [];
     const hudRoot = this.hud?.root;
     const mark = (element) => {
@@ -985,6 +1715,9 @@ export class GameApp {
       } else mark(child);
     }
     this.modal = { panel, opener, inerted };
+    // Only the lock this game owns is released: another app may be holding
+    // the pointer, and taking it from them would break their input.
+    this.exitLookLock();
     const target = focusTarget || panel.querySelector(TABBABLE) || panel;
     if (target === panel) panel.tabIndex = -1;
     target.focus?.();
@@ -994,6 +1727,11 @@ export class GameApp {
   closeModal(record, { restore = true } = {}) {
     if (!record) return;
     for (const element of record.inerted) element.inert = false;
+    // Closing an overlay hands the mouse back to the page: this game must
+    // not keep the pointer while the player is reading the run again. The
+    // lock is released while the modal record is still in place, so the
+    // lock-change handler sees the overlay and does not pause on top of it.
+    this.exitLookLock();
     if (this.modal === record) this.modal = undefined;
     if (!restore || this.destroyed) return;
     const opener = record.opener;
@@ -1018,6 +1756,8 @@ export class GameApp {
     if (this.settingsPanel || this.modal) return { opened: false };
     this.settingsReturnToPaused = this.paused;
     const settingsOpener = document.activeElement;
+    // A modal needs the mouse: the run pauses while the panel is open and
+    // the pointer lock is released with it (openModal does the release).
     if (this.sceneState === 'playing' && !this.pickPanel) this.paused = true;
     const panel = node('section', 'az-hud-panel az-dungeon-settings');
     panel.setAttribute('role', 'dialog');
@@ -1025,9 +1765,10 @@ export class GameApp {
     panel.setAttribute('aria-label', 'Dungeon settings');
     panel.append(node('h2', 'az-hud-panel-title', 'Settings'));
     const rows = node('div', 'az-dungeon-settings-rows');
-    const row = (labelText, control) => {
+    const row = (labelText, control, readout) => {
       const wrapper = node('label', 'az-dungeon-settings-row', labelText);
       wrapper.append(control);
+      if (readout) wrapper.append(readout);
       rows.append(wrapper);
       return wrapper;
     };
@@ -1095,7 +1836,24 @@ export class GameApp {
       this.hud?.announce?.(`Render quality: ${quality.value}`);
     });
     row('Render quality', quality);
-    for (const [key, label] of [['damageNumbers', 'Damage numbers'], ['highContrast', 'High contrast'], ['leftHanded', 'Left-handed layout'], ['reducedMotion', 'Reduced motion']]) {
+    // First-person look controls. They live with the other comfort options
+    // because a camera that fights the player is the fastest way to make a
+    // good game feel broken.
+    const sensitivity = document.createElement('input');
+    sensitivity.type = 'range';
+    sensitivity.min = '25';
+    sensitivity.max = '250';
+    sensitivity.step = '5';
+    sensitivity.value = String(Math.round(Number(this.settings.lookSensitivity ?? 1) * 100));
+    sensitivity.setAttribute('aria-label', 'Look sensitivity');
+    const sensitivityValue = node('span', 'az-dungeon-settings-readout', `${sensitivity.value}%`);
+    sensitivity.addEventListener('input', () => {
+      this.settings.lookSensitivity = Math.max(0.25, Math.min(2.5, Number(sensitivity.value) / 100));
+      sensitivityValue.textContent = `${sensitivity.value}%`;
+      this.saveAndApplySettings();
+    });
+    row('Look sensitivity', sensitivity, sensitivityValue);
+    for (const [key, label] of [['damageNumbers', 'Damage numbers'], ['highContrast', 'High contrast'], ['leftHanded', 'Left-handed layout'], ['reducedMotion', 'Reduced motion'], ['invertY', 'Invert vertical look']]) {
       const input = document.createElement('input');
       input.type = 'checkbox';
       input.checked = Boolean(this.settings[key]);
@@ -1137,6 +1895,9 @@ export class GameApp {
     this.settingsModal = undefined;
     this.closeModal(record);
     this.hud?.update?.({ paused: this.paused && !this.pickPanel, help: this.help && !this.pickPanel });
+    // The pointer is not taken back here: closing a panel is not a gesture
+    // on the canvas, and a lock request without one is refused by the
+    // browser anyway. The next click on the canvas takes it.
     return { closed: true };
   }
 
@@ -1221,6 +1982,10 @@ export class GameApp {
       if (gap <= 0.6 || this.state.time > this.qaWalkCoord.until) { this.qaWalkCoord = null; this.touchMove = null; }
     }
     const input = this.movementInput();
+    // Looking is aiming. The simulation used to derive facing from the walk
+    // vector, which in first person would swing the sword where the player
+    // strafes; the camera's horizontal forward is the truth now.
+    input.facing = { x: -Math.sin(this.look.yaw), z: -Math.cos(this.look.yaw) };
     this.pollGamepad(input);
     input.attack = this.pendingAttack || this.keys.has('KeyJ');
     input.dash = this.pendingDash;
@@ -1327,7 +2092,7 @@ export class GameApp {
       clearTimeout(this.damageTimer);
       this.damageTimer = setTimeout(() => this.hud?.setDamage(false), 280);
     } else if (event.type === 'dash') this.feedback.emit('dash', { position });
-    else if (event.type === 'bow-shot') this.feedback.emit('bow', { position });
+    else if (event.type === 'bow-shot') { this.lastShootAt = performance.now(); this.feedback.emit('bow', { position }); }
     else if (event.type === 'attack-telegraph') {
       // Audible windup cue; the ground ring is synced from live windup state.
       this.feedback.emit('swing', { position, intensity: 0.6 });
@@ -1388,6 +2153,9 @@ export class GameApp {
   syncWorld() {
     if (this.hero) {
       const now = performance.now();
+      // First person means the camera is inside the avatar: drawing it would
+      // fill the screen with the back of its own head. It is the menu model.
+      this.hero.visible = this.sceneState === 'menu';
       this.hero.position.set(this.state.player.position.x, 0, this.state.player.position.z);
       this.hero.rotation.y = Math.atan2(this.state.player.facing.x, this.state.player.facing.z);
       // Readable motion: a stride bob while moving and a lunge pulse on swing.
@@ -1407,6 +2175,7 @@ export class GameApp {
       }
       this.heroRing.position.set(this.state.player.position.x, 0.06, this.state.player.position.z);
       this.heroRing.scale.setScalar(1.2);
+      this.heroRing.visible = this.sceneState === 'menu';
     }
     const alive = new Set();
     if (!this.eliteMeshes) this.eliteMeshes = new Map();
@@ -1468,10 +2237,22 @@ export class GameApp {
     for (const projectile of this.state.projectiles) {
       shots.add(projectile.id);
       let mesh = this.projectileMeshes.get(projectile.id);
-      if (!mesh) { mesh = this.clone('projectile'); this.projectileMeshes.set(projectile.id, mesh); this.dynamic.add(mesh); }
-      // The player's arrow flies level with the bow; enemy shots ride higher
-      // so the two are never mistaken for each other on screen.
-      const height = projectile.source === 'player' ? 0.8 : 1.1;
+      if (!mesh) {
+        mesh = this.clone('projectile');
+        // The arrow sculpt is authored along its own Y axis. Lay it down so
+        // the wrapper's yaw aims the tip at the velocity, instead of leaving
+        // vertical arrows hopping across the floor.
+        const inner = mesh.children[0];
+        if (inner) {
+          inner.position.set(0, 0, 0);
+          inner.rotation.set(Math.PI / 2, 0, 0);
+        }
+        this.projectileMeshes.set(projectile.id, mesh);
+        this.dynamic.add(mesh);
+      }
+      // The player's arrow flies level with the bow; enemy shots ride a little
+      // higher so the two are never mistaken for each other on screen.
+      const height = projectile.source === 'player' ? 0.9 : 1.15;
       mesh.position.set(projectile.x, height, projectile.z);
       mesh.rotation.y = Math.atan2(projectile.vx, projectile.vz);
     }
@@ -1493,6 +2274,14 @@ export class GameApp {
     this.syncTelegraphs();
     this.syncSpawnPortals();
     this.syncHazardTiles();
+    // The exit portal is walked into, so the camera ends up inside it. A
+    // portal that fills the screen with its own vortex is not a portal the
+    // player can read: it steps out of the way once they are inside it.
+    if (this.portal) {
+      const dx = this.portal.position.x - this.camera.position.x;
+      const dz = this.portal.position.z - this.camera.position.z;
+      this.portal.visible = Math.hypot(dx, dz) > 1.7;
+    }
   }
 
   telegraphResources() {
@@ -1596,12 +2385,30 @@ export class GameApp {
         mesh = this.clone('portal');
         mesh.scale.setScalar(0.55);
         mesh.userData.spawnMarker = true;
+        // The marker is a warning, not a prop: the sculpt's own materials are
+        // opaque stone and read as a pink slab in the dark. A soft ember shell
+        // says "something arrives here" without hiding the floor.
+        const shell = this.markerMaterial();
+        mesh.traverse((object) => { if (object.isMesh) object.material = shell; });
         this.spawnMeshes.set(key, mesh);
         this.dynamic.add(mesh);
       }
       mesh.position.set(spawn.x, 0.1, spawn.z);
       if (!this.reducedMotion) mesh.rotation.y += 0.03;
     }
+  }
+
+  /** The shared glow used by spawn markers. */
+  markerMaterial() {
+    if (!this.markerShared) {
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xff7a2e, transparent: true, opacity: 0.28,
+        side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending,
+      });
+      this.markerShared = material;
+      this.materials.add(material);
+    }
+    return this.markerShared;
   }
 
   syncHazardTiles() {
@@ -1673,6 +2480,15 @@ export class GameApp {
       this.slowMoUntil = Math.max(this.slowMoUntil || 0, performance.now() + effect.durationMs);
     } else if (effect.type === 'floating-damage') {
       if (this.settings?.damageNumbers === false) return;
+      // Damage the player takes belongs to the player's own position, which in
+      // first person is under the lens. The damage vignette already says it;
+      // a number floating in the middle of the screen would only be noise.
+      const eye = this.camera?.position;
+      if (eye) {
+        const dx = effect.position.x - eye.x;
+        const dz = effect.position.z - eye.z;
+        if (dx * dx + dz * dz < 2.25) return;
+      }
       const { col, row } = this.projectToGrid(effect.position);
       const label = node('output', `az-floating-damage az-dmg-x${col} az-dmg-y${row}${effect.critical ? ' is-critical' : ''}`, String(Math.round(effect.value)));
       label.setAttribute('aria-hidden', 'true');
@@ -1680,11 +2496,18 @@ export class GameApp {
       const timer = setTimeout(() => label.remove(), 650);
       this.effects.push({ kind: 'dom', value: label, timer });
     } else if (effect.type === 'particle-burst') {
+      // A burst at the player's own feet would sit on the lens and fill the
+      // screen with a coloured lump. The first-person camera cannot show its
+      // own impact, so a burst that close to the eye is not drawn at all.
+      const eye = this.camera?.position;
+      const dx = eye ? effect.position.x - eye.x : 0;
+      const dz = eye ? effect.position.z - eye.z : 0;
+      if (dx * dx + dz * dz < 2.25) return;
       const resourceKey = effect.color in COLORS ? effect.color : 'gold';
       let resources = this.particleResources.get(resourceKey);
       if (!resources) {
         resources = {
-          geometry: new THREE.SphereGeometry(0.07, 4, 3),
+          geometry: new THREE.SphereGeometry(0.055, 6, 4),
           material: new THREE.MeshBasicMaterial({ color: COLORS[resourceKey] }),
         };
         this.particleResources.set(resourceKey, resources);
@@ -1990,6 +2813,25 @@ export class GameApp {
     this.victory.append(makeButton('az-dungeon-begin', 'Continue the descent', () => this.continueEndless()));
     this.victory.append(makeButton('az-dungeon-begin', 'Descend again', () => this.restart()));
     this.root.append(this.victory);
+    // The ledger is the last screen of the run: it is a modal, so it owns
+    // the mouse and releases the pointer lock the game was holding.
+    this.victoryModal = this.openModal(this.victory, null, document.activeElement);
+  }
+
+  /**
+   * Tear down the end-of-run screen (defeat or victory) and give the shell
+   * back. The screen is a modal, so closing it has to release the modal
+   * record as well as the panel.
+   */
+  closeEndScreen() {
+    const record = this.victoryModal || this.defeatModal;
+    this.victoryModal = undefined;
+    this.defeatModal = undefined;
+    this.victory?.remove();
+    this.victory = undefined;
+    this.defeat?.remove();
+    this.defeat = undefined;
+    this.closeModal(record, { restore: false });
   }
 
   /**
@@ -1999,8 +2841,7 @@ export class GameApp {
    */
   continueEndless() {
     if (this.sceneState !== 'victory') return { resumed: false };
-    this.victory?.remove();
-    this.victory = undefined;
+    this.closeEndScreen();
     this.paused = false;
     this.sceneState = 'playing';
     // The endless leg is its own run as far as the local meta is concerned.
@@ -2035,14 +2876,14 @@ export class GameApp {
     actions.append(makeButton('az-dungeon-begin', 'New descent', () => this.restart()));
     this.defeat.append(actions);
     this.root.append(this.defeat);
+    // The fall is the last screen of the run: it is a modal, so it owns the
+    // mouse and releases the pointer lock the game was holding.
+    this.defeatModal = this.openModal(this.defeat, null, document.activeElement);
   }
 
   retrySeed() {
     const seed = this.state.seed;
-    this.defeat?.remove();
-    this.victory?.remove();
-    this.defeat = undefined;
-    this.victory = undefined;
+    this.closeEndScreen();
     this.closePick();
     this.state = createGameState(seed);
     this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: 0 };
@@ -2055,6 +2896,7 @@ export class GameApp {
     spawnWave(this.state, 1);
     this.rebuildRoom(this.state.arena);
     this.root.focus();
+    this.faceArenaCentre();
     this.syncWorld();
     this.updateHud();
     this.hud?.announce?.(`Same seed: ${seed}`);
@@ -2062,10 +2904,7 @@ export class GameApp {
   }
 
   restart() {
-    this.defeat?.remove();
-    this.victory?.remove();
-    this.defeat = undefined;
-    this.victory = undefined;
+    this.closeEndScreen();
     this.closePick();
     this.state = createGameState(`aizo-${Date.now()}`);
     this.eventSeq = 0;
@@ -2082,6 +2921,7 @@ export class GameApp {
     spawnWave(this.state, 1);
     this.rebuildRoom(this.state.arena);
     this.root.focus();
+    this.faceArenaCentre();
     this.syncWorld();
   }
 
@@ -2097,17 +2937,121 @@ export class GameApp {
   }
 
   updateCamera(dt, time) {
-    const target = this.sceneState === 'menu' ? new THREE.Vector3(0, 0.8, 0) : new THREE.Vector3(this.state.player.position.x, 0.8, this.state.player.position.z);
-    const angle = this.sceneState === 'menu' && !this.reducedMotion ? time * 0.00012 : 0.72;
-    const offset = new THREE.Vector3(Math.sin(angle) * 12, 10, Math.cos(angle) * 12);
-    this.cameraTarget.lerp(target, Math.min(1, dt * 8));
-    const desired = this.cameraTarget.clone().add(offset);
-    this.camera.position.lerp(desired, Math.min(1, dt * 7));
+    if (this.sceneState === 'menu') {
+      // The attract camera swings slowly across the arena and looks past the
+      // hero, so the character stands in the right of the frame while the
+      // title card owns the left.
+      const target = new THREE.Vector3(-2, 1, 1.3);
+      const angle = this.reducedMotion ? 0.4 : Math.sin(time * 0.00008) * 0.5;
+      const offset = new THREE.Vector3(Math.sin(angle) * 5, 2.3, Math.cos(angle) * 5);
+      this.cameraTarget.lerp(target, Math.min(1, dt * 8));
+      const desired = this.cameraTarget.clone().add(offset);
+      this.camera.position.lerp(desired, Math.min(1, dt * 7));
+      this.camera.lookAt(this.cameraTarget);
+      this.camera.updateMatrixWorld();
+      return;
+    }
+    // First person: the camera is the player's eyes, so it sits inside the
+    // avatar (hidden from this view) at eye height and turns with the look
+    // state. Nothing is smoothed onto a target — a lagged FPS camera reads as
+    // input delay.
+    const position = this.state.player.position;
+    const previousX = this.lastCamX ?? position.x;
+    const previousZ = this.lastCamZ ?? position.z;
+    const moving = Math.hypot(position.x - previousX, position.z - previousZ) > 0.0015;
+    this.lastCamX = position.x;
+    this.lastCamZ = position.z;
+    this.walkPhase = (this.walkPhase + dt * (moving ? 9.4 : 1.3)) % (Math.PI * 2);
+    const bob = this.reducedMotion ? 0 : moving ? Math.sin(this.walkPhase * 2) * 0.026 : Math.sin(this.walkPhase) * 0.006;
+    const roll = this.reducedMotion ? 0 : Math.cos(this.walkPhase) * 0.005;
+    this.camera.position.set(position.x, EYE_HEIGHT + bob, position.z);
     if (this.shake && performance.now() < this.shake.until) {
       this.camera.position.x += this.shake.x;
       this.camera.position.y += this.shake.y;
     }
-    this.camera.lookAt(this.cameraTarget);
+    this.camera.rotation.set(this.look.pitch, this.look.yaw, roll, 'YXZ');
+    this.camera.updateMatrixWorld();
+  }
+
+  /** Drift the dust field and keep it wrapped around the player. */
+  updateAtmosphere(dt) {
+    if (!this.dust) return;
+    const attribute = this.dust.geometry.attributes.position;
+    const array = attribute.array;
+    const drift = this.dustDrift;
+    const px = this.state?.player?.position?.x ?? 0;
+    const pz = this.state?.player?.position?.z ?? 0;
+    for (let i = 0; i < array.length; i += 3) {
+      array[i] += drift[i] * dt;
+      array[i + 1] += drift[i + 1] * dt;
+      array[i + 2] += drift[i + 2] * dt;
+      // Motes rise, fade out at head height and respawn near the floor.
+      if (array[i + 1] > 4.6) {
+        array[i + 1] = 0.12;
+        array[i] = px + (Math.random() - 0.5) * 26;
+        array[i + 2] = pz + (Math.random() - 0.5) * 26;
+      }
+      // The field travels with the player instead of being left behind.
+      if (Math.abs(array[i] - px) > 18) array[i] = px + (Math.random() - 0.5) * 26;
+      if (Math.abs(array[i + 2] - pz) > 18) array[i + 2] = pz + (Math.random() - 0.5) * 26;
+    }
+    attribute.needsUpdate = true;
+    // The torch breathes instead of reading as a flat spotlight.
+    if (this.torch && !this.reducedMotion) {
+      const t = performance.now() / 1000;
+      const torchBase = 2.2;
+    this.torch.intensity = torchBase + Math.sin(t * 7.3) * 0.12 + Math.sin(t * 3.1) * 0.09;
+    }
+  }
+
+  /**
+   * Animate the first-person weapon rig: walk bob, look sway, a melee swing
+   * and a raised bow after a shot. Everything is procedural, so no animation
+   * clips or extra assets are needed.
+   */
+  updateViewmodel(dt) {
+    const rig = this.viewmodel;
+    if (!rig) return;
+    const playing = this.sceneState === 'playing' || this.sceneState === 'defeat' || this.sceneState === 'victory';
+    rig.visible = playing;
+    if (!playing) return;
+    // The rig rides the camera: same place, same heading, drawn with its own
+    // lens so the weapon never bends with the world's wide field of view.
+    if (this.viewHolder) {
+      this.viewHolder.position.copy(this.camera.position);
+      this.viewHolder.quaternion.copy(this.camera.quaternion);
+    }
+    if (this.viewCamera) {
+      this.viewCamera.position.copy(this.camera.position);
+      this.viewCamera.quaternion.copy(this.camera.quaternion);
+    }
+    const now = performance.now();
+    const bowUp = now - (this.lastShootAt || 0) < 850;
+    if (this.viewmodelBow) this.viewmodelBow.visible = bowUp;
+    if (this.viewmodelSword) this.viewmodelSword.visible = !bowUp;
+    const swingAge = now - (this.lastMeleeAt || 0);
+    const swing = swingAge < 240 ? Math.sin((swingAge / 240) * Math.PI) : 0;
+    const base = this.viewmodelBase || { x: 0.36, y: -0.34, z: -0.66 };
+    // A narrow screen crops the world, not the weapon, so the blade is pushed
+    // further from the lens on a phone than on a desktop monitor.
+    const reach = this.camera.aspect < 1.3 ? -0.98 : base.z;
+    const bob = this.reducedMotion ? 0 : Math.sin(this.walkPhase * 2) * 0.011;
+    const swayX = this.reducedMotion ? 0 : Math.max(-0.05, Math.min(0.05, -this.lookDelta.x * 0.0011));
+    const swayY = this.reducedMotion ? 0 : Math.max(-0.04, Math.min(0.04, -this.lookDelta.y * 0.0011));
+    const decay = Math.max(0, 1 - dt * 9);
+    this.lookDelta.x *= decay;
+    this.lookDelta.y *= decay;
+    rig.position.set(
+      base.x + swayX - swing * 0.16,
+      base.y + bob + swayY - swing * 0.06,
+      reach + swing * 0.24,
+    );
+    if (bowUp) {
+      // The bow is presented across the view, string hand low.
+      rig.rotation.set(-0.05, -0.16, -0.08);
+    } else {
+      rig.rotation.set(-0.16 - swing * 0.55, -0.14 - swing * 0.22, 0.1 + swing * 0.7);
+    }
   }
 
   loop(time) {
@@ -2124,9 +3068,23 @@ export class GameApp {
       for (let i = 0; i < steps; i += 1) this.fixedTick();
     }
     this.updateEffects(scaledDt);
+    this.updateAtmosphere(scaledDt);
+    this.updateViewmodel(dt);
     if (this.portal && !this.reducedMotion) this.portal.rotation.y += dt * 0.7;
     this.updateCamera(dt, time);
     this.renderer.render(this.scene, this.camera);
+    // The world's own draw counters, captured before the weapon pass resets
+    // them. A browser test can read them to see the room's real cost.
+    this.worldCalls = this.renderer.info.render.calls;
+    this.worldTriangles = this.renderer.info.render.triangles;
+    // The weapon is composited on top of the world with a cleared depth
+    // buffer, so it can never be clipped by a wall the player stands behind.
+    if (this.viewScene && this.viewCamera && this.viewmodel?.visible) {
+      this.renderer.autoClear = false;
+      this.renderer.clearDepth();
+      this.renderer.render(this.viewScene, this.viewCamera);
+      this.renderer.autoClear = true;
+    }
     this.frames += 1;
     this.raf = requestAnimationFrame((next) => this.loop(next));
   }
@@ -2137,6 +3095,10 @@ export class GameApp {
     const height = Math.max(2, this.stage.clientHeight);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
+    if (this.viewCamera) {
+      this.viewCamera.aspect = this.camera.aspect;
+      this.viewCamera.updateProjectionMatrix();
+    }
     this.renderer.setSize(width, height, false);
   }
 
@@ -2157,6 +3119,9 @@ export class GameApp {
     clearTimeout(this.damageTimer);
     this.resizeObserver?.disconnect();
     this.resetInput();
+    // The canvas is about to leave the page: give the pointer back instead of
+    // leaving the browser locked to a canvas that no longer exists.
+    this.closeModal(this.modal, { restore: false });
     this.modal = undefined;
     this.disposers.splice(0).forEach((dispose) => { try { dispose(); } catch (_) {} });
     this.effects.forEach((effect) => { clearTimeout(effect.timer); effect.value?.remove?.(); effect.value?.removeFromParent?.(); });
@@ -2164,10 +3129,20 @@ export class GameApp {
     this.audio?.destroy();
     this.hud?.destroy();
     this.releaseStylesheet();
+    // The room owns part of the scene: release it first so its resources
+    // leave the global sets before the sets are emptied.
+    this.disposeRoom();
     this.geometries.forEach((geometry) => geometry.dispose());
     this.materials.forEach((material) => material.dispose());
     this.geometries.clear();
     this.materials.clear();
+    // The generated environment map is a render target the renderer does not
+    // own, so it has to be released with everything else.
+    this.releaseEnvironment();
+    // The dust sprite is a texture carried by the dust material: disposing
+    // the material does not release the texture itself.
+    this.dustTexture?.dispose?.();
+    this.dustTexture = undefined;
     this.renderer?.dispose();
     if (typeof window !== 'undefined' && window.AIZANOI_DUNGEON_GAME === this.qaHandle) window.AIZANOI_DUNGEON_GAME = undefined;
     this.root?.remove();

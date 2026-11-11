@@ -7,9 +7,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+// Windows-safe repository root: URL.pathname keeps a leading slash, which
+// turns "C:/repo" into "/C:/repo" and breaks every join() below.
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
 const CANONICAL = 'frontend/js/v3/apps/dungeon';
 const STANDALONE = 'frontend/dungeon';

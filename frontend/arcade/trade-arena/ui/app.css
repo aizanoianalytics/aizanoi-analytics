@@ -654,6 +654,8 @@ table.stats th button:focus-visible { outline: 2px solid var(--focus); outline-o
 /* v3 bots (2026-11-03) and the BIST 100 benchmark */
 [data-color="#ff6b6b"]{--c:#ff6b6b}[data-bg="#ff6b6b"]{background:#ff6b6b}[data-ink="#ff6b6b"]{color:#ff6b6b}
 [data-color="#b42323"]{--c:#b42323}[data-bg="#b42323"]{background:#b42323}[data-ink="#b42323"]{color:#b42323}
+[data-color="#d97757"]{--c:#d97757}[data-bg="#d97757"]{background:#d97757}[data-ink="#d97757"]{color:#d97757}
+[data-color="#9a3f22"]{--c:#9a3f22}[data-bg="#9a3f22"]{background:#9a3f22}[data-ink="#9a3f22"]{color:#9a3f22}
 [data-color="#f25cf0"]{--c:#f25cf0}[data-bg="#f25cf0"]{background:#f25cf0}[data-ink="#f25cf0"]{color:#f25cf0}
 [data-color="#8f1b8d"]{--c:#8f1b8d}[data-bg="#8f1b8d"]{background:#8f1b8d}[data-ink="#8f1b8d"]{color:#8f1b8d}
 [data-color="#fff36b"]{--c:#fff36b}[data-bg="#fff36b"]{background:#fff36b}[data-ink="#fff36b"]{color:#fff36b}

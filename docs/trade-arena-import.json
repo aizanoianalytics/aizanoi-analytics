@@ -144,8 +144,9 @@
     },
     {
       "path": "bots/roster.json",
-      "sha256": "55e0342956a0b2f4bced434ab1736b84a0d7130bc934633226916e3a544dfc70",
-      "sourceSha256": "55e0342956a0b2f4bced434ab1736b84a0d7130bc934633226916e3a544dfc70"
+      "sha256": "70aac0b61c8b699d01291d9f3644e26259118292782114c09f9cd40a0aaf2834",
+      "sourceSha256": "70aac0b61c8b699d01291d9f3644e26259118292782114c09f9cd40a0aaf2834",
+      "updated": "2026-11-10: Claude Fable 5.2 entry added"
     },
     {
       "path": "data/catalog.json",
@@ -1427,7 +1428,7 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "b47ec37d3d1ad7466a04f82cc805d4d1d6539a1c74f60b32ddce8a2d01b6d693",
+      "sha256": "75c233b4f328361d7a77e70626ce996a3edc6a251ff9d8e27e2d003dd8202336",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
@@ -1442,7 +1443,7 @@
     },
     {
       "path": "ui/bot-worker.js",
-      "sha256": "70bb555e29df75651a3bb50107f57f51d4b86bdb6d80e41e23185cf5a595cfa2",
+      "sha256": "c0e44fb76dcf21e1f8e169aef65f9fa6609b0de75fc57357c73748e32509b129",
       "sourceSha256": "8c17f093eaf15e8eecff258e1c085d2d60cbbed2f3de11e93d977af68e95975f"
     },
     {

@@ -42,7 +42,7 @@ test('imported runtime inventory matches bytes and preserves all strategy and da
   }
   const catalog = JSON.parse(read(root + 'data/catalog.json'));
   assert.equal(catalog.crypto.length, 35); assert.equal(catalog.stocks.length, 30); assert.equal(catalog.bist.length, 30); assert.equal(catalog.context.length, 8);
-  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'opus-5-5', 'muse-spark-1-3', 'deepseek-v4-1-flash', 'glm-5-3-flash', 'beam', 'iceman', 'mimo-v2-6-flash', 'nemotron-3-5-super', 'nemotron-3-5-lightning', 'flint-40b', 'basket', 'aizo', 'momentum', 'hodl', 'monkey']);
+  assert.deepEqual(roster.bots.map(bot => bot.id), ['sonnet-5-5', 'haiku-5-5', 'gpt-6.1-sol', 'gpt-6-astra', 'gpt-6.1-terra', 'gpt-6-sol', 'gpt-6-luna', 'gpt-5.6-sol', 'gpt-5.6-terra', 'gpt-5.6-luna', 'opus-5-5', 'muse-spark-1-3', 'deepseek-v4-1-flash', 'glm-5-3-flash', 'beam', 'iceman', 'mimo-v2-6-flash', 'nemotron-3-5-super', 'nemotron-3-5-lightning', 'flint-40b', 'fable-5-2', 'basket', 'aizo', 'momentum', 'hodl', 'monkey']);
   // Every roster strategy must be runnable by the strict-CSP worker, and nothing else.
   const allowed = read(root + 'ui/bot-worker.js').match(/new Set\(\[([^\]]*)\]\)/)[1].split(',').map(x => x.trim().slice(1, -1));
   assert.deepEqual(allowed.sort(), roster.bots.map(bot => bot.file).sort());

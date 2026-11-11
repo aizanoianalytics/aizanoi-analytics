@@ -74,19 +74,24 @@ export function createHud({ container, document: doc = globalThis.document, onAs
   root.hidden = true;
 
   const top = element(doc, 'div', 'az-hud-top');
-  const vitals = element(doc, 'div', 'az-hud-vitals');
-  const health = meter(doc, 'Health', 'az-hud-health');
-  const stamina = meter(doc, 'Stamina', 'az-hud-stamina');
-  const xp = meter(doc, 'Experience', 'az-hud-xp');
-  vitals.append(health.wrapper, stamina.wrapper, xp.wrapper);
-
   const run = element(doc, 'div', 'az-hud-run');
   const chapter = element(doc, 'p', 'az-hud-chapter', 'Chapter I');
   const wave = element(doc, 'p', 'az-hud-wave', 'Wave 1');
   const gold = element(doc, 'p', 'az-hud-gold', '0 gold');
   gold.setAttribute('aria-label', 'Gold: 0');
   run.append(chapter, wave, gold);
-  top.append(vitals, run);
+  top.append(run);
+
+  // The vitals plate. One instrument panel in the lower-left corner carries
+  // health, stamina, experience and the wrath charge together, so the player
+  // reads their whole state in one glance and the centre of the screen stays
+  // clear for the fight.
+  const vitals = element(doc, 'div', 'az-hud-vitals');
+  const health = meter(doc, 'Health', 'az-hud-health');
+  const stamina = meter(doc, 'Stamina', 'az-hud-stamina');
+  const xp = meter(doc, 'Experience', 'az-hud-xp');
+  const special = meter(doc, 'Wrath', 'az-hud-special');
+  vitals.append(health.wrapper, stamina.wrapper, xp.wrapper, special.wrapper);
 
   const boss = meter(doc, 'Boss health', 'az-hud-boss');
   boss.wrapper.hidden = true;
@@ -106,7 +111,6 @@ export function createHud({ container, document: doc = globalThis.document, onAs
   if (typeof onAssistMode === 'function' && typeof assistChip.addEventListener === 'function') {
     assistChip.addEventListener('click', onAssistMode);
   }
-  const special = meter(doc, 'Wrath', 'az-hud-special');
   const crosshair = element(doc, 'div', 'az-hud-crosshair');
   crosshair.setAttribute('aria-hidden', 'true');
   const vignette = element(doc, 'div', 'az-hud-damage-vignette');
@@ -139,9 +143,9 @@ export function createHud({ container, document: doc = globalThis.document, onAs
   const help = element(doc, 'aside', 'az-hud-panel az-hud-help');
   help.setAttribute('aria-label', 'Controls');
   help.hidden = true;
-  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Shoot: K · Dash: Space · Guard: L · Wrath: E · Lock: Q · Assist: T · Interact: Enter · Help: H · Pause: Escape'));
+  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Look: mouse (or drag) · Move: WASD / arrows · Attack: click / J · Bow: right click / K · Dash: Space · Guard: L · Wrath: E · Lock: Q · Assist: T · Interact: Enter · Help: H · Pause: Escape'));
 
-  root.append(top, boss.wrapper, combo, assistChip, special.wrapper, crosshair, vignette, lootFeed, announcer, pause, help);
+  root.append(top, vitals, boss.wrapper, combo, assistChip, crosshair, vignette, lootFeed, announcer, pause, help);
   container.appendChild(root);
 
   const elements = {
@@ -151,9 +155,15 @@ export function createHud({ container, document: doc = globalThis.document, onAs
     lootFeed, blessings, announcer, pause, help,
     assistChip, special: special.value, specialWrap: special.wrapper,
   };
-
   function update(state = {}) {
-    if (state.health !== undefined || state.maxHealth !== undefined) setMeter(health, state.health ?? 100, state.maxHealth ?? 100);
+    if (state.health !== undefined || state.maxHealth !== undefined) {
+      const max = Math.max(1, Number(state.maxHealth) || 1);
+      const current = Math.max(0, Number(state.health ?? 0));
+      setMeter(health, current, max);
+      // Low-health state: the frame closes in around the player so the
+      // screen itself carries the danger, not only the meter.
+      root.classList.toggle('is-low-health', current / max < 0.3);
+    }
     if (state.stamina !== undefined || state.maxStamina !== undefined) setMeter(stamina, state.stamina ?? 100, state.maxStamina ?? 100);
     if (state.xp !== undefined || state.xpToNext !== undefined) setMeter(xp, state.xp ?? 0, state.xpToNext ?? 100);
     if (state.gold !== undefined) {
@@ -238,7 +248,15 @@ export function createHud({ container, document: doc = globalThis.document, onAs
 
   function setVisible(active = true) { root.hidden = !active; return api; }
 
-  function announce(message) { announcer.textContent = String(message || ''); }
+  function announce(message) {
+    const text = String(message || '');
+    setText(announcer, text);
+    // Restart the banner animation on every call: the class carries the
+    // keyframes, and re-adding it replays the title-card settle.
+    announcer.classList.remove('is-announcing');
+    void announcer.offsetWidth;
+    announcer.classList.add('is-announcing');
+  }
   function setDamage(active = true) { vignette.classList.toggle('is-active', Boolean(active)); }
   function destroy() { root.remove(); }
 

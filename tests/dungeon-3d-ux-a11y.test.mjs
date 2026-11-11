@@ -19,6 +19,76 @@ test('reduced-motion CSS is scoped to the dungeon root and standalone body, neve
   assert.match(block, /\.aizanoi-standalone-body \*/);
 });
 
+// Typography floor: every HUD readout the player must read stays at or above
+// 12px (0.75rem) in the base sheet and in every breakpoint override.
+const CSS_FONT_FLOOR_REM = 0.75;
+const CSS_FONT_TARGETS = ['az-hud-meter-label', 'az-hud-meter-value', 'az-hud-wave', 'az-hud-assist'];
+
+const parseCssRules = (css) => {
+  const rules = [];
+  const walk = (text, media) => {
+    let index = 0;
+    while (index < text.length) {
+      const open = text.indexOf('{', index);
+      if (open === -1) break;
+      const prelude = text.slice(index, open).trim();
+      let depth = 1;
+      let cursor = open + 1;
+      while (cursor < text.length && depth > 0) {
+        const char = text[cursor];
+        if (char === '{') depth += 1;
+        else if (char === '}') depth -= 1;
+        cursor += 1;
+      }
+      const body = text.slice(open + 1, cursor - 1);
+      if (prelude.startsWith('@media')) walk(body, prelude);
+      else if (!prelude.startsWith('@')) rules.push({ selector: prelude, body, media });
+      index = cursor;
+    }
+  };
+  walk(css.replace(/\/\*[\s\S]*?\*\//g, ''), null);
+  return rules;
+};
+
+const selectorClasses = (selector) => selector
+  .split(',')
+  .flatMap((part) => (part.match(/\.[A-Za-z0-9_-]+/g) || []).map((token) => token.slice(1)));
+
+const lengthRem = (body, property) => {
+  const match = new RegExp(`${property}:\\s*([0-9]*\\.?[0-9]+)(rem|px)\\b`).exec(body);
+  if (!match) return null;
+  return match[2] === 'px' ? Number(match[1]) / 16 : Number(match[1]);
+};
+
+test('HUD readouts never drop below the 12px typography floor in any breakpoint', () => {
+  const rules = parseCssRules(read('css/game.css'));
+  for (const target of CSS_FONT_TARGETS) {
+    const sizes = rules
+      .filter((rule) => selectorClasses(rule.selector).includes(target))
+      .map((rule) => ({ media: rule.media, size: lengthRem(rule.body, 'font-size') }))
+      .filter((entry) => entry.size !== null);
+    assert.ok(sizes.length > 0, `${target} must declare a font-size`);
+    for (const { media, size } of sizes) {
+      assert.ok(size >= CSS_FONT_FLOOR_REM,
+        `${target} renders at ${size}rem in ${media || 'base'} — below the ${CSS_FONT_FLOOR_REM}rem (12px) floor`);
+    }
+  }
+});
+
+test('the narrow-screen meter grid keeps room for the 12px labels and values', () => {
+  const rules = parseCssRules(read('css/game.css'));
+  const narrow = rules.filter((rule) => rule.media && rule.media.includes('max-width: 840px'));
+  const meter = narrow.find((rule) => selectorClasses(rule.selector).includes('az-hud-meter'));
+  assert.ok(meter, 'the max-width: 840px block must restyle the meter grid');
+  const columns = /grid-template-columns:\s*([^;]+)/.exec(meter.body);
+  assert.ok(columns, 'the narrow meter grid declares grid-template-columns');
+  const [label, , value] = columns[1].trim().split(/\s+/);
+  assert.ok(lengthRem(`width: ${label}`, 'width') >= 4,
+    `the narrow label column (${label}) is too narrow for 12px labels`);
+  assert.ok(lengthRem(`width: ${value}`, 'width') >= 3.5,
+    `the narrow value column (${value}) is too narrow for 12px values`);
+});
+
 test('effective reduced motion is the OS preference OR the local toggle', () => {
   const source = read('src/runtime/GameApp.js');
   assert.match(source, /osReducedMotion\(\) \|\| Boolean\(settings\.reducedMotion\)/);
