@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-adobe-google-acrobat-integration",
+  "title": "Adobe puts Acrobat inside Gmail and Drive as its Google ties deepen",
+  "summary": "Adobe and Google expanded their partnership at Adobe MAX on 10 November, adding an 'Edit with' shortcut that sends PDFs from Gmail and Drive previews directly into Acrobat. Adobe is also building Acrobat and other creative tools into Gemini, Gemini Enterprise and AI Mode in Search, while Google's models will power conversational PDF editing inside Acrobat. The two companies will explore a DeepMind image model for near-real-time edits in Photoshop, with no timeline announced.",
+  "category": "technology",
+  "priority": 62,
+  "tags": [
+    "adobe",
+    "google",
+    "acrobat",
+    "gemini",
+    "workspace"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/company-news/inside-google/company-announcements/adobe-google-partnership-integration",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "Adobe News",
+      "url": "https://news.adobe.com/news/2026/11/adobe-and-google-deepen-partnership",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

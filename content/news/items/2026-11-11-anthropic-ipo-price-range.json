@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-anthropic-ipo-price-range",
+  "title": "Anthropic sets a $70 to $78 IPO range and aims for a trillion-dollar listing",
+  "summary": "Anthropic filed terms on 10 November for an initial public offering of 825 million Class A shares at $70 to $78 each, a range that would raise $57.75 billion to $64.35 billion and list the company on Nasdaq under the ticker ANT. The filing implies a market value of roughly $917 billion to $1.02 trillion on its post-offering share count, or up to about $1.41 trillion fully diluted. Seven chip and cloud partners agreed to buy $26 billion of Class N stock privately at the offer price.",
+  "category": "economy-markets",
+  "priority": 88,
+  "tags": [
+    "anthropic",
+    "ipo",
+    "nasdaq",
+    "artificial-intelligence",
+    "valuation"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Securities and Exchange Commission",
+      "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072484/anthropicpbc-sx1ax2.htm",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/10/anthropic-sets-price-range-of-70-to-78-in-upcoming-ipo.html",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

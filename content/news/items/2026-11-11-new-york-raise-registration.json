@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-new-york-raise-registration",
+  "title": "New York opens RAISE registration for large frontier AI developers",
+  "summary": "New York opened a registration portal on 10 November for the large frontier AI developers covered by its RAISE Act, which takes effect on 1 January 2027. Covered companies must publish safety frameworks, report critical safety incidents within 72 hours and file quarterly catastrophic-risk assessments, with fines of up to $1 million for a first violation and $3 million afterwards. A new DIGIT office inside the Department of Financial Services will supervise them, and the state launched a research institute at Binghamton University.",
+  "category": "ai",
+  "priority": 64,
+  "tags": [
+    "regulation",
+    "new-york",
+    "raise-act",
+    "policy",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Office of the Governor of New York",
+      "url": "https://www.governor.ny.gov/news/governor-hochul-declares-ny-will-lead-nation-ai-science-and-safety-launches-new-research",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/10/openai-anthropic-face-new-oversight-as-new-yorks-ai-safety-law-takes-effect/",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-gemini-4-carbon-general-availability",
+  "title": "Google opens Gemini 4 Carbon to every paying developer at Argon prices",
+  "summary": "Google made Gemini 4 Carbon generally available on 11 November to developers, enterprises, scientists and AI Ultra subscribers, two weeks after a limited release to cybersecurity defenders. DeepMind says Carbon leads CursorBench 4.0, Perplexity's WANDR and Zapier's AutomationBench at less than half the cost per task of the next best external model, and it keeps the introductory price of Gemini 4 Argon at $2 per million input tokens and $10 per million output tokens. A multi-agent '/swarm' mode is in preview in Google Antigravity.",
+  "category": "ai",
+  "priority": 82,
+  "tags": [
+    "google",
+    "deepmind",
+    "gemini",
+    "models",
+    "benchmarks"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-4-carbon-is-now-available",
+      "publishedAt": "2026-11-11T00:00:00Z"
+    },
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available",
+      "publishedAt": "2026-11-11T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

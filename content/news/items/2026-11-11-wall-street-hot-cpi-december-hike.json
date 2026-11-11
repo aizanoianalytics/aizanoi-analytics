@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-wall-street-hot-cpi-december-hike",
+  "title": "Wall Street slips as a hot October CPI hardens bets on a December hike",
+  "summary": "US stocks fell on 10 November after consumer prices rose 0.4 percent in October, above the 0.3 percent economists expected and cooler than September's 0.6 percent gain. The S&P 500 lost 0.38 percent to 7,520.93, the Nasdaq Composite 0.74 percent to 25,065.87 and the Dow 0.30 percent to 52,231.89. Traders priced an 84 percent chance of a quarter-point Federal Reserve increase next month, and Nvidia fell more than 5 percent as an investigation into its chief executive weighed on the stock.",
+  "category": "economy-markets",
+  "priority": 80,
+  "tags": [
+    "stocks",
+    "s-p-500",
+    "inflation",
+    "federal-reserve",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-tuesday-november-10-dow-sp-500-nasdaq-inflation-data-cpi-090627830.html",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/09/stock-market-today-live-updates.html",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

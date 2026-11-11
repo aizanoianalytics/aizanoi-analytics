@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-11-womens-champions-league-matchday-four",
+  "title": "Bayern and Manchester City close on the Women's Champions League top four",
+  "summary": "Bayern München won 2-1 at Paris Saint-Germain and Manchester City beat Inter 4-1 as the Women's Champions League league phase reached matchday four on 10 November. Real Madrid and Roma claimed their first wins of the phase, 3-0 over Paris FC and 2-1 against Servette, while Chelsea were held 0-0 at Häcken despite 27 attempts. Bayern moved second on eight points behind Barcelona; Chelsea also have eight, with Paris Saint-Germain on five.",
+  "category": "football",
+  "priority": 50,
+  "tags": [
+    "womens-football",
+    "champions-league",
+    "bayern",
+    "manchester-city",
+    "chelsea"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/womenschampionsleague/news/02ab-220a5d617502-a5029344b1eb-1000--uefa-women-s-champions-league-matchday-4-tuesday-round-up/",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

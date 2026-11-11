@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-nitori-customer-records-breach",
+  "title": "Nitori says intruders may have taken 37.6 million customer records",
+  "summary": "Nitori Holdings said unauthorised access to a server behind its online store may have exposed up to 37.62 million customer records, including names, addresses, telephone numbers, birth dates and order histories. The Japanese home-furnishings retailer detected the intrusion on 6 November and blocked it; its investigation found the attacker had access from mid to late October. Login passwords and credit card details were not affected, and the company warned customers about phishing messages and calls.",
+  "category": "technology",
+  "priority": 60,
+  "tags": [
+    "security",
+    "data-breach",
+    "japan",
+    "retail",
+    "nitori"
+  ],
+  "sources": [
+    {
+      "publisher": "Nitori Holdings",
+      "url": "https://www.nitorihd.co.jp/news/items/2b702dbe4d438f7fef74945d68e5bd27_3.pdf",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Mainichi Shimbun",
+      "url": "https://mainichi.jp/english/articles/20261109/p2g/00m/0bu/034000c",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

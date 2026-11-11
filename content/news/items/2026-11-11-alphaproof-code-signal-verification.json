@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-alphaproof-code-signal-verification",
+  "title": "DeepMind agents prove Signal's core code secure, a first at machine-code level",
+  "summary": "Google DeepMind's AlphaProof Code generated about 6.5 million lines of machine-checked Lean proofs showing that the compiled AArch64 code of libsignal, Signal's reference implementation, preserves forward secrecy, authentication and post-compromise security. The work, described on 10 November, is the first formal verification of protocol-level guarantees against the unmodified code of a widely deployed cryptographic library, and it took four weeks rather than years. Reintroducing two previously fixed bugs made the proofs fail.",
+  "category": "ai",
+  "priority": 72,
+  "tags": [
+    "deepmind",
+    "formal-verification",
+    "signal",
+    "security",
+    "lean"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/introducing-alphaproof-code",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "Google DeepMind (paper)",
+      "url": "https://google-deepmind.github.io/code-verification",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
