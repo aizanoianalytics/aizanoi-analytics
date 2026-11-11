@@ -17,7 +17,7 @@ const launch = () => chromium.launch({
 test('the victory screen shows a run ledger when the descent is complete', async () => {
   const browser = await launch();
   try {
-    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const context = await browser.newContext({ viewport: { width: 640, height: 400 } });
     const page = await context.newPage();
     const errors = [];
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
@@ -121,7 +121,7 @@ test('the victory screen shows a run ledger when the descent is complete', async
 test('the victory screen offers a way to start a new run', async () => {
   const browser = await launch();
   try {
-    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const context = await browser.newContext({ viewport: { width: 640, height: 400 } });
     const page = await context.newPage();
     await page.goto(`${base}/dungeon/?victory2=${Date.now()}`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
@@ -161,7 +161,7 @@ test('the victory screen offers a way to start a new run', async () => {
 test('the victory screen lets the descent continue past the tenth chapter', async () => {
   const browser = await launch();
   try {
-    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const context = await browser.newContext({ viewport: { width: 640, height: 400 } });
     const page = await context.newPage();
     const errors = [];
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });

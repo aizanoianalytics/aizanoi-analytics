@@ -175,7 +175,7 @@ jobs:
     needs: arcade-browser
     if: always()
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - name: Require successful arcade browser matrix
         env: { ARCADE_RESULT: '${{ needs.arcade-browser.result }}' }

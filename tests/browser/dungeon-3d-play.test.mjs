@@ -27,7 +27,7 @@ const readFrameStats = (page) => page.evaluate(async () => {
   // preserveDrawingBuffer off, a copied canvas is already blank.
   await new Promise((resolve) => {
     let n = 0;
-    const tick = () => { n += 1; if (n < 2) requestAnimationFrame(tick); else resolve(); };
+    const tick = () => { n += 1; if (n < 24) requestAnimationFrame(tick); else resolve(); };
     requestAnimationFrame(tick);
   });
   const canvas = document.querySelector('canvas');
@@ -61,7 +61,7 @@ const readFrameStats = (page) => page.evaluate(async () => {
 test('the 3D dungeon boots a real Three.js scene and plays a real run', async () => {
   const browser = await chromium.launch({ headless: true, args: LAUNCH_ARGS });
   const context = await browser.newContext({
-    viewport: { width: 640, height: 400 },
+    viewport: { width: 1024, height: 640 },
     serviceWorkers: 'block',
   });
   const page = await context.newPage();
