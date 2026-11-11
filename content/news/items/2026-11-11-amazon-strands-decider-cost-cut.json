@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-11-amazon-strands-decider-cost-cut",
+  "title": "Amazon swaps a frontier model for a small decider and cuts ticket costs 98 percent",
+  "summary": "Amazon replaced Claude Sonnet 4.6 with Strands Decider, a small Gemma 4-based decision model, on a high-volume support routing task and reported equal or better results at about $0.0005 per ticket instead of $0.0222. Its engineers described the switch on 10 November: input tokens per ticket fell from 6,554 to 2,009 and output from 170 to one, taking the cost of a million tickets from roughly $22,200 to $500. The model runs on a single SageMaker instance.",
+  "category": "ai",
+  "priority": 54,
+  "tags": [
+    "amazon",
+    "aws",
+    "inference",
+    "cost",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Strands Agents",
+      "url": "https://strandsagents.com/blog/amazon-saves-millions-replacing-sonnet-with-strands-decider/",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-softbank-data-centre-loss",
+  "title": "SoftBank swings to a $7 billion loss on US data-centre spending",
+  "summary": "SoftBank Group reported a net loss of 1.115 trillion yen, about $7 billion, for the quarter to September, reversing a 2.5 trillion yen profit a year earlier. The result included a 597.2 billion yen special loss after procurement plans changed for power-generation equipment destined for American data-centre projects, including a large development in Pike County, Ohio. SoftBank said it may recover as much as $2.1 billion through rebates on future purchases of the same equipment.",
+  "category": "economy-markets",
+  "priority": 68,
+  "tags": [
+    "softbank",
+    "data-centres",
+    "earnings",
+    "power",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/softbank-swings-7-billion-net-loss-second-quarter-2026-11-10",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "Dow Jones via Morningstar",
+      "url": "https://www.morningstar.com/news/dow-jones/202611101939/softbank-group-posts-quarterly-loss-on-special-losses-linked-to-us-data-center-projects",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

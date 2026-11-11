@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-synaptics-vino-displaylink-patents",
+  "title": "Synaptics uses patents to shut down an open-source DisplayLink driver",
+  "summary": "Synaptics sent a cease-and-desist letter to Mike Lothian, author of Vino, an independently written Rust driver that let Linux use DisplayLink docks without the vendor's proprietary daemon. The company cited UK patents GB2484736 and GB2485613, arguing that a clean-room implementation can still infringe patent claims even without copied code, and the GitHub repository has been taken offline. Lothian disputes the patents' validity and notes that Synaptics belongs to the Open Invention Network.",
+  "category": "technology",
+  "priority": 52,
+  "tags": [
+    "linux",
+    "open-source",
+    "patents",
+    "displaylink",
+    "synaptics"
+  ],
+  "sources": [
+    {
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/peripherals/docking-stations-hubs/synaptics-sends-cease-and-desist-order-to-creator-of-open-source-displaylink-driver-dares-him-to-publicize-its-threats-dev-reverse-engineers-displaylink-using-claude-ai-and-rust-synaptics-threatens-to-bill-creator-for-legal-documentation",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "Gadget Review",
+      "url": "https://www.gadgetreview.com/synaptics-hits-open-source-linux-driver-vino-with-cease-and-desist-over-displaylink-patents",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

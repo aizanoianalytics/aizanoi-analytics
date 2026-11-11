@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-11-sony-cancels-fairgames",
+  "title": "Sony cancels Fairgames after a playtest fell short of its targets",
+  "summary": "Sony cancelled Fairgames, the heist shooter it announced in 2023, after a large playtest produced weaker retention than the company had targeted. PlayStation executives Sean Decker and John Doyle told staff that player feedback was mixed and cited difficult conditions in the player-versus-player shooter market, according to Bloomberg. No jobs will be cut: Haven Studios, which Sony bought in 2022, will support other PlayStation teams instead of shipping its debut game.",
+  "category": "technology",
+  "priority": 56,
+  "tags": [
+    "sony",
+    "playstation",
+    "gaming",
+    "haven-studios",
+    "live-service"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/games/1031242/sony-playstation-fairgames-canceled",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    },
+    {
+      "publisher": "GameSpot",
+      "url": "https://www.gamespot.com/articles/sony-cancels-live-service-ps5-game-fairgames-but-no-layoffs/",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

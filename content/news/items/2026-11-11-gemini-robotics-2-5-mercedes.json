@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-11-gemini-robotics-2-5-mercedes",
+  "title": "Gemini Robotics 2.5 lifts task success by up to 100 percent, scores 96 percent at Mercedes",
+  "summary": "Google DeepMind introduced Gemini Robotics 2.5 on 10 November, a vision-language-action model it says completes tasks 30 to 100 percent more often, and 20 to 30 percent faster, than its previous baselines. In a proof-of-concept on Mercedes-Benz lines in Kecskemét and Sindelfingen, an Apptronik Apollo 2 humanoid sorted metal brackets into sequence trays with a 96 percent success rate. Access is limited to robotics partners, and DeepMind published an adversarial safety benchmark alongside the model.",
+  "category": "ai",
+  "priority": 66,
+  "tags": [
+    "deepmind",
+    "robotics",
+    "humanoids",
+    "mercedes-benz",
+    "manufacturing"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-11T05:00:00Z",
+  "updatedAt": "2026-11-11T05:00:00Z",
+  "retrievedAt": "2026-11-11T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
