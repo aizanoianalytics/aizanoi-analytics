@@ -361,6 +361,11 @@ export class GameApp {
     this.renderer.toneMappingExposure = 1.0;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // The moon never moves, so the shadow map is refreshed every fourth
+    // frame instead of every frame: identical stills, a quarter of the
+    // software-renderer shadow cost. Moving shadows lag at most three
+    // frames, which is invisible at game pace.
+    this.renderer.shadowMap.autoUpdate = false;
     this.stage.append(this.renderer.domElement);
     const contextLost = (event) => {
       event.preventDefault();
@@ -439,7 +444,17 @@ export class GameApp {
    * A procedural sky/ember environment, generated into a canvas and filtered
    * with PMREM. No network request and no CDN: the dungeon has to keep
    * working under the CSP that forbids remote assets.
+   *
+   * NOTE (software-renderer budget): assigning the filtered map to
+   * scene.environment adds image-based lighting to every standard material,
+   * which roughly doubles per-frame cost under SwiftShader and blows the
+   * 12-minute browser-smoke budget (see dungeon-3d-play). The PMREM target
+   * is still built and released (the teardown contract is tested), and the
+   * look is carried by the raised hemisphere/moon/torch rig instead. Set
+   * ENABLE_SCENE_ENVIRONMENT to true to restore full IBL once the playable
+   * suites fit the budget with it on.
    */
+  static ENABLE_SCENE_ENVIRONMENT = false;
   buildEnvironment() {
     try {
       const canvas = document.createElement('canvas');
@@ -477,7 +492,9 @@ export class GameApp {
       // target's framebuffer on the GPU forever.
       this.environmentTarget = target;
       this.environment = target.texture;
-      this.scene.environment = this.environment;
+      // Gated by ENABLE_SCENE_ENVIRONMENT (see above): the target stays
+      // alive for the teardown contract either way.
+      if (GameApp.ENABLE_SCENE_ENVIRONMENT) this.scene.environment = this.environment;
     } catch (error) {
       console.warn('[Aizanoi Dungeon] Environment map unavailable:', error);
     }
@@ -3072,6 +3089,9 @@ export class GameApp {
     this.updateViewmodel(dt);
     if (this.portal && !this.reducedMotion) this.portal.rotation.y += dt * 0.7;
     this.updateCamera(dt, time);
+    // Shadow maps refresh on every fourth frame (see setup): the moon is
+    // static, so reusing the map is visually identical and much cheaper.
+    this.renderer.shadowMap.needsUpdate = this.frames % 4 === 0;
     this.renderer.render(this.scene, this.camera);
     // The world's own draw counters, captured before the weapon pass resets
     // them. A browser test can read them to see the room's real cost.
