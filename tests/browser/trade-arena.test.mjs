@@ -27,6 +27,35 @@ async function withPage(size, run) {
   try { await run(page, errors); } finally { await Promise.race([context.unrouteAll({ behavior:'ignoreErrors' }), new Promise(resolve => { setTimeout(resolve, 2000); })]); await browser.close(); }
 }
 
+test('legacy Fable history and saved picks keep Flavius Tide identity without rewriting records', async () => {
+  await withPage({width:1280,height:900}, async (page, errors) => {
+    const legacy = [{at:1,stats:[{id:'fable-5-2',final:110000,totalReturn:.1},{id:'hodl',final:100000,totalReturn:0}]}];
+    await page.addInitScript(({history}) => {
+      localStorage.setItem('trade-arena:history',JSON.stringify(history));
+      localStorage.setItem('trade-arena:pick',JSON.stringify({bots:['fable-5-2','hodl'],basketBot:'fable-5-2',advisorBots:['fable-5-2','hodl']}));
+    },{history:legacy});
+    await page.goto(base+'/arcade/trade-arena/#/league');
+    await page.locator('h2').filter({hasText:'Simulations completed here'}).waitFor();
+    const stored = page.locator('table').filter({has:page.locator('caption', {hasText:'Head-to-head races finished in this browser'})});
+    assert.match(await stored.innerText(), /Claude Fable 5\.1/);
+    assert.doesNotMatch(await stored.innerText(), /Claude Fable 5\.2/);
+    assert.match(await page.locator('#view').innerText(), /Older races labelled Fable 5\.2 used Flavius Tide/);
+    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem('trade-arena:history'))),legacy);
+    await page.goto(base+'/arcade/trade-arena/');
+    assert.equal(await page.locator('#roster input[value="fable-5-1"]').isChecked(),true);
+    assert.equal(await page.locator('#roster input[value="fable-5-2"]').isChecked(),false);
+    await page.evaluate(() => { location.hash = '#/basket'; });
+    await page.locator('#bk-bots input[value="fable-5-1"]').waitFor();
+    assert.equal(await page.locator('#bk-bots input[value="fable-5-1"]').isChecked(),true);
+    assert.equal(await page.locator('#bk-bots input[value="fable-5-2"]').isChecked(),false);
+    await page.evaluate(() => { location.hash = '#/advisor'; });
+    await page.locator('#ad-bots input[value="fable-5-1"]').waitFor();
+    assert.equal(await page.locator('#ad-bots input[value="fable-5-1"]').isChecked(),true);
+    assert.equal(await page.locator('#ad-bots input[value="fable-5-2"]').isChecked(),false);
+    assert.deepEqual(errors,[]);
+  });
+});
+
 test('mixed daily races include BIST, US and crypto in USD with both benchmarks and real concurrent workers', {timeout:180000}, async () => {
   await withPage({width:1440,height:1000}, async (page,errors) => {
     const failed=[];

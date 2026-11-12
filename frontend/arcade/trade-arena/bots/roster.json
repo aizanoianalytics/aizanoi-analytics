@@ -372,15 +372,15 @@
       }
     },
     {
-      "id": "fable-5-2",
-      "name": "Claude Fable 5.2",
-      "short": "Fable",
-      "initials": "F5",
+      "id": "fable-5-1",
+      "name": "Claude Fable 5.1",
+      "short": "Fable 5.1",
+      "initials": "F51",
       "lab": "Anthropic",
       "kind": "ai",
-      "model": "claude-fable-5-2",
+      "model": "claude-fable-5-1",
       "color": "#d97757",
-      "file": "bots/ai/fable-5-2.js",
+      "file": "bots/ai/fable-5-1.js",
       "strategy": "Regime-aware cross-sectional trend follower. Every few days it ranks assets by a blend of 20-, 60- and 120-bar return and Sharpe, keeps those above their SMA200 with positive momentum, confirms with Supertrend, golden cross and ADX, skips blow-off tops, and holds the top 4 to 6 between inverse-volatility and equal weight with a 30% cap. A 'tide' score from breadth, the equal-weight index, SPY vs SMA200 and VIX sets exposure, shrinking toward 25% when the tide turns; when shorts are allowed and the tide is out it shorts the weakest downtrends. ATR stops every bar, and it only trades when the book drifts more than 20%.",
       "botName": "Flavius Tide",
       "session": {
@@ -388,6 +388,25 @@
         "provider": "claude-code"
       },
       "colorLight": "#9a3f22"
+    },
+    {
+      "id": "fable-5-2",
+      "name": "Claude Fable 5.2",
+      "short": "Fable 5.2",
+      "initials": "F52",
+      "lab": "Anthropic",
+      "kind": "ai",
+      "model": "claude-fable-5-2",
+      "color": "#ffa94d",
+      "colorLight": "#a85a00",
+      "file": "bots/ai/fable-5-2.js",
+      "botName": "Tidewater",
+      "contract": 2,
+      "strategy": "Every 7 bars it rotates into the six strongest assets trading above their long trend, equal-weighted. Long exposure shrinks when few assets are above their 200-bar mean; between rebalances it only cuts positions that break trend. In long/short races it shorts the weakest downtrending crypto assets when breadth has collapsed, never stocks; leverage only in broad, calm uptrends.",
+      "session": {
+        "secs": 1622,
+        "provider": "claude-code"
+      }
     },
     {
       "id": "basket",

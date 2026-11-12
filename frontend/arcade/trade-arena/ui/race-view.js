@@ -505,7 +505,7 @@ function confetti(color) {
 function saveHistory() {
   try {
     const hist = JSON.parse(localStorage.getItem('trade-arena:history') || '[]');
-    hist.unshift({ at: Date.now(), cfg: R.cfg, stats: R.done.stats.map((s, j) => ({ id: R.bots[j].id, final: s.final, totalReturn: s.totalReturn, sharpe: s.sharpe, maxDrawdown: s.maxDrawdown })) });
+    hist.unshift({ identityVersion: 2, at: Date.now(), cfg: R.cfg, stats: R.done.stats.map((s, j) => ({ id: R.bots[j].id, final: s.final, totalReturn: s.totalReturn, sharpe: s.sharpe, maxDrawdown: s.maxDrawdown })) });
     localStorage.setItem('trade-arena:history', JSON.stringify(hist.slice(0, 200)));
   } catch { /* storage unavailable */ }
 }

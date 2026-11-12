@@ -12,9 +12,19 @@ import { getTheme, setTheme, applyBotColors, css, reducedMotion } from './theme.
 const DATA_START = '2017-08-17', ARCHIVE_END = '2026-10-30', CUTOFF = '2024-12-31';
 let DATA_END = ARCHIVE_END;
 const state = { roster: null, catalog: null, league: null, leagueSort: null, pick: { preset: 'crypto-season', bots: ['sonnet-5-5', 'haiku-5-5'], blind: false, short: false, gross: 1 } };
-try { Object.assign(state.pick, JSON.parse(localStorage.getItem('trade-arena:pick') || '{}')); } catch { /* storage blocked */ }
+try {
+  const saved = JSON.parse(localStorage.getItem('trade-arena:pick') || '{}');
+  // Before the correction, fable-5-2 referred to Flavius Tide, not Tidewater.
+  if (saved.identityVersion !== 2) {
+    const legacyId = id => id === 'fable-5-2' ? 'fable-5-1' : id;
+    if (Array.isArray(saved.bots)) saved.bots = saved.bots.map(legacyId);
+    if (typeof saved.basketBot === 'string') saved.basketBot = legacyId(saved.basketBot);
+    if (Array.isArray(saved.advisorBots)) saved.advisorBots = saved.advisorBots.map(legacyId);
+  }
+  Object.assign(state.pick, saved);
+} catch { /* storage blocked */ }
 if (!(+state.pick.gross >= 1 && +state.pick.gross <= 2)) state.pick.gross = 1; // contract v2 allows 1×–2× gross
-const savePick = () => { try { localStorage.setItem('trade-arena:pick', JSON.stringify(state.pick)); } catch { /* storage blocked */ } };
+const savePick = () => { try { localStorage.setItem('trade-arena:pick', JSON.stringify({ ...state.pick, identityVersion: 2 })); } catch { /* storage blocked */ } };
 export const announce = text => { const a = $('#announcer'); if (a) { a.textContent = ''; setTimeout(() => { a.textContent = text; }, 30); } };
 
 async function boot() {
@@ -270,9 +280,12 @@ function renderLeague(view) {
   let hist = [];
   try { hist = JSON.parse(localStorage.getItem('trade-arena:history') || localStorage.getItem('arena-history') || '[]'); } catch { /* storage blocked */ }
   const mine = {};
+  // Legacy race records have no identityVersion: their fable-5-2 is Flavius Tide.
+  // Reattribute in the view only; leave the original stored races untouched.
+  const legacyFable = hist.some(h => h?.identityVersion !== 2 && h?.stats?.some(s => s.id === 'fable-5-2'));
   for (const h of hist) {
     if (!Array.isArray(h.stats) || h.stats.length < 2) continue;
-    [...h.stats].sort((a, b) => b.final - a.final).forEach((s, i) => { const m = (mine[s.id] ??= { id: s.id, races: 0, wins: 0, ret: 0 }); m.races++; if (!i) m.wins++; m.ret += s.totalReturn; });
+    [...h.stats].sort((a, b) => b.final - a.final).forEach((s, i) => { const id = h.identityVersion === 2 || s.id !== 'fable-5-2' ? s.id : 'fable-5-1'; const m = (mine[id] ??= { id, races: 0, wins: 0, ret: 0 }); m.races++; if (!i) m.wins++; m.ret += s.totalReturn; });
   }
   const myRows = Object.values(mine).sort((a, b) => b.wins - a.wins || b.ret - a.ret);
   const sort = state.leagueSort;
@@ -291,6 +304,7 @@ function renderLeague(view) {
     ${league.races.map((r, ri) => `<tr><th scope="row" class="l" data-layout="ta-s15"><span data-layout="ta-s19">${esc(r.title)}</span><div class="faint num" data-layout="ta-s20">${r.market} · ${r.tf} · ${r.start} → ${r.end}${r.blind ? ' · blind' : ''}</div></th>${league.standings.map(s => { const x = r.results.find(q => q.id === s.id); return `<td class="${x ? cls(x.totalReturn) : ''}">${x ? `${x.place <= 3 ? `<span aria-label="place ${x.place}">${['🥇', '🥈', '🥉'][x.place - 1]}</span> ` : ''}${pct(x.totalReturn)}` : '—'}</td>`; }).join('')}<td class="${cls(r.equalWeight)}">${pct(r.equalWeight)}</td><td><button class="btn sm" type="button" data-watch="${ri}" aria-label="Re-run ${esc(r.title)}">▶ Re-run</button></td></tr>`).join('')}
   </tbody></table></div>` : '<div class="panel empty">The official season has not been run yet.</div>'}
   <div class="section-h"><div><div class="eyebrow">Stored only in this browser</div><h2>Simulations completed here</h2></div>${hist.length ? '<button class="btn ghost" type="button" id="clear-hist">Clear this browser’s history</button>' : ''}</div>
+  ${legacyFable ? '<p class="muted">Older races labelled Fable 5.2 used Flavius Tide (now Fable 5.1). They are shown under Fable 5.1 here; saved race data is unchanged.</p>' : ''}
   ${myRows.length ? `<div class="panel table-wrap"><table class="stats"><caption>Head-to-head races finished in this browser (not part of the official league)</caption><thead><tr><th scope="col" class="l">Bot</th><th scope="col">Races</th><th scope="col">Wins</th><th scope="col">Avg return</th></tr></thead><tbody>${myRows.map(m => { const b = bot(m.id); return `<tr><th scope="row" class="l" data-layout="ta-s15"><span data-layout="ta-s16">${avatar(b, 'sm')}${esc(b.name)}</span></th><td>${m.races}</td><td>${m.wins}</td><td class="${cls(m.ret / m.races)}">${pct(m.ret / m.races)}</td></tr>`; }).join('')}</tbody></table></div>` : '<div class="panel empty">Head-to-head races you run in the Arena are tallied here.</div>'}`;
   view.onclick = e => {
     const season = e.target.closest('[data-s]');
