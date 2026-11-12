@@ -31,8 +31,11 @@ test('Wars standalone boots and starts its real game under production CSP', { ti
     assert.equal(initial.ready, true, JSON.stringify(initial));
     assert.ok(initial.frames >= 2 && initial.width > 0, JSON.stringify(initial));
     assert.equal(initial.state, 'title');
-    await page.getByRole('button', { name: /deploy|start|play/i }).first().click({ timeout: 10000 });
-    await page.waitForFunction(() => window.__G?.game?.state === 'playing' || window.__fatal, null, { timeout: 15000 });
+    // The first software-rendered frame may compile shaders after boot is ready.
+    // Wait for the actual menu to be hit-testable, then use a trusted click.
+    await page.locator('#boot').waitFor({ state: 'hidden', timeout: 30000 });
+    await page.getByRole('button', { name: 'Deploy' }).click({ timeout: 45000 });
+    await page.waitForFunction(() => window.__G?.game?.state === 'playing' || window.__fatal, null, { timeout: 30000 });
     assert.equal(await page.evaluate(() => window.__G?.game?.state), 'playing');
     assert.deepEqual(initial.violations, []);
     assert.deepEqual(errors, []);

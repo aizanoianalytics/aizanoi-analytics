@@ -18,6 +18,7 @@ test('Aizanoi Wars is a distinct Arcade route with external assets under strict 
   assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)|<style\b|\son\w+=|\sstyle=/i);
   assert.doesNotMatch(html, /https:\/\/fonts\.googleapis\.com/);
   assert.match(css, /#view/);
+  assert.match(css, /#boot\[hidden\]\s*\{\s*display:\s*none/);
   assert.match(game, /window\.__ready/);
   assert.match(game, /window\.__G/);
   assert.match(game, /window\.__THREE__="180"/);
