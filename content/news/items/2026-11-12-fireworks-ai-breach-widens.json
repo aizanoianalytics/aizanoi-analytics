@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-12-fireworks-ai-breach-widens",
+  "title": "Fireworks AI widens its breach notice to customer datasets and partial model weights",
+  "summary": "Fireworks AI widened its account of an October intrusion: an attacker reached research machines through a third-party cloud provider on 23 October and ran an unauthorised workload the next day, exposing billing details, secrets and a subset of incomplete model weights and datasets for a limited set of accounts. The company says card numbers were not stored and blames a financially motivated group that resells access to language models.",
+  "category": "technology",
+  "priority": 66,
+  "tags": [
+    "fireworks-ai",
+    "security",
+    "data-breach",
+    "cloud",
+    "llm"
+  ],
+  "sources": [
+    {
+      "publisher": "Fireworks AI",
+      "url": "https://fireworks.ai/security/bulletins/october-2026-security-incident-update",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/cyber-crime/2026/11/10/fireworks-ai-gets-burned-twice-as-customer-data-exposure-widens/5308722",
+      "publishedAt": "2026-11-10T15:28:00Z"
+    },
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

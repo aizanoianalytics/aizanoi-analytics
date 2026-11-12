@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-12-tsmc-october-revenue-record",
+  "title": "TSMC books a record October as 2-nanometer output starts to scale",
+  "summary": "TSMC reported record consolidated sales of NT$586.89 billion, about US$17.8 billion, for October, up 59.7% from a year earlier and 14.7% from September. Sales in the first ten months reached NT$4.49 trillion, 43.3% higher. Analysts credited demand for chips made on its 2-nanometer process, and the month ran ahead of the pace implied by fourth-quarter guidance of US$52.3 billion to US$54.3 billion.",
+  "category": "technology",
+  "priority": 64,
+  "tags": [
+    "tsmc",
+    "semiconductors",
+    "revenue",
+    "2nm",
+    "foundry"
+  ],
+  "sources": [
+    {
+      "publisher": "Focus Taiwan (CNA)",
+      "url": "https://focustaiwan.tw/business/202611100014",
+      "publishedAt": "2026-11-10T07:31:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

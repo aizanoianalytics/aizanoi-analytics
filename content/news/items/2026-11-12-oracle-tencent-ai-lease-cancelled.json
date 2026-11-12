@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-12-oracle-tencent-ai-lease-cancelled",
+  "title": "Oracle said to drop a $7 billion AI compute lease for Tencent",
+  "summary": "Oracle has reportedly cancelled a five-year agreement to lease about $7 billion of AI computing to Tencent, capacity that would have run roughly 100,000 advanced Nvidia chips in Southeast Asian data centres. The Financial Times report says US officials raised concerns about export rules, while officials in Guangdong urged Tencent to favour domestic silicon. Oracle, Tencent and the White House did not respond to requests for comment.",
+  "category": "technology",
+  "priority": 60,
+  "tags": [
+    "oracle",
+    "tencent",
+    "export-controls",
+    "data-centers",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Network World",
+      "url": "https://www.networkworld.com/article/4246940/oracle-cancels-7-billion-tencent-ai-chip-deal.html",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

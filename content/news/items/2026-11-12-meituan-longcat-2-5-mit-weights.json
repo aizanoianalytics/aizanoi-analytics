@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-12-meituan-longcat-2-5-mit-weights",
+  "title": "Meituan releases its trillion-parameter LongCat-2.5 under a permissive licence",
+  "summary": "Meituan published the weights of LongCat-2.5 on Hugging Face under the MIT licence, a week after introducing the vision-capable mixture-of-experts model. The release lets teams run a system built for screenshots, video and multi-step coding inside their own networks, while Meituan's hosted API undercuts premium pricing. VentureBeat notes that no US federal restriction specifically names Meituan or LongCat, unlike DeepSeek.",
+  "category": "ai",
+  "priority": 56,
+  "tags": [
+    "meituan",
+    "longcat",
+    "open-weights",
+    "multimodal",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "Hugging Face",
+      "url": "https://huggingface.co/meituan-longcat/LongCat-2.5",
+      "publishedAt": "2026-11-09T00:00:00Z"
+    },
+    {
+      "publisher": "VentureBeat",
+      "url": "https://venturebeat.com/technology/meituan-releases-the-open-weights-of-its-longcat-2-5-llm-with-vision-under-a-permissive-mit-license",
+      "publishedAt": "2026-11-09T23:04:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

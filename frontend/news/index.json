@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-11T05:30:00.000Z",
+  "generatedAt": "2026-11-12T05:30:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-12",
+      "path": "/news/2026-11-12/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-11",
       "path": "/news/2026-11-11/",
@@ -478,6 +483,536 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-12-nvidia-board-weighs-huang-exit",
+      "kind": "daily",
+      "title": "Nvidia's board weighs a future without Jensen Huang as the stock slides",
+      "summary": "Nvidia shares fell 8.6% in after-hours trading after reports that the board met on Wednesday night to discuss chief executive Jensen Huang, who has admitted a relationship with a businesswoman US officials suspect of passing intelligence and advanced chips to China. Bloomberg reported that the company is working with an outside firm to identify possible replacements. The stock had gained 2.9% in the regular session before the late reversal.",
+      "category": "ai",
+      "priority": 92,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "jensen-huang",
+        "semiconductors",
+        "corporate-governance",
+        "national-security"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://wsls.com/business/2026/11/12/asian-shares-mostly-slip-as-nvidias-troubles-weigh-on-ai-stocks-despite-a-rally-on-wall-st",
+          "publishedAt": "2026-11-11T23:11:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://swissinfo.ch/eng/stock-rally-falters-on-nvidia-woes%2C-oil-declines%3A-markets-wrap/92367440",
+          "publishedAt": "2026-11-12T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-dollar-high-december-hike-priced",
+      "kind": "daily",
+      "title": "Traders fully price a December Fed hike as the dollar sits at an 18-month high",
+      "summary": "A Bloomberg gauge of the dollar held at an 18-month high as traders moved to fully price a quarter-point Federal Reserve increase in December, with a small chance of a half-point move. The repricing follows October consumer prices that rose 0.4% on the month and comments from governor Christopher Waller, who said a 50-basis-point hike should be considered. The 30-year Treasury yield slipped to 5.32% on haven demand.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "inflation",
+        "dollar",
+        "treasuries",
+        "interest-rates"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://swissinfo.ch/eng/stock-rally-falters-on-nvidia-woes%2C-oil-declines%3A-markets-wrap/92367440",
+          "publishedAt": "2026-11-12T02:00:00.000Z"
+        },
+        {
+          "publisher": "Charles Schwab",
+          "url": "https://www.schwab.com/learn/story/stock-market-update-open",
+          "publishedAt": "2026-11-11T14:22:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-anthropic-ipo-oversubscribed",
+      "kind": "daily",
+      "title": "Anthropic's offering draws several times the shares on sale",
+      "summary": "Orders for Anthropic's offering have run to multiple times the 825 million shares on sale at $70 to $78, Bloomberg reported, helped by large anchor bids from institutions. At the top of the range the company raises up to $64.4 billion, or about $90.4 billion with a $26 billion private placement to seven chip and software partners. Shares are due to price on 18 November and trade on Nasdaq as ANT the next day.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "nasdaq",
+        "valuation",
+        "artificial-intelligence"
+      ],
+      "sources": [
+        {
+          "publisher": "Stock Analysis",
+          "url": "https://stockanalysis.com/news/anthropic-ipo-multiple-times-oversubscribed/",
+          "publishedAt": "2026-11-11T14:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://swissinfo.ch/eng/stock-rally-falters-on-nvidia-woes%2C-oil-declines%3A-markets-wrap/92367440",
+          "publishedAt": "2026-11-12T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-united-pochettino-agreement-in-principle",
+      "kind": "daily",
+      "title": "United agree in principle with Pochettino as Carrick's exit nears",
+      "summary": "Manchester United have a verbal agreement in principle with Mauricio Pochettino to become head coach, Sky Sports reported, with Michael Carrick still in charge on Wednesday but likely to be dismissed before the end of the week. United would owe about £7 million to buy Pochettino out of his US Soccer contract and expect him to stay with the USA for two games against Haiti first.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "manchester-united",
+        "pochettino",
+        "carrick",
+        "premier-league",
+        "coaching"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/12040/13610949/mauricio-pochettino-man-utd-strike-agreement-with-michael-carricks-potential-successor",
+          "publishedAt": "2026-11-11T21:38:00.000Z"
+        },
+        {
+          "publisher": "SuperSport (AFP)",
+          "url": "https://supersport.com/football/news/8c554e92-a669-4321-91f4-7b133c9c83fb/man-utd-reach-verbal-agreement-with-pochettino-to-replace-carrick",
+          "publishedAt": "2026-11-11T12:33:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-tsmc-stakes-anthropic-openai",
+      "kind": "daily",
+      "title": "TSMC puts up to $1 billion of its own balance sheet behind Anthropic and OpenAI",
+      "summary": "TSMC's board approved staking up to $500 million in Anthropic at its IPO price and up to $500 million in OpenAI preferred stock, putting supplier capital behind two of the largest buyers of its advanced chips. The same meeting cleared about $40.9 billion of capital appropriations, a $500 million chip-ecosystem investment vehicle and a dividend rise to NT$9 a share from NT$7. TSMC did not say when the OpenAI investment closes.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "anthropic",
+        "openai",
+        "semiconductors",
+        "investment"
+      ],
+      "sources": [
+        {
+          "publisher": "MLQ.ai",
+          "url": "https://mlq.ai/news/tsmc-will-invest-up-to-1-billion-in-anthropic-and-openai-and-set-up-a-chip-ecosystem-investment-company/",
+          "publishedAt": "2026-11-11T03:17:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-coreweave-quarter-restores-ai-trade",
+      "kind": "daily",
+      "title": "CoreWeave's quarter restores the AI trade, and Nvidia rises with it",
+      "summary": "CoreWeave jumped about 25% after reporting a third-quarter loss smaller than analysts expected, raising its full-year revenue forecast and pointing to roughly $9 billion of customer prepayments and deposits due in the next three months. The S&P 500 rose 1.3% and the Nasdaq 1.6%, with Nvidia up 2.9% at $173.73. Baird cut Nvidia to neutral that day, citing its chief executive's position and export risk.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "coreweave",
+        "nvidia",
+        "markets",
+        "earnings",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "The Motley Fool",
+          "url": "https://www.fool.com/coverage/stock-market-today/2026/11/11/stock-market-today-nov-11-nvidia-rebounds-as-coreweave-earnings-reignite-the-ai-trade",
+          "publishedAt": "2026-11-11T21:45:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://wsls.com/business/2026/11/12/asian-shares-mostly-slip-as-nvidias-troubles-weigh-on-ai-stocks-despite-a-rally-on-wall-st",
+          "publishedAt": "2026-11-11T23:11:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-fireworks-ai-breach-widens",
+      "kind": "daily",
+      "title": "Fireworks AI widens its breach notice to customer datasets and partial model weights",
+      "summary": "Fireworks AI widened its account of an October intrusion: an attacker reached research machines through a third-party cloud provider on 23 October and ran an unauthorised workload the next day, exposing billing details, secrets and a subset of incomplete model weights and datasets for a limited set of accounts. The company says card numbers were not stored and blames a financially motivated group that resells access to language models.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "fireworks-ai",
+        "security",
+        "data-breach",
+        "cloud",
+        "llm"
+      ],
+      "sources": [
+        {
+          "publisher": "Fireworks AI",
+          "url": "https://fireworks.ai/security/bulletins/october-2026-security-incident-update",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Register",
+          "url": "https://www.theregister.com/cyber-crime/2026/11/10/fireworks-ai-gets-burned-twice-as-customer-data-exposure-widens/5308722",
+          "publishedAt": "2026-11-10T15:28:00.000Z"
+        },
+        {
+          "publisher": "The Hacker News",
+          "url": "https://thehackernews.com/2026/11/fireworks-ai-breach-widens-to-expose.html",
+          "publishedAt": "2026-11-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-tsmc-october-revenue-record",
+      "kind": "daily",
+      "title": "TSMC books a record October as 2-nanometer output starts to scale",
+      "summary": "TSMC reported record consolidated sales of NT$586.89 billion, about US$17.8 billion, for October, up 59.7% from a year earlier and 14.7% from September. Sales in the first ten months reached NT$4.49 trillion, 43.3% higher. Analysts credited demand for chips made on its 2-nanometer process, and the month ran ahead of the pace implied by fourth-quarter guidance of US$52.3 billion to US$54.3 billion.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "semiconductors",
+        "revenue",
+        "2nm",
+        "foundry"
+      ],
+      "sources": [
+        {
+          "publisher": "Focus Taiwan (CNA)",
+          "url": "https://focustaiwan.tw/business/202611100014",
+          "publishedAt": "2026-11-10T07:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-england-croatia-kane-record-cap",
+      "kind": "daily",
+      "title": "England need a point at Wembley, and Kane needs one cap for the record",
+      "summary": "England host Croatia at Wembley on Thursday knowing a draw confirms a top-two finish in Nations League Group A3 and a quarter-final place, three days before they meet Spain in Madrid. Harry Kane is expected to start and pass Peter Shilton's record of 125 caps. Marc Guehi has withdrawn with a hip injury and Dan Burn replaced him; Croatia are without the suspended Ivan Perisic and five injured players.",
+      "category": "football",
+      "priority": 62,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "england",
+        "croatia",
+        "nations-league",
+        "harry-kane",
+        "wembley"
+      ],
+      "sources": [
+        {
+          "publisher": "The Standard",
+          "url": "https://standard.co.uk/sport/football/england-xi-vs-croatia-confirmed-team-news-predicted-lineup-injury-latest-nations-league-b1304147.html",
+          "publishedAt": "2026-11-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "Goal.com",
+          "url": "https://goal.com/en/news/england-croatia-uefa-nations-league-preview/blt30be8a572ac86500",
+          "publishedAt": "2026-11-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-oracle-tencent-ai-lease-cancelled",
+      "kind": "daily",
+      "title": "Oracle said to drop a $7 billion AI compute lease for Tencent",
+      "summary": "Oracle has reportedly cancelled a five-year agreement to lease about $7 billion of AI computing to Tencent, capacity that would have run roughly 100,000 advanced Nvidia chips in Southeast Asian data centres. The Financial Times report says US officials raised concerns about export rules, while officials in Guangdong urged Tencent to favour domestic silicon. Oracle, Tencent and the White House did not respond to requests for comment.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oracle",
+        "tencent",
+        "export-controls",
+        "data-centers",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Network World",
+          "url": "https://www.networkworld.com/article/4246940/oracle-cancels-7-billion-tencent-ai-chip-deal.html",
+          "publishedAt": "2026-11-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-openai-shared-token-allowance",
+      "kind": "daily",
+      "title": "OpenAI folds ChatGPT and Codex into one token allowance from December",
+      "summary": "From December, OpenAI's Plus, Pro and Business plans will meter usage in tokens and draw one shared allowance across ChatGPT and Codex, according to the company's help centre. Instant chat is exempt, and remaining usage will appear under Settings. The same month, six older GPT-5 and o3 snapshots leave the API on 11 December. When the pool runs out, subscribers can wait for a reset, upgrade or buy credits.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "chatgpt",
+        "codex",
+        "pricing",
+        "api"
+      ],
+      "sources": [
+        {
+          "publisher": "DeAI News",
+          "url": "https://deai.org/news/openai-shared-token-allowance-codex",
+          "publishedAt": "2026-11-12T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-italy-france-mbappe-doubt",
+      "kind": "daily",
+      "title": "France can seal a quarter-final place in Milan while Mbappe sits out training",
+      "summary": "France visit San Siro three points clear in Group A1 knowing a win over Italy books a top-two finish. Kylian Mbappe did not train on Wednesday and the staff said only that he is under treatment, while Marcus Thuram left camp with a hamstring problem and Ousmane Dembele, William Saliba and Pierre Kalulu are also out. Italy, a point above Belgium, called up Federico Gatti after Gianluca Mancini withdrew.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "italy",
+        "france",
+        "nations-league",
+        "mbappe",
+        "san-siro"
+      ],
+      "sources": [
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/sports/2026/11/11/italy-vs-france-uefa-nations-league-preview-team-news",
+          "publishedAt": "2026-11-11T00:00:00.000Z"
+        },
+        {
+          "publisher": "Sports Mole",
+          "url": "https://www.sportsmole.co.uk/football/italy/uefa-nations-league/preview/italy-vs-france-prediction-team-news-lineups_608854.html",
+          "publishedAt": "2026-11-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-meituan-longcat-2-5-mit-weights",
+      "kind": "daily",
+      "title": "Meituan releases its trillion-parameter LongCat-2.5 under a permissive licence",
+      "summary": "Meituan published the weights of LongCat-2.5 on Hugging Face under the MIT licence, a week after introducing the vision-capable mixture-of-experts model. The release lets teams run a system built for screenshots, video and multi-step coding inside their own networks, while Meituan's hosted API undercuts premium pricing. VentureBeat notes that no US federal restriction specifically names Meituan or LongCat, unlike DeepSeek.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meituan",
+        "longcat",
+        "open-weights",
+        "multimodal",
+        "china"
+      ],
+      "sources": [
+        {
+          "publisher": "Hugging Face",
+          "url": "https://huggingface.co/meituan-longcat/LongCat-2.5",
+          "publishedAt": "2026-11-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "VentureBeat",
+          "url": "https://venturebeat.com/technology/meituan-releases-the-open-weights-of-its-longcat-2-5-llm-with-vision-under-a-permissive-mit-license",
+          "publishedAt": "2026-11-09T23:04:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-nintendo-dmca-modchip-firmware",
+      "kind": "daily",
+      "title": "Nintendo's first modchip-firmware takedown wipes 144 GitHub repositories",
+      "summary": "GitHub disabled 144 repositories after Nintendo of America sent a 6 November notice targeting firmware for Switch modchips including Picofly, SX Core, SX Lite and HWFLY. Nintendo named a single repository and GitHub removed its whole fork network, accepting that the copies infringed to the same extent. Nintendo says the code bypasses its copy protections. Installed chips keep working, but updates and new installs become harder.",
+      "category": "technology",
+      "priority": 54,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nintendo",
+        "github",
+        "dmca",
+        "firmware",
+        "copyright"
+      ],
+      "sources": [
+        {
+          "publisher": "Tom's Hardware",
+          "url": "https://www.tomshardware.com/video-games/nintendo/nintendo-unleashes-dmca-takedown-wave-against-open-source-switch-modchip-firmware-144-tools-disabled-picofly-sx-core-and-hwfly-among-casualties-following-criminal-trial-victory",
+          "publishedAt": "2026-11-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-12-gemini-decision-1-api",
+      "kind": "daily",
+      "title": "Gemini Decision 1 turns bulk classification into a cheap API call",
+      "summary": "Google released Gemini Decision 1, a model that answers batches of closed-ended questions rather than writing prose, joining Jev and OpenAI's Luna decision model. It supports yes/no, multiple-choice and rubric-scoring questions, costs 10 cents per million input tokens with free output, and accepts text, images, audio, video and PDFs. Simon Willison's test on a video returned calibrated probabilities instead of the hard zeros and ones rivals produce.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-11-12T05:00:00.000Z",
+      "updatedAt": "2026-11-12T05:00:00.000Z",
+      "retrievedAt": "2026-11-12T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "api",
+        "classification",
+        "pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "Simon Willison's Weblog",
+          "url": "https://simonwillison.net/2026/Nov/11/gemini-decisions-api/",
+          "publishedAt": "2026-11-11T22:03:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-11-anthropic-ipo-price-range",
       "kind": "daily",
