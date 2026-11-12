@@ -13,7 +13,7 @@ test('Snake Royale is a first-party desktop module with its own icon', () => {
   assert.equal(app.label, 'AI Snake Royale');
   assert.equal(app.module, '/js/v3/apps/snake-royale/src/index.js');
   assert.equal(app.icon, '/assets/icons/aizanoi-snake-royale.svg');
-  assert.match(readFileSync(new URL('../frontend/js/v3/brand-platform.js', import.meta.url), 'utf8'), /'games','dungeon','snake-royale'/);
+  assert.match(readFileSync(new URL('../frontend/js/v3/brand-platform.js', import.meta.url), 'utf8'), /'games','dungeon','aizanoi-wars','snake-royale'/);
   assert.match(readFileSync(new URL('../frontend/assets/icons/aizanoi-snake-royale.svg', import.meta.url), 'utf8'), /<svg/);
 });
 

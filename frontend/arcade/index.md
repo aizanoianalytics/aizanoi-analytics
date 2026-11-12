@@ -5,6 +5,7 @@ Scope: public static arena pages, local bot workers and shared browser controls.
 ## Arena owners
 
 - [AI Snake Royale](snake-royale/index.md) — simultaneous snake arena and shared shell renderer.
+- [Aizanoi Wars](aizanoi-wars/index.md) — cinematic first-person harbor-action game; standalone and desktop app.
 - [Chess](chess/index.md) — legal moves, board and worker matches.
 - [Maze Chase](maze-chase/index.md) — maze, ghosts and human controls.
 - [Capture the Flag](capture-flag/index.md) — team arena and accessibility.

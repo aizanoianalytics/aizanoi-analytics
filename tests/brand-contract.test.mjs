@@ -20,6 +20,7 @@ const canonicalIcons = [
   'aizanoi-journal.svg',
   'aizanoi-labs.svg',
   'aizanoi-arcade.svg',
+  'aizanoi-wars.svg',
   'aizanoi-snake-royale.svg'
 ];
 const retiredCatalogIconNames = [

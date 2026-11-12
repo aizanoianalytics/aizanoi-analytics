@@ -10,6 +10,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - [`calculator/index.md`](calculator/index.md) — Calculator
 - [`camera/index.md`](camera/index.md) — local Camera with explicit media capability
 - [`dungeon/index.md`](dungeon/index.md) — Aizanoi Dungeon: Aizo's Awakening (Three.js 3D dungeon-crawler RPG)
+- [`aizanoi-wars/index.md`](aizanoi-wars/index.md) — independent first-person harbor-action game
 - [`forge/index.md`](forge/index.md) — Aizanoi Forge
 - [`games/index.md`](games/index.md) — Aizanoi Arcade launcher and games
 - [`journal/index.md`](journal/index.md) — Aizanoi Journal
