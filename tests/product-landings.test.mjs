@@ -92,7 +92,8 @@ test('secondary product placeholders state their current status honestly', () =>
 test('Arcade landing matches the seven-game module catalog', () => {
   const html = read('frontend/arcade/index.html');
   for (const title of ['Sudoku', 'Solitaire', 'Marble Serpent', 'Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(title));
-  assert.match(html, /Sixteen experiences that run locally in your browser/i);
+  assert.match(html, /Seventeen experiences that run locally in your browser/i);
+  assert.match(html, /href="\/arcade\/aizanoi-wars\/"/);
   assert.match(html, /AI Trade Arena/);
   assert.match(html, /href="\/arcade\/trade-arena\/"/);
   assert.match(html, /href="\/\?app=trade-arena"/);

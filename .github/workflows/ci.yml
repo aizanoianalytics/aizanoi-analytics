@@ -277,6 +277,7 @@ jobs:
           ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
         run: |
           set -o pipefail
+          node --test tests/browser/aizanoi-wars.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-wars.log
           node --test tests/browser/aizanoi-os-snake-royale.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-snake-royale.log
           node --test tests/browser/aizanoi-os-videos.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-videos.log
       - name: Upload browser diagnostics

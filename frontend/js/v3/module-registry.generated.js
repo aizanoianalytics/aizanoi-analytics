@@ -11,6 +11,15 @@ export const INSTALLED_MODULES = Object.freeze([
   }),
   Object.freeze({
     manifestVersion: 1,
+    id: "aizanoi-wars",
+    type: "desktop-app",
+    entry: "/js/v3/apps/aizanoi-wars/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze([]),
+    provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
     id: "analytics",
     type: "desktop-app",
     entry: "/js/v3/apps/analytics/src/index.js",
