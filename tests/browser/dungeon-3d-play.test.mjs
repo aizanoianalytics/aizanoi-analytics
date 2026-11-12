@@ -92,6 +92,10 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
     // Start a run with a real trusted click, never evaluate(el.click()).
     await page.locator('.az-dungeon-begin').click();
     await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 15000 });
+    const mission = page.locator('.az-hud-objective');
+    await mission.waitFor({ state: 'visible' });
+    assert.match(await mission.textContent(), /Hold the chamber · [1-9]\d* \/ [1-9]\d* remain/,
+      'the mission counts queued portals before they spawn');
     // Spawn portals telegraph for one simulated second before materializing.
     await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(70));
 

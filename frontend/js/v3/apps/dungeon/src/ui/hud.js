@@ -79,7 +79,9 @@ export function createHud({ container, document: doc = globalThis.document, onAs
   const wave = element(doc, 'p', 'az-hud-wave', 'Wave 1');
   const gold = element(doc, 'p', 'az-hud-gold', '0 gold');
   gold.setAttribute('aria-label', 'Gold: 0');
-  run.append(chapter, wave, gold);
+  const objective = element(doc, 'p', 'az-hud-objective');
+  objective.hidden = true;
+  run.append(chapter, wave, gold, objective);
   top.append(run);
 
   // The vitals plate. One instrument panel in the lower-left corner carries
@@ -151,7 +153,7 @@ export function createHud({ container, document: doc = globalThis.document, onAs
   const elements = {
     health: health.value, stamina: stamina.value, xp: xp.value,
     boss: boss.value, bossWrap: boss.wrapper, bossName,
-    gold, combo, chapter, wave, crosshair, damageVignette: vignette,
+    gold, combo, chapter, wave, objective, crosshair, damageVignette: vignette,
     lootFeed, blessings, announcer, pause, help,
     assistChip, special: special.value, specialWrap: special.wrapper,
   };
@@ -173,6 +175,15 @@ export function createHud({ container, document: doc = globalThis.document, onAs
     }
     if (state.chapter !== undefined) setText(chapter, `Chapter ${state.chapter}`);
     if (state.wave !== undefined) setText(wave, `Wave ${state.wave}`);
+    if (state.objective !== undefined) {
+      setHidden(objective, !state.objective);
+      if (state.objective) {
+        const { active, remaining, total } = state.objective;
+        setText(objective, active ? `Hold the chamber · ${remaining} / ${total} remain` : 'Claim the reward chest');
+        writeAttr(objective, 'aria-label', active
+          ? `Objective: ${remaining} of ${total} enemies remain` : 'Objective: claim the reward chest');
+      }
+    }
     if (state.combo !== undefined) {
       const count = Math.max(0, Math.floor(Number(state.combo) || 0));
       setHidden(combo, count < 2);

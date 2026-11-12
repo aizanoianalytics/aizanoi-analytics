@@ -329,6 +329,26 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+/* Saltline's always-visible mission board, remapped to Dungeon's wave/chest
+   loop. No overlay or extra input is introduced; the combat lens stays clear. */
+.az-hud-objective {
+  margin-top: 0.7rem !important;
+  padding: 0.4rem 0.65rem;
+  max-width: min(17rem, 44vw);
+  border-right: 2px solid var(--az-bronze-bright);
+  background: rgba(7, 8, 8, 0.78);
+  color: var(--az-ivory);
+  font-family: var(--az-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.az-hud-objective[hidden] { display: none; }
+.az-hud-objective::before {
+  content: 'OBJECTIVE / ';
+  color: var(--az-bronze-bright);
+}
 .az-hud-gold {
   margin-top: 0.2rem !important;
   color: #f1c86f;

@@ -48,6 +48,33 @@ test('runtime owns focused controls and lifecycle guards', () => {
   assert.match(source, /shadowMap\.enabled\s*=\s*true/);
 });
 
+test('cover impact routes an audible, restrained cue through the existing sound bus', () => {
+  const app = new GameApp({ container: {} });
+  const heard = [];
+  app.state = { player: { position: { x: 0, z: 0 } }, enemies: [] };
+  app.feedback = { emit: (...args) => heard.push(args) };
+  app.handleEvent({ type: 'cover-hit', x: 2, z: 3 });
+  assert.deepEqual(heard, [['bow-hit', { position: { x: 2, y: 0.8, z: 3 }, intensity: 0.35 }]]);
+});
+
+test('runtime objective includes portals not yet materialised as enemies', () => {
+  const app = new GameApp({ container: {} });
+  let snapshot;
+  app.hud = { update: (state) => { snapshot = state; } };
+  app.state = {
+    player: { hp: 100, maxHp: 100, stamina: 100, maxStamina: 100, xp: 0, xpToNext: 50, gold: 0, combo: 0 },
+    enemies: [{ id: 'live', dead: false, archetype: 'chaser' }, { id: 'down', dead: true, archetype: 'chaser' }],
+    pendingSpawns: [{ id: 'portal' }], wave: { active: true, chapter: 2, total: 4 }, chapter: 2,
+    blessings: [], settings: {},
+  };
+  app.updateHud();
+  assert.deepEqual(snapshot.objective, { active: true, remaining: 2, total: 4 });
+  app.state.wave.active = false;
+  app.state.wave.complete = true;
+  app.updateHud();
+  assert.deepEqual(snapshot.objective, { active: false, remaining: 0, total: 4 });
+});
+
 test('directional keys and touch pad move in the on-screen direction', () => {
   const app = new GameApp({ container: {} });
   app.camera = new THREE.PerspectiveCamera(52, 1, 0.1, 80);

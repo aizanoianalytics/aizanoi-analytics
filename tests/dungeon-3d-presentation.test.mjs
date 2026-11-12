@@ -68,6 +68,17 @@ test('HUD factory exposes an update API and semantic status regions', () => {
   assert.equal(typeof hud.destroy, 'function');
 });
 
+test('mission tracker counts live and pending enemies then points to the reward', () => {
+  const hud = createHud({ container: new FakeElement('div'), document: fakeDocument() });
+  hud.update({ objective: { active: true, remaining: 5, total: 7 } });
+  assert.equal(hud.elements.objective.textContent, 'Hold the chamber · 5 / 7 remain');
+  assert.equal(hud.elements.objective.getAttribute('aria-label'), 'Objective: 5 of 7 enemies remain');
+  hud.update({ objective: { active: false, remaining: 0, total: 7 } });
+  assert.equal(hud.elements.objective.textContent, 'Claim the reward chest');
+  hud.update({ objective: null });
+  assert.equal(hud.elements.objective.hidden, true);
+});
+
 test('HUD loot feed keeps the last four entries without crashing', () => {
   const container = new FakeElement('div');
   const hud = createHud({ container, document: fakeDocument() });

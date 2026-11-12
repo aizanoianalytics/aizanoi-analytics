@@ -97,6 +97,33 @@ test('enemy archetypes choose distinct role intents and archers fire projectiles
   assert.ok(state.projectiles.some((shot) => shot.ownerId === 'a'));
 });
 
+test('columns intercept arrows and hostile bolts before their target, including a fast crossing', () => {
+  const state = createGameState('cover');
+  state.obstacles = [{ x: 0, z: 0, radius: 1, kind: 'column' }];
+  state.player.position = { x: 4, z: 0 };
+  state.enemies = [enemy('archer', 'archer', -4, 0, { speed: 0, hp: 100 })];
+  state.projectiles = [
+    { x: -2, z: 0, vx: 240, vz: 0, radius: 0.2, ttl: 2, source: 'enemy', ownerId: 'archer', damage: 20 },
+    { x: 2, z: 0, vx: -240, vz: 0, radius: 0.2, ttl: 2, source: 'player', ownerId: 'archer', damage: 20 },
+  ];
+  stepGame(state, {}, 1 / 60);
+  assert.equal(state.player.hp, state.player.maxHp, 'cover protects the player');
+  assert.equal(state.enemies[0].hp, 100, 'cover protects the enemy too');
+  assert.equal(state.projectiles.length, 0, 'both projectiles are consumed');
+  assert.equal(state.events.filter((event) => event.type === 'cover-hit').length, 2);
+  for (const event of state.events.filter((entry) => entry.type === 'cover-hit')) {
+    assert.ok(Math.abs(event.x) <= 1.2, `cover impact must be on the column, got ${event.x}`);
+  }
+
+  state.obstacles = [];
+  state.projectiles = [{ x: 2, z: 0, vx: -120, vz: 0, radius: 0.2, ttl: 2,
+    source: 'player', ownerId: 'archer', damage: 20 }];
+  stepGame(state, {}, 1 / 60);
+  assert.equal(state.enemies[0].hp, 100, 'no accidental distant hit without cover');
+  tick(state, 0.04);
+  assert.ok(state.enemies[0].hp < 100, 'an unobstructed shot can still connect');
+});
+
 test('boss changes phase below half health and enrages below one quarter', () => {
   const state = createGameState(1);
   state.enemies = [enemy('boss', 'boss', 8, 0, { hp: 240, maxHp: 500, phase: 1 })];
