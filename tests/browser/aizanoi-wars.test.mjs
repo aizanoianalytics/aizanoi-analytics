@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const csp = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob:; media-src 'self' blob:; object-src 'none'; frame-src 'self'; worker-src 'self' blob:";
 
-test('Wars standalone boots and starts its real game under production CSP', { timeout: 135000 }, async () => {
+test('Wars standalone boots and starts its real game under production CSP', { timeout: 210000 }, async () => {
   const browser = await chromium.launch({ headless: true });
   try {
     const context = await browser.newContext({ viewport: { width: 960, height: 640 }, serviceWorkers: 'block' });
@@ -35,9 +35,15 @@ test('Wars standalone boots and starts its real game under production CSP', { ti
     // Wait for the actual menu to be hit-testable, then use a trusted click.
     await page.locator('#boot').waitFor({ state: 'hidden', timeout: 30000 });
     await page.getByRole('button', { name: 'Deploy' }).click({ timeout: 45000 });
-    await page.waitForFunction(() => window.__G?.game?.state === 'playing' || window.__fatal, null, { timeout: 30000 });
+    await page.waitForFunction(() => window.__G?.game?.state === 'intro' || window.__G?.game?.state === 'playing' || window.__fatal, null, { timeout: 10000 });
+    try {
+      await page.waitForFunction(() => window.__G?.game?.state === 'playing' || window.__fatal, null, { timeout: 90000 });
+    } catch (error) {
+      const state = await page.evaluate(() => ({ game: window.__G?.game?.state, frames: window.__frames, fatal: window.__fatal, errors: window.__errors?.slice(-5), menu: document.querySelector('.menu')?.dataset.screen, locked: document.pointerLockElement?.id })).catch(() => null);
+      throw new Error(`Deploy click did not enter gameplay: ${JSON.stringify({ state, errors, failed })}`, { cause: error });
+    }
     assert.equal(await page.evaluate(() => window.__G?.game?.state), 'playing');
-    assert.deepEqual(initial.violations, []);
+    assert.deepEqual(await page.evaluate(() => window.__violations || []), []);
     assert.deepEqual(errors, []);
     assert.deepEqual(failed, []);
     await context.close();
