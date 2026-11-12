@@ -31,6 +31,7 @@ body { background: var(--ink); color: var(--bone); overflow: hidden; font-family
 .boot-bar { width: min(320px, 70vw); height: 2px; background: #23282c; }
 .boot-bar i { display: block; height: 100%; width: 0%; background: var(--signal); transition: width .25s ease; }
 #fatal { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + var(--sab)) max(16px, env(safe-area-inset-left, 0px)); font: 12px/1.4 var(--f-mono); color: #ffb4a8; background: rgba(40, 8, 4, .85); white-space: pre-wrap; z-index: 99; max-height: 40%; overflow: auto; pointer-events: auto; -webkit-user-select: text; user-select: text; }
+#bench { position: absolute; left: 12px; top: 12px; z-index: 90; margin: 0; padding: 10px 12px; font: 12px/1.45 ui-monospace, monospace; color: #d8f0d0; background: rgba(0, 0, 0, .72); white-space: pre-wrap; max-width: min(560px, 90vw); pointer-events: none; }
 
 /* =====================================================================  HUD  */
 .hud { position: absolute; inset: 0; opacity: 0; transition: opacity .35s ease; pointer-events: none; color: var(--bone); text-shadow: var(--shadow); }

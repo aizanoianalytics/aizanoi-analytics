@@ -22,6 +22,7 @@ test('Aizanoi Wars is a distinct Arcade route with external assets under strict 
   assert.match(game, /window\.__ready/);
   assert.match(game, /window\.__G/);
   assert.match(game, /window\.__THREE__="180"/);
+  assert.doesNotMatch(game, /style="|\.style\.cssText/, 'game HUD and benchmark must not inject inline style under production CSP');
   assert.match(read('arcade/index.html'), /href="\/arcade\/aizanoi-wars\/"/);
   assert.ok(existsSync(new URL('arcade/aizanoi-wars/THIRD_PARTY_NOTICES.txt', root)));
 });
