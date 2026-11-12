@@ -2091,6 +2091,9 @@ export class GameApp {
       this.feedback.emit(event.chain === 3 ? 'crit' : 'hit', { damage: event.damage, position });
     }
     else if (event.type === 'bow-hit') this.feedback.emit(event.crit ? 'crit' : 'bow-hit', { damage: event.damage, position });
+    else if (event.type === 'cover-hit') {
+      this.feedback.emit('bow-hit', { position: { x: event.x, y: 0.8, z: event.z }, intensity: 0.35 });
+    }
     else if (event.type === 'bow-missed') {
       // The bow did nothing, and the player is told why instead of the input
       // looking broken.
@@ -2473,6 +2476,11 @@ export class GameApp {
       health: player.hp, maxHealth: player.maxHp, stamina: player.stamina, maxStamina: player.maxStamina,
       xp: player.xp, xpToNext: player.xpToNext, gold: player.gold, combo: player.combo,
       chapter: this.state.chapter, wave: this.state.wave.chapter,
+      objective: this.state.wave.active
+        ? { active: true, remaining: this.state.enemies.filter((enemy) => !enemy.dead).length
+          + this.state.pendingSpawns.length, total: this.state.wave.total }
+        : this.state.wave.complete
+          ? { active: false, remaining: 0, total: this.state.wave.total } : null,
       boss: boss ? { name: 'Marble Minotaur', health: boss.hp, maxHealth: boss.maxHp } : null,
       blessings: this.state.blessings, blessingLabels: BLESSING_LABELS,
       blessingLevels: { ...(this.state.blessingLevels || {}) },

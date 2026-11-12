@@ -1018,12 +1018,41 @@ const updateEnemy = (state, enemy, dt) => {
   }
 };
 
+// Swept circle against each solid prop: a fast arrow cannot tunnel through
+// a column between fixed ticks. Return the FIRST point of impact, so the
+// small impact effect belongs to the column rather than the far endpoint.
+const projectileCoverImpact = (fromX, fromZ, shot, obstacles) => {
+  const dx = shot.x - fromX;
+  const dz = shot.z - fromZ;
+  const lengthSquared = dx * dx + dz * dz;
+  let earliest = Infinity;
+  for (const obstacle of obstacles) {
+    const ox = fromX - obstacle.x;
+    const oz = fromZ - obstacle.z;
+    const radius = obstacle.radius + shot.radius;
+    const projection = ox * dx + oz * dz;
+    const discriminant = projection * projection - lengthSquared * (ox * ox + oz * oz - radius * radius);
+    if (discriminant < 0 || lengthSquared === 0) continue;
+    const fraction = Math.max(0, (-projection - Math.sqrt(discriminant)) / lengthSquared);
+    if (fraction <= 1) earliest = Math.min(earliest, fraction);
+  }
+  return earliest === Infinity ? null : { x: fromX + dx * earliest, z: fromZ + dz * earliest };
+};
+
 const updateProjectiles = (state, dt) => {
   for (const shot of state.projectiles) {
+    const fromX = shot.x;
+    const fromZ = shot.z;
     shot.x += shot.vx * dt;
     shot.z += shot.vz * dt;
     shot.ttl -= dt;
     if (shot.ttl <= 0) continue;
+    const impact = projectileCoverImpact(fromX, fromZ, shot, state.obstacles || []);
+    if (impact) {
+      shot.ttl = 0;
+      emitEvent(state, { type: 'cover-hit', ...impact, at: state.time });
+      continue;
+    }
     if (shot.source === 'player') {
       if (!Array.isArray(shot.hitIds)) shot.hitIds = [];
       // The arrow hits the first enemy it touches (not only ownerId). ownerId
