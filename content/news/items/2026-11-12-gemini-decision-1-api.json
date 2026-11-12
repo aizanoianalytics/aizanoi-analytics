@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-12-gemini-decision-1-api",
+  "title": "Gemini Decision 1 turns bulk classification into a cheap API call",
+  "summary": "Google released Gemini Decision 1, a model that answers batches of closed-ended questions rather than writing prose, joining Jev and OpenAI's Luna decision model. It supports yes/no, multiple-choice and rubric-scoring questions, costs 10 cents per million input tokens with free output, and accepts text, images, audio, video and PDFs. Simon Willison's test on a video returned calibrated probabilities instead of the hard zeros and ones rivals produce.",
+  "category": "ai",
+  "priority": 52,
+  "tags": [
+    "google",
+    "gemini",
+    "api",
+    "classification",
+    "pricing"
+  ],
+  "sources": [
+    {
+      "publisher": "Simon Willison's Weblog",
+      "url": "https://simonwillison.net/2026/Nov/11/gemini-decisions-api/",
+      "publishedAt": "2026-11-11T22:03:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

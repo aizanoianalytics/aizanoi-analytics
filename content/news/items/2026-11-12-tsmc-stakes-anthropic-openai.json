@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-12-tsmc-stakes-anthropic-openai",
+  "title": "TSMC puts up to $1 billion of its own balance sheet behind Anthropic and OpenAI",
+  "summary": "TSMC's board approved staking up to $500 million in Anthropic at its IPO price and up to $500 million in OpenAI preferred stock, putting supplier capital behind two of the largest buyers of its advanced chips. The same meeting cleared about $40.9 billion of capital appropriations, a $500 million chip-ecosystem investment vehicle and a dividend rise to NT$9 a share from NT$7. TSMC did not say when the OpenAI investment closes.",
+  "category": "ai",
+  "priority": 72,
+  "tags": [
+    "tsmc",
+    "anthropic",
+    "openai",
+    "semiconductors",
+    "investment"
+  ],
+  "sources": [
+    {
+      "publisher": "MLQ.ai",
+      "url": "https://mlq.ai/news/tsmc-will-invest-up-to-1-billion-in-anthropic-and-openai-and-set-up-a-chip-ecosystem-investment-company/",
+      "publishedAt": "2026-11-11T03:17:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

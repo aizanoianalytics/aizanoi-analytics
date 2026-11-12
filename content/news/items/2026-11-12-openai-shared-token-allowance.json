@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-12-openai-shared-token-allowance",
+  "title": "OpenAI folds ChatGPT and Codex into one token allowance from December",
+  "summary": "From December, OpenAI's Plus, Pro and Business plans will meter usage in tokens and draw one shared allowance across ChatGPT and Codex, according to the company's help centre. Instant chat is exempt, and remaining usage will appear under Settings. The same month, six older GPT-5 and o3 snapshots leave the API on 11 December. When the pool runs out, subscribers can wait for a reset, upgrade or buy credits.",
+  "category": "ai",
+  "priority": 58,
+  "tags": [
+    "openai",
+    "chatgpt",
+    "codex",
+    "pricing",
+    "api"
+  ],
+  "sources": [
+    {
+      "publisher": "DeAI News",
+      "url": "https://deai.org/news/openai-shared-token-allowance-codex",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

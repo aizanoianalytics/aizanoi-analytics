@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-12-nintendo-dmca-modchip-firmware",
+  "title": "Nintendo's first modchip-firmware takedown wipes 144 GitHub repositories",
+  "summary": "GitHub disabled 144 repositories after Nintendo of America sent a 6 November notice targeting firmware for Switch modchips including Picofly, SX Core, SX Lite and HWFLY. Nintendo named a single repository and GitHub removed its whole fork network, accepting that the copies infringed to the same extent. Nintendo says the code bypasses its copy protections. Installed chips keep working, but updates and new installs become harder.",
+  "category": "technology",
+  "priority": 54,
+  "tags": [
+    "nintendo",
+    "github",
+    "dmca",
+    "firmware",
+    "copyright"
+  ],
+  "sources": [
+    {
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/video-games/nintendo/nintendo-unleashes-dmca-takedown-wave-against-open-source-switch-modchip-firmware-144-tools-disabled-picofly-sx-core-and-hwfly-among-casualties-following-criminal-trial-victory",
+      "publishedAt": "2026-11-11T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-12T05:00:00Z",
+  "updatedAt": "2026-11-12T05:00:00Z",
+  "retrievedAt": "2026-11-12T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
