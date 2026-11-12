@@ -32,7 +32,7 @@ test('legacy Fable history and saved picks keep Flavius Tide identity without re
     const legacy = [{at:1,stats:[{id:'fable-5-2',final:110000,totalReturn:.1},{id:'hodl',final:100000,totalReturn:0}]}];
     await page.addInitScript(({history}) => {
       localStorage.setItem('trade-arena:history',JSON.stringify(history));
-      localStorage.setItem('trade-arena:pick',JSON.stringify({bots:['fable-5-2','hodl']}));
+      localStorage.setItem('trade-arena:pick',JSON.stringify({bots:['fable-5-2','hodl'],basketBot:'fable-5-2',advisorBots:['fable-5-2','hodl']}));
     },{history:legacy});
     await page.goto(base+'/arcade/trade-arena/#/league');
     await page.locator('h2').filter({hasText:'Simulations completed here'}).waitFor();
@@ -44,6 +44,14 @@ test('legacy Fable history and saved picks keep Flavius Tide identity without re
     await page.goto(base+'/arcade/trade-arena/');
     assert.equal(await page.locator('#roster input[value="fable-5-1"]').isChecked(),true);
     assert.equal(await page.locator('#roster input[value="fable-5-2"]').isChecked(),false);
+    await page.evaluate(() => { location.hash = '#/basket'; });
+    await page.locator('#bk-bots input[value="fable-5-1"]').waitFor();
+    assert.equal(await page.locator('#bk-bots input[value="fable-5-1"]').isChecked(),true);
+    assert.equal(await page.locator('#bk-bots input[value="fable-5-2"]').isChecked(),false);
+    await page.evaluate(() => { location.hash = '#/advisor'; });
+    await page.locator('#ad-bots input[value="fable-5-1"]').waitFor();
+    assert.equal(await page.locator('#ad-bots input[value="fable-5-1"]').isChecked(),true);
+    assert.equal(await page.locator('#ad-bots input[value="fable-5-2"]').isChecked(),false);
     assert.deepEqual(errors,[]);
   });
 });

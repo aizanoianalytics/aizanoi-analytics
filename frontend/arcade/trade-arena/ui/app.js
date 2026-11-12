@@ -15,8 +15,12 @@ const state = { roster: null, catalog: null, league: null, leagueSort: null, pic
 try {
   const saved = JSON.parse(localStorage.getItem('trade-arena:pick') || '{}');
   // Before the correction, fable-5-2 referred to Flavius Tide, not Tidewater.
-  if (saved.identityVersion !== 2 && Array.isArray(saved.bots))
-    saved.bots = saved.bots.map(id => id === 'fable-5-2' ? 'fable-5-1' : id);
+  if (saved.identityVersion !== 2) {
+    const legacyId = id => id === 'fable-5-2' ? 'fable-5-1' : id;
+    if (Array.isArray(saved.bots)) saved.bots = saved.bots.map(legacyId);
+    if (typeof saved.basketBot === 'string') saved.basketBot = legacyId(saved.basketBot);
+    if (Array.isArray(saved.advisorBots)) saved.advisorBots = saved.advisorBots.map(legacyId);
+  }
   Object.assign(state.pick, saved);
 } catch { /* storage blocked */ }
 if (!(+state.pick.gross >= 1 && +state.pick.gross <= 2)) state.pick.gross = 1; // contract v2 allows 1×–2× gross
