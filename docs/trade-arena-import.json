@@ -19,6 +19,18 @@
       "added": "2026-11-03"
     },
     {
+      "path": "bots/ai/fable-5-1.js",
+      "sha256": "6525562cd42e80279796115a7b0a8dede69addd32f628caeb0e48d9a859e7caa",
+      "sourceSha256": "6525562cd42e80279796115a7b0a8dede69addd32f628caeb0e48d9a859e7caa",
+      "added": "2026-11-10"
+    },
+    {
+      "path": "bots/ai/fable-5-2.js",
+      "sha256": "4de1a310138936cb688ee18c2a7b91695987215041bb667d22fee4204a02f1c3",
+      "sourceSha256": "4de1a310138936cb688ee18c2a7b91695987215041bb667d22fee4204a02f1c3",
+      "added": "2026-11-12"
+    },
+    {
       "path": "bots/ai/flint-40b.js",
       "sha256": "50143fc0d1cece385a324d9e813d203356c7b3e686ce5e117c42bf51eb8dfc9a",
       "sourceSha256": "49d0a9fb25fdbd1c83ac3aaafbbbda5b78edbba02d01d0914937467709e63aa0",
@@ -144,9 +156,9 @@
     },
     {
       "path": "bots/roster.json",
-      "sha256": "70aac0b61c8b699d01291d9f3644e26259118292782114c09f9cd40a0aaf2834",
-      "sourceSha256": "70aac0b61c8b699d01291d9f3644e26259118292782114c09f9cd40a0aaf2834",
-      "updated": "2026-11-10: Claude Fable 5.2 entry added"
+      "sha256": "f199fecb75e866c22c21897a119564b0853583a4bc99f2dfa9ba8a91df906603",
+      "sourceSha256": "f199fecb75e866c22c21897a119564b0853583a4bc99f2dfa9ba8a91df906603",
+      "updated": "2026-11-12: 10 Nov entry corrected to Claude Fable 5.1; Claude Fable 5.2 (Tidewater) added"
     },
     {
       "path": "data/catalog.json",
@@ -1428,12 +1440,12 @@
     },
     {
       "path": "ui/app.css",
-      "sha256": "bd758b873387209f17063238b998e65dd1db8c722a26773e50ab4ace35da4ac4",
+      "sha256": "671f63382d2411e0feaaaf9bc246f42260b7a4dd449a1eb572399e5d7dea02ac",
       "sourceSha256": "f6f60c1d1a4f1d02f8da983a8ae9f3ce6a1dae287cd3c08f6e994cee65abc934"
     },
     {
       "path": "ui/app.js",
-      "sha256": "6d2dfada83b0b608aba89434979d4c5e97fc1fee5eab4c65e4635abbae5178f0",
+      "sha256": "d694ac90aa04c64644834010d5de35c0e21091eba0d3a37368c5f31a076d391a",
       "sourceSha256": "8c15a87f0c88b3708c62da28283d51fad52967e1c246dae07deda76d4d63c466"
     },
     {
@@ -1443,7 +1455,7 @@
     },
     {
       "path": "ui/bot-worker.js",
-      "sha256": "c0e44fb76dcf21e1f8e169aef65f9fa6609b0de75fc57357c73748e32509b129",
+      "sha256": "d55e44fcfb72fe2ad55508dfa250abc1f2ad4aa03f67aaf7b66c7b180531dbed",
       "sourceSha256": "8c17f093eaf15e8eecff258e1c085d2d60cbbed2f3de11e93d977af68e95975f"
     },
     {
@@ -1475,7 +1487,7 @@
     },
     {
       "path": "ui/race-view.js",
-      "sha256": "199ce8de104f9434c35cc5230b5697e0a3bc2053840453bf0b12b5b970cdb911",
+      "sha256": "335887dae7abae543407c834f150fcf30b2b5ab763a719047aadb828416c6744",
       "sourceSha256": "4f762ee58e9f977ea26a8bd0ee8ad143464777f170bb76a743a06f534778af64"
     },
     {
@@ -1596,6 +1608,16 @@
         "data/raw/context/1d/XU100.json",
         "live/manifest.json",
         "bots/house/aizo.js"
+      ]
+    },
+    {
+      "date": "2026-11-12",
+      "note": "Owner correction: the bots added on 2026-11-10 as \"Claude Fable 5.2\" (Trade Arena Flavius Tide, Snake Royale Flavius Coil) were written by Claude Fable 5.1; ids, names and file names corrected, strategy bytes unchanged. The Trade Arena bot actually written by Claude Fable 5.2 (Tidewater, contract v2, 2024-12-31 cutoff) added as fable-5-2. League tables not recomputed; neither bot is in them. The previously published fable-5-2 browser history/picks refer to Flavius Tide: display-only history attribution and saved picker selections resolve to fable-5-1 without rewriting historical records. New history/picks carry identityVersion 2.",
+      "source": "C:/Users/husey/oc-sandbox/trade-arena (owner workstation)",
+      "paths": [
+        "bots/roster.json",
+        "bots/ai/fable-5-1.js",
+        "bots/ai/fable-5-2.js"
       ]
     }
   ]

@@ -34,3 +34,15 @@ test('Beam chess packaging repair preserves the normalized executable submission
   assert.equal(typeof context.module.exports, 'function');
   assert.equal(typeof context.module.exports.move, 'function');
 });
+
+test('Snake Royale Flavius Coil is Fable 5.1 with the original strategy bytes', () => {
+  const base = new URL('../frontend/arcade/snake-royale/', import.meta.url);
+  const { bots } = JSON.parse(readFileSync(new URL('bots.json', base), 'utf8'));
+  const coil = bots.find(bot => bot.id === 'fable-5-1');
+  assert.equal(coil.name, 'Claude Fable 5.1');
+  assert.equal(coil.botName, 'Flavius Coil');
+  assert.equal(coil.file, 'bots/fable-5-1.js');
+  assert.ok(!bots.some(bot => bot.id === 'fable-5-2'));
+  assert.equal(createHash('sha256').update(readFileSync(new URL(coil.file, base))).digest('hex'),
+    '7ef287a4d0cfb9e104e251900d2016f1ac7364101feab84b9cd6195074885af3');
+});
