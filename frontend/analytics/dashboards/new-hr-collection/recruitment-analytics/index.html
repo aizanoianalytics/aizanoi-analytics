@@ -1354,6 +1354,9 @@ table thead th {
     .ref-bar-fill { height: 100%; background: var(--recruit-primary); border-radius: 8px; }
     .ref-pagination { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; margin-top: 1rem; }
     #referencedVisualization[hidden] { display: none !important; }
+    #referencedDropzone.is-loaded { padding: .7rem 1rem; text-align: left; }
+    #referencedDropzone.is-loaded .drop-icon, #referencedDropzone.is-loaded .drop-sub { display: none; }
+    #referencedDropzone.is-loaded .drop-title { margin: 0; font-size: .875rem; }
     .import-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.25rem; align-items: start; }
     .import-grid > .card { margin-bottom: 0; }
     .intern-live-frame-wrap { display: flex; flex-direction: column; gap: .6rem; padding: .9rem 1rem; background: #f7f7fc; border: 1px solid var(--t-line); border-radius: 12px; }
@@ -2751,7 +2754,7 @@ table thead th {
         <div id="referencedImportResult" role="status" aria-live="polite"></div>
         <div id="referencedVisualization" hidden>
           <label for="referencedSheetSelect">Görüntülenecek sayfa</label>
-          <select class="filter-control" id="referencedSheetSelect"><option>Ref Adayları_28.09.2023 sonrası</option><option>TÜM REFERANSLI ADAYLAR</option></select>
+          <select class="filter-control" id="referencedSheetSelect"><option value="Ref Adayları_28.09.2023 sonrası">2023 sonrası adaylar</option><option value="TÜM REFERANSLI ADAYLAR">Tüm referanslı adaylar</option></select>
           <p id="referencedCount" class="card-subtitle"></p>
           <div class="dashboard-grid-2">
             <div><h4>Pozisyon dağılımı</h4><div id="referencedPositionChart"></div></div>
@@ -4628,7 +4631,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           sheet["!data"].forEach((row, r) => { if (r && String(row?.[2]?.v ?? "").trim()) last = r; });
         } else {
           for (const address of Object.keys(sheet)) {
-            if (!/^C[2-9]\d*$/.test(address)) continue;
+            if (!/^C(?:[2-9]|[1-9]\d+)$/.test(address)) continue;
             if (String(sheet[address]?.v ?? "").trim()) last = Math.max(last, Number(address.slice(1)) - 1);
           }
         }
@@ -4645,6 +4648,15 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
       return result;
     }
+    function summarizeReferencedCategories(rows, field) {
+      const counts = new Map();
+      rows.forEach(row => { const key = row[field] || "Belirtilmemiş"; counts.set(key, (counts.get(key) || 0) + 1); });
+      const sorted = [...counts].sort((a, b) => b[1] - a[1]);
+      const remaining = sorted.slice(10);
+      return remaining.length
+        ? [...sorted.slice(0, 10), [`Diğer (${remaining.length} kategori)`, remaining.reduce((sum, [, count]) => sum + count, 0)]]
+        : sorted;
+    }
     // REFERENCED SHEET PARSER END
 
     let referencedData = null;
@@ -4654,17 +4666,21 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const rows = referencedData?.[name]?.rows || [];
       $("#referencedCount").textContent = `${formatNumber(rows.length)} aday · ${name}`;
       const chart = (id, field) => {
-        const counts = new Map();
-        rows.forEach(row => { const key = row[field] || "Belirtilmemiş"; counts.set(key, (counts.get(key) || 0) + 1); });
+        const categories = summarizeReferencedCategories(rows, field);
         const container = $(id);
         container.replaceChildren();
-        const top = [...counts].sort((a, b) => b[1] - a[1]).slice(0, 10);
-        top.forEach(([label, count]) => {
+        container.setAttribute("role", "list");
+        container.setAttribute("aria-label", `${field === "position" ? "Pozisyon" : "Sonuç"} dağılımı, ${formatNumber(rows.length)} aday`);
+        if (!categories.length) { container.textContent = "Bu sayfada aday bulunmuyor."; return; }
+        const maxCount = Math.max(...categories.map(([, value]) => value));
+        categories.forEach(([label, count]) => {
           const item = document.createElement("div"); item.className = "ref-bar-row";
+          item.setAttribute("role", "listitem");
+          item.setAttribute("aria-label", `${label}: ${formatNumber(count)} aday`);
           const text = document.createElement("span"); text.textContent = label; text.title = label;
-          const track = document.createElement("div"); track.className = "ref-bar-track";
+          const track = document.createElement("div"); track.className = "ref-bar-track"; track.setAttribute("aria-hidden", "true");
           const bar = document.createElement("div"); bar.className = "ref-bar-fill";
-          bar.style.width = `${100 * count / top[0][1]}%`; track.append(bar);
+          bar.style.width = `${100 * count / maxCount}%`; track.append(bar);
           const total = document.createElement("strong"); total.textContent = formatNumber(count);
           item.append(text, track, total); container.append(item);
         });
@@ -4753,6 +4769,8 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const parsed = parseReferencedWorkbook(detected.workbook);
         referencedData = parsed; // atomic: failed validation keeps the previous view
         referencedPage = 0;
+        $("#referencedDropzone").classList.add("is-loaded");
+        $("#referencedDropzone .drop-title").textContent = "Başka Excel yükle";
         $("#referencedVisualization").hidden = false;
         renderReferencedSheet();
         return { file: file.name, kind: "referenced", detail: Object.entries(parsed).map(([name, data]) => `${name}: ${formatNumber(data.rows.length)} aday`).join(" · ") };
