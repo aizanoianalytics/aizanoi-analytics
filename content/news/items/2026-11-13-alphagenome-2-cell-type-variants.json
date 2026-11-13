@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-alphagenome-2-cell-type-variants",
+  "title": "DeepMind's AlphaGenome 2 predicts variants cell by cell",
+  "summary": "Google DeepMind released AlphaGenome 2, a DNA model that predicts how variants affect one cell type at a time instead of averaging across tissues. Trained on more than 107 million cell profiles from 68 tissues, it identified nearly twice as many causal variants (30% versus 16%) and directional gene effects (43% versus 23%) on the TenK10K immune-cell benchmark. It is free for non-commercial research and in private preview for commercial use.",
+  "category": "ai",
+  "priority": 56,
+  "tags": [
+    "deepmind",
+    "genomics",
+    "research",
+    "biology",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/",
+      "publishedAt": "2026-11-11T17:00:00Z"
+    },
+    {
+      "publisher": "MarkTechPost",
+      "url": "https://www.marktechpost.com/2026/11/11/google-deepmind-alphagenome-2-cell-type-variant-effects/",
+      "publishedAt": "2026-11-11T20:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

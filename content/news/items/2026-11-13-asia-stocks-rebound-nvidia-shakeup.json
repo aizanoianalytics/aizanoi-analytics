@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-asia-stocks-rebound-nvidia-shakeup",
+  "title": "Asian stocks steady as investors digest Nvidia leadership shock",
+  "summary": "Asian equities recovered part of Thursday's slide as investors reassessed Nvidia's leadership change: the MSCI Asia Pacific Index rose 0.3%, South Korea's Kospi gained 1.97% and Japan's Nikkei 225 added 1.48%. Nvidia fell as much as 14% before closing 4.3% lower, while Brent held near $96 a barrel and Treasury yields stayed close to multi-week highs. US index futures were mixed after the S&P 500 and Nasdaq 100 both closed lower.",
+  "category": "economy-markets",
+  "priority": 72,
+  "tags": [
+    "markets",
+    "asia",
+    "nvidia",
+    "equities",
+    "bonds"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC-TV18",
+      "url": "https://www.cnbctv18.com/market/asian-markets-kospi-nikkei-nvidia-jensen-huang-resignation-ai-stocks-japanese-yen-gift-nifty-oil-share-price-20033026.htm",
+      "publishedAt": "2026-11-13T03:30:00Z"
+    },
+    {
+      "publisher": "Bloomberg (via SWI swissinfo.ch)",
+      "url": "https://swissinfo.ch/eng/asian-stocks-gain-after-nvidia-shakeup%2C-oil-steady%3A-markets-wrap/92374084",
+      "publishedAt": "2026-11-13T03:10:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

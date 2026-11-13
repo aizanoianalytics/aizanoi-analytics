@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-12T05:30:00.000Z",
+  "generatedAt": "2026-11-13T05:05:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-13",
+      "path": "/news/2026-11-13/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-12",
       "path": "/news/2026-11-12/",
@@ -483,6 +488,551 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-13-nvidia-huang-resigns-kress-interim",
+      "kind": "daily",
+      "title": "Nvidia names Colette Kress interim CEO after Huang resigns",
+      "summary": "NVIDIA's board said Jensen Huang resigned as president, chief executive and director effective immediately, ending a 33-year tenure at the company he co-founded. Chief financial officer Colette Kress will hold the interim CEO role while keeping her finance post until a permanent successor is named, and the board appointed former Synopsys chief executive Harvey C. Jones as its first chair. NVIDIA kept third-quarter results scheduled for November 17.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "jensen-huang",
+        "leadership",
+        "semiconductors",
+        "colette-kress"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
+          "publishedAt": "2026-11-12T21:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/12/nvidia-jensen-huang-ceo-live-updates.html",
+          "publishedAt": "2026-11-12T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-gemini-4-hydrogen-launch",
+      "kind": "daily",
+      "title": "Google ships Gemini 4 Hydrogen as its fast default model",
+      "summary": "Google released Gemini 4 Hydrogen as the successor to Gemini 3.8 Flash, priced flat at $1.50 per million input tokens and $7.50 per million output tokens across a one-million-token context. Google says it finishes tasks 2.5 times faster at default settings, scores 51 on the Artificial Analysis Intelligence Index against 50 for Gemini 4 Argon, and lifts Terminal-Bench 4.1 from 18.2% to 57%. Four thinking levels, including a new xhigh tier, ship with it.",
+      "category": "ai",
+      "priority": 85,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "models",
+        "pricing",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+          "publishedAt": "2026-11-12T17:00:00.000Z"
+        },
+        {
+          "publisher": "VentureBeat",
+          "url": "https://venturebeat.com/technology/google-launches-gemini-4-hydrogen-a-faster-smarter-pricier-flash-successor",
+          "publishedAt": "2026-11-12T22:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-man-utd-sack-carrick-pochettino",
+      "kind": "daily",
+      "title": "United sack Carrick after one win in ten and turn to Pochettino",
+      "summary": "Manchester United sacked head coach Michael Carrick after one win in ten Premier League matches left the club in the relegation zone, and are finalising a deal to appoint Mauricio Pochettino. The club said it reached the conclusion that a change was necessary. Pochettino, currently in charge of the United States, is expected to take training on 18 or 19 November and to face Liverpool away on 22 November.",
+      "category": "football",
+      "priority": 76,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "manchester-united",
+        "premier-league",
+        "pochettino",
+        "carrick",
+        "coaching"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/live/cw4g15k9xm5kt",
+          "publishedAt": "2026-11-12T13:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13606106/man-utd-sack-michael-carrick-with-mauricio-pochettino-set-to-be-appointed-after-worst-start-to-premier-league-season",
+          "publishedAt": "2026-11-12T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-asia-stocks-rebound-nvidia-shakeup",
+      "kind": "daily",
+      "title": "Asian stocks steady as investors digest Nvidia leadership shock",
+      "summary": "Asian equities recovered part of Thursday's slide as investors reassessed Nvidia's leadership change: the MSCI Asia Pacific Index rose 0.3%, South Korea's Kospi gained 1.97% and Japan's Nikkei 225 added 1.48%. Nvidia fell as much as 14% before closing 4.3% lower, while Brent held near $96 a barrel and Treasury yields stayed close to multi-week highs. US index futures were mixed after the S&P 500 and Nasdaq 100 both closed lower.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "asia",
+        "nvidia",
+        "equities",
+        "bonds"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC-TV18",
+          "url": "https://www.cnbctv18.com/market/asian-markets-kospi-nikkei-nvidia-jensen-huang-resignation-ai-stocks-japanese-yen-gift-nifty-oil-share-price-20033026.htm",
+          "publishedAt": "2026-11-13T03:30:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg (via SWI swissinfo.ch)",
+          "url": "https://swissinfo.ch/eng/asian-stocks-gain-after-nvidia-shakeup%2C-oil-steady%3A-markets-wrap/92374084",
+          "publishedAt": "2026-11-13T03:10:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-openai-daybreak-security-products",
+      "kind": "daily",
+      "title": "OpenAI turns frontier cyber work into two security products",
+      "summary": "OpenAI launched two security products at its Cyber at the Frontier keynote: Daybreak Red Team, in early access, which runs agent teams against web applications to confirm vulnerabilities and test patches, and Daybreak Defense Factory, which traces findings through a codebase and drafts fixes for engineers to approve. Both run on OpenAI's cyber models, currently GPT-6 Cyber, with customer-set scope and isolated test environments.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "cybersecurity",
+        "agents",
+        "daybreak",
+        "enterprise"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/daybreak/red-team",
+          "publishedAt": "2026-11-12T18:00:00.000Z"
+        },
+        {
+          "publisher": "AI Brief",
+          "url": "https://dailyaibrief.com/news/openai-launches-daybreak-red-team-defense-factory-RwX3Ig7N",
+          "publishedAt": "2026-11-12T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-ai-freeze-lawsuit-san-francisco",
+      "kind": "daily",
+      "title": "Nonprofits ask court to freeze the most advanced AI systems",
+      "summary": "Four nonprofits asked San Francisco Superior Court to freeze development of the most advanced AI systems at Anthropic, Google, Meta, OpenAI and SpaceXSI, arguing the companies cannot control technology their own executives say could cause catastrophic harm. The complaint, brought under California's Unfair Competition Law, cites documented agent intrusions into third-party computer systems and seeks an injunction until the companies can show the models remain under human control.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-safety",
+        "litigation",
+        "regulation",
+        "frontier-models",
+        "california"
+      ],
+      "sources": [
+        {
+          "publisher": "Public Citizen",
+          "url": "https://www.citizen.org/news/coalition-of-nonprofits-files-landmark-lawsuit-to-stop-development-of-advanced-ai-systems-at-anthropic-google-meta-openai-and-spacexsi-that-proliferate-bioweapons-and-cyberattacks/",
+          "publishedAt": "2026-11-12T17:00:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/artificial-intelligence-ai-lawsuit-cyberattacks-anthropic-openai-03ece37b96979fe834f60976648504ba",
+          "publishedAt": "2026-11-12T19:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-brent-holds-near-96-iran-deal",
+      "kind": "daily",
+      "title": "Brent holds near $96 as Iran deal hopes dim",
+      "summary": "Brent crude held near $96 a barrel after rising 3.3% on Thursday, when President Donald Trump said the United States could forgo a deal with Iran, dimming hopes of an agreement to end the war that has disrupted Gulf supplies. West Texas Intermediate traded below $89. Reports of fresh friction around the Strait of Hormuz kept risk premiums elevated even as Brent headed for a second consecutive weekly loss.",
+      "category": "economy-markets",
+      "priority": 63,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "energy",
+        "iran",
+        "commodities",
+        "shipping"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC-TV18",
+          "url": "https://www.cnbctv18.com/market/commodities/crude-oil-prices-brent-near-96-wti-trump-rules-out-us-iran-deal-strait-of-hormuz-attacks-west-asia-supplies-20033024.htm",
+          "publishedAt": "2026-11-13T04:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-barr-ai-labor-share-warning",
+      "kind": "daily",
+      "title": "Fed's Barr warns AI concentration could widen inequality",
+      "summary": "Federal Reserve governor Michael Barr said the United States should prepare for serious short-term disruption in the labour market from AI and warned that market concentration could widen inequality. In remarks at Yale, he noted labour's share of national income fell to a record low 52.8% in the second quarter of 2026, from roughly 60% to 65% after the Second World War, and said competition will decide whether AI's gains are broadly shared.",
+      "category": "economy-markets",
+      "priority": 61,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "ai",
+        "labour-market",
+        "inequality",
+        "monetary-policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Board of Governors of the Federal Reserve System",
+          "url": "https://www.federalreserve.gov/newsevents/speech/barr20261112a.htm",
+          "publishedAt": "2026-11-12T15:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.investing.com/news/economy-news/feds-barr-us-should-prepare-for-serious-ai-job-disruption-widening-inequality-5022504",
+          "publishedAt": "2026-11-12T16:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-gemini-intelligent-eyewear-preorders",
+      "kind": "daily",
+      "title": "Gemini eyewear opens for pre-order from $395",
+      "summary": "Google and Samsung opened pre-orders for Intelligent Eyewear built with Gemini, with Warby Parker frames starting at $395 and Gentle Monster models from $449. The glasses weigh about 41 grams, carry a 12-megapixel camera, four microphones and up to nine hours of battery, and reach stores on December 10 in the United States and South Korea. At launch they pair with recent iPhones, Pixel 7 or newer and Samsung Galaxy S or Z phones.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "samsung",
+        "wearables",
+        "gemini",
+        "hardware"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/technology/xr-ar/google-intelligent-eyewear-collections-pre-order/",
+          "publishedAt": "2026-11-12T15:00:00.000Z"
+        },
+        {
+          "publisher": "Business Wire (Warby Parker)",
+          "url": "https://www.businesswire.com/news/home/20261112472878/en/Warby-Parker-Opens-Preorders-for-First-Intelligent-Eyewear-Collection",
+          "publishedAt": "2026-11-12T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-alphagenome-2-cell-type-variants",
+      "kind": "daily",
+      "title": "DeepMind's AlphaGenome 2 predicts variants cell by cell",
+      "summary": "Google DeepMind released AlphaGenome 2, a DNA model that predicts how variants affect one cell type at a time instead of averaging across tissues. Trained on more than 107 million cell profiles from 68 tissues, it identified nearly twice as many causal variants (30% versus 16%) and directional gene effects (43% versus 23%) on the TenK10K immune-cell benchmark. It is free for non-commercial research and in private preview for commercial use.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepmind",
+        "genomics",
+        "research",
+        "biology",
+        "models"
+      ],
+      "sources": [
+        {
+          "publisher": "Google DeepMind",
+          "url": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/",
+          "publishedAt": "2026-11-11T17:00:00.000Z"
+        },
+        {
+          "publisher": "MarkTechPost",
+          "url": "https://www.marktechpost.com/2026/11/11/google-deepmind-alphagenome-2-cell-type-variant-effects/",
+          "publishedAt": "2026-11-11T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-grok-build-open-apps-exposure",
+      "kind": "daily",
+      "title": "Audit finds most published Grok Build apps need no sign-in",
+      "summary": "Claroc Research said 35,578 of 37,571 live apps published under SpaceXSI's grok.me domain opened without a sign-in, about 94.7% of those it tested. The security firm said 24 of the open apps were built by SpaceXSI and X staff and held a confidential onboarding plan, a sales territory map of 594 accounts and advertising proposals, and that apps from about 30 other organisations exposed internal data. SpaceXSI removed its own staff apps after press questions.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "grok",
+        "privacy",
+        "app-builders",
+        "spacexsi"
+      ],
+      "sources": [
+        {
+          "publisher": "Crypto Briefing",
+          "url": "https://cryptobriefing.com/claroc-grok-build-apps-exposed-online",
+          "publishedAt": "2026-11-11T11:04:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/grok-build-apps-exposed-claroc-spacexsi",
+          "publishedAt": "2026-11-11T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-silicon-box-vulcan-novara-aid",
+      "kind": "daily",
+      "title": "Italy backs Silicon Box's €3.2bn packaging plant in Novara",
+      "summary": "Italy cleared €1.3 billion in state aid for Silicon Box's Vulcan Project, a €3.2 billion advanced packaging and testing plant in Novara that would be the Singapore company's first factory outside Singapore. The site is designed for panel-level packaging that combines multiple chiplets into one package for AI, high-performance computing and automotive customers, with about 1,600 jobs planned and construction due to begin in early 2027.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "semiconductors",
+        "supply-chain",
+        "italy",
+        "chiplets",
+        "europe"
+      ],
+      "sources": [
+        {
+          "publisher": "Innovation News Network",
+          "url": "https://www.innovationnewsnetwork.com/european-microchips-receive-boost-from-vulcan-project/75794/",
+          "publishedAt": "2026-11-12T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-crystal-palace-sack-pierre-sage",
+      "kind": "daily",
+      "title": "Crystal Palace sack Pierre Sage with the club bottom",
+      "summary": "Crystal Palace sacked manager Pierre Sage after 16 matches, with the club bottom of the Premier League on seven points from ten games. Sage, appointed in June on a three-year contract, won two league matches in that run. The club said three members of his coaching staff left with him and that an update on the appointment process would follow in due course; Sky Sports reported Palace are working on a deal for Thomas Frank.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "crystal-palace",
+        "premier-league",
+        "managers",
+        "pierre-sage",
+        "thomas-frank"
+      ],
+      "sources": [
+        {
+          "publisher": "Crystal Palace FC",
+          "url": "https://www.cpfc.co.uk/news/announcement/statement-pierre-sage/",
+          "publishedAt": "2026-11-12T16:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13606476/pierre-sage-crystal-palace-sack-manager-with-club-bottom-of-premier-league-table-after-10-matches",
+          "publishedAt": "2026-11-12T13:52:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-nations-league-final-round-permutations",
+      "kind": "daily",
+      "title": "Nations League: England and Italy face decisive final round",
+      "summary": "The Nations League group stage closes on Sunday with quarter-final places still at stake in League A. England, already qualified, visit Spain knowing a win by two goals or more would top Group A3. In Group A1, Italy and France are level on ten points, with Belgium one behind and needing to beat Italy in Brussels to advance, while France host pointless Türkiye, who are already relegated.",
+      "category": "football",
+      "priority": 48,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "england",
+        "italy",
+        "france",
+        "belgium"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/news/02ab-2209792f2fda-6a523d4500bb-1000--nations-league-latest-on-quarter-final-qualification-prom/",
+          "publishedAt": "2026-11-12T22:00:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/nations-league-scores-5b83decbc6fe7eef22bc49366a91f0df",
+          "publishedAt": "2026-11-12T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-vs-code-1-146-local-harness",
+      "kind": "daily",
+      "title": "VS Code 1.146 starts countdown on its Local agent harness",
+      "summary": "Microsoft's VS Code 1.146 adds an experimental Inbox view for tracking agent sessions, chat windows and side-by-side model comparisons, and starts a three-month countdown on the Local agent harness. The Local harness will be removed in February 2027 and is frozen in the meantime, with Microsoft directing users to the Copilot harness, which also enforces managed sandbox and permission policies that the older runtime lacks.",
+      "category": "technology",
+      "priority": 44,
+      "publishedAt": "2026-11-13T05:00:00.000Z",
+      "updatedAt": "2026-11-13T05:00:00.000Z",
+      "retrievedAt": "2026-11-13T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "vs-code",
+        "developer-tools",
+        "agents",
+        "copilot"
+      ],
+      "sources": [
+        {
+          "publisher": "Visual Studio Code",
+          "url": "https://code.visualstudio.com/updates/v1_146",
+          "publishedAt": "2026-11-12T17:00:00.000Z"
+        },
+        {
+          "publisher": "Visual Studio Magazine",
+          "url": "https://visualstudiomagazine.com/articles/2026/11/12/vs-code-1-146-adds-ai-agent-inbox-model-comparisons-and-chat-windows.aspx",
+          "publishedAt": "2026-11-12T18:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-12-nvidia-board-weighs-huang-exit",
       "kind": "daily",

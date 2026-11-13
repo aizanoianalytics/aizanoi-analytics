@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/nvidia-huang-resigns-kress-interim/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Nvidia names Colette Kress interim CEO after Huang resigns</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/gemini-4-hydrogen-launch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Google ships Gemini 4 Hydrogen as its fast default model</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/man-utd-sack-carrick-pochettino/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>United sack Carrick after one win in ten and turn to Pochettino</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/asia-stocks-rebound-nvidia-shakeup/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Asian stocks steady as investors digest Nvidia leadership shock</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/openai-daybreak-security-products/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI turns frontier cyber work into two security products</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/ai-freeze-lawsuit-san-francisco/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Nonprofits ask court to freeze the most advanced AI systems</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/brent-holds-near-96-iran-deal/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Brent holds near $96 as Iran deal hopes dim</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/barr-ai-labor-share-warning/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Fed&#39;s Barr warns AI concentration could widen inequality</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/gemini-intelligent-eyewear-preorders/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Gemini eyewear opens for pre-order from $395</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/alphagenome-2-cell-type-variants/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>DeepMind&#39;s AlphaGenome 2 predicts variants cell by cell</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/grok-build-open-apps-exposure/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Audit finds most published Grok Build apps need no sign-in</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/silicon-box-vulcan-novara-aid/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Italy backs Silicon Box&#39;s €3.2bn packaging plant in Novara</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/crystal-palace-sack-pierre-sage/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Crystal Palace sack Pierre Sage with the club bottom</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/nations-league-final-round-permutations/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>Nations League: England and Italy face decisive final round</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-13/vs-code-1-146-local-harness/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-13T05:00:00.000Z</news:publication_date>
+      <news:title>VS Code 1.146 starts countdown on its Local agent harness</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-12/nvidia-board-weighs-huang-exit/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,126 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-11T05:00:00.000Z</news:publication_date>
       <news:title>Yamal sits out Spain&#39;s trip to Czechia with England in view</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/anthropic-fable-mythos-5-2/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic cuts prices with Fable 5.2 and Mythos 5.2 ahead of its IPO</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/wall-street-relief-rally/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Wall Street stages a broad relief rally as chips rebound and oil slides</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/google-tpu-8tx-8i-max/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Google adds two specialised TPU systems in its push against Nvidia</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/australia-ai-breach-reporting-regulator/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Australia to force AI firms to report breaches and will create a regulator</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/metr-anthropic-rd-acceleration/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>METR finds AI is doubling the pace of Anthropic&#39;s own model progress</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/barcelona-atletico-fermin/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Fermín López double sends Barcelona three points clear at the top</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/democrats-ai-bills-data-centers/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Democrats prepare AI bills and data-centre limits after midterm sweep</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/october-cpi-no-annual-rate/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>October CPI lands Tuesday without a headline annual rate</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/microchip-ai-capacity-squeeze/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Microchip says AI buyers seized its suppliers&#39; capacity as lead times hit 32 weeks</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/qantas-accenture-job-cuts/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Qantas cuts 850 corporate jobs and hands work to Accenture, citing AI</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/microsoft-oracle-capacity/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Microsoft winds down rented Oracle AI capacity as it tightens its own build-out</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/england-squad-burn-guehi/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Burn replaces the injured Guéhi as England prepare for Croatia and Spain</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/nvidia-rebellions-sk-telecom/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Nvidia links Korean AI chips to NVLink Fusion in sovereign-AI deal</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/cubarsi-golden-boy/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Cubarsí wins the 2026 Golden Boy with 475 of 500 points</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-10/bitcoin-lags-equity-rally/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-10T05:00:00.000Z</news:publication_date>
-      <news:title>Bitcoin stalls near $75,000 while the Nasdaq rallies nearly 3 percent</news:title>
     </news:news>
   </url>
 </urlset>

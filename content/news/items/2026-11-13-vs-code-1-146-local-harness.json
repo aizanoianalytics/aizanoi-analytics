@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-vs-code-1-146-local-harness",
+  "title": "VS Code 1.146 starts countdown on its Local agent harness",
+  "summary": "Microsoft's VS Code 1.146 adds an experimental Inbox view for tracking agent sessions, chat windows and side-by-side model comparisons, and starts a three-month countdown on the Local agent harness. The Local harness will be removed in February 2027 and is frozen in the meantime, with Microsoft directing users to the Copilot harness, which also enforces managed sandbox and permission policies that the older runtime lacks.",
+  "category": "technology",
+  "priority": 44,
+  "tags": [
+    "microsoft",
+    "vs-code",
+    "developer-tools",
+    "agents",
+    "copilot"
+  ],
+  "sources": [
+    {
+      "publisher": "Visual Studio Code",
+      "url": "https://code.visualstudio.com/updates/v1_146",
+      "publishedAt": "2026-11-12T17:00:00Z"
+    },
+    {
+      "publisher": "Visual Studio Magazine",
+      "url": "https://visualstudiomagazine.com/articles/2026/11/12/vs-code-1-146-adds-ai-agent-inbox-model-comparisons-and-chat-windows.aspx",
+      "publishedAt": "2026-11-12T18:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
