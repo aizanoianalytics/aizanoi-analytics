@@ -1371,6 +1371,15 @@ table thead th {
     .ref-bar-track { height: 12px; background: var(--recruit-primary-soft); border-radius: 8px; overflow: hidden; }
     .ref-bar-fill { height: 100%; background: var(--recruit-primary); border-radius: 8px; }
     .ref-pagination { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; margin-top: 1rem; }
+    #referencedQuality { border: 1px solid var(--ip-border); border-radius: 12px; padding: 1rem; margin: 1rem 0 1.5rem; background: var(--ip-bg); }
+    #referencedQuality h3 { font-size: 1rem; margin-bottom: .5rem; }
+    .ref-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; margin: .5rem 0; align-items: end; }
+    .ref-filters label { display: flex; flex-direction: column; gap: .3rem; font-size: .8rem; font-weight: 600; color: var(--ip-muted); }
+    .ref-quality-summary { display: flex; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+    .ref-quality-chip { font-size: .78rem; font-weight: 600; border: 1px solid var(--ip-border); border-radius: 999px; padding: .2rem .7rem; background: var(--ip-card); color: var(--ip-text); }
+    .ref-quality-list { display: grid; gap: .5rem; margin-top: .5rem; max-height: 320px; overflow-y: auto; }
+    .ref-quality-item { border: 1px solid var(--ip-border); border-radius: 10px; padding: .6rem .8rem; background: var(--ip-card); font-size: .82rem; }
+    .ref-quality-item ul { margin: .3rem 0 0 1.1rem; color: var(--ip-muted); }
     #referencedDropzone.is-loaded { padding: .7rem 1rem; text-align: left; }
     #referencedDropzone.is-loaded .drop-icon, #referencedDropzone.is-loaded .drop-sub { display: none; }
     #referencedDropzone.is-loaded .drop-title { margin: 0; font-size: .875rem; }
@@ -2749,6 +2758,21 @@ table thead th {
         <div id="referenceEmpty"><h2>2023 sonrası adaylar</h2><p>Henüz Excel yüklenmedi. Seçili sayfanın analizini görmek için kitabı yükleyin.</p><button type="button" class="btn btn-primary" data-go-view="import">Excel Yükle</button></div>
         <div id="referenceLoaded" hidden>
           <div class="card-header"><div><h2 id="referenceHeading" class="card-title"></h2><p id="referencedCount" class="card-subtitle"></p></div><button type="button" class="btn btn-white" data-go-view="import">Başka Excel yükle</button></div>
+          <section id="referencedQuality" aria-label="Filtre ve veri kalitesi">
+            <h3>Filtre ve veri kalitesi</h3>
+            <div class="ref-filters">
+              <label>Pozisyon<select id="referencedPositionFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Sonuç (SONUÇ)<select id="referencedResultFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>CV yılı<select id="referencedYearFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Referans<select id="referencedRefFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <div><button id="referencedClearFilters" class="btn btn-white" type="button">Temizle</button></div>
+            </div>
+            <p id="referencedFilteredCount" class="card-subtitle" role="status"></p>
+            <div id="referencedQualitySummary" class="ref-quality-summary" role="status"></div>
+            <label for="referencedQualitySearch">Kalite listesinde ara (ad veya sorun türü)</label>
+            <input id="referencedQualitySearch" class="filter-control ref-search" type="search" autocomplete="off" placeholder="Ad veya sorun türü ara">
+            <div id="referencedQualityList" class="ref-quality-list" role="list"></div>
+          </section>
           <div id="referencedKpis" class="ref-kpis"></div>
           <div class="ref-charts">
             <section><h3>Pozisyon dağılımı</h3><div id="referencedPositionChart"></div></section>
@@ -4704,11 +4728,110 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         ? [...sorted.slice(0, limit), [`Diğer (${remaining.length} kategori)`, remaining.reduce((sum, [, count]) => sum + count, 0)]]
         : sorted;
     }
+    const REFERENCED_EXEMPT_TOKENS = Object.freeze(["YAPILMADI", "MUAF"]);
+    function isReferencedExempt(value) {
+      return REFERENCED_EXEMPT_TOKENS.includes(String(value ?? "").trim().toLocaleUpperCase("tr-TR"));
+    }
+    function referencedSerialIso(serial) {
+      if (typeof serial !== "number" || !(serial > 20000 && serial < 100000)) return "";
+      const d = new Date(Date.UTC(1899, 11, 30) + serial * 86400000);
+      return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
+    }
+    function referencedDateIso(value) {
+      if (value instanceof Date && !Number.isNaN(value.valueOf())) {
+        return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, "0")}-${String(value.getDate()).padStart(2, "0")}`;
+      }
+      if (typeof value === "number") return referencedSerialIso(value);
+      const text = String(value ?? "").trim();
+      if (!text || isReferencedExempt(text)) return "";
+      if (/^\d{5}$/.test(text)) return referencedSerialIso(Number(text));
+      const tr = text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})$/);
+      if (tr && +tr[2] >= 1 && +tr[2] <= 12 && +tr[1] >= 1 && +tr[1] <= 31) {
+        return `${tr[3]}-${tr[2].padStart(2, "0")}-${tr[1].padStart(2, "0")}`;
+      }
+      const iso = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (iso && +iso[2] >= 1 && +iso[2] <= 12 && +iso[3] >= 1 && +iso[3] <= 31) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+      return "";
+    }
+    function referencedYear(value) {
+      const iso = referencedDateIso(value);
+      return iso ? iso.slice(0, 4) : "";
+    }
+    function filterReferencedRows(rows, filters = {}) {
+      const foldTr = value => String(value ?? "").trim().toLocaleLowerCase("tr-TR");
+      const q = foldTr(filters.q);
+      return (rows || []).filter(row => {
+        if (filters.position && row.position !== filters.position) return false;
+        if (filters.result && row.result !== filters.result) return false;
+        if (filters.ref && row.ref !== filters.ref) return false;
+        if (filters.year && referencedYear(row.date ?? row.cells?.["CV İLETİLME TARİHİ"]) !== filters.year) return false;
+        if (q && ![row.name, row.ref, row.position, row.result, ...Object.values(row.cells || {})].some(value => foldTr(value).includes(q))) return false;
+        return true;
+      });
+    }
+    function referencedFilterOptions(rows = []) {
+      const unique = values => [...new Set(values.filter(value => String(value ?? "").trim()))].sort((a, b) => a.localeCompare(b, "tr"));
+      const years = unique((rows || []).map(row => referencedYear(row.date ?? row.cells?.["CV İLETİLME TARİHİ"])));
+      const results = unique((rows || []).map(row => row.result));
+      return {
+        positions: unique((rows || []).map(row => row.position)),
+        results,
+        years,
+        refs: unique((rows || []).map(row => row.ref)),
+        blanks: (rows || []).filter(row => !String(row.result ?? "").trim()).length
+      };
+    }
+    const REFERENCED_STAGE_ORDER = Object.freeze(["CV İLETİLME TARİHİ", "ADAYA İLK TEMAS EDİLEN TARİH", "1.GÖRÜŞME TARİHİ", "2.GÖRÜŞME TARİHİ", "GERİ DÖNÜŞ TARİHİ"]);
+    function analyzeReferencedQuality(rows = [], opts = {}) {
+      const today = typeof opts.today === "string" && /^\d{4}-\d{2}-\d{2}/.test(opts.today) ? opts.today.slice(0, 10) : "";
+      const issues = [];
+      const counts = { total: (rows || []).length, withIssues: 0, missing: 0, invalid: 0, reversed: 0, future: 0 };
+      (rows || []).forEach(row => {
+        const types = [];
+        const cells = row.cells || {};
+        const cvRaw = row.date ?? cells["CV İLETİLME TARİHİ"] ?? "";
+        if (!referencedDateIso(cvRaw)) {
+          types.push(String(cvRaw ?? "").trim() ? "Geçersiz CV tarihi" : "Eksik CV tarihi");
+        }
+        const stages = REFERENCED_STAGE_ORDER.map(key => ({ key, raw: key === "CV İLETİLME TARİHİ" ? cvRaw : cells[key] ?? "", iso: referencedDateIso(key === "CV İLETİLME TARİHİ" ? cvRaw : cells[key] ?? "") }));
+        stages.forEach(stage => {
+          const text = String(stage.raw ?? "").trim();
+          if (text && !stage.iso && !isReferencedExempt(text)) types.push(`Geçersiz tarih: ${stage.key}`);
+        });
+        const valid = stages.filter(stage => stage.iso);
+        for (let i = 1; i < valid.length; i++) {
+          if (valid[i].iso < valid[i - 1].iso) {
+            types.push(`Sıra dışı kronoloji: ${valid[i - 1].key} → ${valid[i].key}`);
+            break;
+          }
+        }
+        const laterValid = valid.slice(1);
+        if (laterValid.length && !valid[0]) {
+          const gap = stages.slice(1).find(stage => !stage.iso && !isReferencedExempt(String(stage.raw ?? "").trim()));
+          if (gap) types.push(`Eksik önceki aşama tarihi: ${gap.key}`);
+        }
+        if (today) {
+          const futureStage = valid.find(stage => stage.iso > today);
+          if (futureStage) types.push(`Gelecek tarih: ${futureStage.key}`);
+        }
+        if (types.length) {
+          issues.push({ row: row.row ?? null, name: row.name || "", types });
+        }
+      });
+      counts.withIssues = issues.length;
+      counts.missing = issues.filter(i => i.types.some(t => /Eksik/.test(t))).length;
+      counts.invalid = issues.filter(i => i.types.some(t => /Geçersiz/.test(t))).length;
+      counts.reversed = issues.filter(i => i.types.some(t => /Sıra dışı/.test(t))).length;
+      counts.future = issues.filter(i => i.types.some(t => /Gelecek/.test(t))).length;
+      return { counts, issues };
+    }
     // REFERENCED SHEET PARSER END
 
     let referencedData = null;
     let referencedPage = 0;
     let referencedReturnFocus = null;
+    let referencedFilters = { position: "", result: "", year: "", ref: "" };
+    let referencedQualityQuery = "";
     const referencedName = "Ref Adayları_28.09.2023 sonrası";
     function referencedNotes(row) {
       return ["GÖRÜŞME NOTU", "KISA AÇIKLAMA"]
@@ -4721,6 +4844,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
       }
       const text = String(value ?? "").trim();
+      if (/^\d{5}$/.test(text)) return referencedSerialIso(Number(text)).slice(0, 7);
       const tr = text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})/);
       if (tr && +tr[2] <= 12 && +tr[1] <= 31) return `${tr[3]}-${tr[2].padStart(2, "0")}`;
       const iso = text.match(/^(\d{4})-(\d{2})-\d{2}/);
@@ -4734,25 +4858,47 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       $("#referenceEmpty h2").textContent = "2023 sonrası adaylar";
       if (!referencedData) return;
       $("#referenceHeading").textContent = "2023 sonrası adaylar";
-      const nonblank = key => rows.filter(row => row.cells[key]?.trim()).length;
-      const noteCount = rows.filter(row => referencedNotes(row)).length;
+      const searchInput = $("#referencedSearch");
+      const q = searchInput.value.trim().toLocaleLowerCase("tr-TR");
+      const filtered = filterReferencedRows(rows, { position: referencedFilters.position, result: referencedFilters.result, year: referencedFilters.year, ref: referencedFilters.ref, q });
+      const total = rows.length;
+      const shown = filtered.length;
+      const fillFilter = (id, values, current) => {
+        const select = $(id);
+        const previous = current || "";
+        select.replaceChildren();
+        const all = document.createElement("option"); all.value = ""; all.textContent = "Tümü";
+        select.append(all);
+        values.forEach(value => {
+          const option = document.createElement("option"); option.value = value; option.textContent = value || "(Boş)";
+          select.append(option);
+        });
+        select.value = previous;
+      };
+      const filterOptions = referencedFilterOptions(rows);
+      fillFilter("#referencedPositionFilter", filterOptions.positions, referencedFilters.position);
+      fillFilter("#referencedResultFilter", filterOptions.results, referencedFilters.result);
+      fillFilter("#referencedYearFilter", filterOptions.years, referencedFilters.year);
+      fillFilter("#referencedRefFilter", filterOptions.refs, referencedFilters.ref);
+      const nonblank = key => filtered.filter(row => row.cells[key]?.trim()).length;
+      const noteCount = filtered.filter(row => referencedNotes(row)).length;
       const resultField = "SONUÇ";
       const resultCount = nonblank(resultField);
-      $("#referencedCount").textContent = `${formatNumber(rows.length)} aday · ${name} · Sonuç dağılımı: ${formatNumber(resultCount)} dolu / ${formatNumber(rows.length)} toplam`;
-      const datedCount = key => rows.filter(row => referencedMonth(row.cells[key])).length;
+      $("#referencedCount").textContent = `${formatNumber(shown)} / ${formatNumber(total)} aday · ${name} · Sonuç dağılımı: ${formatNumber(resultCount)} dolu / ${formatNumber(shown)} filtreli toplam`;
+      const datedCount = key => filtered.filter(row => referencedMonth(row.cells[key])).length;
       const metrics = [
-        ["Toplam aday", rows.length, "Adı dolu satırlar"],
-        ["Görüşme notu", nonblank("GÖRÜŞME NOTU"), `${formatNumber(rows.length)} adaydan`],
-        ["Kısa açıklama", nonblank("KISA AÇIKLAMA"), `${formatNumber(rows.length)} adaydan`],
-        ["En az bir not", noteCount, `${formatNumber(rows.length)} adaydan`],
-        ["Sonuç kaydı", resultCount, `${formatNumber(rows.length)} adaydan; boşlar sonuç değildir`],
-        ["İlk temas tarihi", datedCount("ADAYA İLK TEMAS EDİLEN TARİH"), `${formatNumber(rows.length)} adaydan; YAPILMADI hariç`],
-        ["1. görüşme tarihi", datedCount("1.GÖRÜŞME TARİHİ"), `${formatNumber(rows.length)} adaydan; YAPILMADI hariç`],
-        ["2. görüşme tarihi", datedCount("2.GÖRÜŞME TARİHİ"), `${formatNumber(rows.length)} adaydan; MUAF/YAPILMADI hariç`],
-        ["İş başlangıcı", rows.filter(row => row.cells.SONUÇ?.trim().toLocaleLowerCase("tr-TR") === "iş başlangıcı").length, `${formatNumber(resultCount)} sonuç kaydından`],
-        ["Final olumlu", rows.filter(row => row.cells.FİNAL?.trim().toLocaleUpperCase("tr-TR") === "OLUMLU").length, `${formatNumber(rows.length)} adaydan`],
-        ["Geri dönüş yapıldı", rows.filter(row => row.cells["GERİ DÖNÜŞ"]?.trim().toLocaleUpperCase("tr-TR") === "YAPILDI").length, `${formatNumber(rows.length)} adaydan`],
-        ["Geri dönüş tarihi", datedCount("GERİ DÖNÜŞ TARİHİ"), `${formatNumber(rows.length)} adaydan`]
+        ["Toplam aday", shown, `${formatNumber(total)} adaydan; filtreli`],
+        ["Görüşme notu", nonblank("GÖRÜŞME NOTU"), `${formatNumber(shown)} adaydan`],
+        ["Kısa açıklama", nonblank("KISA AÇIKLAMA"), `${formatNumber(shown)} adaydan`],
+        ["En az bir not", noteCount, `${formatNumber(shown)} adaydan`],
+        ["Sonuç kaydı", resultCount, `${formatNumber(shown)} adaydan; boşlar sonuç değildir`],
+        ["İlk temas tarihi", datedCount("ADAYA İLK TEMAS EDİLEN TARİH"), `${formatNumber(shown)} adaydan; YAPILMADI hariç`],
+        ["1. görüşme tarihi", datedCount("1.GÖRÜŞME TARİHİ"), `${formatNumber(shown)} adaydan; YAPILMADI hariç`],
+        ["2. görüşme tarihi", datedCount("2.GÖRÜŞME TARİHİ"), `${formatNumber(shown)} adaydan; MUAF/YAPILMADI hariç`],
+        ["İş başlangıcı", filtered.filter(row => row.cells.SONUÇ?.trim().toLocaleLowerCase("tr-TR") === "iş başlangıcı").length, `${formatNumber(resultCount)} sonuç kaydından`],
+        ["Final olumlu", filtered.filter(row => row.cells.FİNAL?.trim().toLocaleUpperCase("tr-TR") === "OLUMLU").length, `${formatNumber(shown)} adaydan`],
+        ["Geri dönüş yapıldı", filtered.filter(row => row.cells["GERİ DÖNÜŞ"]?.trim().toLocaleUpperCase("tr-TR") === "YAPILDI").length, `${formatNumber(shown)} adaydan`],
+        ["Geri dönüş tarihi", datedCount("GERİ DÖNÜŞ TARİHİ"), `${formatNumber(shown)} adaydan`]
       ];
       const kpis = $("#referencedKpis"); kpis.replaceChildren();
       metrics.forEach(([label, count, denominator]) => {
@@ -4762,7 +4908,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const sub = document.createElement("small"); sub.textContent = denominator;
         card.append(title, total, sub); kpis.append(card);
       });
-      const dated = rows.map(row => referencedMonth(row.date)).filter(Boolean);
+      const dated = filtered.map(row => referencedMonth(row.date)).filter(Boolean);
       const chart = (id, items, label, totalRows) => {
         const categories = summarizeReferencedCategories(items, "value", id === "#referencedTrendChart" ? Infinity : 10);
         if (id === "#referencedTrendChart") categories.sort((a, b) => a[0].localeCompare(b[0]));
@@ -4782,17 +4928,38 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           item.append(text, track, total); container.append(item);
         });
       };
-      chart("#referencedPositionChart", rows.map(row => ({ value: row.position })), "Pozisyon", rows.length);
-      chart("#referencedResultChart", rows.filter(row => row.cells[resultField]?.trim()).map(row => ({ value: row.cells[resultField].trim() })), "Sonuç (yalnızca dolu)", resultCount);
-      chart("#referencedReferrerChart", rows.map(row => ({ value: row.ref })), "Referans", rows.length);
+      chart("#referencedPositionChart", filtered.map(row => ({ value: row.position })), "Pozisyon", shown);
+      chart("#referencedResultChart", filtered.filter(row => row.cells[resultField]?.trim()).map(row => ({ value: row.cells[resultField].trim() })), "Sonuç (yalnızca dolu)", resultCount);
+      chart("#referencedReferrerChart", filtered.map(row => ({ value: row.ref })), "Referans", shown);
       chart("#referencedTrendChart", dated.map(value => ({ value })), "İletilme ayı (geçerli tarih)", dated.length);
       for (const [id, field] of [["#referencedInterviewChart", "MÜLAKAT SONUCU"], ["#referencedFinalChart", "FİNAL"], ["#referencedMmpiChart", "MMPI"], ["#referencedWallChart", "WALL STREET"], ["#referencedContractChart", "SÖZLEŞME TÜRÜ"], ["#referencedCallbackChart", "GERİ DÖNÜŞ"]]) {
-        chart(id, rows.map(row => ({ value: row.cells[field]?.trim() || "" })), field, rows.length);
+        chart(id, filtered.map(row => ({ value: row.cells[field]?.trim() || "" })), field, shown);
       }
-      const q = $("#referencedSearch").value.trim().toLocaleLowerCase("tr-TR");
-      const filtered = q ? rows.filter(row => [row.name, row.ref, row.position, row.result, ...Object.values(row.cells)].some(value => value.toLocaleLowerCase("tr-TR").includes(q))) : rows;
+      const quality = analyzeReferencedQuality(filtered, { today: new Date().toISOString().slice(0, 10) });
+      const summary = $("#referencedQualitySummary"); summary.replaceChildren();
+      [[`Filtreli aday: ${formatNumber(shown)}`], [`Sorunlu kayıt: ${formatNumber(quality.counts.withIssues)}`], [`Eksik tarih: ${formatNumber(quality.counts.missing)}`], [`Geçersiz tarih: ${formatNumber(quality.counts.invalid)}`], [`Sıra dışı kronoloji: ${formatNumber(quality.counts.reversed)}`], [`Gelecek tarih: ${formatNumber(quality.counts.future)}`]].forEach(([text]) => {
+        const chip = document.createElement("span"); chip.className = "ref-quality-chip"; chip.textContent = text; summary.append(chip);
+      });
+      const qualityList = $("#referencedQualityList"); qualityList.replaceChildren();
+      const qualityFold = value => String(value ?? "").trim().toLocaleLowerCase("tr-TR");
+      const qualityQuery = qualityFold(referencedQualityQuery);
+      const qualityIssues = qualityQuery ? quality.issues.filter(issue => qualityFold(`${issue.name} ${issue.types.join(" ")}`).includes(qualityQuery)) : quality.issues;
+      if (!qualityIssues.length) { qualityList.textContent = shown ? "Filtreli kümede veri kalitesi sorunu bulunmuyor." : "Gösterilecek kayıt yok."; }
+      qualityIssues.slice(0, 200).forEach(issue => {
+        const item = document.createElement("div"); item.className = "ref-quality-item"; item.setAttribute("role", "listitem");
+        const head = document.createElement("strong"); head.textContent = `${issue.name || "(Adsız)"}${issue.row ? ` · satır ${issue.row}` : ""}`;
+        const list = document.createElement("ul");
+        issue.types.forEach(type => { const li = document.createElement("li"); li.textContent = type; list.append(li); });
+        item.append(head, list); qualityList.append(item);
+      });
+      if (quality.issues.length > qualityIssues.length) {
+        const more = document.createElement("p"); more.className = "card-subtitle";
+        more.textContent = `${formatNumber(qualityIssues.length)} / ${formatNumber(quality.issues.length)} sorunlu kayıt listeleniyor`;
+        qualityList.append(more);
+      }
+      $("#referencedFilteredCount").textContent = `${formatNumber(shown)} / ${formatNumber(total)} aday gösteriliyor`;
       referencedPage = Math.min(referencedPage, Math.max(0, Math.ceil(filtered.length / 50) - 1));
-      $("#referenceSearchCount").textContent = `${formatNumber(filtered.length)} / ${formatNumber(rows.length)} aday gösteriliyor`;
+      $("#referenceSearchCount").textContent = `${formatNumber(filtered.length)} / ${formatNumber(total)} aday gösteriliyor`;
       const table = $("#referencedTable"); table.replaceChildren();
       filtered.slice(referencedPage * 50, (referencedPage + 1) * 50).forEach(row => {
         const tr = document.createElement("tr");
@@ -7473,6 +7640,21 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       bindImportDropzone("#referencedDropzone", "#referencedFileInput", "#referencedImportResult");
       document.body.append($("#referencedDetailBg"), $("#referencedDetail"));
       $("#referencedSearch").addEventListener("input", () => { referencedPage = 0; renderReferencedSheet(); });
+      for (const [id, key] of [["#referencedPositionFilter", "position"], ["#referencedResultFilter", "result"], ["#referencedYearFilter", "year"], ["#referencedRefFilter", "ref"]]) {
+        $(id).addEventListener("change", event => { referencedFilters[key] = event.target.value; referencedPage = 0; renderReferencedSheet(); });
+      }
+      $("#referencedClearFilters").addEventListener("click", () => {
+        referencedFilters = { position: "", result: "", year: "", ref: "" };
+        referencedQualityQuery = "";
+        referencedPage = 0;
+        referencedFilters = { position: "", result: "", year: "", ref: "" };
+        referencedQualityQuery = "";
+        $("#referencedSearch").value = "";
+        $("#referencedQualitySearch").value = "";
+        $("#referencedQualitySearch").value = "";
+        renderReferencedSheet();
+      });
+      $("#referencedQualitySearch").addEventListener("input", event => { referencedQualityQuery = event.target.value; renderReferencedSheet(); });
       $("#referencedDetailClose").addEventListener("click", closeReferencedDetail);
       $("#referencedDetailBg").addEventListener("click", closeReferencedDetail);
       document.addEventListener("keydown", event => {
