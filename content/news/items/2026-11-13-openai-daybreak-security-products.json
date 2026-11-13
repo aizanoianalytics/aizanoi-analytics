@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-openai-daybreak-security-products",
+  "title": "OpenAI turns frontier cyber work into two security products",
+  "summary": "OpenAI launched two security products at its Cyber at the Frontier keynote: Daybreak Red Team, in early access, which runs agent teams against web applications to confirm vulnerabilities and test patches, and Daybreak Defense Factory, which traces findings through a codebase and drafts fixes for engineers to approve. Both run on OpenAI's cyber models, currently GPT-6 Cyber, with customer-set scope and isolated test environments.",
+  "category": "ai",
+  "priority": 68,
+  "tags": [
+    "openai",
+    "cybersecurity",
+    "agents",
+    "daybreak",
+    "enterprise"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/daybreak/red-team",
+      "publishedAt": "2026-11-12T18:00:00Z"
+    },
+    {
+      "publisher": "AI Brief",
+      "url": "https://dailyaibrief.com/news/openai-launches-daybreak-red-team-defense-factory-RwX3Ig7N",
+      "publishedAt": "2026-11-12T20:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

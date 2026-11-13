@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-barr-ai-labor-share-warning",
+  "title": "Fed's Barr warns AI concentration could widen inequality",
+  "summary": "Federal Reserve governor Michael Barr said the United States should prepare for serious short-term disruption in the labour market from AI and warned that market concentration could widen inequality. In remarks at Yale, he noted labour's share of national income fell to a record low 52.8% in the second quarter of 2026, from roughly 60% to 65% after the Second World War, and said competition will decide whether AI's gains are broadly shared.",
+  "category": "economy-markets",
+  "priority": 61,
+  "tags": [
+    "federal-reserve",
+    "ai",
+    "labour-market",
+    "inequality",
+    "monetary-policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "url": "https://www.federalreserve.gov/newsevents/speech/barr20261112a.htm",
+      "publishedAt": "2026-11-12T15:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.investing.com/news/economy-news/feds-barr-us-should-prepare-for-serious-ai-job-disruption-widening-inequality-5022504",
+      "publishedAt": "2026-11-12T16:30:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

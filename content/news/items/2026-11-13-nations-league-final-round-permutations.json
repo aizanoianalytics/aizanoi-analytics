@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-nations-league-final-round-permutations",
+  "title": "Nations League: England and Italy face decisive final round",
+  "summary": "The Nations League group stage closes on Sunday with quarter-final places still at stake in League A. England, already qualified, visit Spain knowing a win by two goals or more would top Group A3. In Group A1, Italy and France are level on ten points, with Belgium one behind and needing to beat Italy in Brussels to advance, while France host pointless Türkiye, who are already relegated.",
+  "category": "football",
+  "priority": 48,
+  "tags": [
+    "nations-league",
+    "england",
+    "italy",
+    "france",
+    "belgium"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/news/02ab-2209792f2fda-6a523d4500bb-1000--nations-league-latest-on-quarter-final-qualification-prom/",
+      "publishedAt": "2026-11-12T22:00:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/nations-league-scores-5b83decbc6fe7eef22bc49366a91f0df",
+      "publishedAt": "2026-11-12T23:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

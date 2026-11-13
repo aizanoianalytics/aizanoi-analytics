@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-gemini-4-hydrogen-launch",
+  "title": "Google ships Gemini 4 Hydrogen as its fast default model",
+  "summary": "Google released Gemini 4 Hydrogen as the successor to Gemini 3.8 Flash, priced flat at $1.50 per million input tokens and $7.50 per million output tokens across a one-million-token context. Google says it finishes tasks 2.5 times faster at default settings, scores 51 on the Artificial Analysis Intelligence Index against 50 for Gemini 4 Argon, and lifts Terminal-Bench 4.1 from 18.2% to 57%. Four thinking levels, including a new xhigh tier, ship with it.",
+  "category": "ai",
+  "priority": 85,
+  "tags": [
+    "google",
+    "gemini",
+    "models",
+    "pricing",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Blog",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+      "publishedAt": "2026-11-12T17:00:00Z"
+    },
+    {
+      "publisher": "VentureBeat",
+      "url": "https://venturebeat.com/technology/google-launches-gemini-4-hydrogen-a-faster-smarter-pricier-flash-successor",
+      "publishedAt": "2026-11-12T22:30:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
