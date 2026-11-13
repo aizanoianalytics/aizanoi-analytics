@@ -1348,6 +1348,12 @@ table thead th {
     #toastRegion { bottom: 4.25rem; }
 
     /* Import center */
+    .ref-bar-row { display: grid; grid-template-columns: minmax(110px, 1fr) minmax(80px, 2fr) 48px; align-items: center; gap: .75rem; margin: .7rem 0; font-size: .8125rem; }
+    .ref-bar-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ref-bar-track { height: 12px; background: var(--recruit-primary-soft); border-radius: 8px; overflow: hidden; }
+    .ref-bar-fill { height: 100%; background: var(--recruit-primary); border-radius: 8px; }
+    .ref-pagination { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; margin-top: 1rem; }
+    #referencedVisualization[hidden] { display: none !important; }
     .import-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.25rem; align-items: start; }
     .import-grid > .card { margin-bottom: 0; }
     .intern-live-frame-wrap { display: flex; flex-direction: column; gap: .6rem; padding: .9rem 1rem; background: #f7f7fc; border: 1px solid var(--t-line); border-radius: 12px; }
@@ -2735,6 +2741,27 @@ table thead th {
         <div id="unifiedImportResult" style="margin-top: 1rem;" role="status" aria-live="polite"></div>
       </article>
 
+      <article class="card" id="referencedPanel">
+        <div class="card-header"><div><h3 class="card-title">Referanslı Adaylar</h3><p class="card-subtitle">Şifresiz Excel dosyanızdan yalnızca seçili iki sayfa tarayıcıda okunur; veriler sunucuya gönderilmez veya kaydedilmez.</p></div></div>
+        <div class="dropzone" id="referencedDropzone" tabindex="0" role="button" aria-label="Referanslı aday Excel dosyasını yükle">
+          <div class="drop-icon">📁</div><div class="drop-title">Şifresiz referanslı aday kitabını yükleyin</div>
+          <p class="drop-sub">Ref Adayları_28.09.2023 sonrası ve TÜM REFERANSLI ADAYLAR · en fazla 50MB</p>
+          <input type="file" id="referencedFileInput" accept=".xlsx,.xlsm,.xls" multiple="" style="display: none;">
+        </div>
+        <div id="referencedImportResult" role="status" aria-live="polite"></div>
+        <div id="referencedVisualization" hidden>
+          <label for="referencedSheetSelect">Görüntülenecek sayfa</label>
+          <select class="filter-control" id="referencedSheetSelect"><option>Ref Adayları_28.09.2023 sonrası</option><option>TÜM REFERANSLI ADAYLAR</option></select>
+          <p id="referencedCount" class="card-subtitle"></p>
+          <div class="dashboard-grid-2">
+            <div><h4>Pozisyon dağılımı</h4><div id="referencedPositionChart"></div></div>
+            <div><h4>Sonuç dağılımı</h4><div id="referencedResultChart"></div></div>
+          </div>
+          <h4>Aday kayıtları</h4>
+          <div class="data-table-container" role="region" aria-label="Referanslı aday kayıtları" tabindex="0"><table class="data-table"><thead><tr><th>Satır</th><th>Ad Soyad</th><th>Referans</th><th>Pozisyon</th><th>Sonuç</th><th>Final</th></tr></thead><tbody id="referencedTable"></tbody></table></div>
+          <div class="ref-pagination"><button class="btn btn-white" id="referencedPrev" type="button">Önceki</button><span id="referencedPageLabel"></span><button class="btn btn-white" id="referencedNext" type="button">Sonraki</button></div>
+        </div>
+      </article>
       <div class="import-grid">
       <article class="card" id="recruitmentLiveCard">
         <div class="card-header">
@@ -4577,6 +4604,86 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
+    // REFERENCED SHEET PARSER START
+    const REFERENCED_SHEETS = Object.freeze({
+      "Ref Adayları_28.09.2023 sonrası": ["NO", "CV İLETİLME TARİHİ", "AD SOYAD", "REFERANS", "CV'Yİ PAYLAŞAN", "KAYNAK", "ADAYA İLK TEMAS EDİLEN TARİH", "1.GÖRÜŞME TARİHİ", "MÜLAKATI YAPAN İK", "2.GÖRÜŞME TARİHİ", "MÜLAKATI YAPAN YÖNETİCİ", "POZİSYON", "MÜLAKAT SONUCU", "GÖRÜŞME NOTU", "KISA AÇIKLAMA", "SONUÇ", "MMPI", "WALL STREET", "SÖZLEŞME TÜRÜ", "FİNAL", "GERİ DÖNÜŞ TARİHİ", "GERİ DÖNÜŞ"],
+      "TÜM REFERANSLI ADAYLAR": ["NO", "İLETİLME TARİHİ", "AD SOYAD", "REFERANS", "CV'Yİ PAYLAŞAN", "GÖRÜŞME TARİHİ", "POZİSYON", "DEĞERLENDİRME SONUCU", "DEĞERLENDİRME NOTU", "FİNAL"]
+    });
+    function parseReferencedWorkbook(workbook) {
+      const result = {};
+      for (const [name, headers] of Object.entries(REFERENCED_SHEETS)) {
+        const sheet = workbook.Sheets[name];
+        if (!sheet) throw new Error(`Seçilen sayfa bulunamadı: ${name}`);
+        const headerText = value => String(value ?? "").trim().toLocaleUpperCase("tr-TR");
+        const cell = (row, col) => sheet["!data"]
+          ? sheet["!data"][row]?.[col]
+          : sheet[XLSX.utils.encode_cell({ r: row, c: col })];
+        if (headers.some((h, c) => headerText(cell(0, c)?.v) !== headerText(h))) {
+          throw new Error(`${name} başlık şeması beklenen sütunlarla eşleşmiyor.`);
+        }
+        // !ref can be A1:V1048561 from formatting alone. Only cells with a name
+        // determine the last record; never walk the million-row declared extent.
+        let last = 0;
+        if (sheet["!data"]) {
+          sheet["!data"].forEach((row, r) => { if (r && String(row?.[2]?.v ?? "").trim()) last = r; });
+        } else {
+          for (const address of Object.keys(sheet)) {
+            if (!/^C[2-9]\d*$/.test(address)) continue;
+            if (String(sheet[address]?.v ?? "").trim()) last = Math.max(last, Number(address.slice(1)) - 1);
+          }
+        }
+        const rows = [];
+        for (let r = 1; r <= last; r++) {
+          const value = c => String(cell(r, c)?.v ?? "").trim();
+          const applicant = value(2);
+          if (!applicant) continue;
+          rows.push({ name: applicant, ref: value(3), position: value(name === "TÜM REFERANSLI ADAYLAR" ? 6 : 11),
+            result: value(name === "TÜM REFERANSLI ADAYLAR" ? 7 : 15) || (name === "TÜM REFERANSLI ADAYLAR" ? "" : value(12)),
+            final: value(name === "TÜM REFERANSLI ADAYLAR" ? 9 : 19), row: r + 1 });
+        }
+        result[name] = { rows, headers };
+      }
+      return result;
+    }
+    // REFERENCED SHEET PARSER END
+
+    let referencedData = null;
+    let referencedPage = 0;
+    function renderReferencedSheet() {
+      const name = $("#referencedSheetSelect").value;
+      const rows = referencedData?.[name]?.rows || [];
+      $("#referencedCount").textContent = `${formatNumber(rows.length)} aday · ${name}`;
+      const chart = (id, field) => {
+        const counts = new Map();
+        rows.forEach(row => { const key = row[field] || "Belirtilmemiş"; counts.set(key, (counts.get(key) || 0) + 1); });
+        const container = $(id);
+        container.replaceChildren();
+        const top = [...counts].sort((a, b) => b[1] - a[1]).slice(0, 10);
+        top.forEach(([label, count]) => {
+          const item = document.createElement("div"); item.className = "ref-bar-row";
+          const text = document.createElement("span"); text.textContent = label; text.title = label;
+          const track = document.createElement("div"); track.className = "ref-bar-track";
+          const bar = document.createElement("div"); bar.className = "ref-bar-fill";
+          bar.style.width = `${100 * count / top[0][1]}%`; track.append(bar);
+          const total = document.createElement("strong"); total.textContent = formatNumber(count);
+          item.append(text, track, total); container.append(item);
+        });
+      };
+      chart("#referencedPositionChart", "position");
+      chart("#referencedResultChart", "result");
+      const table = $("#referencedTable"); table.replaceChildren();
+      rows.slice(referencedPage * 50, (referencedPage + 1) * 50).forEach(row => {
+        const tr = document.createElement("tr");
+        [row.row, row.name, row.ref, row.position, row.result, row.final].forEach(value => {
+          const td = document.createElement("td"); td.textContent = value; tr.append(td);
+        });
+        table.append(tr);
+      });
+      $("#referencedPageLabel").textContent = rows.length ? `${referencedPage + 1} / ${Math.ceil(rows.length / 50)}` : "0 / 0";
+      $("#referencedPrev").disabled = referencedPage === 0;
+      $("#referencedNext").disabled = (referencedPage + 1) * 50 >= rows.length;
+    }
+
     // EXCEL IMPORT VIA SHEETJS
     async function ingestRecruitmentWorkbook(buffer, sourceName) {
       const workbook = XLSX.read(buffer, { type: "array", cellDates: true, cellFormula: false });
@@ -4612,6 +4719,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     // workbooks together; each file is routed by its header schema, never by filename.
     function detectWorkbookKind(buffer) {
       const workbook = XLSX.read(buffer, { type: "array", cellDates: true, cellFormula: false });
+      if (Object.keys(REFERENCED_SHEETS).some(name => workbook.SheetNames.includes(name))) {
+        return { kind: "referenced", workbook };
+      }
       // Recruitment uses the exact sheet scope of ingestRecruitmentWorkbook (db, else first sheet).
       const targetName = workbook.SheetNames.includes(SHEET_NAME) ? SHEET_NAME : workbook.SheetNames[0];
       const targetSheet = targetName ? workbook.Sheets[targetName] : null;
@@ -4639,6 +4749,14 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     async function routeSingleWorkbook(file) {
       const buffer = await file.arrayBuffer();
       const detected = detectWorkbookKind(buffer);
+      if (detected.kind === "referenced") {
+        const parsed = parseReferencedWorkbook(detected.workbook);
+        referencedData = parsed; // atomic: failed validation keeps the previous view
+        referencedPage = 0;
+        $("#referencedVisualization").hidden = false;
+        renderReferencedSheet();
+        return { file: file.name, kind: "referenced", detail: Object.entries(parsed).map(([name, data]) => `${name}: ${formatNumber(data.rows.length)} aday`).join(" · ") };
+      }
       if (detected.kind === "recruitment") {
         await ingestRecruitmentWorkbook(buffer, file.name);
         return { file: file.name, kind: "recruitment", detail: `${formatNumber(state.records.length)} işe alım kaydı` };
@@ -4658,7 +4776,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const count = loadCandidateTracking(detected.candidate, file.name);
         return { file: file.name, kind: "candidate", detail: `${formatNumber(count)} aday · sayfa "${detected.candidate.sheetName}"` };
       }
-      throw new Error(`${file.name} beklenen üç yapıdan birine uymuyor: işe alım A–Q şeması, staj başvuru sütunları ya da aday takip sütunları (Ad Soyad, Pozisyon, Sonuç, Elenen Aşama…).`);
+      throw new Error(`${file.name} beklenen dört yapıdan birine uymuyor: işe alım A–Q şeması, staj başvuru sütunları, aday takip sütunları (Ad Soyad, Pozisyon, Sonuç, Elenen Aşama…) ya da seçili iki referanslı aday sayfası.`);
     }
 
     let unifiedImportRunning = false;
@@ -4682,7 +4800,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         let recruitmentLoaded = false;
         let internLoaded = false;
         let candidateLoaded = false;
-        const KIND_LABEL = { recruitment: "İşe alım panosu", intern: "Staj paneli", candidate: "Aday Takip panosu" };
+        const KIND_LABEL = { recruitment: "İşe alım panosu", intern: "Staj paneli", candidate: "Aday Takip panosu", referenced: "Referanslı Adaylar" };
         for (const file of files) {
           try {
             const outcome = await routeSingleWorkbook(file);
@@ -4708,6 +4826,11 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         });
         if (target) {
           target.innerHTML = lines.map(line => `<div class="import-result-line ${line.ok ? "import-result-ok" : "import-result-err"}">${escapeHtml(line.text)}</div>`).join("");
+        }
+        const referencedResult = $("#referencedImportResult");
+        if (referencedResult && target !== referencedResult) {
+          const latest = lines.filter(line => line.kind === "referenced").at(-1);
+          if (latest) referencedResult.textContent = latest.text;
         }
         if (recruitmentLoaded) {
           const box = $("#importResult");
@@ -7195,6 +7318,10 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         });
       }
       bindImportDropzone("#unifiedExcelDropzone", "#unifiedExcelInput", "#unifiedImportResult");
+      bindImportDropzone("#referencedDropzone", "#referencedFileInput", "#referencedImportResult");
+      $("#referencedSheetSelect").addEventListener("change", () => { referencedPage = 0; renderReferencedSheet(); });
+      $("#referencedPrev").addEventListener("click", () => { referencedPage--; renderReferencedSheet(); });
+      $("#referencedNext").addEventListener("click", () => { referencedPage++; renderReferencedSheet(); });
       bindImportDropzone("#excelDropzone", "#excelFileInput", "#importResult");
       bindImportDropzone("#internRecruitmentDropzone", "#internRecruitmentFileInput", "#internImportResult");
       bindImportDropzone("#candidateDropzone", "#candidateFileInput", "#ctImportResult");

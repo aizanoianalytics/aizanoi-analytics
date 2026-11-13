@@ -45,9 +45,9 @@ test('active intern modal traps focus and isolates the background', () => {
   assert.match(html, /event\.key\s*===\s*"Tab"[\s\S]*?internActiveModal/);
 });
 
-test('supplied dashboard keeps all three workbook routing destinations', () => {
+test('supplied dashboard keeps the original workbook routes alongside referenced sheets', () => {
   assert.match(html, /if \(outcome\.kind === "recruitment"\) recruitmentLoaded = true/);
   assert.match(html, /if \(outcome\.kind === "intern"\) internLoaded = true/);
   assert.match(html, /if \(outcome\.kind === "candidate"\) candidateLoaded = true/);
-  assert.match(html, /const KIND_LABEL = \{ recruitment: "İşe alım panosu", intern: "Staj paneli", candidate: "Aday Takip panosu" \}/);
+  assert.match(html, /const KIND_LABEL = \{ recruitment: "İşe alım panosu", intern: "Staj paneli", candidate: "Aday Takip panosu", referenced: "Referanslı Adaylar" \}/);
 });
