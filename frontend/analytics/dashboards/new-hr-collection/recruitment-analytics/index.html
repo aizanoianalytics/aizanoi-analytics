@@ -2101,7 +2101,7 @@ table thead th {
         <span>Staj Yönetimi</span>
         <span class="tab-badge" id="internCandidateTabCount">0</span>
       </button>
-      <button type="button" class="nav-tab" data-view="reference-recent"><span>2023 sonrası adaylar</span><span class="tab-badge" id="referenceRecentBadge">0</span></button>
+      <button type="button" class="nav-tab" data-view="reference-recent"><span>Referanslı Adaylar</span><span class="tab-badge" id="referenceRecentBadge">0</span></button>
 
     </nav>
   </header>
@@ -2755,7 +2755,7 @@ table thead th {
     <!-- Private reference workbook dashboards: data exists in memory only. -->
     <div class="view-panel" data-view-panel="reference-recent">
       <section id="referenceDashboard" class="card" aria-label="Referanslı aday analizi">
-        <div id="referenceEmpty"><h2>2023 sonrası adaylar</h2><p>Henüz Excel yüklenmedi. Seçili sayfanın analizini görmek için kitabı yükleyin.</p><button type="button" class="btn btn-primary" data-go-view="import">Excel Yükle</button></div>
+        <div id="referenceEmpty"><h2>Referanslı Adaylar</h2><p>Henüz Excel yüklenmedi. Seçili sayfanın analizini görmek için kitabı yükleyin.</p><button type="button" class="btn btn-primary" data-go-view="import">Excel Yükle</button></div>
         <div id="referenceLoaded" hidden>
           <div class="card-header"><div><h2 id="referenceHeading" class="card-title"></h2><p id="referencedCount" class="card-subtitle"></p></div><button type="button" class="btn btn-white" data-go-view="import">Başka Excel yükle</button></div>
           <section id="referencedQuality" aria-label="Filtre ve veri kalitesi">
@@ -2821,7 +2821,7 @@ table thead th {
       </article>
 
       <article class="card" id="referencedPanel">
-        <div class="card-header"><div><h3 class="card-title">2023 sonrası adaylar</h3><p class="card-subtitle">Şifresiz Excel dosyanızdan yalnızca Ref Adayları_28.09.2023 sonrası sayfası tarayıcı belleğinde okunur; veriler sunucuya gönderilmez veya kaydedilmez.</p></div></div>
+        <div class="card-header"><div><h3 class="card-title">Referanslı Adaylar</h3><p class="card-subtitle">Şifresiz Excel dosyanızdan yalnızca Ref Adayları_28.09.2023 sonrası sayfası tarayıcı belleğinde okunur; veriler sunucuya gönderilmez veya kaydedilmez.</p></div></div>
         <div class="dropzone" id="referencedDropzone" tabindex="0" role="button" aria-label="Referanslı aday Excel dosyasını yükle">
           <div class="drop-icon">📁</div><div class="drop-title">Şifresiz referanslı aday kitabını yükleyin</div>
           <p class="drop-sub">Ref Adayları_28.09.2023 sonrası · en fazla 50MB</p>
@@ -4855,9 +4855,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const rows = referencedData?.[name]?.rows || [];
       $("#referenceEmpty").hidden = !!referencedData;
       $("#referenceLoaded").hidden = !referencedData;
-      $("#referenceEmpty h2").textContent = "2023 sonrası adaylar";
+      $("#referenceEmpty h2").textContent = "Referanslı Adaylar";
       if (!referencedData) return;
-      $("#referenceHeading").textContent = "2023 sonrası adaylar";
+      $("#referenceHeading").textContent = "Referanslı Adaylar";
       const searchInput = $("#referencedSearch");
       const q = searchInput.value.trim().toLocaleLowerCase("tr-TR");
       const filtered = filterReferencedRows(rows, { position: referencedFilters.position, result: referencedFilters.result, year: referencedFilters.year, ref: referencedFilters.ref, q });
