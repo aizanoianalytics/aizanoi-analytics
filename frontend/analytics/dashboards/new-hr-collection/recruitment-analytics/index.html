@@ -1348,12 +1348,29 @@ table thead th {
     #toastRegion { bottom: 4.25rem; }
 
     /* Import center */
+    .ref-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: .75rem; margin: 1rem 0 1.5rem; }
+    .ref-kpi { display: flex; flex-direction: column; gap: .25rem; border: 1px solid var(--ip-border); border-radius: 12px; padding: 1rem; background: var(--ip-bg); }
+    .ref-kpi strong { font-size: 1.6rem; color: var(--ip-purple-dark); }
+    .ref-kpi small { color: var(--ip-muted); }
+    .ref-charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .ref-charts section { min-width: 0; border: 1px solid var(--ip-border); border-radius: 12px; padding: 1rem; }
+    .ref-charts h3 { margin-bottom: .8rem; font-size: 1rem; }
+    .ref-search { width: 100%; margin: .35rem 0 .5rem; }
+    .ref-note-preview { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ref-detail-bg { position: fixed; inset: 0; background: rgba(7, 20, 38, .62); z-index: 210; }
+    .ref-detail { position: fixed; inset: 0 0 0 auto; width: min(560px, 100vw); height: 100dvh; overflow-y: auto; overscroll-behavior: contain; padding: 1.5rem; background: var(--recruit-surface); color: var(--recruit-ink); box-shadow: var(--shadow-lg); z-index: 211; }
+    .ref-detail-bg[hidden], .ref-detail[hidden], #referenceLoaded[hidden], #referenceEmpty[hidden] { display: none !important; }
+    .ref-detail-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+    .ref-detail-fields { margin-top: 1rem; display: grid; gap: .65rem; }
+    .ref-detail-fields > div { min-width: 0; border-bottom: 1px solid var(--ip-border); padding: .5rem 0; }
+    .ref-detail-fields dt { font-weight: 700; color: var(--ip-muted); font-size: .8rem; }
+    .ref-detail-fields dd { margin-top: .3rem; white-space: pre-wrap; overflow-wrap: anywhere; }
     .ref-bar-row { display: grid; grid-template-columns: minmax(110px, 1fr) minmax(80px, 2fr) 48px; align-items: center; gap: .75rem; margin: .7rem 0; font-size: .8125rem; }
+    @media (max-width: 600px) { .ref-charts { grid-template-columns: minmax(0, 1fr); } .ref-bar-row { grid-template-columns: minmax(80px, 1fr) minmax(60px, 1fr) 34px; gap: .3rem; } .ref-detail { padding: 1rem; } }
     .ref-bar-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .ref-bar-track { height: 12px; background: var(--recruit-primary-soft); border-radius: 8px; overflow: hidden; }
     .ref-bar-fill { height: 100%; background: var(--recruit-primary); border-radius: 8px; }
     .ref-pagination { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; margin-top: 1rem; }
-    #referencedVisualization[hidden] { display: none !important; }
     #referencedDropzone.is-loaded { padding: .7rem 1rem; text-align: left; }
     #referencedDropzone.is-loaded .drop-icon, #referencedDropzone.is-loaded .drop-sub { display: none; }
     #referencedDropzone.is-loaded .drop-title { margin: 0; font-size: .875rem; }
@@ -2075,6 +2092,8 @@ table thead th {
         <span>Staj Yönetimi</span>
         <span class="tab-badge" id="internCandidateTabCount">0</span>
       </button>
+      <button type="button" class="nav-tab" data-view="reference-recent"><span>2023 sonrası adaylar</span><span class="tab-badge" id="referenceRecentBadge">0</span></button>
+
     </nav>
   </header>
 
@@ -2724,6 +2743,39 @@ table thead th {
       </article>
     </div>
 
+    <!-- Private reference workbook dashboards: data exists in memory only. -->
+    <div class="view-panel" data-view-panel="reference-recent">
+      <section id="referenceDashboard" class="card" aria-label="Referanslı aday analizi">
+        <div id="referenceEmpty"><h2>2023 sonrası adaylar</h2><p>Henüz Excel yüklenmedi. Seçili sayfanın analizini görmek için kitabı yükleyin.</p><button type="button" class="btn btn-primary" data-go-view="import">Excel Yükle</button></div>
+        <div id="referenceLoaded" hidden>
+          <div class="card-header"><div><h2 id="referenceHeading" class="card-title"></h2><p id="referencedCount" class="card-subtitle"></p></div><button type="button" class="btn btn-white" data-go-view="import">Başka Excel yükle</button></div>
+          <div id="referencedKpis" class="ref-kpis"></div>
+          <div class="ref-charts">
+            <section><h3>Pozisyon dağılımı</h3><div id="referencedPositionChart"></div></section>
+            <section><h3>Sonuç dağılımı</h3><div id="referencedResultChart"></div></section>
+            <section><h3>Referans dağılımı</h3><div id="referencedReferrerChart"></div></section>
+            <section><h3>İletilme eğilimi (ay)</h3><div id="referencedTrendChart"></div></section>
+            <section><h3>Mülakat sonucu</h3><div id="referencedInterviewChart"></div></section>
+            <section><h3>Final durumu</h3><div id="referencedFinalChart"></div></section>
+            <section><h3>MMPI değerlendirmesi</h3><div id="referencedMmpiChart"></div></section>
+            <section><h3>Wall Street değerlendirmesi</h3><div id="referencedWallChart"></div></section>
+            <section><h3>Sözleşme türü</h3><div id="referencedContractChart"></div></section>
+            <section><h3>Geri dönüş durumu</h3><div id="referencedCallbackChart"></div></section>
+          </div>
+          <label for="referencedSearch">Aday ara (ad, referans, pozisyon, sonuç veya not)</label>
+          <input id="referencedSearch" class="filter-control ref-search" type="search" autocomplete="off" placeholder="Aday veya not ara">
+          <p id="referenceSearchCount" class="card-subtitle" role="status"></p>
+          <div class="data-table-container" role="region" aria-label="Referanslı aday kayıtları" tabindex="0"><table class="data-table"><thead><tr><th>Satır</th><th>Ad Soyad</th><th>Referans</th><th>Pozisyon</th><th>Sonuç</th><th>Not</th></tr></thead><tbody id="referencedTable"></tbody></table></div>
+          <div class="ref-pagination"><button class="btn btn-white" id="referencedPrev" type="button">Önceki</button><span id="referencedPageLabel"></span><button class="btn btn-white" id="referencedNext" type="button">Sonraki</button></div>
+        </div>
+      </section>
+    </div>
+
+    <div id="referencedDetailBg" class="ref-detail-bg" hidden></div>
+    <aside id="referencedDetail" class="ref-detail" role="dialog" aria-modal="true" aria-labelledby="referencedDetailTitle" hidden>
+      <div class="ref-detail-head"><h2 id="referencedDetailTitle"></h2><button id="referencedDetailClose" class="btn btn-white" type="button">Kapat ×</button></div>
+      <p id="referencedDetailMeta" class="card-subtitle"></p><div id="referencedDetailFields" class="ref-detail-fields"></div>
+    </aside>
     <!-- VIEW 8: EXCEL IMPORT CENTER -->
     <div class="view-panel" data-view-panel="import">
       <article class="card">
@@ -2745,25 +2797,14 @@ table thead th {
       </article>
 
       <article class="card" id="referencedPanel">
-        <div class="card-header"><div><h3 class="card-title">Referanslı Adaylar</h3><p class="card-subtitle">Şifresiz Excel dosyanızdan yalnızca seçili iki sayfa tarayıcıda okunur; veriler sunucuya gönderilmez veya kaydedilmez.</p></div></div>
+        <div class="card-header"><div><h3 class="card-title">2023 sonrası adaylar</h3><p class="card-subtitle">Şifresiz Excel dosyanızdan yalnızca Ref Adayları_28.09.2023 sonrası sayfası tarayıcı belleğinde okunur; veriler sunucuya gönderilmez veya kaydedilmez.</p></div></div>
         <div class="dropzone" id="referencedDropzone" tabindex="0" role="button" aria-label="Referanslı aday Excel dosyasını yükle">
           <div class="drop-icon">📁</div><div class="drop-title">Şifresiz referanslı aday kitabını yükleyin</div>
-          <p class="drop-sub">Ref Adayları_28.09.2023 sonrası ve TÜM REFERANSLI ADAYLAR · en fazla 50MB</p>
+          <p class="drop-sub">Ref Adayları_28.09.2023 sonrası · en fazla 50MB</p>
           <input type="file" id="referencedFileInput" accept=".xlsx,.xlsm,.xls" multiple="" style="display: none;">
         </div>
         <div id="referencedImportResult" role="status" aria-live="polite"></div>
-        <div id="referencedVisualization" hidden>
-          <label for="referencedSheetSelect">Görüntülenecek sayfa</label>
-          <select class="filter-control" id="referencedSheetSelect"><option value="Ref Adayları_28.09.2023 sonrası">2023 sonrası adaylar</option><option value="TÜM REFERANSLI ADAYLAR">Tüm referanslı adaylar</option></select>
-          <p id="referencedCount" class="card-subtitle"></p>
-          <div class="dashboard-grid-2">
-            <div><h4>Pozisyon dağılımı</h4><div id="referencedPositionChart"></div></div>
-            <div><h4>Sonuç dağılımı</h4><div id="referencedResultChart"></div></div>
-          </div>
-          <h4>Aday kayıtları</h4>
-          <div class="data-table-container" role="region" aria-label="Referanslı aday kayıtları" tabindex="0"><table class="data-table"><thead><tr><th>Satır</th><th>Ad Soyad</th><th>Referans</th><th>Pozisyon</th><th>Sonuç</th><th>Final</th></tr></thead><tbody id="referencedTable"></tbody></table></div>
-          <div class="ref-pagination"><button class="btn btn-white" id="referencedPrev" type="button">Önceki</button><span id="referencedPageLabel"></span><button class="btn btn-white" id="referencedNext" type="button">Sonraki</button></div>
-        </div>
+        <p class="card-subtitle">Yükleme sonrası üst sekmede analiz ve aday notları açılır.</p>
       </article>
       <div class="import-grid">
       <article class="card" id="recruitmentLiveCard">
@@ -4609,8 +4650,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
     // REFERENCED SHEET PARSER START
     const REFERENCED_SHEETS = Object.freeze({
-      "Ref Adayları_28.09.2023 sonrası": ["NO", "CV İLETİLME TARİHİ", "AD SOYAD", "REFERANS", "CV'Yİ PAYLAŞAN", "KAYNAK", "ADAYA İLK TEMAS EDİLEN TARİH", "1.GÖRÜŞME TARİHİ", "MÜLAKATI YAPAN İK", "2.GÖRÜŞME TARİHİ", "MÜLAKATI YAPAN YÖNETİCİ", "POZİSYON", "MÜLAKAT SONUCU", "GÖRÜŞME NOTU", "KISA AÇIKLAMA", "SONUÇ", "MMPI", "WALL STREET", "SÖZLEŞME TÜRÜ", "FİNAL", "GERİ DÖNÜŞ TARİHİ", "GERİ DÖNÜŞ"],
-      "TÜM REFERANSLI ADAYLAR": ["NO", "İLETİLME TARİHİ", "AD SOYAD", "REFERANS", "CV'Yİ PAYLAŞAN", "GÖRÜŞME TARİHİ", "POZİSYON", "DEĞERLENDİRME SONUCU", "DEĞERLENDİRME NOTU", "FİNAL"]
+      "Ref Adayları_28.09.2023 sonrası": ["NO", "CV İLETİLME TARİHİ", "AD SOYAD", "REFERANS", "CV'Yİ PAYLAŞAN", "KAYNAK", "ADAYA İLK TEMAS EDİLEN TARİH", "1.GÖRÜŞME TARİHİ", "MÜLAKATI YAPAN İK", "2.GÖRÜŞME TARİHİ", "MÜLAKATI YAPAN YÖNETİCİ", "POZİSYON", "MÜLAKAT SONUCU", "GÖRÜŞME NOTU", "KISA AÇIKLAMA", "SONUÇ", "MMPI", "WALL STREET", "SÖZLEŞME TÜRÜ", "FİNAL", "GERİ DÖNÜŞ TARİHİ", "GERİ DÖNÜŞ"]
     });
     function parseReferencedWorkbook(workbook) {
       const result = {};
@@ -4640,44 +4680,101 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           const value = c => String(cell(r, c)?.v ?? "").trim();
           const applicant = value(2);
           if (!applicant) continue;
-          rows.push({ name: applicant, ref: value(3), position: value(name === "TÜM REFERANSLI ADAYLAR" ? 6 : 11),
-            result: value(name === "TÜM REFERANSLI ADAYLAR" ? 7 : 15) || (name === "TÜM REFERANSLI ADAYLAR" ? "" : value(12)),
-            final: value(name === "TÜM REFERANSLI ADAYLAR" ? 9 : 19), row: r + 1 });
+          const cells = Object.fromEntries(headers.map((header, c) => {
+            const raw = cell(r, c)?.v;
+            const value = Object.prototype.toString.call(raw) === "[object Date]" && !Number.isNaN(raw.valueOf())
+              ? `${raw.getFullYear()}-${String(raw.getMonth() + 1).padStart(2, "0")}-${String(raw.getDate()).padStart(2, "0")}`
+              : String(raw ?? "");
+            return [header, value];
+          }));
+          rows.push({ name: applicant, ref: value(3), position: value(11),
+            result: value(15) || value(12), final: value(19), row: r + 1, cells,
+            date: cell(r, 1)?.v ?? "" });
         }
         result[name] = { rows, headers };
       }
       return result;
     }
-    function summarizeReferencedCategories(rows, field) {
+    function summarizeReferencedCategories(rows, field, limit = 10) {
       const counts = new Map();
       rows.forEach(row => { const key = row[field] || "Belirtilmemiş"; counts.set(key, (counts.get(key) || 0) + 1); });
       const sorted = [...counts].sort((a, b) => b[1] - a[1]);
-      const remaining = sorted.slice(10);
+      const remaining = sorted.slice(limit);
       return remaining.length
-        ? [...sorted.slice(0, 10), [`Diğer (${remaining.length} kategori)`, remaining.reduce((sum, [, count]) => sum + count, 0)]]
+        ? [...sorted.slice(0, limit), [`Diğer (${remaining.length} kategori)`, remaining.reduce((sum, [, count]) => sum + count, 0)]]
         : sorted;
     }
     // REFERENCED SHEET PARSER END
 
     let referencedData = null;
     let referencedPage = 0;
+    let referencedReturnFocus = null;
+    const referencedName = "Ref Adayları_28.09.2023 sonrası";
+    function referencedNotes(row) {
+      return ["GÖRÜŞME NOTU", "KISA AÇIKLAMA"]
+        .map(key => row.cells[key]).filter(value => value?.trim()).join(" · ");
+    }
+    function referencedMonth(value) {
+      if (value instanceof Date && !Number.isNaN(value.valueOf())) return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, "0")}`;
+      if (typeof value === "number" && value > 20000 && value < 100000) {
+        const d = new Date(Date.UTC(1899, 11, 30) + value * 86400000);
+        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
+      }
+      const text = String(value ?? "").trim();
+      const tr = text.match(/^(\d{1,2})[./-](\d{1,2})[./-](\d{4})/);
+      if (tr && +tr[2] <= 12 && +tr[1] <= 31) return `${tr[3]}-${tr[2].padStart(2, "0")}`;
+      const iso = text.match(/^(\d{4})-(\d{2})-\d{2}/);
+      return iso && +iso[2] <= 12 ? `${iso[1]}-${iso[2]}` : "";
+    }
     function renderReferencedSheet() {
-      const name = $("#referencedSheetSelect").value;
+      const name = referencedName;
       const rows = referencedData?.[name]?.rows || [];
-      $("#referencedCount").textContent = `${formatNumber(rows.length)} aday · ${name}`;
-      const chart = (id, field) => {
-        const categories = summarizeReferencedCategories(rows, field);
-        const container = $(id);
-        container.replaceChildren();
+      $("#referenceEmpty").hidden = !!referencedData;
+      $("#referenceLoaded").hidden = !referencedData;
+      $("#referenceEmpty h2").textContent = "2023 sonrası adaylar";
+      if (!referencedData) return;
+      $("#referenceHeading").textContent = "2023 sonrası adaylar";
+      const nonblank = key => rows.filter(row => row.cells[key]?.trim()).length;
+      const noteCount = rows.filter(row => referencedNotes(row)).length;
+      const resultField = "SONUÇ";
+      const resultCount = nonblank(resultField);
+      $("#referencedCount").textContent = `${formatNumber(rows.length)} aday · ${name} · Sonuç dağılımı: ${formatNumber(resultCount)} dolu / ${formatNumber(rows.length)} toplam`;
+      const datedCount = key => rows.filter(row => referencedMonth(row.cells[key])).length;
+      const metrics = [
+        ["Toplam aday", rows.length, "Adı dolu satırlar"],
+        ["Görüşme notu", nonblank("GÖRÜŞME NOTU"), `${formatNumber(rows.length)} adaydan`],
+        ["Kısa açıklama", nonblank("KISA AÇIKLAMA"), `${formatNumber(rows.length)} adaydan`],
+        ["En az bir not", noteCount, `${formatNumber(rows.length)} adaydan`],
+        ["Sonuç kaydı", resultCount, `${formatNumber(rows.length)} adaydan; boşlar sonuç değildir`],
+        ["İlk temas tarihi", datedCount("ADAYA İLK TEMAS EDİLEN TARİH"), `${formatNumber(rows.length)} adaydan; YAPILMADI hariç`],
+        ["1. görüşme tarihi", datedCount("1.GÖRÜŞME TARİHİ"), `${formatNumber(rows.length)} adaydan; YAPILMADI hariç`],
+        ["2. görüşme tarihi", datedCount("2.GÖRÜŞME TARİHİ"), `${formatNumber(rows.length)} adaydan; MUAF/YAPILMADI hariç`],
+        ["İş başlangıcı", rows.filter(row => row.cells.SONUÇ?.trim().toLocaleLowerCase("tr-TR") === "iş başlangıcı").length, `${formatNumber(resultCount)} sonuç kaydından`],
+        ["Final olumlu", rows.filter(row => row.cells.FİNAL?.trim().toLocaleUpperCase("tr-TR") === "OLUMLU").length, `${formatNumber(rows.length)} adaydan`],
+        ["Geri dönüş yapıldı", rows.filter(row => row.cells["GERİ DÖNÜŞ"]?.trim().toLocaleUpperCase("tr-TR") === "YAPILDI").length, `${formatNumber(rows.length)} adaydan`],
+        ["Geri dönüş tarihi", datedCount("GERİ DÖNÜŞ TARİHİ"), `${formatNumber(rows.length)} adaydan`]
+      ];
+      const kpis = $("#referencedKpis"); kpis.replaceChildren();
+      metrics.forEach(([label, count, denominator]) => {
+        const card = document.createElement("div"); card.className = "ref-kpi";
+        const title = document.createElement("span"); title.textContent = label;
+        const total = document.createElement("strong"); total.textContent = formatNumber(count);
+        const sub = document.createElement("small"); sub.textContent = denominator;
+        card.append(title, total, sub); kpis.append(card);
+      });
+      const dated = rows.map(row => referencedMonth(row.date)).filter(Boolean);
+      const chart = (id, items, label, totalRows) => {
+        const categories = summarizeReferencedCategories(items, "value", id === "#referencedTrendChart" ? Infinity : 10);
+        if (id === "#referencedTrendChart") categories.sort((a, b) => a[0].localeCompare(b[0]));
+        const container = $(id); container.replaceChildren();
         container.setAttribute("role", "list");
-        container.setAttribute("aria-label", `${field === "position" ? "Pozisyon" : "Sonuç"} dağılımı, ${formatNumber(rows.length)} aday`);
-        if (!categories.length) { container.textContent = "Bu sayfada aday bulunmuyor."; return; }
+        container.setAttribute("aria-label", `${label} dağılımı, ${formatNumber(totalRows)} kayıt`);
+        if (!categories.length) { container.textContent = "Kayıt bulunmuyor."; return; }
         const maxCount = Math.max(...categories.map(([, value]) => value));
-        categories.forEach(([label, count]) => {
+        categories.forEach(([textValue, count]) => {
           const item = document.createElement("div"); item.className = "ref-bar-row";
-          item.setAttribute("role", "listitem");
-          item.setAttribute("aria-label", `${label}: ${formatNumber(count)} aday`);
-          const text = document.createElement("span"); text.textContent = label; text.title = label;
+          item.setAttribute("role", "listitem"); item.setAttribute("aria-label", `${textValue}: ${formatNumber(count)} kayıt`);
+          const text = document.createElement("span"); text.textContent = textValue; text.title = textValue;
           const track = document.createElement("div"); track.className = "ref-bar-track"; track.setAttribute("aria-hidden", "true");
           const bar = document.createElement("div"); bar.className = "ref-bar-fill";
           bar.style.width = `${100 * count / maxCount}%`; track.append(bar);
@@ -4685,19 +4782,54 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           item.append(text, track, total); container.append(item);
         });
       };
-      chart("#referencedPositionChart", "position");
-      chart("#referencedResultChart", "result");
+      chart("#referencedPositionChart", rows.map(row => ({ value: row.position })), "Pozisyon", rows.length);
+      chart("#referencedResultChart", rows.filter(row => row.cells[resultField]?.trim()).map(row => ({ value: row.cells[resultField].trim() })), "Sonuç (yalnızca dolu)", resultCount);
+      chart("#referencedReferrerChart", rows.map(row => ({ value: row.ref })), "Referans", rows.length);
+      chart("#referencedTrendChart", dated.map(value => ({ value })), "İletilme ayı (geçerli tarih)", dated.length);
+      for (const [id, field] of [["#referencedInterviewChart", "MÜLAKAT SONUCU"], ["#referencedFinalChart", "FİNAL"], ["#referencedMmpiChart", "MMPI"], ["#referencedWallChart", "WALL STREET"], ["#referencedContractChart", "SÖZLEŞME TÜRÜ"], ["#referencedCallbackChart", "GERİ DÖNÜŞ"]]) {
+        chart(id, rows.map(row => ({ value: row.cells[field]?.trim() || "" })), field, rows.length);
+      }
+      const q = $("#referencedSearch").value.trim().toLocaleLowerCase("tr-TR");
+      const filtered = q ? rows.filter(row => [row.name, row.ref, row.position, row.result, ...Object.values(row.cells)].some(value => value.toLocaleLowerCase("tr-TR").includes(q))) : rows;
+      referencedPage = Math.min(referencedPage, Math.max(0, Math.ceil(filtered.length / 50) - 1));
+      $("#referenceSearchCount").textContent = `${formatNumber(filtered.length)} / ${formatNumber(rows.length)} aday gösteriliyor`;
       const table = $("#referencedTable"); table.replaceChildren();
-      rows.slice(referencedPage * 50, (referencedPage + 1) * 50).forEach(row => {
+      filtered.slice(referencedPage * 50, (referencedPage + 1) * 50).forEach(row => {
         const tr = document.createElement("tr");
-        [row.row, row.name, row.ref, row.position, row.result, row.final].forEach(value => {
-          const td = document.createElement("td"); td.textContent = value; tr.append(td);
+        [row.row, row.name, row.ref, row.position, row.cells[resultField]?.trim() || "—", referencedNotes(row) || "—"].forEach((value, index) => {
+          const td = document.createElement("td");
+          if (index === 1) { const button = document.createElement("button"); button.type = "button"; button.className = "btn btn-white ref-open"; button.textContent = value; button.addEventListener("click", () => openReferencedDetail(row, name, button)); td.append(button); }
+          else { td.textContent = value; if (index === 5) td.className = "ref-note-preview"; }
+          tr.append(td);
         });
         table.append(tr);
       });
-      $("#referencedPageLabel").textContent = rows.length ? `${referencedPage + 1} / ${Math.ceil(rows.length / 50)}` : "0 / 0";
+      $("#referencedPageLabel").textContent = filtered.length ? `${referencedPage + 1} / ${Math.ceil(filtered.length / 50)}` : "0 / 0";
       $("#referencedPrev").disabled = referencedPage === 0;
-      $("#referencedNext").disabled = (referencedPage + 1) * 50 >= rows.length;
+      $("#referencedNext").disabled = (referencedPage + 1) * 50 >= filtered.length;
+    }
+    function openReferencedDetail(row, name, opener) {
+      referencedReturnFocus = opener;
+      $("#referencedDetailTitle").textContent = row.cells["AD SOYAD"];
+      $("#referencedDetailMeta").textContent = `${name} · Excel satırı ${row.row}`;
+      const fields = $("#referencedDetailFields"); fields.replaceChildren();
+      referencedData[name].headers.forEach(header => {
+        const value = row.cells[header];
+        if (!value?.trim()) return;
+        const block = document.createElement("div");
+        const label = document.createElement("dt"); label.textContent = header;
+        const content = document.createElement("dd"); content.textContent = value;
+        block.append(label, content); fields.append(block);
+      });
+      $("#referencedDetailBg").hidden = false; $("#referencedDetail").hidden = false;
+      document.querySelectorAll("body > :not(#referencedDetail):not(#referencedDetailBg)").forEach(el => { el.inert = true; });
+      $("#referencedDetailClose").focus();
+    }
+    function closeReferencedDetail() {
+      if ($("#referencedDetail").hidden) return;
+      $("#referencedDetailBg").hidden = true; $("#referencedDetail").hidden = true;
+      document.querySelectorAll("body > :not(#referencedDetail):not(#referencedDetailBg)").forEach(el => { el.inert = false; });
+      if (referencedReturnFocus?.isConnected) referencedReturnFocus.focus();
     }
 
     // EXCEL IMPORT VIA SHEETJS
@@ -4771,8 +4903,10 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         referencedPage = 0;
         $("#referencedDropzone").classList.add("is-loaded");
         $("#referencedDropzone .drop-title").textContent = "Başka Excel yükle";
-        $("#referencedVisualization").hidden = false;
+        $("#referenceRecentBadge").textContent = formatNumber(parsed[referencedName].rows.length);
+        $("#referencedSearch").value = "";
         renderReferencedSheet();
+        navigate("reference-recent");
         return { file: file.name, kind: "referenced", detail: Object.entries(parsed).map(([name, data]) => `${name}: ${formatNumber(data.rows.length)} aday`).join(" · ") };
       }
       if (detected.kind === "recruitment") {
@@ -4794,7 +4928,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const count = loadCandidateTracking(detected.candidate, file.name);
         return { file: file.name, kind: "candidate", detail: `${formatNumber(count)} aday · sayfa "${detected.candidate.sheetName}"` };
       }
-      throw new Error(`${file.name} beklenen dört yapıdan birine uymuyor: işe alım A–Q şeması, staj başvuru sütunları, aday takip sütunları (Ad Soyad, Pozisyon, Sonuç, Elenen Aşama…) ya da seçili iki referanslı aday sayfası.`);
+      throw new Error(`${file.name} beklenen dört yapıdan birine uymuyor: işe alım A–Q şeması, staj başvuru sütunları, aday takip sütunları ya da Ref Adayları_28.09.2023 sonrası sayfası.`);
     }
 
     let unifiedImportRunning = false;
@@ -7337,7 +7471,15 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
       bindImportDropzone("#unifiedExcelDropzone", "#unifiedExcelInput", "#unifiedImportResult");
       bindImportDropzone("#referencedDropzone", "#referencedFileInput", "#referencedImportResult");
-      $("#referencedSheetSelect").addEventListener("change", () => { referencedPage = 0; renderReferencedSheet(); });
+      document.body.append($("#referencedDetailBg"), $("#referencedDetail"));
+      $("#referencedSearch").addEventListener("input", () => { referencedPage = 0; renderReferencedSheet(); });
+      $("#referencedDetailClose").addEventListener("click", closeReferencedDetail);
+      $("#referencedDetailBg").addEventListener("click", closeReferencedDetail);
+      document.addEventListener("keydown", event => {
+        if ($("#referencedDetail").hidden) return;
+        if (event.key === "Escape") { event.preventDefault(); closeReferencedDetail(); }
+        if (event.key === "Tab") { event.preventDefault(); $("#referencedDetailClose").focus(); }
+      });
       $("#referencedPrev").addEventListener("click", () => { referencedPage--; renderReferencedSheet(); });
       $("#referencedNext").addEventListener("click", () => { referencedPage++; renderReferencedSheet(); });
       bindImportDropzone("#excelDropzone", "#excelFileInput", "#importResult");
