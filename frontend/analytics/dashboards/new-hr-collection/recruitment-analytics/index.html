@@ -1354,6 +1354,9 @@ table thead th {
     .ref-bar-fill { height: 100%; background: var(--recruit-primary); border-radius: 8px; }
     .ref-pagination { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; margin-top: 1rem; }
     #referencedVisualization[hidden] { display: none !important; }
+    #referencedDropzone.is-loaded { padding: .7rem 1rem; text-align: left; }
+    #referencedDropzone.is-loaded .drop-icon, #referencedDropzone.is-loaded .drop-sub { display: none; }
+    #referencedDropzone.is-loaded .drop-title { margin: 0; font-size: .875rem; }
     .import-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.25rem; align-items: start; }
     .import-grid > .card { margin-bottom: 0; }
     .intern-live-frame-wrap { display: flex; flex-direction: column; gap: .6rem; padding: .9rem 1rem; background: #f7f7fc; border: 1px solid var(--t-line); border-radius: 12px; }
@@ -4766,6 +4769,8 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const parsed = parseReferencedWorkbook(detected.workbook);
         referencedData = parsed; // atomic: failed validation keeps the previous view
         referencedPage = 0;
+        $("#referencedDropzone").classList.add("is-loaded");
+        $("#referencedDropzone .drop-title").textContent = "Başka Excel yükle";
         $("#referencedVisualization").hidden = false;
         renderReferencedSheet();
         return { file: file.name, kind: "referenced", detail: Object.entries(parsed).map(([name, data]) => `${name}: ${formatNumber(data.rows.length)} aday`).join(" · ") };

@@ -87,6 +87,13 @@ test('sheet choices stay short on mobile while exact worksheet names remain thei
   assert.match(html, /referencedCount"\)\.textContent = .*\$\{name\}/);
 });
 
+test('successful import compacts the upload target so charts appear sooner on mobile', () => {
+  assert.match(html, /#referencedDropzone\.is-loaded\s*\{[^}]*padding:/);
+  assert.match(html, /#referencedDropzone\.is-loaded\s+\.drop-icon/);
+  assert.match(html, /#referencedDropzone"\)\.classList\.add\("is-loaded"\)/);
+  assert.match(html, /Başka Excel yükle/);
+});
+
 test('two selected sheets have a visible switch, dedicated charts and a bounded detail table', () => {
   assert.match(html, /id="referencedPanel"/);
   assert.match(html, /id="referencedSheetSelect"/);
