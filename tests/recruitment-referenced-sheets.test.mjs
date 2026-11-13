@@ -4,103 +4,85 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
 const html = readFileSync('frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html', 'utf8');
-const first = 'Ref Adayları_28.09.2023 sonrası';
-const second = 'TÜM REFERANSLI ADAYLAR';
-const firstHeaders = ['NO', 'CV İLETİLME TARİHİ', 'AD SOYAD', 'REFERANS', "CV'Yİ PAYLAŞAN", 'KAYNAK', 'ADAYA İLK TEMAS EDİLEN TARİH', '1.GÖRÜŞME TARİHİ', 'MÜLAKATI YAPAN İK', '2.GÖRÜŞME TARİHİ', 'MÜLAKATI YAPAN YÖNETİCİ', 'POZİSYON', 'MÜLAKAT SONUCU', 'GÖRÜŞME NOTU', 'KISA AÇIKLAMA', 'SONUÇ', 'MMPI', 'WALL STREET', 'SÖZLEŞME TÜRÜ', 'FİNAL', 'GERİ DÖNÜŞ TARİHİ', 'GERİ DÖNÜŞ'];
-const secondHeaders = ['NO', 'İLETİLME TARİHİ', 'AD SOYAD', 'REFERANS', "CV'Yİ PAYLAŞAN", 'GÖRÜŞME TARİHİ', 'POZİSYON', 'DEĞERLENDİRME SONUCU', 'DEĞERLENDİRME NOTU', 'FİNAL'];
-
+const name = 'Ref Adayları_28.09.2023 sonrası';
+const headers = ['NO', 'CV İLETİLME TARİHİ', 'AD SOYAD', 'REFERANS', "CV'Yİ PAYLAŞAN", 'KAYNAK', 'ADAYA İLK TEMAS EDİLEN TARİH', '1.GÖRÜŞME TARİHİ', 'MÜLAKATI YAPAN İK', '2.GÖRÜŞME TARİHİ', 'MÜLAKATI YAPAN YÖNETİCİ', 'POZİSYON', 'MÜLAKAT SONUCU', 'GÖRÜŞME NOTU', 'KISA AÇIKLAMA', 'SONUÇ', 'MMPI', 'WALL STREET', 'SÖZLEŞME TÜRÜ', 'FİNAL', 'GERİ DÖNÜŞ TARİHİ', 'GERİ DÖNÜŞ'];
 function parser() {
   const context = {};
-  const vendor = html.slice(html.indexOf('var XLSX={};function make_xlsx_lib'), html.indexOf('</script>', html.indexOf('var XLSX={};function make_xlsx_lib')));
-  vm.runInNewContext(vendor, context);
+  const start = html.indexOf('var XLSX={};function make_xlsx_lib');
+  vm.runInNewContext(html.slice(start, html.indexOf('</script>', start)), context);
   const source = html.split('// REFERENCED SHEET PARSER START')[1]?.split('// REFERENCED SHEET PARSER END')[0];
-  assert.ok(source, 'referenced sheet parser is available');
-  return { XLSX: context.XLSX, parse: vm.runInNewContext(`${source}\nparseReferencedWorkbook`, context) };
+  assert.ok(source);
+  return { XLSX: context.XLSX, ...vm.runInNewContext(`${source}\n({parse: parseReferencedWorkbook, summarize: summarizeReferencedCategories})`, context) };
 }
-function book(XLSX, entries) {
+function book(XLSX, rows, header = headers) {
   const b = XLSX.utils.book_new();
-  for (const [name, headers, rows] of entries) XLSX.utils.book_append_sheet(b, XLSX.utils.aoa_to_sheet([headers, ...rows]), name);
+  XLSX.utils.book_append_sheet(b, XLSX.utils.aoa_to_sheet([header, ...rows]), name);
   return b;
 }
-
-test('both exact selected sheets import as independent datasets without importing other sheets', () => {
+test('selected sheet alone imports without requiring other worksheets; notes preserve line breaks and markup as data', () => {
   const { XLSX, parse } = parser();
-  const workbook = book(XLSX, [['Other', ['NO'], [[100]]], [first, firstHeaders, [[1, '', 'First', 'Ref A', '', '', '', '', '', '', '', 'Pilot', 'Olumlu']]], [second, secondHeaders, [[2, '', 'Second', 'Ref B', '', '', 'Engineer', 'Uygun']]]]);
-  const result = parse(workbook);
-  assert.deepEqual(Object.keys(result), [first, second]);
-  assert.equal(result[first].rows.length, 1);
-  assert.equal(result[second].rows.length, 1);
-  assert.equal(result[first].rows[0].name, 'First');
-  assert.equal(result[second].rows[0].position, 'Engineer');
-  assert.equal(result[first].rows[0].result, 'Olumlu');
-  assert.equal(result[second].rows[0].result, 'Uygun');
+  const b = book(XLSX, [[1, '21.07.2023', 'Synthetic One', 'Ref', '', '', '', '', '', '', '', 'Pilot', 'OLUMLU', 'Line one\n<script>alert(1)</script>', '  second line  ', 'SÜREÇ DEVAM', '', '', '', 'OLUMLU']]);
+  const result = parse(b);
+  assert.deepEqual(Object.keys(result), [name]);
+  assert.equal(result[name].rows[0].cells['GÖRÜŞME NOTU'], 'Line one\n<script>alert(1)</script>');
+  assert.equal(result[name].rows[0].cells['KISA AÇIKLAMA'], '  second line  ');
+});
+test('375 selected candidates survive C100 and 1168 survive C1000; inflated formatting does not drive iteration', () => {
+  const { XLSX, parse } = parser();
+  for (const count of [375, 1168]) {
+    const b = book(XLSX, Array.from({ length: count }, (_, i) => [i + 1, '', `Synthetic ${i + 1}`]));
+    b.Sheets[name]['!ref'] = 'A1:V1048561';
+    const start = performance.now();
+    const rows = parse(b)[name].rows;
+    assert.equal(rows.length, count);
+    assert.equal(rows.at(-1).row, count + 1);
+    assert.ok(performance.now() - start < 3000);
+  }
+});
+test('invalid or missing selected sheet fails closed and tolerates trailing header whitespace', () => {
+  const { XLSX, parse } = parser();
+  const b = book(XLSX, [[1, '', 'Synthetic']], headers.map(h => h === 'KISA AÇIKLAMA' ? 'KISA AÇIKLAMA  ' : h));
+  assert.equal(parse(b)[name].rows.length, 1);
+  assert.throws(() => parse({ Sheets: {} }), /Ref Adayları/);
+  assert.throws(() => parse(book(XLSX, [[1, '', 'Synthetic']], ['wrong'])), /başlık|şema/i);
+});
+test('typed Excel dates remain usable for contact, interview and callback metrics', () => {
+  const { XLSX, parse } = parser();
+  const b = book(XLSX, [[1, '2024-01-15', 'Synthetic', '', '', '', '', '', '', 'MUAF']]);
+  for (const [address, day] of [['G2',16], ['H2',17], ['U2',18]]) b.Sheets[name][address] = { t: 'd', v: new Date(2024, 0, day) };
+  b.Sheets[name]['!ref'] = 'A1:V2';
+  const row = parse(b)[name].rows[0];
+  assert.match(row.cells['ADAYA İLK TEMAS EDİLEN TARİH'], /^2024-01-16/);
+  assert.match(row.cells['1.GÖRÜŞME TARİHİ'], /^2024-01-17/);
+  assert.match(row.cells['GERİ DÖNÜŞ TARİHİ'], /^2024-01-18/);
+  assert.equal(row.cells['2.GÖRÜŞME TARİHİ'], 'MUAF');
 });
 
-test('all 125 populated first-sheet candidates survive the C100 boundary', () => {
-  const { XLSX, parse } = parser();
-  const rows = Array.from({ length: 125 }, (_, i) => [i + 1, '', `Synthetic ${i + 1}`]);
-  const workbook = book(XLSX, [[first, firstHeaders, rows], [second, secondHeaders, [[1, '', 'Second']]]]);
-  const result = parse(workbook);
-  assert.equal(result[first].rows.length, 125);
-  assert.equal(result[first].rows.at(-1).name, 'Synthetic 125');
-  assert.equal(result[first].rows.at(-1).row, 126);
-  assert.equal(result[second].rows.length, 1);
-});
-
-test('inflated formatted range is bounded to populated applicant rows', () => {
-  const { XLSX, parse } = parser();
-  const workbook = book(XLSX, [[first, firstHeaders, [[1, '', 'First']]], [second, secondHeaders, [[2, '', 'Second']]]]);
-  workbook.Sheets[first]['!ref'] = 'A1:V1048561';
-  workbook.Sheets[second]['!ref'] = 'A1:DL1170';
-  const started = performance.now();
-  const result = parse(workbook);
-  assert.equal(result[first].rows.length, 1);
-  assert.equal(result[second].rows.length, 1);
-  assert.ok(performance.now() - started < 3000, 'formatted million-row extent must not drive iteration');
-});
-
-test('charts retain every candidate by grouping categories beyond the first ten', () => {
-  const source = html.split('// REFERENCED SHEET PARSER START')[1]?.split('// REFERENCED SHEET PARSER END')[0];
-  const summarize = vm.runInNewContext(`${source}\nsummarizeReferencedCategories`, {});
-  const rows = Array.from({ length: 25 }, (_, i) => ({ position: `Role ${i + 1}` }));
-  const categories = summarize(rows, 'position');
+test('category charts include top ten plus all remaining and blank categories', () => {
+  const { summarize } = parser();
+  const categories = summarize(Array.from({length: 25}, (_, i) => ({value: `Role ${i}`})), 'value');
   assert.equal(categories.length, 11);
-  assert.equal(categories.at(-1)[0], 'Diğer (15 kategori)');
   assert.equal(categories.at(-1)[1], 15);
-  assert.equal(categories.reduce((sum, [, count]) => sum + count, 0), rows.length);
-  assert.equal(summarize([], 'position').length, 0);
-  assert.equal(summarize([{ position: '' }], 'position')[0][0], 'Belirtilmemiş');
-  assert.match(html, /Math\.max\(\.\.\.categories\.map\(\(\[, value\]\) => value\)\)/, 'rollup bars must scale against the largest displayed category');
+  assert.equal(categories.reduce((sum, [, count]) => sum + count, 0), 25);
+  assert.equal(summarize([{value: ''}], 'value')[0][0], 'Belirtilmemiş');
+});
+test('time trend retains every month in chronological order rather than only the ten busiest', () => {
+  const { summarize } = parser();
+  const months = Array.from({length: 18}, (_, i) => ({ value: `${2024 + Math.floor(i / 12)}-${String(i % 12 + 1).padStart(2, '0')}` }));
+  assert.equal(summarize(months, 'value', Infinity).length, 18);
+  assert.match(html, /summarizeReferencedCategories\(items, "value", id === "#referencedTrendChart" \? Infinity : 10\)/);
 });
 
-test('missing or invalid selected sheet fails closed without replacing an earlier dataset', () => {
-  const { XLSX, parse } = parser();
-  const onlyFirst = book(XLSX, [[first, firstHeaders, [[1, '', 'First']]]]);
-  assert.throws(() => parse(onlyFirst), /TÜM REFERANSLI ADAYLAR/);
-  const malformed = book(XLSX, [[first, firstHeaders, [[1, '', 'First']]], [second, ['wrong'], [[2, '', 'Second']]]]);
-  assert.throws(() => parse(malformed), /başlık|şema/i);
-});
-
-test('sheet choices stay short on mobile while exact worksheet names remain their values', () => {
-  assert.match(html, /<option value="Ref Adayları_28\.09\.2023 sonrası">2023 sonrası adaylar<\/option>/);
-  assert.match(html, /<option value="TÜM REFERANSLI ADAYLAR">Tüm referanslı adaylar<\/option>/);
-  assert.match(html, /referencedCount"\)\.textContent = .*\$\{name\}/);
-});
-
-test('successful import compacts the upload target so charts appear sooner on mobile', () => {
-  assert.match(html, /#referencedDropzone\.is-loaded\s*\{[^}]*padding:/);
-  assert.match(html, /#referencedDropzone\.is-loaded\s+\.drop-icon/);
-  assert.match(html, /#referencedDropzone"\)\.classList\.add\("is-loaded"\)/);
-  assert.match(html, /Başka Excel yükle/);
-});
-
-test('two selected sheets have a visible switch, dedicated charts and a bounded detail table', () => {
-  assert.match(html, /id="referencedPanel"/);
-  assert.match(html, /id="referencedSheetSelect"/);
-  assert.match(html, /id="referencedPositionChart"/);
-  assert.match(html, /id="referencedResultChart"/);
+test('one top navigation tab leads to rich private candidate dashboard, not duplicate import charts', () => {
+  assert.match(html, /data-view="reference-recent"/);
+  assert.ok(!html.includes('data-view="reference-all"'));
+  assert.match(html, /id="referencedSearch"/);
+  assert.match(html, /id="referencedDetail"[^>]*role="dialog"/);
+  assert.match(html, /id="referencedReferrerChart"/);
+  assert.match(html, /id="referencedTrendChart"/);
+  assert.match(html, /id="referencedKpis"/);
   assert.match(html, /id="referencedTable"/);
-  assert.match(html, /referencedSheetSelect.*addEventListener\("change"/);
-  assert.match(html, /kind: "referenced"/);
-  assert.match(html, /textContent = .*name/);
+  assert.match(html, /id="referencedPrev"/);
+  assert.match(html, /textContent = value/);
+  assert.ok(!html.includes('id="referencedSheetSelect"'));
 });
