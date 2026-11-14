@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-14-anthropic-ipo-six-times-oversubscribed",
+  "title": "Anthropic's IPO is six times oversubscribed at a $1.4 trillion target",
+  "summary": "Orders for Anthropic's initial public offering exceed the shares on offer by a factor of six, Bloomberg reported, putting the Claude developer on course for the largest listing on record. The company aims to raise up to $64.4 billion in the offering and another $26 billion in a private placement at a valuation of roughly $1.4 trillion, above SpaceX's IPO. Annualised revenue reached $81 billion by late October, up from $71 billion in September.",
+  "category": "ai",
+  "priority": 84,
+  "tags": [
+    "anthropic",
+    "ipo",
+    "markets",
+    "ai-models",
+    "claude"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-ipo-is-six-times-oversubscribed-and-on-track-to-become-the-largest-public-offering-in-history/",
+      "publishedAt": "2026-11-13T15:15:08Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stocks-fall-as-chip-rout-outweighs-inflation-data%3A-markets-wrap/92374084",
+      "publishedAt": "2026-11-13T16:40:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

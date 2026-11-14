@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-14-bitcoin-slips-below-70k",
+  "title": "Bitcoin slips below $70,000 as the AI trade wobbles",
+  "summary": "Bitcoin fell below $70,000 on Friday and was down 4.6% at about $68,192, Bloomberg reported, extending a slide that began when Nvidia's chief executive resigned. Cointelegraph reported that the token had already broken below $72,000 on Thursday for the first time since 20 August, with month-to-date losses of 7.4%, as chip stocks sold off and traders waited for US producer price data. Ether and other large tokens fell alongside it.",
+  "category": "economy-markets",
+  "priority": 68,
+  "tags": [
+    "bitcoin",
+    "crypto",
+    "markets",
+    "ether",
+    "risk-assets"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stocks-fall-as-chip-rout-outweighs-inflation-data%3A-markets-wrap/92374084",
+      "publishedAt": "2026-11-13T16:40:00Z"
+    },
+    {
+      "publisher": "Cointelegraph",
+      "url": "https://cointelegraph.com/markets/bitcoin-price-drops-71k-stocks-nvidia-huang-resignation",
+      "publishedAt": "2026-11-12T16:04:40Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

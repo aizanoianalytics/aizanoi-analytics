@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-14-uber-licence-data-fireworks-breach",
+  "title": "Uber tells drivers their licence data was stolen through Fireworks AI",
+  "summary": "Uber is notifying drivers that personal information and driver's licence data were stolen in an October breach at one of its technology providers, which TechCrunch identified as Fireworks AI. Filings with US state attorneys general list 2,567 people in Massachusetts, 3,430 in South Carolina and 1,873 in Rhode Island, with Illinois figures still pending. Fireworks told TechCrunch it had found unauthorised access to its systems and blamed a criminal group that sells access tokens for large language models.",
+  "category": "technology",
+  "priority": 60,
+  "tags": [
+    "uber",
+    "fireworks-ai",
+    "data-breach",
+    "privacy",
+    "cybersecurity"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/uber-confirms-hackers-stole-thousands-of-drivers-license-information-in-data-breach/",
+      "publishedAt": "2026-11-13T14:57:55Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
