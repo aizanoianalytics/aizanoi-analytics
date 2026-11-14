@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-14-faa-nationwide-ground-stop",
+  "title": "FAA grounds every US departure for four hours, then clears flights",
+  "summary": "The Federal Aviation Administration stopped all US departures shortly before 4pm Eastern on Friday after communications and radar outages at the 22 regional centres that direct high-altitude traffic, then lifted the order about four hours later once its systems had been tested. Transportation Secretary Sean Duffy blamed ageing equipment, citing old switches and routers and 1980s copper lines. More than 8,000 flights had been delayed and 7,000 cancelled by 9pm Eastern, FlightAware said.",
+  "category": "technology",
+  "priority": 90,
+  "tags": [
+    "aviation",
+    "faa",
+    "air-traffic-control",
+    "infrastructure",
+    "outage"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press",
+      "url": "https://pbs.org/newshour/nation/faa-grounds-all-flights-at-u-s-airports-due-to-air-traffic-control-communications-problems",
+      "publishedAt": "2026-11-13T21:41:27Z"
+    },
+    {
+      "publisher": "KPBS",
+      "url": "https://kpbs.org/news/national/2026/11/13/faa-lifts-the-nationwide-ground-stop-for-all-u-s-airports",
+      "publishedAt": "2026-11-13T16:55:13Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

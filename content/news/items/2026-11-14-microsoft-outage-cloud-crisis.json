@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-14-microsoft-outage-cloud-crisis",
+  "title": "A Microsoft email outage turns into an 18-hour cloud crisis",
+  "summary": "An outage that began on Thursday as an Outlook and Teams problem spread into a company-wide cloud failure, taking down consumer and business email, files and documents, Copilot, Defender and the Intune administration dashboards. Microsoft said a large number of servers had become unexpectedly unavailable and that it found no evidence of malicious activity, nor any link to cyber or AI agents. Internet monitoring firm Kentik measured about 18 hours of disruption before traffic returned.",
+  "category": "technology",
+  "priority": 76,
+  "tags": [
+    "microsoft",
+    "outage",
+    "cloud",
+    "outlook",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/microsoft-latest-email-outage-turned-into-a-full-blown-global-cloud-crisis/",
+      "publishedAt": "2026-11-13T13:15:20Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

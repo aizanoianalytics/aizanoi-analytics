@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-14-us-producer-prices-fastest-since-2022",
+  "title": "US producer prices post their biggest annual rise since November 2022",
+  "summary": "The producer price index rose 0.3% in October, below the 0.4% forecast, but was up 6.5% over twelve months, the largest annual gain since November 2022, the Bureau of Labor Statistics said. Final demand prices had risen 1.4% in September. Core prices excluding food and energy rose 0.3% on the month and 5% on the year. The report followed a hotter-than-expected consumer price reading and left markets pricing a quarter-point Federal Reserve rate rise in December.",
+  "category": "economy-markets",
+  "priority": 70,
+  "tags": [
+    "inflation",
+    "producer-prices",
+    "federal-reserve",
+    "bonds",
+    "us-economy"
+  ],
+  "sources": [
+    {
+      "publisher": "US Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/news.release/archives/ppi_11132026.htm",
+      "publishedAt": "2026-11-13T13:30:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://www.wral.com/news/ap/5f427-wholesale-inflation-declined-last-month-yet-remains-stubbornly-elevated/",
+      "publishedAt": "2026-11-13T13:48:12Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

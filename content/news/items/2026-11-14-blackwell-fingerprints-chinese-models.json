@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-14-blackwell-fingerprints-chinese-models",
+  "title": "Model-weight fingerprints point to Blackwell chips in six Chinese models",
+  "summary": "Will DePue, a former OpenAI researcher who worked on Sora and GPT-5, says a forensic analysis of published weights shows that DeepSeek, Moonshot, MiniMax and Ant Group trained recent models on export-controlled Nvidia Blackwell GPUs. The method reads the random seed pattern left when weights are initialised: Hopper chips use 132 cores, Blackwell 148 or 152. He says OpenAI and Anthropic researchers checked the work and that it identified 24 control models correctly. It shows which hardware initialised the weights, not where training ran.",
+  "category": "ai",
+  "priority": 72,
+  "tags": [
+    "nvidia",
+    "export-controls",
+    "china",
+    "deepseek",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/former-openai-researcher-says-he-found-nvidia-blackwell-fingerprints-hidden-inside-six-chinese-ai-models/",
+      "publishedAt": "2026-11-13T15:21:04Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

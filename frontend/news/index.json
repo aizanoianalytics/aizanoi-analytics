@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-12T05:30:00.000Z",
+  "generatedAt": "2026-11-14T05:40:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-14",
+      "path": "/news/2026-11-14/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-12",
       "path": "/news/2026-11-12/",
@@ -483,6 +488,516 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-14-faa-nationwide-ground-stop",
+      "kind": "daily",
+      "title": "FAA grounds every US departure for four hours, then clears flights",
+      "summary": "The Federal Aviation Administration stopped all US departures shortly before 4pm Eastern on Friday after communications and radar outages at the 22 regional centres that direct high-altitude traffic, then lifted the order about four hours later once its systems had been tested. Transportation Secretary Sean Duffy blamed ageing equipment, citing old switches and routers and 1980s copper lines. More than 8,000 flights had been delayed and 7,000 cancelled by 9pm Eastern, FlightAware said.",
+      "category": "technology",
+      "priority": 90,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "aviation",
+        "faa",
+        "air-traffic-control",
+        "infrastructure",
+        "outage"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://pbs.org/newshour/nation/faa-grounds-all-flights-at-u-s-airports-due-to-air-traffic-control-communications-problems",
+          "publishedAt": "2026-11-13T21:41:27.000Z"
+        },
+        {
+          "publisher": "KPBS",
+          "url": "https://kpbs.org/news/national/2026/11/13/faa-lifts-the-nationwide-ground-stop-for-all-u-s-airports",
+          "publishedAt": "2026-11-13T16:55:13.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-anthropic-ipo-six-times-oversubscribed",
+      "kind": "daily",
+      "title": "Anthropic's IPO is six times oversubscribed at a $1.4 trillion target",
+      "summary": "Orders for Anthropic's initial public offering exceed the shares on offer by a factor of six, Bloomberg reported, putting the Claude developer on course for the largest listing on record. The company aims to raise up to $64.4 billion in the offering and another $26 billion in a private placement at a valuation of roughly $1.4 trillion, above SpaceX's IPO. Annualised revenue reached $81 billion by late October, up from $71 billion in September.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "markets",
+        "ai-models",
+        "claude"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/anthropics-ipo-is-six-times-oversubscribed-and-on-track-to-become-the-largest-public-offering-in-history/",
+          "publishedAt": "2026-11-13T15:15:08.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stocks-fall-as-chip-rout-outweighs-inflation-data%3A-markets-wrap/92374084",
+          "publishedAt": "2026-11-13T16:40:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-chip-rout-nvidia-worst-week",
+      "kind": "daily",
+      "title": "Chip rout hands Nvidia its worst week since April 2025",
+      "summary": "A gauge of chipmakers fell 4.5% on Friday and Nvidia lost 14% over the week, its worst run since April 2025, as investors waited for the company's first earnings call without Jensen Huang on 17 November. The S&P 500 slipped 0.4% to 7,561.67 and the Nasdaq composite 0.9% to 25,136.27, while the Dow added 0.1%. All three still rose more than 2% over the week, the market's first winning week since early October, the Associated Press reported.",
+      "category": "economy-markets",
+      "priority": 82,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "semiconductors",
+        "markets",
+        "wall-street",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-12c1e8155fb85c3c7b09e058ed6d3c74",
+          "publishedAt": "2026-11-13T21:18:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stocks-fall-as-chip-rout-outweighs-inflation-data%3A-markets-wrap/92374084",
+          "publishedAt": "2026-11-13T16:40:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-italy-beat-france-nations-league",
+      "kind": "daily",
+      "title": "Italy beat France 3-1 at San Siro to top their Nations League group",
+      "summary": "Italy came from behind to beat France 3-1 in Milan on Thursday, Pio Esposito scoring twice and Davide Frattesi once in front of 71,452 spectators. Michael Olise had given France a 10th-minute lead after a Donnarumma error; Esposito equalised on 26 minutes, Frattesi scored on 63 and Esposito converted a penalty on 75 after his brother Sebastiano had missed one. It was Italy's first home win over France in 64 years and Zinedine Zidane's first defeat as coach.",
+      "category": "football",
+      "priority": 78,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "italy",
+        "france",
+        "nations-league",
+        "football",
+        "san-siro"
+      ],
+      "sources": [
+        {
+          "publisher": "Italian Football Federation (FIGC)",
+          "url": "https://www.figc.it/en/national-teams/news/pio-esposito-and-frattesi-steer-italy-past-france-n6xs7kce",
+          "publishedAt": "2026-11-12T22:55:00.000Z"
+        },
+        {
+          "publisher": "beIN SPORTS",
+          "url": "https://www.beinsports.com/en-us/soccer/uefa-nations-league/articles/italy-3-1-france-esposito-double-deals-zidane-first-defeat-2026-11-12",
+          "publishedAt": "2026-11-12T21:51:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-microsoft-outage-cloud-crisis",
+      "kind": "daily",
+      "title": "A Microsoft email outage turns into an 18-hour cloud crisis",
+      "summary": "An outage that began on Thursday as an Outlook and Teams problem spread into a company-wide cloud failure, taking down consumer and business email, files and documents, Copilot, Defender and the Intune administration dashboards. Microsoft said a large number of servers had become unexpectedly unavailable and that it found no evidence of malicious activity, nor any link to cyber or AI agents. Internet monitoring firm Kentik measured about 18 hours of disruption before traffic returned.",
+      "category": "technology",
+      "priority": 76,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "outage",
+        "cloud",
+        "outlook",
+        "infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/13/microsoft-latest-email-outage-turned-into-a-full-blown-global-cloud-crisis/",
+          "publishedAt": "2026-11-13T13:15:20.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-blackwell-fingerprints-chinese-models",
+      "kind": "daily",
+      "title": "Model-weight fingerprints point to Blackwell chips in six Chinese models",
+      "summary": "Will DePue, a former OpenAI researcher who worked on Sora and GPT-5, says a forensic analysis of published weights shows that DeepSeek, Moonshot, MiniMax and Ant Group trained recent models on export-controlled Nvidia Blackwell GPUs. The method reads the random seed pattern left when weights are initialised: Hopper chips use 132 cores, Blackwell 148 or 152. He says OpenAI and Anthropic researchers checked the work and that it identified 24 control models correctly. It shows which hardware initialised the weights, not where training ran.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "export-controls",
+        "china",
+        "deepseek",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/former-openai-researcher-says-he-found-nvidia-blackwell-fingerprints-hidden-inside-six-chinese-ai-models/",
+          "publishedAt": "2026-11-13T15:21:04.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-us-producer-prices-fastest-since-2022",
+      "kind": "daily",
+      "title": "US producer prices post their biggest annual rise since November 2022",
+      "summary": "The producer price index rose 0.3% in October, below the 0.4% forecast, but was up 6.5% over twelve months, the largest annual gain since November 2022, the Bureau of Labor Statistics said. Final demand prices had risen 1.4% in September. Core prices excluding food and energy rose 0.3% on the month and 5% on the year. The report followed a hotter-than-expected consumer price reading and left markets pricing a quarter-point Federal Reserve rate rise in December.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "inflation",
+        "producer-prices",
+        "federal-reserve",
+        "bonds",
+        "us-economy"
+      ],
+      "sources": [
+        {
+          "publisher": "US Bureau of Labor Statistics",
+          "url": "https://www.bls.gov/news.release/archives/ppi_11132026.htm",
+          "publishedAt": "2026-11-13T13:30:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://www.wral.com/news/ap/5f427-wholesale-inflation-declined-last-month-yet-remains-stubbornly-elevated/",
+          "publishedAt": "2026-11-13T13:48:12.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-bitcoin-slips-below-70k",
+      "kind": "daily",
+      "title": "Bitcoin slips below $70,000 as the AI trade wobbles",
+      "summary": "Bitcoin fell below $70,000 on Friday and was down 4.6% at about $68,192, Bloomberg reported, extending a slide that began when Nvidia's chief executive resigned. Cointelegraph reported that the token had already broken below $72,000 on Thursday for the first time since 20 August, with month-to-date losses of 7.4%, as chip stocks sold off and traders waited for US producer price data. Ether and other large tokens fell alongside it.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bitcoin",
+        "crypto",
+        "markets",
+        "ether",
+        "risk-assets"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.swissinfo.ch/eng/stocks-fall-as-chip-rout-outweighs-inflation-data%3A-markets-wrap/92374084",
+          "publishedAt": "2026-11-13T16:40:00.000Z"
+        },
+        {
+          "publisher": "Cointelegraph",
+          "url": "https://cointelegraph.com/markets/bitcoin-price-drops-71k-stocks-nvidia-huang-resignation",
+          "publishedAt": "2026-11-12T16:04:40.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-chatgpt-wallet-agentic-checkout",
+      "kind": "daily",
+      "title": "OpenAI lets ChatGPT shop and pay through a new Wallet",
+      "summary": "OpenAI launched a wallet for ChatGPT on Friday that lets its agents, called dots, research a purchase and complete checkout. It starts with a limited number of US ChatGPT Pro subscribers aged 18 and over paying with a US-issued Visa, Mastercard or American Express. Users review the items, the total and the card before approving with Face ID or a fingerprint, and the payment runs on a token rather than raw card details. OpenAI says spending limits and category controls are planned later.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "chatgpt",
+        "agentic-commerce",
+        "payments",
+        "retail"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/",
+          "publishedAt": "2026-11-13T16:00:12.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-langchain-300m-series-c",
+      "kind": "daily",
+      "title": "LangChain raises $300m at a $3bn valuation as agent tooling consolidates",
+      "summary": "LangChain has raised a $300 million Series C at a $3 billion valuation led by CapitalG, with Singapore's GIC, DFJ Growth, IVP and Sapphire Ventures also participating, the company said on Friday. It started in 2022 as an open-source project that handled web search, API calls and database access for early models, and now sells agent creation and management software. It says about 7,000 customers use LangSmith, including Harvey, Rippling, Clay, Nvidia, Toyota and Salesforce.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "langchain",
+        "funding",
+        "ai-agents",
+        "venture-capital",
+        "enterprise-ai"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+          "publishedAt": "2026-11-13T19:37:57.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-uber-licence-data-fireworks-breach",
+      "kind": "daily",
+      "title": "Uber tells drivers their licence data was stolen through Fireworks AI",
+      "summary": "Uber is notifying drivers that personal information and driver's licence data were stolen in an October breach at one of its technology providers, which TechCrunch identified as Fireworks AI. Filings with US state attorneys general list 2,567 people in Massachusetts, 3,430 in South Carolina and 1,873 in Rhode Island, with Illinois figures still pending. Fireworks told TechCrunch it had found unauthorised access to its systems and blamed a criminal group that sells access tokens for large language models.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "uber",
+        "fireworks-ai",
+        "data-breach",
+        "privacy",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/13/uber-confirms-hackers-stole-thousands-of-drivers-license-information-in-data-breach/",
+          "publishedAt": "2026-11-13T14:57:55.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-openai-daybreak-cybersecurity",
+      "kind": "daily",
+      "title": "OpenAI moves into cybersecurity with Daybreak attack and patch agents",
+      "summary": "OpenAI has launched two security products under its Daybreak brand, both running on a model it calls GPT-6 Cyber. Daybreak Red Team, in early access, uses agents to read an application's source and context, map attack paths, check findings from bug bounty reports or scanners and test patches. Daybreak Defense Factory takes the defensive side, scanning a codebase and opening pull requests with fixes and tests for developers to approve.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "cybersecurity",
+        "ai-agents",
+        "vulnerability-research",
+        "developer-tools"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/openai-enters-the-cybersecurity-market-with-two-daybreak-products/",
+          "publishedAt": "2026-11-13T15:08:57.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-afcon-2027-qualifying-salah-nigeria",
+      "kind": "daily",
+      "title": "Salah's double and Nigeria's bench revive Afcon 2027 campaigns",
+      "summary": "Mohamed Salah scored twice late as Egypt beat Malawi 5-0 in Ali Maher's first match in charge, while Tolu Arokodare came off the bench to score twice in Nigeria's 3-1 win over Tanzania. Achraf Hakimi scored two and Yassine Bounou saved a penalty in Morocco's 5-1 win over Niger. Tunisia lost 2-0 at home to Libya and are in danger of missing the finals for the first time since 1992, and Kenya scored a last-minute equaliser to end South Africa's perfect start.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "afcon",
+        "egypt",
+        "nigeria",
+        "morocco",
+        "africa"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/articles/cw1md9jx2r3po",
+          "publishedAt": "2026-11-13T22:11:27.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-drogue-ocean-thermal-data-centres",
+      "kind": "daily",
+      "title": "A startup wants to run floating data centres on ocean heat",
+      "summary": "Drogue, founded six months ago in Washington, has raised $20 million to build data centres that generate their own power from the temperature difference between warm surface water and cold deep water, a process known as ocean thermal energy conversion. Investors include XYZ Venture Capital, Toyota Ventures, Boost VC and Slow Ventures. Chief executive Sam Sipe says a multi-megawatt prototype will go to sea on a conventional ship in early 2028, aiming at AI timelines rather than the decade utilities need.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "data-centres",
+        "energy",
+        "startups",
+        "ocean-thermal",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/13/this-young-startup-wants-to-power-floating-data-centers-with-the-oceans-heat-and-investors-are-already-on-board/",
+          "publishedAt": "2026-11-13T20:07:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-14-ronaldinho-ravenna-start",
+      "kind": "daily",
+      "title": "Ronaldinho, 46, is set for his first Ravenna start on Sunday",
+      "summary": "Ronaldinho will start for Ravenna against Forli in Italy's Serie C on Sunday, his first competitive start in more than a decade. The 46-year-old joined the club in August as an investor and has trained once with his team-mates since arriving in Italy. Coach Andrea Mandorlini said he would play as one of three forwards; the club has added a temporary stand for the expected crowd, and Ronaldinho is expected to take penalties as he chases a 300th career goal.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-11-14T05:00:00.000Z",
+      "updatedAt": "2026-11-14T05:00:00.000Z",
+      "retrievedAt": "2026-11-14T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ronaldinho",
+        "ravenna",
+        "serie-c",
+        "italy",
+        "football"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/articles/cqz0k4e00v0mo",
+          "publishedAt": "2026-11-13T19:12:37.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-12-nvidia-board-weighs-huang-exit",
       "kind": "daily",
