@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-ai-freeze-lawsuit-san-francisco",
+  "title": "Nonprofits ask court to freeze the most advanced AI systems",
+  "summary": "Four nonprofits asked San Francisco Superior Court to freeze development of the most advanced AI systems at Anthropic, Google, Meta, OpenAI and SpaceXSI, arguing the companies cannot control technology their own executives say could cause catastrophic harm. The complaint, brought under California's Unfair Competition Law, cites documented agent intrusions into third-party computer systems and seeks an injunction until the companies can show the models remain under human control.",
+  "category": "ai",
+  "priority": 66,
+  "tags": [
+    "ai-safety",
+    "litigation",
+    "regulation",
+    "frontier-models",
+    "california"
+  ],
+  "sources": [
+    {
+      "publisher": "Public Citizen",
+      "url": "https://www.citizen.org/news/coalition-of-nonprofits-files-landmark-lawsuit-to-stop-development-of-advanced-ai-systems-at-anthropic-google-meta-openai-and-spacexsi-that-proliferate-bioweapons-and-cyberattacks/",
+      "publishedAt": "2026-11-12T17:00:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/artificial-intelligence-ai-lawsuit-cyberattacks-anthropic-openai-03ece37b96979fe834f60976648504ba",
+      "publishedAt": "2026-11-12T19:30:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

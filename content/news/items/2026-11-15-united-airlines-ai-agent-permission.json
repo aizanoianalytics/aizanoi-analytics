@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-united-airlines-ai-agent-permission",
+  "title": "United becomes the first US airline to close its booking flow to AI agents",
+  "summary": "United's website terms, updated on 11 November, now require written permission before any automated agent searches, books, buys or manages a trip on united.com or in its app, and bar the use of its fares and availability data to train or ground a model. Search-engine indexing stays exempt, and bookings agents made before that date are being honoured. United cites credential sharing, unintended purchases and check-in rules that require a human to confirm what is in the bags.",
+  "category": "technology",
+  "priority": 74,
+  "tags": [
+    "united-airlines",
+    "ai-agents",
+    "terms-of-service",
+    "travel",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Search Engine Journal",
+      "url": "https://www.searchenginejournal.com/united-ai-agents-permission-search-indexing/597418",
+      "publishedAt": "2026-11-14T00:00:00Z"
+    },
+    {
+      "publisher": "Skift",
+      "url": "https://skift.com/2026/11/11/united-airlines-moves-to-block-personal-ai-agents-from-booking-flights",
+      "publishedAt": "2026-11-11T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

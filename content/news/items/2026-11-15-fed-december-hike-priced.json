@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-fed-december-hike-priced",
+  "title": "A December rate rise is close to fully priced, and the minutes may settle the size",
+  "summary": "Futures put 88% of the market on a quarter-point increase at the December meeting, with the remainder positioned for half a point, after October inflation came in stronger than expected and the labour market held up. The Fed's meeting minutes are due on Wednesday alongside speeches from several policymakers. Bonds have offered little cover: the two-year Treasury yield climbed almost 28 basis points this month before retreating on Friday.",
+  "category": "economy-markets",
+  "priority": 64,
+  "tags": [
+    "federal-reserve",
+    "rates",
+    "inflation",
+    "treasuries",
+    "fomc"
+  ],
+  "sources": [
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/calendar?article=29379&g=top&importance=2&startdate=2026-11-13/news/601252",
+      "publishedAt": "2026-11-13T00:00:00Z"
+    },
+    {
+      "publisher": "The Sydney Morning Herald (Bloomberg)",
+      "url": "https://smh.com.au/business/markets/wall-street-s-wild-nvidia-ride-delivers-big-paydays-and-even-bigger-bruises-20261115-p61e8o.html",
+      "publishedAt": "2026-11-15T03:50:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

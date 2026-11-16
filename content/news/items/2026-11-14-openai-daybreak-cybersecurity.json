@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-14-openai-daybreak-cybersecurity",
+  "title": "OpenAI moves into cybersecurity with Daybreak attack and patch agents",
+  "summary": "OpenAI has launched two security products under its Daybreak brand, both running on a model it calls GPT-6 Cyber. Daybreak Red Team, in early access, uses agents to read an application's source and context, map attack paths, check findings from bug bounty reports or scanners and test patches. Daybreak Defense Factory takes the defensive side, scanning a codebase and opening pull requests with fixes and tests for developers to approve.",
+  "category": "ai",
+  "priority": 58,
+  "tags": [
+    "openai",
+    "cybersecurity",
+    "ai-agents",
+    "vulnerability-research",
+    "developer-tools"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/openai-enters-the-cybersecurity-market-with-two-daybreak-products/",
+      "publishedAt": "2026-11-13T15:08:57Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

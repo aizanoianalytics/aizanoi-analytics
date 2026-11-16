@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-14-langchain-300m-series-c",
+  "title": "LangChain raises $300m at a $3bn valuation as agent tooling consolidates",
+  "summary": "LangChain has raised a $300 million Series C at a $3 billion valuation led by CapitalG, with Singapore's GIC, DFJ Growth, IVP and Sapphire Ventures also participating, the company said on Friday. It started in 2022 as an open-source project that handled web search, API calls and database access for early models, and now sells agent creation and management software. It says about 7,000 customers use LangSmith, including Harvey, Rippling, Clay, Nvidia, Toyota and Salesforce.",
+  "category": "ai",
+  "priority": 62,
+  "tags": [
+    "langchain",
+    "funding",
+    "ai-agents",
+    "venture-capital",
+    "enterprise-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+      "publishedAt": "2026-11-13T19:37:57Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

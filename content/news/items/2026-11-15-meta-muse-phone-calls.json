@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-meta-muse-phone-calls",
+  "title": "Meta's Muse starts placing phone calls for paying US subscribers",
+  "summary": "After a September test, Meta has opened outbound calling on its Muse assistant to paid subscribers in the United States, at $20 a month for the entry tier and $100 for the heaviest. Alexandr Wang pitched it at errands people avoid, from cable companies to restaurants that take no online bookings, and put Muse above 10 million users. The awkward part is the other end of the line: receptionists often hang up once they suspect a machine.",
+  "category": "ai",
+  "priority": 66,
+  "tags": [
+    "meta",
+    "muse",
+    "voice",
+    "consumer-ai",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/12/muse-can-now-place-calls-to-u-s-businesses-if-you-pay/",
+      "publishedAt": "2026-11-12T22:22:00Z"
+    },
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/metas-muse-now-calls-businesses-for-you-but-many-companies-might-just-hang-up-on-the-ai/",
+      "publishedAt": "2026-11-14T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
