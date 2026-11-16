@@ -1,0 +1,39 @@
+{
+  "id": "2026-11-16-weekly-anthropic-ipo-compute-bet",
+  "title": "Anthropic's IPO will ask public markets to underwrite a $901bn compute bet",
+  "summary": "At $70 to $78 a share for 825 million shares, pricing on 18 November and trading as ANT the next day, Anthropic would be valued at up to $1.4 trillion on a fully diluted basis, above the $965 billion of its May round. The proceeds are less a reward for past growth than a buffer. Dario Amodei told a JPMorgan audience that compute must be bought one to two years before demand is known, and Bloomberg puts commitments near $901 billion, with about $71 billion due by September 2027.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "anthropic",
+    "ipo",
+    "compute",
+    "valuation"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-ceo-amodei-admits-theres-a-huge-uncertainty-in-whats-going-to-happen-next-year-days-before-a-record-ipo/",
+      "publishedAt": "2026-11-14T19:05:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/anthropic-sets-ipo-price-range-140602411.html",
+      "publishedAt": "2026-11-10T14:06:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W47"
+}

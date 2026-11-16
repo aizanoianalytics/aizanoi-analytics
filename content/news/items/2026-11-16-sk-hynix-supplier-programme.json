@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-16-sk-hynix-supplier-programme",
+  "title": "SK hynix puts $1.05bn behind Korean chip suppliers and a shared test line",
+  "summary": "SK hynix will spend 1.4 trillion won, about $1.05 billion, over five years supporting domestic makers of chip materials, parts and equipment, advancing up to half of early development costs and paying suppliers even when a project misses its targets. The centrepiece is Trinity Fab, an 874.6 billion won, 3,305-square-metre test line inside its Yongin plant that opens in May 2027. Korea's domestic sourcing rate in the segment is about 30%.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "sk-hynix",
+    "semiconductors",
+    "supply-chain",
+    "korea"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-spend-1-billion-over-five-years-support-chip-suppliers-2026-11-16/",
+      "publishedAt": "2026-11-16T00:10:00Z"
+    },
+    {
+      "publisher": "The Korea Herald",
+      "url": "https://www.koreaherald.com/article/10938000",
+      "publishedAt": "2026-11-16T00:02:00Z"
+    }
+  ],
+  "kind": "daily"
+}

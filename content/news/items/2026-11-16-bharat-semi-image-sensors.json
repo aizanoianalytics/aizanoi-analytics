@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-16-bharat-semi-image-sensors",
+  "title": "Bharat Semi raises $24m to put AI inside image sensors",
+  "summary": "New Delhi-based Bharat Semi has raised a $24 million seed round for programmable image sensors that combine capture, signal processing and inference on a single chip, which co-founder Vrinda Kapoor says can cut system costs by at least 70% against separate sensor, processor and system-on-chip designs. The pre-revenue startup claims design wins with General Atomics and Kaynes Semicon and targets first commercial production in 2027.",
+  "category": "technology",
+  "priority": 44,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "india",
+    "semiconductors",
+    "image-sensors",
+    "startups"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/15/indian-chip-startup-bharat-semi-lands-24m-seed-round-as-it-eyes-global-ai-sensor-market/",
+      "publishedAt": "2026-11-15T23:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

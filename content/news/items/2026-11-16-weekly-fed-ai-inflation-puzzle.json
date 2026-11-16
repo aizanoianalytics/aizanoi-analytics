@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-16-weekly-fed-ai-inflation-puzzle",
+  "title": "The Fed's AI problem: an investment boom that raises the prices it promises to lower",
+  "summary": "Warsh's San Francisco forum on Monday sets out the tension plainly. AI may eventually cut unit costs, but the build-out consumes power, chips, materials and skilled labour now, and those inputs already show up in the inflation data the Fed watches. Governor Lisa Cook says the spending is delaying a return to 2%; governor Michael Barr ties job disruption to adoption speed. With the 10-year near 5.15% and a December increase priced as near certain, the central bank is tightening into the capital cycle it says will be disinflationary.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "federal-reserve",
+    "inflation",
+    "ai-capex",
+    "rates"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/feds-warsh-take-stock-ai-revolution-us-public-grows-wary-2026-11-13/",
+      "publishedAt": "2026-11-13T12:00:00Z"
+    },
+    {
+      "publisher": "Federal Reserve Bank of San Francisco",
+      "url": "https://www.frbsf.org/news-and-media/events/2026/11/productivity-and-jobs-task-force-conference/",
+      "publishedAt": "2026-11-01T00:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance (Barchart)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-futures-gain-focus-112639456.html",
+      "publishedAt": "2026-11-13T11:26:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W47"
+}

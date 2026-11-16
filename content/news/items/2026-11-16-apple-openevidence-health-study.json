@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-16-apple-openevidence-health-study",
+  "title": "Apple and OpenEvidence open a 200,000-person study of health answers",
+  "summary": "Apple has launched a US research app with clinical AI company OpenEvidence that answers health questions from literature including the New England Journal of Medicine, JAMA and Nature. It targets up to 200,000 participants using iPhone 15 or later with Apple Intelligence for at least 12 months. Participants may share HealthKit data; queries are anonymised, deleted after 24 hours and not used to train models.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "health",
+    "openevidence",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/15/apple-launches-new-app-to-study-how-people-use-ai-for-health/",
+      "publishedAt": "2026-11-16T01:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

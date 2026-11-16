@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-16-weekly-nvidia-succession-test",
+  "title": "Nvidia's search for a chief executive is now a test of the entire AI trade",
+  "summary": "The board has approached Arm's Rene Haas, insists it has not formally engaged anyone, and has put finance chief Colette Kress in charge while founder-board member Harvey Jones chairs the company for the first time - a thin structure for a firm that had no chair and no visible succession plan. The market has already voted: about $5.8 trillion in early October to $3.9 trillion on Friday, with results due Tuesday and analysts expecting 90% earnings growth on $109 billion of revenue. Governance and demand now arrive in the same week.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "nvidia",
+    "governance",
+    "succession",
+    "ai-trade"
+  ],
+  "sources": [
+    {
+      "publisher": "Financial Times",
+      "url": "https://www.ft.com/content/2a64f698-46dd-4178-a3f4-4c5f4c0a0926",
+      "publishedAt": "2026-11-13T10:45:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/15/is-bad-news-for-jensen-huang-also-bad-news-for-the-ai-industry/",
+      "publishedAt": "2026-11-15T21:56:00Z"
+    },
+    {
+      "publisher": "Investing.com (via Finwire)",
+      "url": "https://finwire.io/news/stock-markets-news/asia-stocks-slide-as-ai-jitters-deepen-ahead-of-nvidia-results",
+      "publishedAt": "2026-11-16T02:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W47"
+}

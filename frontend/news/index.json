@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-12T05:30:00.000Z",
+  "generatedAt": "2026-11-16T05:35:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-16",
+      "path": "/news/2026-11-16/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-12",
       "path": "/news/2026-11-12/",
@@ -416,6 +421,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-11-16",
+      "week": "2026-W47",
+      "path": "/news/weekly/2026-11-16/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-11-09",
       "week": "2026-W46",
       "path": "/news/weekly/2026-11-09/",
@@ -483,6 +494,732 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-16-nvidia-haas-succession",
+      "kind": "daily",
+      "title": "Nvidia's board sounds out Arm's Rene Haas as Huang's successor",
+      "summary": "Nvidia's board has approached Arm chief executive Rene Haas about succeeding Jensen Huang, the Financial Times reported, while saying it is still choosing a search firm and has not formally engaged any candidate. Haas spent about seven years at Nvidia and retains close ties to Huang and to board members. Chief financial officer Colette Kress is interim CEO and founder-board member Harvey Jones is the company's first chair. Analysts also name Ian Buck and AMD's Lisa Su.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "succession",
+        "arm",
+        "semiconductors",
+        "governance"
+      ],
+      "sources": [
+        {
+          "publisher": "Financial Times",
+          "url": "https://www.ft.com/content/2a64f698-46dd-4178-a3f4-4c5f4c0a0926",
+          "publishedAt": "2026-11-13T10:45:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Investing.com)",
+          "url": "https://ca.investing.com/news/stock-market-news/nvidia-approached-arm-ceo-haas-to-succeed-huang-ft-reports-4957654",
+          "publishedAt": "2026-11-13T18:18:00.000Z"
+        },
+        {
+          "publisher": "The Economic Times",
+          "url": "https://economictimes.indiatimes.com/news/international/world-news/nvidia-approached-arm-holdings-ceo-rene-haas-to-succeed-huang/articleshow/135811892.cms",
+          "publishedAt": "2026-11-13T17:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-england-spain-nations-league",
+      "kind": "daily",
+      "title": "England beat Spain 3-2 in Madrid to top their Nations League group",
+      "summary": "England led 3-0 in Madrid through a Harry Kane penalty, an Ezri Konsa header and a Ben White finish, then survived after Elliot Anderson was sent off on 63 minutes for pulling back Lamine Yamal. Mikel Oyarzabal converted the resulting penalty and Nico Williams scored before James Trafford made a late double save to secure a 3-2 win and first place in Group A3.",
+      "category": "football",
+      "priority": 86,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "england",
+        "spain",
+        "nations-league",
+        "tuchel"
+      ],
+      "sources": [
+        {
+          "publisher": "England Football (The FA)",
+          "url": "https://www.englandfootball.com/england/mens-senior-team/fixtures-results/2026-27/nations-league/spain-v-england-uefa-nations-league-sunday-15-november-2026-match-centre",
+          "publishedAt": "2026-11-15T22:15:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/15/spain-england-nations-league-match-report",
+          "publishedAt": "2026-11-15T21:56:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-asia-stocks-nvidia-earnings-test",
+      "kind": "daily",
+      "title": "Asian chip stocks slide into Nvidia's earnings test",
+      "summary": "MSCI's Asia-Pacific index fell about 1% and its technology sub-index 3.6% on Monday, with Japan's Nikkei down 0.6% and Korea 0.2%, as investors waited for Nvidia's results on Tuesday. LSEG data put Nvidia's market value at $3.9 trillion, down from about $5.8 trillion in early October, with analysts expecting earnings growth of 90% on revenue of $109 billion. Minutes of the Fed's October meeting follow on Wednesday.",
+      "category": "economy-markets",
+      "priority": 82,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "asia",
+        "nvidia",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Investing.com (via Finwire)",
+          "url": "https://finwire.io/news/stock-markets-news/asia-stocks-slide-as-ai-jitters-deepen-ahead-of-nvidia-results",
+          "publishedAt": "2026-11-16T02:00:00.000Z"
+        },
+        {
+          "publisher": "The Edge Malaysia (Reuters)",
+          "url": "http://theedgemarkets.com/node/825835",
+          "publishedAt": "2026-11-16T01:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-weekly-nvidia-succession-test",
+      "kind": "weekly",
+      "title": "Nvidia's search for a chief executive is now a test of the entire AI trade",
+      "summary": "The board has approached Arm's Rene Haas, insists it has not formally engaged anyone, and has put finance chief Colette Kress in charge while founder-board member Harvey Jones chairs the company for the first time - a thin structure for a firm that had no chair and no visible succession plan. The market has already voted: about $5.8 trillion in early October to $3.9 trillion on Friday, with results due Tuesday and analysts expecting 90% earnings growth on $109 billion of revenue. Governance and demand now arrive in the same week.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "week": "2026-W47",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "nvidia",
+        "governance",
+        "succession",
+        "ai-trade"
+      ],
+      "sources": [
+        {
+          "publisher": "Financial Times",
+          "url": "https://www.ft.com/content/2a64f698-46dd-4178-a3f4-4c5f4c0a0926",
+          "publishedAt": "2026-11-13T10:45:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/15/is-bad-news-for-jensen-huang-also-bad-news-for-the-ai-industry/",
+          "publishedAt": "2026-11-15T21:56:00.000Z"
+        },
+        {
+          "publisher": "Investing.com (via Finwire)",
+          "url": "https://finwire.io/news/stock-markets-news/asia-stocks-slide-as-ai-jitters-deepen-ahead-of-nvidia-results",
+          "publishedAt": "2026-11-16T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-warsh-ai-inflation-forum",
+      "kind": "daily",
+      "title": "Warsh opens a Fed forum on whether AI lowers or raises inflation",
+      "summary": "Federal Reserve chair Kevin Warsh convenes a three-hour public forum in San Francisco on Monday on AI, productivity and employment, the only open session among the five task forces he created. Officials are split: Warsh has argued AI can cut costs, while governor Lisa Cook says data-centre spending on power, chips and labour is delaying a return to 2%. The next rate decision is scheduled for 9 December.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "warsh",
+        "inflation",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/finance/feds-warsh-take-stock-ai-revolution-us-public-grows-wary-2026-11-13/",
+          "publishedAt": "2026-11-13T12:00:00.000Z"
+        },
+        {
+          "publisher": "Federal Reserve Bank of San Francisco",
+          "url": "https://www.frbsf.org/news-and-media/events/2026/11/productivity-and-jobs-task-force-conference/",
+          "publishedAt": "2026-11-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-anthropic-amodei-compute-dilemma",
+      "kind": "daily",
+      "title": "Amodei calls compute 'the deepest business dilemma' days before Anthropic's IPO",
+      "summary": "Speaking with Jamie Dimon at a JPMorgan event in New York, Anthropic chief executive Dario Amodei said there is \"a huge uncertainty\" about next year and that capacity has to be bought one to two years before anyone knows whether revenue will justify it. Bloomberg puts the company's commitments near $901 billion, with roughly $71 billion due by September 2027. The offering is expected to price on 18 November and trade as ANT.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "compute",
+        "dario-amodei"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/anthropic-ceo-amodei-admits-theres-a-huge-uncertainty-in-whats-going-to-happen-next-year-days-before-a-record-ipo/",
+          "publishedAt": "2026-11-14T19:05:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/anthropic-sets-ipo-price-range-140602411.html",
+          "publishedAt": "2026-11-10T14:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-weekly-fed-ai-inflation-puzzle",
+      "kind": "weekly",
+      "title": "The Fed's AI problem: an investment boom that raises the prices it promises to lower",
+      "summary": "Warsh's San Francisco forum on Monday sets out the tension plainly. AI may eventually cut unit costs, but the build-out consumes power, chips, materials and skilled labour now, and those inputs already show up in the inflation data the Fed watches. Governor Lisa Cook says the spending is delaying a return to 2%; governor Michael Barr ties job disruption to adoption speed. With the 10-year near 5.15% and a December increase priced as near certain, the central bank is tightening into the capital cycle it says will be disinflationary.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "week": "2026-W47",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "federal-reserve",
+        "inflation",
+        "ai-capex",
+        "rates"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/finance/feds-warsh-take-stock-ai-revolution-us-public-grows-wary-2026-11-13/",
+          "publishedAt": "2026-11-13T12:00:00.000Z"
+        },
+        {
+          "publisher": "Federal Reserve Bank of San Francisco",
+          "url": "https://www.frbsf.org/news-and-media/events/2026/11/productivity-and-jobs-task-force-conference/",
+          "publishedAt": "2026-11-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance (Barchart)",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-futures-gain-focus-112639456.html",
+          "publishedAt": "2026-11-13T11:26:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-sk-hynix-supplier-programme",
+      "kind": "daily",
+      "title": "SK hynix puts $1.05bn behind Korean chip suppliers and a shared test line",
+      "summary": "SK hynix will spend 1.4 trillion won, about $1.05 billion, over five years supporting domestic makers of chip materials, parts and equipment, advancing up to half of early development costs and paying suppliers even when a project misses its targets. The centrepiece is Trinity Fab, an 874.6 billion won, 3,305-square-metre test line inside its Yongin plant that opens in May 2027. Korea's domestic sourcing rate in the segment is about 30%.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "sk-hynix",
+        "semiconductors",
+        "supply-chain",
+        "korea"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-spend-1-billion-over-five-years-support-chip-suppliers-2026-11-16/",
+          "publishedAt": "2026-11-16T00:10:00.000Z"
+        },
+        {
+          "publisher": "The Korea Herald",
+          "url": "https://www.koreaherald.com/article/10938000",
+          "publishedAt": "2026-11-16T00:02:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-weekly-anthropic-ipo-compute-bet",
+      "kind": "weekly",
+      "title": "Anthropic's IPO will ask public markets to underwrite a $901bn compute bet",
+      "summary": "At $70 to $78 a share for 825 million shares, pricing on 18 November and trading as ANT the next day, Anthropic would be valued at up to $1.4 trillion on a fully diluted basis, above the $965 billion of its May round. The proceeds are less a reward for past growth than a buffer. Dario Amodei told a JPMorgan audience that compute must be bought one to two years before demand is known, and Bloomberg puts commitments near $901 billion, with about $71 billion due by September 2027.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "week": "2026-W47",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "anthropic",
+        "ipo",
+        "compute",
+        "valuation"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/anthropic-ceo-amodei-admits-theres-a-huge-uncertainty-in-whats-going-to-happen-next-year-days-before-a-record-ipo/",
+          "publishedAt": "2026-11-14T19:05:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/anthropic-sets-ipo-price-range-140602411.html",
+          "publishedAt": "2026-11-10T14:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-treasury-yields-december-hike",
+      "kind": "daily",
+      "title": "Treasury yields near 5.15% keep a December rate rise in the price",
+      "summary": "The 10-year Treasury yield closed near 5.15% after its biggest weekly rise since April 2025, and futures price a quarter-point Federal Reserve increase next month as near certain, with the odds of a 50-basis-point move down to about 6% from 12% a day earlier. Cleveland's Beth Hammack said inflation is heading in the \"wrong direction\"; Kansas City's Jeff Schmid cited energy, goods, healthcare and AI build-out costs.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "treasuries",
+        "federal-reserve",
+        "rates",
+        "inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance (Barchart)",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-futures-gain-focus-112639456.html",
+          "publishedAt": "2026-11-13T11:26:00.000Z"
+        },
+        {
+          "publisher": "TradeNews USA",
+          "url": "https://tradenewsusa.com/stock-indexes-settle-mostly-lower-as-chipmakers-slide-4",
+          "publishedAt": "2026-11-16T00:30:00.000Z"
+        },
+        {
+          "publisher": "Investing.com (via Finwire)",
+          "url": "https://finwire.io/news/stock-markets-news/asia-stocks-slide-as-ai-jitters-deepen-ahead-of-nvidia-results",
+          "publishedAt": "2026-11-16T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-weekly-korea-chip-proximity",
+      "kind": "weekly",
+      "title": "Korea is rebuilding its chip supply chain around proximity, not price",
+      "summary": "SK hynix's 1.4 trillion won supplier programme and the 874.6 billion won Trinity Fab answer a bottleneck: Korean memory leadership still rests on roughly 30% domestic sourcing for materials and equipment, and a result proven on an 8-inch laboratory wafer does not qualify on a 12-inch line. Paying half of development costs up front and compensating suppliers whose projects fail is procurement run as industrial policy. The counterexample is China, where Meituan trained a 1.6-trillion-parameter agent model on Huawei accelerators and published a self-hosting guide with no Nvidia configuration.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "week": "2026-W47",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "semiconductors",
+        "supply-chain",
+        "korea",
+        "china"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-spend-1-billion-over-five-years-support-chip-suppliers-2026-11-16/",
+          "publishedAt": "2026-11-16T00:10:00.000Z"
+        },
+        {
+          "publisher": "The Korea Herald",
+          "url": "https://www.koreaherald.com/article/10938000",
+          "publishedAt": "2026-11-16T00:02:00.000Z"
+        },
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/meituan-releases-a-1-6-trillion-parameter-agent-model-that-never-touched-an-nvidia-gpu/",
+          "publishedAt": "2026-11-15T10:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-denmark-portugal-nations-league",
+      "kind": "daily",
+      "title": "Denmark thrash Portugal 4-1 in Braga in the first match of the post-Ronaldo era",
+      "summary": "Denmark beat Portugal 4-1 in Braga, with Rasmus Hojlund scoring twice, in Portugal's first match since Cristiano Ronaldo retired from international football and the federation retired his number 7 shirt. Denmark moved into second place in Group A4 and closed on a quarter-final place. Norway beat Wales 3-1 in Oslo in the same group, leaving Wales bottom of the section.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "portugal",
+        "denmark",
+        "nations-league",
+        "ronaldo"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/14/clinical-norway-dent-wales-nations-league-top-tier-hopes-with-victory-in-oslo",
+          "publishedAt": "2026-11-14T22:23:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/14/portugal-immortalise-cristiano-ronaldos-no-7-shirt-in-tribute-to-national-legend",
+          "publishedAt": "2026-11-14T19:13:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-cursor-fireworks-extension-breach",
+      "kind": "daily",
+      "title": "A stolen Fireworks key let attackers ship a malicious Claude Code extension",
+      "summary": "Cursor says attackers used an access key stored at inference provider Fireworks AI to copy historical coding-agent traces, some containing unredacted credentials, and then distributed malicious builds of Anthropic's Claude Code extension through Cursor's marketplace on 29 October. Up to 5,000 developers were exposed to malware that installed persistent SSH backdoors. Cursor says fewer than 0.05% of users had traces exposed and fewer than 0.01% had credentials compromised.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "cursor",
+        "fireworks",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/",
+          "publishedAt": "2026-11-15T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-weekly-england-madrid-window",
+      "kind": "weekly",
+      "title": "England's night in Madrid reframes what the November window is for",
+      "summary": "Three goals in 57 minutes in Madrid, then half an hour of defending a one-goal lead with ten men after Elliot Anderson's red card: England's 3-2 win over Spain did more for Thomas Tuchel than the autumn friendlies before it. Spain had lost only one of 40 home matches in all competitions since 2018 and had been beaten once in 43 games before this decider. The same window produced Denmark's 4-1 win in Braga in Portugal's first match after retiring Ronaldo's number 7.",
+      "category": "football",
+      "priority": 62,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "week": "2026-W47",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "england",
+        "spain",
+        "nations-league",
+        "portugal"
+      ],
+      "sources": [
+        {
+          "publisher": "England Football (The FA)",
+          "url": "https://www.englandfootball.com/england/mens-senior-team/fixtures-results/2026-27/nations-league/spain-v-england-uefa-nations-league-sunday-15-november-2026-match-centre",
+          "publishedAt": "2026-11-15T22:15:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/15/spain-england-nations-league-match-report",
+          "publishedAt": "2026-11-15T21:56:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/14/clinical-norway-dent-wales-nations-league-top-tier-hopes-with-victory-in-oslo",
+          "publishedAt": "2026-11-14T22:23:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-apple-openevidence-health-study",
+      "kind": "daily",
+      "title": "Apple and OpenEvidence open a 200,000-person study of health answers",
+      "summary": "Apple has launched a US research app with clinical AI company OpenEvidence that answers health questions from literature including the New England Journal of Medicine, JAMA and Nature. It targets up to 200,000 participants using iPhone 15 or later with Apple Intelligence for at least 12 months. Participants may share HealthKit data; queries are anonymised, deleted after 24 hours and not used to train models.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "health",
+        "openevidence",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/15/apple-launches-new-app-to-study-how-people-use-ai-for-health/",
+          "publishedAt": "2026-11-16T01:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-faa-smart-all-centres",
+      "kind": "daily",
+      "title": "FAA extends its AI flight-routing adviser to all 22 US centres",
+      "summary": "The Federal Aviation Administration has widened SMART, an $875 million cloud system that recommends reroutes, routes and arrival sequencing, from Washington airspace to all 22 air route traffic control centres. The agency says the tool has rerouted 180 flights and saved about 10 minutes and 80 gallons of fuel per flight since 21 September. The controllers' union NATCA says it was not involved in designing or testing the system; FAA specialists validate each recommendation.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "faa",
+        "aviation",
+        "ai-adoption",
+        "air-traffic"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/features/2026/11/faa-expands-ai-advice-to-manage-air-traffic-congestion-across-entire-us-airspace/",
+          "publishedAt": "2026-11-13T21:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-langchain-3b-valuation",
+      "kind": "daily",
+      "title": "LangChain doubles its valuation to $3bn on agent governance demand",
+      "summary": "LangChain raised $300 million in a Series C led by CapitalG at a $3 billion valuation, more than double its $1.25 billion mark a year earlier, with GIC, DFJ Growth, IVP and Sapphire Ventures participating. The company says its LangSmith agent-management platform has 7,000 customers, including Nvidia, Toyota, Salesforce, Harvey and Rippling, and pitches model- and cloud-neutral governance as the differentiator.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "langchain",
+        "funding",
+        "agents",
+        "valuation"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+          "publishedAt": "2026-11-13T19:37:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-gemini-4-carbon-matharena",
+      "kind": "daily",
+      "title": "Gemini 4 Carbon tops a maths benchmark at fifteen times the price",
+      "summary": "Google's Gemini 4 Carbon has become the first non-OpenAI model in some time to lead the MathArena benchmark, displacing GPT-6.1 Sol, with Anthropic's Claude Fable 5.2 second. The Decoder reports that Carbon's most common failure is exceeding the time limit and that, at the reasoning settings used in testing, it costs roughly 15 times as much as GPT-6.1 Sol, while Fable 5.2 costs about 40 times as much.",
+      "category": "ai",
+      "priority": 48,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "benchmarks",
+        "reasoning"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/gemini-4-carbon-takes-the-matharena-crown-but-costs-15-times-more-than-gpt-6-1-sol/",
+          "publishedAt": "2026-11-14T16:48:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-bharat-semi-image-sensors",
+      "kind": "daily",
+      "title": "Bharat Semi raises $24m to put AI inside image sensors",
+      "summary": "New Delhi-based Bharat Semi has raised a $24 million seed round for programmable image sensors that combine capture, signal processing and inference on a single chip, which co-founder Vrinda Kapoor says can cut system costs by at least 70% against separate sensor, processor and system-on-chip designs. The pre-revenue startup claims design wins with General Atomics and Kaynes Semicon and targets first commercial production in 2027.",
+      "category": "technology",
+      "priority": 44,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "india",
+        "semiconductors",
+        "image-sensors",
+        "startups"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/15/indian-chip-startup-bharat-semi-lands-24m-seed-round-as-it-eyes-global-ai-sensor-market/",
+          "publishedAt": "2026-11-15T23:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-16-ronaldinho-ravenna-debut",
+      "kind": "daily",
+      "title": "Ronaldinho plays 45 minutes on his Ravenna debut at 46",
+      "summary": "Ronaldinho started and played the first half for Serie C side Ravenna against local rivals Forli, 11 years after his last professional appearance, having signed for the club in June. The 46-year-old wore the number 10 in front of a 5,000-capacity Stadio Bruno Benelli expanded by a temporary 1,800-seat stand named R10. \"Is this my last one? I don't know,\" he said afterwards.",
+      "category": "football",
+      "priority": 38,
+      "publishedAt": "2026-11-16T05:00:00.000Z",
+      "updatedAt": "2026-11-16T05:00:00.000Z",
+      "retrievedAt": "2026-11-16T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ronaldinho",
+        "italy",
+        "serie-c",
+        "ravenna"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/15/ronaldinho-debut-italian-side-ravenna-after-11-year-hiatus-playing-career",
+          "publishedAt": "2026-11-15T19:20:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-12-nvidia-board-weighs-huang-exit",
       "kind": "daily",
