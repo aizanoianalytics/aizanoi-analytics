@@ -1372,6 +1372,13 @@ table thead th {
     .ref-bar-fill { height: 100%; background: var(--recruit-primary); border-radius: 8px; }
     .ref-pagination { display: flex; justify-content: flex-end; align-items: center; gap: .75rem; margin-top: 1rem; }
     #referencedQuality { border: 1px solid var(--ip-border); border-radius: 12px; padding: 1rem; margin: 1rem 0 1.5rem; background: var(--ip-bg); }
+    .ref-topbar { position: sticky; top: 0; z-index: 30; background: var(--ip-card); border: 1px solid var(--ip-border); border-radius: 12px; padding: .8rem 1rem; margin: 1rem 0 1.25rem; box-shadow: 0 6px 18px rgba(20, 10, 60, .08); }
+    .ref-topbar-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem .75rem; align-items: end; }
+    .ref-topbar-filters label { display: flex; flex-direction: column; gap: .3rem; font-size: .78rem; font-weight: 600; color: var(--ip-muted); }
+    .ref-topbar-actions { display: flex; gap: .5rem; align-items: end; }
+    #referencedTopCount { margin: .5rem 0 0; }
+    #referenceLoaded .data-table tbody tr:nth-child(even) td { background: rgba(238, 232, 251, .35); }
+    #referenceLoaded .data-table thead th { position: sticky; top: 0; background: var(--ip-card); z-index: 5; }
     #referencedQuality h3 { font-size: 1rem; margin-bottom: .5rem; }
     .ref-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; margin: .5rem 0; align-items: end; }
     .ref-filters label { display: flex; flex-direction: column; gap: .3rem; font-size: .8rem; font-weight: 600; color: var(--ip-muted); }
@@ -2758,21 +2765,17 @@ table thead th {
         <div id="referenceEmpty"><h2>Referanslı Adaylar</h2><p>Henüz Excel yüklenmedi. Seçili sayfanın analizini görmek için kitabı yükleyin.</p><button type="button" class="btn btn-primary" data-go-view="import">Excel Yükle</button></div>
         <div id="referenceLoaded" hidden>
           <div class="card-header"><div><h2 id="referenceHeading" class="card-title"></h2><p id="referencedCount" class="card-subtitle"></p></div><button type="button" class="btn btn-white" data-go-view="import">Başka Excel yükle</button></div>
-          <section id="referencedQuality" aria-label="Filtre ve veri kalitesi">
-            <h3>Filtre ve veri kalitesi</h3>
-            <div class="ref-filters">
-              <label>Pozisyon<select id="referencedPositionFilter" class="filter-control"><option value="">Tümü</option></select></label>
-              <label>Sonuç (SONUÇ)<select id="referencedResultFilter" class="filter-control"><option value="">Tümü</option></select></label>
-              <label>CV yılı<select id="referencedYearFilter" class="filter-control"><option value="">Tümü</option></select></label>
-              <label>Referans<select id="referencedRefFilter" class="filter-control"><option value="">Tümü</option></select></label>
-              <div><button id="referencedClearFilters" class="btn btn-white" type="button">Temizle</button></div>
+          <div id="referencedTopbar" class="ref-topbar" role="region" aria-label="Çalışma filtresi">
+            <div class="ref-topbar-filters">
+              <label>Pozisyon<select id="referencedPositionFilterTop" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Sonuç (SONUÇ)<select id="referencedResultFilterTop" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>CV yılı<select id="referencedYearFilterTop" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Referans<select id="referencedRefFilterTop" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Aday ara<input id="referencedSearchTop" class="filter-control" type="search" autocomplete="off" placeholder="Ad, referans, pozisyon, not"></label>
+              <div class="ref-topbar-actions"><button id="referencedClearFiltersTop" class="btn btn-white" type="button">Temizle</button><button id="referencedExportXlsx" class="btn btn-primary" type="button">Excel indir</button></div>
             </div>
-            <p id="referencedFilteredCount" class="card-subtitle" role="status"></p>
-            <div id="referencedQualitySummary" class="ref-quality-summary" role="status"></div>
-            <label for="referencedQualitySearch">Kalite listesinde ara (ad veya sorun türü)</label>
-            <input id="referencedQualitySearch" class="filter-control ref-search" type="search" autocomplete="off" placeholder="Ad veya sorun türü ara">
-            <div id="referencedQualityList" class="ref-quality-list" role="list"></div>
-          </section>
+            <p id="referencedTopCount" class="card-subtitle" role="status"></p>
+          </div>
           <div id="referencedKpis" class="ref-kpis"></div>
           <div class="ref-charts">
             <section><h3>Pozisyon dağılımı</h3><div id="referencedPositionChart"></div></section>
@@ -2791,6 +2794,21 @@ table thead th {
           <p id="referenceSearchCount" class="card-subtitle" role="status"></p>
           <div class="data-table-container" role="region" aria-label="Referanslı aday kayıtları" tabindex="0"><table class="data-table"><thead><tr><th>Satır</th><th>Ad Soyad</th><th>Referans</th><th>Pozisyon</th><th>Sonuç</th><th>Not</th></tr></thead><tbody id="referencedTable"></tbody></table></div>
           <div class="ref-pagination"><button class="btn btn-white" id="referencedPrev" type="button">Önceki</button><span id="referencedPageLabel"></span><button class="btn btn-white" id="referencedNext" type="button">Sonraki</button></div>
+          <section id="referencedQuality" aria-label="Filtre ve veri kalitesi">
+            <h3>Filtre ve veri kalitesi</h3>
+            <div class="ref-filters">
+              <label>Pozisyon<select id="referencedPositionFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Sonuç (SONUÇ)<select id="referencedResultFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>CV yılı<select id="referencedYearFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <label>Referans<select id="referencedRefFilter" class="filter-control"><option value="">Tümü</option></select></label>
+              <div><button id="referencedClearFilters" class="btn btn-white" type="button">Temizle</button></div>
+            </div>
+            <p id="referencedFilteredCount" class="card-subtitle" role="status"></p>
+            <div id="referencedQualitySummary" class="ref-quality-summary" role="status"></div>
+            <label for="referencedQualitySearch">Kalite listesinde ara (ad veya sorun türü)</label>
+            <input id="referencedQualitySearch" class="filter-control ref-search" type="search" autocomplete="off" placeholder="Ad veya sorun türü ara">
+            <div id="referencedQualityList" class="ref-quality-list" role="list"></div>
+          </section>
         </div>
       </section>
     </div>
@@ -4825,6 +4843,10 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       counts.future = issues.filter(i => i.types.some(t => /Gelecek/.test(t))).length;
       return { counts, issues };
     }
+    function referencedExportAoa(rows = [], headers = []) {
+      const head = headers.length ? [...headers] : Array.from(new Set((rows || []).flatMap(row => Object.keys(row.cells || {}))));
+      return [head, ...(rows || []).map(row => head.map(key => row.cells?.[key] ?? ""))];
+    }
     // REFERENCED SHEET PARSER END
 
     let referencedData = null;
@@ -4850,6 +4872,11 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const iso = text.match(/^(\d{4})-(\d{2})-\d{2}/);
       return iso && +iso[2] <= 12 ? `${iso[1]}-${iso[2]}` : "";
     }
+    function currentReferencedFiltered() {
+      const rows = referencedData?.[referencedName]?.rows || [];
+      const q = $("#referencedSearch").value.trim().toLocaleLowerCase("tr-TR");
+      return filterReferencedRows(rows, { position: referencedFilters.position, result: referencedFilters.result, year: referencedFilters.year, ref: referencedFilters.ref, q });
+    }
     function renderReferencedSheet() {
       const name = referencedName;
       const rows = referencedData?.[name]?.rows || [];
@@ -4858,9 +4885,8 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       $("#referenceEmpty h2").textContent = "Referanslı Adaylar";
       if (!referencedData) return;
       $("#referenceHeading").textContent = "Referanslı Adaylar";
-      const searchInput = $("#referencedSearch");
-      const q = searchInput.value.trim().toLocaleLowerCase("tr-TR");
-      const filtered = filterReferencedRows(rows, { position: referencedFilters.position, result: referencedFilters.result, year: referencedFilters.year, ref: referencedFilters.ref, q });
+      const filtered = currentReferencedFiltered();
+      const q = $("#referencedSearch").value.trim().toLocaleLowerCase("tr-TR");
       const total = rows.length;
       const shown = filtered.length;
       const fillFilter = (id, values, current) => {
@@ -4876,10 +4902,13 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         select.value = previous;
       };
       const filterOptions = referencedFilterOptions(rows);
-      fillFilter("#referencedPositionFilter", filterOptions.positions, referencedFilters.position);
-      fillFilter("#referencedResultFilter", filterOptions.results, referencedFilters.result);
-      fillFilter("#referencedYearFilter", filterOptions.years, referencedFilters.year);
-      fillFilter("#referencedRefFilter", filterOptions.refs, referencedFilters.ref);
+      for (const suffix of ["", "Top"]) {
+        fillFilter("#referencedPositionFilter" + suffix, filterOptions.positions, referencedFilters.position);
+        fillFilter("#referencedResultFilter" + suffix, filterOptions.results, referencedFilters.result);
+        fillFilter("#referencedYearFilter" + suffix, filterOptions.years, referencedFilters.year);
+        fillFilter("#referencedRefFilter" + suffix, filterOptions.refs, referencedFilters.ref);
+      }
+      if ($("#referencedSearchTop").value !== $("#referencedSearch").value) $("#referencedSearchTop").value = $("#referencedSearch").value;
       const nonblank = key => filtered.filter(row => row.cells[key]?.trim()).length;
       const noteCount = filtered.filter(row => referencedNotes(row)).length;
       const resultField = "SONUÇ";
@@ -4958,6 +4987,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         qualityList.append(more);
       }
       $("#referencedFilteredCount").textContent = `${formatNumber(shown)} / ${formatNumber(total)} aday gösteriliyor`;
+      $("#referencedTopCount").textContent = `${formatNumber(shown)} / ${formatNumber(total)} aday · filtreler üstte`;
       referencedPage = Math.min(referencedPage, Math.max(0, Math.ceil(filtered.length / 50) - 1));
       $("#referenceSearchCount").textContent = `${formatNumber(filtered.length)} / ${formatNumber(total)} aday gösteriliyor`;
       const table = $("#referencedTable"); table.replaceChildren();
@@ -4974,6 +5004,23 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       $("#referencedPageLabel").textContent = filtered.length ? `${referencedPage + 1} / ${Math.ceil(filtered.length / 50)}` : "0 / 0";
       $("#referencedPrev").disabled = referencedPage === 0;
       $("#referencedNext").disabled = (referencedPage + 1) * 50 >= filtered.length;
+    }
+    function exportReferencedXlsx() {
+      const data = referencedData?.[referencedName];
+      if (!data) { toast("Önce Excel yükleyin.", "error"); return; }
+      const filtered = currentReferencedFiltered();
+      if (!filtered.length) { toast("Dışa aktarılacak aday yok.", "error"); return; }
+      const aoa = referencedExportAoa(filtered, data.headers);
+      const book = XLSX.utils.book_new();
+      const sheet = XLSX.utils.aoa_to_sheet(aoa, { cellDates: true, dateNF: "dd\\.mm\\.yyyy" });
+      sheet["!cols"] = aoa[0].map((h, c) => {
+        let w = String(h ?? "").length;
+        for (let r = 1; r < Math.min(aoa.length, 400); r++) { const v = aoa[r][c]; const t = v instanceof Date ? "00.00.0000" : String(v ?? ""); if (t.length > w) w = t.length; }
+        return { wch: Math.min(48, Math.max(10, w + 2)) };
+      });
+      XLSX.utils.book_append_sheet(book, sheet, "Referanslı Adaylar");
+      XLSX.writeFile(book, `Referansli-Adaylar-${toIsoDay(new Date())}.xlsx`, { cellDates: true });
+      toast(`${formatNumber(filtered.length)} aday Excel'e aktarıldı.`, "success");
     }
     function openReferencedDetail(row, name, opener) {
       referencedReturnFocus = opener;
@@ -7639,10 +7686,22 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       bindImportDropzone("#unifiedExcelDropzone", "#unifiedExcelInput", "#unifiedImportResult");
       bindImportDropzone("#referencedDropzone", "#referencedFileInput", "#referencedImportResult");
       document.body.append($("#referencedDetailBg"), $("#referencedDetail"));
-      $("#referencedSearch").addEventListener("input", () => { referencedPage = 0; renderReferencedSheet(); });
-      for (const [id, key] of [["#referencedPositionFilter", "position"], ["#referencedResultFilter", "result"], ["#referencedYearFilter", "year"], ["#referencedRefFilter", "ref"]]) {
+      $("#referencedSearch").addEventListener("input", event => { $("#referencedSearchTop").value = event.target.value; referencedPage = 0; renderReferencedSheet(); });
+      $("#referencedSearchTop").addEventListener("input", event => { $("#referencedSearch").value = event.target.value; referencedPage = 0; renderReferencedSheet(); });
+      for (const [id, key] of [["#referencedPositionFilter", "position"], ["#referencedResultFilter", "result"], ["#referencedYearFilter", "year"], ["#referencedRefFilter", "ref"], ["#referencedPositionFilterTop", "position"], ["#referencedResultFilterTop", "result"], ["#referencedYearFilterTop", "year"], ["#referencedRefFilterTop", "ref"]]) {
         $(id).addEventListener("change", event => { referencedFilters[key] = event.target.value; referencedPage = 0; renderReferencedSheet(); });
       }
+      const clearReferencedAll = () => {
+        referencedFilters = { position: "", result: "", year: "", ref: "" };
+        referencedQualityQuery = "";
+        referencedPage = 0;
+        $("#referencedSearch").value = "";
+        $("#referencedSearchTop").value = "";
+        $("#referencedQualitySearch").value = "";
+        renderReferencedSheet();
+      };
+      $("#referencedClearFiltersTop").addEventListener("click", clearReferencedAll);
+      $("#referencedExportXlsx").addEventListener("click", exportReferencedXlsx);
       $("#referencedClearFilters").addEventListener("click", () => {
         referencedFilters = { position: "", result: "", year: "", ref: "" };
         referencedQualityQuery = "";

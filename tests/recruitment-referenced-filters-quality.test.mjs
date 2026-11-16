@@ -10,7 +10,7 @@ function parser() {
   vm.runInNewContext(html.slice(start, html.indexOf('</script>', start)), context);
   const source = html.split('// REFERENCED SHEET PARSER START')[1]?.split('// REFERENCED SHEET PARSER END')[0];
   assert.ok(source);
-  return vm.runInNewContext(`${source}\n({parse: parseReferencedWorkbook, filter: (typeof filterReferencedRows === 'undefined' ? null : filterReferencedRows), options: (typeof referencedFilterOptions === 'undefined' ? null : referencedFilterOptions), quality: (typeof analyzeReferencedQuality === 'undefined' ? null : analyzeReferencedQuality), year: (typeof referencedYear === 'undefined' ? null : referencedYear)})`, context);
+  return vm.runInNewContext(`${source}\n({parse: parseReferencedWorkbook, filter: (typeof filterReferencedRows === 'undefined' ? null : filterReferencedRows), options: (typeof referencedFilterOptions === 'undefined' ? null : referencedFilterOptions), quality: (typeof analyzeReferencedQuality === 'undefined' ? null : analyzeReferencedQuality), year: (typeof referencedYear === 'undefined' ? null : referencedYear), exportAoa: (typeof referencedExportAoa === 'undefined' ? null : referencedExportAoa)})`, context);
 }
 function row(cells, extra = {}) {
   return { name: cells['AD SOYAD'] || '', ref: cells['REFERANS'] || '', position: cells['POZİSYON'] || '', result: cells['SONUÇ'] || '', row: 2, cells, date: cells['CV İLETİLME TARİHİ'] || '', ...extra };
@@ -78,7 +78,28 @@ test('quality analysis flags missing dates and reversed chronology without punis
 });
 
 test('filter bar and data-quality panel exist with clear/reset and visible counts', () => {
-  for (const id of ['referencedPositionFilter', 'referencedResultFilter', 'referencedYearFilter', 'referencedRefFilter', 'referencedClearFilters', 'referencedFilteredCount', 'referencedQuality', 'referencedQualitySearch']) {
+  for (const id of ['referencedPositionFilter', 'referencedResultFilter', 'referencedYearFilter', 'referencedRefFilter', 'referencedClearFilters', 'referencedFilteredCount', 'referencedQuality', 'referencedQualitySearch', 'referencedPositionFilterTop', 'referencedResultFilterTop', 'referencedYearFilterTop', 'referencedRefFilterTop', 'referencedClearFiltersTop', 'referencedSearchTop', 'referencedTopCount', 'referencedExportXlsx', 'referencedTopbar']) {
     assert.ok(html.includes(`id="${id}"`), `missing #${id}`);
   }
+});
+
+test('sticky work filter sits at the top and filter+quality panel sits at the bottom', () => {
+  const topbar = html.indexOf('id="referencedTopbar"');
+  const kpis = html.indexOf('id="referencedKpis"');
+  const table = html.indexOf('id="referencedTable"');
+  const quality = html.indexOf('id="referencedQuality"');
+  assert.ok(topbar !== -1 && kpis !== -1 && table !== -1 && quality !== -1, 'referenced layout anchors exist');
+  assert.ok(topbar < kpis, 'top work filter renders before the KPI cards');
+  assert.ok(quality > table, 'filter+quality panel renders after the records table');
+});
+
+test('export builder returns header plus one row per filtered record', () => {
+  const { exportAoa } = parser();
+  assert.ok(exportAoa, 'referencedExportAoa helper exists');
+  const headers = ['AD SOYAD', 'REFERANS'];
+  const aoa = exportAoa([
+    row({ 'AD SOYAD': 'A', 'REFERANS': 'R1' }),
+    row({ 'AD SOYAD': 'B', 'REFERANS': 'R2' }),
+  ], headers);
+  assert.equal(JSON.stringify(aoa), JSON.stringify([headers, ['A', 'R1'], ['B', 'R2']]));
 });
