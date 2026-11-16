@@ -1,10 +1,7 @@
-# Route-scoped headers for the Dungeon game and Markets dashboards.
+# Route-scoped headers for Markets dashboards. Filename retained for the live Markets include.
 # Install as /etc/nginx/snippets/aizanoi-dungeon-markets-security-headers.conf.
-# Both surfaces are fully static (external scripts/styles only, no inline
-# code, no eval): the Dungeon game runs the vendored Three.js build plus
-# same-origin GLB assets, and the Markets dashboards load same-origin JSON
-# shards, so the strict site-wide policy applies unchanged. The include is repeated per location because any
-# add_header at location level would otherwise suppress the inherited set.
+# Markets dashboards load external scripts/styles and same-origin JSON shards.
+# Keep the strict site-wide policy; location-level add_header suppresses inherited headers.
 add_header X-Content-Type-Options "nosniff" always;
 add_header X-Frame-Options "SAMEORIGIN" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
