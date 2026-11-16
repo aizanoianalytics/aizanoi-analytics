@@ -32,10 +32,10 @@ test('Factory standalone boots, renders frames and toggles help under production
     assert.ok(initial.frames >= 2 && initial.width > 0, JSON.stringify(initial));
     assert.equal(initial.engine, 'object', JSON.stringify(initial));
     await page.locator('#boot').waitFor({ state: 'hidden', timeout: 30000 });
-    // Trusted interaction: the H control opens the controls modal and toggles it shut.
-    await page.locator('#btn-help').click({ timeout: 10000 });
+    // Trusted keyboard interaction: H opens the controls modal, H toggles it shut.
+    await page.keyboard.press('h');
     await page.locator('#help-modal:not([hidden])').waitFor({ timeout: 10000 });
-    await page.locator('#btn-help').click({ timeout: 10000 });
+    await page.keyboard.press('h');
     await page.locator('#help-modal[hidden]').waitFor({ timeout: 10000 });
     assert.ok(await page.evaluate(() => document.querySelector('#zone-name')?.textContent.length > 0), 'HUD zone readout renders');
     assert.deepEqual(await page.evaluate(() => window.__violations || []), []);
