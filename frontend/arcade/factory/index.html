@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Aizanoi Factory — Ultra HD 3D Mimari Keşif Alanı</title>
+  <meta name="description" content="Cam Tezyinat Fabrikası ve avlusu için Ultra HD interaktif 3D serbest gezinti alanı.">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/factory/">
+  <meta name="theme-color" content="#0b0d0f">
+  <link rel="stylesheet" href="./factory.css">
+  <script src="./engine.js" defer></script>
+  <script src="./vehicles.js" defer></script>
+  <script src="./factory_interior.js" defer></script>
+  <script src="./factory.js" defer></script>
+</head>
+<body>
+<div id="app">
+  <canvas id="view" tabindex="0"></canvas>
+  <div id="ui">
+    <!-- Top Architectural HUD Bar -->
+    <header class="hud-top">
+      <div class="hud-brand">
+        <div class="brand-kicker">3D MİMARİ KEŞİF ALANI · ULTRA HD</div>
+        <div class="brand-title">AİZANOİ CAM TEZYİNAT FABRİKASI</div>
+        <div class="brand-zone">Konum: <strong id="zone-name">Dış Avlu</strong> · <span id="coords-readout">X 0.0 · Z 0.0</span></div>
+      </div>
+
+      <div class="hud-actions">
+        <button type="button" class="hud-btn" id="btn-mode" title="Kamera Modunu Değiştir [V]">
+          <span class="btn-key">V</span>
+          <span class="btn-label" id="mode-label">Yürüyüş Modu</span>
+        </button>
+        <button type="button" class="hud-btn" id="btn-atmo" title="Atmosfer / Işık Değiştir [T]">
+          <span class="btn-key">T</span>
+          <span class="btn-label" id="atmo-label">Gün Batımı</span>
+        </button>
+        <button type="button" class="hud-btn" id="btn-flash" title="El Feneri Aç/Kapat [F]">
+          <span class="btn-key">F</span>
+          <span class="btn-label">Fener</span>
+        </button>
+        <button type="button" class="hud-btn active" id="btn-map" title="2D Plan Haritası [M]">
+          <span class="btn-key">M</span>
+          <span class="btn-label">Plan</span>
+        </button>
+        <button type="button" class="hud-btn" id="btn-help" title="Kontroller ve Kısayollar [H]">
+          <span class="btn-key">H</span>
+          <span class="btn-label">Kontroller</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Center Crosshair -->
+    <div id="crosshair" aria-hidden="true"><i></i></div>
+
+    <!-- Interactive Prompt -->
+    <div id="prompt" class="prompt-pill" aria-live="polite">
+      <kbd>E</kbd>
+      <span id="prompt-text">Etkileşim</span>
+    </div>
+
+    <!-- Transient Toast Message -->
+    <div id="toast" class="toast-msg" aria-live="polite"></div>
+
+    <!-- Pointer Lock Notice -->
+    <div id="lock-hint" class="lock-hint">
+      Fareyi serbestçe çevirmek için sahneye tıklayın · <strong>ESC</strong> ile imleci bırakın
+    </div>
+
+    <!-- Live 2D Architectural Blueprint Minimap -->
+    <aside id="minimap-card" class="minimap-card">
+      <div class="minimap-head">
+        <span>VAZİYET &amp; İÇ PLAN</span>
+        <span id="compass-dir">K 0°</span>
+      </div>
+      <canvas id="minimap" width="252" height="252"></canvas>
+    </aside>
+
+    <!-- Quick Teleport Bookmarks [1]-[9] -->
+    <nav class="bookmark-bar" aria-label="Hızlı Konum Geçişi">
+      <button type="button" class="bm-btn" data-bm="0"><kbd>1</kbd> Avlu &amp; Rampa</button>
+      <button type="button" class="bm-btn" data-bm="1"><kbd>2</kbd> Honda CR-V</button>
+      <button type="button" class="bm-btn" data-bm="2"><kbd>3</kbd> Dodge Kamyon</button>
+      <button type="button" class="bm-btn" data-bm="3"><kbd>4</kbd> Ağaç &amp; Çardak</button>
+      <button type="button" class="bm-btn" data-bm="4"><kbd>5</kbd> Garaj &amp; 928S</button>
+      <button type="button" class="bm-btn" data-bm="5"><kbd>6</kbd> Palet &amp; Paketleme</button>
+      <button type="button" class="bm-btn" data-bm="6"><kbd>7</kbd> Ofisler &amp; Mutfak</button>
+      <button type="button" class="bm-btn" data-bm="7"><kbd>8</kbd> Bardak Yaldız</button>
+      <button type="button" class="bm-btn" data-bm="8"><kbd>9</kbd> Tezyinat Fırını</button>
+    </nav>
+
+    <!-- Controls Overlay Modal [H] -->
+    <section id="help-modal" class="help-modal" hidden>
+      <div class="help-card">
+        <div class="help-head">
+          <div>
+            <div class="help-kicker">AİZANOİ FACTORY SANDBOX</div>
+            <h2>Kontroller &amp; Gezinti Rehberi</h2>
+          </div>
+          <button type="button" class="help-close" id="btn-help-close">Kapat [H]</button>
+        </div>
+        <div class="help-grid">
+          <div class="help-col">
+            <h3>Hareket &amp; Kamera</h3>
+            <dl class="key-list">
+              <div><dt>Hareket</dt><dd><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></dd></div>
+              <div><dt>Koş / Hızlan</dt><dd><kbd>Shift</kbd></dd></div>
+              <div><dt>Zıpla / Yüksel (Drone)</dt><dd><kbd>Space</kbd></dd></div>
+              <div><dt>Eğil / Alçal (Drone)</dt><dd><kbd>C</kbd> / <kbd>Ctrl</kbd></dd></div>
+              <div><dt>Bakış Açısı</dt><dd>Fare (Sahneye Tıkla)</dd></div>
+              <div><dt>Yürüyüş / Drone Geçişi</dt><dd><kbd>V</kbd></dd></div>
+            </dl>
+          </div>
+          <div class="help-col">
+            <h3>Etkileşim &amp; Ortam</h3>
+            <dl class="key-list">
+              <div><dt>Kapılar &amp; Makineler</dt><dd><kbd>E</kbd></dd></div>
+              <div><dt>Atmosfer / Hava Durumu</dt><dd><kbd>T</kbd></dd></div>
+              <div><dt>El Feneri</dt><dd><kbd>F</kbd></dd></div>
+              <div><dt>2D Plan Haritası</dt><dd><kbd>M</kbd></dd></div>
+              <div><dt>Hızlı Konumlar</dt><dd><kbd>1</kbd> – <kbd>9</kbd></dd></div>
+              <div><dt>Kalite / İstatistik</dt><dd>Otomatik Ultra/High PBR</dd></div>
+            </dl>
+          </div>
+        </div>
+        <p class="help-foot">
+          Bu alan tamamen serbest keşif ve mimari inceleme içindir. Tüm iç ve dış bölmeler, araçlar, cam yaldız tezgahları ve fırın hattı 1:1 ölçekte gezilebilir.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Loading Boot Screen -->
+  <div id="boot">
+    <div class="boot-mark">AİZANOİ FACTORY</div>
+    <div class="boot-sub" id="boot-msg">Ultra HD 3D sahne hazırlanıyor</div>
+    <div class="boot-bar"><i id="boot-fill"></i></div>
+  </div>
+</div>
+</body>
+</html>
