@@ -26,13 +26,18 @@ for (const width of [1440, 390]) test(`Solitaire launcher, real play and undo at
     assert.match(await status.textContent(), /of 52 cards home/);
 
     // Draw from stock with a trusted input, then undo restores the counts.
-    const stockBefore = await stock.textContent();
+    const stockBefore = Number(await stock.textContent());
+    assert.equal(stockBefore, 24);
     await activate(stock);
-    assert.notEqual(await stock.textContent(), stockBefore);
-    assert.match(await page.locator('[data-sol-moves]').textContent(), /1/);
+    // Gate on the actual game transition, not just completion of touch input.
+    // A missed tap must still time out without changing the stock or move count.
+    await page.waitForFunction((before) =>
+      Number(document.querySelector('[data-sol-stock]')?.textContent) === before - 1 &&
+      document.querySelector('[data-sol-moves]')?.textContent === '1', stockBefore, { timeout: 5000 });
     await activate(page.getByRole('button', { name: 'Undo', exact: true }));
-    assert.equal(await stock.textContent(), stockBefore);
-    assert.match(await page.locator('[data-sol-moves]').textContent(), /0/);
+    await page.waitForFunction((before) =>
+      Number(document.querySelector('[data-sol-stock]')?.textContent) === before &&
+      document.querySelector('[data-sol-moves]')?.textContent === '0', stockBefore);
 
     // Keyboard draw (S) and auto-home attempt keep the move counter honest.
     await page.keyboard.press('s');
