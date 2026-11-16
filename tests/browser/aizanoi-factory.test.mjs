@@ -36,7 +36,7 @@ test('Factory standalone boots, renders frames and toggles help under production
     await page.keyboard.press('h');
     await page.locator('#help-modal:not([hidden])').waitFor({ timeout: 10000 });
     await page.keyboard.press('h');
-    await page.locator('#help-modal[hidden]').waitFor({ timeout: 10000 });
+    await page.locator('#help-modal').waitFor({ state: 'hidden', timeout: 10000 });
     assert.ok(await page.evaluate(() => document.querySelector('#zone-name')?.textContent.length > 0), 'HUD zone readout renders');
     assert.deepEqual(await page.evaluate(() => window.__violations || []), []);
     assert.deepEqual(errors, []);
