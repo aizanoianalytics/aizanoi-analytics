@@ -20,6 +20,7 @@ const canonicalBase = [
   '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
  '/arcade/snake-royale/',
   '/arcade/aizanoi-wars/',
+  '/arcade/factory/',
   '/arcade/chess/',
   '/arcade/maze-chase/',
   '/arcade/capture-flag/',
