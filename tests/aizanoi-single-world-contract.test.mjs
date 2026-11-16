@@ -161,7 +161,6 @@ test('operations docs do not impose retired-world smoke or deploy obligations', 
     assert.doesNotMatch(doc, /\?app=worlds\b/, `${name} must not smoke-test the retired worlds app id`);
     // Current Aizanoi routes must be listed instead.
     assert.match(doc, /\/worlds\/aizanoi-225\//, `${name} must name the canonical Aizanoi runtime route`);
-    assert.match(doc, /\/dungeon\//, `${name} must name the Dungeon route`);
   }
   assert.match(hermes, /\?app=aizanoi\b/, 'Hermes operations must smoke-test the canonical aizanoi app id');
 });

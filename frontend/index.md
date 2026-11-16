@@ -1,6 +1,6 @@
 # Frontend
 
-The public product is **Aizanoi** (flagship interactive historical reconstruction) and **Aizanoi Dungeon** (flagship browser game).
+The public product is **Aizanoi** (flagship interactive historical reconstruction).
 
 Scope: production static application served to visitors.
 

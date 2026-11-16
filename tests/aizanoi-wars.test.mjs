@@ -29,11 +29,9 @@ test('Aizanoi Wars is a distinct Arcade route with external assets under strict 
 
 test('AizanoiOS has its own Wars app and desktop shortcut', () => {
   const wars = APPS.find(app => app.id === 'aizanoi-wars');
-  const dungeon = APPS.find(app => app.id === 'dungeon');
   assert.equal(wars?.label, 'Aizanoi Wars');
   assert.equal(wars?.module, '/js/v3/apps/aizanoi-wars/src/index.js');
-  assert.ok(dungeon);
-  assert.match(read('js/v3/brand-platform.js'), /'games','dungeon','aizanoi-wars'/);
+  assert.match(read('js/v3/brand-platform.js'), /'games','aizanoi-wars'/);
   assert.match(read('js/v3/apps/aizanoi-wars/src/index.js'), /iframe/);
   assert.match(read('js/v3/apps/index.md'), /aizanoi-wars\/index\.md/);
 });

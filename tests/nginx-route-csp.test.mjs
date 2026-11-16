@@ -14,14 +14,14 @@ test('root static CSP permits same-origin GLB embedded texture blobs', () => {
   assert.doesNotMatch(staticSnippet, /unsafe-inline|unsafe-eval/);
 });
 
-test('dungeon/markets snippet pins a strict CSP without unsafe tokens', () => {
+test('Markets snippet pins a strict CSP without unsafe tokens', () => {
   assert.match(snippet, /Content-Security-Policy/);
   assert.match(snippet, /script-src 'self'/);
   assert.doesNotMatch(snippet, /unsafe-inline/);
   assert.doesNotMatch(snippet, /unsafe-eval/);
 });
 
-for (const route of ['/dungeon/', '/analytics/markets/']) {
+for (const route of ['/analytics/markets/']) {
   test(`repo nginx example scopes the CSP snippet to ${route}`, () => {
     const block = nginxExample.match(new RegExp(`location \\^~ ${esc(route)} \\{[^}]*\\}`));
     assert.ok(block, `no location block for ${route}`);
