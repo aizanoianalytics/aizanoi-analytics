@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-godel-workbooks-claude-coq",
+  "title": "Claude reads G\u00f6del's shorthand workbooks and surfaces 663 candidate theorems",
+  "summary": "A Helsinki-led project has spent years transcribing 1,009 pages of Kurt G\u00f6del's 1940s workbooks, mostly written in the obsolete Gabelsberger shorthand, at roughly a page a week. Jan von Plato fed his transcriptions to Claude and got a 650-page digest in days, plus 663 theorems G\u00f6del had proved, sketched or merely imagined. Run through the Coq proof assistant, about 400 held as stated, 200 needed tighter statements and about 50 were false.",
+  "category": "ai",
+  "priority": 78,
+  "tags": [
+    "claude",
+    "godel",
+    "mathematics",
+    "proof-assistant",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/science/2026/nov/13/kurt-godel-notebooks-ai-helps-unlock-hidden-discoveries-man-who-transformed-maths",
+      "publishedAt": "2026-11-13T00:00:00Z"
+    },
+    {
+      "publisher": "Institute for Advanced Study",
+      "url": "https://www.ias.edu/news/ahead-his-time-ai-helps-unlock-discoveries-hidden-notebooks-man-who-transformed-maths",
+      "publishedAt": "2026-11-14T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

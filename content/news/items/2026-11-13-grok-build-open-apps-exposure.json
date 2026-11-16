@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-grok-build-open-apps-exposure",
+  "title": "Audit finds most published Grok Build apps need no sign-in",
+  "summary": "Claroc Research said 35,578 of 37,571 live apps published under SpaceXSI's grok.me domain opened without a sign-in, about 94.7% of those it tested. The security firm said 24 of the open apps were built by SpaceXSI and X staff and held a confidential onboarding plan, a sales territory map of 594 accounts and advertising proposals, and that apps from about 30 other organisations exposed internal data. SpaceXSI removed its own staff apps after press questions.",
+  "category": "technology",
+  "priority": 55,
+  "tags": [
+    "security",
+    "grok",
+    "privacy",
+    "app-builders",
+    "spacexsi"
+  ],
+  "sources": [
+    {
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/claroc-grok-build-apps-exposed-online",
+      "publishedAt": "2026-11-11T11:04:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/grok-build-apps-exposed-claroc-spacexsi",
+      "publishedAt": "2026-11-11T12:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

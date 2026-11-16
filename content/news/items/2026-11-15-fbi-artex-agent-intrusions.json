@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-15-fbi-artex-agent-intrusions",
+  "title": "FBI warning casts an open agent framework as an intrusion assembly line",
+  "summary": "A Friday flash alert from the FBI describes Artex, an open-source framework that turns a general-purpose language model into an intrusion tool, as capable of automating an attack from reconnaissance to data exfiltration and reaching privileged access in under three hours. The FBI says community forks, archived copies and a commercial version keep it available after its removal from GitHub, and cited more than 1,600 exposed console instances. Amazon published parallel findings on credential theft used to pay for model access.",
+  "category": "technology",
+  "priority": 86,
+  "tags": [
+    "fbi",
+    "artex",
+    "cybersecurity",
+    "ai-agents",
+    "intrusion"
+  ],
+  "sources": [
+    {
+      "publisher": "The Record",
+      "url": "https://therecord.media/artex-ai-tool-fbi-flash-alert",
+      "publishedAt": "2026-11-13T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

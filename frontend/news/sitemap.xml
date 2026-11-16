@@ -160,4 +160,244 @@
       <news:title>Ronaldinho plays 45 minutes on his Ravenna debut at 46</news:title>
     </news:news>
   </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/fbi-artex-agent-intrusions/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>FBI warning casts an open agent framework as an intrusion assembly line</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/anthropic-self-hosted-managed-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic lets enterprises run its agent platform inside their own network</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/godel-workbooks-claude-coq/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Claude reads Gödel&#39;s shorthand workbooks and surfaces 663 candidate theorems</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/wall-street-november-whiplash/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>November&#39;s tape is the wildest since the tariff shock, and dip buyers keep paying</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/united-airlines-ai-agent-permission/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>United becomes the first US airline to close its booking flow to AI agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/eu-digital-fairness-act-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Brussels proposes an autonomy dial for AI agents that shop on your behalf</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/ibm-granite-llmon-prompt-injection/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>IBM trains two small Granite models to read documents without obeying them</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/nvidia-earnings-week-ahead/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Nvidia&#39;s results land Tuesday with the AI trade short of a backstop</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/spain-england-group-a3-decider/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Spain need a draw, England need a win, and Group A3 finishes in Madrid</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/meta-muse-phone-calls/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Meta&#39;s Muse starts placing phone calls for paying US subscribers</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/fed-december-hike-priced/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>A December rate rise is close to fully priced, and the minutes may settle the size</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/edge0-145b-on-device-model/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Edge0 releases a 145-billion-parameter model aimed at a single laptop</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/nations-league-a1-final-day/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Three teams, two places: Group A1 goes to the last night in Brussels and Paris</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/llama-cpp-ggml-v1/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>llama.cpp and ggml reach 1.0 with a promise to stop breaking downstream code quietly</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-15/wsl-chelsea-man-city-baltimore/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-15T05:00:00.000Z</news:publication_date>
+      <news:title>Baltimore&#39;s strike puts Chelsea back on top and hands City a first defeat</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/faa-nationwide-ground-stop/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>FAA grounds every US departure for four hours, then clears flights</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/anthropic-ipo-six-times-oversubscribed/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s IPO is six times oversubscribed at a $1.4 trillion target</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/chip-rout-nvidia-worst-week/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Chip rout hands Nvidia its worst week since April 2025</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/italy-beat-france-nations-league/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Italy beat France 3-1 at San Siro to top their Nations League group</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/microsoft-outage-cloud-crisis/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>A Microsoft email outage turns into an 18-hour cloud crisis</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/blackwell-fingerprints-chinese-models/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Model-weight fingerprints point to Blackwell chips in six Chinese models</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/us-producer-prices-fastest-since-2022/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>US producer prices post their biggest annual rise since November 2022</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/bitcoin-slips-below-70k/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Bitcoin slips below $70,000 as the AI trade wobbles</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/chatgpt-wallet-agentic-checkout/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI lets ChatGPT shop and pay through a new Wallet</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/langchain-300m-series-c/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>LangChain raises $300m at a $3bn valuation as agent tooling consolidates</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/uber-licence-data-fireworks-breach/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Uber tells drivers their licence data was stolen through Fireworks AI</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/openai-daybreak-cybersecurity/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI moves into cybersecurity with Daybreak attack and patch agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/afcon-2027-qualifying-salah-nigeria/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Salah&#39;s double and Nigeria&#39;s bench revive Afcon 2027 campaigns</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/drogue-ocean-thermal-data-centres/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>A startup wants to run floating data centres on ocean heat</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-14/ronaldinho-ravenna-start/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-14T05:00:00.000Z</news:publication_date>
+      <news:title>Ronaldinho, 46, is set for his first Ravenna start on Sunday</news:title>
+    </news:news>
+  </url>
 </urlset>

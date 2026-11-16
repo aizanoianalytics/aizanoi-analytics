@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-nvidia-earnings-week-ahead",
+  "title": "Nvidia's results land Tuesday with the AI trade short of a backstop",
+  "summary": "Nvidia reports quarterly results on Tuesday, the first print since Jensen Huang's departure, with the shares under pressure and the company having given up more than a trillion dollars of market value, enough to take its capitalisation back below $4 trillion. The same week brings Federal Reserve meeting minutes on Wednesday. Demand for Anthropic's planned listing has run several times past the shares on offer, so the two events now carry the burden of proof for the whole complex.",
+  "category": "economy-markets",
+  "priority": 70,
+  "tags": [
+    "nvidia",
+    "earnings",
+    "anthropic",
+    "ipo",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/calendar?article=29379&g=top&importance=2&startdate=2026-11-13/news/601252",
+      "publishedAt": "2026-11-13T00:00:00Z"
+    },
+    {
+      "publisher": "The Sydney Morning Herald (Bloomberg)",
+      "url": "https://smh.com.au/business/markets/wall-street-s-wild-nvidia-ride-delivers-big-paydays-and-even-bigger-bruises-20261115-p61e8o.html",
+      "publishedAt": "2026-11-15T03:50:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

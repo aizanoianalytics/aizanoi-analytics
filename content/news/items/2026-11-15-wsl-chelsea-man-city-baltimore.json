@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-wsl-chelsea-man-city-baltimore",
+  "title": "Baltimore's strike puts Chelsea back on top and hands City a first defeat",
+  "summary": "Sandy Baltimore drove Chelsea in front in first-half stoppage time and Manchester City, who lost goalkeeper Ayaka Yamashita to a red card, could not answer, so Chelsea leapfrogged them at the top of the Women's Super League and ended a run in which City had scored in each of their previous 21 matches in all competitions. Manchester United beat Crystal Palace 2-0, Liverpool won 3-0 at Brighton and Tottenham drew 0-0 with Everton; Arsenal host London City Lionesses on Sunday.",
+  "category": "football",
+  "priority": 54,
+  "tags": [
+    "wsl",
+    "chelsea",
+    "manchester-city",
+    "baltimore",
+    "women-football"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/live/2026/nov/14/chelsea-v-man-city-womens-super-league-live",
+      "publishedAt": "2026-11-14T18:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/videos/cm702wwpj9keo",
+      "publishedAt": "2026-11-14T20:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-15-llama-cpp-ggml-v1",
+  "title": "llama.cpp and ggml reach 1.0 with a promise to stop breaking downstream code quietly",
+  "summary": "The project that made local inference practical on ordinary hardware has shipped llama.cpp v1.0.0 and ggml v1.0.0, more than three years after it started. The commitment is semantic versioning: incompatible API and ABI changes now come with a major-version bump instead of arriving as a routine weekly surprise. For maintainers building on the C API, or on the more than 150 supported architectures, that turns a moving target into something that can be pinned.",
+  "category": "technology",
+  "priority": 58,
+  "tags": [
+    "llama-cpp",
+    "ggml",
+    "open-source",
+    "local-inference",
+    "semver"
+  ],
+  "sources": [
+    {
+      "publisher": "Hugging Face (ggml-org)",
+      "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+      "publishedAt": "2026-11-13T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-eu-digital-fairness-act-agents",
+  "title": "Brussels proposes an autonomy dial for AI agents that shop on your behalf",
+  "summary": "The European Commission's draft Digital Fairness Act, published on 11 November, would replace the 2005 unfair commercial practices directive with a regulation that applies directly across the bloc. Article 26 covers software that concludes contracts for a consumer and would require a first-use choice: approve every contract, approve only categories the consumer defines by criteria such as a price ceiling and a time limit, or let the agent buy unsupervised. Traders would have to provide tools to change that setting later.",
+  "category": "technology",
+  "priority": 72,
+  "tags": [
+    "eu",
+    "digital-fairness-act",
+    "consumer-law",
+    "ai-agents",
+    "regulation"
+  ],
+  "sources": [
+    {
+      "publisher": "Pinsent Masons",
+      "url": "https://pinsentmasons.com/Out-Law/News/AI-agents-dark-patterns-Digital-Fairness-Act",
+      "publishedAt": "2026-11-11T18:15:00Z"
+    },
+    {
+      "publisher": "Bristows",
+      "url": "https://inquisitiveminds.bristows.com/post/102o9b2/spotlight-on-agentic-ai-the-digital-fairness-act-and-agentic-commerce",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

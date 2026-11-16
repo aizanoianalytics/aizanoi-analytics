@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-anthropic-self-hosted-managed-agents",
+  "title": "Anthropic lets enterprises run its agent platform inside their own network",
+  "summary": "Anthropic opened a private beta that moves Claude Managed Agents into a customer's own cloud account or data centre: the harness, sandboxes, credentials and session history all run on infrastructure the customer operates, while inference still goes to Anthropic, Bedrock, Google's agent platform or Microsoft Foundry. The published licence rules out modifying the server, bars third-party models and requires a safety rollback within eight hours of a notice, plus incident reporting inside 48 hours.",
+  "category": "ai",
+  "priority": 80,
+  "tags": [
+    "anthropic",
+    "claude",
+    "managed-agents",
+    "enterprise",
+    "self-hosting"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://claude.com/resources/articles/self-hosted-claude-managed-agents",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/legal/self-hosted-managed-agents-license",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

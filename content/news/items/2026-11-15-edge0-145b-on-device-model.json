@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-15-edge0-145b-on-device-model",
+  "title": "Edge0 releases a 145-billion-parameter model aimed at a single laptop",
+  "summary": "Edge0 published weights for Edge0-145B and Edge0-120B, billing the larger as the first open model at that scale to run entirely on a personal machine. The company reports roughly 10 billion parameters active per step, peak memory near 29GB on a 48GB laptop, decoding above 80 tokens a second and a context window of 128K to 256K. The comparisons are its own, the technical report is still to come, and the release post names no licence.",
+  "category": "ai",
+  "priority": 62,
+  "tags": [
+    "edge0",
+    "open-weights",
+    "local-inference",
+    "on-device"
+  ],
+  "sources": [
+    {
+      "publisher": "Edge0",
+      "url": "https://edge0.ai/blog/introducing-edge0-145b-frontier-ai-capabilities-on-your-own-computer",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

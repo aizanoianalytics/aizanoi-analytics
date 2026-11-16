@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-14-chip-rout-nvidia-worst-week",
+  "title": "Chip rout hands Nvidia its worst week since April 2025",
+  "summary": "A gauge of chipmakers fell 4.5% on Friday and Nvidia lost 14% over the week, its worst run since April 2025, as investors waited for the company's first earnings call without Jensen Huang on 17 November. The S&P 500 slipped 0.4% to 7,561.67 and the Nasdaq composite 0.9% to 25,136.27, while the Dow added 0.1%. All three still rose more than 2% over the week, the market's first winning week since early October, the Associated Press reported.",
+  "category": "economy-markets",
+  "priority": 82,
+  "tags": [
+    "nvidia",
+    "semiconductors",
+    "markets",
+    "wall-street",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-12c1e8155fb85c3c7b09e058ed6d3c74",
+      "publishedAt": "2026-11-13T21:18:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.swissinfo.ch/eng/stocks-fall-as-chip-rout-outweighs-inflation-data%3A-markets-wrap/92374084",
+      "publishedAt": "2026-11-13T16:40:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-15-ibm-granite-llmon-prompt-injection",
+  "title": "IBM trains two small Granite models to read documents without obeying them",
+  "summary": "IBM published 3B and 8B previews of Granite 4.1 trained on LLMON, a markup that labels instructions and data as separate addressable blocks so text pulled from a document cannot pass itself off as an order. On the OPI benchmark the attack success rate falls from 100% to 0.1% for the 3B model and from 96.3% to 0.02% for the 8B. IBM calls the effect learned behaviour rather than an enforced guarantee and limits the weights to evaluation.",
+  "category": "ai",
+  "priority": 70,
+  "tags": [
+    "ibm",
+    "granite",
+    "prompt-injection",
+    "open-weights",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "IBM Granite (Hugging Face)",
+      "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    },
+    {
+      "publisher": "IBM Granite (Hugging Face)",
+      "url": "https://huggingface.co/ibm-granite/granite-4.1-8b-llmon-preview",
+      "publishedAt": "2026-11-12T00:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-15T05:00:00Z",
+  "updatedAt": "2026-11-15T05:00:00Z",
+  "retrievedAt": "2026-11-15T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

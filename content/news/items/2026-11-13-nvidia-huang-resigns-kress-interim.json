@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-13-nvidia-huang-resigns-kress-interim",
+  "title": "Nvidia names Colette Kress interim CEO after Huang resigns",
+  "summary": "NVIDIA's board said Jensen Huang resigned as president, chief executive and director effective immediately, ending a 33-year tenure at the company he co-founded. Chief financial officer Colette Kress will hold the interim CEO role while keeping her finance post until a permanent successor is named, and the board appointed former Synopsys chief executive Harvey C. Jones as its first chair. NVIDIA kept third-quarter results scheduled for November 17.",
+  "category": "ai",
+  "priority": 88,
+  "tags": [
+    "nvidia",
+    "jensen-huang",
+    "leadership",
+    "semiconductors",
+    "colette-kress"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
+      "publishedAt": "2026-11-12T21:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/12/nvidia-jensen-huang-ceo-live-updates.html",
+      "publishedAt": "2026-11-12T21:00:00Z"
+    }
+  ],
+  "publishedAt": "2026-11-13T05:00:00Z",
+  "updatedAt": "2026-11-13T05:00:00Z",
+  "retrievedAt": "2026-11-13T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}

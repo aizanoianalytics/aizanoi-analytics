@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-14-chatgpt-wallet-agentic-checkout",
+  "title": "OpenAI lets ChatGPT shop and pay through a new Wallet",
+  "summary": "OpenAI launched a wallet for ChatGPT on Friday that lets its agents, called dots, research a purchase and complete checkout. It starts with a limited number of US ChatGPT Pro subscribers aged 18 and over paying with a US-issued Visa, Mastercard or American Express. Users review the items, the total and the card before approving with Face ID or a fingerprint, and the payment runs on a token rather than raw card details. OpenAI says spending limits and category controls are planned later.",
+  "category": "ai",
+  "priority": 66,
+  "tags": [
+    "openai",
+    "chatgpt",
+    "agentic-commerce",
+    "payments",
+    "retail"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/",
+      "publishedAt": "2026-11-13T16:00:12Z"
+    }
+  ],
+  "publishedAt": "2026-11-14T05:00:00Z",
+  "updatedAt": "2026-11-14T05:00:00Z",
+  "retrievedAt": "2026-11-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "kind": "daily"
+}
