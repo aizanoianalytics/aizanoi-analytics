@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-16-langchain-3b-valuation",
+  "title": "LangChain doubles its valuation to $3bn on agent governance demand",
+  "summary": "LangChain raised $300 million in a Series C led by CapitalG at a $3 billion valuation, more than double its $1.25 billion mark a year earlier, with GIC, DFJ Growth, IVP and Sapphire Ventures participating. The company says its LangSmith agent-management platform has 7,000 customers, including Nvidia, Toyota, Salesforce, Harvey and Rippling, and pitches model- and cloud-neutral governance as the differentiator.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "langchain",
+    "funding",
+    "agents",
+    "valuation"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+      "publishedAt": "2026-11-13T19:37:00Z"
+    }
+  ],
+  "kind": "daily"
+}

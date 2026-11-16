@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-16-denmark-portugal-nations-league",
+  "title": "Denmark thrash Portugal 4-1 in Braga in the first match of the post-Ronaldo era",
+  "summary": "Denmark beat Portugal 4-1 in Braga, with Rasmus Hojlund scoring twice, in Portugal's first match since Cristiano Ronaldo retired from international football and the federation retired his number 7 shirt. Denmark moved into second place in Group A4 and closed on a quarter-final place. Norway beat Wales 3-1 in Oslo in the same group, leaving Wales bottom of the section.",
+  "category": "football",
+  "priority": 64,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "portugal",
+    "denmark",
+    "nations-league",
+    "ronaldo"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/nov/14/clinical-norway-dent-wales-nations-league-top-tier-hopes-with-victory-in-oslo",
+      "publishedAt": "2026-11-14T22:23:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/nov/14/portugal-immortalise-cristiano-ronaldos-no-7-shirt-in-tribute-to-national-legend",
+      "publishedAt": "2026-11-14T19:13:00Z"
+    }
+  ],
+  "kind": "daily"
+}

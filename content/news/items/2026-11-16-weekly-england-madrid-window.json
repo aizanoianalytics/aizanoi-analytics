@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-16-weekly-england-madrid-window",
+  "title": "England's night in Madrid reframes what the November window is for",
+  "summary": "Three goals in 57 minutes in Madrid, then half an hour of defending a one-goal lead with ten men after Elliot Anderson's red card: England's 3-2 win over Spain did more for Thomas Tuchel than the autumn friendlies before it. Spain had lost only one of 40 home matches in all competitions since 2018 and had been beaten once in 43 games before this decider. The same window produced Denmark's 4-1 win in Braga in Portugal's first match after retiring Ronaldo's number 7.",
+  "category": "football",
+  "priority": 62,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "england",
+    "spain",
+    "nations-league",
+    "portugal"
+  ],
+  "sources": [
+    {
+      "publisher": "England Football (The FA)",
+      "url": "https://www.englandfootball.com/england/mens-senior-team/fixtures-results/2026-27/nations-league/spain-v-england-uefa-nations-league-sunday-15-november-2026-match-centre",
+      "publishedAt": "2026-11-15T22:15:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/nov/15/spain-england-nations-league-match-report",
+      "publishedAt": "2026-11-15T21:56:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/nov/14/clinical-norway-dent-wales-nations-league-top-tier-hopes-with-victory-in-oslo",
+      "publishedAt": "2026-11-14T22:23:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W47"
+}

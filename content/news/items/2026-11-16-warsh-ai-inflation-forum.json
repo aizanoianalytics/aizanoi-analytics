@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-16-warsh-ai-inflation-forum",
+  "title": "Warsh opens a Fed forum on whether AI lowers or raises inflation",
+  "summary": "Federal Reserve chair Kevin Warsh convenes a three-hour public forum in San Francisco on Monday on AI, productivity and employment, the only open session among the five task forces he created. Officials are split: Warsh has argued AI can cut costs, while governor Lisa Cook says data-centre spending on power, chips and labour is delaying a return to 2%. The next rate decision is scheduled for 9 December.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "federal-reserve",
+    "warsh",
+    "inflation",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/feds-warsh-take-stock-ai-revolution-us-public-grows-wary-2026-11-13/",
+      "publishedAt": "2026-11-13T12:00:00Z"
+    },
+    {
+      "publisher": "Federal Reserve Bank of San Francisco",
+      "url": "https://www.frbsf.org/news-and-media/events/2026/11/productivity-and-jobs-task-force-conference/",
+      "publishedAt": "2026-11-01T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

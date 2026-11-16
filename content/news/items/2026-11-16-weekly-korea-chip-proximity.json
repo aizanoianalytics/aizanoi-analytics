@@ -1,0 +1,44 @@
+{
+  "id": "2026-11-16-weekly-korea-chip-proximity",
+  "title": "Korea is rebuilding its chip supply chain around proximity, not price",
+  "summary": "SK hynix's 1.4 trillion won supplier programme and the 874.6 billion won Trinity Fab answer a bottleneck: Korean memory leadership still rests on roughly 30% domestic sourcing for materials and equipment, and a result proven on an 8-inch laboratory wafer does not qualify on a 12-inch line. Paying half of development costs up front and compensating suppliers whose projects fail is procurement run as industrial policy. The counterexample is China, where Meituan trained a 1.6-trillion-parameter agent model on Huawei accelerators and published a self-hosting guide with no Nvidia configuration.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "weekly",
+    "semiconductors",
+    "supply-chain",
+    "korea",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/sk-hynix-spend-1-billion-over-five-years-support-chip-suppliers-2026-11-16/",
+      "publishedAt": "2026-11-16T00:10:00Z"
+    },
+    {
+      "publisher": "The Korea Herald",
+      "url": "https://www.koreaherald.com/article/10938000",
+      "publishedAt": "2026-11-16T00:02:00Z"
+    },
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/meituan-releases-a-1-6-trillion-parameter-agent-model-that-never-touched-an-nvidia-gpu/",
+      "publishedAt": "2026-11-15T10:06:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W47"
+}

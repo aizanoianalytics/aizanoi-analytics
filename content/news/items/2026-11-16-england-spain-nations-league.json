@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-16-england-spain-nations-league",
+  "title": "England beat Spain 3-2 in Madrid to top their Nations League group",
+  "summary": "England led 3-0 in Madrid through a Harry Kane penalty, an Ezri Konsa header and a Ben White finish, then survived after Elliot Anderson was sent off on 63 minutes for pulling back Lamine Yamal. Mikel Oyarzabal converted the resulting penalty and Nico Williams scored before James Trafford made a late double save to secure a 3-2 win and first place in Group A3.",
+  "category": "football",
+  "priority": 86,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "england",
+    "spain",
+    "nations-league",
+    "tuchel"
+  ],
+  "sources": [
+    {
+      "publisher": "England Football (The FA)",
+      "url": "https://www.englandfootball.com/england/mens-senior-team/fixtures-results/2026-27/nations-league/spain-v-england-uefa-nations-league-sunday-15-november-2026-match-centre",
+      "publishedAt": "2026-11-15T22:15:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/nov/15/spain-england-nations-league-match-report",
+      "publishedAt": "2026-11-15T21:56:00Z"
+    }
+  ],
+  "kind": "daily"
+}

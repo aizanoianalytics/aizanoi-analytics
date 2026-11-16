@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-16-faa-smart-all-centres",
+  "title": "FAA extends its AI flight-routing adviser to all 22 US centres",
+  "summary": "The Federal Aviation Administration has widened SMART, an $875 million cloud system that recommends reroutes, routes and arrival sequencing, from Washington airspace to all 22 air route traffic control centres. The agency says the tool has rerouted 180 flights and saved about 10 minutes and 80 gallons of fuel per flight since 21 September. The controllers' union NATCA says it was not involved in designing or testing the system; FAA specialists validate each recommendation.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "faa",
+    "aviation",
+    "ai-adoption",
+    "air-traffic"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/features/2026/11/faa-expands-ai-advice-to-manage-air-traffic-congestion-across-entire-us-airspace/",
+      "publishedAt": "2026-11-13T21:20:00Z"
+    }
+  ],
+  "kind": "daily"
+}

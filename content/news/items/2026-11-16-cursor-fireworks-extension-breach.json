@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-16-cursor-fireworks-extension-breach",
+  "title": "A stolen Fireworks key let attackers ship a malicious Claude Code extension",
+  "summary": "Cursor says attackers used an access key stored at inference provider Fireworks AI to copy historical coding-agent traces, some containing unredacted credentials, and then distributed malicious builds of Anthropic's Claude Code extension through Cursor's marketplace on 29 October. Up to 5,000 developers were exposed to malware that installed persistent SSH backdoors. Cursor says fewer than 0.05% of users had traces exposed and fewer than 0.01% had credentials compromised.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-11-16T05:00:00Z",
+  "updatedAt": "2026-11-16T05:00:00Z",
+  "retrievedAt": "2026-11-16T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "cursor",
+    "fireworks",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/",
+      "publishedAt": "2026-11-15T10:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
