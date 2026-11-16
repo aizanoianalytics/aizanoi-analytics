@@ -23,8 +23,6 @@ Current public families are:
 
 **Aizanoi** is the flagship interactive historical reconstruction and the primary interactive world of the Aizanoi Analytics brand. It is not one world in a catalog — it is the singular flagship experience.
 
-**Aizanoi Dungeon: Aizo's Awakening** is the flagship browser game within the Aizanoi universe.
-
 **Analytics** is the user-facing data-product area. Its stable route is `/analytics/` and its internal AizanoiOS app id is `analytics`; dashboards are one format within this product family.
 
 The former Workbench/power-tool product is retired from the visitor-facing catalog. Do not add Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal or Workspace Monitor back to navigation, search, deep-link routing or public product documentation without an explicit owner decision.
@@ -43,9 +41,6 @@ Browser
    |
    +-- Aizanoi (flagship interactive world)
    |     +-- /worlds/aizanoi-225/
-   |
-   +-- Aizanoi Dungeon (flagship game)
-   |     +-- /dungeon/
    |
 Nginx -> static HTML/CSS/JS/JSON/assets
 ```
@@ -103,10 +98,6 @@ Primary public language is English.
 ## Aizanoi
 
 Aizanoi is the flagship interactive historical reconstruction. `frontend/worlds/aizanoi-225/` is the canonical scene/data/assets/builders. `frontend/worlds/shared/` owns shared Three.js/runtime infrastructure. Evidence/source ownership remains strict: documented, inferred, and reconstructed elements must remain visually and structurally distinct.
-
-## Aizanoi Dungeon
-
-Aizanoi Dungeon: Aizo's Awakening is the flagship browser game. The canonical module is `frontend/js/v3/apps/dungeon/`. The standalone route `/dungeon/` must remain a first-class fullscreen experience.
 
 Never present plausible, inferred or atmospheric reconstruction as verified fact.
 

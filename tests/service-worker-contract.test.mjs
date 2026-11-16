@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
 
 const sw = readFileSync('frontend/service-worker.js', 'utf8');
 const release = readFileSync('frontend/release.js', 'utf8');
@@ -99,4 +100,66 @@ test('cache retirement preserves the bounded offline contract for current produc
   assert.match(sw, /caches\.match\('\/'\)/, 'root offline fallback must remain');
   // The /api/* bypass is a security boundary and must not be weakened.
   assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/);
+});
+
+
+test('Dungeon retirement purges old caches and forbids offline resurrection without blocking Wars or Markets', async () => {
+  const events = new Map();
+  const entries = new Map([
+    ['/dungeon/', { old: true }],
+    ['/js/v3/apps/dungeon/src/index.js', { old: true }],
+    ['/assets/icons/aizanoi-dungeon.svg', { old: true }],
+    ['/arcade/aizanoi-wars/', { live: true }],
+    ['/analytics/markets/', { live: true }],
+  ]);
+  const cache = {
+    keys: async () => [...entries.keys()].map((path) => ({ url: `https://example.test${path}` })),
+    delete: async (request) => entries.delete(new URL(request.url).pathname),
+    match: async (request) => entries.get(new URL(request.url).pathname),
+    put: async (request, response) => entries.set(new URL(request.url).pathname, response),
+  };
+  const caches = {
+    keys: async () => ['current'], open: async () => cache,
+    delete: async () => true,
+    match: async (request) => cache.match(typeof request === 'string' ? new Request(`https://example.test${request}`) : request),
+  };
+  const sandbox = {
+    self: { AIZANOI_RELEASE: { CACHE: 'current' }, location: { origin: 'https://example.test' },
+      clients: { claim: async () => {} }, addEventListener: (name, handler) => events.set(name, handler) },
+    importScripts() {}, caches, URL, Request,
+    fetch: async () => { throw new Error('offline'); },
+  };
+  runInNewContext(sw, sandbox);
+  let activation;
+  events.get('activate')({ waitUntil: (promise) => { activation = promise; } });
+  await activation;
+  for (const path of ['/dungeon/', '/js/v3/apps/dungeon/src/index.js', '/assets/icons/aizanoi-dungeon.svg']) {
+    assert.equal(entries.has(path), false, `${path} must be purged`);
+    await assert.rejects(
+      runInNewContext('networkFirstNavigation', sandbox)(new Request(`https://example.test${path}`)),
+      /offline/, `${path} must not receive the homepage offline fallback`,
+    );
+  }
+  assert.equal(entries.has('/arcade/aizanoi-wars/'), true);
+  assert.equal(entries.has('/analytics/markets/'), true);
+  assert.deepEqual(await runInNewContext('networkFirstNavigation', sandbox)(new Request('https://example.test/arcade/aizanoi-wars/')), { live: true });
+  await assert.rejects(runInNewContext('networkFirstStatic', sandbox)(new Request('https://example.test/js/v3/apps/dungeon/src/index.js')), /Retired asset unavailable/);
+});
+
+
+test('retired Dungeon is absent from current public discovery while Wars, world and Markets remain', () => {
+  const surfaces = [
+    'frontend/arcade/index.html', 'frontend/forge/index.html', 'frontend/worlds/index.html',
+    'frontend/manifest.webmanifest', 'frontend/js/v3/brand-platform.js',
+    'frontend/js/v3/registry.js', 'frontend/js/v3/module-registry.generated.js',
+    'AGENTS.md', 'PRODUCT.md', 'docs/HERMES_OPERATIONS.md', 'docs/OPERATIONS.md',
+  ];
+  for (const file of surfaces) {
+    const content = readFileSync(file, 'utf8');
+    assert.doesNotMatch(content, /\bDungeon\b|\/dungeon\/|['"]dungeon['"]/i, `${file} must not advertise the retired game`);
+  }
+  const arcade = readFileSync('frontend/arcade/index.html', 'utf8');
+  assert.match(arcade, /href="\/arcade\/aizanoi-wars\/"/);
+  assert.match(readFileSync('frontend/worlds/index.html', 'utf8'), /\/worlds\/aizanoi-225\//);
+  assert.match(readFileSync('frontend/manifest.webmanifest', 'utf8'), /\/analytics\/markets\//);
 });
