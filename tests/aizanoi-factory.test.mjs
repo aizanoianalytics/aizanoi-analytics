@@ -39,3 +39,32 @@ test('Aizanoi Factory is a standalone static Arcade route under strict CSP', () 
   assert.ok(existsSync(new URL('arcade/factory/THIRD_PARTY_NOTICES.txt', root)));
   assert.match(read('arcade/index.md'), /factory\/index\.md/);
 });
+
+test('Factory exposes a raised quality control, stable help button and touch dock', () => {
+  const html = read('arcade/factory/index.html');
+  const css = read('arcade/factory/factory.css');
+  const factory = read('arcade/factory/factory.js');
+  const notes = read('arcade/factory/index.md');
+
+  assert.match(html, /id="btn-quality"/);
+  assert.match(html, /id="quality-label"/);
+  assert.match(html, /id="touch-dock"/);
+  assert.match(html, /Sol başparmak hareket/);
+  assert.match(html, /Sağ başparmak bakış/);
+  assert.match(factory, /function chooseFactoryQuality/);
+  assert.match(factory, /G\.render\.setQuality/);
+  assert.match(factory, /aizanoi\.factory\.quality/);
+  assert.match(factory, /shadow:\s*8192|shadow = Math\.max/);
+  assert.match(factory, /function raiseSceneFinish/);
+  assert.match(css, /#coords-readout[\s\S]*width:\s*18ch/);
+  assert.match(css, /\.hud-actions[\s\S]*z-index:\s*30/);
+  assert.match(css, /#touch-dock/);
+  assert.doesNotMatch(notes, /fifteen loaded pallets|Steep solid loading ramp/);
+  assert.match(notes, /87 pallet/);
+  const interior = read('arcade/factory/factory_interior.js');
+  assert.match(notes, /cement ramp/);
+  assert.match(interior, /createTallSpacerGlass/);
+  assert.match(interior, /PC Tower Case/);
+  assert.match(factory, /invulnerable = true/);
+  assert.match(factory, /4\.2m/);
+});

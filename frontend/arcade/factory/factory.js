@@ -329,11 +329,11 @@
     const grassMat = makeGrassMaterial();
     const dirtRoadMat = makeDirtRoadMaterial();
     const stoneWallMat = makeStoneWallMaterial();
-    const shrubMat = new THREE.MeshStandardMaterial({ color: 0x2f5a26, roughness: 0.88 });
-    const wildWeedMat = new THREE.MeshStandardMaterial({ color: 0x4b6a2c, roughness: 0.90 });
-    const ledWarm = G.mats.emissive(0xffd796, 3.8);
-    const brassMat = new THREE.MeshStandardMaterial({ color: 0xdca83c, metalness: 0.9, roughness: 0.22 });
-    const glassCupMat = new THREE.MeshPhysicalMaterial({ color: 0xe6f4fb, transparent: true, opacity: 0.5, roughness: 0.08 });
+    const shrubMat = new THREE.MeshStandardMaterial({ color: 0x347028, roughness: 0.74 });
+    const wildWeedMat = new THREE.MeshStandardMaterial({ color: 0x5d8234, roughness: 0.72 });
+    const ledWarm = G.mats.emissive(0xffd796, 4.4);
+    const brassMat = new THREE.MeshStandardMaterial({ color: 0xffd56a, metalness: 0.96, roughness: 0.12, envMapIntensity: 2.1 });
+    const glassCupMat = new THREE.MeshPhysicalMaterial({ color: 0xe7f6ff, transparent: true, opacity: 0.34, roughness: 0.035, clearcoat: 1, envMapIntensity: 1.8 });
 
     const exteriorNightLights = [];
     const addYardLight = (col, int, dist, x, y, z) => {
@@ -928,9 +928,57 @@
   // --------------------------------------------------------------------------
   // Main Bootstrap
   // --------------------------------------------------------------------------
+  function chooseFactoryQuality(detected, params) {
+    const ladder = ['low', 'medium', 'high', 'ultra'];
+    const labels = { low: 'Düşük', medium: 'Orta', high: 'Yüksek', ultra: 'Ultra' };
+    const forced = params.q && E.presets[params.q] ? params.q : '';
+    let saved = '';
+    try { saved = localStorage.getItem('aizanoi.factory.quality') || ''; } catch {}
+    let name = forced || (E.presets[saved] ? saved : '');
+    if (!name) {
+      const idx = Math.max(0, ladder.indexOf(detected && detected.name));
+      const automated = typeof navigator !== 'undefined' && navigator.webdriver;
+      name = automated ? ((detected && detected.name) || 'high') : ladder[Math.min(ladder.length - 1, idx + 1)];
+    }
+    const preset = { ...E.presets[name] };
+    if (name === 'ultra') {
+      preset.shadow = Math.max(preset.shadow || 0, 8192);
+      preset.tex = Math.max(preset.tex || 0, 2048);
+      preset.volSteps = Math.max(preset.volSteps || 0, 48);
+      preset.planar = 1;
+      preset.ao = true;
+      preset.bloom = true;
+      preset.msaa = Math.max(preset.msaa || 0, 4);
+      preset.scale = 1;
+    }
+    preset.name = name;
+    preset.label = labels[name] || name;
+    return preset;
+  }
+
+  function raiseSceneFinish(root, renderer) {
+    const maxAniso = Math.min(16, (renderer.capabilities && renderer.capabilities.getMaxAnisotropy && renderer.capabilities.getMaxAnisotropy()) || 8);
+    root.traverse((obj) => {
+      const list = obj.material ? [].concat(obj.material) : [];
+      for (const mat of list) {
+        if (!mat || mat.userData.factoryFinish) continue;
+        mat.userData.factoryFinish = true;
+        if (mat.map && mat.map.anisotropy < maxAniso) mat.map.anisotropy = maxAniso;
+        if (mat.isMeshPhysicalMaterial) {
+          mat.envMapIntensity = Math.max(mat.envMapIntensity || 1, 1.45);
+          if (typeof mat.clearcoat === 'number' && mat.clearcoat > 0) mat.clearcoat = Math.min(1, mat.clearcoat + 0.04);
+        } else if ((mat.metalness || 0) >= 0.7) {
+          mat.roughness = Math.max(0.07, (mat.roughness || 0.2) * 0.82);
+          mat.envMapIntensity = Math.max(mat.envMapIntensity || 1, 1.85);
+        }
+        if (mat.emissiveIntensity) mat.emissiveIntensity = Math.min(8, mat.emissiveIntensity * 1.12);
+      }
+    });
+  }
+
   async function boot() {
     const params = Object.fromEntries(new URLSearchParams(location.search));
-    const quality = E.detectQuality(params.q || '');
+    const quality = chooseFactoryQuality(E.detectQuality(params.q || ''), params);
 
     const G = {
       THREE,
@@ -1010,6 +1058,7 @@
     levelRoot.name = 'factory-level';
     levelRoot.add(mergedLevel, L.dynRoot);
     G.scene.add(levelRoot);
+    raiseSceneFinish(levelRoot, G.renderer);
 
     G.level = {
       playerStart: { pos: new THREE.Vector3(-11.5, 0.0, 9.5), yaw: -0.96 },
@@ -1128,6 +1177,26 @@
       showToast(bm.label);
     }
 
+    const qualityLabel = document.getElementById('quality-label');
+    const qualityLadder = ['low', 'medium', 'high', 'ultra'];
+    const qualityNames = { low: 'Düşük', medium: 'Orta', high: 'Yüksek', ultra: 'Ultra' };
+    if (qualityLabel) qualityLabel.textContent = quality.label || qualityNames[quality.name] || 'Ultra';
+    function applyQuality(name) {
+      const next = E.presets[name] ? chooseFactoryQuality({ name }, { q: name }) : quality;
+      try { G.render.setQuality(next); } catch {}
+      G.quality = next;
+      if (qualityLabel) qualityLabel.textContent = next.label || qualityNames[name] || name;
+      try { localStorage.setItem('aizanoi.factory.quality', next.name); } catch {}
+      showToast('Kalite: ' + (next.label || next.name));
+    }
+    const btnQuality = document.getElementById('btn-quality');
+    btnQuality && btnQuality.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const idx = qualityLadder.indexOf(G.quality && G.quality.name);
+      applyQuality(qualityLadder[(idx + 1) % qualityLadder.length]);
+    });
+
     btnMode && btnMode.addEventListener('click', () => toggleDroneMode());
     btnAtmo && btnAtmo.addEventListener('click', () => applyAtmosphere(atmoIdx + 1));
     btnFlash && btnFlash.addEventListener('click', () => setFlash(!flashOn));
@@ -1140,7 +1209,17 @@
       helpModal.hidden = !open;
       if (open && document.pointerLockElement) document.exitPointerLock();
     };
-    btnHelp && btnHelp.addEventListener('click', () => toggleHelp(true));
+    btnHelp && btnHelp.addEventListener('pointerup', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (document.pointerLockElement) document.exitPointerLock();
+      toggleHelp(true);
+    });
+    btnHelp && btnHelp.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      toggleHelp(true);
+    });
     btnHelpClose && btnHelpClose.addEventListener('click', () => toggleHelp(false));
     document.querySelectorAll('.bm-btn').forEach((btn) => {
       btn.addEventListener('click', () => jumpToBookmark(+btn.dataset.bm));
@@ -1152,6 +1231,10 @@
       else if (ev.code === 'KeyT') applyAtmosphere(atmoIdx + 1);
       else if (ev.code === 'KeyF') setFlash(!flashOn);
       else if (ev.code === 'KeyM') btnMap && btnMap.click();
+      else if (ev.code === 'KeyQ') {
+        const idx = qualityLadder.indexOf(G.quality && G.quality.name);
+        applyQuality(qualityLadder[(idx + 1) % qualityLadder.length]);
+      }
       else if (ev.code === 'KeyH') toggleHelp();
       else if (ev.code === 'KeyE') {
         if (activeInteract) {
