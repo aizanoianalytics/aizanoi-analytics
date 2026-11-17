@@ -1190,6 +1190,12 @@
       showToast('Kalite: ' + (next.label || next.name));
     }
     const btnQuality = document.getElementById('btn-quality');
+    btnQuality && btnQuality.addEventListener('pointerup', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const idx = qualityLadder.indexOf(G.quality && G.quality.name);
+      applyQuality(qualityLadder[(idx + 1) % qualityLadder.length]);
+    });
     btnQuality && btnQuality.addEventListener('click', (ev) => {
       ev.preventDefault();
       ev.stopPropagation();

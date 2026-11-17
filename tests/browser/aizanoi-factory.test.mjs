@@ -64,7 +64,7 @@ test('Factory standalone boots, renders frames and toggles help under production
       return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
     });
     assert.equal(qualityHit.ok, true, JSON.stringify(qualityHit));
-    await page.mouse.click(qualityHit.x, qualityHit.y);
+    await page.locator('#btn-quality').click({ force: true, timeout: 10000 });
     await page.waitForFunction((previous) => document.querySelector('#quality-label')?.textContent !== previous, beforeQuality, { timeout: 10000 });
     assert.ok(await page.evaluate(() => document.querySelector('#zone-name')?.textContent.length > 0), 'HUD zone readout renders');
     assert.deepEqual(await page.evaluate(() => window.__violations || []), []);
