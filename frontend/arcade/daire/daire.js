@@ -27,8 +27,8 @@
     bath: 'Lavabo tam karşıda, üstünde küçük banyo dolabı. Diğer tarafta kabin yok, sadece duş başlığı ve duş alanı.',
     wc: 'Klozet kapının karşısında. Hareket edecek alan yok.',
     hall: 'Ayakkabı kartonu koridorda, üstünde bir sürü ayakkabı.',
-    kitchen: 'İki buzdolabı solda: birinde ayakkabı, diğerinde yiyecek. Yanında sürgülü dolap, üstünde küçük burn dolabı. Tezgahın buzdolabı tarafı boş. Ocak karşıda, ortada lavabo.',
-    empty: '4 anlatılmadı. Bu oda boş bırakıldı.'
+    kitchen: 'İki buzdolabı solda: birinde ayakkabı, diğerinde yiyecek. Yanında sürgülü dolap, üstünde küçük enerji içeceği dolabı. Tezgahın buzdolabı tarafı boş. Ocak karşıda, ortada lavabo.',
+    balcony: '4 · Balkon. Kombi burada. Oda 3 kapısının hizasındaki kapıdan çıkılır.'
   };
 
   function boot() {
@@ -57,6 +57,17 @@
       G.input = E.createInput(G);
       const L = E.createLevelHelper(G);
       buildApartment(G, L, THREE);
+      const merged = E.mergeStatic(L.staticRoot);
+      const levelRoot = new THREE.Group();
+      levelRoot.name = 'ev-level';
+      levelRoot.add(merged, L.dynRoot);
+      G.scene.add(levelRoot);
+      G.level = {
+        playerStart: { pos: new THREE.Vector3(0.58, 0, 11.35), yaw: 0 },
+        groundSurfaceAt: () => 'wood',
+        update() {}
+      };
+      try { G.ground = await E.createGround(G); } catch {}
       G.physics.build();
       G.player = E.createPlayer(G);
       G.player.reset({ pos: new THREE.Vector3(0.58, 0, 11.35), yaw: 0 });
@@ -105,9 +116,9 @@
     if (x < 0 && z >= 0.15 && z < 3.55) return { title: '2 · Yatak odası', note: NOTES.bed };
     if (x > 1.15 && z >= 10.55 && z <= 12.25) return { title: '7 · Tuvalet', note: NOTES.wc };
     if (x > 1.15 && z >= 8.15 && z < 10.55) return { title: '6 · Banyo', note: NOTES.bath };
+    if (x > 4.0 && z >= 5.2 && z <= 7.8) return { title: '4 · Balkon', note: NOTES.balcony };
     if (x > 1.15 && z >= 4.95 && z < 8.15) return { title: '3 · Oda', note: NOTES.pouf };
     if (x > 1.15 && z >= 2.35 && z < 4.95) return { title: '5 · Küçük oda', note: NOTES.desk };
-    if (x > 1.15 && z >= 0.15 && z < 2.35) return { title: '4 · Boş', note: NOTES.empty };
     return { title: '8 · Koridor', note: NOTES.hall };
   }
 
@@ -172,7 +183,7 @@
     slab(dirty, 4.05, 5.3, 5.55, 7.7, 0.03);
 
     wallX(0, 0.15, 12.25, [[1.55, 2.4], [5.55, 6.4], [9.35, 10.2]]);
-    wallX(1.15, 0.15, 12.25, [[0.7, 1.45], [3.15, 4.0], [6.15, 7.0], [8.75, 9.6], [10.95, 11.55]]);
+    wallX(1.15, 0.15, 12.25, [[3.15, 4.0], [6.15, 7.0], [8.75, 9.6], [10.95, 11.55]]);
     wallX(-5.4, 3.55, 8.55);
     wallX(-3.8, 0.15, 3.55);
     wallX(-3.4, 8.55, 12.25);
@@ -219,7 +230,12 @@
     box(white, 0.7, 1.7, 0.68, -1.75, 0.88, 11.55);
     box(food, 0.2, 0.16, 0.22, -2.05, 1.05, 11.3);
     box(wood, 0.42, 0.7, 0.55, -2.45, 0.4, 11.15);
-    box(wood, 0.4, 0.32, 0.5, -2.45, 1.55, 11.15);
+    const cooler = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.4, metalness: 0.35 });
+    const can = new THREE.MeshStandardMaterial({ color: 0xff8a00, roughness: 0.35, metalness: 0.2 });
+    box(cooler, 0.38, 0.55, 0.36, -2.45, 1.08, 11.15);
+    box(glass, 0.34, 0.4, 0.02, -2.45, 1.12, 10.96);
+    box(can, 0.08, 0.16, 0.08, -2.52, 1.05, 11.12);
+    box(can, 0.08, 0.16, 0.08, -2.38, 1.05, 11.18);
     box(metal, 0.6, 0.16, 0.6, -3.05, 0.9, 10.2);
     box(white, 0.5, 0.2, 0.4, -3.05, 0.9, 9.35);
     box(dirty, 1.6, 0.9, 0.6, -3.05, 0.48, 9.7);
@@ -243,6 +259,7 @@
     box(plastic, 0.35, 0.78, 0.35, 2.75, 0.4, 5.55);
     box(plastic, 0.35, 0.78, 0.35, 3.55, 0.4, 5.55);
     windowPane(3.96, 1.35, 5.85, 0.04, 1.3, Math.PI / 2);
+    // 4 · Balkon — kombi is on this balcony, not a separate empty room
     box(white, 0.45, 0.7, 0.28, 5.05, 0.9, 7.25);
     box(white, 0.9, 0.4, 1.9, 1.55, 0.28, 5.35);
     light(2.6, 2.2, 6.4, 0xfff0d0, 1.0);
@@ -260,8 +277,6 @@
     box(card, 0.7, 0.14, 0.45, 0.58, 0.1, 10.7);
     for (let i = 0; i < 7; i++) box(shoe, 0.12, 0.08, 0.22, 0.38 + (i % 4) * 0.14, 0.2, 10.58 + Math.floor(i / 4) * 0.16);
 
-    // 4 anlatılmadı — no furniture
-    light(2.2, 2.1, 1.2, 0x888078, 0.35);
     const hemi = new THREE.HemisphereLight(0xf2efe6, 0x3a3228, 0.55);
     G.scene.add(hemi);
   }

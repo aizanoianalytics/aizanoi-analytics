@@ -17,6 +17,7 @@ test('Daire boots and the help key opens the note', { timeout: 180000 }, async (
     assert.equal(state.fatal, null, JSON.stringify(state));
     assert.equal(state.ready, true, JSON.stringify(state));
     assert.match(state.zone, /Koridor|Mutfak|Salon/);
+    assert.equal(await page.evaluate(() => !!window.__G?.scene?.getObjectByName('ev-level')), true);
     await page.keyboard.press('h');
     await page.locator('#help-modal:not([hidden])').waitFor({ timeout: 10000 });
     await page.keyboard.press('h');

@@ -16,8 +16,9 @@ test('Daire is a standalone walkable apartment under strict CSP', () => {
   assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)|<style\b|\son\w+=|\sstyle=/i);
   assert.match(css, /#boot\[hidden\]\s*\{/);
   assert.doesNotMatch(src, /style="|\.style\.cssText/);
-  for (const marker of ['Salon', 'Yatak odası', 'Mavi puf', 'Çalışma masası', 'Lavabo', 'Klozet', 'Ayakkabı kartonu', 'İki buzdolabı', 'anlatılmadı']) {
+  for (const marker of ['Salon', 'Yatak odası', 'Mavi puf', 'Çalışma masası', 'Lavabo', 'Klozet', 'Ayakkabı kartonu', 'İki buzdolabı', '4 · Balkon', 'enerji içeceği', 'ev-level', 'mergeStatic']) {
     assert.match(src, new RegExp(marker), marker);
   }
-  assert.match(read('arcade/daire/index.md'), /Room 4 was not described/);
+  assert.doesNotMatch(src, /anlatılmadı/);
+  assert.match(read('arcade/daire/index.md'), /Room 4 is the balcony/);
 });
