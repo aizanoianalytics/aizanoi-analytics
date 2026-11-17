@@ -7,9 +7,9 @@
       color: 0x030406,
       metalness: 0.08,
       roughness: 0.24,
-      clearcoat: 0.92,
-      clearcoatRoughness: 0.08,
-      envMapIntensity: 0.42
+      clearcoat: 1,
+      clearcoatRoughness: 0.05,
+      envMapIntensity: 0.62
     });
 
     const paintPorscheBlack = new THREE.MeshPhysicalMaterial({

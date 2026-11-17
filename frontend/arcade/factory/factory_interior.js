@@ -194,18 +194,21 @@
     const porcelainAged = new THREE.MeshStandardMaterial({ color: 0xe6e1d3, roughness: 0.25, metalness: 0.05 });
     const rustPipeMat = new THREE.MeshStandardMaterial({ color: 0x4b4742, roughness: 0.72, metalness: 0.65 });
     const brassGold = new THREE.MeshStandardMaterial({
-      color: 0xf4c44e,
-      metalness: 0.94,
-      roughness: 0.16,
-      envMapIntensity: 1.5
+      color: 0xffd56a,
+      metalness: 0.97,
+      roughness: 0.11,
+      envMapIntensity: 2.1
     });
     const glassMat = new THREE.MeshPhysicalMaterial({
-      color: 0xd9eef8,
-      metalness: 0.05,
-      roughness: 0.06,
+      color: 0xe7f6ff,
+      metalness: 0.04,
+      roughness: 0.035,
       transparent: true,
-      opacity: 0.42,
-      clearcoat: 1.0
+      opacity: 0.34,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.04,
+      envMapIntensity: 1.8,
+      thickness: 0.4
     });
     const frostedGlass = new THREE.MeshPhysicalMaterial({
       color: 0xd2dce0,

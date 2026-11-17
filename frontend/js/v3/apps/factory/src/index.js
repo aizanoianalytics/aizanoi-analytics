@@ -17,6 +17,7 @@ export async function mount({ container }) {
   footer.target = '_blank';
   footer.rel = 'noopener noreferrer';
   footer.textContent = 'Open Aizanoi Factory full screen ↗';
+  frame.addEventListener('load', () => { try { frame.focus(); } catch {} });
   root.append(frame, footer);
   container.append(root);
   container.prepend(link);
