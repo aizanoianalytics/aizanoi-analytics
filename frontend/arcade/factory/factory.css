@@ -182,13 +182,20 @@ html, body {
 
 .hud-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
   gap: 8px;
   position: relative;
   z-index: 30;
   flex-shrink: 0;
   pointer-events: auto;
+}
+
+#btn-help {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 80;
 }
 
 .hud-btn {
