@@ -19,6 +19,9 @@ test('Daire is a standalone walkable apartment under strict CSP', () => {
   for (const marker of ['Salon', 'Yatak odası', 'Mavi puf', 'Çalışma masası', 'Lavabo', 'Klozet', 'Ayakkabı kartonu', 'İki buzdolabı', '4 · Balkon', 'enerji içeceği', 'ev-level', 'mergeStatic']) {
     assert.match(src, new RegExp(marker), marker);
   }
-  assert.doesNotMatch(src, /anlatılmadı/);
+  assert.doesNotMatch(src, /createGround/);
+  assert.match(src, /sofaBed\(/);
+  assert.match(src, /showerHead\(/);
+  assert.match(src, /burnCooler\(/);
   assert.match(read('arcade/daire/index.md'), /Room 4 is the balcony/);
 });
