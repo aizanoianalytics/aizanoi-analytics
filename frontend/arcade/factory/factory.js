@@ -100,7 +100,6 @@
       bctx.fillStyle = `rgb(${gv},${gv},${gv})`;
       bctx.fillRect(x, y, r, r);
     }
-    // Small natural gravel pebbles
     for (let i = 0; i < 1600; i++) {
       const x = rnd() * 512;
       const y = rnd() * 512;
@@ -112,12 +111,12 @@
     const map = new THREE.CanvasTexture(c);
     map.colorSpace = THREE.SRGBColorSpace;
     map.wrapS = map.wrapT = THREE.RepeatWrapping;
-    map.repeat.set(34, 34);
+    map.repeat.set(52, 52);
     map.anisotropy = 8;
 
     const bump = new THREE.CanvasTexture(b);
     bump.wrapS = bump.wrapT = THREE.RepeatWrapping;
-    bump.repeat.set(34, 34);
+    bump.repeat.set(52, 52);
     bump.anisotropy = 4;
 
     return new THREE.MeshStandardMaterial({
@@ -164,7 +163,7 @@
     c.width = 512;
     c.height = 512;
     const ctx = c.getContext('2d');
-    ctx.fillStyle = '#5f5b53'; // mortar
+    ctx.fillStyle = '#5f5b53';
     ctx.fillRect(0, 0, 512, 512);
 
     const b = document.createElement('canvas');
@@ -188,7 +187,6 @@
         const pad = 4;
         ctx.fillStyle = palette[Math.floor(rnd() * palette.length)];
         ctx.fillRect(x + pad, y + pad, sw - pad * 2, rowH - pad * 2);
-        // subtle stone speckle
         for (let k = 0; k < 28; k++) {
           ctx.fillStyle = rnd() < 0.5 ? 'rgba(255,250,240,0.09)' : 'rgba(25,22,18,0.14)';
           ctx.fillRect(x + pad + rnd() * (sw - pad * 2), y + pad + rnd() * (rowH - pad * 2), 4, 3);
@@ -233,13 +231,13 @@
       const x = rnd() * 512;
       const y = rnd() * 512;
       const shade = rnd();
-      ctx.fillStyle = shade < 0.33 ? '#243f1b' : shade < 0.72 ? '#365c27' : '#4b7333';
+      ctx.fillStyle = shade < 0.33 ? '#243f1b' : shade < 0.72 ? '#365c27' : '#4f7a34';
       ctx.fillRect(x, y, 2 + rnd() * 3, 2 + rnd() * 5);
     }
     const tex = new THREE.CanvasTexture(c);
     tex.colorSpace = THREE.SRGBColorSpace;
     tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(8, 8);
+    tex.repeat.set(12, 12);
     tex.anisotropy = 4;
     return new THREE.MeshStandardMaterial({
       map: tex,
@@ -314,8 +312,8 @@
   }
 
   // --------------------------------------------------------------------------
-  // Exterior Campus Builder (Yeşillik, Toprak Yol, Kompakt 4 Direkli Garaj,
-  // Duvar Dibi Ağaç & Çardak, Taş Çevre Duvarları)
+  // Exterior Campus Builder (Expanded +25% Alan, +50% Genişletilmiş Yeşillikler
+  // & Uzun Yabanıl Otlar, Tek Araçlık 3 Kapılı Taş Duvar, Direksiz Çardak)
   // --------------------------------------------------------------------------
   function buildExteriorCampus(G, L, interactives) {
     const stat = L.staticRoot;
@@ -332,6 +330,7 @@
     const dirtRoadMat = makeDirtRoadMaterial();
     const stoneWallMat = makeStoneWallMaterial();
     const shrubMat = new THREE.MeshStandardMaterial({ color: 0x2f5a26, roughness: 0.88 });
+    const wildWeedMat = new THREE.MeshStandardMaterial({ color: 0x4b6a2c, roughness: 0.90 });
     const ledWarm = G.mats.emissive(0xffd796, 3.8);
     const brassMat = new THREE.MeshStandardMaterial({ color: 0xdca83c, metalness: 0.9, roughness: 0.22 });
     const glassCupMat = new THREE.MeshPhysicalMaterial({ color: 0xe6f4fb, transparent: true, opacity: 0.5, roughness: 0.08 });
@@ -346,34 +345,37 @@
     };
 
     // ------------------------------------------------------------------------
-    // 1. TOPRAK YOL — Çizimdeki girişlerden geçip Çardak yanından, Rampadan ve Garaj önünden uzanan yol
+    // 1. TOPRAK YOLLAR — Tek araçlık 3 kapı ile bağlantılı genişletilmiş yollar
     // ------------------------------------------------------------------------
     {
-      // Main North-South dirt road immediately East of the wall-side Çardak & Ağaç (X: -16.5 .. -10.7)
-      // Connects South-West entrance (Z = 42) all the way through North entrance (Z = -40)
-      L.box(dirtRoadMat, 5.8, 0.025, 82.0, -13.6, 0.012, 1.0, { cast: false });
-      // Branch road East around the Ramp low threshold (X: 1.5..4.0) and Honda CR-V
-      L.box(dirtRoadMat, 14.5, 0.025, 11.0, -3.5, 0.014, 0.0, { cast: false });
-      // South courtyard road running East in front of the front-aligned Garage (Z: 26.2..31.0)
-      L.box(dirtRoadMat, 48.0, 0.025, 4.8, 10.5, 0.013, 28.6, { cast: false });
+      // Main North-South dirt road (X: -19.6..-13.4, Z: -53..37.2) -> exits North through Gate 3 (Z=-48, X:-18.6..-14.4)
+      L.box(dirtRoadMat, 6.2, 0.025, 90.2, -16.5, 0.012, -7.9, { cast: false });
+      // Compacted dirt apron under Dodge Truck connecting smoothly to N-S road
+      L.box(dirtRoadMat, 6.4, 0.025, 12.0, -22.2, 0.013, -21.5, { cast: false });
+      // Branch road East around the longer Cement Ramp (X: -13.4..4.0, Z: -6.5..6.5) & Honda CR-V
+      L.box(dirtRoadMat, 17.6, 0.025, 13.0, -4.6, 0.014, 0.0, { cast: false });
+      // West gate apron connecting N-S road out through Gate 1 beside Çardak (X: -34..-19.4, Z: 26.6..31.4)
+      L.box(dirtRoadMat, 14.6, 0.025, 4.8, -26.7, 0.013, 29.0, { cast: false });
+      // South courtyard road running East in front of Garage (Z: 31.6..36.6) & out Rear Gate 2 (X=48)
+      L.box(dirtRoadMat, 72.0, 0.025, 5.0, 16.5, 0.013, 34.1, { cast: false });
     }
 
     // ------------------------------------------------------------------------
-    // 2. YEŞİLLİK ALANLARI (Üst Kuzey, Sağ Doğu, Alt Güney + Çardak Altı Çim)
+    // 2. YEŞİLLİK ALANLARI (+50% Genişletilmiş En & Uzun Yabanıl Otlar)
     // ------------------------------------------------------------------------
     const greenZones = [
       // Üst Yeşillik (Kuzey)
-      { x0: -2.5, z0: -37.2, x1: 36.8, z1: -28.4 },
-      // Sağ Yeşillik Kuzey Parça (WC üstü)
-      { x0: 28.4, z0: -28.4, x1: 36.8, z1: 5.7 },
+      { x0: -4.5, z0: -47.2, x1: 47.2, z1: -35.5 },
+      // Sağ Yeşillik Kuzey Parça (WC üstü — %50+ geniş)
+      { x0: 34.4, z0: -35.5, x1: 47.2, z1: 6.7 },
       // Sağ Yeşillik WC Yan Şerit
-      { x0: 33.1, z0: 5.7, x1: 36.8, z1: 18.3 },
+      { x0: 39.6, z0: 6.7, x1: 47.2, z1: 21.3 },
       // Sağ Yeşillik Alt Parça (WC altı)
-      { x0: 28.4, z0: 18.3, x1: 36.8, z1: 24.8 },
-      // Alt Yeşillik (Güney — çizimdeki alt yeşil blok)
-      { x0: -10.2, z0: 31.8, x1: 33.5, z1: 42.2 },
-      // Duvar dibi Çardak & Ağaç yeşil şeridi (X: -22.2 .. -16.6, Z: 3.0 .. 21.0)
-      { x0: -22.1, z0: 3.0, x1: -16.6, z1: 21.0 }
+      { x0: 34.4, z0: 21.3, x1: 47.2, z1: 31.2 },
+      // Alt Yeşillik (Güney — Ofise arkamızı döndüğümüzde solumuzda kalan yeşil alan, eni %65+ genişletildi!)
+      { x0: -28.4, z0: 37.8, x1: 47.2, z1: 55.3 },
+      // Duvar dibi Çardak & Ağaç yeşil şeridi (X: -28.4..-20.2, Z: 2.0..25.8, ~%50 daha geniş)
+      { x0: -28.4, z0: 2.0, x1: -20.2, z1: 25.8 }
     ];
 
     for (const gz of greenZones) {
@@ -385,11 +387,11 @@
       L.box(grassMat, w, 0.10, d, cx, 0.05, cz, { cast: false });
     }
 
-    // Instanced 3D Grass Blades scattered across all Yeşillik zones
-    const bladeCount = 6500;
-    const bladeGeo = new THREE.BoxGeometry(0.028, 0.22, 0.010);
-    bladeGeo.translate(0, 0.11, 0);
-    const bladeMat = new THREE.MeshStandardMaterial({ color: 0x42752e, roughness: 0.85 });
+    // Instanced Tall Wild Grass & Weeds ("daha uzun yabanıl gibi otlar")
+    const bladeCount = 12000;
+    const bladeGeo = new THREE.BoxGeometry(0.042, 0.56, 0.014);
+    bladeGeo.translate(0, 0.28, 0);
+    const bladeMat = new THREE.MeshStandardMaterial({ color: 0x4c7b32, roughness: 0.87 });
     const blades = new THREE.InstancedMesh(bladeGeo, bladeMat, bladeCount);
     blades.receiveShadow = true;
     const dummy = new THREE.Object3D();
@@ -403,12 +405,14 @@
         const bx = gz.x0 + 0.25 + rng() * (gz.x1 - gz.x0 - 0.5);
         const bz = gz.z0 + 0.25 + rng() * (gz.z1 - gz.z0 - 0.5);
         dummy.position.set(bx, 0.09, bz);
-        dummy.rotation.set((rng() - 0.5) * 0.28, rng() * Math.PI, (rng() - 0.5) * 0.28);
-        const sc = 0.65 + rng() * 0.9;
-        dummy.scale.set(1, sc, 1);
+        dummy.rotation.set((rng() - 0.5) * 0.58, rng() * Math.PI, (rng() - 0.5) * 0.58);
+        const scY = 0.78 + rng() * 1.25; // up to ~1.14m tall wild blades
+        const scX = 0.8 + rng() * 0.7;
+        dummy.scale.set(scX, scY, 1);
         dummy.updateMatrix();
         blades.setMatrixAt(placedBlades, dummy.matrix);
-        bColor.setHSL(0.27 + (rng() - 0.5) * 0.04, 0.48, 0.25 + rng() * 0.14);
+        // Wild olive, meadow green & dry wheat hues
+        bColor.setHSL(0.18 + rng() * 0.14, 0.36 + rng() * 0.22, 0.22 + rng() * 0.18);
         blades.setColorAt(placedBlades, bColor);
         placedBlades++;
       }
@@ -418,40 +422,66 @@
     if (blades.instanceColor) blades.instanceColor.needsUpdate = true;
     stat.add(blades);
 
+    // Extra tall wild weed/reed tufts across the green zones (especially wide South lawn)
+    const tuftCount = 3200;
+    const tuftGeo = new THREE.BoxGeometry(0.055, 0.92, 0.018);
+    tuftGeo.translate(0, 0.46, 0);
+    const tufts = new THREE.InstancedMesh(tuftGeo, wildWeedMat, tuftCount);
+    tufts.receiveShadow = true;
+    let placedTufts = 0;
+    for (const gz of greenZones) {
+      const share = Math.round((tuftCount * (gz.x1 - gz.x0) * (gz.z1 - gz.z0)) / totalArea);
+      for (let i = 0; i < share && placedTufts < tuftCount; i++) {
+        const bx = gz.x0 + 0.35 + rng() * (gz.x1 - gz.x0 - 0.7);
+        const bz = gz.z0 + 0.35 + rng() * (gz.z1 - gz.z0 - 0.7);
+        dummy.position.set(bx, 0.09, bz);
+        dummy.rotation.set((rng() - 0.5) * 0.65, rng() * Math.PI, (rng() - 0.5) * 0.65);
+        dummy.scale.set(0.8 + rng() * 0.7, 0.80 + rng() * 0.75, 1); // up to ~1.42m tall wild stalks
+        dummy.updateMatrix();
+        tufts.setMatrixAt(placedTufts, dummy.matrix);
+        bColor.setHSL(0.15 + rng() * 0.14, 0.32 + rng() * 0.20, 0.24 + rng() * 0.16);
+        tufts.setColorAt(placedTufts, bColor);
+        placedTufts++;
+      }
+    }
+    tufts.count = placedTufts;
+    tufts.instanceMatrix.needsUpdate = true;
+    if (tufts.instanceColor) tufts.instanceColor.needsUpdate = true;
+    stat.add(tufts);
+
     const cypressSpots = [
-      [1.5, -34.2], [11.5, -34.6], [21.5, -34.4], [33.4, -33.5],
-      [34.6, -20.0], [34.6, -8.5], [34.6, 2.0], [34.6, 21.5],
-      [-7.5, 39.2], [2.5, 39.5], [12.5, 39.2], [22.5, 39.4], [29.5, 39.0]
+      [1.5, -43.0], [13.5, -43.5], [26.5, -43.2], [41.5, -42.0],
+      [44.2, -26.0], [44.2, -10.5], [44.2, 4.0], [44.2, 26.5],
+      [-23.5, 51.0], [-11.5, 51.4], [2.5, 51.2], [16.5, 51.4], [30.5, 51.0], [42.0, 50.8]
     ];
     for (const [cx, cz] of cypressSpots) {
-      const c = buildCypress(cx, cz, 4.2 + rng() * 1.4);
+      const c = buildCypress(cx, cz, 4.4 + rng() * 1.6);
       stat.add(c);
       L.col(cx - 0.4, 0, cz - 0.4, cx + 0.4, 4.5, cz + 0.4, 'wood');
     }
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 65; i++) {
       const gz = greenZones[i % 5];
       const sx = gz.x0 + 0.8 + rng() * Math.max(0.5, gz.x1 - gz.x0 - 1.6);
       const sz = gz.z0 + 0.8 + rng() * Math.max(0.5, gz.z1 - gz.z0 - 1.6);
-      const bush = new THREE.Mesh(new THREE.SphereGeometry(0.45 + rng() * 0.35, 10, 8), shrubMat);
-      bush.position.set(sx, 0.28, sz);
-      bush.scale.set(1.2, 0.72, 1.1);
+      const bush = new THREE.Mesh(new THREE.SphereGeometry(0.50 + rng() * 0.42, 10, 8), shrubMat);
+      bush.position.set(sx, 0.32, sz);
+      bush.scale.set(1.25, 0.80, 1.15);
       bush.castShadow = true;
       bush.receiveShadow = true;
       stat.add(bush);
     }
 
     // ------------------------------------------------------------------------
-    // 3. ÖNE ALINMIŞ KOMPAKT 4 DİREKLİ GARAJ — Fabrikanın ön-alt köşesinde (X: 4.1..10.5, Z: 22.05..25.75)
+    // 3. ÖNE ALINMIŞ KOMPAKT 4 DİREKLİ GARAJ (X: 4.5..11.2, Z: 27.6..31.3)
     // ------------------------------------------------------------------------
     {
-      const gx0 = 4.1, gx1 = 10.5, gz0 = 22.05, gz1 = 25.75;
-      const canopyH = 2.55;
-      const gcx = (gx0 + gx1) / 2; // 7.3
-      const gcz = (gz0 + gz1) / 2; // 23.9
+      const gx0 = 4.5, gx1 = 11.2, gz0 = 27.6, gz1 = 31.3;
+      const canopyH = 3.35;
+      const gcx = (gx0 + gx1) / 2; // 7.85
+      const gcz = (gz0 + gz1) / 2; // 29.45
       L.slab(concrete, gx0, 0.0, gz0, gx1, 0.04, gz1, { cast: false });
       L.col(gx0, -0.1, gz0, gx1, 0.04, gz1, 'concrete');
 
-      // STRICTLY 4 SLIM CORNER STEEL POSTS (4 direk) — Completely open sides!
       const posts = [
         [gx0 + 0.14, gz0 + 0.14],
         [gx1 - 0.14, gz0 + 0.14],
@@ -465,38 +495,37 @@
         L.col(px - 0.12, 0, pz - 0.12, px + 0.12, canopyH + 0.1, pz + 0.12, 'metal');
       }
 
-      // Canopy beams & corrugated roof
       L.box(steelDark, gx1 - gx0 + 0.16, 0.14, 0.14, gcx, canopyH, gz0 + 0.14);
       L.box(steelDark, gx1 - gx0 + 0.16, 0.14, 0.14, gcx, canopyH, gz1 - 0.14);
       for (const tx of [gx0 + 0.2, gcx, gx1 - 0.2]) {
         L.box(steelDark, 0.10, 0.12, gz1 - gz0, tx, canopyH + 0.06, gcz);
       }
       L.box(roofMat, gx1 - gx0 + 0.45, 0.07, gz1 - gz0 + 0.45, gcx, canopyH + 0.16, gcz, { r: [0.05, 0, 0] });
+      // Climbable Garage Canopy Roof (#14)
+      L.col(gx0 - 0.2, canopyH, gz0 - 0.2, gx1 + 0.2, canopyH + 0.22, gz1 + 0.2, 'metal');
 
-      // Compact ceiling LED strip directly over Porsche 928S
       L.box(steelDark, 1.3, 0.05, 0.18, gcx, canopyH - 0.04, gcz);
       L.box(ledWarm, 1.20, 0.03, 0.12, gcx, canopyH - 0.07, gcz, { parent: dyn });
       addYardLight(0xffe7c2, 10, 12, gcx, canopyH - 0.2, gcz);
     }
 
     // ------------------------------------------------------------------------
-    // 4. DUVARIN DİBİNDE AĞAÇ & ÇARDAK (X = -19.5, Taş Duvarın hemen önünde!)
-    //    Çardakın hemen yanından (X: -16.4..-10.8) toprak yol geçiyor!
+    // 4. DUVARIN DİBİNDE AĞAÇ & ÇARDAK (X = -25.4, Taş Duvarın hemen önünde!)
+    //    Yanındaki ışık direği KALDIRILDI!
     // ------------------------------------------------------------------------
-    // Large Shade Tree right next to the West Stone Wall
     {
-      const tree = buildTree(-19.4, 7.2, 1.15, 3);
+      const tree = buildTree(-25.4, 9.2, 1.22, 3);
       stat.add(tree);
-      L.col(-19.9, 0, 6.7, -18.9, 3.6, 7.7, 'wood');
+      L.col(-25.95, 0, 8.65, -24.85, 3.8, 9.75, 'wood');
     }
 
-    // Cozy Wooden Çardak right up against the West Stone Wall (X = -19.5, Z = 15.0)
     {
-      const cx = -19.5, cz = 15.0;
-      const cw = 4.6, cd = 5.0, deckH = 0.24, postH = 2.65;
+      const cx = -25.4, cz = 21.8;
+      const cw = 4.8, cd = 5.2, deckH = 0.24, postH = 2.65;
       L.box(woodDark, cw, deckH, cd, cx, deckH / 2, cz, { bevel: 0.02 });
-      // Step directly onto the adjacent dirt road on the East side (X = -17.0)
-      L.box(woodDark, 0.55, 0.13, 1.7, cx + cw / 2 + 0.25, 0.065, cz, { bevel: 0.01 });
+      // Step on East side
+      L.box(woodDark, 0.55, 0.13, 1.8, cx + cw / 2 + 0.25, 0.065, cz, { bevel: 0.01 });
+      L.col(cx + cw / 2, 0, cz - 0.9, cx + cw / 2 + 0.55, 0.13, cz + 0.9, 'wood');
       L.col(cx - cw / 2, 0, cz - cd / 2, cx + cw / 2, deckH, cz + cd / 2, 'wood');
 
       for (const sx of [-cw / 2 + 0.18, cw / 2 - 0.18]) {
@@ -505,7 +534,6 @@
           L.col(cx + sx - 0.12, deckH, cz + sz - 0.12, cx + sx + 0.12, deckH + postH, cz + sz + 0.12, 'wood');
         }
       }
-      // Railings on back (wall side) + North/South ends, open East side facing the road
       L.box(woodPallet, 0.10, 0.07, cd - 0.3, cx - cw / 2 + 0.18, deckH + 0.88, cz);
       L.box(woodPallet, 0.10, 0.07, cd - 0.3, cx - cw / 2 + 0.18, deckH + 0.45, cz);
       L.box(woodPallet, cw - 0.3, 0.07, 0.10, cx, deckH + 0.88, cz - cd / 2 + 0.18);
@@ -517,7 +545,7 @@
       L.col(cx - cw / 2, deckH, cz + cd / 2 - 0.35, cx + cw / 2, deckH + 1.0, cz + cd / 2, 'wood');
 
       const roofCone = new THREE.Mesh(
-        new THREE.ConeGeometry(3.9, 1.30, 4),
+        new THREE.ConeGeometry(4.0, 1.30, 4),
         new THREE.MeshStandardMaterial({ color: 0x4b2f21, roughness: 0.88 })
       );
       roofCone.position.set(cx, deckH + postH + 0.65, cz);
@@ -525,17 +553,23 @@
       roofCone.castShadow = true;
       roofCone.receiveShadow = true;
       stat.add(roofCone);
+      // Climbable Çardak roof (#14)
+      L.col(cx - cw / 2, deckH + postH, cz - cd / 2, cx + cw / 2, deckH + postH + 0.55, cz + cd / 2, 'wood');
 
+      // Climbable Benches inside Çardak
       L.box(woodPallet, 0.54, 0.44, cd - 0.9, cx - cw / 2 + 0.55, deckH + 0.22, cz);
+      L.col(cx - cw / 2 + 0.28, deckH, cz - (cd - 0.9) / 2, cx - cw / 2 + 0.82, deckH + 0.46, cz + (cd - 0.9) / 2, 'wood');
       L.box(woodPallet, cw - 1.2, 0.44, 0.54, cx - 0.1, deckH + 0.22, cz - cd / 2 + 0.55);
+      L.col(cx - 0.1 - (cw - 1.2) / 2, deckH, cz - cd / 2 + 0.28, cx - 0.1 + (cw - 1.2) / 2, deckH + 0.46, cz - cd / 2 + 0.82, 'wood');
       L.box(woodPallet, cw - 1.2, 0.44, 0.54, cx - 0.1, deckH + 0.22, cz + cd / 2 - 0.55);
+      L.col(cx - 0.1 - (cw - 1.2) / 2, deckH, cz + cd / 2 - 0.82, cx - 0.1 + (cw - 1.2) / 2, deckH + 0.46, cz + cd / 2 - 0.28, 'wood');
 
-      // Table + Tea Tray & Çaydanlık
+      // Climbable Table + Tea Tray & Çaydanlık
       L.box(woodDark, 1.25, 0.06, 1.60, cx, deckH + 0.74, cz, { bevel: 0.01 });
       for (const [lx, lz] of [[-0.4, -0.52], [0.4, -0.52], [-0.4, 0.52], [0.4, 0.52]]) {
         L.box(woodDark, 0.10, 0.72, 0.10, cx + lx, deckH + 0.36, cz + lz);
       }
-      L.col(cx - 0.65, deckH, cz - 0.82, cx + 0.65, deckH + 0.8, cz + 0.82, 'wood');
+      L.col(cx - 0.65, deckH, cz - 0.82, cx + 0.65, deckH + 0.80, cz + 0.82, 'wood');
 
       L.cyl(brassMat, 0.28, 0.02, cx, deckH + 0.78, cz);
       L.cyl(steelGalv, 0.10, 0.22, cx, deckH + 0.90, cz);
@@ -565,17 +599,24 @@
     }
 
     // ------------------------------------------------------------------------
-    // 5. DIŞ SINIR TAŞ DUVARLARI — İçeriye dönük duvar parçaları OLMADAN düz sınır duvarları
+    // 5. DIŞ SINIR TAŞ DUVARLARI — YALNIZCA 3 ADET TEK ARAÇLIK KAPI (4.2m),
+    //    GERİ KALAN TÜM ÇEVRE KESİNTİSİZ TAŞ DUVAR!
+    //    - #10: Çardak yanı Batı kapısı: X=-29.0, Z: 26.8..31.0 (4.2m)
+    //    - #12: Fabrika arkası Doğu çıkış kapısı: X=48.0, Z: 31.9..36.1 (4.2m)
+    //    - #13: Dodge kamyon arkası Kuzey kapısı: Z=-48.0, X: -18.6..-14.4 (4.2m)
     // ------------------------------------------------------------------------
     const wallSegments = [
-      // Batı dış sınır taş duvarı (Dodge, Ağaç, Çardak arkası)
-      [-22.5, -36.0, -22.5, 22.0],
-      // Kuzey dış sınır taş duvarı (Üst yeşillik dış kenarı)
-      [-3.2, -37.8, 37.5, -37.8],
-      // Doğu dış sınır taş duvarı (Sağ yeşillik dış kenarı)
-      [37.5, -37.8, 37.5, 25.5],
-      // Güney dış sınır taş duvarı (Alt yeşillik dış kenarı)
-      [-10.5, 42.8, 34.0, 42.8]
+      // Batı dış sınır taş duvarı (Çardak yanı tek araçlık kapı Z: 26.8..31.0 hariç kesintisiz)
+      [-29.0, -48.0, -29.0, 26.8],
+      [-29.0, 31.0, -29.0, 56.0],
+      // Kuzey dış sınır taş duvarı (Dodge arkası tek araçlık kapı X: -18.6..-14.4 hariç kesintisiz)
+      [-29.0, -48.0, -18.6, -48.0],
+      [-14.4, -48.0, 48.0, -48.0],
+      // Doğu dış sınır taş duvarı (Fabrika arkası tek araçlık kapı Z: 31.9..36.1 hariç kesintisiz)
+      [48.0, -48.0, 48.0, 31.9],
+      [48.0, 36.1, 48.0, 56.0],
+      // Güney dış sınır taş duvarı (Tamamı kesintisiz duvar!)
+      [-29.0, 56.0, 48.0, 56.0]
     ];
 
     for (const [x0, z0, x1, z1] of wallSegments) {
@@ -586,40 +627,53 @@
       const cz = (z0 + z1) / 2;
       const ang = Math.atan2(dx, dz);
 
-      // Coursed stone masonry wall + top stone coping cap
       L.box(stoneWallMat, 0.52, 2.15, len, cx, 1.075, cz, { r: [0, ang, 0] });
       L.box(concreteDirty, 0.64, 0.14, len + 0.1, cx, 2.20, cz, { r: [0, ang, 0] });
 
-      // Periodic stone piers along wall
       const piers = Math.max(2, Math.floor(len / 9));
       for (let p = 0; p <= piers; p++) {
         const t = p / piers;
         const px = x0 + dx * t;
         const pz = z0 + dz * t;
-        L.box(stoneWallMat, 0.72, 2.40, 0.72, px, 1.20, pz);
-        L.box(concreteDirty, 0.82, 0.12, 0.82, px, 2.46, pz);
+        L.box(stoneWallMat, 0.72, 2.45, 0.72, px, 1.225, pz);
+        L.box(concreteDirty, 0.82, 0.14, 0.82, px, 2.52, pz);
       }
 
       const nx = Math.min(x0, x1) - 0.35, px = Math.max(x0, x1) + 0.35;
       const nz = Math.min(z0, z1) - 0.35, pz = Math.max(z0, z1) + 0.35;
-      L.col(nx, 0, nz, px, 2.8, pz, 'concrete');
+      L.col(nx, 0, nz, px, 2.65, pz, 'concrete');
     }
 
-    // Yard lamp posts
-    const postSpots = [[-21.4, -26], [-21.4, -4], [-21.4, 24], [-4, -38.8], [20, -38.8], [37.8, -10], [37.8, 22]];
+    // Prominent stone gate pillars framing the 3 single-car (4.2m) openings
+    const gatePillars = [
+      [-29.0, 26.8], [-29.0, 31.0], // Gate 1 (Cardak side)
+      [48.0, 31.9], [48.0, 36.1],   // Gate 2 (Rear Factory exit)
+      [-18.6, -48.0], [-14.4, -48.0] // Gate 3 (Dodge rear passage)
+    ];
+    for (const [gx, gz] of gatePillars) {
+      L.box(stoneWallMat, 0.95, 2.85, 0.95, gx, 1.425, gz);
+      L.box(concreteDirty, 1.08, 0.16, 1.08, gx, 2.93, gz);
+      L.col(gx - 0.50, 0, gz - 0.50, gx + 0.50, 3.02, gz + 0.50, 'concrete');
+    }
+
+    // Yard lamp posts — Çardak yanındaki direk (-21.4, 24) KALDIRILDI (#10)!
+    const postSpots = [
+      [-27.8, -34], [-27.8, -6], [-6, -46.8], [22, -46.8],
+      [46.8, -20], [46.8, 18], [46.8, 46], [16, 54.8], [-16, 54.8]
+    ];
     for (const [px, pz] of postSpots) {
       L.cyl(steelGalv, 0.11, 8.5, px, 4.25, pz);
       L.box(steelDark, 0.8, 0.18, 0.38, px, 8.5, pz);
       L.box(ledWarm, 0.65, 0.06, 0.28, px, 8.42, pz, { parent: dyn });
-      addYardLight(0xffe1b0, 14, 24, px, 8.2, pz);
+      addYardLight(0xffe1b0, 14, 26, px, 8.2, pz);
     }
 
-    // Rolling distant green Anatolian countryside hills
+    // Rolling distant green Anatolian countryside hills (pushed further out for expanded map)
     const hillMat = new THREE.MeshStandardMaterial({ color: 0x2a3f22, roughness: 0.96, metalness: 0.0 });
     const hillCoords = [
-      [-95, -95, 55, 16], [0, -110, 65, 22], [95, -90, 58, 18],
-      [110, 10, 62, 19], [95, 100, 60, 17], [-5, 115, 70, 20],
-      [-105, 90, 62, 16], [-112, -5, 58, 15]
+      [-115, -115, 62, 18], [10, -130, 72, 24], [120, -110, 64, 20],
+      [135, 10, 68, 21], [120, 125, 66, 19], [5, 138, 78, 22],
+      [-125, 110, 68, 18], [-132, -5, 64, 17]
     ];
     for (const [hx, hz, hr, hh] of hillCoords) {
       const hill = new THREE.Mesh(new THREE.SphereGeometry(hr, 20, 12), hillMat);
@@ -704,40 +758,41 @@
   // Quick-Jump Bookmarks [1]-[9]
   // --------------------------------------------------------------------------
   const BOOKMARKS = [
-    { label: 'Genel Avlu & Rampa', pos: [-9.2, 0.0, 8.2], yaw: -0.96, pitch: -0.03 },
-    { label: 'Honda CR-V (2005 Siyah)', pos: [-5.8, 0.0, -9.8], yaw: -0.97, pitch: -0.06 },
-    { label: 'Kirmizi Dodge Kamyon', pos: [-11.5, 0.0, -23.5], yaw: 2.50, pitch: -0.04 },
-    { label: 'Duvar Dibi Agac & Cardak', pos: [-12.0, 0.0, 14.8], yaw: 1.55, pitch: -0.04 },
-    { label: '4 Direkli Garaj & Porsche 928S', pos: [0.2, 0.0, 27.6], yaw: -1.12, pitch: -0.05 },
-    { label: 'Paletler & Paketleme Masasi', pos: [9.5, 0.06, -2.5], yaw: -0.15, pitch: -0.06 },
-    { label: 'Ofis 1 · Ofis 2 · Mutfak', pos: [7.75, 0.06, 6.2], yaw: -3.05, pitch: -0.05 },
-    { label: 'Bardak Yaldiz (Yatay Carklar)', pos: [21.5, 0.06, -22.5], yaw: -0.06, pitch: -0.10 },
-    { label: 'Cam Tezyinat Firini', pos: [18.5, 0.06, -8.5], yaw: -2.23, pitch: -0.06 }
+    { label: 'Genel Avlu & Uzun Cimento Rampa', pos: [-11.5, 0.0, 9.5], yaw: -0.96, pitch: -0.03 },
+    { label: 'Honda CR-V (2005 Siyah)', pos: [-7.8, 0.0, -13.0], yaw: -1.10, pitch: -0.06 },
+    { label: 'Kirmizi Dodge Kamyon & Kuzey Kapi', pos: [-15.8, 0.0, -29.0], yaw: 2.45, pitch: -0.04 },
+    { label: 'Duvar Dibi Agac & Cardak', pos: [-16.5, 0.0, 21.8], yaw: 1.57, pitch: -0.04 },
+    { label: '4 Direkli Garaj & Porsche 928S', pos: [-0.5, 0.0, 33.8], yaw: -1.08, pitch: -0.05 },
+    { label: 'Palet Parkur & Paketleme Masasi', pos: [12.0, 0.06, -3.5], yaw: 0.45, pitch: -0.06 },
+    { label: 'Ofis 1 · Ofis 2 (PC) · Mutfak', pos: [8.2, 0.06, 9.2], yaw: -3.12, pitch: -0.05 },
+    { label: 'Bardak Yaldiz (Arka Gecis & Tepsiler)', pos: [26.0, 0.06, -21.5], yaw: 0.0, pitch: -0.08 },
+    { label: 'Cam Tezyinat Firini', pos: [23.2, 0.06, -8.5], yaw: -2.10, pitch: -0.06 }
   ];
 
   function getZoneName(x, y, z) {
-    if (x >= 28.0 && x <= 33.0 && z >= 6.0 && z <= 12.0) return 'Erkek WC';
-    if (x >= 28.0 && x <= 33.0 && z >= 12.0 && z <= 18.0) return 'Kadin WC';
-    if (x >= 4.0 && x <= 28.0 && z >= -28.0 && z <= 22.0) {
-      if (x < 15.5) {
-        if (z >= 9.0 && z <= 15.2 && x < 10.6) return 'Ofis 1';
-        if (z > 15.2 && z <= 21.8 && x < 10.6) return 'Ofis 2';
-        if (z >= 9.0 && z <= 21.8 && x >= 10.6) return 'Mutfak';
-        if (x >= 10.4 && z >= -19.2 && z <= -5.5) return 'Paketleme Masalari';
+    if (x >= 34.0 && x <= 39.2 && z >= 7.0 && z <= 14.0) return 'Erkek WC';
+    if (x >= 34.0 && x <= 39.2 && z > 14.0 && z <= 21.0) return 'Kadin WC';
+    if (x >= 4.0 && x <= 34.0 && z >= -35.0 && z <= 27.5) {
+      if (x < 18.5) {
+        if (z >= 12.5 && z <= 19.8 && x < 11.8) return 'Ofis 1';
+        if (z > 19.8 && z <= 27.15 && x < 11.8) return 'Ofis 2';
+        if (z >= 12.5 && z <= 27.15 && x >= 11.8) return 'Mutfak';
+        if (x >= 13.0 && z >= -22.5 && z <= -6.5) return 'Paketleme Masalari';
         return 'Sevkiyat & Palet Holu';
       } else {
-        if (z <= -22.5) return 'Bardak Yaldiz Tezgahlari';
-        if (x >= 21.0 && z >= -20.0 && z <= 13.5) return 'Cam Tezyinat Firini';
-        if (z >= 13.6) return 'Ilk Paketleme Alani';
+        if (z <= -30.5) return 'Yaldiz Tezgahi Arka Alan';
+        if (z <= -23.8) return 'Bardak Yaldiz & Tepsi Istifleri';
+        if (x >= 26.0 && z >= -21.5 && z <= 17.5) return 'Cam Tezyinat Firini';
+        if (z >= 18.5) return 'Ilk Paketleme Alani';
         return 'Uretim & Firin Holu';
       }
     }
-    if (x >= -1.5 && x <= 4.0 && z >= -3.5 && z <= 3.5) return 'Yukleme Rampasi (Dik & Dolu)';
-    if (x >= 4.0 && x <= 10.6 && z >= 22.0 && z <= 25.9) return 'Garaj (4 Direkli) · Porsche 928S';
-    if (x >= -22.2 && x <= -16.8 && z >= 12.0 && z <= 18.2) return 'Cardak (Duvar Dibi)';
-    if (x >= -22.2 && x <= -16.8 && z >= 4.5 && z <= 10.0) return 'Agac Golgeligi';
-    if (x >= -16.6 && x <= -10.8) return 'Toprak Yol';
-    if (z <= -28.2 || x >= 28.2 || z >= 32.5) return 'Yesillik Alani';
+    if (x >= -4.8 && x <= 4.0 && z >= -3.1 && z <= 3.1) return 'Yukleme Rampasi (Cimento)';
+    if (x >= 4.5 && x <= 11.2 && z >= 27.6 && z <= 31.3) return 'Garaj (4 Direkli) · Porsche 928S';
+    if (x >= -28.0 && x <= -22.8 && z >= 19.0 && z <= 24.6) return 'Cardak (Duvar Dibi)';
+    if (x >= -28.0 && x <= -22.8 && z >= 6.5 && z <= 12.0) return 'Agac Golgeligi';
+    if (x >= -19.6 && x <= -13.4 && z <= 37.2) return 'Toprak Yol';
+    if (z <= -35.4 || x >= 34.3 || z >= 37.7 || (x <= -20.2 && z >= 2.0 && z <= 25.8)) return 'Yesillik & Yabanil Ot Alani';
     return 'Toprak Avlu';
   }
 
@@ -748,7 +803,7 @@
     const ctx = minimapCtx;
     ctx.clearRect(0, 0, w, h);
 
-    const minX = -25, maxX = 40, minZ = -41, maxZ = 47;
+    const minX = -32, maxX = 51, minZ = -51, maxZ = 59;
     const sx = (x) => ((x - minX) / (maxX - minX)) * w;
     const sz = (z) => ((z - minZ) / (maxZ - minZ)) * h;
     const fillRectW = (x0, z0, x1, z1, col, stroke) => {
@@ -766,84 +821,90 @@
     ctx.fillStyle = '#33291f';
     ctx.fillRect(0, 0, w, h);
 
-    // Compacted dirt road beside Çardak & front of Garage
-    fillRectW(-16.5, -40, -10.7, 42, '#4d3e2e');
-    fillRectW(-11.0, -5.5, 4.0, 5.5, '#4d3e2e');
-    fillRectW(-13.5, 26.2, 34.0, 31.0, '#4d3e2e');
+    // Compacted dirt roads & single-car gates
+    fillRectW(-19.6, -52, -13.4, 37.2, '#4d3e2e');
+    fillRectW(-13.4, -6.5, 4.0, 6.5, '#4d3e2e');
+    fillRectW(-33.5, 26.6, -19.4, 31.4, '#4d3e2e');
+    fillRectW(-19.5, 31.6, 52.5, 36.6, '#4d3e2e');
 
-    // Yeşillik
-    fillRectW(-2.5, -37.2, 36.8, -28.4, '#244522', '#3a6c36');
-    fillRectW(28.4, -28.4, 36.8, 24.8, '#244522', '#3a6c36');
-    fillRectW(-10.2, 31.8, 33.5, 42.2, '#244522', '#3a6c36');
-    fillRectW(-22.1, 3.0, -16.6, 21.0, '#244522', '#3a6c36');
+    // Expanded Yeşillik zones
+    fillRectW(-4.5, -47.2, 47.2, -35.5, '#244522', '#3a6c36');
+    fillRectW(34.4, -35.5, 47.2, 31.2, '#244522', '#3a6c36');
+    fillRectW(-28.4, 37.8, 47.2, 55.3, '#244522', '#3a6c36');
+    fillRectW(-28.4, 2.0, -20.2, 25.8, '#244522', '#3a6c36');
 
-    // Taş Çevre Duvarı (İçeri dönük parçalar olmadan dış sınırlar)
+    // Taş Çevre Duvarı (3 tek araçlık kapı hariç kesintisiz)
     ctx.strokeStyle = '#9b9182';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.moveTo(sx(-22.5), sz(-36));
-    ctx.lineTo(sx(-22.5), sz(22));
-    ctx.moveTo(sx(-3.2), sz(-37.8));
-    ctx.lineTo(sx(37.5), sz(-37.8));
-    ctx.lineTo(sx(37.5), sz(25.5));
-    ctx.moveTo(sx(-10.5), sz(42.8));
-    ctx.lineTo(sx(34.0), sz(42.8));
+    ctx.moveTo(sx(-29), sz(-48));
+    ctx.lineTo(sx(-29), sz(26.8));
+    ctx.moveTo(sx(-29), sz(31.0));
+    ctx.lineTo(sx(-29), sz(56));
+    ctx.lineTo(sx(48), sz(56));
+    ctx.lineTo(sx(48), sz(36.1));
+    ctx.moveTo(sx(48), sz(31.9));
+    ctx.lineTo(sx(48), sz(-48));
+    ctx.lineTo(sx(-14.4), sz(-48));
+    ctx.moveTo(sx(-18.6), sz(-48));
+    ctx.lineTo(sx(-29), sz(-48));
     ctx.stroke();
 
-    // Main Factory
-    fillRectW(4.0, -28.0, 28.0, 22.0, '#232930', '#9ea6ae');
+    // Main Factory (+25% expanded)
+    fillRectW(4.0, -35.0, 34.0, 27.5, '#232930', '#9ea6ae');
     ctx.strokeStyle = '#d4cab6';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(sx(15.55), sz(-28));
-    ctx.lineTo(sx(15.55), sz(-2.6));
-    ctx.moveTo(sx(15.55), sz(2.6));
-    ctx.lineTo(sx(15.55), sz(22));
+    ctx.moveTo(sx(18.5), sz(-35));
+    ctx.lineTo(sx(18.5), sz(-2.6));
+    ctx.moveTo(sx(18.5), sz(2.6));
+    ctx.lineTo(sx(18.5), sz(27.5));
     ctx.stroke();
 
-    // Outward-rising Rampa (dik ve hemen yükselen)
-    fillRectW(-1.3, -3.1, 4.0, 3.1, '#495057', '#ffb347');
+    // Longer All-Cement Rampa (no side guardrails)
+    fillRectW(-4.8, -3.1, 4.0, 3.1, '#7a7d80', '#d0d4d8');
 
     // İç Bölümler
-    fillRectW(4.3, 9.0, 10.6, 15.2, '#2c3642', '#708499');
-    fillRectW(4.3, 15.2, 10.6, 21.7, '#2c3642', '#708499');
-    fillRectW(10.6, 9.0, 15.35, 21.7, '#2c3f3b', '#5da699');
-    fillRectW(4.9, -26.5, 8.6, -5.5, '#7a5938');
-    fillRectW(10.6, -18.8, 13.0, -13.6, '#8f6940');
-    fillRectW(10.6, -11.0, 13.0, -5.8, '#8f6940');
-    fillRectW(16.2, -27.3, 27.2, -25.4, '#8b7433');
-    fillRectW(22.0, -19.5, 25.2, 13.0, '#9c431f', '#ff8c42');
-    fillRectW(18.5, 16.8, 23.5, 18.8, '#4e5d6b');
-    fillRectW(28.0, 6.0, 32.8, 12.0, '#2d4768', '#83a8d8');
-    fillRectW(28.0, 12.0, 32.8, 18.0, '#5a314a', '#c97da8');
+    fillRectW(4.3, 12.5, 11.8, 19.8, '#2c3642', '#708499');
+    fillRectW(4.3, 19.8, 11.8, 27.15, '#2c3642', '#708499');
+    fillRectW(11.8, 12.5, 18.35, 27.15, '#2c3f3b', '#5da699');
+    fillRectW(4.7, -33.7, 10.3, -4.0, '#7a5938');
+    fillRectW(13.2, -22.0, 15.6, -16.4, '#8f6940');
+    fillRectW(13.2, -12.6, 15.6, -7.0, '#8f6940');
+    fillRectW(20.6, -30.5, 31.4, -29.1, '#8b7433'); // Horizontal bench
+    fillRectW(20.9, -26.9, 29.9, -24.4, '#a68b44'); // Stacked trays
+    fillRectW(26.9, -16.2, 30.3, 12.2, '#9c431f', '#ff8c42'); // Kiln
+    fillRectW(23.3, 21.7, 28.7, 23.5, '#4e5d6b');
+    fillRectW(34.0, 7.0, 39.2, 14.0, '#2d4768', '#83a8d8');
+    fillRectW(34.0, 14.0, 39.2, 21.0, '#5a314a', '#c97da8');
 
     // Front-Aligned Compact 4-Post Garage & Porsche 928S
-    fillRectW(4.1, 22.05, 10.5, 25.75, '#2a2f35', '#ffb347');
-    fillRectW(5.0, 23.0, 9.6, 24.8, '#08090c', '#ffffff');
+    fillRectW(4.5, 27.6, 11.2, 31.3, '#2a2f35', '#ffb347');
+    fillRectW(5.5, 28.5, 10.1, 30.4, '#08090c', '#ffffff');
 
-    // Honda CR-V + Massive Dodge Truck + Wall-Side Tree & Çardak
-    fillRectW(-1.3, -15.8, 0.5, -11.2, '#0b0d10', '#d0d7de');
-    fillRectW(-19.7, -20.2, -16.7, -10.8, '#a8211b', '#f2b8b5');
+    // Honda CR-V + Red Dodge Truck + Wall-Side Tree & Çardak
+    fillRectW(-4.1, -19.8, -2.3, -15.2, '#0b0d10', '#d0d7de');
+    fillRectW(-24.7, -26.0, -21.7, -16.6, '#a8211b', '#f2b8b5');
     ctx.fillStyle = '#3c7a33';
     ctx.beginPath();
-    ctx.arc(sx(-19.4), sz(7.2), 7, 0, Math.PI * 2);
+    ctx.arc(sx(-25.4), sz(9.2), 6, 0, Math.PI * 2);
     ctx.fill();
-    fillRectW(-21.8, 12.5, -17.2, 17.5, '#6e4e30', '#d8b282');
+    fillRectW(-27.8, 19.2, -23.0, 24.4, '#6e4e30', '#d8b282');
 
     ctx.fillStyle = 'rgba(235,230,220,0.88)';
     ctx.font = 'bold 7px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('PALET', sx(9.8), sz(-22.5));
-    ctx.fillText('YALDIZ', sx(21.8), sz(-25.8));
-    ctx.fillText('FIRIN', sx(23.6), sz(-3.5));
-    ctx.fillText('OFIS 1', sx(7.2), sz(12.2));
-    ctx.fillText('OFIS 2', sx(7.2), sz(18.6));
-    ctx.fillText('MUTFAK', sx(12.8), sz(15.6));
-    ctx.fillText('GARAJ', sx(7.3), sz(27.5));
-    ctx.fillText('CARDAK', sx(-19.2), sz(19.6));
-    ctx.fillText('YOL', sx(-13.6), sz(26.5));
-    ctx.fillText('DODGE', sx(-18.2), sz(-21.6));
-    ctx.fillText('CR-V', sx(-0.4), sz(-16.8));
+    ctx.fillText('PALET', sx(11.5), sz(-30.0));
+    ctx.fillText('YALDIZ', sx(26.0), sz(-31.8));
+    ctx.fillText('FIRIN', sx(28.6), sz(-2.0));
+    ctx.fillText('OFIS 1', sx(8.0), sz(16.2));
+    ctx.fillText('OFIS 2', sx(8.0), sz(23.5));
+    ctx.fillText('MUTFAK', sx(15.0), sz(20.0));
+    ctx.fillText('GARAJ', sx(7.8), sz(32.5));
+    ctx.fillText('CARDAK', sx(-25.4), sz(25.8));
+    ctx.fillText('YESIL', sx(10.0), sz(46.5));
+    ctx.fillText('DODGE', sx(-23.2), sz(-27.8));
+    ctx.fillText('CR-V', sx(-3.2), sz(-21.2));
 
     const ux = sx(px), uz = sz(pz);
     const fx = -Math.sin(yaw), fz = -Math.cos(yaw);
@@ -851,7 +912,7 @@
     ctx.beginPath();
     ctx.moveTo(ux, uz);
     const ang = Math.atan2(fz, fx);
-    ctx.arc(ux, uz, 22, ang - 0.45, ang + 0.45);
+    ctx.arc(ux, uz, 20, ang - 0.45, ang + 0.45);
     ctx.closePath();
     ctx.fill();
 
@@ -859,7 +920,7 @@
     ctx.strokeStyle = '#0b0d0f';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(ux, uz, 4.5, 0, Math.PI * 2);
+    ctx.arc(ux, uz, 4.2, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
   }
@@ -899,30 +960,42 @@
     const L = E.createLevelHelper(G);
     const interactives = [];
 
-    await setBoot('Fabrika binasi, firin ve ic bolumler insa ediliyor', 0.44);
+    await setBoot('Genisletilmis fabrika binasi, firin ve ic bolumler insa ediliyor', 0.44);
     const interior = window.AZ_FACTORY_INTERIOR.buildFactoryBuilding(G, L, interactives);
 
-    await setBoot('Tas duvarlar, toprak yol, garaj ve cardak kuruluyor', 0.62);
+    await setBoot('Tas duvarlar, genis yesillikler, garaj ve cardak kuruluyor', 0.62);
     const exterior = buildExteriorCampus(G, L, interactives);
 
     await setBoot('Honda CR-V, Iri Dodge Kamyon ve Porsche 928S hazirlaniyor', 0.78);
+    // Honda CR-V with stepped climbable colliders (#14)
     const crv = window.AZ_VEHICLES.buildHondaCRV2005(G, G.mats);
-    crv.position.set(-0.4, 0.0, -13.5);
+    crv.position.set(-3.2, 0.0, -17.5);
     crv.rotation.y = 0.12;
     L.dynRoot.add(crv);
-    L.col(-1.45, 0, -15.9, 0.65, 1.82, -11.1, 'metal');
+    L.col(-4.20, 0, -20.0, -2.20, 0.56, -19.50, 'metal');   // rear bumper step
+    L.col(-4.18, 0, -19.85, -2.22, 1.06, -15.10, 'metal');  // hood & lower body
+    L.col(-4.10, 0, -19.50, -2.30, 1.76, -16.40, 'metal');  // cabin roof
 
+    // Red Dodge Truck with stepped climbable colliders (#14)
     const dodge = window.AZ_VEHICLES.buildDodgeTruck(G, G.mats);
-    dodge.position.set(-18.2, 0.0, -15.5);
+    dodge.position.set(-23.2, 0.0, -21.0);
     dodge.rotation.y = 0.0;
     L.dynRoot.add(dodge);
-    L.col(-19.8, 0, -20.5, -16.6, 3.6, -10.8, 'metal');
+    L.col(-24.62, 0, -26.25, -21.78, 0.90, -25.90, 'metal');    // rear bumper step
+    L.col(-24.65, 0, -26.0, -21.75, 1.38, -21.25, 'metal');     // cargo bed
+    L.col(-24.15, 0, -25.6, -22.25, 2.45, -21.9, 'wood');       // cargo pallets in bed (grounded min.y)
+    L.col(-24.48, 0, -21.25, -21.92, 3.42, -19.50, 'metal');    // cab roof
+    L.col(-24.55, 0, -19.50, -21.85, 2.28, -16.95, 'metal');    // long hood & fenders
+    L.col(-24.65, 0, -16.95, -21.75, 0.96, -16.50, 'metal');    // front bumper & steps
 
+    // Black Porsche 928S inside 4-post Garage with stepped climbable colliders (#14)
     const porsche = window.AZ_VEHICLES.buildPorsche928S(G, G.mats);
-    porsche.position.set(7.3, 0.04, 23.90);
+    porsche.position.set(7.85, 0.04, 29.45);
     porsche.rotation.y = -Math.PI / 2;
     L.dynRoot.add(porsche);
-    L.col(4.9, 0.04, 22.90, 9.7, 1.38, 24.90, 'metal');
+    L.col(5.45, 0.04, 28.42, 6.95, 0.88, 30.38, 'metal');  // front nose/hood
+    L.col(6.95, 0.04, 28.55, 8.75, 1.32, 30.25, 'metal');  // coupe roof
+    L.col(8.75, 0.04, 28.42, 10.15, 0.96, 30.38, 'metal'); // rear deck & wing
 
     L.staticRoot.updateMatrixWorld(true);
     L.staticRoot.traverse((o) => {
@@ -939,7 +1012,7 @@
     G.scene.add(levelRoot);
 
     G.level = {
-      playerStart: { pos: new THREE.Vector3(-9.2, 0.0, 8.2), yaw: -0.96 },
+      playerStart: { pos: new THREE.Vector3(-11.5, 0.0, 9.5), yaw: -0.96 },
       interiorBoxes: [interior.interiorBox],
       groundSurfaceAt: () => 'concrete',
       update(dt) {
@@ -950,8 +1023,9 @@
 
     await setBoot('Toprak zemin, golgeler ve yansimalar yukleniyor', 0.88);
     G.ground = await E.createGround(G);
-    // Replace asphalt ground material with natural compacted earth / dirt ground (NO ASPHALT!)
     if (G.ground && G.ground.apron) {
+      G.ground.apron.scale.set(1.6, 1, 1.6);
+      G.ground.apron.updateMatrix();
       G.ground.apron.material = makeEarthGroundMaterial();
       G.ground.apron.receiveShadow = true;
     }
@@ -966,6 +1040,7 @@
 
     G.player = E.createPlayer(G);
     G.player.reset(G.level.playerStart);
+    G.player.invulnerable = true;
     G.player.enabled = true;
     G.input.setGameplay(true);
 
@@ -1007,7 +1082,7 @@
     applyAtmosphere(0);
 
     let droneMode = false;
-    const dronePos = new THREE.Vector3(-9.2, 4.0, 8.2);
+    const dronePos = new THREE.Vector3(-11.5, 4.0, 9.5);
     let droneYaw = -1.10;
     let dronePitch = -0.15;
 
@@ -1022,8 +1097,8 @@
         G.player.enabled = false;
         showToast('Serbest Ucus (Drone) Modu — Space/C ile yukselip alcalabilirsiniz');
       } else {
-        const gx = Math.max(-52, Math.min(52, dronePos.x));
-        const gz = Math.max(-48, Math.min(48, dronePos.z));
+        const gx = Math.max(-90, Math.min(90, dronePos.x));
+        const gz = Math.max(-85, Math.min(85, dronePos.z));
         const gy = G.physics.groundHeight(gx, gz, Math.max(2.0, dronePos.y + 0.5));
         G.player.pos.set(gx, Math.max(0, gy), gz);
         G.player.vel.set(0, 0, 0);
@@ -1139,16 +1214,16 @@
         tmpFwd.set(0, 0, -1).applyEuler(tmpEul);
         tmpRight.set(1, 0, 0).applyEuler(tmpEul);
 
-        const speed = G.input.sprint ? 19.0 : 8.5;
+        const speed = G.input.sprint ? 21.0 : 9.5;
         const mx = G.input.move.x;
         const my = G.input.move.y;
         dronePos.addScaledVector(tmpFwd, my * speed * dt);
         dronePos.addScaledVector(tmpRight, mx * speed * dt);
         if (G.input.down('jump')) dronePos.y += speed * 0.75 * dt;
         if (G.input.down('crouch')) dronePos.y -= speed * 0.75 * dt;
-        dronePos.y = Math.max(0.35, Math.min(34, dronePos.y));
-        dronePos.x = Math.max(-55, Math.min(55, dronePos.x));
-        dronePos.z = Math.max(-50, Math.min(50, dronePos.z));
+        dronePos.y = Math.max(0.35, Math.min(42, dronePos.y));
+        dronePos.x = Math.max(-90, Math.min(90, dronePos.x));
+        dronePos.z = Math.max(-85, Math.min(85, dronePos.z));
 
         G.camera.position.copy(dronePos);
         G.camera.rotation.set(dronePitch, droneYaw, 0, 'YXZ');
