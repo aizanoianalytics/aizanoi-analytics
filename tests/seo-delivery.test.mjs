@@ -21,6 +21,7 @@ const canonicalBase = [
  '/arcade/snake-royale/',
   '/arcade/aizanoi-wars/',
   '/arcade/factory/',
+  '/arcade/daire/',
   '/arcade/chess/',
   '/arcade/maze-chase/',
   '/arcade/capture-flag/',

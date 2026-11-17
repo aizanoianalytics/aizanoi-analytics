@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ev — gezilebilir daire</title>
+  <meta name="description" content="Anlatılan odalardan kurulan gezilebilir daire. 4. oda bilinçli olarak boş.">
+  <link rel="canonical" href="https://aizanoianalytics.com/arcade/daire/">
+  <meta name="theme-color" content="#1c1916">
+  <link rel="stylesheet" href="./daire.css">
+  <script src="/arcade/factory/engine.js" defer></script>
+  <script src="./daire.js" defer></script>
+</head>
+<body>
+<div id="app">
+  <canvas id="view" tabindex="0"></canvas>
+  <div id="ui">
+    <header class="hud-top">
+      <div class="hud-brand">
+        <div class="brand-kicker">GEZİLEBİLİR DAİRE</div>
+        <div class="brand-title" id="zone-name">Koridor</div>
+        <div class="brand-zone" id="zone-note">Kapıdan gir. WASD, fare ile bak.</div>
+      </div>
+      <button type="button" class="hud-btn" id="btn-help">Kontroller [H]</button>
+    </header>
+    <p class="lock-hint" id="lock-hint">Sahneye tıkla, fare bakışı kilitle</p>
+    <section id="help-modal" class="help-modal" hidden>
+      <div class="help-card">
+        <h2>Ev</h2>
+        <p>1 salon, 2 yatak odası, 3 puf ve balkon, 5 çalışma odası, 6 banyo, 7 tuvalet, 8 koridor, 9 mutfak. 4 anlatılmadı, o yüzden boş.</p>
+        <dl>
+          <div><dt>Yürü</dt><dd>W A S D</dd></div>
+          <div><dt>Bak</dt><dd>Sahneye tıkla, fare</dd></div>
+          <div><dt>Zıpla</dt><dd>Space</dd></div>
+          <div><dt>Bu pencere</dt><dd>H</dd></div>
+        </dl>
+        <button type="button" id="btn-help-close">Kapat</button>
+      </div>
+    </section>
+  </div>
+  <div id="boot">
+    <div class="boot-mark">EV</div>
+    <div class="boot-sub" id="boot-msg">Odalar kuruluyor</div>
+  </div>
+  <pre id="fatal" hidden></pre>
+</div>
+</body>
+</html>

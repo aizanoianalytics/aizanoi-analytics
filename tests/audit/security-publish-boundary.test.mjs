@@ -302,6 +302,7 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/camera\/manifest\.json$/,
   /\/js\/v3\/apps\/aizanoi-wars\/manifest\.json$/,
   /\/js\/v3\/apps\/factory\/manifest\.json$/,
+  /\/js\/v3\/apps\/daire\/manifest\.json$/,
   /\/js\/v3\/apps\/forge\/manifest\.json$/,
   /\/js\/v3\/apps\/games\/manifest\.json$/,
   /\/js\/v3\/apps\/markets\/manifest\.json$/,
