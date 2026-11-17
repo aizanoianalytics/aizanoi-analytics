@@ -43,7 +43,16 @@ test('Factory standalone boots, renders frames and toggles help under production
     assert.equal(helpHit.ok, true, JSON.stringify(helpHit));
     await page.mouse.click(helpHit.x, helpHit.y);
     await page.locator('#help-modal:not([hidden])').waitFor({ timeout: 10000 });
-    await page.locator('#btn-help-close').click({ timeout: 10000 });
+    const closeHit = await page.evaluate(() => {
+      const btn = document.querySelector('#btn-help-close');
+      const rect = btn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const el = document.elementFromPoint(x, y);
+      return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
+    });
+    assert.equal(closeHit.ok, true, JSON.stringify(closeHit));
+    await page.mouse.click(closeHit.x, closeHit.y);
     await page.locator('#help-modal').waitFor({ state: 'hidden', timeout: 10000 });
     const beforeQuality = await page.locator('#quality-label').textContent();
     const qualityHit = await page.evaluate(() => {
