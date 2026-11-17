@@ -3,7 +3,14 @@
 
   const FLOOR_Y = 0.06;
   const WALL_H = 6.90;
-  const RIDGE_Y = 9.00;
+  const RIDGE_Y = 9.50;
+
+  // Expanded +25% factory footprint: X: 4.0..34.0 (30m wide), Z: -35.0..27.5 (62.5m long)
+  const FAC_X0 = 4.0;
+  const FAC_X1 = 34.0;
+  const FAC_Z0 = -35.0;
+  const FAC_Z1 = 27.5;
+  const MID_WALL_X = 18.5;
 
   function makeSignTexture(THREE, title, subtitle = '', bg = '#161b20', fg = '#f2ede2', accent = '#ffb347') {
     const c = document.createElement('canvas');
@@ -79,7 +86,7 @@
     c.width = 512;
     c.height = 512;
     const ctx = c.getContext('2d');
-    ctx.fillStyle = isFloor ? '#4d4a44' : '#736f65'; // worn grout
+    ctx.fillStyle = isFloor ? '#4d4a44' : '#736f65';
     ctx.fillRect(0, 0, 512, 512);
     const step = isFloor ? 32 : 64;
     let seed = isFloor ? 913 : 419;
@@ -93,7 +100,6 @@
           ctx.fillStyle = v < 0.3 ? '#cbc4b0' : v < 0.75 ? '#d4ceb9' : '#beb6a2';
         }
         ctx.fillRect(x + 2, y + 2, step - 4, step - 4);
-        // subtle aged staining speckles
         if (rnd() > 0.65) {
           ctx.fillStyle = 'rgba(72, 60, 44, 0.14)';
           ctx.fillRect(x + 4, y + step - 12, step - 8, 8);
@@ -141,6 +147,23 @@
     return g;
   }
 
+  // Taller spacer glass used between stacked drying trays ("daha uzun bardaklar")
+  function createTallSpacerGlass(THREE, glassMat, goldMat) {
+    const g = new THREE.Group();
+    const tallH = 0.23;
+    const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.046, 0.036, tallH, 14), glassMat);
+    cup.position.y = tallH / 2;
+    cup.castShadow = true;
+    g.add(cup);
+    const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.047, 0.046, 0.016, 14), goldMat);
+    rim.position.y = tallH - 0.010;
+    g.add(rim);
+    const baseRing = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.037, 0.022, 14), glassMat);
+    baseRing.position.y = 0.011;
+    g.add(baseRing);
+    return g;
+  }
+
   function buildFactoryBuilding(G, L, interactives) {
     const THREE = G.THREE;
     const geo = G.geo;
@@ -157,7 +180,6 @@
     const steelDarkInt = L.MI('steel_dark');
     const steelGalv = L.M('steel_galv');
     const steelGalvInt = L.MI('steel_galv');
-    const diamondPlate = L.M('diamond_plate');
     const roofExtMat = L.M('corrugated_roof');
     const roofIntMat = L.M('corrugated_roof');
     const woodPallet = L.MI('wood_pallet');
@@ -213,32 +235,26 @@
     }
 
     // ------------------------------------------------------------------------
-    // 1. MAIN FACTORY FLOOR SLAB (Ground level: Y = 0.06m, X: 4..28, Z: -28..22)
+    // 1. MAIN FACTORY FLOOR SLAB (Expanded +25%: X: 4.0..34.0, Z: -35.0..27.5)
     // ------------------------------------------------------------------------
-    L.slab(concreteDirty, 3.9, -0.05, -28.1, 28.1, FLOOR_Y - 0.02, 22.1, { cast: false });
-    L.slab(epoxyFloor, 4.05, FLOOR_Y - 0.02, -27.95, 27.95, FLOOR_Y, 21.95, { cast: false });
-    L.col(4.0, -0.4, -28.0, 28.0, FLOOR_Y, 22.0, 'concrete');
+    L.slab(concreteDirty, FAC_X0 - 0.1, -0.05, FAC_Z0 - 0.1, FAC_X1 + 0.1, FLOOR_Y - 0.02, FAC_Z1 + 0.1, { cast: false });
+    L.slab(epoxyFloor, FAC_X0 + 0.05, FLOOR_Y - 0.02, FAC_Z0 + 0.05, FAC_X1 - 0.05, FLOOR_Y, FAC_Z1 - 0.05, { cast: false });
+    L.col(FAC_X0, -0.4, FAC_Z0, FAC_X1, FLOOR_Y, FAC_Z1, 'concrete');
 
     // ------------------------------------------------------------------------
-    // 2. SOLID STEEP OUTWARD-RISING LOADING RAMP
-    //    - Kapıdan çıkınca düz pay olmadan DİREKT yükselmeye başlar ve daha diktir (~19.2°)
-    //    - En yüksek tarafında çıkış/merdiven YOK (1.52m kamyon yanaşma yüksekliği)
-    //    - Altı tamamen dolu beton kütle (boşluk yok)
-    //    - En düşük yeri (X: 2.6..4.0) kapıyla buluştuğu alanda yanlardan yürüyüp girilebilir
+    // 2. SOLID LONGER ALL-CEMENT LOADING RAMP (NO SIDE GUARDRAILS)
+    //    - Uzun rampa: X: 4.0 -> -3.4 (egim), -3.4 -> -4.8 (duz baslik), toplam 8.8m
+    //    - Tamami tek tip cimento rengi (concreteExt)
+    //    - Saginda solunda korumalik, korkuluk, bariyer, lastik tampon YOK!
     // ------------------------------------------------------------------------
     {
       const DOCK_H = 1.52;
-      const xIn = 4.0;          // rises IMMEDIATELY from factory doorway!
-      const xSlopeTop = -0.2;   // 4.2m steep ramp rising from 0.06m -> 1.52m (~19.2 deg)
-      const xDockOut = -1.3;    // outer truck-dock head X: -1.3..-0.2 at Y = 1.52m
-      const slopeRun = xIn - xSlopeTop;
-      const rise = DOCK_H - FLOOR_Y;
-      const rampAngle = -Math.atan2(rise, slopeRun);
-      const rampHyp = Math.hypot(slopeRun, rise);
-      const midX = (xIn + xSlopeTop) / 2;
-      const midY = (FLOOR_Y + DOCK_H) / 2;
+      const xIn = 4.0;
+      const xSlopeTop = -3.4;
+      const xDockOut = -4.8;
+      const slopeRun = xIn - xSlopeTop; // 7.4m slope run
 
-      // Solid full-depth concrete ramp body (zero hollow space underneath!)
+      // Solid full-depth cement/concrete ramp body
       const rampShape = new THREE.Shape();
       rampShape.moveTo(xDockOut, 0.0);
       rampShape.lineTo(xIn, 0.0);
@@ -252,58 +268,29 @@
         bevelEnabled: false
       });
       solidRampGeo.translate(0, 0, -3.1);
-      const solidRampMesh = new THREE.Mesh(solidRampGeo, concreteDirty);
+      const solidRampMesh = new THREE.Mesh(solidRampGeo, concreteExt);
       solidRampMesh.castShadow = true;
       solidRampMesh.receiveShadow = true;
       stat.add(solidRampMesh);
 
-      // Solid outer dock platform collider
+      // Solid outer cement dock platform collider
       L.slab(concreteExt, xDockOut, 0.0, -3.1, xSlopeTop, DOCK_H, 3.1);
       L.col(xDockOut, -0.1, -3.1, xSlopeTop, DOCK_H, 3.1, 'concrete');
 
-      // Anti-slip diamond-plate wheel/pallet-jack tracks directly up the steep slope
-      for (const rz of [-1.45, 1.45]) {
-        L.box(diamondPlate, rampHyp, 0.02, 1.25, midX, midY + 0.012, rz, { r: [0, 0, rampAngle] });
-        L.box(diamondPlate, xSlopeTop - xDockOut, 0.02, 1.25, (xDockOut + xSlopeTop) / 2, DOCK_H + 0.01, rz);
-      }
-
-      // Rubber truck dock bumpers on outer high West face (X = -1.36)
-      for (const bz of [-2.1, -0.7, 0.7, 2.1]) {
-        L.box(rubberMat, 0.16, 0.42, 0.45, xDockOut - 0.06, DOCK_H - 0.20, bz);
-      }
-
-      // Side safety curbs & handrails ONLY on the elevated part (X: -1.3..2.5),
-      // leaving the lowest door-threshold zone (X: 2.5..4.0) completely open on both sides!
-      const railSlopeRun = 2.5 - xSlopeTop; // 2.7m
-      const railLowY = FLOOR_Y + ((xIn - 2.5) / slopeRun) * rise;
-      const railHyp = Math.hypot(railSlopeRun, DOCK_H - railLowY);
-      const railMidX = (2.5 + xSlopeTop) / 2;
-      const railMidY = (railLowY + DOCK_H) / 2;
-      for (const sz of [-3.05, 3.05]) {
-        L.box(hazardMat, railHyp, 0.18, 0.18, railMidX, railMidY + 0.06, sz, { r: [0, 0, rampAngle] });
-        L.box(hazardMat, xSlopeTop - xDockOut, 0.18, 0.18, (xDockOut + xSlopeTop) / 2, DOCK_H + 0.06, sz);
-        for (const px of [-1.2, -0.2, 1.15, 2.45]) {
-          const py = px <= xSlopeTop ? DOCK_H : FLOOR_Y + ((xIn - px) / slopeRun) * rise;
-          L.cyl(steelGalv, 0.032, 0.96, px, py + 0.48, sz);
-        }
-        L.box(paintYellow, railHyp, 0.05, 0.06, railMidX, railMidY + 0.96, sz, { r: [0, 0, rampAngle] });
-        L.box(paintYellow, xSlopeTop - xDockOut, 0.05, 0.06, (xDockOut + xSlopeTop) / 2, DOCK_H + 0.96, sz);
-        L.col(xDockOut, 0, sz - 0.16, 2.5, DOCK_H + 1.1, sz + 0.16, 'metal');
-      }
-
-      // 24 smooth stepped physics colliders starting immediately from X=4.0 up to X=-0.2
-      const steps = 24;
+      // 36 smooth stepped concrete colliders starting immediately from X=4.0 up to X=-3.4
+      const steps = 36;
+      const rise = DOCK_H - FLOOR_Y;
       for (let s = 0; s < steps; s++) {
         const sx1 = xIn - (slopeRun * s) / steps;
         const sx0 = xIn - (slopeRun * (s + 1)) / steps;
         const syTop = FLOOR_Y + ((s + 1) / steps) * rise;
-        L.col(sx0, -0.1, -3.0, sx1, syTop, 3.0, 'concrete');
+        L.col(sx0, -0.1, -3.1, sx1, syTop, 3.1, 'concrete');
       }
 
       // Overhead canopy above factory doorway + loading sign
       L.slab(steelDark, 2.5, 4.35, -3.3, 4.15, 4.55, 3.3);
       L.box(ledWarmMat, 0.18, 0.10, 4.4, 3.3, 4.32, 0);
-      addSign(THREE, stat, 'YUKLEME RAMPASI', 'KAMYON SEVKIYAT KAPISI (1.52m)', 3.92, 5.15, 0, 4.4, 0.95, -Math.PI / 2);
+      addSign(THREE, stat, 'YUKLEME RAMPASI', 'UZUN CIMENTO SEVKIYAT RAMPASI', 3.92, 5.15, 0, 4.4, 0.95, -Math.PI / 2);
     }
 
     // ------------------------------------------------------------------------
@@ -315,122 +302,130 @@
       if (axis === 'z') {
         const xm = (x0 + x1) / 2;
         L.slab(glassMat, xm - 0.02, yWin0, z0, xm + 0.02, yWin1, z1, { cast: false });
-        for (let z = Math.min(z0, z1); z <= Math.max(z0, z1); z += 3.2) {
+        for (let z = Math.min(z0, z1); z <= Math.max(z0, z1); z += 3.5) {
           L.slab(steelDark, x0 - 0.02, yWin0, z - 0.06, x1 + 0.02, yWin1, z + 0.06);
         }
       } else {
         const zm = (z0 + z1) / 2;
         L.slab(glassMat, x0, yWin0, zm - 0.02, x1, yWin1, zm + 0.02, { cast: false });
-        for (let x = Math.min(x0, x1); x <= Math.max(x0, x1); x += 3.2) {
+        for (let x = Math.min(x0, x1); x <= Math.max(x0, x1); x += 3.5) {
           L.slab(steelDark, x - 0.06, yWin0, z0 - 0.02, x + 0.06, yWin1, z1 + 0.02);
         }
       }
     }
 
-    // West Exterior Wall (X: 4.0..4.32), single factory sliding door open at Z: -2.6..2.6
-    buildWindowBandWall(4.0, -28.0, 4.32, -2.6, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
-    buildWindowBandWall(4.0, 2.6, 4.32, 22.0, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
-    L.slab(wallExtMat, 4.0, 3.85, -2.6, 4.32, WALL_H, 2.6);
-    L.slab(paintGrey, 3.96, FLOOR_Y, -28.0, 4.02, FLOOR_Y + 1.15, -2.6);
-    L.slab(paintGrey, 3.96, FLOOR_Y, 2.6, 4.02, FLOOR_Y + 1.15, 22.0);
-    L.slab(paintYellow, 3.96, FLOOR_Y, -2.72, 4.36, 3.90, -2.56);
-    L.slab(paintYellow, 3.96, FLOOR_Y, 2.56, 4.36, 3.90, 2.72);
-    L.col(3.98, 0, -28.0, 4.34, WALL_H, -2.62, 'concrete');
-    L.col(3.98, 0, 2.62, 4.34, WALL_H, 22.0, 'concrete');
-    L.col(3.98, 3.85, -2.62, 4.34, WALL_H, 2.62, 'concrete');
+    // West Exterior Wall (X: 4.0..4.32), factory sliding door open at Z: -2.6..2.6
+    buildWindowBandWall(FAC_X0, FAC_Z0, FAC_X0 + 0.32, -2.6, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
+    buildWindowBandWall(FAC_X0, 2.6, FAC_X0 + 0.32, FAC_Z1, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
+    L.slab(wallExtMat, FAC_X0, 3.85, -2.6, FAC_X0 + 0.32, WALL_H, 2.6);
+    L.slab(paintGrey, FAC_X0 - 0.04, FLOOR_Y, FAC_Z0, FAC_X0 + 0.02, FLOOR_Y + 1.15, -2.6);
+    L.slab(paintGrey, FAC_X0 - 0.04, FLOOR_Y, 2.6, FAC_X0 + 0.02, FLOOR_Y + 1.15, FAC_Z1);
+    L.slab(paintYellow, FAC_X0 - 0.04, FLOOR_Y, -2.72, FAC_X0 + 0.36, 3.90, -2.56);
+    L.slab(paintYellow, FAC_X0 - 0.04, FLOOR_Y, 2.56, FAC_X0 + 0.36, 3.90, 2.72);
+    L.col(FAC_X0 - 0.02, 0, FAC_Z0, FAC_X0 + 0.34, WALL_H, -2.62, 'concrete');
+    L.col(FAC_X0 - 0.02, 0, 2.62, FAC_X0 + 0.34, WALL_H, FAC_Z1, 'concrete');
+    L.col(FAC_X0 - 0.02, 3.85, -2.62, FAC_X0 + 0.34, WALL_H, 2.62, 'concrete');
 
-    // North Exterior Wall (Z: -28.0..-27.68)
-    buildWindowBandWall(4.0, -28.0, 28.0, -27.68, FLOOR_Y, 4.2, 5.9, WALL_H, 'x', wallExtMat);
-    L.col(4.0, 0, -28.0, 28.0, WALL_H, -27.66, 'concrete');
+    // North Exterior Wall (Z: -35.0..-34.68)
+    buildWindowBandWall(FAC_X0, FAC_Z0, FAC_X1, FAC_Z0 + 0.32, FLOOR_Y, 4.2, 5.9, WALL_H, 'x', wallExtMat);
+    L.col(FAC_X0, 0, FAC_Z0, FAC_X1, WALL_H, FAC_Z0 + 0.34, 'concrete');
 
-    // South Exterior Wall (Z: 21.68..22.0) overlooking compact 4-post Garage
-    buildWindowBandWall(4.0, 21.68, 28.0, 22.0, FLOOR_Y, 4.2, 5.9, WALL_H, 'x', wallExtMat);
-    L.col(4.0, 0, 21.66, 28.0, WALL_H, 22.0, 'concrete');
+    // South Exterior Wall (Z: 27.18..27.5) overlooking compact 4-post Garage
+    buildWindowBandWall(FAC_X0, FAC_Z1 - 0.32, FAC_X1, FAC_Z1, FLOOR_Y, 4.2, 5.9, WALL_H, 'x', wallExtMat);
+    L.col(FAC_X0, 0, FAC_Z1 - 0.34, FAC_X1, WALL_H, FAC_Z1, 'concrete');
 
-    // East Exterior Wall (X: 27.68..28.0) with WIDE enterable WC doors (1.5m wide: 8.25..9.75 & 14.25..15.75)
-    buildWindowBandWall(27.68, -28.0, 28.0, 8.25, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
-    L.slab(wallExtMat, 27.68, FLOOR_Y + 2.35, 8.25, 28.0, WALL_H, 9.75);
-    buildWindowBandWall(27.68, 9.75, 28.0, 14.25, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
-    L.slab(wallExtMat, 27.68, FLOOR_Y + 2.35, 14.25, 28.0, WALL_H, 15.75);
-    buildWindowBandWall(27.68, 15.75, 28.0, 22.0, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
-    L.col(27.66, 0, -28.0, 28.0, WALL_H, 8.23, 'concrete');
-    L.col(27.66, FLOOR_Y + 2.35, 8.23, 28.0, WALL_H, 9.77, 'concrete');
-    L.col(27.66, 0, 9.77, 28.0, WALL_H, 14.23, 'concrete');
-    L.col(27.66, FLOOR_Y + 2.35, 14.23, 28.0, WALL_H, 15.77, 'concrete');
-    L.col(27.66, 0, 15.77, 28.0, WALL_H, 22.0, 'concrete');
+    // East Exterior Wall (X: 33.68..34.0) with WIDE enterable WC doors (9.75..11.25 & 16.75..18.25)
+    buildWindowBandWall(FAC_X1 - 0.32, FAC_Z0, FAC_X1, 9.75, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
+    L.slab(wallExtMat, FAC_X1 - 0.32, FLOOR_Y + 2.35, 9.75, FAC_X1, WALL_H, 11.25);
+    buildWindowBandWall(FAC_X1 - 0.32, 11.25, FAC_X1, 16.75, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
+    L.slab(wallExtMat, FAC_X1 - 0.32, FLOOR_Y + 2.35, 16.75, FAC_X1, WALL_H, 18.25);
+    buildWindowBandWall(FAC_X1 - 0.32, 18.25, FAC_X1, FAC_Z1, FLOOR_Y, 4.2, 5.9, WALL_H, 'z', wallExtMat);
+    L.col(FAC_X1 - 0.34, 0, FAC_Z0, FAC_X1, WALL_H, 9.73, 'concrete');
+    L.col(FAC_X1 - 0.34, FLOOR_Y + 2.35, 9.73, FAC_X1, WALL_H, 11.27, 'concrete');
+    L.col(FAC_X1 - 0.34, 0, 11.27, FAC_X1, WALL_H, 16.73, 'concrete');
+    L.col(FAC_X1 - 0.34, FLOOR_Y + 2.35, 16.73, FAC_X1, WALL_H, 18.27, 'concrete');
+    L.col(FAC_X1 - 0.34, 0, 18.27, FAC_X1, WALL_H, FAC_Z1, 'concrete');
 
-    // Gable ends & Skylight Pitched Roof
-    for (const gz of [-27.84, 21.84]) {
+    // Gable ends & Skylight Pitched Roof (centered at X = 19.0)
+    const centerFacX = (FAC_X0 + FAC_X1) / 2; // 19.0
+    const halfSpan = 15.6;
+    const roofRise = RIDGE_Y - WALL_H; // 2.60
+    const roofAngle = Math.atan2(roofRise, halfSpan);
+    const slopeLen = Math.hypot(halfSpan, roofRise);
+
+    for (const gz of [FAC_Z0 + 0.16, FAC_Z1 - 0.16]) {
       const gs = new THREE.Shape();
-      gs.moveTo(-12.2, WALL_H);
+      gs.moveTo(-15.2, WALL_H);
       gs.lineTo(0, RIDGE_Y);
-      gs.lineTo(12.2, WALL_H);
+      gs.lineTo(15.2, WALL_H);
       gs.closePath();
       const gGeo = new THREE.ExtrudeGeometry(gs, { depth: 0.30, bevelEnabled: false });
-      gGeo.translate(16.0, 0, gz - 0.15);
+      gGeo.translate(centerFacX, 0, gz - 0.15);
       const gm = new THREE.Mesh(gGeo, concreteExt);
       gm.castShadow = true;
       gm.receiveShadow = true;
       stat.add(gm);
     }
 
-    const halfSpan = 12.6;
-    const roofRise = RIDGE_Y - WALL_H;
-    const roofAngle = Math.atan2(roofRise, halfSpan);
-    const slopeLen = Math.hypot(halfSpan, roofRise);
     const roofBays = [
-      [-28.4, -14.0, true],
-      [-14.0, -9.2, false],
-      [-9.2, 4.5, true],
-      [4.5, 9.3, false],
-      [9.3, 22.4, true]
+      [FAC_Z0 - 0.4, -18.0, true],
+      [-18.0, -12.0, false],
+      [-12.0, 5.5, true],
+      [5.5, 11.5, false],
+      [11.5, FAC_Z1 + 0.4, true]
     ];
     for (const [z0, z1, solid] of roofBays) {
       const lenZ = z1 - z0;
       const cz = (z0 + z1) / 2;
       for (const side of [-1, 1]) {
-        const cx = 16.0 + side * (halfSpan * 0.5);
+        const cx = centerFacX + side * (halfSpan * 0.5);
         const cy = (WALL_H + RIDGE_Y) * 0.5;
         if (solid) {
           L.box(roofExtMat, slopeLen, 0.10, lenZ, cx, cy + 0.05, cz, { r: [0, 0, -side * roofAngle] });
           L.box(roofIntMat, slopeLen, 0.06, lenZ, cx, cy - 0.03, cz, { r: [0, 0, -side * roofAngle] });
         } else {
-          L.box(roofExtMat, slopeLen * 0.45, 0.10, lenZ, 16.0 + side * 9.5, WALL_H + 0.55, cz, { r: [0, 0, -side * roofAngle] });
-          L.box(glassMat, slopeLen * 0.52, 0.04, lenZ, 16.0 + side * 3.4, RIDGE_Y - 0.58, cz, { r: [0, 0, -side * roofAngle], cast: false });
+          const eaveDx = halfSpan * 0.775;
+          const eaveY = RIDGE_Y - 0.775 * roofRise;
+          const skyDx = halfSpan * 0.275;
+          const skyY = RIDGE_Y - 0.275 * roofRise;
+          L.box(roofExtMat, slopeLen * 0.45, 0.10, lenZ, centerFacX + side * eaveDx, eaveY + 0.05, cz, { r: [0, 0, -side * roofAngle] });
+          L.box(glassMat, slopeLen * 0.55, 0.04, lenZ, centerFacX + side * skyDx, skyY + 0.02, cz, { r: [0, 0, -side * roofAngle], cast: false });
         }
       }
     }
 
-    // Steel trusses & high-bay LED lighting
-    for (let z = -25; z <= 19; z += 7.3) {
-      L.ibeam(steelDarkInt, 'y', WALL_H - FLOOR_Y, 4.45, FLOOR_Y + (WALL_H - FLOOR_Y) / 2, z, { depth: 0.28, width: 0.18 });
-      L.ibeam(steelDarkInt, 'y', WALL_H - FLOOR_Y, 27.55, FLOOR_Y + (WALL_H - FLOOR_Y) / 2, z, { depth: 0.28, width: 0.18 });
-      L.box(steelDarkInt, 12.2, 0.22, 0.16, 10.1, WALL_H + 0.9, z, { r: [0, 0, roofAngle] });
-      L.box(steelDarkInt, 12.2, 0.22, 0.16, 21.9, WALL_H + 0.9, z, { r: [0, 0, -roofAngle] });
-      L.box(steelDarkInt, 23.2, 0.16, 0.14, 16.0, WALL_H - 0.1, z);
+    // Steel trusses & high-bay LED lighting across the 30m x 62.5m hall
+    for (let z = -31.5; z <= 24.5; z += 8.0) {
+      L.ibeam(steelDarkInt, 'y', WALL_H - FLOOR_Y, FAC_X0 + 0.45, FLOOR_Y + (WALL_H - FLOOR_Y) / 2, z, { depth: 0.28, width: 0.18 });
+      L.ibeam(steelDarkInt, 'y', WALL_H - FLOOR_Y, FAC_X1 - 0.45, FLOOR_Y + (WALL_H - FLOOR_Y) / 2, z, { depth: 0.28, width: 0.18 });
+      L.box(steelDarkInt, slopeLen - 0.4, 0.22, 0.16, centerFacX - halfSpan * 0.48, (WALL_H + RIDGE_Y) * 0.5 - 0.15, z, { r: [0, 0, roofAngle] });
+      L.box(steelDarkInt, slopeLen - 0.4, 0.22, 0.16, centerFacX + halfSpan * 0.48, (WALL_H + RIDGE_Y) * 0.5 - 0.15, z, { r: [0, 0, -roofAngle] });
+      L.box(steelDarkInt, 29.0, 0.16, 0.14, centerFacX, WALL_H - 0.1, z);
 
-      for (const lx of [9.6, 21.6]) {
+      for (const lx of [11.2, 26.2]) {
         L.box(steelDarkInt, 1.5, 0.08, 0.26, lx, 6.45, z);
         L.box(ledCoolMat, 1.38, 0.04, 0.18, lx, 6.40, z, { parent: dyn });
       }
     }
 
-    addIntLight(0xfff1dc, 18, 22, 9.6, 5.9, -16.0);
-    addIntLight(0xfff1dc, 18, 22, 9.6, 5.9, -1.0);
-    addIntLight(0xffe6c4, 16, 20, 21.6, 5.9, -22.0);
-    addIntLight(0xffe6c4, 14, 18, 21.6, 5.9, 16.0);
+    addIntLight(0xfff1dc, 22, 28, 11.2, 5.9, -24.0);
+    addIntLight(0xfff1dc, 22, 28, 11.2, 5.9, -6.0);
+    addIntLight(0xfff1dc, 18, 24, 11.2, 5.9, 10.0);
+    addIntLight(0xffe6c4, 20, 26, 26.2, 5.9, -28.0);
+    addIntLight(0xffe6c4, 20, 26, 26.2, 5.9, -6.0);
+    addIntLight(0xffe6c4, 18, 24, 26.2, 5.9, 18.0);
 
     // ------------------------------------------------------------------------
-    // 4. ORTA BÖLME DUVARI & SÜRGÜLÜ KAPILAR
+    // 4. ORTA BÖLME DUVARI (X = 18.5) & SÜRGÜLÜ KAPILAR
     // ------------------------------------------------------------------------
-    buildWindowBandWall(15.42, -27.7, 15.68, -2.6, FLOOR_Y, 3.6, 5.3, WALL_H, 'z', wallIntMat);
-    buildWindowBandWall(15.42, 2.6, 15.68, 21.7, FLOOR_Y, 3.6, 5.3, WALL_H, 'z', wallIntMat);
-    L.slab(wallIntMat, 15.42, 3.85, -2.6, 15.68, WALL_H, 2.6);
-    L.slab(paintYellow, 15.38, FLOOR_Y, -2.72, 15.72, 3.90, -2.56);
-    L.slab(paintYellow, 15.38, FLOOR_Y, 2.56, 15.72, 3.90, 2.72);
-    L.col(15.38, 0, -28.0, 15.72, WALL_H, -2.62, 'concrete');
-    L.col(15.38, 0, 2.62, 15.72, WALL_H, 22.0, 'concrete');
-    L.col(15.38, 3.85, -2.62, 15.72, WALL_H, 2.62, 'concrete');
+    buildWindowBandWall(MID_WALL_X - 0.13, FAC_Z0 + 0.3, MID_WALL_X + 0.13, -2.6, FLOOR_Y, 3.6, 5.3, WALL_H, 'z', wallIntMat);
+    buildWindowBandWall(MID_WALL_X - 0.13, 2.6, MID_WALL_X + 0.13, FAC_Z1 - 0.3, FLOOR_Y, 3.6, 5.3, WALL_H, 'z', wallIntMat);
+    L.slab(wallIntMat, MID_WALL_X - 0.13, 3.85, -2.6, MID_WALL_X + 0.13, WALL_H, 2.6);
+    L.slab(paintYellow, MID_WALL_X - 0.17, FLOOR_Y, -2.72, MID_WALL_X + 0.17, 3.90, -2.56);
+    L.slab(paintYellow, MID_WALL_X - 0.17, FLOOR_Y, 2.56, MID_WALL_X + 0.17, 3.90, 2.72);
+    L.col(MID_WALL_X - 0.17, 0, FAC_Z0, MID_WALL_X + 0.17, WALL_H, -2.62, 'concrete');
+    L.col(MID_WALL_X - 0.17, 0, 2.62, MID_WALL_X + 0.17, WALL_H, FAC_Z1, 'concrete');
+    L.col(MID_WALL_X - 0.17, 3.85, -2.62, MID_WALL_X + 0.17, WALL_H, 2.62, 'concrete');
 
     function createSlidingDoor({ name, label, x, railZ0, railZ1, closedZ, openZ, widthZ, heightY }) {
       L.box(steelDark, 0.14, 0.14, railZ1 - railZ0, x, FLOOR_Y + heightY + 0.12, (railZ0 + railZ1) / 2);
@@ -507,7 +502,7 @@
     createSlidingDoor({
       name: 'ic_surgulu_kapi',
       label: 'IC SURGULU KAPI',
-      x: 15.26,
+      x: MID_WALL_X - 0.28,
       railZ0: -8.6,
       railZ1: 3.2,
       closedZ: 0.0,
@@ -517,31 +512,34 @@
     });
 
     // ------------------------------------------------------------------------
-    // 5. SOL HOL: PALETLER & PAKETLEME MASASI
+    // 5. SOL HOL: ÇOK SAYIDA PALET & PARKUR TIRMANIŞ KULESİ + PAKETLEME MASALARI
+    //    - 45+ palet bloğu (palet üstüne palet istifleri dahil)
+    //    - En alçaktan en tepeye (Y = 5.4m) zıplayarak çıkılabilir parkur düzeni!
     // ------------------------------------------------------------------------
-    function addLoadedPallet(px, pz, yaw = 0, stackH = 2) {
+    function addLoadedPallet(px, pz, yaw = 0, stackH = 2, baseY = FLOOR_Y, addCollider = true) {
       const grp = new THREE.Group();
-      grp.position.set(px, FLOOR_Y, pz);
+      grp.position.set(px, baseY, pz);
       grp.rotation.y = yaw;
       stat.add(grp);
 
-      const deck = new THREE.Mesh(geo.box(1.25, 0.04, 1.05), woodPallet);
-      deck.position.y = 0.13;
+      const deck = new THREE.Mesh(geo.box(1.36, 0.045, 1.16), woodPallet);
+      deck.position.y = 0.135;
       deck.castShadow = true;
+      deck.receiveShadow = true;
       grp.add(deck);
-      for (const bx of [-0.52, 0, 0.52]) {
-        for (const bz of [-0.42, 0, 0.42]) {
+      for (const bx of [-0.56, 0, 0.56]) {
+        for (const bz of [-0.46, 0, 0.46]) {
           const block = new THREE.Mesh(geo.box(0.14, 0.11, 0.12), woodPallet);
           block.position.set(bx, 0.055, bz);
           grp.add(block);
         }
       }
       for (let tier = 0; tier < stackH; tier++) {
-        for (const cx of [-0.30, 0.30]) {
-          for (const cz of [-0.25, 0.25]) {
-            const ctn = new THREE.Mesh(geo.bevelBox(0.54, 0.46, 0.44, 0.012), cardboard);
-            ctn.position.set(cx, 0.38 + tier * 0.47, cz);
-            ctn.rotation.y = ((tier + cx) % 2) * 0.03;
+        for (const cx of [-0.32, 0.32]) {
+          for (const cz of [-0.27, 0.27]) {
+            const ctn = new THREE.Mesh(geo.bevelBox(0.58, 0.46, 0.48, 0.012), cardboard);
+            ctn.position.set(cx, 0.39 + tier * 0.47, cz);
+            ctn.rotation.y = ((tier + cx) % 2) * 0.02;
             ctn.castShadow = true;
             ctn.receiveShadow = true;
             grp.add(ctn);
@@ -549,42 +547,104 @@
         }
       }
       const wrap = new THREE.Mesh(
-        new THREE.BoxGeometry(1.16, stackH * 0.46, 0.96),
+        new THREE.BoxGeometry(1.26, stackH * 0.46, 1.06),
         new THREE.MeshPhysicalMaterial({ color: 0xeaf4fa, transparent: true, opacity: 0.16, roughness: 0.12 })
       );
       wrap.position.y = 0.16 + stackH * 0.23;
       grp.add(wrap);
 
-      L.col(px - 0.65, FLOOR_Y, pz - 0.56, px + 0.65, FLOOR_Y + 0.2 + stackH * 0.48, pz + 0.56, 'wood');
+      const topY = baseY + 0.16 + stackH * 0.47;
+      if (addCollider) {
+        L.col(px - 0.69, FLOOR_Y, pz - 0.59, px + 0.69, topY, pz + 0.59, 'wood');
+      }
+      return topY;
     }
 
-    // 14+ Loaded Wooden Pallets across Sol Hol storage rows
-    const palletCoords = [
-      [5.5, -25.8, 0.02, 3], [5.5, -23.4, -0.04, 2], [5.5, -21.0, 0.03, 3],
-      [5.5, -18.5, -0.02, 2], [5.5, -16.0, 0.05, 3], [5.5, -13.5, 0.0, 2],
-      [5.5, -11.0, -0.04, 3], [5.5, -8.5, 0.02, 2], [5.5, -6.0, 0.04, 2],
-      [7.8, -25.6, -0.03, 3], [7.8, -23.1, 0.02, 2], [7.8, -20.5, -0.02, 3],
-      [7.8, -17.8, 0.03, 2], [7.8, -15.0, 0.01, 2], [11.8, -21.5, 0.0, 2]
-    ];
-    for (const [px, pz, pyaw, pstack] of palletCoords) {
-      addLoadedPallet(px, pz, pyaw, pstack);
+    // Helper: stack N wooden pallets vertically with a single grounded collider (prevents mid-air ceiling bonks)
+    function addPalletTower(px, pz, yaw, tierList) {
+      let curY = FLOOR_Y;
+      for (const t of tierList) {
+        curY = addLoadedPallet(px, pz, yaw, t, curY, false);
+      }
+      L.col(px - 0.69, FLOOR_Y, pz - 0.59, px + 0.69, curY, pz + 0.59, 'wood');
+      return curY;
     }
 
-    // 2 Larger Industrial Packing Tables (2.3m wide x 5.2m long each)
+    // Row 1 (West Wall side, X = 5.4): Stepped climbable parkour chain rising South->North
+    // Top heights: 0.69 -> 1.16 -> 1.63 -> 2.10 -> 2.73 -> 3.36 -> 3.99 -> 4.62 -> 5.25 -> 5.25 -> 4.62 -> 3.99
+    addPalletTower(5.4, -4.6, 0.02, [1]);            // 0.69m (entry step right beside door)
+    addPalletTower(5.4, -6.5, -0.02, [2]);           // 1.16m
+    addPalletTower(5.4, -8.4, 0.03, [3]);            // 1.63m
+    addPalletTower(5.4, -10.3, -0.01, [2, 1]);       // 2.26m (2 pallets stacked)
+    addPalletTower(5.4, -12.2, 0.02, [2, 2]);        // 2.89m
+    addPalletTower(5.4, -14.1, -0.03, [2, 3]);       // 3.52m
+    addPalletTower(5.4, -16.0, 0.01, [2, 2, 2]);     // 3.36m (3 pallets stacked)
+    addPalletTower(5.4, -17.9, -0.02, [2, 2, 3]);    // 3.83m
+    addPalletTower(5.4, -19.8, 0.02, [3, 3, 2]);     // 4.30m
+    addPalletTower(5.4, -21.7, -0.01, [3, 3, 3]);    // 4.77m
+    addPalletTower(5.4, -23.6, 0.03, [3, 3, 2, 2]);  // 5.40m (PEAK 4-PALLET TOWER!)
+    addPalletTower(5.4, -25.5, -0.02, [3, 3, 3]);    // 4.77m
+    addPalletTower(5.4, -27.4, 0.02, [2, 2, 2]);     // 3.36m
+    addPalletTower(5.4, -29.3, -0.03, [2, 2]);       // 2.26m
+    addPalletTower(5.4, -31.2, 0.01, [3]);           // 1.63m
+    addPalletTower(5.4, -33.1, 0.0, [2]);            // 1.16m
+
+    // Row 2 (X = 7.45): Cross-jumpable stepped stacks connecting to Row 1 and Row 3
+    addPalletTower(7.45, -5.4, -0.02, [1]);          // 0.69m
+    addPalletTower(7.45, -7.4, 0.03, [2]);           // 1.16m
+    addPalletTower(7.45, -9.4, -0.01, [3]);          // 1.63m
+    addPalletTower(7.45, -11.4, 0.02, [2, 2]);       // 2.89m
+    addPalletTower(7.45, -13.4, -0.02, [3, 2]);      // 3.36m
+    addPalletTower(7.45, -15.4, 0.01, [2, 2, 2]);    // 4.15m
+    addPalletTower(7.45, -17.4, -0.03, [3, 2, 2]);   // 4.62m
+    addPalletTower(7.45, -19.4, 0.02, [2, 3, 2]);    // 4.62m
+    addPalletTower(7.45, -21.4, -0.01, [2, 2, 2]);   // 4.15m
+    addPalletTower(7.45, -23.4, 0.02, [2, 3]);       // 3.52m
+    addPalletTower(7.45, -25.4, -0.02, [2, 2]);      // 2.89m
+    addPalletTower(7.45, -27.4, 0.03, [3]);          // 1.63m
+    addPalletTower(7.45, -29.4, -0.01, [2]);         // 1.16m
+    addPalletTower(7.45, -31.4, 0.02, [2]);          // 1.16m
+    addPalletTower(7.45, -33.3, -0.02, [1]);         // 0.69m
+
+    // Row 3 (X = 9.55): Additional pallet storage stacks & stepping blocks
+    addPalletTower(9.55, -6.4, 0.01, [1]);
+    addPalletTower(9.55, -8.8, -0.02, [2]);
+    addPalletTower(9.55, -11.2, 0.02, [3]);
+    addPalletTower(9.55, -13.8, -0.01, [2, 2]);
+    addPalletTower(9.55, -16.4, 0.03, [2, 3]);
+    addPalletTower(9.55, -19.0, -0.02, [3, 2]);
+    addPalletTower(9.55, -21.6, 0.02, [2, 2]);
+    addPalletTower(9.55, -24.2, -0.01, [3]);
+    addPalletTower(9.55, -26.8, 0.02, [2]);
+    addPalletTower(9.55, -29.4, -0.03, [2]);
+    addPalletTower(9.55, -32.2, 0.01, [1]);
+
+    // Extra pallets near North packing area & South approach (total 48+ pallet towers / 65+ wooden pallet units)
+    addPalletTower(11.6, -28.0, 0.02, [2]);
+    addPalletTower(11.6, -25.6, -0.02, [1]);
+    addPalletTower(14.0, -28.5, 0.03, [2]);
+    addPalletTower(14.0, -26.2, -0.01, [1]);
+    // Stepped pallets on South side leading onto the Office/Mutfak mezzanine roof (Y = 3.46m at Z = 12.5)!
+    addPalletTower(5.4, 6.2, 0.02, [1]);             // 0.69m
+    addPalletTower(5.4, 8.1, -0.02, [2]);            // 1.16m
+    addPalletTower(5.4, 10.0, 0.01, [2, 1]);         // 2.26m
+    addPalletTower(5.4, 11.7, 0.0, [2, 2]);          // 2.89m -> jump right onto Office roof (3.46m)!
+
+    // 2 Larger Industrial Packing Tables (2.4m wide x 5.6m long each) in expanded Sol Hol
     function buildPackingTable(tx, tz, idx) {
-      const tw = 2.35, tl = 5.2, th = 0.90;
+      const tw = 2.40, tl = 5.6, th = 0.90;
       L.box(woodPallet, tw, 0.06, tl, tx, FLOOR_Y + th, tz, { bevel: 0.01 });
       L.box(steelDarkInt, tw - 0.1, 0.06, tl - 0.1, tx, FLOOR_Y + th - 0.05, tz);
-      for (const lx of [tx - 1.02, tx + 1.02]) {
-        for (const lz of [tz - 2.35, tz, tz + 2.35]) {
+      for (const lx of [tx - 1.05, tx + 1.05]) {
+        for (const lz of [tz - 2.5, tz, tz + 2.5]) {
           L.box(steelDarkInt, 0.08, th, 0.08, lx, FLOOR_Y + th * 0.5, lz);
         }
       }
-      L.cyl(new THREE.MeshStandardMaterial({ color: 0x89c4e1, transparent: true, opacity: 0.65, roughness: 0.2 }), 0.24, 1.25, tx - 0.4, FLOOR_Y + th + 0.32, tz - 1.7, { axis: 'x' });
-      L.box(paintBlue, 0.52, 0.08, 0.52, tx + 0.45, FLOOR_Y + th + 0.06, tz - 1.0);
+      L.cyl(new THREE.MeshStandardMaterial({ color: 0x89c4e1, transparent: true, opacity: 0.65, roughness: 0.2 }), 0.24, 1.25, tx - 0.4, FLOOR_Y + th + 0.32, tz - 1.8, { axis: 'x' });
+      L.box(paintBlue, 0.52, 0.08, 0.52, tx + 0.45, FLOOR_Y + th + 0.06, tz - 1.1);
       L.box(cardboard, 0.56, 0.40, 0.46, tx + 0.35, FLOOR_Y + th + 0.23, tz + 0.2);
-      L.box(cardboard, 0.56, 0.40, 0.46, tx - 0.40, FLOOR_Y + th + 0.23, tz + 1.1);
-      L.box(cardboard, 0.56, 0.40, 0.46, tx + 0.35, FLOOR_Y + th + 0.23, tz + 1.9);
+      L.box(cardboard, 0.56, 0.40, 0.46, tx - 0.40, FLOOR_Y + th + 0.23, tz + 1.2);
+      L.box(cardboard, 0.56, 0.40, 0.46, tx + 0.35, FLOOR_Y + th + 0.23, tz + 2.0);
       for (let gx = -0.26; gx <= 0.26; gx += 0.13) {
         for (let gz = -0.18; gz <= 0.18; gz += 0.12) {
           const cup = createGlassCup(THREE, glassMat, brassGold, true);
@@ -593,13 +653,15 @@
         }
       }
       addSign(THREE, stat, `PAKETLEME MASASI ${idx}`, 'BUYUK SEVK HAZIRLIK MASASI', tx, FLOOR_Y + 2.35, tz, 2.3, 0.48, -Math.PI / 2);
-      L.col(tx - tw / 2, FLOOR_Y, tz - tl / 2, tx + tw / 2, FLOOR_Y + th + 0.3, tz + tl / 2, 'wood');
+      // Clean table top collider so player can jump onto packing tables (#14)
+      L.col(tx - tw / 2, FLOOR_Y, tz - tl / 2, tx + tw / 2, FLOOR_Y + th + 0.04, tz + tl / 2, 'wood');
     }
-    buildPackingTable(11.8, -16.2, 1);
-    buildPackingTable(11.8, -8.4, 2);
+    buildPackingTable(14.4, -19.2, 1);
+    buildPackingTable(14.4, -9.8, 2);
 
     // ------------------------------------------------------------------------
-    // 6. SOL HOL ALT BÖLÜM: OFİS 1, OFİS 2 (BAĞLANTILI) & MUTFAK — TAM GİRİLEBİLİR
+    // 6. SOL HOL ALT BÖLÜM: OFİS 1, OFİS 2 (BİLGİSAYARLI) & MUTFAK
+    //    Expanded footprint: X: 4.3..18.35, Z: 12.5..27.2
     // ------------------------------------------------------------------------
     function createHingedDoor(id, label, hx, hz, width, axis, openAngle = 1.45, mat = woodDark, startOpen = true) {
       const doorH = 2.22;
@@ -635,7 +697,6 @@
       let curA = isOpen ? openAngle : 0;
       pivot.rotation.y = curA;
 
-      // FIX: Use Math.abs(curA) so negative openAngle (-1.45) disables collider properly!
       const syncCol = () => {
         if (Math.abs(curA) > 0.35) {
           col.min.y = -50;
@@ -667,294 +728,358 @@
       });
     }
 
+    const offZ0 = 12.5;
+    const offZMid = 19.8;
+    const offZ1 = 27.15;
+    const offXMid = 11.8;
+    const offXMax = 18.35;
     const ceilY0 = FLOOR_Y + 3.20;
     const ceilY1 = FLOOR_Y + 3.40;
-    L.slab(wallIntMat, 4.3, ceilY0, 9.0, 15.35, ceilY1, 21.7);
-    L.col(4.3, ceilY0, 9.0, 15.35, ceilY1, 21.7, 'concrete');
+    L.slab(wallIntMat, 4.3, ceilY0, offZ0, offXMax, ceilY1, offZ1);
+    L.col(4.3, ceilY0, offZ0, offXMax, ceilY1, offZ1, 'concrete');
 
-    // Ofis & Mutfak Üstü — Merdiven YOK, yukarıya atılmış pis yatak/döşek ve eşya yığını
+    // Ofis & Mutfak Üstü — eski pis yatak/döşek ve eşya yığını (hepsi üstüne çıkılabilir!)
     {
       const dirtyMattressMat = new THREE.MeshStandardMaterial({ color: 0x877b68, roughness: 0.94 });
       const dirtyBlanketMat = new THREE.MeshStandardMaterial({ color: 0x4f4338, roughness: 0.92 });
       const dirtyPillowMat = new THREE.MeshStandardMaterial({ color: 0x9b8f74, roughness: 0.9 });
       const stainPatchMat = new THREE.MeshStandardMaterial({ color: 0x524533, roughness: 0.96 });
-      // Stained old floor mattress & rumpled blanket/pillow
-      L.box(dirtyMattressMat, 1.35, 0.20, 2.10, 7.6, ceilY1 + 0.10, 14.2, { r: [0, 0.16, 0], bevel: 0.04 });
-      L.box(stainPatchMat, 0.55, 0.02, 0.72, 7.7, ceilY1 + 0.205, 14.0, { r: [0, 0.12, 0] });
-      L.box(dirtyBlanketMat, 1.18, 0.11, 1.25, 7.45, ceilY1 + 0.24, 14.55, { r: [0.04, 0.22, -0.03], bevel: 0.03 });
-      L.box(dirtyPillowMat, 0.68, 0.12, 0.42, 7.78, ceilY1 + 0.26, 13.38, { r: [0.05, 0.10, 0], bevel: 0.03 });
-      // Rolled old rug, crushed cartons, dusty plastic crate & old bucket
-      L.cyl(dirtyBlanketMat, 0.16, 1.95, 9.8, ceilY1 + 0.16, 12.6, { axis: 'x', r: [0, 0.25, Math.PI / 2] });
-      L.box(cardboard, 0.85, 0.42, 0.75, 11.4, ceilY1 + 0.21, 16.5, { r: [0, 0.35, 0] });
-      L.box(cardboard, 0.72, 0.22, 0.65, 11.9, ceilY1 + 0.11, 17.6, { r: [0, -0.4, 0.12] });
-      L.box(paintBlue, 0.55, 0.35, 0.42, 12.8, ceilY1 + 0.175, 14.2, { r: [0, 0.6, 0] });
-      L.cyl(rustPipeMat, 0.18, 0.38, 10.6, ceilY1 + 0.19, 18.8);
+      L.box(dirtyMattressMat, 1.35, 0.20, 2.10, 8.2, ceilY1 + 0.10, 17.5, { r: [0, 0.16, 0], bevel: 0.04 });
+      L.box(stainPatchMat, 0.55, 0.02, 0.72, 8.3, ceilY1 + 0.205, 17.3, { r: [0, 0.12, 0] });
+      L.box(dirtyBlanketMat, 1.18, 0.11, 1.25, 8.05, ceilY1 + 0.24, 17.85, { r: [0.04, 0.22, -0.03], bevel: 0.03 });
+      L.box(dirtyPillowMat, 0.68, 0.12, 0.42, 8.38, ceilY1 + 0.26, 16.68, { r: [0.05, 0.10, 0], bevel: 0.03 });
+      L.col(7.4, ceilY1, 16.3, 9.0, ceilY1 + 0.25, 18.7, 'wood');
+
+      L.cyl(dirtyBlanketMat, 0.16, 1.95, 10.8, ceilY1 + 0.16, 15.6, { axis: 'x', r: [0, 0.25, Math.PI / 2] });
+      L.box(cardboard, 0.85, 0.42, 0.75, 12.8, ceilY1 + 0.21, 20.5, { r: [0, 0.35, 0] });
+      L.col(12.3, ceilY1, 20.0, 13.3, ceilY1 + 0.42, 21.0, 'wood');
+      L.box(cardboard, 0.72, 0.22, 0.65, 13.4, ceilY1 + 0.11, 21.8, { r: [0, -0.4, 0.12] });
+      L.box(paintBlue, 0.55, 0.35, 0.42, 14.5, ceilY1 + 0.175, 17.2, { r: [0, 0.6, 0] });
+      L.cyl(rustPipeMat, 0.18, 0.38, 11.8, ceilY1 + 0.19, 23.0);
     }
 
-    // North wall of Ofis 1 (Z = 9.0), WIDE doorway X: 7.0..8.5 (1.5m wide!)
-    buildWindowBandWall(4.3, 8.92, 7.0, 9.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
-    L.slab(wallIntMat, 7.0, FLOOR_Y + 2.25, 8.92, 8.5, ceilY0, 9.10);
-    buildWindowBandWall(8.5, 8.92, 10.6, 9.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
-    L.col(4.3, FLOOR_Y, 8.90, 6.98, ceilY0, 9.12, 'concrete');
-    L.col(8.52, FLOOR_Y, 8.90, 10.6, ceilY0, 9.12, 'concrete');
-    L.col(6.98, FLOOR_Y + 2.25, 8.90, 8.52, ceilY0, 9.12, 'concrete');
-    createHingedDoor('ofis1_kapi', 'Ofis 1 Kapisi', 7.0, 9.0, 1.46, 'x', -1.45);
-    addSign(THREE, stat, 'OFIS 1', 'IDARI & PLANLAMA', 9.45, FLOOR_Y + 2.65, 8.88, 1.4, 0.36, Math.PI);
+    // North wall of Ofis 1 (Z = 12.5), WIDE doorway X: 7.4..8.9
+    buildWindowBandWall(4.3, offZ0 - 0.08, 7.4, offZ0 + 0.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
+    L.slab(wallIntMat, 7.4, FLOOR_Y + 2.25, offZ0 - 0.08, 8.9, ceilY0, offZ0 + 0.10);
+    buildWindowBandWall(8.9, offZ0 - 0.08, offXMid, offZ0 + 0.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
+    L.col(4.3, FLOOR_Y, offZ0 - 0.10, 7.38, ceilY0, offZ0 + 0.12, 'concrete');
+    L.col(8.92, FLOOR_Y, offZ0 - 0.10, offXMid, ceilY0, offZ0 + 0.12, 'concrete');
+    L.col(7.38, FLOOR_Y + 2.25, offZ0 - 0.10, 8.92, ceilY0, offZ0 + 0.12, 'concrete');
+    createHingedDoor('ofis1_kapi', 'Ofis 1 Kapisi', 7.4, offZ0, 1.46, 'x', -1.45);
+    addSign(THREE, stat, 'OFIS 1', 'IDARI & PLANLAMA', 10.25, FLOOR_Y + 2.65, offZ0 - 0.12, 1.4, 0.36, Math.PI);
 
-    // North wall of Mutfak (Z = 9.0), WIDE doorway X: 12.1..13.6 (1.5m wide!)
-    buildWindowBandWall(10.6, 8.92, 12.1, 9.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
-    L.slab(wallIntMat, 12.1, FLOOR_Y + 2.25, 8.92, 13.6, ceilY0, 9.10);
-    buildWindowBandWall(13.6, 8.92, 15.35, 9.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
-    L.col(10.6, FLOOR_Y, 8.90, 12.08, ceilY0, 9.12, 'concrete');
-    L.col(13.62, FLOOR_Y, 8.90, 15.35, ceilY0, 9.12, 'concrete');
-    L.col(12.08, FLOOR_Y + 2.25, 8.90, 13.62, ceilY0, 9.12, 'concrete');
-    createHingedDoor('mutfak_kapi', 'Mutfak Kapisi', 12.1, 9.0, 1.46, 'x', -1.45);
-    addSign(THREE, stat, 'MUTFAK', 'YEMEK & DINLENME', 14.45, FLOOR_Y + 2.65, 8.88, 1.4, 0.36, Math.PI);
+    // North wall of Mutfak (Z = 12.5), WIDE doorway X: 14.2..15.7
+    buildWindowBandWall(offXMid, offZ0 - 0.08, 14.2, offZ0 + 0.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
+    L.slab(wallIntMat, 14.2, FLOOR_Y + 2.25, offZ0 - 0.08, 15.7, ceilY0, offZ0 + 0.10);
+    buildWindowBandWall(15.7, offZ0 - 0.08, offXMax, offZ0 + 0.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
+    L.col(offXMid, FLOOR_Y, offZ0 - 0.10, 14.18, ceilY0, offZ0 + 0.12, 'concrete');
+    L.col(15.72, FLOOR_Y, offZ0 - 0.10, offXMax, ceilY0, offZ0 + 0.12, 'concrete');
+    L.col(14.18, FLOOR_Y + 2.25, offZ0 - 0.10, 15.72, ceilY0, offZ0 + 0.12, 'concrete');
+    createHingedDoor('mutfak_kapi', 'Mutfak Kapisi', 14.2, offZ0, 1.46, 'x', -1.45);
+    addSign(THREE, stat, 'MUTFAK', 'YEMEK & DINLENME', 17.1, FLOOR_Y + 2.65, offZ0 - 0.12, 1.4, 0.36, Math.PI);
 
-    // Shared wall between Offices & Mutfak (X = 10.6)
-    L.slab(wallIntMat, 10.52, FLOOR_Y, 9.0, 10.68, ceilY0, 21.7);
-    L.col(10.50, FLOOR_Y, 9.0, 10.70, ceilY0, 21.7, 'concrete');
+    // Shared wall between Offices & Mutfak (X = 11.8)
+    L.slab(wallIntMat, offXMid - 0.08, FLOOR_Y, offZ0, offXMid + 0.08, ceilY0, offZ1);
+    L.col(offXMid - 0.10, FLOOR_Y, offZ0, offXMid + 0.10, ceilY0, offZ1, 'concrete');
 
-    // Shared wall between Ofis 1 and Ofis 2 (Z = 15.2), WIDE connecting doorway X: 7.0..8.5!
-    L.slab(wallIntMat, 4.3, FLOOR_Y, 15.12, 7.0, ceilY0, 15.28);
-    L.slab(wallIntMat, 7.0, FLOOR_Y + 2.25, 15.12, 8.5, ceilY0, 15.28);
-    L.slab(wallIntMat, 8.5, FLOOR_Y, 15.12, 10.6, ceilY0, 15.28);
-    L.col(4.3, FLOOR_Y, 15.10, 6.98, ceilY0, 15.30, 'concrete');
-    L.col(8.52, FLOOR_Y, 15.10, 10.6, ceilY0, 15.30, 'concrete');
-    L.col(6.98, FLOOR_Y + 2.25, 15.10, 8.52, ceilY0, 15.30, 'concrete');
-    createHingedDoor('ofis2_ara_kapi', 'Ofis 1-2 Ara Kapisi', 7.0, 15.2, 1.46, 'x', 1.45);
-    addSign(THREE, stat, 'OFIS 2', 'YONETIM & SHOWROOM', 9.45, FLOOR_Y + 2.55, 15.08, 1.3, 0.34, Math.PI);
+    // Shared wall between Ofis 1 and Ofis 2 (Z = 19.8), WIDE connecting doorway X: 7.4..8.9
+    L.slab(wallIntMat, 4.3, FLOOR_Y, offZMid - 0.08, 7.4, ceilY0, offZMid + 0.08);
+    L.slab(wallIntMat, 7.4, FLOOR_Y + 2.25, offZMid - 0.08, 8.9, ceilY0, offZMid + 0.08);
+    L.slab(wallIntMat, 8.9, FLOOR_Y, offZMid - 0.08, offXMid, ceilY0, offZMid + 0.08);
+    L.col(4.3, FLOOR_Y, offZMid - 0.10, 7.38, ceilY0, offZMid + 0.10, 'concrete');
+    L.col(8.92, FLOOR_Y, offZMid - 0.10, offXMid, ceilY0, offZMid + 0.10, 'concrete');
+    L.col(7.38, FLOOR_Y + 2.25, offZMid - 0.10, 8.92, ceilY0, offZMid + 0.10, 'concrete');
+    createHingedDoor('ofis2_ara_kapi', 'Ofis 1-2 Ara Kapisi', 7.4, offZMid, 1.46, 'x', 1.45);
+    addSign(THREE, stat, 'OFIS 2', 'YONETIM & SHOWROOM', 10.25, FLOOR_Y + 2.55, offZMid - 0.12, 1.3, 0.34, Math.PI);
 
-    // Ofis 1 Interior:
-    // Masa sırtı batı duvarına dayalı (oturan Doğu +X yönüne bakar -> Fabrika kapısı SOLUNDA, İç Ofis kapısı SAĞINDA!)
-    // Üstünde TEK MONİTÖR + yanında BİLGİSAYAR KASASI!
-    {
-      L.box(ledWarmMat, 1.2, 0.04, 0.5, 7.6, ceilY0 - 0.05, 12.1, { parent: dyn });
-      addIntLight(0xffebd0, 6.5, 9.0, 7.6, ceilY0 - 0.3, 12.1);
-
-      // Desk (Z: 11.1..13.1, X: 5.2..6.05) — Chair behind it at X=4.72 backed to West wall X=4.3!
-      L.box(woodDark, 0.86, 0.05, 1.95, 5.62, FLOOR_Y + 0.76, 12.1);
-      L.box(steelDarkInt, 0.06, 0.74, 1.85, 6.00, FLOOR_Y + 0.37, 12.1);
-      L.box(steelDarkInt, 0.80, 0.74, 0.06, 5.62, FLOOR_Y + 0.37, 11.18);
-      L.box(steelDarkInt, 0.80, 0.74, 0.06, 5.62, FLOOR_Y + 0.37, 13.02);
-      L.col(5.15, FLOOR_Y, 11.1, 6.08, FLOOR_Y + 0.85, 13.1, 'wood');
-
-      // Single Monitor + PC Tower Case right beside it
-      const scrMat = L.G.mats.emissive(0x6eb6ff, 1.4);
-      L.box(steelDarkInt, 0.05, 0.38, 0.64, 5.68, FLOOR_Y + 1.07, 12.15);
-      L.box(scrMat, 0.04, 0.33, 0.58, 5.65, FLOOR_Y + 1.07, 12.15); // screen faces chair (-X)
-      L.box(steelDarkInt, 0.14, 0.14, 0.14, 5.68, FLOOR_Y + 0.85, 12.15); // stand
-      // PC Tower Case (Kasa) on desk right next to the monitor
-      L.box(steelDarkInt, 0.44, 0.46, 0.22, 5.62, FLOOR_Y + 1.02, 11.42, { bevel: 0.01 });
-      L.box(ledCoolMat, 0.02, 0.28, 0.03, 5.39, FLOOR_Y + 1.04, 11.42, { parent: dyn });
+    // Helper: Full Desktop Computer Set (Monitor + Glowing Screen + PC Tower Case + Keyboard & Mouse)
+    const pcScrMat = L.G.mats.emissive(0x6eb6ff, 1.4);
+    function addDesktopComputer(mx, my, mz) {
+      L.box(steelDarkInt, 0.05, 0.38, 0.64, mx, my + 0.31, mz + 0.05);
+      L.box(pcScrMat, 0.04, 0.33, 0.58, mx - 0.03, my + 0.31, mz + 0.05);
+      L.box(steelDarkInt, 0.14, 0.14, 0.14, mx, my + 0.09, mz + 0.05);
+      // PC Tower Case beside monitor
+      L.box(steelDarkInt, 0.44, 0.46, 0.22, mx - 0.06, my + 0.26, mz - 0.68, { bevel: 0.01 });
+      L.box(ledCoolMat, 0.02, 0.28, 0.03, mx - 0.29, my + 0.28, mz - 0.68, { parent: dyn });
       // Keyboard & Mouse
-      L.box(steelDarkInt, 0.16, 0.02, 0.44, 5.38, FLOOR_Y + 0.80, 12.15);
-      L.box(steelDarkInt, 0.11, 0.02, 0.07, 5.38, FLOOR_Y + 0.80, 12.48);
-
-      // Swivel chair with back against West wall (X=4.3)
-      L.box(leatherDark, 0.50, 0.10, 0.52, 4.78, FLOOR_Y + 0.46, 12.1);
-      L.box(leatherDark, 0.08, 0.64, 0.50, 4.55, FLOOR_Y + 0.78, 12.1);
-      L.cyl(steelDarkInt, 0.04, 0.42, 4.78, FLOOR_Y + 0.21, 12.1);
-
-      // Filing cabinet against East partition wall
-      L.box(paintGrey, 0.55, 1.35, 0.65, 10.1, FLOOR_Y + 0.68, 13.9);
-      L.col(9.8, FLOOR_Y, 13.55, 10.45, FLOOR_Y + 1.36, 14.25, 'metal');
+      L.box(steelDarkInt, 0.16, 0.02, 0.44, mx - 0.28, my + 0.04, mz + 0.05);
+      L.box(steelDarkInt, 0.11, 0.02, 0.07, mx - 0.28, my + 0.04, mz + 0.38);
     }
 
-    // Ofis 2 Interior:
-    // Masa Ofis 1 ile aynı yönde ama DAHA BÜYÜK; önünde İKİ TANE TEKLİ KOLTUK;
-    // Kapıdan girildiğinde (Z=15.2) TAM KARŞINDA bir koltuk, SOLUNDA bir koltuk, ORTALARINDA masa!
+    // Ofis 1 Interior (Z: 12.5..19.8)
     {
-      L.box(ledWarmMat, 1.2, 0.04, 0.5, 7.6, ceilY0 - 0.05, 18.4, { parent: dyn });
-      addIntLight(0xffe4bd, 7.2, 9.5, 7.6, ceilY0 - 0.3, 18.4);
+      L.box(ledWarmMat, 1.2, 0.04, 0.5, 8.0, ceilY0 - 0.05, 16.2, { parent: dyn });
+      addIntLight(0xffebd0, 7.5, 11.0, 8.0, ceilY0 - 0.3, 16.2);
 
-      // Larger Executive Desk in same orientation (back to West wall, X: 5.2..6.2, Z: 17.2..19.6)
-      L.box(woodDark, 1.02, 0.06, 2.38, 5.65, FLOOR_Y + 0.76, 18.4);
-      L.box(woodDark, 0.92, 0.74, 2.28, 5.65, FLOOR_Y + 0.37, 18.4);
-      L.col(5.12, FLOOR_Y, 17.2, 6.18, FLOOR_Y + 0.82, 19.6, 'wood');
+      // Desk (X: 5.15..6.08, Z: 15.2..17.2)
+      L.box(woodDark, 0.86, 0.05, 1.95, 5.62, FLOOR_Y + 0.76, 16.2);
+      L.box(steelDarkInt, 0.06, 0.74, 1.85, 6.00, FLOOR_Y + 0.37, 16.2);
+      L.box(steelDarkInt, 0.80, 0.74, 0.06, 5.62, FLOOR_Y + 0.37, 15.28);
+      L.box(steelDarkInt, 0.80, 0.74, 0.06, 5.62, FLOOR_Y + 0.37, 17.12);
+      L.col(5.15, FLOOR_Y, 15.2, 6.08, FLOOR_Y + 0.80, 17.2, 'wood');
+
+      addDesktopComputer(5.68, FLOOR_Y + 0.76, 16.2);
+
+      // Climbable Swivel Chair backed against West wall
+      L.box(leatherDark, 0.50, 0.10, 0.52, 4.78, FLOOR_Y + 0.46, 16.2);
+      L.box(leatherDark, 0.08, 0.64, 0.50, 4.55, FLOOR_Y + 0.78, 16.2);
+      L.cyl(steelDarkInt, 0.04, 0.42, 4.78, FLOOR_Y + 0.21, 16.2);
+      L.col(4.50, FLOOR_Y, 15.92, 5.06, FLOOR_Y + 0.52, 16.48, 'wood');
+
+      // Climbable Filing cabinet against East partition wall
+      L.box(paintGrey, 0.55, 1.35, 0.65, 11.3, FLOOR_Y + 0.68, 18.2);
+      L.col(11.0, FLOOR_Y, 17.85, 11.65, FLOOR_Y + 1.36, 18.55, 'metal');
+    }
+
+    // Ofis 2 Interior (Z: 19.8..27.15) — NOW WITH COMPUTER (#9) + Climbable Furniture (#14)
+    {
+      L.box(ledWarmMat, 1.2, 0.04, 0.5, 8.0, ceilY0 - 0.05, 23.5, { parent: dyn });
+      addIntLight(0xffe4bd, 8.0, 11.5, 8.0, ceilY0 - 0.3, 23.5);
+
+      // Larger Executive Desk (X: 5.12..6.18, Z: 22.3..24.7)
+      L.box(woodDark, 1.02, 0.06, 2.38, 5.65, FLOOR_Y + 0.76, 23.5);
+      L.box(woodDark, 0.92, 0.74, 2.28, 5.65, FLOOR_Y + 0.37, 23.5);
+      L.col(5.12, FLOOR_Y, 22.3, 6.18, FLOOR_Y + 0.80, 24.7, 'wood');
+
+      // Desktop Computer inside Ofis 2 (#9)!
+      addDesktopComputer(5.74, FLOOR_Y + 0.76, 23.5);
+
       // Executive chair backed against West wall
-      L.box(leatherDark, 0.54, 0.12, 0.56, 4.76, FLOOR_Y + 0.48, 18.4);
-      L.box(leatherDark, 0.10, 0.74, 0.54, 4.52, FLOOR_Y + 0.85, 18.4);
+      L.box(leatherDark, 0.54, 0.12, 0.56, 4.76, FLOOR_Y + 0.48, 23.5);
+      L.box(leatherDark, 0.10, 0.74, 0.54, 4.52, FLOOR_Y + 0.85, 23.5);
+      L.col(4.46, FLOOR_Y, 23.20, 5.06, FLOOR_Y + 0.55, 23.80, 'wood');
 
-      // Two Single Armchairs directly in front of the executive desk (facing West toward desk)
-      for (const az of [17.75, 19.05]) {
-        L.box(leatherDark, 0.66, 0.40, 0.68, 6.72, FLOOR_Y + 0.20, az, { bevel: 0.02 });
-        L.box(leatherDark, 0.14, 0.48, 0.68, 7.00, FLOOR_Y + 0.58, az, { bevel: 0.02 });
-        L.box(leatherDark, 0.64, 0.24, 0.10, 6.72, FLOOR_Y + 0.50, az - 0.29);
-        L.box(leatherDark, 0.64, 0.24, 0.10, 6.72, FLOOR_Y + 0.50, az + 0.29);
-        L.col(6.35, FLOOR_Y, az - 0.36, 7.12, FLOOR_Y + 0.85, az + 0.36, 'wood');
+      // Two Single Armchairs directly in front of the executive desk
+      for (const az of [22.85, 24.15]) {
+        L.box(leatherDark, 0.66, 0.40, 0.68, 6.82, FLOOR_Y + 0.20, az, { bevel: 0.02 });
+        L.box(leatherDark, 0.14, 0.48, 0.68, 7.10, FLOOR_Y + 0.58, az, { bevel: 0.02 });
+        L.box(leatherDark, 0.64, 0.24, 0.10, 6.82, FLOOR_Y + 0.50, az - 0.29);
+        L.box(leatherDark, 0.64, 0.24, 0.10, 6.82, FLOOR_Y + 0.50, az + 0.29);
+        L.col(6.45, FLOOR_Y, az - 0.36, 7.22, FLOOR_Y + 0.45, az + 0.36, 'wood');
       }
 
-      // Entering from doorway (Z=15.2, X~7.8) facing South (+Z):
-      // 1) Directly ahead (Tam karşında) along South wall: Sofa facing North (-Z)
-      L.box(leatherDark, 1.95, 0.42, 0.82, 8.35, FLOOR_Y + 0.21, 21.1, { bevel: 0.02 });
-      L.box(leatherDark, 1.95, 0.46, 0.16, 8.35, FLOOR_Y + 0.60, 21.45, { bevel: 0.02 });
-      L.col(7.35, FLOOR_Y, 20.65, 9.35, FLOOR_Y + 0.85, 21.55, 'wood');
+      // Sofa 1 along South wall
+      L.box(leatherDark, 2.05, 0.42, 0.82, 9.1, FLOOR_Y + 0.21, 26.5, { bevel: 0.02 });
+      L.box(leatherDark, 2.05, 0.46, 0.16, 9.1, FLOOR_Y + 0.60, 26.85, { bevel: 0.02 });
+      L.col(8.05, FLOOR_Y, 26.05, 10.15, FLOOR_Y + 0.45, 26.95, 'wood');
 
-      // 2) On the left (Solunda) along East wall: Sofa facing West (-X)
-      L.box(leatherDark, 0.82, 0.42, 1.95, 10.0, FLOOR_Y + 0.21, 18.4, { bevel: 0.02 });
-      L.box(leatherDark, 0.16, 0.46, 1.95, 10.35, FLOOR_Y + 0.60, 18.4, { bevel: 0.02 });
-      L.col(9.55, FLOOR_Y, 17.4, 10.45, FLOOR_Y + 0.85, 19.4, 'wood');
+      // Sofa 2 along East wall
+      L.box(leatherDark, 0.82, 0.42, 2.05, 11.15, FLOOR_Y + 0.21, 23.5, { bevel: 0.02 });
+      L.box(leatherDark, 0.16, 0.46, 2.05, 11.50, FLOOR_Y + 0.60, 23.5, { bevel: 0.02 });
+      L.col(10.70, FLOOR_Y, 22.45, 11.60, FLOOR_Y + 0.45, 24.55, 'wood');
 
-      // 3) Center Table between the two sofas (Ortalarında da bir masa)
-      L.box(woodDark, 1.05, 0.05, 1.05, 8.65, FLOOR_Y + 0.46, 19.2, { bevel: 0.01 });
-      L.box(steelDarkInt, 0.85, 0.44, 0.85, 8.65, FLOOR_Y + 0.22, 19.2);
-      L.col(8.10, FLOOR_Y, 18.65, 9.20, FLOOR_Y + 0.50, 19.75, 'wood');
+      // Center Coffee Table between the two sofas
+      L.box(woodDark, 1.05, 0.05, 1.05, 9.4, FLOOR_Y + 0.46, 24.4, { bevel: 0.01 });
+      L.box(steelDarkInt, 0.85, 0.44, 0.85, 9.4, FLOOR_Y + 0.22, 24.4);
+      L.col(8.85, FLOOR_Y, 23.85, 9.95, FLOOR_Y + 0.50, 24.95, 'wood');
 
-      // Display Vitrine tucked on North-West wall (X: 4.5..6.0, Z: 15.7)
-      L.box(woodDark, 1.5, 0.45, 0.50, 5.25, FLOOR_Y + 0.22, 15.75);
-      L.box(glassMat, 1.46, 1.55, 0.46, 5.25, FLOOR_Y + 1.22, 15.75, { cast: false });
-      L.box(ledWarmMat, 1.3, 0.03, 0.28, 5.25, FLOOR_Y + 1.96, 15.75, { parent: dyn });
+      // Display Vitrine tucked on North-West wall
+      L.box(woodDark, 1.5, 0.45, 0.50, 5.25, FLOOR_Y + 0.22, 20.4);
+      L.box(glassMat, 1.46, 1.55, 0.46, 5.25, FLOOR_Y + 1.22, 20.4, { cast: false });
+      L.box(ledWarmMat, 1.3, 0.03, 0.28, 5.25, FLOOR_Y + 1.96, 20.4, { parent: dyn });
       for (const sy of [FLOOR_Y + 0.72, FLOOR_Y + 1.28]) {
-        L.box(glassMat, 1.38, 0.02, 0.38, 5.25, sy, 15.75, { cast: false });
+        L.box(glassMat, 1.38, 0.02, 0.38, 5.25, sy, 20.4, { cast: false });
         for (let sx = 4.7; sx <= 5.8; sx += 0.22) {
           const cup = createGlassCup(THREE, glassMat, brassGold, true);
-          cup.position.set(sx, sy + 0.015, 15.75);
+          cup.position.set(sx, sy + 0.015, 20.4);
           stat.add(cup);
         }
       }
-      L.col(4.48, FLOOR_Y, 15.48, 6.02, FLOOR_Y + 2.0, 16.02, 'wood');
+      L.col(4.48, FLOOR_Y, 20.12, 6.02, FLOOR_Y + 2.0, 20.68, 'wood');
     }
 
-    // Mutfak Interior: El yıkama yeri + Buzdolabı + Tüp & Üstünde Büyük Kazan/Tencere + Yemek Masası
+    // Mutfak Interior (X: 11.8..18.35, Z: 12.5..27.15)
     {
-      L.box(ledCoolMat, 1.2, 0.04, 0.45, 12.9, ceilY0 - 0.05, 15.5, { parent: dyn });
-      addIntLight(0xfff4e0, 7.0, 9.5, 12.9, ceilY0 - 0.3, 15.5);
+      L.box(ledCoolMat, 1.2, 0.04, 0.45, 15.0, ceilY0 - 0.05, 19.5, { parent: dyn });
+      addIntLight(0xfff4e0, 8.0, 11.5, 15.0, ceilY0 - 0.3, 19.5);
 
-      // Tall Two-Door Refrigerator (Buzdolabı)
       const fridgeMat = L.MI('steel_bare');
-      L.box(fridgeMat, 0.84, 2.02, 0.84, 14.82, FLOOR_Y + 1.01, 12.6, { bevel: 0.02 });
-      L.box(steelDarkInt, 0.03, 1.96, 0.04, 14.39, FLOOR_Y + 1.01, 12.6);
-      L.col(14.36, FLOOR_Y, 12.15, 15.28, FLOOR_Y + 2.05, 13.05, 'metal');
+      L.box(fridgeMat, 0.84, 2.02, 0.84, 17.82, FLOOR_Y + 1.01, 16.5, { bevel: 0.02 });
+      L.box(steelDarkInt, 0.03, 1.96, 0.04, 17.39, FLOOR_Y + 1.01, 16.5);
+      L.col(17.36, FLOOR_Y, 16.05, 18.28, FLOOR_Y + 2.05, 16.95, 'metal');
 
-      // Dedicated Handwashing Sink Station (El Yıkama Yeri)
-      L.box(paintWhite, 0.72, 0.88, 2.8, 14.85, FLOOR_Y + 0.44, 15.4);
-      L.box(steelGalvInt, 0.74, 0.04, 2.82, 14.85, FLOOR_Y + 0.90, 15.4);
-      // Recessed stainless sink basin, chrome faucet, mirror & soap bottle
-      L.box(steelDarkInt, 0.48, 0.06, 0.62, 14.82, FLOOR_Y + 0.91, 15.4);
-      L.cyl(steelGalvInt, 0.018, 0.28, 15.04, FLOOR_Y + 1.06, 15.4);
-      L.cyl(steelGalvInt, 0.016, 0.16, 14.96, FLOOR_Y + 1.18, 15.4, { axis: 'x' });
-      L.box(glassMat, 0.03, 0.74, 0.92, 15.22, FLOOR_Y + 1.55, 15.4, { cast: false });
-      L.cyl(paintBlue, 0.04, 0.14, 14.98, FLOOR_Y + 0.99, 15.85);
-      L.box(paintWhite, 0.04, 0.48, 0.30, 15.20, FLOOR_Y + 1.25, 14.65);
-      L.col(14.46, FLOOR_Y, 13.95, 15.28, FLOOR_Y + 1.0, 16.85, 'wood');
+      L.box(paintWhite, 0.72, 0.88, 2.8, 17.85, FLOOR_Y + 0.44, 19.4);
+      L.box(steelGalvInt, 0.74, 0.04, 2.82, 17.85, FLOOR_Y + 0.90, 19.4);
+      L.box(steelDarkInt, 0.48, 0.06, 0.62, 17.82, FLOOR_Y + 0.91, 19.4);
+      L.cyl(steelGalvInt, 0.018, 0.28, 18.04, FLOOR_Y + 1.06, 19.4);
+      L.cyl(steelGalvInt, 0.016, 0.16, 17.96, FLOOR_Y + 1.18, 19.4, { axis: 'x' });
+      L.box(glassMat, 0.03, 0.74, 0.92, 18.22, FLOOR_Y + 1.55, 19.4, { cast: false });
+      L.cyl(paintBlue, 0.04, 0.14, 17.98, FLOOR_Y + 0.99, 19.85);
+      L.box(paintWhite, 0.04, 0.48, 0.30, 18.20, FLOOR_Y + 1.25, 18.65);
+      L.col(17.46, FLOOR_Y, 17.95, 18.28, FLOOR_Y + 0.95, 20.85, 'wood');
 
-      // LPG Gas Cylinder (Tüp) + Floor Gas Burner (Ocak) + Large Cooking Cauldron/Pot (Büyük Kazan/Tencere)
       const lpgTankMat = new THREE.MeshStandardMaterial({ color: 0x3f6e94, roughness: 0.45, metalness: 0.35 });
-      const lpgX = 14.65, lpgZ = 18.2;
+      const lpgX = 17.65, lpgZ = 22.4;
       L.cyl(lpgTankMat, 0.21, 0.62, lpgX, FLOOR_Y + 0.31, lpgZ);
       L.cyl(lpgTankMat, 0.16, 0.16, lpgX, FLOOR_Y + 0.68, lpgZ, { open: true });
       L.cyl(brassGold, 0.025, 0.08, lpgX, FLOOR_Y + 0.65, lpgZ);
       L.col(lpgX - 0.25, FLOOR_Y, lpgZ - 0.25, lpgX + 0.25, FLOOR_Y + 0.80, lpgZ + 0.25, 'metal');
 
-      // Gas Burner Stand & Large Two-Handled Metal Cauldron / Big Pot sitting on the Burner
-      const potX = 14.55, potZ = 19.65;
+      const potX = 17.55, potZ = 23.95;
       L.box(steelDarkInt, 0.78, 0.34, 0.78, potX, FLOOR_Y + 0.17, potZ);
       L.cyl(L.G.mats.emissive(0x389bff, 2.2), 0.22, 0.04, potX, FLOOR_Y + 0.36, potZ, { parent: dyn });
-      // Gas hose connecting cylinder to burner
       L.box(rubberMat, 0.03, 0.03, 1.3, potX, FLOOR_Y + 0.22, (lpgZ + potZ) / 2);
-      // Giant Aluminium/Stainless Kazan (Cauldron) on top of burner
       const kazanMat = L.MI('aluminium');
       L.cyl(kazanMat, 0.37, 0.48, potX, FLOOR_Y + 0.62, potZ, { seg: 20 });
-      L.cyl(kazanMat, 0.38, 0.05, potX, FLOOR_Y + 0.88, potZ, { seg: 20 }); // lid
-      L.box(steelDarkInt, 0.16, 0.05, 0.06, potX, FLOOR_Y + 0.93, potZ); // lid handle
+      L.cyl(kazanMat, 0.38, 0.05, potX, FLOOR_Y + 0.88, potZ, { seg: 20 });
+      L.box(steelDarkInt, 0.16, 0.05, 0.06, potX, FLOOR_Y + 0.93, potZ);
       L.box(steelDarkInt, 0.08, 0.04, 0.14, potX - 0.40, FLOOR_Y + 0.72, potZ);
       L.box(steelDarkInt, 0.08, 0.04, 0.14, potX + 0.40, FLOOR_Y + 0.72, potZ);
       L.col(potX - 0.45, FLOOR_Y, potZ - 0.45, potX + 0.45, FLOOR_Y + 0.96, potZ + 0.45, 'metal');
 
-      // Staff Dining Table & 4 Chairs
-      L.box(woodPallet, 1.15, 0.05, 1.75, 12.1, FLOOR_Y + 0.75, 16.0);
-      L.box(steelDarkInt, 0.06, 0.74, 0.06, 11.6, FLOOR_Y + 0.37, 15.25);
-      L.box(steelDarkInt, 0.06, 0.74, 0.06, 12.6, FLOOR_Y + 0.37, 15.25);
-      L.box(steelDarkInt, 0.06, 0.74, 0.06, 11.6, FLOOR_Y + 0.37, 16.75);
-      L.box(steelDarkInt, 0.06, 0.74, 0.06, 12.6, FLOOR_Y + 0.37, 16.75);
-      L.col(11.5, FLOOR_Y, 15.1, 12.7, FLOOR_Y + 0.80, 16.9, 'wood');
-      for (const [cx, cz] of [[11.2, 15.6], [11.2, 16.4], [13.0, 15.6], [13.0, 16.4]]) {
+      // Staff Dining Table & 4 Climbable Chairs
+      L.box(woodPallet, 1.15, 0.05, 1.85, 14.3, FLOOR_Y + 0.75, 20.0);
+      L.box(steelDarkInt, 0.06, 0.74, 0.06, 13.8, FLOOR_Y + 0.37, 19.2);
+      L.box(steelDarkInt, 0.06, 0.74, 0.06, 14.8, FLOOR_Y + 0.37, 19.2);
+      L.box(steelDarkInt, 0.06, 0.74, 0.06, 13.8, FLOOR_Y + 0.37, 20.8);
+      L.box(steelDarkInt, 0.06, 0.74, 0.06, 14.8, FLOOR_Y + 0.37, 20.8);
+      L.col(13.7, FLOOR_Y, 19.05, 14.9, FLOOR_Y + 0.80, 20.95, 'wood');
+      for (const [cx, cz] of [[13.35, 19.6], [13.35, 20.4], [15.25, 19.6], [15.25, 20.4]]) {
         L.box(paintGrey, 0.42, 0.05, 0.42, cx, FLOOR_Y + 0.45, cz);
         L.box(steelDarkInt, 0.38, 0.44, 0.38, cx, FLOOR_Y + 0.22, cz);
+        L.col(cx - 0.22, FLOOR_Y, cz - 0.22, cx + 0.22, FLOOR_Y + 0.48, cz + 0.22, 'metal');
       }
     }
 
     // ------------------------------------------------------------------------
-    // 7. SAĞ HOL ÜST: BARDAK YALDIZ TEZGAHLARI — YATAY & SAĞDAN DÖNEN ÇARKLAR
-    //    Oturunca kişinin sağında (+X) motor kutusu, yatay (-X) mandrel & bardak
+    // 7. SAĞ HOL ÜST: BARDAK YALDIZ TEZGAHLARI & ÜST ÜSTE TEPSİ SİSTEMİ
+    //    - #6: Sandalyeler yatay çarkların DİĞER (Kuzey/Arka) tarafında ve
+    //          arka alana yanlardan rahatça geçilebilir!
+    //    - #7: Uzun büyük kurutma standı YOK; yerine bir sürü üst üste TEPSİ var
+    //          ve tepsileri bir altındakinden ayıran sistem DAHA UZUN BARDAKLAR!
     // ------------------------------------------------------------------------
     const horizontalSpindles = [];
     let turntableSpeed = 1.0;
     {
-      L.box(woodDark, 10.8, 0.06, 1.35, 21.8, FLOOR_Y + 0.86, -26.6, { bevel: 0.01 });
-      L.box(steelDarkInt, 10.6, 0.82, 1.15, 21.8, FLOOR_Y + 0.41, -26.6);
-      L.col(16.3, FLOOR_Y, -27.3, 27.3, FLOOR_Y + 1.0, -25.85, 'wood');
-      L.box(steelGalvInt, 10.8, 0.38, 1.25, 21.8, FLOOR_Y + 2.45, -26.6);
-      L.box(ledCoolMat, 10.4, 0.04, 0.16, 21.8, FLOOR_Y + 2.24, -26.1, { parent: dyn });
-      addIntLight(0xfff6ea, 10, 12, 21.8, FLOOR_Y + 2.15, -25.5);
+      const benchZ = -29.8; // Leaves 4.5m open rear corridor (Z: -34.7..-30.5) & wide side aisles!
+      const benchX = 26.0;  // X: 20.6..31.4 (1.9m West aisle, 2.3m East aisle)
+      L.box(woodDark, 10.8, 0.06, 1.35, benchX, FLOOR_Y + 0.86, benchZ, { bevel: 0.01 });
+      L.box(steelDarkInt, 10.6, 0.82, 1.15, benchX, FLOOR_Y + 0.41, benchZ);
+      L.col(benchX - 5.45, FLOOR_Y, benchZ - 0.68, benchX + 5.45, FLOOR_Y + 0.90, benchZ + 0.68, 'wood');
+      L.box(steelGalvInt, 10.8, 0.38, 1.25, benchX, FLOOR_Y + 2.45, benchZ);
+      L.box(ledCoolMat, 10.4, 0.04, 0.16, benchX, FLOOR_Y + 2.24, benchZ - 0.45, { parent: dyn });
+      addIntLight(0xfff6ea, 12, 16, benchX, FLOOR_Y + 2.25, benchZ - 1.2);
 
       for (let i = 0; i < 6; i++) {
-        const sx = 17.2 + i * 1.75; // station center X
-        const tz = -26.48;
+        const sx = 21.6 + i * 1.75;
+        const tz = benchZ;
 
-        // Seated operator stool facing North (-Z): right side of operator is +X!
-        L.cyl(steelDarkInt, 0.20, 0.04, sx, FLOOR_Y + 0.02, -25.45);
-        L.cyl(steelDarkInt, 0.03, 0.48, sx, FLOOR_Y + 0.26, -25.45);
-        L.cyl(leatherDark, 0.19, 0.07, sx, FLOOR_Y + 0.52, -25.45);
+        // #6: Operator chairs on the OTHER (North/rear) side (Z = -31.15) facing South (+Z) toward bench
+        const chairZ = benchZ - 1.35;
+        L.cyl(steelDarkInt, 0.22, 0.04, sx, FLOOR_Y + 0.02, chairZ);
+        L.cyl(steelDarkInt, 0.035, 0.48, sx, FLOOR_Y + 0.26, chairZ);
+        L.box(leatherDark, 0.44, 0.08, 0.44, sx, FLOOR_Y + 0.50, chairZ, { bevel: 0.015 });
+        // Backrest on North side (-Z) so seated operator faces South (+Z) toward the horizontal wheel
+        L.box(steelDarkInt, 0.06, 0.38, 0.04, sx, FLOOR_Y + 0.68, chairZ - 0.21);
+        L.box(leatherDark, 0.42, 0.28, 0.07, sx, FLOOR_Y + 0.82, chairZ - 0.21, { bevel: 0.015 });
+        L.col(sx - 0.24, FLOOR_Y, chairZ - 0.25, sx + 0.24, FLOOR_Y + 0.56, chairZ + 0.23, 'metal');
 
-        // Horizontal Side-Mounted Motor Head on the RIGHT (+X) of seated operator
-        const motorX = sx + 0.44;
+        // Horizontal Side-Mounted Motor Head on the RIGHT (-X when facing +Z) of seated operator
+        const motorX = sx - 0.44;
         const spindleY = FLOOR_Y + 1.08;
         L.box(steelDarkInt, 0.26, 0.30, 0.28, motorX, FLOOR_Y + 1.02, tz);
-        L.cyl(paintBlue, 0.10, 0.24, motorX + 0.04, spindleY, tz, { axis: 'x' });
+        L.cyl(paintBlue, 0.10, 0.24, motorX - 0.04, spindleY, tz, { axis: 'x' });
 
-        // Horizontal rotating chuck + glass cup mounted HORIZONTALLY extending leftward (-X)!
+        // Horizontal rotating chuck + glass cup mounted HORIZONTALLY extending (+X)
         const spindle = new THREE.Group();
-        spindle.position.set(motorX - 0.14, spindleY, tz);
+        spindle.position.set(motorX + 0.14, spindleY, tz);
         dyn.add(spindle);
 
         const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.20, 12).rotateZ(Math.PI / 2), steelGalvInt);
-        shaft.position.x = -0.10;
+        shaft.position.x = 0.10;
         spindle.add(shaft);
 
         const chuck = new THREE.Mesh(new THREE.CylinderGeometry(0.044, 0.036, 0.06, 16).rotateZ(Math.PI / 2), rubberMat);
-        chuck.position.x = -0.20;
+        chuck.position.x = 0.20;
         spindle.add(chuck);
 
-        // Glass cup attached horizontally (cup axis along X, open rim facing -X toward operator's brush)
         const cup = createGlassCup(THREE, glassMat, brassGold, true);
-        cup.rotation.z = Math.PI / 2; // base sits in chuck at x=-0.22, open rim points -X!
-        cup.position.x = -0.22;
+        cup.rotation.z = -Math.PI / 2;
+        cup.position.x = 0.22;
         spindle.add(cup);
 
         horizontalSpindles.push(spindle);
 
-        // Operator hand-rest bar, gold luster ink pot & brush on bench
-        L.box(steelGalvInt, 0.36, 0.02, 0.03, sx + 0.08, FLOOR_Y + 0.96, tz + 0.30);
-        L.cyl(brassGold, 0.042, 0.075, sx + 0.30, FLOOR_Y + 0.93, tz + 0.28);
-        L.box(paintYellow, 0.07, 0.28, 0.07, sx - 0.38, FLOOR_Y + 1.02, tz - 0.24);
-        L.box(ledCoolMat, 0.14, 0.03, 0.09, sx - 0.30, FLOOR_Y + 1.15, tz - 0.08, { parent: dyn });
+        // Operator hand-rest bar, gold luster ink pot & brush on North/operator edge of bench
+        L.box(steelGalvInt, 0.36, 0.02, 0.03, sx - 0.08, FLOOR_Y + 0.96, tz - 0.30);
+        L.cyl(brassGold, 0.042, 0.075, sx - 0.30, FLOOR_Y + 0.93, tz - 0.28);
+        L.box(paintYellow, 0.07, 0.28, 0.07, sx + 0.38, FLOOR_Y + 1.02, tz + 0.24);
+        L.box(ledCoolMat, 0.14, 0.03, 0.09, sx + 0.30, FLOOR_Y + 1.15, tz + 0.08, { parent: dyn });
       }
 
-      // Drying rack behind operator aisle
-      L.box(steelDarkInt, 7.6, 0.04, 0.90, 21.2, FLOOR_Y + 0.86, -24.0);
-      L.box(steelDarkInt, 7.6, 0.04, 0.90, 21.2, FLOOR_Y + 1.38, -24.0);
-      for (const lx of [17.5, 20.0, 22.5, 24.9]) {
-        L.box(steelDarkInt, 0.06, 1.45, 0.85, lx, FLOOR_Y + 0.72, -24.0);
-      }
-      for (let gx = 17.8; gx <= 24.6; gx += 0.34) {
-        for (const gz of [-24.2, -23.8]) {
-          const c1 = createGlassCup(THREE, glassMat, brassGold, true);
-          c1.position.set(gx, FLOOR_Y + 0.88, gz);
-          stat.add(c1);
-          const c2 = createGlassCup(THREE, glassMat, brassGold, false);
-          c2.position.set(gx, FLOOR_Y + 1.40, gz);
-          stat.add(c2);
+      // #7: Stacked Trays separated by TALLER GLASSES (replaced the long drying rack stand!)
+      // 8 multi-tier tray stacks (4, 5, 6, 7 trays high per stack)
+      const trayW = 1.12;
+      const trayD = 0.80;
+      const trayBaseH = 0.025;
+      const spacerH = 0.23; // prominent tall glass separator height
+      const tierStep = trayBaseH + spacerH;
+
+      function buildStackedTrayTower(tx, tz, numTrays = 6) {
+        // Low wooden skid base on floor
+        L.box(woodDark, trayW + 0.04, 0.12, trayD + 0.04, tx, FLOOR_Y + 0.06, tz);
+        let curY = FLOOR_Y + 0.12;
+
+        for (let tier = 0; tier < numTrays; tier++) {
+          // Tray bottom + raised tray border edges
+          L.box(woodPallet, trayW, trayBaseH, trayD, tx, curY + trayBaseH / 2, tz, { bevel: 0.005 });
+          L.box(woodDark, trayW, 0.042, 0.025, tx, curY + 0.021, tz - trayD / 2 + 0.012);
+          L.box(woodDark, trayW, 0.042, 0.025, tx, curY + 0.021, tz + trayD / 2 - 0.012);
+          L.box(woodDark, 0.025, 0.042, trayD, tx - trayW / 2 + 0.012, curY + 0.021, tz);
+          L.box(woodDark, 0.025, 0.042, trayD, tx + trayW / 2 - 0.012, curY + 0.021, tz);
+
+          const traySurfaceY = curY + trayBaseH;
+
+          // Regular gilded cups inside each tray
+          for (let gx = -0.30; gx <= 0.30; gx += 0.15) {
+            for (let gz = -0.22; gz <= 0.22; gz += 0.145) {
+              const cup = createGlassCup(THREE, glassMat, brassGold, true);
+              cup.position.set(tx + gx, traySurfaceY, tz + gz);
+              stat.add(cup);
+            }
+          }
+
+          // Taller upright spacer glasses separating each tray (plus corner spacer glasses on top tray)
+          if (tier < numTrays - 1) {
+            for (const sx of [-0.46, 0, 0.46]) {
+              for (const sz of [-0.31, 0.31]) {
+                const spacer = createTallSpacerGlass(THREE, glassMat, brassGold);
+                spacer.position.set(tx + sx, traySurfaceY, tz + sz);
+                stat.add(spacer);
+              }
+            }
+          } else {
+            for (const sx of [-0.46, 0.46]) {
+              for (const sz of [-0.31, 0.31]) {
+                const spacer = createTallSpacerGlass(THREE, glassMat, brassGold);
+                spacer.position.set(tx + sx, traySurfaceY, tz + sz);
+                stat.add(spacer);
+              }
+            }
+          }
+
+          curY += tierStep;
         }
+
+        const totalTopY = curY - spacerH + 0.04;
+        L.col(tx - trayW / 2 - 0.03, FLOOR_Y, tz - trayD / 2 - 0.03, tx + trayW / 2 + 0.03, totalTopY, tz + trayD / 2 + 0.03, 'wood');
       }
-      L.col(17.35, FLOOR_Y, -24.48, 25.05, FLOOR_Y + 1.5, -23.52, 'metal');
-      addSign(THREE, stat, 'BARDAK YALDIZ TEZGAHLARI', 'YANDAN DONEN YATAY CARKLAR [E]', 21.8, FLOOR_Y + 3.05, -27.55, 4.6, 0.82, 0);
+
+      const trayStacks = [
+        [21.5, -26.5, 6], [24.1, -26.5, 7], [26.7, -26.5, 6], [29.3, -26.5, 5],
+        [21.5, -24.8, 4], [24.1, -24.8, 5], [26.7, -24.8, 6], [29.3, -24.8, 5]
+      ];
+      for (const [tx, tz, nTrays] of trayStacks) {
+        buildStackedTrayTower(tx, tz, nTrays);
+      }
+
+      addSign(THREE, stat, 'BARDAK YALDIZ TEZGAHLARI', 'ARKA GECISLI YATAY CARKLAR & TEPSI ISTIFLERI [E]', benchX, FLOOR_Y + 3.05, benchZ + 0.72, 5.2, 0.82, Math.PI);
+      addSign(THREE, stat, 'BARDAK YALDIZ TEZGAHLARI', 'ARKA OTURMA KORIDORU & TEPSI ISTIFLERI [E]', benchX, FLOOR_Y + 3.05, benchZ - 0.72, 5.2, 0.82, 0);
 
       interactives.push({
         id: 'yaldiz_carklari',
-        pos: new THREE.Vector3(21.8, FLOOR_Y + 1.1, -25.8),
-        range: 5.5,
+        pos: new THREE.Vector3(benchX, FLOOR_Y + 1.1, benchZ),
+        range: 6.0,
         getLabel: () => turntableSpeed > 0.2 ? 'Yatay Yaldiz Carklarini Durdur' : 'Yatay Yaldiz Carklarini Calistir',
         trigger: () => {
           turntableSpeed = turntableSpeed > 0.2 ? 0 : 1.0;
@@ -964,62 +1089,70 @@
     }
 
     // ------------------------------------------------------------------------
-    // 8. CAM TEZYİNAT FIRINI (DOLUM → TÜNEL → ÇIKIŞ)
+    // 8. CAM TEZYİNAT FIRINI (DOLUM → TÜNEL → ÇIKIŞ) — Expanded Sağ Hol (kx = 28.6)
     // ------------------------------------------------------------------------
     const kilnGlasses = [];
     let kilnRunning = true;
     {
-      const kx = 23.6;
-      const kw = 3.2;
+      const kx = 28.6;
+      const kw = 3.4;
       const convY = FLOOR_Y + 0.96;
 
-      L.box(steelDarkInt, 2.2, 0.14, 4.6, kx, convY - 0.08, -17.25);
-      L.box(steelGalvInt, 1.85, 0.03, 4.5, kx, convY, -17.25);
+      // Entry conveyor (Z: -21.2 .. -16.2)
+      L.box(steelDarkInt, 2.2, 0.14, 5.0, kx, convY - 0.08, -18.7);
+      L.box(steelGalvInt, 1.85, 0.03, 4.9, kx, convY, -18.7);
       for (const lx of [kx - 0.95, kx + 0.95]) {
-        for (const lz of [-19.3, -17.3, -15.3]) {
+        for (const lz of [-20.9, -18.7, -16.5]) {
           L.box(steelDarkInt, 0.08, 0.92, 0.08, lx, FLOOR_Y + 0.46, lz);
         }
-        L.box(paintYellow, 0.05, 0.12, 4.5, lx, convY + 0.07, -17.25);
+        L.box(paintYellow, 0.05, 0.12, 4.9, lx, convY + 0.07, -18.7);
       }
-      addSign(THREE, stat, 'DOLUM  -->', 'FIRIN GIRIS KONVEYORU', kx, FLOOR_Y + 2.35, -18.8, 2.4, 0.52, Math.PI, '#152028', '#fff', '#58c4b8');
+      addSign(THREE, stat, 'DOLUM  -->', 'FIRIN GIRIS KONVEYORU', kx, FLOOR_Y + 2.35, -20.5, 2.4, 0.52, Math.PI, '#152028', '#fff', '#58c4b8');
 
-      L.box(paintGrey, kw, 2.05, 23.5, kx, FLOOR_Y + 1.38, -3.25, { bevel: 0.03 });
-      for (let lz = -14.5; lz <= 8.0; lz += 2.8) {
+      // Main Kiln Tunnel (Z: -16.2 .. 12.2, length = 28.4m)
+      L.box(paintGrey, kw, 2.05, 28.4, kx, FLOOR_Y + 1.38, -2.0, { bevel: 0.03 });
+      for (let lz = -15.6; lz <= 11.6; lz += 3.2) {
         L.box(steelDarkInt, kw + 0.14, 0.42, 0.24, kx, FLOOR_Y + 0.21, lz);
         L.box(steelDarkInt, kw + 0.12, 2.15, 0.18, kx, FLOOR_Y + 1.40, lz);
       }
-      for (const cz of [-10.5, -2.5, 5.2]) {
-        L.cyl(steelGalvInt, 0.34, WALL_H + 1.2, kx, FLOOR_Y + (WALL_H + 1.2) * 0.5 + 1.5, cz);
+      for (const cz of [-11.5, -2.0, 7.5]) {
+        L.cyl(steelGalvInt, 0.36, WALL_H + 1.2, kx, FLOOR_Y + (WALL_H + 1.2) * 0.5 + 1.5, cz);
       }
 
-      for (const wz of [-11.5, -7.5, -3.5, 0.5, 4.5]) {
+      for (const wz of [-12.5, -7.5, -2.5, 2.5, 7.5]) {
         L.box(steelDarkInt, 0.08, 0.54, 1.35, kx - kw / 2 - 0.02, FLOOR_Y + 1.48, wz);
         L.box(kilnGlowMat, 0.05, 0.40, 1.18, kx - kw / 2 - 0.04, FLOOR_Y + 1.48, wz, { parent: dyn });
       }
-      L.box(kilnGlowMat, 1.80, 0.55, 0.12, kx, convY + 0.32, -14.98, { parent: dyn });
-      L.box(kilnGlowMat, 1.80, 0.55, 0.12, kx, convY + 0.32, 8.48, { parent: dyn });
-      addIntLight(0xff7426, 9, 11, kx - 2.3, FLOOR_Y + 1.6, -7.5);
-      addIntLight(0xff7426, 9, 11, kx - 2.3, FLOOR_Y + 1.6, 0.5);
-      addIntLight(0xff8c42, 8, 10, kx, FLOOR_Y + 1.7, 10.5);
+      L.box(kilnGlowMat, 1.80, 0.55, 0.12, kx, convY + 0.32, -16.18, { parent: dyn });
+      L.box(kilnGlowMat, 1.80, 0.55, 0.12, kx, convY + 0.32, 12.18, { parent: dyn });
+      addIntLight(0xff7426, 10, 13, kx - 2.4, FLOOR_Y + 1.6, -8.5);
+      addIntLight(0xff7426, 10, 13, kx - 2.4, FLOOR_Y + 1.6, 2.5);
+      addIntLight(0xff8c42, 9, 12, kx, FLOOR_Y + 1.7, 14.5);
 
-      L.box(paintGrey, 0.55, 1.85, 1.25, kx - kw / 2 - 0.32, FLOOR_Y + 0.94, -13.2);
+      // Control Cabinet & PID Screen
+      L.box(paintGrey, 0.55, 1.85, 1.25, kx - kw / 2 - 0.32, FLOOR_Y + 0.94, -14.2);
       const pidMesh = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.72, 0.72), makePidScreenTexture(THREE));
-      pidMesh.position.set(kx - kw / 2 - 0.60, FLOOR_Y + 1.45, -13.2);
+      pidMesh.position.set(kx - kw / 2 - 0.60, FLOOR_Y + 1.45, -14.2);
       pidMesh.rotation.y = Math.PI;
       dyn.add(pidMesh);
-      addSign(THREE, stat, 'CAM TEZYINAT FIRINI', '615 C TAV & YALDIZ PISIRME', kx - kw / 2 - 0.08, FLOOR_Y + 2.85, -3.5, 4.4, 0.78, -Math.PI / 2);
+      addSign(THREE, stat, 'CAM TEZYINAT FIRINI', '615 C TAV & YALDIZ PISIRME', kx - kw / 2 - 0.08, FLOOR_Y + 2.85, -2.0, 4.4, 0.78, -Math.PI / 2);
 
-      L.box(steelDarkInt, 2.2, 0.14, 4.6, kx, convY - 0.08, 10.75);
-      L.box(steelGalvInt, 1.85, 0.03, 4.5, kx, convY, 10.75);
+      // Exit conveyor (Z: 12.2 .. 17.2)
+      L.box(steelDarkInt, 2.2, 0.14, 5.0, kx, convY - 0.08, 14.7);
+      L.box(steelGalvInt, 1.85, 0.03, 4.9, kx, convY, 14.7);
       for (const lx of [kx - 0.95, kx + 0.95]) {
-        for (const lz of [8.8, 10.8, 12.8]) {
+        for (const lz of [12.5, 14.7, 16.9]) {
           L.box(steelDarkInt, 0.08, 0.92, 0.08, lx, FLOOR_Y + 0.46, lz);
         }
-        L.box(paintYellow, 0.05, 0.12, 4.5, lx, convY + 0.07, 10.75);
+        L.box(paintYellow, 0.05, 0.12, 4.9, lx, convY + 0.07, 14.7);
       }
-      addSign(THREE, stat, 'CIKIS', 'SOGUTMA VE KONTROL', kx, FLOOR_Y + 2.35, 12.5, 2.2, 0.52, 0, '#152028', '#fff', '#ffb347');
+      addSign(THREE, stat, 'CIKIS', 'SOGUTMA VE KONTROL', kx, FLOOR_Y + 2.35, 16.8, 2.2, 0.52, 0, '#152028', '#fff', '#ffb347');
 
-      L.col(kx - kw / 2 - 0.55, FLOOR_Y, -19.6, kx + kw / 2 + 0.1, FLOOR_Y + 2.8, 13.1, 'metal');
+      // Stepped colliders for kiln conveyors, control cabinet & kiln tunnel body (climbable #14!)
+      L.col(kx - 1.1, FLOOR_Y, -21.2, kx + 1.1, convY + 0.05, -16.2, 'metal');
+      L.col(kx - kw / 2 - 0.60, FLOOR_Y, -14.85, kx - kw / 2 - 0.05, FLOOR_Y + 1.88, -13.55, 'metal');
+      L.col(kx - kw / 2 - 0.45, FLOOR_Y, -16.2, kx + kw / 2 + 0.1, FLOOR_Y + 2.42, 12.2, 'metal');
+      L.col(kx - 1.1, FLOOR_Y, 12.2, kx + 1.1, convY + 0.05, 17.2, 'metal');
 
       for (let i = 0; i < 18; i++) {
         const row = new THREE.Group();
@@ -1032,7 +1165,7 @@
         }
         const phase = (i % 9) / 9;
         const isOut = i >= 9;
-        row.position.set(kx, convY + 0.02, isOut ? (8.6 + phase * 4.2) : (-19.3 + phase * 4.2));
+        row.position.set(kx, convY + 0.02, isOut ? (12.3 + phase * 4.6) : (-21.0 + phase * 4.6));
         dyn.add(row);
         kilnGlasses.push({ mesh: row, phase, isOut });
       }
@@ -1042,14 +1175,14 @@
         for (const item of kilnGlasses) {
           item.phase = (item.phase + dt * 0.12) % 1;
           item.mesh.position.z = item.isOut
-            ? (8.6 + item.phase * 4.2)
-            : (-19.3 + item.phase * 4.2);
+            ? (12.3 + item.phase * 4.6)
+            : (-21.0 + item.phase * 4.6);
         }
       });
 
       interactives.push({
         id: 'firin_konveyor',
-        pos: new THREE.Vector3(kx - 1.9, FLOOR_Y + 1.2, -13.2),
+        pos: new THREE.Vector3(kx - 2.1, FLOOR_Y + 1.2, -14.2),
         range: 4.5,
         getLabel: () => kilnRunning ? 'Firin Konveyorunu Durdur' : 'Firin Konveyorunu Baslat',
         trigger: () => {
@@ -1060,138 +1193,125 @@
     }
 
     // ------------------------------------------------------------------------
-    // 9. İLK PAKETLEME (X: 17.2..24.8, Z: 15.2..20.5)
+    // 9. İLK PAKETLEME (X: 21.0..30.0, Z: 19.5..26.0)
     // ------------------------------------------------------------------------
     {
-      L.box(steelDarkInt, 4.8, 0.88, 1.45, 21.0, FLOOR_Y + 0.44, 17.8);
-      L.box(woodPallet, 4.9, 0.05, 1.55, 21.0, FLOOR_Y + 0.90, 17.8);
-      L.box(ledCoolMat, 1.8, 0.02, 0.95, 22.0, FLOOR_Y + 0.935, 17.8, { parent: dyn });
-      for (let gx = 21.25; gx <= 22.75; gx += 0.25) {
-        for (const gz of [17.55, 18.05]) {
+      const ipx = 26.0, ipz = 22.6;
+      L.box(steelDarkInt, 5.2, 0.88, 1.55, ipx, FLOOR_Y + 0.44, ipz);
+      L.box(woodPallet, 5.3, 0.05, 1.65, ipx, FLOOR_Y + 0.90, ipz);
+      L.box(ledCoolMat, 1.8, 0.02, 0.95, ipx + 1.0, FLOOR_Y + 0.935, ipz, { parent: dyn });
+      for (let gx = ipx + 0.25; gx <= ipx + 1.75; gx += 0.25) {
+        for (const gz of [ipz - 0.25, ipz + 0.25]) {
           const cup = createGlassCup(THREE, glassMat, brassGold, true);
           cup.position.set(gx, FLOOR_Y + 0.95, gz);
           stat.add(cup);
         }
       }
-      L.box(cardboard, 0.56, 0.36, 0.46, 19.3, FLOOR_Y + 1.10, 17.8);
-      L.box(cardboard, 0.56, 0.36, 0.46, 19.9, FLOOR_Y + 1.10, 17.8);
-      addLoadedPallet(17.5, 19.5, 0.02, 2);
-      addSign(THREE, stat, 'ILK PAKETLEME', 'KALITE KONTROL & AYIRMA', 21.0, FLOOR_Y + 2.25, 17.8, 2.5, 0.50, 0);
-      L.col(18.5, FLOOR_Y, 17.0, 23.5, FLOOR_Y + 1.2, 18.6, 'wood');
+      L.box(cardboard, 0.56, 0.36, 0.46, ipx - 1.7, FLOOR_Y + 1.10, ipz);
+      L.box(cardboard, 0.56, 0.36, 0.46, ipx - 1.1, FLOOR_Y + 1.10, ipz);
+      addLoadedPallet(21.4, 24.4, 0.02, 2);
+      addLoadedPallet(21.4, 22.2, -0.02, 1);
+      addSign(THREE, stat, 'ILK PAKETLEME', 'KALITE KONTROL & AYIRMA', ipx, FLOOR_Y + 2.25, ipz, 2.5, 0.50, 0);
+      L.col(ipx - 2.65, FLOOR_Y, ipz - 0.85, ipx + 2.65, FLOOR_Y + 0.95, ipz + 0.85, 'wood');
     }
 
     // ------------------------------------------------------------------------
-    // 10. VINTAGE & FULLY EQUIPPED ERKEK WC & KADIN WC (X: 28.0..32.8, Z: 6..18)
-    //     Dışarıda WC yazısı YOK! Tam donanımlı ve eski fabrika tuvaletleri.
+    // 10. VINTAGE & FULLY EQUIPPED ERKEK WC & KADIN WC (X: 34.0..39.2, Z: 7.0..21.0)
     // ------------------------------------------------------------------------
     {
-      const wcX0 = 28.0, wcX1 = 32.8, wcH = FLOOR_Y + 3.25;
-      L.slab(concreteDirty, wcX0, 0.0, 6.0, wcX1, FLOOR_Y - 0.02, 18.0);
-      L.slab(wcFloorTile, wcX0, FLOOR_Y - 0.02, 6.0, wcX1 - 0.15, FLOOR_Y, 18.0);
-      L.col(wcX0, -0.1, 6.0, wcX1, FLOOR_Y, 18.0, 'concrete');
+      const wcX0 = FAC_X1, wcX1 = FAC_X1 + 5.2, wcH = FLOOR_Y + 3.25;
+      L.slab(concreteDirty, wcX0, 0.0, 7.0, wcX1, FLOOR_Y - 0.02, 21.0);
+      L.slab(wcFloorTile, wcX0, FLOOR_Y - 0.02, 7.0, wcX1 - 0.15, FLOOR_Y, 21.0);
+      L.col(wcX0, -0.1, 7.0, wcX1, FLOOR_Y, 21.0, 'concrete');
 
-      // Outer structural walls + tiled interior walls + frosted vasistas window band
-      L.slab(concreteExt, wcX0, FLOOR_Y, 5.95, wcX1, wcH, 6.20);
-      L.slab(wcWallTile, wcX0, FLOOR_Y, 6.20, wcX1 - 0.22, wcH, 6.24);
-      L.slab(concreteExt, wcX0, FLOOR_Y, 11.88, wcX1, wcH, 12.12);
-      L.slab(wcWallTile, wcX0, FLOOR_Y, 11.84, wcX1 - 0.22, wcH, 11.88);
-      L.slab(wcWallTile, wcX0, FLOOR_Y, 12.12, wcX1 - 0.22, wcH, 12.16);
-      L.slab(concreteExt, wcX0, FLOOR_Y, 17.80, wcX1, wcH, 18.05);
-      L.slab(wcWallTile, wcX0, FLOOR_Y, 17.76, wcX1 - 0.22, wcH, 17.80);
+      L.slab(concreteExt, wcX0, FLOOR_Y, 6.95, wcX1, wcH, 7.20);
+      L.slab(wcWallTile, wcX0, FLOOR_Y, 7.20, wcX1 - 0.22, wcH, 7.24);
+      L.slab(concreteExt, wcX0, FLOOR_Y, 13.88, wcX1, wcH, 14.12);
+      L.slab(wcWallTile, wcX0, FLOOR_Y, 13.84, wcX1 - 0.22, wcH, 13.88);
+      L.slab(wcWallTile, wcX0, FLOOR_Y, 14.12, wcX1 - 0.22, wcH, 14.16);
+      L.slab(concreteExt, wcX0, FLOOR_Y, 20.80, wcX1, wcH, 21.05);
+      L.slab(wcWallTile, wcX0, FLOOR_Y, 20.76, wcX1 - 0.22, wcH, 20.80);
 
-      // East outer wall with high frosted vasistas windows (Y: 2.15..2.75)
-      L.slab(concreteExt, wcX1 - 0.24, FLOOR_Y, 6.0, wcX1, FLOOR_Y + 2.15, 18.0);
-      L.slab(concreteExt, wcX1 - 0.24, FLOOR_Y + 2.75, 6.0, wcX1, wcH, 18.0);
-      L.slab(frostedGlass, wcX1 - 0.14, FLOOR_Y + 2.15, 6.2, wcX1 - 0.10, FLOOR_Y + 2.75, 17.8, { cast: false });
-      L.slab(wcWallTile, wcX1 - 0.28, FLOOR_Y, 6.2, wcX1 - 0.24, FLOOR_Y + 2.15, 17.8);
-      L.slab(roofExtMat, wcX0 - 0.1, wcH, 5.8, wcX1 + 0.3, wcH + 0.22, 18.2);
+      L.slab(concreteExt, wcX1 - 0.24, FLOOR_Y, 7.0, wcX1, FLOOR_Y + 2.15, 21.0);
+      L.slab(concreteExt, wcX1 - 0.24, FLOOR_Y + 2.75, 7.0, wcX1, wcH, 21.0);
+      L.slab(frostedGlass, wcX1 - 0.14, FLOOR_Y + 2.15, 7.2, wcX1 - 0.10, FLOOR_Y + 2.75, 20.8, { cast: false });
+      L.slab(wcWallTile, wcX1 - 0.28, FLOOR_Y, 7.2, wcX1 - 0.24, FLOOR_Y + 2.15, 20.8);
+      L.slab(roofExtMat, wcX0 - 0.1, wcH, 6.8, wcX1 + 0.3, wcH + 0.22, 21.2);
+      // Climbable WC roof
+      L.col(wcX0 - 0.1, wcH, 6.8, wcX1 + 0.3, wcH + 0.22, 21.2, 'metal');
 
-      L.col(wcX0, FLOOR_Y, 5.95, wcX1, wcH, 6.24, 'concrete');
-      L.col(wcX0, FLOOR_Y, 11.84, wcX1, wcH, 12.16, 'concrete');
-      L.col(wcX0, FLOOR_Y, 17.76, wcX1, wcH, 18.05, 'concrete');
-      L.col(wcX1 - 0.28, FLOOR_Y, 6.0, wcX1, wcH, 18.0, 'concrete');
+      L.col(wcX0, FLOOR_Y, 6.95, wcX1, wcH, 7.24, 'concrete');
+      L.col(wcX0, FLOOR_Y, 13.84, wcX1, wcH, 14.16, 'concrete');
+      L.col(wcX0, FLOOR_Y, 20.76, wcX1, wcH, 21.05, 'concrete');
+      L.col(wcX1 - 0.28, FLOOR_Y, 7.0, wcX1, wcH, 21.0, 'concrete');
 
-      // Helpers for old toilet hardware inside WCs
       function buildOldWashbasin(bx, bz) {
-        // Aged pedestal & oval ceramic basin
         L.cyl(porcelainAged, 0.11, 0.68, bx, FLOOR_Y + 0.34, bz);
         L.box(porcelainAged, 0.46, 0.16, 0.54, bx, FLOOR_Y + 0.76, bz, { bevel: 0.03 });
-        // Twin vintage metal faucets + drain pipe under sink
         L.cyl(rustPipeMat, 0.025, 0.35, bx + 0.14, FLOOR_Y + 0.56, bz);
         L.cyl(steelGalvInt, 0.015, 0.12, bx, FLOOR_Y + 0.89, bz - 0.21);
         L.cyl(brassGold, 0.014, 0.05, bx - 0.08, FLOOR_Y + 0.87, bz - 0.22);
         L.cyl(brassGold, 0.014, 0.05, bx + 0.08, FLOOR_Y + 0.87, bz - 0.22);
-        // Old weathered mirror with rusted metal frame + soap dish
         L.box(rustPipeMat, 0.48, 0.64, 0.03, bx, FLOOR_Y + 1.48, bz - 0.26);
         L.box(glassMat, 0.42, 0.58, 0.035, bx, FLOOR_Y + 1.48, bz - 0.25);
         L.box(porcelainAged, 0.14, 0.04, 0.09, bx + 0.18, FLOOR_Y + 0.86, bz - 0.19);
+        L.col(bx - 0.24, FLOOR_Y, bz - 0.28, bx + 0.24, FLOOR_Y + 0.86, bz + 0.28, 'concrete');
       }
 
       function buildToiletStall(sx, sz, isAlaturka) {
-        // Wooden aged stall walls & slightly ajar door (openable/walkable right inside!)
         L.box(woodDark, 1.55, 2.05, 0.05, sx, FLOOR_Y + 1.02, sz - 0.78);
         L.box(woodDark, 1.55, 2.05, 0.05, sx, FLOOR_Y + 1.02, sz + 0.78);
-        // Ajar door angled outward so you see right in and can step inside
         L.box(woodDark, 0.05, 1.98, 0.78, sx - 0.88, FLOOR_Y + 0.99, sz - 0.44, { r: [0, 0.85, 0] });
 
         if (isAlaturka) {
-          // Traditional Alaturka Hela Taşı + Raised Step + Ribbed Footrests
           L.box(porcelainAged, 0.68, 0.07, 0.74, sx + 0.22, FLOOR_Y + 0.035, sz, { bevel: 0.015 });
           L.box(rubberMat, 0.24, 0.02, 0.42, sx + 0.20, FLOOR_Y + 0.075, sz);
           L.box(porcelainAged, 0.16, 0.03, 0.34, sx + 0.20, FLOOR_Y + 0.08, sz - 0.22);
           L.box(porcelainAged, 0.16, 0.03, 0.34, sx + 0.20, FLOOR_Y + 0.08, sz + 0.22);
         } else {
-          // Vintage Alafranga Klozet with porcelain tank & seat
           L.cyl(porcelainAged, 0.19, 0.40, sx + 0.26, FLOOR_Y + 0.20, sz);
           L.box(porcelainAged, 0.42, 0.05, 0.36, sx + 0.26, FLOOR_Y + 0.41, sz, { bevel: 0.02 });
           L.box(porcelainAged, 0.22, 0.44, 0.42, sx + 0.48, FLOOR_Y + 0.64, sz, { bevel: 0.02 });
+          L.col(sx + 0.05, FLOOR_Y, sz - 0.22, sx + 0.60, FLOOR_Y + 0.45, sz + 0.22, 'concrete');
         }
 
-        // High-mounted old pull-chain cistern & chrome downpipe + brass taharet musluğu + plastic ibrik
         L.box(porcelainAged, 0.24, 0.34, 0.46, sx + 0.60, FLOOR_Y + 2.02, sz, { bevel: 0.02 });
         L.cyl(steelGalvInt, 0.018, 1.75, sx + 0.62, FLOOR_Y + 1.05, sz);
-        L.cyl(steelGalvInt, 0.008, 0.65, sx + 0.50, FLOOR_Y + 1.62, sz + 0.24); // pull chain
-        L.cyl(brassGold, 0.018, 0.14, sx + 0.58, FLOOR_Y + 0.42, sz + 0.38, { axis: 'x' }); // taharet musluğu
-        // Plastic ibrik (water pitcher) + toilet paper holder + brush
+        L.cyl(steelGalvInt, 0.008, 0.65, sx + 0.50, FLOOR_Y + 1.62, sz + 0.24);
+        L.cyl(brassGold, 0.018, 0.14, sx + 0.58, FLOOR_Y + 0.42, sz + 0.38, { axis: 'x' });
         L.cyl(paintBlue, 0.08, 0.22, sx + 0.48, FLOOR_Y + 0.11, sz + 0.48);
         L.cyl(paintWhite, 0.055, 0.11, sx + 0.40, FLOOR_Y + 0.72, sz - 0.72, { axis: 'z' });
       }
 
       const zonesWC = [
-        { label: 'ERKEK WC', zMin: 6.0, signCol: '#2a6cb8', hasUrinals: true },
-        { label: 'KADIN WC', zMin: 12.0, signCol: '#b83c6a', hasUrinals: false }
+        { label: 'ERKEK WC', zMin: 7.0, signCol: '#2a6cb8', hasUrinals: true },
+        { label: 'KADIN WC', zMin: 14.0, signCol: '#b83c6a', hasUrinals: false }
       ];
 
       for (const wc of zonesWC) {
-        const cz = wc.zMin + 3.0;
-        // ONLY interior doorway sign (NO sign on outside East facade!)
-        addSign(THREE, stat, wc.label, '', 27.64, FLOOR_Y + 2.55, cz, 1.4, 0.36, -Math.PI / 2, '#161b20', '#fff', wc.signCol);
+        const cz = wc.zMin + 3.5;
+        addSign(THREE, stat, wc.label, '', wcX0 - 0.36, FLOOR_Y + 2.55, cz, 1.4, 0.36, -Math.PI / 2, '#161b20', '#fff', wc.signCol);
 
-        // Old industrial ceiling bulkhead lamp + exposed galvanized water & cast-iron drain pipes
-        L.box(ledWarmMat, 0.42, 0.08, 0.24, 30.1, wcH - 0.08, cz, { parent: dyn });
-        addIntLight(0xffdfb0, 5.2, 7.5, 30.1, wcH - 0.35, cz);
-        L.cyl(rustPipeMat, 0.06, 3.2, 32.42, FLOOR_Y + 1.6, wc.zMin + 0.42); // cast-iron vertical stack
-        L.cyl(steelGalvInt, 0.02, 4.4, 30.3, FLOOR_Y + 2.45, wc.zMin + 0.30, { axis: 'x' }); // water supply pipe
+        L.box(ledWarmMat, 0.42, 0.08, 0.24, wcX0 + 2.3, wcH - 0.08, cz, { parent: dyn });
+        addIntLight(0xffdfb0, 5.2, 8.0, wcX0 + 2.3, wcH - 0.35, cz);
+        L.cyl(rustPipeMat, 0.06, 3.2, wcX1 - 0.38, FLOOR_Y + 1.6, wc.zMin + 0.42);
+        L.cyl(steelGalvInt, 0.02, 4.4, wcX0 + 2.5, FLOOR_Y + 2.45, wc.zMin + 0.30, { axis: 'x' });
 
-        // Twin aged pedestal sinks along North wall of each WC
-        buildOldWashbasin(29.0, wc.zMin + 0.55);
-        buildOldWashbasin(30.1, wc.zMin + 0.55);
-        // Cleaning bucket, metal trash bin & hanging wall towel
-        L.cyl(paintBlue, 0.14, 0.30, 28.35, FLOOR_Y + 0.15, wc.zMin + 0.55);
-        L.cyl(steelGalvInt, 0.14, 0.42, 30.85, FLOOR_Y + 0.21, wc.zMin + 0.52);
-        L.box(paintWhite, 0.04, 0.48, 0.28, 28.25, FLOOR_Y + 1.25, wc.zMin + 1.05);
+        buildOldWashbasin(wcX0 + 1.0, wc.zMin + 0.55);
+        buildOldWashbasin(wcX0 + 2.1, wc.zMin + 0.55);
+        L.cyl(paintBlue, 0.14, 0.30, wcX0 + 0.35, FLOOR_Y + 0.15, wc.zMin + 0.55);
+        L.cyl(steelGalvInt, 0.14, 0.42, wcX0 + 2.85, FLOOR_Y + 0.21, wc.zMin + 0.52);
+        L.box(paintWhite, 0.04, 0.48, 0.28, wcX0 + 0.25, FLOOR_Y + 1.25, wc.zMin + 1.05);
 
-        // 2 Enterable Old Stalls along East end (X = 31.75)
-        buildToiletStall(31.75, wc.zMin + 2.25, true);
-        buildToiletStall(31.75, wc.zMin + 4.15, false);
+        buildToiletStall(wcX1 - 1.1, wc.zMin + 2.5, true);
+        buildToiletStall(wcX1 - 1.1, wc.zMin + 4.7, false);
 
-        // Erkek WC Urinals along South wall
         if (wc.hasUrinals) {
-          for (const ux of [29.1, 30.1]) {
-            L.box(porcelainAged, 0.34, 0.56, 0.26, ux, FLOOR_Y + 0.96, wc.zMin + 5.56, { bevel: 0.03 });
-            L.cyl(brassGold, 0.02, 0.18, ux, FLOOR_Y + 1.34, wc.zMin + 5.65);
+          for (const ux of [wcX0 + 1.1, wcX0 + 2.1]) {
+            L.box(porcelainAged, 0.34, 0.56, 0.26, ux, FLOOR_Y + 0.96, wc.zMin + 6.56, { bevel: 0.03 });
+            L.cyl(brassGold, 0.02, 0.18, ux, FLOOR_Y + 1.34, wc.zMin + 6.65);
           }
-          L.box(woodDark, 0.05, 1.15, 0.44, 29.6, FLOOR_Y + 1.05, wc.zMin + 5.52);
+          L.box(woodDark, 0.05, 1.15, 0.44, wcX0 + 1.6, FLOOR_Y + 1.05, wc.zMin + 6.52);
         }
       }
     }
@@ -1205,12 +1325,11 @@
 
     return {
       interiorBox: {
-        min: new THREE.Vector3(4.0, FLOOR_Y, -28.0),
-        max: new THREE.Vector3(28.0, 9.0, 22.0)
+        min: new THREE.Vector3(FAC_X0, FLOOR_Y, FAC_Z0),
+        max: new THREE.Vector3(FAC_X1, 9.5, FAC_Z1)
       },
       setNightFactor,
       update(dt) {
-        // Rotate sideways-mounted glasses around their horizontal X axis
         for (let i = 0; i < horizontalSpindles.length; i++) {
           horizontalSpindles[i].rotation.x += dt * 2.5 * turntableSpeed;
         }
