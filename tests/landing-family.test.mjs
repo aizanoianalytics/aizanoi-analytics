@@ -20,14 +20,15 @@ test('landing pages share skip link, tokens, current-page nav, main target and p
   }
 });
 
-test('Arcade is English and its share metadata matches the seventeen-experience catalog', () => {
+test('Arcade is English and its share metadata matches the eighteen-experience catalog', () => {
   const html = read('frontend/arcade/index.html');
   assert.doesNotMatch(html, /Hemen Oyna|Uyanışı|Antik|mahzen/);
   assert.match(html, /Aizanoi Wars/);
   assert.match(html, /Aizanoi Factory/);
+  assert.match(html, /Ev/);
   for (const m of html.match(/<meta (?:property="og:description"|name="twitter:description"|name="description") content="[^"]*"/g)) {
     assert.doesNotMatch(m, /\bfour\b/i, m);
-    assert.match(m, /[Ss]eventeen/, m);
+    assert.match(m, /[Ee]ighteen/, m);
   }
   for (const game of ['Sudoku', 'Solitaire', 'Marble Serpent', 'Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(`aria-label="Play ${game} in the AizanoiOS Arcade"`));
 });

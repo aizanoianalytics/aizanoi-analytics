@@ -249,6 +249,12 @@ jobs:
         run: |
           set -o pipefail
           node --test tests/browser/aizanoi-factory.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-factory.log
+      - name: Ev apartment standalone and desktop QA
+        env:
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+        run: |
+          set -o pipefail
+          node --test tests/browser/aizanoi-daire.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-daire.log
       - name: Aizanoi world WebGL smoke
         env:
           ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
