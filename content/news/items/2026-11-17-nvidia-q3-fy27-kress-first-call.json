@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-nvidia-q3-fy27-kress-first-call",
+  "title": "Nvidia reports into the unknown, with Kress in the chair and $109bn expected",
+  "summary": "Nvidia reports fiscal third-quarter results after Tuesday's US close, the first since Jensen Huang resigned and chief financial officer Colette Kress became interim chief executive. The company guided in August to $108bn of revenue, give or take 2%, with a 74% gross margin; analysts expect about $109bn and adjusted earnings near $2.47 a share. Investors are watching the fourth-quarter outlook, margin trajectory and any signal from Kress on the permanent succession search.",
+  "category": "ai",
+  "priority": 86,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "earnings",
+    "colette-kress",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "FXStreet (Saxo Bank research)",
+      "url": "https://www.fxstreet.com/news/nvidia-earnings-preview-the-first-big-test-after-jensen-huangs-exit-202611160603",
+      "publishedAt": "2026-11-16T06:03:00Z"
+    },
+    {
+      "publisher": "StockTitan",
+      "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-november-16-2026",
+      "publishedAt": "2026-11-16T10:48:00Z"
+    }
+  ],
+  "kind": "daily"
+}

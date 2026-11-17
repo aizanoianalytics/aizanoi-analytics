@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-apec-shenzhen-ai-digital-roadmap",
+  "title": "APEC lands in Shenzhen with an AI roadmap and a three-way summit on the agenda",
+  "summary": "Leaders of 21 APEC economies gather in Shenzhen on 18 and 19 November, with China pushing a Shenzhen declaration, a Free Trade Area of the Asia-Pacific document and a roadmap on artificial intelligence and the digital economy. Donald Trump, Xi Jinping and Vladimir Putin are due in the same room on 19 November, the first three-way session of its kind, after the September truce cutting tariffs on $30bn of each other's goods was extended to 10 January.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apec",
+    "china",
+    "trade",
+    "ai-policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Channel NewsAsia",
+      "url": "https://www.channelnewsasia.com/east-asia/apec-summit-2026-china-shenzhen-trump-xi-putin-6545366",
+      "publishedAt": "2026-11-16T22:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/china/five-features-apec-know-about-with-trump-putin-xi-set-attend-2026-11-13/",
+      "publishedAt": "2026-11-13T06:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

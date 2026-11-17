@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-wall-street-nvidia-jitters-correction",
+  "title": "Nasdaq closes in correction as Nvidia's leadership crisis becomes a market problem",
+  "summary": "US stocks fell sharply on Monday as Nvidia's leadership crisis and doubts about AI valuations spread across chipmakers. The Nasdaq Composite lost 2.49% to 24,509.76, more than 10% below its 6 October closing high, the S&P 500 fell 1.92% to 7,416.59 and the Dow dropped 739.38 points, or 1.41%, to 51,608.17. The Philadelphia semiconductor index lost 5.3% and Nvidia closed 4.1% lower at $156.14 on the eve of its results.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nvidia",
+    "nasdaq",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "The Straits Times (Reuters)",
+      "url": "https://straitstimes.com/business/companies-markets/us-stocks-wall-street-ends-sharply-lower-on-ai-jitters-ahead-of-nvidia-results-anthropic-ipo",
+      "publishedAt": "2026-11-16T23:30:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/16/stocks-moving-the-most-today-live-updates.html",
+      "publishedAt": "2026-11-16T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

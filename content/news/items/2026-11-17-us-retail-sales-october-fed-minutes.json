@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-us-retail-sales-october-fed-minutes",
+  "title": "October retail sales test the US consumer two days before the Fed's minutes",
+  "summary": "October US retail sales are due at 8:30am New York time on Tuesday, with consensus at a 0.2% monthly gain after September's 0.8% and the GDP-bearing control group seen up 0.4%. Gasoline stations accounted for most of September's increase, so the detail matters more than the headline for a Federal Reserve weighing a December move. Minutes of the 27-28 October meeting follow on Wednesday, with the 10-year Treasury yield at 5.12%.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "retail-sales",
+    "federal-reserve",
+    "treasuries",
+    "consumer"
+  ],
+  "sources": [
+    {
+      "publisher": "US Census Bureau",
+      "url": "https://www.census.gov/retail/release_schedule.html",
+      "publishedAt": "2026-11-17T00:00:00Z"
+    },
+    {
+      "publisher": "Admiral Markets",
+      "url": "https://admiralmarkets.com/analytics/traders-blog/retail-earnings-week-home-depot-target-walmart",
+      "publishedAt": "2026-11-16T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

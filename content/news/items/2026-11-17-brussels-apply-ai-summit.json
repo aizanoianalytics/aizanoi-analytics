@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-17-brussels-apply-ai-summit",
+  "title": "Brussels marks a year of its Apply AI Strategy while the AI Act's timetable slips",
+  "summary": "The European Commission holds its Apply AI Summit in Brussels on Tuesday, a year after adopting the Apply AI Strategy and at the close of the first European AI Innovation Month. The hybrid event at The EGG brings industry, policymakers and startups together around adoption in healthcare, mobility and the public sector, with sessions on the AI Act, frontier models and technological sovereignty. A virtual platform stays open until 22 November with recordings.",
+  "category": "technology",
+  "priority": 52,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "eu",
+    "ai-act",
+    "policy",
+    "brussels"
+  ],
+  "sources": [
+    {
+      "publisher": "European Commission",
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/apply-ai-summit",
+      "publishedAt": "2026-11-13T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
