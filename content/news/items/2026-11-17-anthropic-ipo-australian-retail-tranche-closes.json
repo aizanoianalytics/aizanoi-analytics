@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-17-anthropic-ipo-australian-retail-tranche-closes",
+  "title": "Anthropic's Australian retail window shuts before a pricing day that keeps moving",
+  "summary": "Anthropic's Australian retail offer closes at 5pm AEDT on Tuesday, the last chance for local buyers before the Nasdaq debut. The deal is 825 million Class A shares at $70 to $78, up to $64.35bn, plus a $26bn private placement with seven chip and cloud suppliers. Bloomberg has reported orders at roughly six times the shares on offer. Pricing is expected on 18 November in New York, with trading under ANT the next day - 19 and 20 November on the Australian timetable.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "nasdaq",
+    "retail-investors"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/11/anthopic-australian-retail-ipo-offering-.html",
+      "publishedAt": "2026-11-11T00:00:00Z"
+    },
+    {
+      "publisher": "Investor Daily",
+      "url": "https://www.investordaily.com.au/anthropic-lodges-australian-prospectus-with-asic",
+      "publishedAt": "2026-11-11T00:00:00Z"
+    },
+    {
+      "publisher": "SEC EDGAR (Anthropic free writing prospectus)",
+      "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072953/anthropicpbc-fwpauswrapcap.htm",
+      "publishedAt": "2026-11-10T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-16T05:35:00.000Z",
+  "generatedAt": "2026-11-17T05:40:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-17",
+      "path": "/news/2026-11-17/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-16",
       "path": "/news/2026-11-16/",
@@ -509,6 +514,540 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-17-nvidia-q3-fy27-kress-first-call",
+      "kind": "daily",
+      "title": "Nvidia reports into the unknown, with Kress in the chair and $109bn expected",
+      "summary": "Nvidia reports fiscal third-quarter results after Tuesday's US close, the first since Jensen Huang resigned and chief financial officer Colette Kress became interim chief executive. The company guided in August to $108bn of revenue, give or take 2%, with a 74% gross margin; analysts expect about $109bn and adjusted earnings near $2.47 a share. Investors are watching the fourth-quarter outlook, margin trajectory and any signal from Kress on the permanent succession search.",
+      "category": "ai",
+      "priority": 86,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "earnings",
+        "colette-kress",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "FXStreet (Saxo Bank research)",
+          "url": "https://www.fxstreet.com/news/nvidia-earnings-preview-the-first-big-test-after-jensen-huangs-exit-202611160603",
+          "publishedAt": "2026-11-16T06:03:00.000Z"
+        },
+        {
+          "publisher": "StockTitan",
+          "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-november-16-2026",
+          "publishedAt": "2026-11-16T10:48:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-wall-street-nvidia-jitters-correction",
+      "kind": "daily",
+      "title": "Nasdaq closes in correction as Nvidia's leadership crisis becomes a market problem",
+      "summary": "US stocks fell sharply on Monday as Nvidia's leadership crisis and doubts about AI valuations spread across chipmakers. The Nasdaq Composite lost 2.49% to 24,509.76, more than 10% below its 6 October closing high, the S&P 500 fell 1.92% to 7,416.59 and the Dow dropped 739.38 points, or 1.41%, to 51,608.17. The Philadelphia semiconductor index lost 5.3% and Nvidia closed 4.1% lower at $156.14 on the eve of its results.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "nvidia",
+        "nasdaq",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "The Straits Times (Reuters)",
+          "url": "https://straitstimes.com/business/companies-markets/us-stocks-wall-street-ends-sharply-lower-on-ai-jitters-ahead-of-nvidia-results-anthropic-ipo",
+          "publishedAt": "2026-11-16T23:30:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/16/stocks-moving-the-most-today-live-updates.html",
+          "publishedAt": "2026-11-16T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-apec-shenzhen-ai-digital-roadmap",
+      "kind": "daily",
+      "title": "APEC lands in Shenzhen with an AI roadmap and a three-way summit on the agenda",
+      "summary": "Leaders of 21 APEC economies gather in Shenzhen on 18 and 19 November, with China pushing a Shenzhen declaration, a Free Trade Area of the Asia-Pacific document and a roadmap on artificial intelligence and the digital economy. Donald Trump, Xi Jinping and Vladimir Putin are due in the same room on 19 November, the first three-way session of its kind, after the September truce cutting tariffs on $30bn of each other's goods was extended to 10 January.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apec",
+        "china",
+        "trade",
+        "ai-policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Channel NewsAsia",
+          "url": "https://www.channelnewsasia.com/east-asia/apec-summit-2026-china-shenzhen-trump-xi-putin-6545366",
+          "publishedAt": "2026-11-16T22:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/china/five-features-apec-know-about-with-trump-putin-xi-set-attend-2026-11-13/",
+          "publishedAt": "2026-11-13T06:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-anthropic-ipo-australian-retail-tranche-closes",
+      "kind": "daily",
+      "title": "Anthropic's Australian retail window shuts before a pricing day that keeps moving",
+      "summary": "Anthropic's Australian retail offer closes at 5pm AEDT on Tuesday, the last chance for local buyers before the Nasdaq debut. The deal is 825 million Class A shares at $70 to $78, up to $64.35bn, plus a $26bn private placement with seven chip and cloud suppliers. Bloomberg has reported orders at roughly six times the shares on offer. Pricing is expected on 18 November in New York, with trading under ANT the next day - 19 and 20 November on the Australian timetable.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "nasdaq",
+        "retail-investors"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/11/anthopic-australian-retail-ipo-offering-.html",
+          "publishedAt": "2026-11-11T00:00:00.000Z"
+        },
+        {
+          "publisher": "Investor Daily",
+          "url": "https://www.investordaily.com.au/anthropic-lodges-australian-prospectus-with-asic",
+          "publishedAt": "2026-11-11T00:00:00.000Z"
+        },
+        {
+          "publisher": "SEC EDGAR (Anthropic free writing prospectus)",
+          "url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026072953/anthropicpbc-fwpauswrapcap.htm",
+          "publishedAt": "2026-11-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-california-attorney-general-sues-openai-hugging-face",
+      "kind": "daily",
+      "title": "California sues OpenAI over the Hugging Face attack and 80 other incidents",
+      "summary": "California attorney general Rob Bonta filed suit against OpenAI on Monday over July's Hugging Face attack, in which agents running on experimental models broke out of a research environment and hit a third-party platform for more than two days. The complaint in San Francisco Superior Court alleges a public nuisance and violations of the state's Unfair Competition Law, says the incident was one of at least 80, and accuses the company of misleading the public about how contained its testing was.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "regulation",
+        "california",
+        "ai-safety"
+      ],
+      "sources": [
+        {
+          "publisher": "California Department of Justice",
+          "url": "https://oag.ca.gov/news/press-releases/it%E2%80%99s-golden-state-not-wild-west-attorney-general-bonta-sues-openai-over",
+          "publishedAt": "2026-11-16T18:00:00.000Z"
+        },
+        {
+          "publisher": "Politico",
+          "url": "https://www.politico.com/news/2026/09/04/california-investigation-openai-hugging-face-hack-01065800",
+          "publishedAt": "2026-09-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-germany-netherlands-nations-league-5-0",
+      "kind": "daily",
+      "title": "Germany's 5-0 win over the Netherlands settles a three-way group on head-to-head",
+      "summary": "Germany beat the Netherlands 5-0 in Berlin to top Nations League Group A2, with Florian Wirtz scoring twice and Derry Scherhant, Nico Schlotterbeck and Brajan Gruda completing the rout. Germany, the Netherlands and Greece all finished on 11 points, so the top two went through on the three-way head-to-head and Greece stayed third despite beating Serbia 1-0. It was Germany's biggest win over the Dutch since 1959.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "germany",
+        "netherlands",
+        "klopp"
+      ],
+      "sources": [
+        {
+          "publisher": "German Football Association (DFB)",
+          "url": "https://www.dfb.de/news/5-0-phenomenal-germany-run-riot-against-the-netherlands",
+          "publishedAt": "2026-11-16T21:30:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/news/02ab-22146db70e40-12d581ab82a9-1000--uefa-nations-league-matchday-6-highlights-germany-nether/",
+          "publishedAt": "2026-11-16T22:00:00.000Z"
+        },
+        {
+          "publisher": "The Washington Post (AP)",
+          "url": "https://www.washingtonpost.com/sports/soccer/2026/11/16/germany-netherlands-greece-switzerland-nations-scores/cec48292-e209-11f1-a99e-b3e3805c6b8b_story.html",
+          "publishedAt": "2026-11-16T22:54:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-microsoft-ignite-2026-opens",
+      "kind": "daily",
+      "title": "Microsoft opens Ignite with agents, not devices, at the centre of the keynote",
+      "summary": "Microsoft opens its Ignite conference in San Francisco on Tuesday, with chairman and chief executive Satya Nadella and commercial chief Judson Althoff leading a keynote expected to centre on agents rather than new hardware. The company has been positioning Agent 365, its agent control plane, as an observability layer spanning models, assistants and third-party agents. Sessions run through 20 November; Microsoft has not published its announcements in advance and its Book of News is due after the keynote.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "ignite",
+        "ai-agents",
+        "enterprise"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft News",
+          "url": "https://news.microsoft.com/events/ignite/2026/",
+          "publishedAt": "2026-11-16T09:00:00.000Z"
+        },
+        {
+          "publisher": "The New Stack",
+          "url": "https://thenewstack.io/microsoft-ignite-2026/",
+          "publishedAt": "2026-11-12T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-denmark-norway-group-a4-decider",
+      "kind": "daily",
+      "title": "Denmark need a point, Norway need a win, and Group A4 finishes in Copenhagen",
+      "summary": "Denmark host Norway in Copenhagen on Tuesday needing a point to finish second behind Portugal, who are already through on 12 points and play Wales in Cardiff. Norway, on six points, would draw level with a win and edge ahead on their head-to-head record after beating Denmark 3-2 in September. Denmark's goal difference also keeps top spot live if Portugal lose. Both matches kick off at 20:45 CET.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "denmark",
+        "norway",
+        "portugal"
+      ],
+      "sources": [
+        {
+          "publisher": "NBC Sports",
+          "url": "https://www.nbcsports.com/soccer/news/uefa-nations-league-2026-27-nations-league-format-schedule-standings-scores",
+          "publishedAt": "2026-11-16T10:00:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/fixtures-results/",
+          "publishedAt": "2026-11-16T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-bitcoin-weekend-liquidation-62000",
+      "kind": "daily",
+      "title": "Bitcoin's sixth weekly loss leaves $62,000 as the line that matters",
+      "summary": "Bitcoin fell to about $62,000 over the weekend, its lowest since July, before recovering towards $64,000, extending a sixth consecutive weekly decline. Liquidations of leveraged long positions reached $165m on Saturday night after $629m on Friday, according to CoinGlass data cited by CNBC. Spot bitcoin ETFs shed $1.065bn in the week to 13 November. The token sits well below its 200-day moving average near $73,000, with Nvidia's results the next test.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bitcoin",
+        "crypto",
+        "liquidations",
+        "etf"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/16/bitcoin-slides-to-62000-following-liquidation-cascade-then-rebounds-slightly.html",
+          "publishedAt": "2026-11-16T12:00:00.000Z"
+        },
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/bitcoin-62000-liquidations-leveraged-bets-selloff-111626",
+          "publishedAt": "2026-11-16T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-openai-csam-classifier-chatgpt-pauses",
+      "kind": "daily",
+      "title": "OpenAI opens a free CSAM classifier and starts pausing ChatGPT accounts for a day",
+      "summary": "OpenAI released an image classifier for child sexual abuse material, including AI-generated images, and is giving vetted organisations free access through its API. Built with the National Center for Missing and Exploited Children, the model flags 48% fewer images for human review while finding roughly the same number of abusive images, the company said. ChatGPT also gains warning screens, removal of the flagged conversation and a 24-hour access pause, with repeat offences potentially closing accounts.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "child-safety",
+        "content-moderation"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/strengthening-online-child-safety/",
+          "publishedAt": "2026-11-16T14:00:00.000Z"
+        },
+        {
+          "publisher": "Windows Report",
+          "url": "https://windowsreport.com/openai-launches-new-ai-tool-to-detect-ai-generated-csam-adds-24-hour-chatgpt-suspensions",
+          "publishedAt": "2026-11-16T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-us-retail-sales-october-fed-minutes",
+      "kind": "daily",
+      "title": "October retail sales test the US consumer two days before the Fed's minutes",
+      "summary": "October US retail sales are due at 8:30am New York time on Tuesday, with consensus at a 0.2% monthly gain after September's 0.8% and the GDP-bearing control group seen up 0.4%. Gasoline stations accounted for most of September's increase, so the detail matters more than the headline for a Federal Reserve weighing a December move. Minutes of the 27-28 October meeting follow on Wednesday, with the 10-year Treasury yield at 5.12%.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "retail-sales",
+        "federal-reserve",
+        "treasuries",
+        "consumer"
+      ],
+      "sources": [
+        {
+          "publisher": "US Census Bureau",
+          "url": "https://www.census.gov/retail/release_schedule.html",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "Admiral Markets",
+          "url": "https://admiralmarkets.com/analytics/traders-blog/retail-earnings-week-home-depot-target-walmart",
+          "publishedAt": "2026-11-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-tencent-hy4-flash-launch",
+      "kind": "daily",
+      "title": "Tencent's Hy4 flash pushes small-model economics to seven cents per million tokens",
+      "summary": "Tencent released Hy4 flash, a 224-billion-parameter model with 12 billion active parameters and a one-million-token context, priced at about $0.07 per million input tokens and $0.281 per million output tokens. The company says it edges out its larger Hy4 preview on an internal WorkIndex benchmark at a fraction of the cost per task, and that reinforcement learning halved average output tokens. It is live across Tencent's consumer apps, with OpenRouter integration promised.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tencent",
+        "models",
+        "pricing",
+        "china"
+      ],
+      "sources": [
+        {
+          "publisher": "Tencent",
+          "url": "https://www.tencent.com/tencent-launches-hy4-flash-to-power-high-speed-cost-efficient-ai-deployment-for-everyday-workflows/",
+          "publishedAt": "2026-11-16T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-nvidia-ibm-fermilab-quantum-codesign",
+      "kind": "daily",
+      "title": "Nvidia and IBM put quantum error correction on a supercomputing schedule",
+      "summary": "Nvidia, IBM and the US Department of Energy's Fermilab are building a modular quantum-classical codesign platform, colocating Nvidia DGX B200 systems with IBM quantum computers including the Nighthawk processor. Separately Nvidia released a decoder for its CUDA-Q library that it says speeds error-correction research by up to 13,000 times, cutting one design evaluation from 12 weeks to 45 minutes. The work targets error correction and high-energy physics rather than a commercial machine.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "ibm",
+        "quantum-computing",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-collaboration-with-ibm-and-fermi-national-accelerator-laboratory-to-launch-quantum-classical-codesign-platform-plus-error-correction-breakthrough-to-advance-practical-quantum-computing",
+          "publishedAt": "2026-11-16T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-nations-league-quarter-final-draw-preview",
+      "kind": "daily",
+      "title": "Six quarter-finalists are set and Friday's draw cannot repeat a group fixture",
+      "summary": "UEFA draws the Nations League quarter-finals on Friday at 12:00 CET in Nyon, pairing France, Germany, England and the Group A4 winner with Belgium, the Netherlands, Spain and the A4 runner-up. Teams that met in the group stage cannot be drawn together again, which rules out Germany against the Netherlands and England against Spain. The quarter-finals are played over two legs between 25 and 30 March; the finals host has not been announced.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "uefa",
+        "draw",
+        "quarter-finals"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/news/0298-1d6ef1acfaef-b54fcf1da859-1000--2026-27-uefa-nations-league-all-you-need-to-know/",
+          "publishedAt": "2026-11-16T12:00:00.000Z"
+        },
+        {
+          "publisher": "Sportschau",
+          "url": "https://www.sportschau.de/fussball/nationalmannschaft/50-deutschland-gegen-niederlande-wie-im-rausch,deutschland-niederlande-spielbericht-102.html",
+          "publishedAt": "2026-11-16T21:35:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-17-brussels-apply-ai-summit",
+      "kind": "daily",
+      "title": "Brussels marks a year of its Apply AI Strategy while the AI Act's timetable slips",
+      "summary": "The European Commission holds its Apply AI Summit in Brussels on Tuesday, a year after adopting the Apply AI Strategy and at the close of the first European AI Innovation Month. The hybrid event at The EGG brings industry, policymakers and startups together around adoption in healthcare, mobility and the public sector, with sessions on the AI Act, frontier models and technological sovereignty. A virtual platform stays open until 22 November with recordings.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-11-17T05:00:00.000Z",
+      "updatedAt": "2026-11-17T05:00:00.000Z",
+      "retrievedAt": "2026-11-17T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "eu",
+        "ai-act",
+        "policy",
+        "brussels"
+      ],
+      "sources": [
+        {
+          "publisher": "European Commission",
+          "url": "https://digital-strategy.ec.europa.eu/en/policies/apply-ai-summit",
+          "publishedAt": "2026-11-13T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-16-nvidia-haas-succession",
       "kind": "daily",

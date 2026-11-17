@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-microsoft-ignite-2026-opens",
+  "title": "Microsoft opens Ignite with agents, not devices, at the centre of the keynote",
+  "summary": "Microsoft opens its Ignite conference in San Francisco on Tuesday, with chairman and chief executive Satya Nadella and commercial chief Judson Althoff leading a keynote expected to centre on agents rather than new hardware. The company has been positioning Agent 365, its agent control plane, as an observability layer spanning models, assistants and third-party agents. Sessions run through 20 November; Microsoft has not published its announcements in advance and its Book of News is due after the keynote.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "ignite",
+    "ai-agents",
+    "enterprise"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft News",
+      "url": "https://news.microsoft.com/events/ignite/2026/",
+      "publishedAt": "2026-11-16T09:00:00Z"
+    },
+    {
+      "publisher": "The New Stack",
+      "url": "https://thenewstack.io/microsoft-ignite-2026/",
+      "publishedAt": "2026-11-12T13:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

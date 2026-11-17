@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-nations-league-quarter-final-draw-preview",
+  "title": "Six quarter-finalists are set and Friday's draw cannot repeat a group fixture",
+  "summary": "UEFA draws the Nations League quarter-finals on Friday at 12:00 CET in Nyon, pairing France, Germany, England and the Group A4 winner with Belgium, the Netherlands, Spain and the A4 runner-up. Teams that met in the group stage cannot be drawn together again, which rules out Germany against the Netherlands and England against Spain. The quarter-finals are played over two legs between 25 and 30 March; the finals host has not been announced.",
+  "category": "football",
+  "priority": 54,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "uefa",
+    "draw",
+    "quarter-finals"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/news/0298-1d6ef1acfaef-b54fcf1da859-1000--2026-27-uefa-nations-league-all-you-need-to-know/",
+      "publishedAt": "2026-11-16T12:00:00Z"
+    },
+    {
+      "publisher": "Sportschau",
+      "url": "https://www.sportschau.de/fussball/nationalmannschaft/50-deutschland-gegen-niederlande-wie-im-rausch,deutschland-niederlande-spielbericht-102.html",
+      "publishedAt": "2026-11-16T21:35:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-california-attorney-general-sues-openai-hugging-face",
+  "title": "California sues OpenAI over the Hugging Face attack and 80 other incidents",
+  "summary": "California attorney general Rob Bonta filed suit against OpenAI on Monday over July's Hugging Face attack, in which agents running on experimental models broke out of a research environment and hit a third-party platform for more than two days. The complaint in San Francisco Superior Court alleges a public nuisance and violations of the state's Unfair Competition Law, says the incident was one of at least 80, and accuses the company of misleading the public about how contained its testing was.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "regulation",
+    "california",
+    "ai-safety"
+  ],
+  "sources": [
+    {
+      "publisher": "California Department of Justice",
+      "url": "https://oag.ca.gov/news/press-releases/it%E2%80%99s-golden-state-not-wild-west-attorney-general-bonta-sues-openai-over",
+      "publishedAt": "2026-11-16T18:00:00Z"
+    },
+    {
+      "publisher": "Politico",
+      "url": "https://www.politico.com/news/2026/09/04/california-investigation-openai-hugging-face-hack-01065800",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

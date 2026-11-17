@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-17-germany-netherlands-nations-league-5-0",
+  "title": "Germany's 5-0 win over the Netherlands settles a three-way group on head-to-head",
+  "summary": "Germany beat the Netherlands 5-0 in Berlin to top Nations League Group A2, with Florian Wirtz scoring twice and Derry Scherhant, Nico Schlotterbeck and Brajan Gruda completing the rout. Germany, the Netherlands and Greece all finished on 11 points, so the top two went through on the three-way head-to-head and Greece stayed third despite beating Serbia 1-0. It was Germany's biggest win over the Dutch since 1959.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "germany",
+    "netherlands",
+    "klopp"
+  ],
+  "sources": [
+    {
+      "publisher": "German Football Association (DFB)",
+      "url": "https://www.dfb.de/news/5-0-phenomenal-germany-run-riot-against-the-netherlands",
+      "publishedAt": "2026-11-16T21:30:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/news/02ab-22146db70e40-12d581ab82a9-1000--uefa-nations-league-matchday-6-highlights-germany-nether/",
+      "publishedAt": "2026-11-16T22:00:00Z"
+    },
+    {
+      "publisher": "The Washington Post (AP)",
+      "url": "https://www.washingtonpost.com/sports/soccer/2026/11/16/germany-netherlands-greece-switzerland-nations-scores/cec48292-e209-11f1-a99e-b3e3805c6b8b_story.html",
+      "publishedAt": "2026-11-16T22:54:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-denmark-norway-group-a4-decider",
+  "title": "Denmark need a point, Norway need a win, and Group A4 finishes in Copenhagen",
+  "summary": "Denmark host Norway in Copenhagen on Tuesday needing a point to finish second behind Portugal, who are already through on 12 points and play Wales in Cardiff. Norway, on six points, would draw level with a win and edge ahead on their head-to-head record after beating Denmark 3-2 in September. Denmark's goal difference also keeps top spot live if Portugal lose. Both matches kick off at 20:45 CET.",
+  "category": "football",
+  "priority": 68,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "denmark",
+    "norway",
+    "portugal"
+  ],
+  "sources": [
+    {
+      "publisher": "NBC Sports",
+      "url": "https://www.nbcsports.com/soccer/news/uefa-nations-league-2026-27-nations-league-format-schedule-standings-scores",
+      "publishedAt": "2026-11-16T10:00:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/fixtures-results/",
+      "publishedAt": "2026-11-16T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

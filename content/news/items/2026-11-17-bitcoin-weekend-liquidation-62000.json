@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-17-bitcoin-weekend-liquidation-62000",
+  "title": "Bitcoin's sixth weekly loss leaves $62,000 as the line that matters",
+  "summary": "Bitcoin fell to about $62,000 over the weekend, its lowest since July, before recovering towards $64,000, extending a sixth consecutive weekly decline. Liquidations of leveraged long positions reached $165m on Saturday night after $629m on Friday, according to CoinGlass data cited by CNBC. Spot bitcoin ETFs shed $1.065bn in the week to 13 November. The token sits well below its 200-day moving average near $73,000, with Nvidia's results the next test.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bitcoin",
+    "crypto",
+    "liquidations",
+    "etf"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/16/bitcoin-slides-to-62000-following-liquidation-cascade-then-rebounds-slightly.html",
+      "publishedAt": "2026-11-16T12:00:00Z"
+    },
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/bitcoin-62000-liquidations-leveraged-bets-selloff-111626",
+      "publishedAt": "2026-11-16T15:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

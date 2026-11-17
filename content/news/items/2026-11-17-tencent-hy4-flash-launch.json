@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-17-tencent-hy4-flash-launch",
+  "title": "Tencent's Hy4 flash pushes small-model economics to seven cents per million tokens",
+  "summary": "Tencent released Hy4 flash, a 224-billion-parameter model with 12 billion active parameters and a one-million-token context, priced at about $0.07 per million input tokens and $0.281 per million output tokens. The company says it edges out its larger Hy4 preview on an internal WorkIndex benchmark at a fraction of the cost per task, and that reinforcement learning halved average output tokens. It is live across Tencent's consumer apps, with OpenRouter integration promised.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-11-17T05:00:00Z",
+  "updatedAt": "2026-11-17T05:00:00Z",
+  "retrievedAt": "2026-11-17T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tencent",
+    "models",
+    "pricing",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "Tencent",
+      "url": "https://www.tencent.com/tencent-launches-hy4-flash-to-power-high-speed-cost-efficient-ai-deployment-for-everyday-workflows/",
+      "publishedAt": "2026-11-16T08:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
