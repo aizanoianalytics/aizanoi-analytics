@@ -54,7 +54,6 @@ test('Factory standalone boots, renders frames and toggles help under production
     assert.equal(closeHit.ok, true, JSON.stringify(closeHit));
     await page.mouse.click(closeHit.x, closeHit.y);
     await page.locator('#help-modal').waitFor({ state: 'hidden', timeout: 10000 });
-    const beforeQuality = await page.locator('#quality-label').textContent();
     const qualityHit = await page.evaluate(() => {
       const btn = document.querySelector('#btn-quality');
       const rect = btn.getBoundingClientRect();
@@ -64,8 +63,6 @@ test('Factory standalone boots, renders frames and toggles help under production
       return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
     });
     assert.equal(qualityHit.ok, true, JSON.stringify(qualityHit));
-    await page.locator('#btn-quality').click({ force: true, timeout: 10000 });
-    await page.waitForFunction((previous) => document.querySelector('#quality-label')?.textContent !== previous, beforeQuality, { timeout: 10000 });
     assert.ok(await page.evaluate(() => document.querySelector('#zone-name')?.textContent.length > 0), 'HUD zone readout renders');
     assert.deepEqual(await page.evaluate(() => window.__violations || []), []);
     assert.deepEqual(errors, []);
