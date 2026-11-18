@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-bis-remote-compute-rule",
+  "title": "Washington closes the remote-compute route to American AI chips",
+  "summary": "Commerce's Bureau of Industry and Security issued an interim final rule requiring licences before US AI chips and servers are supplied to data centres anywhere that may provide compute to companies in China, Russia, Iran, North Korea and 18 other embargoed states. It applies above 12 million total processing performance and reaches brokers and intermediaries. New licences also cover Malaysia, Singapore, Indonesia, Thailand and Brazil; existing operators have 90 days to comply. The rule was written by Treasury and the National Security Council.",
+  "category": "technology",
+  "priority": 80,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "export-controls",
+    "bis",
+    "ai-chips",
+    "china",
+    "data-centres"
+  ],
+  "sources": [
+    {
+      "publisher": "US Bureau of Industry and Security",
+      "url": "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology",
+      "publishedAt": "2026-11-16T17:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/16/us-tightens-ai-chip-export-controls-to-deter-chinese-companies-from-accessing-compute-remotely/",
+      "publishedAt": "2026-11-16T18:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/us-issues-rule-protect-advanced-ai-chips-being-accessed-remotely-2026-11-16/",
+      "publishedAt": "2026-11-16T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

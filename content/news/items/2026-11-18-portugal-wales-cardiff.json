@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-18-portugal-wales-cardiff",
+  "title": "Portugal win in Cardiff to take the seeded route through the last eight",
+  "summary": "Portugal beat Wales 3-2 at Cardiff City Stadium to finish top of League A Group 4 with 15 points and a seeded place in the Nations League quarter-finals. Bruno Fernandes put the visitors ahead with a strike from outside the penalty area; David Brooks equalised for Wales, and Portugal still closed out the win. Wales end the group with three points and enter the League A/B play-offs, where they will be seeded and play the second leg at home.",
+  "category": "football",
+  "priority": 64,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "portugal",
+    "wales",
+    "uefa",
+    "cardiff"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/news/02ab-2209792f2fda-6a523d4500bb-1000--2026-27-nations-league-quarter-final-qualification-promotion",
+      "publishedAt": "2026-11-17T23:30:00Z"
+    },
+    {
+      "publisher": "Tempo (reporting CNA)",
+      "url": "https://en.tempo.co/read/2123867/norway-beats-denmark-3-2-to-reach-nations-league-quarter-finals",
+      "publishedAt": "2026-11-18T02:56:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-anthropic-ipo-pricing-test",
+  "title": "Anthropic prices into a market that has stopped paying up for AI",
+  "summary": "Anthropic sets the price of its Nasdaq offering on Wednesday evening, with trading due to begin on 19 November under the symbol ANT. It is selling 825 million Class A shares at $70 to $78, which would raise up to $64.4bn and value the company near $1.4tn on a fully diluted basis, with as much as a fifth reserved for retail buyers. Orders closed on Tuesday with demand reported at about seven times the shares on offer, even as the Nasdaq has fallen roughly 5% in a month.",
+  "category": "economy-markets",
+  "priority": 82,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "nasdaq",
+    "ai-valuation",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/17/anthropic-ipo-price.html",
+      "publishedAt": "2026-11-17T14:13:00Z"
+    },
+    {
+      "publisher": "Reuters (via Yahoo Finance)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/asia-stocks-set-snap-losing-014340794.html",
+      "publishedAt": "2026-11-18T01:34:00Z"
+    },
+    {
+      "publisher": "Investopedia",
+      "url": "https://www.investopedia.com/anthropic-prices-its-ipo-wednesday-here-s-what-investors-need-to-know-12258058",
+      "publishedAt": "2026-11-17T15:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

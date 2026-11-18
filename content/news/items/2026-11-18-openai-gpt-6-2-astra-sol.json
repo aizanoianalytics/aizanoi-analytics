@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-18-openai-gpt-6-2-astra-sol",
+  "title": "OpenAI splits GPT-6.2 into a frontier model and an everyday one",
+  "summary": "OpenAI released GPT-6.2 in two tiers: Astra, built for hard professional and scientific work at $8 per million input tokens and $40 per million output, and Sol, an everyday agentic model at $2 and $10. The company says Astra costs less than a third of GPT-6 per task, while Sol lands near a fifth of Astra's cost on coding. Artificial Analysis ranks Astra second on its intelligence index, behind Anthropic's Claude Fable 5.2, and found no gain on its coding agent benchmark.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "gpt-6-2",
+    "model-release",
+    "pricing"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
+      "publishedAt": "2026-11-17T18:00:00Z"
+    },
+    {
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/articles/openai-has-the-2-model-in-the-intelligence-index-with-the-release-of-gpt-6-2-astra-and-gpt-6-2-sol",
+      "publishedAt": "2026-11-17T20:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

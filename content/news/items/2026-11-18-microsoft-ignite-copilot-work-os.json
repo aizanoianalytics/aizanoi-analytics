@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-18-microsoft-ignite-copilot-work-os",
+  "title": "Microsoft recasts Copilot as the operating system for work",
+  "summary": "Satya Nadella opened Ignite in San Francisco by describing Copilot as \"the new operating system for work\". Word, Excel and PowerPoint are now generally available inside Copilot, alongside shared Workspaces, a Code surface and an Autopilot agent that runs tasks continuously; billing for Autopilot will use Copilot Credits, with pricing still unannounced. Microsoft also published Code 2 and Cyber 2 models, brought GPT-6.2 and Meta's latest models into Foundry, and said 50 million agents are managed through Agent 365.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "ignite",
+    "copilot",
+    "agents",
+    "enterprise-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft",
+      "url": "https://blogs.microsoft.com/blog/2026/11/17/ignite-2026",
+      "publishedAt": "2026-11-17T16:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/gadgets/2026/11/microsoft-calls-copilot-the-new-os-for-work-at-ignite-keynote",
+      "publishedAt": "2026-11-17T22:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
