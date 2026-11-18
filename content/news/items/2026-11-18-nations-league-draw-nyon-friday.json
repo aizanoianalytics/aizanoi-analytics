@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-nations-league-draw-nyon-friday",
+  "title": "Four seeds, four runners-up and a draw that cannot repeat a group tie",
+  "summary": "UEFA draws the Nations League knockout stage in Nyon on Friday at 12:00 CET. England, France, Germany and Portugal are seeded and will be paired with Belgium, the Netherlands, Norway or Spain for two legs in March, with the group winners at home in the second. Croatia, Denmark, Serbia and Wales go into the League A/B play-offs against League B runners-up. The finals run from 9 to 13 June 2027, at a host still to be chosen.",
+  "category": "football",
+  "priority": 54,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "uefa",
+    "draw",
+    "play-offs",
+    "2027"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/draws",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "Flashscore",
+      "url": "https://www.flashscore.com/news/soccer-uefa-nations-league-when-is-the-draw-for-the-uefa-nations-league-quarter-finals-and-relegation-play-offs/ANuBBn86/",
+      "publishedAt": "2026-11-18T04:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/articles/cw20xnde3dyzo",
+      "publishedAt": "2026-11-18T03:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-18-microsoft-agent-infrastructure-perception",
+  "title": "Microsoft ships the plumbing agents will run on, and the guards around it",
+  "summary": "Beneath the Copilot announcements at Ignite, Microsoft made Cobalt 200 virtual machines generally available with up to 50% better performance than the previous generation, and released the distributed PostgreSQL service HorizonDB. Windows adds execution containers, Entra-backed agent identities and Agent 365 policies on every device. Perception, now generally available, runs red, blue and green security agents that hunt, defend and remediate vulnerabilities, and Agent 365 Business Analytics ties AI spending to task outcomes.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "azure",
+    "agent-365",
+    "security",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft",
+      "url": "https://news.microsoft.com/source/2026/11/17/microsoft-ignite-2026-empowering-human-ambition-intelligence-and-trust",
+      "publishedAt": "2026-11-17T15:00:00Z"
+    },
+    {
+      "publisher": "Redmond Channel Partner",
+      "url": "https://redmondmag.com/articles/2026/11/17/microsoft-ignite-2026-puts-enterprise-ai-infrastructure-at-center.aspx",
+      "publishedAt": "2026-11-17T21:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

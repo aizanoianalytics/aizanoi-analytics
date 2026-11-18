@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-norway-denmark-copenhagen-comeback",
+  "title": "Haaland's stoppage-time penalty sends Norway through in Copenhagen",
+  "summary": "Norway beat Denmark 3-2 at Parken after trailing 2-0 inside 14 minutes, with Erling Haaland scoring twice, the second a penalty deep into stoppage time after a handball by Joachim Andersen. Martin Odegaard had equalised in the 83rd minute. Norway finish second in League A Group 4 on nine points, level with Denmark but ahead on their head-to-head record, and go to the quarter-finals. Denmark drop into the League A/B play-offs.",
+  "category": "football",
+  "priority": 78,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "norway",
+    "denmark",
+    "haaland",
+    "uefa"
+  ],
+  "sources": [
+    {
+      "publisher": "Tempo (reporting CNA)",
+      "url": "https://en.tempo.co/read/2123867/norway-beats-denmark-3-2-to-reach-nations-league-quarter-finals",
+      "publishedAt": "2026-11-18T02:56:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/news/02ab-2209792f2fda-6a523d4500bb-1000--2026-27-nations-league-quarter-final-qualification-promotion",
+      "publishedAt": "2026-11-17T23:30:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/story/_/id/50512643/england-nations-league-draw-how-watch",
+      "publishedAt": "2026-11-18T03:14:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-memory-prices-dram-nand-split",
+  "title": "Memory pricing splits: DRAM contracts climb while NAND spot slides",
+  "summary": "TrendForce expects PC DRAM contract prices to rise 13-18% in the fourth quarter and client SSD prices by less than 5%, after notebook shipments fell 15.8% sequentially in the third quarter. Suppliers are steering capacity to high-bandwidth memory, server DRAM and enterprise SSDs, leaving module makers short: 16Gb DDR5 contract prices are more than 500% higher year on year, while NAND spot has dropped roughly 20% since mid-October. Some producers say capacity is booked into 2028.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "memory",
+    "dram",
+    "nand",
+    "trendforce",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/presscenter/news/20261111-13303.html",
+      "publishedAt": "2026-11-11T09:00:00Z"
+    },
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/11/12/news-memory-makers-reportedly-plan-new-price-hikes-while-ai-demand-widens-enterprise-consumer-divide/",
+      "publishedAt": "2026-11-12T09:00:00Z"
+    },
+    {
+      "publisher": "Wallstreetcn via Futu News",
+      "url": "https://news.futunn.com/en/post/1004547234/memory-market-divergence-bank-of-america-notes-dram-resilience-amid",
+      "publishedAt": "2026-11-15T00:33:00Z"
+    }
+  ],
+  "kind": "daily"
+}

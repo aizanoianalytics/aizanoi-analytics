@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-18-sec-probe-nvidia-disclosures",
+  "title": "SEC opens a civil probe into what Nvidia told investors",
+  "summary": "The Wall Street Journal reported that the Securities and Exchange Commission has opened a civil investigation into Nvidia, including whether the company's disclosures misled investors, after chief executive Jensen Huang resigned on 12 November. The SEC declined to comment. Treasury Secretary Scott Bessent has accused Nvidia of selling advanced chips into China to inflate earnings and asked the board for answers within ten days; California's attorney general says red flags around chip diversion are under review. Nvidia's stock has fallen more than 10% since Huang left.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "sec",
+    "regulation",
+    "governance",
+    "export-controls"
+  ],
+  "sources": [
+    {
+      "publisher": "The Wall Street Journal",
+      "url": "https://www.wsj.com/business/sec-is-probing-nvidia-amid-departure-of-ceo-jensen-huang-ee7643f8",
+      "publishedAt": "2026-11-17T18:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/17/sec-reportedly-investigating-nvidia-amid-huang-exit",
+      "publishedAt": "2026-11-17T20:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

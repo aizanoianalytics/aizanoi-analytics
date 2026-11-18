@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-japan-october-exports-chip-tools",
+  "title": "Japan's chip-tool exports jump 49.7% and carry a record trade month",
+  "summary": "Japan's exports rose 20.5% in October to a record ¥11.77tn, a fourteenth consecutive monthly gain, as semiconductor manufacturing equipment and chip shipments each climbed 49.7%. Exports to Taiwan rose 42.7% and to the United States 23.9%. Imports grew 21.6% as the value of crude oil purchases jumped 60.5% on slightly lower volumes, leaving a ¥476.5bn deficit. The economy had contracted at an annualised 0.1% in the third quarter, before this export run.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "japan",
+    "semiconductors",
+    "trade",
+    "exports",
+    "chip-equipment"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (Japan Ministry of Finance data)",
+      "url": "https://www.reuters.com/markets/asia/japan-exports-set-record-october-strong-chip-related-demand-2026-11-18",
+      "publishedAt": "2026-11-18T00:30:00Z"
+    },
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/japan/exports-yoy/news/602041",
+      "publishedAt": "2026-11-18T00:04:00Z"
+    },
+    {
+      "publisher": "ActionForex",
+      "url": "https://www.actionforex.com/live-comments/661239-japan-trade-deficit-narrows-as-chip-exports-surge-but-oil-costs-stay-high/",
+      "publishedAt": "2026-11-18T02:26:00Z"
+    }
+  ],
+  "kind": "daily"
+}

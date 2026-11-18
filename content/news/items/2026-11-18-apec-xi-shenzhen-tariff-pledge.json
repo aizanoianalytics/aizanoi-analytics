@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-18-apec-xi-shenzhen-tariff-pledge",
+  "title": "Xi opens APEC with tariff promises and no timetable",
+  "summary": "Xi Jinping opened the APEC chief executives' summit in Shenzhen by promising tariff cuts, wider market access and what he called full manufacturing access for foreign firms, without naming levels or dates. He urged progress towards a Free Trade Area of the Asia-Pacific, a WTO-centred trading system and closer cooperation on artificial intelligence, the digital economy and digital customs. Donald Trump and Vladimir Putin are expected at the leaders' meeting, which runs through 19 November.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apec",
+    "china",
+    "trade",
+    "tariffs",
+    "shenzhen"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/chinas-xi-calls-free-open-trade-apec-summit-2026-11-18/",
+      "publishedAt": "2026-11-18T03:24:00Z"
+    },
+    {
+      "publisher": "Channel NewsAsia",
+      "url": "https://www.channelnewsasia.com/east-asia/apec-ceo-summit-xi-jinping-speech-china-6551601",
+      "publishedAt": "2026-11-18T04:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/18/china-xi-trade-investment-barriers.html",
+      "publishedAt": "2026-11-18T03:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}

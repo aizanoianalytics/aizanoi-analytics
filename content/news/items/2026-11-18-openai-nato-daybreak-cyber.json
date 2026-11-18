@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-18-openai-nato-daybreak-cyber",
+  "title": "OpenAI hands NATO's cyber defenders its Daybreak models",
+  "summary": "OpenAI said NATO's core institutions now use its Daybreak cyber models through the alliance's communications and information agency, with usage reaching up to 300 billion tokens a month. The disclosed work covers reviewing software, investigating suspicious activity, validating vulnerabilities and testing fixes. NATO's Crossed Swords exercise in Tallinn this month ran a stream in which participants directed AI agents under human oversight. EU and national cyber agencies, and Ukraine's digital ministry, also hold Daybreak access.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "nato",
+    "cybersecurity",
+    "daybreak",
+    "defence"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/strengthening-nato-allied-cyber-defences-ai",
+      "publishedAt": "2026-11-17T14:00:00Z"
+    },
+    {
+      "publisher": "Defense One",
+      "url": "https://www.defenseone.com/technology/2026/11/openai-gives-nato-access-most-advanced-cybersecurity-ai/417296",
+      "publishedAt": "2026-11-17T17:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

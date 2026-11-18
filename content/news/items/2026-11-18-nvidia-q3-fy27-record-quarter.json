@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-18-nvidia-q3-fy27-record-quarter",
+  "title": "Nvidia's first post-Huang quarter beats by $7bn and guides to $130bn",
+  "summary": "Revenue reached $115.8bn in the quarter to 25 October, up 103% from a year earlier and roughly $7bn above the company's own $108bn guidance, with data centre sales of $107.6bn. Non-GAAP earnings were $2.68 a share against about $2.47 expected. Nvidia guided the January quarter to $130bn while assuming no data centre compute revenue from China, and its board added $150bn to the buyback. The shares rose about 5% after hours.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-11-18T05:00:00Z",
+  "updatedAt": "2026-11-18T05:00:00Z",
+  "retrievedAt": "2026-11-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "earnings",
+    "vera-rubin",
+    "colette-kress",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2027",
+      "publishedAt": "2026-11-17T21:20:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/live/nvidia-live-updates-interim-ceo-kress-prepares-for-q3-earnings-with-huang-reportedly-planning-comeback-153114076.html",
+      "publishedAt": "2026-11-17T22:30:00Z"
+    }
+  ],
+  "kind": "daily"
+}
