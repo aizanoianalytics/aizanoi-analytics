@@ -115,8 +115,17 @@ test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders 
       return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
     });
     assert.equal(combatHit.ok, true, JSON.stringify(combatHit));
-    await page.evaluate(() => document.querySelector('#btn-start-combat').click());
-    await page.waitForFunction(() => window.__factory && window.__factory.getMode() === 'combat' && document.querySelector('#combat-hud')?.hidden === false, null, { timeout: 10000 });
+    await page.mouse.click(combatHit.x, combatHit.y);
+    try {
+      await page.waitForFunction(() => window.__factory && window.__factory.getMode() === 'combat' && document.querySelector('#combat-hud')?.hidden === false, null, { timeout: 10000 });
+    } catch (error) {
+      const state = await page.evaluate(() => ({
+        mode: window.__factory && window.__factory.getMode(),
+        hidden: document.querySelector('#combat-hud')?.hidden,
+        body: document.body.className
+      })).catch(() => null);
+      throw new Error(`Battle mode did not start: ${JSON.stringify(state)}`, { cause: error });
+    }
     const combatState = await page.evaluate(() => ({
       mode: window.__factory?.getMode(),
       bodyClass: document.body.classList.contains('mode-combat'),
