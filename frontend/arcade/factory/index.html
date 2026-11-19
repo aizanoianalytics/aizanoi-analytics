@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Aizanoi Factory — Ultra HD 3D Mimari Keşif Alanı</title>
-  <meta name="description" content="Cam Tezyinat Fabrikası ve avlusu için Ultra HD interaktif 3D serbest gezinti alanı.">
+  <title>Aizanoi Factory — Ultra HD 3D Space &amp; Combat Arena</title>
+  <meta name="description" content="Explore the Ultra HD 3D glass-gilding factory in Free Tour mode or fight waves of Gull drones and Hound machines in Battle Mode.">
   <link rel="canonical" href="https://aizanoianalytics.com/arcade/factory/">
   <meta name="theme-color" content="#0b0d0f">
   <link rel="stylesheet" href="./factory.css">
@@ -17,41 +17,85 @@
 <div id="app">
   <canvas id="view" tabindex="0"></canvas>
   <div id="ui">
-    <!-- Top Architectural HUD Bar -->
+    <!-- Top Architectural & Tactical HUD Bar -->
     <header class="hud-top">
       <div class="hud-brand">
-        <div class="brand-kicker">3D MİMARİ KEŞİF ALANI · ULTRA HD</div>
-        <div class="brand-title">AİZANOİ CAM TEZYİNAT FABRİKASI</div>
-        <div class="brand-zone">Konum: <strong id="zone-name">Dış Avlu</strong> · <span id="coords-readout">X 0.0 · Z 0.0</span></div>
+        <div class="brand-kicker" id="brand-kicker">3D ARCHITECTURAL SPACE · ULTRA HD</div>
+        <div class="brand-title">AIZANOI GLASS GILDING FACTORY</div>
+        <div class="brand-zone">Zone: <strong id="zone-name">Outer Courtyard</strong> · <span id="coords-readout">X 0.0 · Z 0.0</span></div>
       </div>
 
       <div class="hud-actions">
-        <button type="button" class="hud-btn" id="btn-mode" title="Kamera Modunu Değiştir [V]">
+        <button type="button" class="hud-btn" id="btn-game-mode" title="Switch Free Tour / Battle Mode [G]">
+          <span class="btn-key">G</span>
+          <span class="btn-label" id="game-mode-label">Mode</span>
+        </button>
+        <button type="button" class="hud-btn" id="btn-mode" title="Toggle Camera Mode [V]">
           <span class="btn-key">V</span>
-          <span class="btn-label" id="mode-label">Yürüyüş Modu</span>
+          <span class="btn-label" id="mode-label">Walk Mode</span>
         </button>
-        <button type="button" class="hud-btn" id="btn-atmo" title="Atmosfer / Işık Değiştir [T]">
+        <button type="button" class="hud-btn" id="btn-atmo" title="Cycle Atmosphere / Lighting [T]">
           <span class="btn-key">T</span>
-          <span class="btn-label" id="atmo-label">Gün Batımı</span>
+          <span class="btn-label" id="atmo-label">Sunset</span>
         </button>
-        <button type="button" class="hud-btn" id="btn-flash" title="El Feneri Aç/Kapat [F]">
+        <button type="button" class="hud-btn" id="btn-flash" title="Toggle Flashlight [F]">
           <span class="btn-key">F</span>
-          <span class="btn-label">Fener</span>
+          <span class="btn-label">Light</span>
         </button>
-        <button type="button" class="hud-btn active" id="btn-map" title="2D Plan Haritası [M]">
+        <button type="button" class="hud-btn active" id="btn-map" title="2D Floor Plan Minimap [M]">
           <span class="btn-key">M</span>
-          <span class="btn-label">Plan</span>
+          <span class="btn-label">Map</span>
         </button>
-        <button type="button" class="hud-btn" id="btn-quality" title="Görüntü kalitesi [Q]">
+        <button type="button" class="hud-btn" id="btn-quality" title="Graphics Quality [Q]">
           <span class="btn-key">Q</span>
           <span class="btn-label" id="quality-label">Ultra</span>
         </button>
-        <button type="button" class="hud-btn" id="btn-help" title="Kontroller ve Kısayollar [H]">
+        <button type="button" class="hud-btn" id="btn-help" title="Controls &amp; Shortcuts [H]">
           <span class="btn-key">H</span>
-          <span class="btn-label">Kontroller</span>
+          <span class="btn-label">Controls</span>
         </button>
       </div>
     </header>
+
+    <!-- Combat Mode HUD (Aizanoi Wars Dynamics) -->
+    <div id="combat-hud" class="combat-hud" hidden>
+      <div class="combat-wave-strip">
+        <div class="cw-cell">
+          <span class="cw-k">WAVE</span>
+          <strong id="combat-wave">1</strong>
+        </div>
+        <div class="cw-cell">
+          <span class="cw-k">HOSTILES</span>
+          <strong id="combat-hostiles">0</strong>
+        </div>
+        <div class="cw-cell">
+          <span class="cw-k">KILLS</span>
+          <strong id="combat-kills">0</strong>
+        </div>
+      </div>
+
+      <div id="wave-banner" class="wave-banner" aria-live="polite"></div>
+      <div id="damage-flash" class="damage-flash" aria-hidden="true"></div>
+      <div id="hitmarker" class="hitmarker" aria-hidden="true"></div>
+
+      <div class="combat-health-card">
+        <div class="ch-head">
+          <span class="ch-label">INTEGRITY</span>
+          <strong id="combat-hp">100</strong>
+        </div>
+        <div class="ch-bar"><i id="combat-hp-fill"></i></div>
+      </div>
+
+      <div class="combat-ammo-card">
+        <div class="ca-weapon" id="combat-weapon">PAC-9 CARBINE</div>
+        <div class="ca-counts">
+          <strong id="combat-ammo">30</strong>
+          <span class="ca-sep">/</span>
+          <span id="combat-reserve">120</span>
+        </div>
+        <div class="ca-state" id="combat-weapon-state">READY · [R] RELOAD · RMB AIM</div>
+      </div>
+    </div>
 
     <!-- Center Crosshair -->
     <div id="crosshair" aria-hidden="true"><i></i></div>
@@ -59,7 +103,7 @@
     <!-- Interactive Prompt -->
     <div id="prompt" class="prompt-pill" aria-live="polite">
       <kbd>E</kbd>
-      <span id="prompt-text">Etkileşim</span>
+      <span id="prompt-text">Interact</span>
     </div>
 
     <!-- Transient Toast Message -->
@@ -67,83 +111,130 @@
 
     <!-- Pointer Lock Notice -->
     <div id="lock-hint" class="lock-hint">
-      Fareyi serbestçe çevirmek için sahneye tıklayın · <strong>ESC</strong> ile imleci bırakın
+      Click the scene to look around freely · Press <strong>ESC</strong> to release cursor
     </div>
 
     <!-- Live 2D Architectural Blueprint Minimap -->
     <aside id="minimap-card" class="minimap-card">
       <div class="minimap-head">
-        <span>VAZİYET &amp; İÇ PLAN</span>
-        <span id="compass-dir">K 0°</span>
+        <span>SITE &amp; FLOOR PLAN</span>
+        <span id="compass-dir">N 0°</span>
       </div>
       <canvas id="minimap" width="252" height="252"></canvas>
     </aside>
 
-    <!-- Quick Teleport Bookmarks [1]-[9] -->
-    <nav class="bookmark-bar" aria-label="Hızlı Konum Geçişi">
-      <button type="button" class="bm-btn" data-bm="0"><kbd>1</kbd> Avlu &amp; Rampa</button>
+    <!-- Quick Teleport Bookmarks [1]-[9] (Free Tour Mode) -->
+    <nav id="bookmark-bar" class="bookmark-bar" aria-label="Quick Location Jump">
+      <button type="button" class="bm-btn" data-bm="0"><kbd>1</kbd> Courtyard &amp; Ramp</button>
       <button type="button" class="bm-btn" data-bm="1"><kbd>2</kbd> Honda CR-V</button>
-      <button type="button" class="bm-btn" data-bm="2"><kbd>3</kbd> Dodge Kamyon</button>
-      <button type="button" class="bm-btn" data-bm="3"><kbd>4</kbd> Ağaç &amp; Çardak</button>
-      <button type="button" class="bm-btn" data-bm="4"><kbd>5</kbd> Garaj &amp; 928S</button>
-      <button type="button" class="bm-btn" data-bm="5"><kbd>6</kbd> Palet &amp; Paketleme</button>
-      <button type="button" class="bm-btn" data-bm="6"><kbd>7</kbd> Ofisler &amp; Mutfak</button>
-      <button type="button" class="bm-btn" data-bm="7"><kbd>8</kbd> Bardak Yaldız</button>
-      <button type="button" class="bm-btn" data-bm="8"><kbd>9</kbd> Tezyinat Fırını</button>
+      <button type="button" class="bm-btn" data-bm="2"><kbd>3</kbd> Dodge Truck</button>
+      <button type="button" class="bm-btn" data-bm="3"><kbd>4</kbd> Tree &amp; Gazebo</button>
+      <button type="button" class="bm-btn" data-bm="4"><kbd>5</kbd> Garage &amp; 928S</button>
+      <button type="button" class="bm-btn" data-bm="5"><kbd>6</kbd> Pallets &amp; Packing</button>
+      <button type="button" class="bm-btn" data-bm="6"><kbd>7</kbd> Offices &amp; Kitchen</button>
+      <button type="button" class="bm-btn" data-bm="7"><kbd>8</kbd> Glass Gilding</button>
+      <button type="button" class="bm-btn" data-bm="8"><kbd>9</kbd> Gilding Kiln</button>
     </nav>
+
+    <!-- Mode Selection Modal (Free Tour vs Battle Mode) -->
+    <section id="mode-modal" class="mode-modal" hidden>
+      <div class="mode-card">
+        <div class="mode-head">
+          <div class="mode-kicker">AIZANOI FACTORY · ULTRA HD 3D</div>
+          <h1>Choose Your Mode</h1>
+          <p class="mode-sub">Explore the 1:1 glass-gilding factory freely or deploy with Aizanoi Wars combat dynamics.</p>
+        </div>
+        <div class="mode-grid">
+          <button type="button" class="mode-option" id="btn-start-tour" data-mode="tour">
+            <span class="mode-badge">EXPLORATION</span>
+            <strong class="mode-name">Free Tour</strong>
+            <span class="mode-desc">Walk or fly Drone mode across the courtyard, vehicles, pallet climb course, offices, gilding lathes, and kiln. Invulnerable sandbox with instant bookmarks.</span>
+            <span class="mode-cta">Enter Free Tour</span>
+          </button>
+          <button type="button" class="mode-option mode-option-combat" id="btn-start-combat" data-mode="combat">
+            <span class="mode-badge">AIZANOI WARS COMBAT</span>
+            <strong class="mode-name">Battle Mode</strong>
+            <span class="mode-desc">Deploy with the PAC-9 rifle, ADS, recoil, magazine &amp; reserve ammo. Fight escalating waves of flying Gull drones and Hound machines and resupply at factory crates.</span>
+            <span class="mode-cta">Deploy to Battle</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Combat Defeat / Debrief Modal -->
+    <section id="combat-over-modal" class="mode-modal" hidden>
+      <div class="mode-card combat-over-card">
+        <div class="mode-head">
+          <div class="mode-kicker">FACTORY COMBAT · BREACHER DOWN</div>
+          <h2>Unit Offline</h2>
+          <p class="mode-sub">The machines overran the factory floor. Review your run and redeploy.</p>
+        </div>
+        <dl class="debrief-stats">
+          <div><dt>Wave Reached</dt><dd id="over-wave">1</dd></div>
+          <div><dt>Hostiles Destroyed</dt><dd id="over-kills">0</dd></div>
+          <div><dt>Accuracy</dt><dd id="over-acc">—</dd></div>
+          <div><dt>Survival Time</dt><dd id="over-time">00:00</dd></div>
+        </dl>
+        <div class="over-actions">
+          <button type="button" class="over-btn primary" id="btn-combat-retry">Redeploy Battle</button>
+          <button type="button" class="over-btn" id="btn-combat-to-tour">Switch to Free Tour</button>
+        </div>
+      </div>
+    </section>
 
     <!-- Controls Overlay Modal [H] -->
     <section id="help-modal" class="help-modal" hidden>
       <div class="help-card">
         <div class="help-head">
           <div>
-            <div class="help-kicker">AİZANOİ FACTORY SANDBOX</div>
-            <h2>Kontroller &amp; Gezinti Rehberi</h2>
+            <div class="help-kicker">AIZANOI FACTORY · CONTROLS</div>
+            <h2>Controls &amp; Tactical Guide</h2>
           </div>
-          <button type="button" class="help-close" id="btn-help-close">Kapat [H]</button>
+          <button type="button" class="help-close" id="btn-help-close">Close [H]</button>
         </div>
         <div class="help-grid">
           <div class="help-col">
-            <h3>Hareket &amp; Kamera</h3>
+            <h3>Movement &amp; Combat</h3>
             <dl class="key-list">
-              <div><dt>Hareket</dt><dd><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></dd></div>
-              <div><dt>Koş / Hızlan</dt><dd><kbd>Shift</kbd></dd></div>
-              <div><dt>Zıpla / Yüksel (Drone)</dt><dd><kbd>Space</kbd></dd></div>
-              <div><dt>Eğil / Alçal (Drone)</dt><dd><kbd>C</kbd> / <kbd>Ctrl</kbd></dd></div>
-              <div><dt>Bakış Açısı</dt><dd>Fare (Sahneye Tıkla)</dd></div>
-              <div><dt>Yürüyüş / Drone Geçişi</dt><dd><kbd>V</kbd></dd></div>
+              <div><dt>Move</dt><dd><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></dd></div>
+              <div><dt>Sprint</dt><dd><kbd>Shift</kbd></dd></div>
+              <div><dt>Jump / Ascend (Drone)</dt><dd><kbd>Space</kbd></dd></div>
+              <div><dt>Crouch / Descend (Drone)</dt><dd><kbd>C</kbd> / <kbd>Ctrl</kbd></dd></div>
+              <div><dt>Fire / Aim Down Sights</dt><dd>LMB / RMB (Battle)</dd></div>
+              <div><dt>Reload Weapon</dt><dd><kbd>R</kbd> (Battle)</dd></div>
             </dl>
           </div>
           <div class="help-col">
-            <h3>Etkileşim &amp; Ortam</h3>
+            <h3>Interaction &amp; Environment</h3>
             <dl class="key-list">
-              <div><dt>Kapılar &amp; Makineler</dt><dd><kbd>E</kbd></dd></div>
-              <div><dt>Atmosfer / Hava Durumu</dt><dd><kbd>T</kbd></dd></div>
-              <div><dt>El Feneri</dt><dd><kbd>F</kbd></dd></div>
-              <div><dt>2D Plan Haritası</dt><dd><kbd>M</kbd></dd></div>
-              <div><dt>Hızlı Konumlar</dt><dd><kbd>1</kbd> – <kbd>9</kbd></dd></div>
-              <div><dt>Kalite</dt><dd><kbd>Q</kbd> Düşük · Orta · Yüksek · Ultra</dd></div>
-              <div><dt>Dokunmatik</dt><dd>Sol başparmak hareket · Sağ başparmak bakış · Zıpla</dd></div>
+              <div><dt>Doors, Machines &amp; Crates</dt><dd><kbd>E</kbd></dd></div>
+              <div><dt>Switch Tour / Battle Mode</dt><dd><kbd>G</kbd></dd></div>
+              <div><dt>Walk / Drone Camera</dt><dd><kbd>V</kbd> (Free Tour)</dd></div>
+              <div><dt>Atmosphere / Weather</dt><dd><kbd>T</kbd></dd></div>
+              <div><dt>Flashlight / Minimap</dt><dd><kbd>F</kbd> / <kbd>M</kbd></dd></div>
+              <div><dt>Quick Locations</dt><dd><kbd>1</kbd> – <kbd>9</kbd> (Free Tour)</dd></div>
+              <div><dt>Quality</dt><dd><kbd>Q</kbd> Low · Medium · High · Ultra</dd></div>
+              <div><dt>Touch</dt><dd>Left thumb move · Right thumb look · Jump</dd></div>
             </dl>
           </div>
         </div>
         <p class="help-foot">
-          Bu alan tamamen serbest keşif ve mimari inceleme içindir. Tüm iç ve dış bölmeler, araçlar, cam yaldız tezgahları ve fırın hattı 1:1 ölçekte gezilebilir.
+          Switch between Free Tour and Battle Mode anytime with [G]. In Battle Mode, resupply ammo and health at glowing tactical crates across the courtyard and production halls.
         </p>
       </div>
     </section>
 
     <div id="touch-dock">
-      <p>Sol başparmak hareket</p>
-      <p>Sağ başparmak bakış</p>
-      <p>Zıpla · Kullan</p>
+      <p>Left thumb move</p>
+      <p>Right thumb look</p>
+      <p>Jump · Use</p>
     </div>
   </div>
 
   <!-- Loading Boot Screen -->
   <div id="boot">
-    <div class="boot-mark">AİZANOİ FACTORY</div>
-    <div class="boot-sub" id="boot-msg">Ultra HD 3D sahne hazırlanıyor</div>
+    <div class="boot-mark">AIZANOI FACTORY</div>
+    <div class="boot-sub" id="boot-msg">Preparing Ultra HD 3D scene</div>
     <div class="boot-bar"><i id="boot-fill"></i></div>
   </div>
 </div>

@@ -13,6 +13,7 @@ test('Aizanoi Factory is a standalone static Arcade route under strict CSP', () 
   const interior = read('arcade/factory/factory_interior.js');
   const factory = read('arcade/factory/factory.js');
 
+  assert.match(html, /<html lang="en">/);
   assert.match(html, /<title>Aizanoi Factory/);
   assert.match(html, /<link rel="canonical" href="https:\/\/aizanoianalytics\.com\/arcade\/factory\/">/);
   assert.match(html, /<link rel="stylesheet" href="\.\/factory\.css">/);
@@ -27,6 +28,9 @@ test('Aizanoi Factory is a standalone static Arcade route under strict CSP', () 
 
   assert.match(engine, /window\.__THREE__="180"/);
   assert.match(engine, /AZ_ENGINE/);
+  assert.match(engine, /createCombat:\s*zv/);
+  assert.match(engine, /createWeapon:\s*dm/);
+  assert.match(engine, /createEnemies:\s*Em/);
   for (const [name, source] of [
     ['engine.js', engine],
     ['vehicles.js', vehicles],
@@ -40,31 +44,52 @@ test('Aizanoi Factory is a standalone static Arcade route under strict CSP', () 
   assert.match(read('arcade/index.md'), /factory\/index\.md/);
 });
 
-test('Factory exposes a raised quality control, stable help button and touch dock', () => {
+test('Factory exposes English UI, Free Tour / Battle Mode selector, Aizanoi Wars combat, quality control, and touch dock', () => {
   const html = read('arcade/factory/index.html');
   const css = read('arcade/factory/factory.css');
   const factory = read('arcade/factory/factory.js');
   const notes = read('arcade/factory/index.md');
+  const interior = read('arcade/factory/factory_interior.js');
 
   assert.match(html, /id="btn-quality"/);
   assert.match(html, /id="quality-label"/);
   assert.match(html, /id="touch-dock"/);
-  assert.match(html, /Sol başparmak hareket/);
-  assert.match(html, /Sağ başparmak bakış/);
+  assert.match(html, /Left thumb move/);
+  assert.match(html, /Right thumb look/);
+  assert.match(html, /id="mode-modal"/);
+  assert.match(html, /id="btn-start-tour"/);
+  assert.match(html, /id="btn-start-combat"/);
+  assert.match(html, /id="combat-hud"/);
+  assert.match(html, /id="combat-ammo"/);
+  assert.match(html, /id="combat-hp"/);
+  assert.match(html, /id="combat-wave"/);
+  assert.match(html, /id="combat-over-modal"/);
+
   assert.match(factory, /function chooseFactoryQuality/);
   assert.match(factory, /G\.render\.setQuality/);
   assert.match(factory, /aizanoi\.factory\.quality/);
   assert.match(factory, /shadow:\s*8192|shadow = Math\.max/);
   assert.match(factory, /function raiseSceneFinish/);
+  assert.match(factory, /function enterTourMode/);
+  assert.match(factory, /function enterCombatMode/);
+  assert.match(factory, /E\.createCombat/);
+  assert.match(factory, /E\.createWeapon/);
+  assert.match(factory, /E\.createEnemies/);
+  assert.match(factory, /invulnerable = true/);
+  assert.match(factory, /invulnerable = false/);
+  assert.match(factory, /4\.2m/);
+
   assert.match(css, /#coords-readout[\s\S]*width:\s*18ch/);
   assert.match(css, /\.hud-actions[\s\S]*z-index:\s*30/);
   assert.match(css, /#touch-dock/);
+  assert.match(css, /\.mode-modal/);
+  assert.match(css, /\.combat-hud/);
+
   assert.doesNotMatch(notes, /fifteen loaded pallets|Steep solid loading ramp/);
   assert.match(notes, /87 pallet/);
-  const interior = read('arcade/factory/factory_interior.js');
-  assert.match(notes, /cement ramp/);
+  assert.match(notes, /cement ramp/i);
   assert.match(interior, /createTallSpacerGlass/);
   assert.match(interior, /PC Tower Case/);
-  assert.match(factory, /invulnerable = true/);
-  assert.match(factory, /4\.2m/);
+  assert.match(interior, /GLASS GILDING KILN/);
+  assert.match(interior, /LOADING RAMP/);
 });

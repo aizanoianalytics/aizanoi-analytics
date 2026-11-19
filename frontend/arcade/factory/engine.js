@@ -5855,6 +5855,9 @@ window.AZ_ENGINE = {
   createAudio: c_,
   createInput: v_,
   createPlayer: x_,
+  createCombat: zv,
+  createWeapon: dm,
+  createEnemies: Em,
   geo: {
     box: $e,
     bevelBox: Wi,

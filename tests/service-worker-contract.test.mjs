@@ -60,6 +60,7 @@ test('retired product surfaces are declared as an explicit, append-only denylist
     paths.includes('/analytics/dashboards/hr-analytics-full-set'),
     `RETIRED_PATHS must include the retired HR Full Set route, got ${JSON.stringify(paths)}`,
   );
+  assert.ok(paths.includes('/arcade/daire'), 'RETIRED_PATHS must include the retired Ev apartment');
   assert.match(sw, /function isRetiredPath\(pathname\)/);
   // Prefix match must not swallow sibling routes such as new-hr-collection.
   assert.match(

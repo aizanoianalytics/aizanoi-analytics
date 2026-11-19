@@ -53,12 +53,12 @@
     ctx.strokeRect(6, 6, 244, 244);
     ctx.fillStyle = '#ffb347';
     ctx.font = 'bold 18px monospace';
-    ctx.fillText('CAM TEZYINAT FIRINI', 18, 34);
+    ctx.fillText('GLASS GILDING KILN', 18, 34);
     const zones = [
-      ['BOLGE 1 (ISITMA)', '590 C', '#ff8c42'],
-      ['BOLGE 2 (TAV)', '615 C', '#ff5a36'],
-      ['BOLGE 3 (SOGUMA)', '460 C', '#ffd166'],
-      ['CIKIS HAVA', '165 C', '#58c4b8']
+      ['ZONE 1 (PREHEAT)', '590 C', '#ff8c42'],
+      ['ZONE 2 (ANNEAL)', '615 C', '#ff5a36'],
+      ['ZONE 3 (COOLING)', '460 C', '#ffd166'],
+      ['EXHAUST AIR', '165 C', '#58c4b8']
     ];
     zones.forEach(([label, temp, col], idx) => {
       const y = 68 + idx * 44;
@@ -293,7 +293,7 @@
       // Overhead canopy above factory doorway + loading sign
       L.slab(steelDark, 2.5, 4.35, -3.3, 4.15, 4.55, 3.3);
       L.box(ledWarmMat, 0.18, 0.10, 4.4, 3.3, 4.32, 0);
-      addSign(THREE, stat, 'YUKLEME RAMPASI', 'UZUN CIMENTO SEVKIYAT RAMPASI', 3.92, 5.15, 0, 4.4, 0.95, -Math.PI / 2);
+      addSign(THREE, stat, 'LOADING RAMP', 'EXTENDED CEMENT SHIPPING RAMP', 3.92, 5.15, 0, 4.4, 0.95, -Math.PI / 2);
     }
 
     // ------------------------------------------------------------------------
@@ -461,8 +461,8 @@
         doorGrp.add(r);
       }
 
-      addSign(THREE, doorGrp, label, 'SURGULU KAPI [E]', -0.10, 2.95, 0, 2.2, 0.48, -Math.PI / 2);
-      addSign(THREE, doorGrp, label, 'SURGULU KAPI [E]', 0.10, 2.95, 0, 2.2, 0.48, Math.PI / 2);
+      addSign(THREE, doorGrp, label, 'SLIDING DOOR [E]', -0.10, 2.95, 0, 2.2, 0.48, -Math.PI / 2);
+      addSign(THREE, doorGrp, label, 'SLIDING DOOR [E]', 0.10, 2.95, 0, 2.2, 0.48, Math.PI / 2);
 
       const collider = L.col(x - 0.12, FLOOR_Y, openZ - widthZ / 2, x + 0.12, FLOOR_Y + heightY, openZ + widthZ / 2, 'metal');
       let isOpen = true;
@@ -481,18 +481,18 @@
         id: name,
         pos: new THREE.Vector3(x, FLOOR_Y + 1.4, 0),
         range: 4.5,
-        getLabel: () => isOpen ? `${label} (Kapat)` : `${label} (Ac)`,
+        getLabel: () => isOpen ? `${label} (Close)` : `${label} (Open)`,
         trigger: () => {
           isOpen = !isOpen;
           G.audio && G.audio.play && G.audio.play('impact_metal', { pos: [x, FLOOR_Y + 1.5, 0], gain: 0.45 });
-          return `${label} ${isOpen ? 'acildi' : 'kapandi'}`;
+          return `${label} ${isOpen ? 'opened' : 'closed'}`;
         }
       });
     }
 
     createSlidingDoor({
       name: 'dis_surgulu_kapi',
-      label: 'DIS SURGULU KAPI',
+      label: 'EXTERIOR SLIDING DOOR',
       x: 3.90,
       railZ0: -8.6,
       railZ1: 3.2,
@@ -504,7 +504,7 @@
 
     createSlidingDoor({
       name: 'ic_surgulu_kapi',
-      label: 'IC SURGULU KAPI',
+      label: 'INTERIOR SLIDING DOOR',
       x: MID_WALL_X - 0.28,
       railZ0: -8.6,
       railZ1: 3.2,
@@ -655,7 +655,7 @@
           stat.add(cup);
         }
       }
-      addSign(THREE, stat, `PAKETLEME MASASI ${idx}`, 'BUYUK SEVK HAZIRLIK MASASI', tx, FLOOR_Y + 2.35, tz, 2.3, 0.48, -Math.PI / 2);
+      addSign(THREE, stat, `PACKAGING TABLE ${idx}`, 'LARGE DISPATCH PREP TABLE', tx, FLOOR_Y + 2.35, tz, 2.3, 0.48, -Math.PI / 2);
       // Clean table top collider so player can jump onto packing tables (#14)
       L.col(tx - tw / 2, FLOOR_Y, tz - tl / 2, tx + tw / 2, FLOOR_Y + th + 0.04, tz + tl / 2, 'wood');
     }
@@ -722,11 +722,11 @@
         id,
         pos: new THREE.Vector3(cx, FLOOR_Y + 1.2, cz),
         range: 3.0,
-        getLabel: () => isOpen ? `${label} (Kapat)` : `${label} (Ac)`,
+        getLabel: () => isOpen ? `${label} (Close)` : `${label} (Open)`,
         trigger: () => {
           isOpen = !isOpen;
           G.audio && G.audio.play && G.audio.play('impact_wood', { pos: [cx, FLOOR_Y + 1.1, cz], gain: 0.45 });
-          return `${label} ${isOpen ? 'acildi' : 'kapandi'}`;
+          return `${label} ${isOpen ? 'opened' : 'closed'}`;
         }
       });
     }
@@ -768,8 +768,8 @@
     L.col(4.3, FLOOR_Y, offZ0 - 0.10, 7.38, ceilY0, offZ0 + 0.12, 'concrete');
     L.col(8.92, FLOOR_Y, offZ0 - 0.10, offXMid, ceilY0, offZ0 + 0.12, 'concrete');
     L.col(7.38, FLOOR_Y + 2.25, offZ0 - 0.10, 8.92, ceilY0, offZ0 + 0.12, 'concrete');
-    createHingedDoor('ofis1_kapi', 'Ofis 1 Kapisi', 7.4, offZ0, 1.46, 'x', -1.45);
-    addSign(THREE, stat, 'OFIS 1', 'IDARI & PLANLAMA', 10.25, FLOOR_Y + 2.65, offZ0 - 0.12, 1.4, 0.36, Math.PI);
+    createHingedDoor('ofis1_kapi', 'Office 1 Door', 7.4, offZ0, 1.46, 'x', -1.45);
+    addSign(THREE, stat, 'OFFICE 1', 'ADMIN & PLANNING', 10.25, FLOOR_Y + 2.65, offZ0 - 0.12, 1.4, 0.36, Math.PI);
 
     // North wall of Mutfak (Z = 12.5), WIDE doorway X: 14.2..15.7
     buildWindowBandWall(offXMid, offZ0 - 0.08, 14.2, offZ0 + 0.10, FLOOR_Y, FLOOR_Y + 1.15, FLOOR_Y + 2.30, ceilY0, 'x', wallIntMat);
@@ -778,8 +778,8 @@
     L.col(offXMid, FLOOR_Y, offZ0 - 0.10, 14.18, ceilY0, offZ0 + 0.12, 'concrete');
     L.col(15.72, FLOOR_Y, offZ0 - 0.10, offXMax, ceilY0, offZ0 + 0.12, 'concrete');
     L.col(14.18, FLOOR_Y + 2.25, offZ0 - 0.10, 15.72, ceilY0, offZ0 + 0.12, 'concrete');
-    createHingedDoor('mutfak_kapi', 'Mutfak Kapisi', 14.2, offZ0, 1.46, 'x', -1.45);
-    addSign(THREE, stat, 'MUTFAK', 'YEMEK & DINLENME', 17.1, FLOOR_Y + 2.65, offZ0 - 0.12, 1.4, 0.36, Math.PI);
+    createHingedDoor('mutfak_kapi', 'Kitchen Door', 14.2, offZ0, 1.46, 'x', -1.45);
+    addSign(THREE, stat, 'KITCHEN', 'DINING & BREAK ROOM', 17.1, FLOOR_Y + 2.65, offZ0 - 0.12, 1.4, 0.36, Math.PI);
 
     // Shared wall between Offices & Mutfak (X = 11.8)
     L.slab(wallIntMat, offXMid - 0.08, FLOOR_Y, offZ0, offXMid + 0.08, ceilY0, offZ1);
@@ -792,8 +792,8 @@
     L.col(4.3, FLOOR_Y, offZMid - 0.10, 7.38, ceilY0, offZMid + 0.10, 'concrete');
     L.col(8.92, FLOOR_Y, offZMid - 0.10, offXMid, ceilY0, offZMid + 0.10, 'concrete');
     L.col(7.38, FLOOR_Y + 2.25, offZMid - 0.10, 8.92, ceilY0, offZMid + 0.10, 'concrete');
-    createHingedDoor('ofis2_ara_kapi', 'Ofis 1-2 Ara Kapisi', 7.4, offZMid, 1.46, 'x', 1.45);
-    addSign(THREE, stat, 'OFIS 2', 'YONETIM & SHOWROOM', 10.25, FLOOR_Y + 2.55, offZMid - 0.12, 1.3, 0.34, Math.PI);
+    createHingedDoor('ofis2_ara_kapi', 'Office 1–2 Connecting Door', 7.4, offZMid, 1.46, 'x', 1.45);
+    addSign(THREE, stat, 'OFFICE 2', 'MANAGEMENT & SHOWROOM', 10.25, FLOOR_Y + 2.55, offZMid - 0.12, 1.3, 0.34, Math.PI);
 
     // Helper: Full Desktop Computer Set (Monitor + Glowing Screen + PC Tower Case + Keyboard & Mouse)
     const pcScrMat = L.G.mats.emissive(0x6eb6ff, 1.4);
@@ -1076,17 +1076,17 @@
         buildStackedTrayTower(tx, tz, nTrays);
       }
 
-      addSign(THREE, stat, 'BARDAK YALDIZ TEZGAHLARI', 'ARKA GECISLI YATAY CARKLAR & TEPSI ISTIFLERI [E]', benchX, FLOOR_Y + 3.05, benchZ + 0.72, 5.2, 0.82, Math.PI);
-      addSign(THREE, stat, 'BARDAK YALDIZ TEZGAHLARI', 'ARKA OTURMA KORIDORU & TEPSI ISTIFLERI [E]', benchX, FLOOR_Y + 3.05, benchZ - 0.72, 5.2, 0.82, 0);
+      addSign(THREE, stat, 'GLASS GILDING BENCHES', 'REAR WALKWAY HORIZONTAL LATHES & TRAY STACKS [E]', benchX, FLOOR_Y + 3.05, benchZ + 0.72, 5.2, 0.82, Math.PI);
+      addSign(THREE, stat, 'GLASS GILDING BENCHES', 'REAR SEATING CORRIDOR & TRAY STACKS [E]', benchX, FLOOR_Y + 3.05, benchZ - 0.72, 5.2, 0.82, 0);
 
       interactives.push({
         id: 'yaldiz_carklari',
         pos: new THREE.Vector3(benchX, FLOOR_Y + 1.1, benchZ),
         range: 6.0,
-        getLabel: () => turntableSpeed > 0.2 ? 'Yatay Yaldiz Carklarini Durdur' : 'Yatay Yaldiz Carklarini Calistir',
+        getLabel: () => turntableSpeed > 0.2 ? 'Stop Horizontal Gilding Lathes' : 'Start Horizontal Gilding Lathes',
         trigger: () => {
           turntableSpeed = turntableSpeed > 0.2 ? 0 : 1.0;
-          return turntableSpeed > 0.2 ? 'Yatay yaldiz carklari calistirildi' : 'Yatay yaldiz carklari durduruldu';
+          return turntableSpeed > 0.2 ? 'Horizontal gilding lathes started' : 'Horizontal gilding lathes stopped';
         }
       });
     }
@@ -1110,7 +1110,7 @@
         }
         L.box(paintYellow, 0.05, 0.12, 4.9, lx, convY + 0.07, -18.7);
       }
-      addSign(THREE, stat, 'DOLUM  -->', 'FIRIN GIRIS KONVEYORU', kx, FLOOR_Y + 2.35, -20.5, 2.4, 0.52, Math.PI, '#152028', '#fff', '#58c4b8');
+      addSign(THREE, stat, 'LOAD  -->', 'KILN INFEED CONVEYOR', kx, FLOOR_Y + 2.35, -20.5, 2.4, 0.52, Math.PI, '#152028', '#fff', '#58c4b8');
 
       // Main Kiln Tunnel (Z: -16.2 .. 12.2, length = 28.4m)
       L.box(paintGrey, kw, 2.05, 28.4, kx, FLOOR_Y + 1.38, -2.0, { bevel: 0.03 });
@@ -1138,7 +1138,7 @@
       pidMesh.position.set(kx - kw / 2 - 0.60, FLOOR_Y + 1.45, -14.2);
       pidMesh.rotation.y = Math.PI;
       dyn.add(pidMesh);
-      addSign(THREE, stat, 'CAM TEZYINAT FIRINI', '615 C TAV & YALDIZ PISIRME', kx - kw / 2 - 0.08, FLOOR_Y + 2.85, -2.0, 4.4, 0.78, -Math.PI / 2);
+      addSign(THREE, stat, 'GLASS GILDING KILN', '615 C ANNEALING & GOLD FIRING', kx - kw / 2 - 0.08, FLOOR_Y + 2.85, -2.0, 4.4, 0.78, -Math.PI / 2);
 
       // Exit conveyor (Z: 12.2 .. 17.2)
       L.box(steelDarkInt, 2.2, 0.14, 5.0, kx, convY - 0.08, 14.7);
@@ -1149,7 +1149,7 @@
         }
         L.box(paintYellow, 0.05, 0.12, 4.9, lx, convY + 0.07, 14.7);
       }
-      addSign(THREE, stat, 'CIKIS', 'SOGUTMA VE KONTROL', kx, FLOOR_Y + 2.35, 16.8, 2.2, 0.52, 0, '#152028', '#fff', '#ffb347');
+      addSign(THREE, stat, 'EXIT', 'COOLING & INSPECTION', kx, FLOOR_Y + 2.35, 16.8, 2.2, 0.52, 0, '#152028', '#fff', '#ffb347');
 
       // Stepped colliders for kiln conveyors, control cabinet & kiln tunnel body (climbable #14!)
       L.col(kx - 1.1, FLOOR_Y, -21.2, kx + 1.1, convY + 0.05, -16.2, 'metal');
@@ -1187,10 +1187,10 @@
         id: 'firin_konveyor',
         pos: new THREE.Vector3(kx - 2.1, FLOOR_Y + 1.2, -14.2),
         range: 4.5,
-        getLabel: () => kilnRunning ? 'Firin Konveyorunu Durdur' : 'Firin Konveyorunu Baslat',
+        getLabel: () => kilnRunning ? 'Stop Kiln Conveyor' : 'Start Kiln Conveyor',
         trigger: () => {
           kilnRunning = !kilnRunning;
-          return kilnRunning ? 'Cam Tezyinat Firini konveyoru calisiyor' : 'Cam Tezyinat Firini konveyoru durduruldu';
+          return kilnRunning ? 'Glass Gilding Kiln conveyor running' : 'Glass Gilding Kiln conveyor stopped';
         }
       });
     }
@@ -1214,7 +1214,7 @@
       L.box(cardboard, 0.56, 0.36, 0.46, ipx - 1.1, FLOOR_Y + 1.10, ipz);
       addLoadedPallet(21.4, 24.4, 0.02, 2);
       addLoadedPallet(21.4, 22.2, -0.02, 1);
-      addSign(THREE, stat, 'ILK PAKETLEME', 'KALITE KONTROL & AYIRMA', ipx, FLOOR_Y + 2.25, ipz, 2.5, 0.50, 0);
+      addSign(THREE, stat, 'INITIAL PACKAGING', 'QUALITY CONTROL & SORTING', ipx, FLOOR_Y + 2.25, ipz, 2.5, 0.50, 0);
       L.col(ipx - 2.65, FLOOR_Y, ipz - 0.85, ipx + 2.65, FLOOR_Y + 0.95, ipz + 0.85, 'wood');
     }
 
@@ -1287,8 +1287,8 @@
       }
 
       const zonesWC = [
-        { label: 'ERKEK WC', zMin: 7.0, signCol: '#2a6cb8', hasUrinals: true },
-        { label: 'KADIN WC', zMin: 14.0, signCol: '#b83c6a', hasUrinals: false }
+        { label: "MEN'S WC", zMin: 7.0, signCol: '#2a6cb8', hasUrinals: true },
+        { label: "WOMEN'S WC", zMin: 14.0, signCol: '#b83c6a', hasUrinals: false }
       ];
 
       for (const wc of zonesWC) {

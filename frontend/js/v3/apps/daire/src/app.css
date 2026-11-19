@@ -1,3 +1,0 @@
-.az-daire-app { width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column; background: #1c1916; }
-.az-daire-app iframe { width: 100%; flex: 1 1 auto; min-height: 0; border: 0; }
-.az-daire-app a { display: block; padding: 8px 14px; color: #e0b15a; background: #14110e; font: 600 14px system-ui, sans-serif; text-align: right; }
