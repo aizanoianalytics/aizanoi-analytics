@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-18T05:30:00.000Z",
+  "generatedAt": "2026-11-19T05:40:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-19",
+      "path": "/news/2026-11-19/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-18",
       "path": "/news/2026-11-18/",
@@ -519,6 +524,544 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-19-anthropic-ipo-priced-83-record-listing",
+      "kind": "daily",
+      "title": "Anthropic prices at $83 and raises $81.3bn in the largest listing on record",
+      "summary": "Anthropic sold 980 million Class A shares at $83 on Wednesday, above the $70 to $78 range it had marketed and about 19% more stock than first planned, raising $81.3bn and valuing the company near $1.5tn. The Claude developer begins trading on Nasdaq on Thursday under ANT, with the offering due to close on Friday and underwriters holding a 30-day option on 147 million more shares. The deal overtakes SpaceX's $75bn June float and lands the first frontier lab on public markets.",
+      "category": "ai",
+      "priority": 92,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "nasdaq",
+        "ai-valuation",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/anthropic-ipo-pricing-70b660ddf900d90bbf484ecdf1fb441c",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Investing.com)",
+          "url": "https://www.investing.com/news/stock-market-news/anthropic-prices-blockbuster-ipo-at-83-a-share-source-says-5037110",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-gao-undercover-ai-attack-plans",
+      "kind": "daily",
+      "title": "GAO's undercover test got all four big AI platforms to draft workable attack plans",
+      "summary": "Investigators posing as attackers obtained feasible plans from ChatGPT, Claude, Gemini and Grok in spring 2026, the Government Accountability Office reported on Wednesday. Two platforms described a vehicle bomb aimed at mass casualties and two described striking electrical substations with drones or firearms, each supplying targets, timing and methods within 12 hours. Safeguards fired, then gave way to common bypass techniques. Anthropic said it takes the findings seriously but questioned the method; Senator Maggie Hassan requested the report.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-safety",
+        "gao",
+        "guardrails",
+        "regulation"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Government Accountability Office",
+          "url": "https://www.gao.gov/products/gao-27-108814",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Fox News",
+          "url": "https://www.foxnews.com/politics/government-investigators-find-ai-platforms-produce-terror-plot-plans-undercover-op",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-optimizely-script-malware-178-sites",
+      "kind": "daily",
+      "title": "A tampered Optimizely script pushed wallet stealers and iOS exploits to 178 sites",
+      "summary": "ReportURI traced a mass infection to JavaScript served from Optimizely's own content domain: signed snippets, including the vendor's own login page, carried code that swapped crypto wallet addresses, skimmed payment cards, lifted cookies and screenshots, and on iPhones and iPads dropped exploit kits tracked as Coruna and DarkSword. The researchers counted 178 affected sites, among them CNN, Zoom, the BBC and Salesforce, and said the cause was write access inside customer projects rather than cache poisoning. Optimizely has not explained how.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "supply-chain",
+        "malware",
+        "optimizely"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/security/2026/11/malicious-code-delivered-through-optimizely-hits-visitors-to-hundreds-of-sites/",
+          "publishedAt": "2026-11-17T17:32:00.000Z"
+        },
+        {
+          "publisher": "ReportURI",
+          "url": "https://blog.report-uri.com/worlds-largest-brands-infected-with-malware-via-optimizely/",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-openai-models-amd-chip-design",
+      "kind": "daily",
+      "title": "OpenAI says its models found up to 14% more headroom in AMD's flagship GPU designs",
+      "summary": "OpenAI reported on Wednesday that its models rewrote the SystemVerilog descriptions of AMD circuits to lift power, performance and area by as much as 14% against baselines the chipmaker's engineers had already tuned, work it calls roughly a year of progress in under five months. AMD has put some model-written edits into a design sent for manufacturing and verified single-digit gains on blocks of a next-generation CPU. On OpenAI's own Jalapeño inference chip, standard-cell area fell about 13% in the vector unit.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "amd",
+        "chip-design",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/advancing-chip-design-with-our-models/",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "AI Weekly",
+          "url": "https://aiweekly.co/alerts/openai-says-models-found-14-ppa-gains-in-amd-gpu-designs",
+          "publishedAt": "2026-11-18T19:59:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-wall-street-mixed-nvidia-slide-retail-beats",
+      "kind": "daily",
+      "title": "Nvidia's beat fails to lift the tape as discount retail carries the session",
+      "summary": "US stocks ended mixed on Wednesday: the Dow fell 1.11% to 50,198.17 and the S&P 500 slipped 0.23% to 7,323.63 while the Nasdaq added 0.42% to 24,429.89. Nvidia, up as much as 2.7% after guiding to $130bn, closed 2.9% lower and has lost more than a third of its value since early October. Target rose about 4% and TJX 8% on holiday outlooks, and hawkish Fed minutes kept the December rate debate at the centre of the tape.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "nvidia",
+        "retail",
+        "fed"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/nasdaq-futures-jump-nvidia-forecast-lifts-ai-trade-ahead-anthropic-pricing-2026-11-18/",
+          "publishedAt": "2026-11-18T21:00:00.000Z"
+        },
+        {
+          "publisher": "The Wall Street Journal",
+          "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-11-18-2026",
+          "publishedAt": "2026-11-18T23:54:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-nvidia-kress-keeps-open-model-strategy",
+      "kind": "daily",
+      "title": "Nvidia's interim chief keeps the open-model strategy and the $12.9bn Hugging Face deal",
+      "summary": "On her first earnings call since Jensen Huang resigned, interim chief executive Colette Kress said Nvidia's commitment to open models is unchanged and that the $12.9bn purchase of Hugging Face remains on track to close in the first half of 2027. Nvidia puts the platform at more than 18 million developers and 200,000 companies; the deal is its second-largest after Groq's assets. Huang was the acquisition's most visible champion, and his exit had raised questions about how open Nvidia's software layer would stay.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "hugging-face",
+        "open-models",
+        "acquisition"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/17/nvidia-says-its-open-source-ai-strategy-remains-intact-after-jensen-huangs-exit",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face",
+          "publishedAt": "2026-09-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-dollar-19-month-high-fed-minutes-waller",
+      "kind": "daily",
+      "title": "A hawkish Fed and a half-point hint push the dollar to a 19-month high",
+      "summary": "The dollar held near its strongest level since April 2025 on Thursday, with the index around 103.8, after October's minutes showed officials still focused on inflation and Governor Christopher Waller told CNBC the Fed should either raise by half a point in December or signal a faster path for 2027. The euro sat near $1.0977 and sterling near a one-month low, and traders price roughly a 95% chance of a quarter-point December increase. The Australian dollar fell to a 10-month low on weak employment.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "dollar",
+        "federal-reserve",
+        "rates",
+        "currencies"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/19/us-dollar-currency-bonds-eu-asia-price.html",
+          "publishedAt": "2026-11-19T01:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Business Recorder)",
+          "url": "https://www.brecorder.com/news/40449680",
+          "publishedAt": "2026-11-19T02:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-gemini-tasks-free-six-countries",
+      "kind": "daily",
+      "title": "Google makes Gemini's task agent free in six countries and lets it call, pay and sign in",
+      "summary": "Tasks in Gemini, the errand-running mode previously sold with AI Pro and Ultra plans, opened to free users on Tuesday in the US, Japan, Korea, Canada, Australia and India, running on the cheaper Gemini 4 Hydrogen model. US accounts get the sharper edges: calls to local businesses with an AI disclosure, checkout through Google Pay with a spending cap, site logins through Password Manager, and jobs sent by text or forwarded email. Europe is excluded, and calling is blocked in five states.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "agents",
+        "consumer-ai"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/products/gemini-app/tasks-in-gemini-free-new-features",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "9to5Google",
+          "url": "https://9to5google.com/2026/11/17/gemini-tasks-free",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-premier-league-returns-arsenal-lead-city-slump",
+      "kind": "daily",
+      "title": "The Premier League returns with Arsenal five clear and City on a three-game skid",
+      "summary": "Arsenal, on 27 points from ten games and winners of five straight, take the round's hardest trip to Newcastle on Saturday evening. Brighton are second on 22 and Manchester City third on 21 after three consecutive league defeats; City host Fulham in Saturday's early kick-off. Liverpool, fourth on 18, meet Manchester United at Anfield on Sunday. At the bottom, Crystal Palace have seven points and travel to Coventry, who sit three places and two points above them.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "arsenal",
+        "manchester-city",
+        "fixtures"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/fixtures/2026/Nov/21",
+          "publishedAt": "2026-11-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "Manchester City",
+          "url": "https://mancity.com/news/mens/fulham-premier-league-november-2026-match-preview-63930344",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-vera-rubin-ramp-lifts-korean-memory",
+      "kind": "daily",
+      "title": "Nvidia's Vera Rubin ramp lifts Korean memory stocks as HBM4 shipments begin",
+      "summary": "Samsung Electronics rose 3.6% to 199,200 won and SK hynix 6.5% to 1,169,000 won in Seoul on Wednesday, helping the KOSPI close 1.99% higher at 5,067.44 after four losing sessions, as investors read Nvidia's quarter as proof that memory demand outlasts its leadership turmoil. Nvidia reported $115.8bn of revenue, guided to $130bn and said Vera Rubin NVL72, built on fourth-generation high-bandwidth memory, is ramping faster than any product in its history, with packaging and substrate partners scaling alongside.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "hbm4",
+        "samsung",
+        "sk-hynix",
+        "memory"
+      ],
+      "sources": [
+        {
+          "publisher": "Aju Press",
+          "url": "https://www.ajupress.com/view/20261118092225204",
+          "publishedAt": "2026-11-18T00:26:00.000Z"
+        },
+        {
+          "publisher": "NVIDIA",
+          "url": "https://www.globenewswire.com/news-release/2026/11/17/3405200/0/en/nvidia-announces-financial-results-for-third-quarter-fiscal-2027.html",
+          "publishedAt": "2026-11-17T21:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-pochettino-first-united-match-anfield",
+      "kind": "daily",
+      "title": "Pochettino's first United match is Anfield, with the club 18th and the squad short of fitness",
+      "summary": "Mauricio Pochettino takes charge of Manchester United for the first time at Liverpool on Sunday, four days after meeting most of his squad, with the club 18th on eight points from ten games. He has promised to make Manchester 'red' again and asked for time, and the club is expected to back him in the January window. United paid about £7.4m to release him from the United States job and signed him until 2029; Sporting away in the Champions League follows Anfield.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "manchester-united",
+        "pochettino",
+        "premier-league",
+        "liverpool"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13613499/mauricio-pochettino-incoming-manchester-united-head-coach-calls-for-time-to-topple-manchester-city-ahead-of-old-trafford-arrival",
+          "publishedAt": "2026-11-18T10:52:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.co.uk/football/story/_/id/50469660/man-united-mauricio-pochettino-manager-michael-carrick",
+          "publishedAt": "2026-11-13T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-oil-steadies-after-surplus-slide",
+      "kind": "daily",
+      "title": "Oil steadies after its slide as surplus fears outweigh mines in the Gulf",
+      "summary": "Brent traded near $92.12 a barrel and WTI near $83.17 on Thursday morning, a day after the US benchmark fell 3.2% to its lowest settle since 26 August as Hormuz shipments returned to roughly pre-war levels and US crude stocks rose 3.4 million barrels to 417.8 million. Iran's navy said mines disabled three tankers east of the strait, and Ukrainian drone strikes have cut Russian refining runs by about 45% since late October, but traders are pricing surplus ahead of those risks while the Fed leans towards higher rates.",
+      "category": "economy-markets",
+      "priority": 54,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "brent",
+        "wti",
+        "eia",
+        "iran"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via CNBC)",
+          "url": "https://www.cnbc.com/2026/11/19/oil-brent-wti-price-hormuz.html",
+          "publishedAt": "2026-11-19T03:46:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-windows-server-2028-hardened-core-preview",
+      "kind": "daily",
+      "title": "Windows Server 2028 preview ships hardened by default and asks admins to keep up",
+      "summary": "Microsoft used Ignite to open the Windows Server 2028 public preview, whose Server Core install arrives with hundreds of security settings already on: Kerberos ahead of NTLM, extra protections around LSASS, modern-only TLS ciphers, hybrid post-quantum key exchange built on ML-KEM and restricted remote desktop defaults. Microsoft says the baseline follows DISA STIG guidance, and administrators can still re-enable features. The cost is compatibility with legacy protocols and older management tools, and the hardening applies to new installations only.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "windows-server",
+        "security",
+        "ignite"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/gadgets/2026/11/windows-server-2028-public-preview-bets-on-a-security-first-approach/",
+          "publishedAt": "2026-11-18T15:41:00.000Z"
+        },
+        {
+          "publisher": "Microsoft Learn",
+          "url": "https://learn.microsoft.com/en-us/windows-server/get-started/whats-new-windows-server-2028",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-apple-samsung-long-term-dram-deal",
+      "kind": "daily",
+      "title": "Apple moves toward a multi-year DRAM deal with Samsung as memory tightens",
+      "summary": "Apple is close to a four-to-five-year memory supply agreement with Samsung beginning in the first half of 2027, Maeil Business Newspaper reported, with a committed minimum volume and prices still set by market conditions. That term would reverse Apple's habit of short contracts used to press component prices down, and follows a long-term arrangement with SK hynix reported on terms favourable to the supplier. Neither company has confirmed the deal. Apple has already warned that memory costs will rise into 2027 and that Mac and iPad supply is constrained.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "samsung",
+        "dram",
+        "memory-supply"
+      ],
+      "sources": [
+        {
+          "publisher": "The Apple Post (citing Maeil Business Newspaper)",
+          "url": "https://www.theapplepost.com/2026/11/17/74431/apple-reportedly-nearing-long-term-samsung-memory-deal-amid-chip-shortage/",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-19-serie-a-returns-lazio-inter-atalanta",
+      "kind": "daily",
+      "title": "Serie A restarts with Lazio top and Inter chasing them to Bergamo",
+      "summary": "Lazio lead Serie A on 29 points after 11 rounds, one ahead of Inter and two clear of Roma, with Milan on 24 and Como on 23. Inter return at Atalanta on Sunday night before hosting Stuttgart in the Champions League, while Napoli, tenth on 15, meet Torino and Juventus, seventh, take on Venezia. At the other end Udinese have five points, Venezia six and Monza seven, and Atalanta sit twelfth on 14 before the weekend's headline fixture.",
+      "category": "football",
+      "priority": 46,
+      "publishedAt": "2026-11-19T05:00:00.000Z",
+      "updatedAt": "2026-11-19T05:00:00.000Z",
+      "retrievedAt": "2026-11-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "serie-a",
+        "inter",
+        "lazio",
+        "atalanta"
+      ],
+      "sources": [
+        {
+          "publisher": "Inter",
+          "url": "https://www.inter.it/en/news/inter-schedule-tickets-matches-november-december-san-siro",
+          "publishedAt": "2026-11-19T01:00:00.000Z"
+        },
+        {
+          "publisher": "Planete Football",
+          "url": "https://planetefootball.com/news/serie-a-matchweek-12-preview",
+          "publishedAt": "2026-11-16T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-18-nvidia-q3-fy27-record-quarter",
       "kind": "daily",

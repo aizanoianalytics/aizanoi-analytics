@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-19-apple-samsung-long-term-dram-deal",
+  "title": "Apple moves toward a multi-year DRAM deal with Samsung as memory tightens",
+  "summary": "Apple is close to a four-to-five-year memory supply agreement with Samsung beginning in the first half of 2027, Maeil Business Newspaper reported, with a committed minimum volume and prices still set by market conditions. That term would reverse Apple's habit of short contracts used to press component prices down, and follows a long-term arrangement with SK hynix reported on terms favourable to the supplier. Neither company has confirmed the deal. Apple has already warned that memory costs will rise into 2027 and that Mac and iPad supply is constrained.",
+  "category": "technology",
+  "priority": 48,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "samsung",
+    "dram",
+    "memory-supply"
+  ],
+  "sources": [
+    {
+      "publisher": "The Apple Post (citing Maeil Business Newspaper)",
+      "url": "https://www.theapplepost.com/2026/11/17/74431/apple-reportedly-nearing-long-term-samsung-memory-deal-amid-chip-shortage/",
+      "publishedAt": "2026-11-17T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

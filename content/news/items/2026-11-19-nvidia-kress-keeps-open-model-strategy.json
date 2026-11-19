@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-nvidia-kress-keeps-open-model-strategy",
+  "title": "Nvidia's interim chief keeps the open-model strategy and the $12.9bn Hugging Face deal",
+  "summary": "On her first earnings call since Jensen Huang resigned, interim chief executive Colette Kress said Nvidia's commitment to open models is unchanged and that the $12.9bn purchase of Hugging Face remains on track to close in the first half of 2027. Nvidia puts the platform at more than 18 million developers and 200,000 companies; the deal is its second-largest after Groq's assets. Huang was the acquisition's most visible champion, and his exit had raised questions about how open Nvidia's software layer would stay.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "hugging-face",
+    "open-models",
+    "acquisition"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/17/nvidia-says-its-open-source-ai-strategy-remains-intact-after-jensen-huangs-exit",
+      "publishedAt": "2026-11-17T00:00:00Z"
+    },
+    {
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

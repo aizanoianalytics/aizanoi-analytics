@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-19-anthropic-ipo-priced-83-record-listing",
+  "title": "Anthropic prices at $83 and raises $81.3bn in the largest listing on record",
+  "summary": "Anthropic sold 980 million Class A shares at $83 on Wednesday, above the $70 to $78 range it had marketed and about 19% more stock than first planned, raising $81.3bn and valuing the company near $1.5tn. The Claude developer begins trading on Nasdaq on Thursday under ANT, with the offering due to close on Friday and underwriters holding a 30-day option on 147 million more shares. The deal overtakes SpaceX's $75bn June float and lands the first frontier lab on public markets.",
+  "category": "ai",
+  "priority": 92,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "nasdaq",
+    "ai-valuation",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/anthropic-ipo-pricing-70b660ddf900d90bbf484ecdf1fb441c",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Investing.com)",
+      "url": "https://www.investing.com/news/stock-market-news/anthropic-prices-blockbuster-ipo-at-83-a-share-source-says-5037110",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

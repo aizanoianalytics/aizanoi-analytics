@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-gemini-tasks-free-six-countries",
+  "title": "Google makes Gemini's task agent free in six countries and lets it call, pay and sign in",
+  "summary": "Tasks in Gemini, the errand-running mode previously sold with AI Pro and Ultra plans, opened to free users on Tuesday in the US, Japan, Korea, Canada, Australia and India, running on the cheaper Gemini 4 Hydrogen model. US accounts get the sharper edges: calls to local businesses with an AI disclosure, checkout through Google Pay with a spending cap, site logins through Password Manager, and jobs sent by text or forwarded email. Europe is excluded, and calling is blocked in five states.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "gemini",
+    "agents",
+    "consumer-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/products/gemini-app/tasks-in-gemini-free-new-features",
+      "publishedAt": "2026-11-17T00:00:00Z"
+    },
+    {
+      "publisher": "9to5Google",
+      "url": "https://9to5google.com/2026/11/17/gemini-tasks-free",
+      "publishedAt": "2026-11-17T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

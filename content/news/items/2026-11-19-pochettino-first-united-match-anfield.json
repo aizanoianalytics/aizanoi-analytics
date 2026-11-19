@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-pochettino-first-united-match-anfield",
+  "title": "Pochettino's first United match is Anfield, with the club 18th and the squad short of fitness",
+  "summary": "Mauricio Pochettino takes charge of Manchester United for the first time at Liverpool on Sunday, four days after meeting most of his squad, with the club 18th on eight points from ten games. He has promised to make Manchester 'red' again and asked for time, and the club is expected to back him in the January window. United paid about £7.4m to release him from the United States job and signed him until 2029; Sporting away in the Champions League follows Anfield.",
+  "category": "football",
+  "priority": 56,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "manchester-united",
+    "pochettino",
+    "premier-league",
+    "liverpool"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13613499/mauricio-pochettino-incoming-manchester-united-head-coach-calls-for-time-to-topple-manchester-city-ahead-of-old-trafford-arrival",
+      "publishedAt": "2026-11-18T10:52:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/story/_/id/50469660/man-united-mauricio-pochettino-manager-michael-carrick",
+      "publishedAt": "2026-11-13T17:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

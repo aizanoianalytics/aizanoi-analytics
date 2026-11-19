@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-premier-league-returns-arsenal-lead-city-slump",
+  "title": "The Premier League returns with Arsenal five clear and City on a three-game skid",
+  "summary": "Arsenal, on 27 points from ten games and winners of five straight, take the round's hardest trip to Newcastle on Saturday evening. Brighton are second on 22 and Manchester City third on 21 after three consecutive league defeats; City host Fulham in Saturday's early kick-off. Liverpool, fourth on 18, meet Manchester United at Anfield on Sunday. At the bottom, Crystal Palace have seven points and travel to Coventry, who sit three places and two points above them.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "manchester-city",
+    "fixtures"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/fixtures/2026/Nov/21",
+      "publishedAt": "2026-11-19T00:00:00Z"
+    },
+    {
+      "publisher": "Manchester City",
+      "url": "https://mancity.com/news/mens/fulham-premier-league-november-2026-match-preview-63930344",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-19-vera-rubin-ramp-lifts-korean-memory",
+  "title": "Nvidia's Vera Rubin ramp lifts Korean memory stocks as HBM4 shipments begin",
+  "summary": "Samsung Electronics rose 3.6% to 199,200 won and SK hynix 6.5% to 1,169,000 won in Seoul on Wednesday, helping the KOSPI close 1.99% higher at 5,067.44 after four losing sessions, as investors read Nvidia's quarter as proof that memory demand outlasts its leadership turmoil. Nvidia reported $115.8bn of revenue, guided to $130bn and said Vera Rubin NVL72, built on fourth-generation high-bandwidth memory, is ramping faster than any product in its history, with packaging and substrate partners scaling alongside.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "hbm4",
+    "samsung",
+    "sk-hynix",
+    "memory"
+  ],
+  "sources": [
+    {
+      "publisher": "Aju Press",
+      "url": "https://www.ajupress.com/view/20261118092225204",
+      "publishedAt": "2026-11-18T00:26:00Z"
+    },
+    {
+      "publisher": "NVIDIA",
+      "url": "https://www.globenewswire.com/news-release/2026/11/17/3405200/0/en/nvidia-announces-financial-results-for-third-quarter-fiscal-2027.html",
+      "publishedAt": "2026-11-17T21:20:00Z"
+    }
+  ],
+  "kind": "daily"
+}
