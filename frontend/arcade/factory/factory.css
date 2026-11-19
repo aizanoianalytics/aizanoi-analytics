@@ -804,6 +804,7 @@ body.mode-combat.is-ads #crosshair {
 .combat-hud {
   position: absolute;
   inset: 0;
+  display: block;
   pointer-events: none;
 }
 

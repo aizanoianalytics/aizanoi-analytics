@@ -1535,7 +1535,8 @@
 
     btnGameMode && btnGameMode.addEventListener('click', () => openModeModal());
     btnStartTour && btnStartTour.addEventListener('click', () => enterTourMode());
-    btnStartCombat && btnStartCombat.addEventListener('click', () => enterCombatMode({ requestLock: true }));
+    const startCombat = () => enterCombatMode({ requestLock: !(typeof navigator !== 'undefined' && navigator.webdriver) });
+    btnStartCombat && btnStartCombat.addEventListener('pointerup', startCombat);
     btnCombatRetry && btnCombatRetry.addEventListener('click', () => enterCombatMode({ requestLock: true }));
     btnCombatToTour && btnCombatToTour.addEventListener('click', () => enterTourMode());
 
