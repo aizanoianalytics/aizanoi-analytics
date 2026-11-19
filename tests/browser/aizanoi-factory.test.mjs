@@ -116,7 +116,7 @@ test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders 
     });
     assert.equal(combatHit.ok, true, JSON.stringify(combatHit));
     await page.evaluate(() => document.querySelector('#btn-start-combat').click());
-    await page.locator('#combat-hud:not([hidden])').waitFor({ timeout: 10000 });
+    await page.waitForFunction(() => window.__factory && window.__factory.getMode() === 'combat' && document.querySelector('#combat-hud')?.hidden === false, null, { timeout: 10000 });
     const combatState = await page.evaluate(() => ({
       mode: window.__factory?.getMode(),
       bodyClass: document.body.classList.contains('mode-combat'),
