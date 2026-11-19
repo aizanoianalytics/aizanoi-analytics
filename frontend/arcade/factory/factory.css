@@ -131,11 +131,11 @@ html, body {
   position: absolute;
   top: 14px;
   left: 16px;
-  right: 148px;
+  right: 168px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
 }
 
 .hud-brand {
@@ -144,7 +144,9 @@ html, body {
   border: 1px solid var(--line);
   border-left: 3px solid var(--signal);
   padding: 10px 14px;
-  min-width: 240px;
+  min-width: 0;
+  flex: 1 1 180px;
+  overflow: hidden;
 }
 
 .brand-kicker {
@@ -208,11 +210,12 @@ html, body {
   backdrop-filter: blur(8px);
   border: 1px solid var(--line);
   color: var(--bone);
-  padding: 7px 11px;
+  padding: 7px 8px;
   font: 600 12px/1 var(--f-sans);
   cursor: pointer;
   touch-action: manipulation;
   transition: border-color 0.15s, background 0.15s, color 0.15s;
+  flex: 0 0 auto;
 }
 
 .hud-btn:hover {
