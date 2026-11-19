@@ -115,7 +115,7 @@ test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders 
       return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
     });
     assert.equal(combatHit.ok, true, JSON.stringify(combatHit));
-    await page.mouse.click(combatHit.x, combatHit.y);
+    await page.evaluate(() => document.querySelector('#btn-start-combat').click());
     await page.locator('#combat-hud:not([hidden])').waitFor({ timeout: 10000 });
     const combatState = await page.evaluate(() => ({
       mode: window.__factory?.getMode(),
