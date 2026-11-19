@@ -2,12 +2,13 @@
   'use strict';
 
   const E = window.AZ_ENGINE;
-  if (!E) throw new Error('AZ_ENGINE yuklenemedi');
+  if (!E) throw new Error('AZ_ENGINE failed to load');
   const THREE = E.THREE;
 
   const bootEl = document.getElementById('boot');
   const bootMsg = document.getElementById('boot-msg');
   const bootFill = document.getElementById('boot-fill');
+  const brandKickerEl = document.getElementById('brand-kicker');
   const zoneEl = document.getElementById('zone-name');
   const coordsEl = document.getElementById('coords-readout');
   const compassEl = document.getElementById('compass-dir');
@@ -16,7 +17,9 @@
   const toastEl = document.getElementById('toast');
   const lockHintEl = document.getElementById('lock-hint');
   const modeLabelEl = document.getElementById('mode-label');
+  const gameModeLabelEl = document.getElementById('game-mode-label');
   const atmoLabelEl = document.getElementById('atmo-label');
+  const btnGameMode = document.getElementById('btn-game-mode');
   const btnMode = document.getElementById('btn-mode');
   const btnAtmo = document.getElementById('btn-atmo');
   const btnFlash = document.getElementById('btn-flash');
@@ -24,6 +27,30 @@
   const btnHelp = document.getElementById('btn-help');
   const btnHelpClose = document.getElementById('btn-help-close');
   const helpModal = document.getElementById('help-modal');
+  const modeModal = document.getElementById('mode-modal');
+  const btnStartTour = document.getElementById('btn-start-tour');
+  const btnStartCombat = document.getElementById('btn-start-combat');
+  const combatHudEl = document.getElementById('combat-hud');
+  const combatWaveEl = document.getElementById('combat-wave');
+  const combatHostilesEl = document.getElementById('combat-hostiles');
+  const combatKillsEl = document.getElementById('combat-kills');
+  const combatHpEl = document.getElementById('combat-hp');
+  const combatHpFillEl = document.getElementById('combat-hp-fill');
+  const combatHealthCardEl = document.querySelector('.combat-health-card');
+  const combatWeaponEl = document.getElementById('combat-weapon');
+  const combatAmmoEl = document.getElementById('combat-ammo');
+  const combatReserveEl = document.getElementById('combat-reserve');
+  const combatWeaponStateEl = document.getElementById('combat-weapon-state');
+  const waveBannerEl = document.getElementById('wave-banner');
+  const damageFlashEl = document.getElementById('damage-flash');
+  const hitmarkerEl = document.getElementById('hitmarker');
+  const combatOverModal = document.getElementById('combat-over-modal');
+  const overWaveEl = document.getElementById('over-wave');
+  const overKillsEl = document.getElementById('over-kills');
+  const overAccEl = document.getElementById('over-acc');
+  const overTimeEl = document.getElementById('over-time');
+  const btnCombatRetry = document.getElementById('btn-combat-retry');
+  const btnCombatToTour = document.getElementById('btn-combat-to-tour');
   const minimapCard = document.getElementById('minimap-card');
   const minimapCanvas = document.getElementById('minimap');
   const minimapCtx = minimapCanvas ? minimapCanvas.getContext('2d') : null;
@@ -46,7 +73,7 @@
       el.id = 'fatal';
       document.getElementById('app').appendChild(el);
     }
-    el.textContent = 'Aizanoi Factory baslatilamadi:\n' + msg;
+    el.textContent = 'Aizanoi Factory failed to start:\n' + msg;
   }
 
   const nextFrame = () => new Promise((r) => setTimeout(r, 0));
@@ -586,14 +613,14 @@
         id: 'cardak_cay',
         pos: new THREE.Vector3(cx, deckH + 0.9, cz),
         range: 3.4,
-        getLabel: () => 'Cardakta Taze Cay Doldur',
+        getLabel: () => 'Pour Fresh Tea at Gazebo',
         trigger: () => {
           if (G.fx && G.fx.smoke) {
             for (let s = 0; s < 5; s++) {
               G.fx.smoke([cx, deckH + 1.18, cz], [0, 0.4 + s * 0.08, 0], { size: 0.18, life: 1.5 });
             }
           }
-          return 'Cardakta demli bir bardak cay dolduruldu. Keyifli dinlenmeler!';
+          return 'Poured a fresh glass of hot tea at the gazebo. Enjoy the break!';
         }
       });
     }
@@ -697,7 +724,7 @@
   // --------------------------------------------------------------------------
   const ATMOSPHERES = [
     {
-      name: 'Gun Batimi',
+      name: 'Sunset',
       dir: [0.88, 0.25, 0.36],
       sunCol: 0xffba75,
       sunInt: 8.6,
@@ -711,7 +738,7 @@
       night: 0.0
     },
     {
-      name: 'Ogle Gunesi',
+      name: 'Midday Sun',
       dir: [0.42, 0.84, 0.32],
       sunCol: 0xfff5e4,
       sunInt: 10.5,
@@ -725,7 +752,7 @@
       night: 0.0
     },
     {
-      name: 'Yagmurlu',
+      name: 'Rainy',
       dir: [0.65, 0.34, 0.25],
       sunCol: 0xd8c8b6,
       sunInt: 4.4,
@@ -739,7 +766,7 @@
       night: 0.25
     },
     {
-      name: 'Gece Vardiyasi',
+      name: 'Night Shift',
       dir: [-0.45, 0.35, -0.75],
       sunCol: 0x4b6ba8,
       sunInt: 1.15,
@@ -758,45 +785,45 @@
   // Quick-Jump Bookmarks [1]-[9]
   // --------------------------------------------------------------------------
   const BOOKMARKS = [
-    { label: 'Genel Avlu & Uzun Cimento Rampa', pos: [-11.5, 0.0, 9.5], yaw: -0.96, pitch: -0.03 },
-    { label: 'Honda CR-V (2005 Siyah)', pos: [-7.8, 0.0, -13.0], yaw: -1.10, pitch: -0.06 },
-    { label: 'Kirmizi Dodge Kamyon & Kuzey Kapi', pos: [-15.8, 0.0, -29.0], yaw: 2.45, pitch: -0.04 },
-    { label: 'Duvar Dibi Agac & Cardak', pos: [-16.5, 0.0, 21.8], yaw: 1.57, pitch: -0.04 },
-    { label: '4 Direkli Garaj & Porsche 928S', pos: [-0.5, 0.0, 33.8], yaw: -1.08, pitch: -0.05 },
-    { label: 'Palet Parkur & Paketleme Masasi', pos: [12.0, 0.06, -3.5], yaw: 0.45, pitch: -0.06 },
-    { label: 'Ofis 1 · Ofis 2 (PC) · Mutfak', pos: [8.2, 0.06, 9.2], yaw: -3.12, pitch: -0.05 },
-    { label: 'Bardak Yaldiz (Arka Gecis & Tepsiler)', pos: [26.0, 0.06, -21.5], yaw: 0.0, pitch: -0.08 },
-    { label: 'Cam Tezyinat Firini', pos: [23.2, 0.06, -8.5], yaw: -2.10, pitch: -0.06 }
+    { label: 'Courtyard & Extended Cement Ramp', pos: [-11.5, 0.0, 9.5], yaw: -0.96, pitch: -0.03 },
+    { label: 'Honda CR-V (2005 Black)', pos: [-7.8, 0.0, -13.0], yaw: -1.10, pitch: -0.06 },
+    { label: 'Red Dodge Truck & North Gate', pos: [-15.8, 0.0, -29.0], yaw: 2.45, pitch: -0.04 },
+    { label: 'Wall-Side Tree & Gazebo', pos: [-16.5, 0.0, 21.8], yaw: 1.57, pitch: -0.04 },
+    { label: '4-Post Garage & Porsche 928S', pos: [-0.5, 0.0, 33.8], yaw: -1.08, pitch: -0.05 },
+    { label: 'Pallet Climb & Packaging Table', pos: [12.0, 0.06, -3.5], yaw: 0.45, pitch: -0.06 },
+    { label: 'Office 1 · Office 2 (PC) · Kitchen', pos: [8.2, 0.06, 9.2], yaw: -3.12, pitch: -0.05 },
+    { label: 'Glass Gilding (Rear Walkway & Trays)', pos: [26.0, 0.06, -21.5], yaw: 0.0, pitch: -0.08 },
+    { label: 'Glass Gilding Kiln', pos: [23.2, 0.06, -8.5], yaw: -2.10, pitch: -0.06 }
   ];
 
   function getZoneName(x, y, z) {
-    if (x >= 34.0 && x <= 39.2 && z >= 7.0 && z <= 14.0) return 'Erkek WC';
-    if (x >= 34.0 && x <= 39.2 && z > 14.0 && z <= 21.0) return 'Kadin WC';
+    if (x >= 34.0 && x <= 39.2 && z >= 7.0 && z <= 14.0) return "Men's WC";
+    if (x >= 34.0 && x <= 39.2 && z > 14.0 && z <= 21.0) return "Women's WC";
     if (x >= 4.0 && x <= 34.0 && z >= -35.0 && z <= 27.5) {
       if (x < 18.5) {
-        if (z >= 12.5 && z <= 19.8 && x < 11.8) return 'Ofis 1';
-        if (z > 19.8 && z <= 27.15 && x < 11.8) return 'Ofis 2';
-        if (z >= 12.5 && z <= 27.15 && x >= 11.8) return 'Mutfak';
-        if (x >= 13.0 && z >= -22.5 && z <= -6.5) return 'Paketleme Masalari';
-        return 'Sevkiyat & Palet Holu';
+        if (z >= 12.5 && z <= 19.8 && x < 11.8) return 'Office 1';
+        if (z > 19.8 && z <= 27.15 && x < 11.8) return 'Office 2';
+        if (z >= 12.5 && z <= 27.15 && x >= 11.8) return 'Kitchen';
+        if (x >= 13.0 && z >= -22.5 && z <= -6.5) return 'Packaging Tables';
+        return 'Shipping & Pallet Hall';
       } else {
-        if (z <= -30.5) return 'Yaldiz Tezgahi Arka Alan';
-        if (z <= -23.8) return 'Bardak Yaldiz & Tepsi Istifleri';
-        if (x >= 26.0 && z >= -21.5 && z <= 17.5) return 'Cam Tezyinat Firini';
-        if (z >= 18.5) return 'Ilk Paketleme Alani';
-        return 'Uretim & Firin Holu';
+        if (z <= -30.5) return 'Gilding Bench Rear Walkway';
+        if (z <= -23.8) return 'Glass Gilding & Tray Stacks';
+        if (x >= 26.0 && z >= -21.5 && z <= 17.5) return 'Glass Gilding Kiln';
+        if (z >= 18.5) return 'Initial Packaging Area';
+        return 'Production & Kiln Hall';
       }
     }
-    if (x >= -4.8 && x <= 4.0 && z >= -3.1 && z <= 3.1) return 'Yukleme Rampasi (Cimento)';
-    if (x >= 4.5 && x <= 11.2 && z >= 27.6 && z <= 31.3) return 'Garaj (4 Direkli) · Porsche 928S';
-    if (x >= -28.0 && x <= -22.8 && z >= 19.0 && z <= 24.6) return 'Cardak (Duvar Dibi)';
-    if (x >= -28.0 && x <= -22.8 && z >= 6.5 && z <= 12.0) return 'Agac Golgeligi';
-    if (x >= -19.6 && x <= -13.4 && z <= 37.2) return 'Toprak Yol';
-    if (z <= -35.4 || x >= 34.3 || z >= 37.7 || (x <= -20.2 && z >= 2.0 && z <= 25.8)) return 'Yesillik & Yabanil Ot Alani';
-    return 'Toprak Avlu';
+    if (x >= -4.8 && x <= 4.0 && z >= -3.1 && z <= 3.1) return 'Loading Ramp (Cement)';
+    if (x >= 4.5 && x <= 11.2 && z >= 27.6 && z <= 31.3) return '4-Post Garage · Porsche 928S';
+    if (x >= -28.0 && x <= -22.8 && z >= 19.0 && z <= 24.6) return 'Gazebo (Wall-Side)';
+    if (x >= -28.0 && x <= -22.8 && z >= 6.5 && z <= 12.0) return 'Tree Shade';
+    if (x >= -19.6 && x <= -13.4 && z <= 37.2) return 'Dirt Road';
+    if (z <= -35.4 || x >= 34.3 || z >= 37.7 || (x <= -20.2 && z >= 2.0 && z <= 25.8)) return 'Lawn & Wild Grass';
+    return 'Dirt Courtyard';
   }
 
-  function drawMinimap(px, pz, yaw) {
+  function drawMinimap(px, pz, yaw, enemiesList) {
     if (!minimapCtx) return;
     const w = minimapCanvas.width;
     const h = minimapCanvas.height;
@@ -894,17 +921,32 @@
     ctx.fillStyle = 'rgba(235,230,220,0.88)';
     ctx.font = 'bold 7px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('PALET', sx(11.5), sz(-30.0));
-    ctx.fillText('YALDIZ', sx(26.0), sz(-31.8));
-    ctx.fillText('FIRIN', sx(28.6), sz(-2.0));
-    ctx.fillText('OFIS 1', sx(8.0), sz(16.2));
-    ctx.fillText('OFIS 2', sx(8.0), sz(23.5));
-    ctx.fillText('MUTFAK', sx(15.0), sz(20.0));
-    ctx.fillText('GARAJ', sx(7.8), sz(32.5));
-    ctx.fillText('CARDAK', sx(-25.4), sz(25.8));
-    ctx.fillText('YESIL', sx(10.0), sz(46.5));
+    ctx.fillText('PALLET', sx(11.5), sz(-30.0));
+    ctx.fillText('GILDING', sx(26.0), sz(-31.8));
+    ctx.fillText('KILN', sx(28.6), sz(-2.0));
+    ctx.fillText('OFFICE 1', sx(8.0), sz(16.2));
+    ctx.fillText('OFFICE 2', sx(8.0), sz(23.5));
+    ctx.fillText('KITCHEN', sx(15.0), sz(20.0));
+    ctx.fillText('GARAGE', sx(7.8), sz(32.5));
+    ctx.fillText('GAZEBO', sx(-25.4), sz(25.8));
+    ctx.fillText('LAWN', sx(10.0), sz(46.5));
     ctx.fillText('DODGE', sx(-23.2), sz(-27.8));
     ctx.fillText('CR-V', sx(-3.2), sz(-21.2));
+
+    if (enemiesList && enemiesList.length) {
+      for (const en of enemiesList) {
+        if (!en || !en.alive || !en.pos) continue;
+        const ex = sx(en.pos.x);
+        const ez = sz(en.pos.z);
+        ctx.fillStyle = en.type === 'gull' ? '#ff9f43' : '#ff4d42';
+        ctx.strokeStyle = '#0b0d0f';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(ex, ez, en.type === 'gull' ? 3.2 : 3.6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
 
     const ux = sx(px), uz = sz(pz);
     const fx = -Math.sin(yaw), fz = -Math.cos(yaw);
@@ -930,7 +972,7 @@
   // --------------------------------------------------------------------------
   function chooseFactoryQuality(detected, params) {
     const ladder = ['low', 'medium', 'high', 'ultra'];
-    const labels = { low: 'Düşük', medium: 'Orta', high: 'Yüksek', ultra: 'Ultra' };
+    const labels = { low: 'Low', medium: 'Medium', high: 'High', ultra: 'Ultra' };
     const forced = params.q && E.presets[params.q] ? params.q : '';
     let saved = '';
     try { saved = localStorage.getItem('aizanoi.factory.quality') || ''; } catch {}
@@ -992,14 +1034,14 @@
     };
     window.__G = G;
 
-    await setBoot('Ultra HD motor baslatiliyor', 0.10);
+    await setBoot('Initializing Ultra HD engine', 0.10);
     G.render = await E.createRender(G);
     G.renderer = G.render.renderer;
     G.scene = G.render.scene;
     G.camera = G.render.camera;
     G.viewCamera = G.render.viewCamera;
 
-    await setBoot('Prosedurel PBR dokular karistiriliyor', 0.25);
+    await setBoot('Mixing procedural PBR textures', 0.25);
     G.mats = await E.createMaterials(G);
     G.physics = E.createPhysics(G);
     G.props = E.createProps(G);
@@ -1008,13 +1050,13 @@
     const L = E.createLevelHelper(G);
     const interactives = [];
 
-    await setBoot('Genisletilmis fabrika binasi, firin ve ic bolumler insa ediliyor', 0.44);
+    await setBoot('Constructing factory hall, kiln, and interior rooms', 0.44);
     const interior = window.AZ_FACTORY_INTERIOR.buildFactoryBuilding(G, L, interactives);
 
-    await setBoot('Tas duvarlar, genis yesillikler, garaj ve cardak kuruluyor', 0.62);
+    await setBoot('Building perimeter stone walls, lawns, garage, and gazebo', 0.62);
     const exterior = buildExteriorCampus(G, L, interactives);
 
-    await setBoot('Honda CR-V, Iri Dodge Kamyon ve Porsche 928S hazirlaniyor', 0.78);
+    await setBoot('Preparing Honda CR-V, Dodge Truck, and Porsche 928S', 0.74);
     // Honda CR-V with stepped climbable colliders (#14)
     const crv = window.AZ_VEHICLES.buildHondaCRV2005(G, G.mats);
     crv.position.set(-3.2, 0.0, -17.5);
@@ -1060,9 +1102,33 @@
     G.scene.add(levelRoot);
     raiseSceneFinish(levelRoot, G.renderer);
 
+    const enemySpawns = [
+      // Ground Hound spawns (courtyard roads, gates, factory halls)
+      { type: 'ground', pos: new THREE.Vector3(-16.5, 0.0, -34.0) },
+      { type: 'ground', pos: new THREE.Vector3(-16.5, 0.0, -12.0) },
+      { type: 'ground', pos: new THREE.Vector3(-16.5, 0.0, 26.0) },
+      { type: 'ground', pos: new THREE.Vector3(16.0, 0.0, 34.0) },
+      { type: 'ground', pos: new THREE.Vector3(36.0, 0.0, 34.0) },
+      { type: 'ground', pos: new THREE.Vector3(12.5, 0.06, -18.0) },
+      { type: 'ground', pos: new THREE.Vector3(12.5, 0.06, 2.0) },
+      { type: 'ground', pos: new THREE.Vector3(22.5, 0.06, -14.0) },
+      { type: 'ground', pos: new THREE.Vector3(22.5, 0.06, 8.0) },
+      { type: 'ground', pos: new THREE.Vector3(24.0, 0.06, 22.0) },
+      // Air Gull drone spawns (courtyard skies & high-bay interior)
+      { type: 'air', pos: new THREE.Vector3(-18.0, 7.5, -24.0) },
+      { type: 'air', pos: new THREE.Vector3(-8.0, 8.5, -28.0) },
+      { type: 'air', pos: new THREE.Vector3(-18.0, 7.0, 18.0) },
+      { type: 'air', pos: new THREE.Vector3(12.0, 9.0, 34.0) },
+      { type: 'air', pos: new THREE.Vector3(34.0, 8.0, 32.0) },
+      { type: 'air', pos: new THREE.Vector3(11.5, 5.2, -14.0) },
+      { type: 'air', pos: new THREE.Vector3(23.5, 5.2, -6.0) },
+      { type: 'air', pos: new THREE.Vector3(23.5, 5.2, 12.0) }
+    ];
+
     G.level = {
       playerStart: { pos: new THREE.Vector3(-11.5, 0.0, 9.5), yaw: -0.96 },
       interiorBoxes: [interior.interiorBox],
+      enemySpawns,
       groundSurfaceAt: () => 'concrete',
       update(dt) {
         interior.update(dt);
@@ -1070,7 +1136,7 @@
       }
     };
 
-    await setBoot('Toprak zemin, golgeler ve yansimalar yukleniyor', 0.88);
+    await setBoot('Loading terrain, shadows, and reflections', 0.82);
     G.ground = await E.createGround(G);
     if (G.ground && G.ground.apron) {
       G.ground.apron.scale.set(1.6, 1, 1.6);
@@ -1092,6 +1158,73 @@
     G.player.invulnerable = true;
     G.player.enabled = true;
     G.input.setGameplay(true);
+
+    // Aizanoi Wars Combat Modules (Weapon, Combat Hitscan, Gull & Hound Enemies)
+    await setBoot('Arming PAC-9 rifle and combat units', 0.90);
+    G.combat = E.createCombat ? E.createCombat(G) : { stats: { shots: 0, hits: 0, kills: 0 }, reset() {} };
+    try {
+      G.weapon = E.createWeapon ? await E.createWeapon(G) : null;
+    } catch (e) {
+      console.warn('[factory] createWeapon:', e);
+      G.weapon = null;
+    }
+    if (G.weapon && G.weapon.setVisible) G.weapon.setVisible(false);
+
+    try {
+      G.enemies = E.createEnemies ? await E.createEnemies(G) : null;
+    } catch (e) {
+      console.warn('[factory] createEnemies:', e);
+      G.enemies = null;
+    }
+
+    // Tactical Ammo & Medkit Resupply Crates (visible & active only in Battle Mode)
+    const resupplyGroup = new THREE.Group();
+    resupplyGroup.name = 'factory-resupply-crates';
+    resupplyGroup.visible = false;
+    G.scene.add(resupplyGroup);
+
+    const crateMat = new THREE.MeshStandardMaterial({ color: 0x26313a, roughness: 0.55, metalness: 0.45 });
+    const crateTrimReady = new THREE.MeshStandardMaterial({ color: 0x58c4b8, emissive: 0x2b9c8e, emissiveIntensity: 1.8, roughness: 0.3 });
+    const crateTrimCool = new THREE.MeshStandardMaterial({ color: 0x4a525a, emissive: 0x111518, emissiveIntensity: 0.2, roughness: 0.6 });
+    const resupplySpots = [
+      { id: 'crate_ramp', label: 'Loading Ramp Supply Crate', pos: [-6.2, 0.0, 4.8] },
+      { id: 'crate_garage', label: 'Garage Apron Supply Crate', pos: [2.0, 0.0, 32.5] },
+      { id: 'crate_shipping', label: 'Shipping Hall Supply Crate', pos: [12.5, 0.06, 5.0] },
+      { id: 'crate_kiln', label: 'Kiln Aisle Supply Crate', pos: [23.0, 0.06, -4.0] },
+      { id: 'crate_gazebo', label: 'Gazebo Yard Supply Crate', pos: [-21.5, 0.0, 16.5] }
+    ];
+    const resupplyCrates = resupplySpots.map((sp) => {
+      const grp = new THREE.Group();
+      grp.position.set(sp.pos[0], sp.pos[1], sp.pos[2]);
+      const box = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.56, 0.62), crateMat);
+      box.position.y = 0.28;
+      box.castShadow = true;
+      box.receiveShadow = true;
+      const strip = new THREE.Mesh(new THREE.BoxGeometry(0.94, 0.09, 0.64), crateTrimReady);
+      strip.position.y = 0.46;
+      grp.add(box, strip);
+      resupplyGroup.add(grp);
+      const crate = { ...sp, grp, strip, cooldown: 0 };
+      interactives.push({
+        id: sp.id,
+        combatOnly: true,
+        pos: new THREE.Vector3(sp.pos[0], sp.pos[1] + 0.7, sp.pos[2]),
+        range: 3.2,
+        getLabel: () => crate.cooldown > 0
+          ? `${sp.label} (Recharging ${Math.ceil(crate.cooldown)}s)`
+          : `Resupply Ammo & Medkit (+90 Ammo, +45 HP)`,
+        trigger: () => {
+          if (crate.cooldown > 0) return `Crate recharging (${Math.ceil(crate.cooldown)}s remaining)`;
+          crate.cooldown = 25;
+          crate.strip.material = crateTrimCool;
+          if (G.weapon && G.weapon.addAmmo) G.weapon.addAmmo(90);
+          if (G.player && G.player.heal) G.player.heal(45);
+          G.audio && G.audio.play && G.audio.play('impact_metal', { pos: sp.pos, gain: 0.45 });
+          return 'Resupplied: +90 Reserve Ammo · +45 HP';
+        }
+      });
+      return crate;
+    });
 
     const flashlight = new THREE.SpotLight(0xfff4de, 0, 32, Math.PI / 5.5, 0.45, 1.4);
     const flashTarget = new THREE.Object3D();
@@ -1126,16 +1259,212 @@
       dodge.userData.setLightsOn && dodge.userData.setLightsOn(lightsOn);
       porsche.userData.setLightsOn && porsche.userData.setLightsOn(lightsOn);
       if (atmoLabelEl) atmoLabelEl.textContent = a.name;
-      showToast('Atmosfer: ' + a.name);
+      showToast('Atmosphere: ' + a.name);
     }
     applyAtmosphere(0);
 
+    let gameMode = 'select'; // 'select' | 'tour' | 'combat'
     let droneMode = false;
     const dronePos = new THREE.Vector3(-11.5, 4.0, 9.5);
     let droneYaw = -1.10;
     let dronePitch = -0.15;
 
+    // Combat Wave & Feedback State
+    const combatState = {
+      wave: 0,
+      time: 0,
+      queue: [],
+      nextWaveTimer: 0,
+      dead: false,
+      maxAlive: 9,
+      hitTimer: null,
+      dmgTimer: null,
+      bannerTimer: null
+    };
+
+    function showWaveBanner(text, dur = 3200) {
+      if (!waveBannerEl) return;
+      waveBannerEl.textContent = text;
+      waveBannerEl.classList.add('on');
+      clearTimeout(combatState.bannerTimer);
+      combatState.bannerTimer = setTimeout(() => waveBannerEl.classList.remove('on'), dur);
+    }
+
+    function flashHitmarker(kind) {
+      if (!hitmarkerEl) return;
+      hitmarkerEl.classList.remove('on', 'weak', 'kill');
+      void hitmarkerEl.offsetWidth;
+      hitmarkerEl.classList.add('on');
+      if (kind === 'kill') hitmarkerEl.classList.add('kill');
+      else if (kind === 'weak') hitmarkerEl.classList.add('weak');
+      clearTimeout(combatState.hitTimer);
+      combatState.hitTimer = setTimeout(() => hitmarkerEl.classList.remove('on', 'weak', 'kill'), kind === 'kill' ? 280 : 160);
+    }
+
+    function flashDamage() {
+      if (!damageFlashEl) return;
+      damageFlashEl.classList.add('on');
+      clearTimeout(combatState.dmgTimer);
+      combatState.dmgTimer = setTimeout(() => damageFlashEl.classList.remove('on'), 220);
+    }
+
+    function fmtTime(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+    }
+
+    function pickEnemySpawn(type) {
+      const want = type === 'gull' ? 'air' : 'ground';
+      const candidates = enemySpawns.filter((sp) => sp.type === want);
+      let best = candidates[0] || enemySpawns[0];
+      let bestScore = -1e9;
+      for (const sp of candidates) {
+        const d = Math.hypot(sp.pos.x - G.player.pos.x, sp.pos.z - G.player.pos.z);
+        const score = (d >= 18 ? 4 : -(18 - d)) + Math.random() * 3.5;
+        if (score > bestScore) {
+          bestScore = score;
+          best = sp;
+        }
+      }
+      const p = best.pos.clone();
+      p.x += (Math.random() - 0.5) * 2.0;
+      p.z += (Math.random() - 0.5) * 2.0;
+      return p;
+    }
+
+    function queueWave(waveNum) {
+      combatState.wave = waveNum;
+      combatState.queue.length = 0;
+      const gulls = Math.min(7, 1 + waveNum);
+      const hounds = Math.min(7, 1 + Math.ceil(waveNum * 0.9));
+      const order = [];
+      for (let i = 0; i < gulls; i++) order.push('gull');
+      for (let i = 0; i < hounds; i++) order.splice(Math.min(order.length, 1 + i * 2), 0, 'hound');
+      order.forEach((type, idx) => {
+        combatState.queue.push({
+          type,
+          at: combatState.time + 1.0 + idx * 0.85
+        });
+      });
+      showWaveBanner(`WAVE ${waveNum} · ${gulls} GULLS · ${hounds} HOUNDS`, 3400);
+      G.audio && G.audio.setIntensity && G.audio.setIntensity(Math.min(1, 0.55 + waveNum * 0.12));
+    }
+
+    function aliveEnemyCount() {
+      if (!G.enemies) return 0;
+      if (typeof G.enemies.aliveCount === 'function') return G.enemies.aliveCount();
+      return (G.enemies.list || []).filter((en) => en && en.alive).length;
+    }
+
+    G.events.on('player:hitEnemy', ({ killed, weak }) => {
+      if (gameMode !== 'combat') return;
+      flashHitmarker(killed ? 'kill' : weak ? 'weak' : 'hit');
+    });
+
+    G.events.on('player:hit', () => {
+      if (gameMode !== 'combat') return;
+      flashDamage();
+    });
+
+    G.events.on('player:dead', () => {
+      if (gameMode !== 'combat' || combatState.dead) return;
+      combatState.dead = true;
+      G.player.enabled = false;
+      G.input.setGameplay && G.input.setGameplay(false);
+      if (document.pointerLockElement) document.exitPointerLock();
+      const stats = (G.combat && G.combat.stats) || { shots: 0, hits: 0, kills: 0 };
+      const acc = stats.shots > 0 ? Math.round((stats.hits / stats.shots) * 100) + '%' : '—';
+      if (overWaveEl) overWaveEl.textContent = String(combatState.wave || 1);
+      if (overKillsEl) overKillsEl.textContent = String(stats.kills || 0);
+      if (overAccEl) overAccEl.textContent = acc;
+      if (overTimeEl) overTimeEl.textContent = fmtTime(combatState.time);
+      if (combatOverModal) combatOverModal.hidden = false;
+      G.audio && G.audio.setIntensity && G.audio.setIntensity(0.15);
+    });
+
+    function openModeModal() {
+      if (document.pointerLockElement) document.exitPointerLock();
+      if (helpModal) helpModal.hidden = true;
+      if (combatOverModal) combatOverModal.hidden = true;
+      if (modeModal) modeModal.hidden = false;
+      G.input.setGameplay && G.input.setGameplay(false);
+    }
+
+    function enterTourMode() {
+      gameMode = 'tour';
+      combatState.dead = false;
+      combatState.queue.length = 0;
+      combatState.nextWaveTimer = 0;
+      document.body.classList.remove('mode-combat', 'is-ads');
+      if (modeModal) modeModal.hidden = true;
+      if (combatOverModal) combatOverModal.hidden = true;
+      if (combatHudEl) combatHudEl.hidden = true;
+      if (brandKickerEl) brandKickerEl.textContent = '3D ARCHITECTURAL SPACE · ULTRA HD';
+      if (gameModeLabelEl) gameModeLabelEl.textContent = 'Free Tour';
+      if (G.enemies && G.enemies.clear) G.enemies.clear();
+      if (G.weapon && G.weapon.setVisible) G.weapon.setVisible(false);
+      resupplyGroup.visible = false;
+      G.player.invulnerable = true;
+      G.player.alive = true;
+      G.player.health = G.player.maxHealth || 100;
+      G.player.enabled = !droneMode;
+      G.input.setGameplay && G.input.setGameplay(true);
+      G.audio && G.audio.setIntensity && G.audio.setIntensity(0.15);
+      showToast('Free Tour Mode — Explore freely');
+    }
+
+    function enterCombatMode({ requestLock = false } = {}) {
+      gameMode = 'combat';
+      droneMode = false;
+      combatState.dead = false;
+      combatState.time = 0;
+      combatState.nextWaveTimer = 0;
+      combatState.queue.length = 0;
+      if (modeLabelEl) modeLabelEl.textContent = 'Walk Mode';
+      btnMode && btnMode.classList.remove('active');
+      document.body.classList.add('mode-combat');
+      document.body.classList.remove('is-ads');
+      if (modeModal) modeModal.hidden = true;
+      if (combatOverModal) combatOverModal.hidden = true;
+      if (helpModal) helpModal.hidden = true;
+      if (combatHudEl) combatHudEl.hidden = false;
+      if (brandKickerEl) brandKickerEl.textContent = 'AIZANOI WARS COMBAT · FACTORY ARENA';
+      if (gameModeLabelEl) gameModeLabelEl.textContent = 'Battle Mode';
+
+      if (G.enemies && G.enemies.clear) G.enemies.clear();
+      if (G.combat && G.combat.reset) G.combat.reset();
+      if (G.weapon) {
+        G.weapon.reset && G.weapon.reset();
+        G.weapon.setVisible && G.weapon.setVisible(true);
+        if (combatWeaponEl && G.weapon.name) combatWeaponEl.textContent = G.weapon.name.toUpperCase();
+      }
+      for (const crate of resupplyCrates) {
+        crate.cooldown = 0;
+        crate.strip.material = crateTrimReady;
+      }
+      resupplyGroup.visible = true;
+
+      G.player.reset(G.level.playerStart);
+      G.player.invulnerable = false;
+      G.player.enabled = true;
+      G.input.setGameplay && G.input.setGameplay(true);
+      if (requestLock && G.input.requestLock) G.input.requestLock();
+      try { G.audio && G.audio.resume && G.audio.resume(); } catch {}
+      queueWave(1);
+    }
+
+    window.__factory = {
+      getMode: () => gameMode,
+      enterTourMode,
+      enterCombatMode,
+      openModeModal
+    };
+
     function toggleDroneMode(force) {
+      if (gameMode === 'combat') {
+        showToast('Drone camera is disabled in Battle Mode');
+        return;
+      }
       const next = typeof force === 'boolean' ? force : !droneMode;
       if (next === droneMode) return;
       droneMode = next;
@@ -1144,7 +1473,7 @@
         droneYaw = G.player.yaw;
         dronePitch = G.player.pitch;
         G.player.enabled = false;
-        showToast('Serbest Ucus (Drone) Modu — Space/C ile yukselip alcalabilirsiniz');
+        showToast('Free Flight (Drone) Mode — Use Space / C to ascend and descend');
       } else {
         const gx = Math.max(-90, Math.min(90, dronePos.x));
         const gz = Math.max(-85, Math.min(85, dronePos.z));
@@ -1154,13 +1483,14 @@
         G.player.yaw = droneYaw;
         G.player.pitch = dronePitch;
         G.player.enabled = true;
-        showToast('Yuruyus Modu (FPS)');
+        showToast('Walk Mode (FPS)');
       }
-      if (modeLabelEl) modeLabelEl.textContent = droneMode ? 'Drone Ucus Modu' : 'Yuruyus Modu';
+      if (modeLabelEl) modeLabelEl.textContent = droneMode ? 'Drone Flight' : 'Walk Mode';
       btnMode && btnMode.classList.toggle('active', droneMode);
     }
 
     function jumpToBookmark(idx) {
+      if (gameMode === 'combat') return;
       const bm = BOOKMARKS[idx];
       if (!bm) return;
       if (droneMode) {
@@ -1179,7 +1509,7 @@
 
     const qualityLabel = document.getElementById('quality-label');
     const qualityLadder = ['low', 'medium', 'high', 'ultra'];
-    const qualityNames = { low: 'Düşük', medium: 'Orta', high: 'Yüksek', ultra: 'Ultra' };
+    const qualityNames = { low: 'Low', medium: 'Medium', high: 'High', ultra: 'Ultra' };
     if (qualityLabel) qualityLabel.textContent = quality.label || qualityNames[quality.name] || 'Ultra';
     function applyQuality(name) {
       const next = E.presets[name] ? chooseFactoryQuality({ name }, { q: name }) : quality;
@@ -1187,7 +1517,7 @@
       G.quality = next;
       if (qualityLabel) qualityLabel.textContent = next.label || qualityNames[name] || name;
       try { localStorage.setItem('aizanoi.factory.quality', next.name); } catch {}
-      showToast('Kalite: ' + (next.label || next.name));
+      showToast('Quality: ' + (next.label || next.name));
     }
     const btnQuality = document.getElementById('btn-quality');
     btnQuality && btnQuality.addEventListener('pointerup', (ev) => {
@@ -1202,6 +1532,12 @@
       const idx = qualityLadder.indexOf(G.quality && G.quality.name);
       applyQuality(qualityLadder[(idx + 1) % qualityLadder.length]);
     });
+
+    btnGameMode && btnGameMode.addEventListener('click', () => openModeModal());
+    btnStartTour && btnStartTour.addEventListener('click', () => enterTourMode());
+    btnStartCombat && btnStartCombat.addEventListener('click', () => enterCombatMode({ requestLock: true }));
+    btnCombatRetry && btnCombatRetry.addEventListener('click', () => enterCombatMode({ requestLock: true }));
+    btnCombatToTour && btnCombatToTour.addEventListener('click', () => enterTourMode());
 
     btnMode && btnMode.addEventListener('click', () => toggleDroneMode());
     btnAtmo && btnAtmo.addEventListener('click', () => applyAtmosphere(atmoIdx + 1));
@@ -1233,6 +1569,18 @@
 
     window.addEventListener('keydown', (ev) => {
       if (ev.repeat) return;
+      if (ev.code === 'KeyG') {
+        if (modeModal && !modeModal.hidden && gameMode !== 'select') {
+          modeModal.hidden = true;
+          G.input.setGameplay && G.input.setGameplay(true);
+        } else {
+          openModeModal();
+        }
+        return;
+      }
+      if (modeModal && !modeModal.hidden) return;
+      if (combatOverModal && !combatOverModal.hidden) return;
+
       if (ev.code === 'KeyV') toggleDroneMode();
       else if (ev.code === 'KeyT') applyAtmosphere(atmoIdx + 1);
       else if (ev.code === 'KeyF') setFlash(!flashOn);
@@ -1259,16 +1607,24 @@
     window.addEventListener('pointerdown', resumeAudio, { once: true });
     window.addEventListener('keydown', resumeAudio, { once: true });
 
-    await setBoot('Ilk kare derleniyor', 0.96);
+    await setBoot('Compiling first frame', 0.96);
     try {
       await G.render.onLevelReady();
     } catch (e) {
       console.warn('[factory] onLevelReady:', e);
     }
-    await setBoot('Hazir', 1.0);
+    await setBoot('Ready', 1.0);
     if (bootEl) {
       bootEl.classList.add('done');
       setTimeout(() => { bootEl.hidden = true; }, 650);
+    }
+
+    if (params.mode === 'tour') {
+      enterTourMode();
+    } else if (params.mode === 'combat') {
+      enterCombatMode({ requestLock: false });
+    } else {
+      openModeModal();
     }
 
     let activeInteract = null;
@@ -1288,15 +1644,85 @@
       G.time.frame++;
 
       G.input.update(dt);
-      lockHintEl && lockHintEl.classList.toggle('hidden', G.input.locked || G.input.touch);
+      const modalOpen = !helpModal.hidden || (modeModal && !modeModal.hidden) || (combatOverModal && !combatOverModal.hidden);
+      lockHintEl && lockHintEl.classList.toggle('hidden', modalOpen || G.input.locked || G.input.touch);
 
-      if (!helpModal.hidden) {
+      if (modalOpen) {
+        G.level.update(dt);
+        G.ground.update(dt);
         G.input.endFrame();
         G.render.frame(dt);
+        window.__frames++;
+        if (window.__frames === 2) window.__ready = true;
         return;
       }
 
-      if (droneMode) {
+      if (gameMode === 'combat') {
+        if (!combatState.dead && G.player.alive) {
+          combatState.time += dt;
+          G.player.update(dt);
+          G.weapon && G.weapon.update && G.weapon.update(dt);
+          G.enemies && G.enemies.update && G.enemies.update(dt);
+          document.body.classList.toggle('is-ads', !!(G.weapon && (G.weapon.ads || 0) > 0.35));
+
+          // Update resupply crates cooldown
+          for (const crate of resupplyCrates) {
+            if (crate.cooldown > 0) {
+              crate.cooldown = Math.max(0, crate.cooldown - dt);
+              if (crate.cooldown === 0) crate.strip.material = crateTrimReady;
+            }
+          }
+
+          // Staggered wave enemy spawner
+          const alive = aliveEnemyCount();
+          if (combatState.queue.length > 0 && alive < combatState.maxAlive) {
+            const next = combatState.queue[0];
+            if (combatState.time >= next.at && G.enemies && G.enemies.spawn) {
+              combatState.queue.shift();
+              const pos = pickEnemySpawn(next.type);
+              try {
+                G.enemies.spawn(next.type, pos, { state: 'alert', target: G.player.pos });
+                G.enemies.alert && G.enemies.alert(G.player.pos, 90);
+              } catch (e) {
+                console.warn('[factory] enemy spawn failed:', e);
+              }
+            }
+          } else if (combatState.queue.length === 0 && alive === 0) {
+            if (combatState.nextWaveTimer <= 0) {
+              combatState.nextWaveTimer = 4.0;
+              if (G.player.heal) G.player.heal(30);
+              if (G.weapon && G.weapon.addAmmo) G.weapon.addAmmo(60);
+              showWaveBanner(`WAVE ${combatState.wave} CLEARED · +30 HP · +60 AMMO`, 2800);
+            } else {
+              combatState.nextWaveTimer -= dt;
+              if (combatState.nextWaveTimer <= 0) {
+                queueWave(combatState.wave + 1);
+              }
+            }
+          }
+
+          // Update Combat HUD
+          const remaining = alive + combatState.queue.length;
+          const hp = Math.max(0, Math.round(G.player.health || 0));
+          const maxHp = G.player.maxHealth || 100;
+          if (combatWaveEl) combatWaveEl.textContent = String(combatState.wave || 1);
+          if (combatHostilesEl) combatHostilesEl.textContent = String(remaining);
+          if (combatKillsEl) combatKillsEl.textContent = String((G.combat && G.combat.stats && G.combat.stats.kills) || 0);
+          if (combatHpEl) combatHpEl.textContent = String(hp);
+          if (combatHpFillEl) combatHpFillEl.style.width = Math.round((hp / maxHp) * 100) + '%';
+          if (combatHealthCardEl) combatHealthCardEl.classList.toggle('low', hp <= 30);
+          if (G.weapon) {
+            if (combatAmmoEl) combatAmmoEl.textContent = String(G.weapon.ammo ?? 0);
+            if (combatReserveEl) combatReserveEl.textContent = String(G.weapon.reserve ?? 0);
+            if (combatWeaponStateEl) {
+              if (G.weapon.state === 'reload') combatWeaponStateEl.textContent = 'RELOADING...';
+              else if ((G.weapon.ammo ?? 0) === 0 && (G.weapon.reserve ?? 0) === 0) combatWeaponStateEl.textContent = 'EMPTY · FIND A SUPPLY CRATE [E]';
+              else if ((G.weapon.ammo ?? 0) <= 6) combatWeaponStateEl.textContent = 'LOW AMMO · PRESS [R] TO RELOAD';
+              else combatWeaponStateEl.textContent = 'READY · [R] RELOAD · RMB AIM';
+            }
+          }
+        }
+      } else if (droneMode) {
         droneYaw -= G.input.look.dx;
         dronePitch = Math.max(-1.52, Math.min(1.52, dronePitch - G.input.look.dy));
         tmpEul.set(dronePitch, droneYaw, 0, 'YXZ');
@@ -1330,6 +1756,7 @@
       let best = null;
       let bestD = Infinity;
       for (const item of interactives) {
+        if (item.combatOnly && gameMode !== 'combat') continue;
         const d = camPos.distanceTo(item.pos);
         if (d <= item.range && d < bestD) {
           best = item;
@@ -1352,11 +1779,11 @@
       if (compassEl) {
         let deg = Math.round(((-curYaw * 180) / Math.PI) % 360);
         if (deg < 0) deg += 360;
-        const dirs = ['K', 'KD', 'D', 'GD', 'G', 'GB', 'B', 'KB'];
+        const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
         compassEl.textContent = `${dirs[Math.round(deg / 45) % 8]} ${deg}°`;
       }
       if (!minimapCard.classList.contains('hidden')) {
-        drawMinimap(camPos.x, camPos.z, curYaw);
+        drawMinimap(camPos.x, camPos.z, curYaw, gameMode === 'combat' && G.enemies ? G.enemies.list : null);
       }
 
       G.render.frame(dt);

@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const csp = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob:; media-src 'self' blob:; object-src 'none'; frame-src 'self'; worker-src 'self' blob:;";
 
-test('Factory standalone boots, renders frames and toggles help under production CSP', { timeout: 180000 }, async () => {
+test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders frames and toggles help under production CSP', { timeout: 180000 }, async () => {
   const browser = await chromium.launch({ headless: true });
   try {
     const context = await browser.newContext({ viewport: { width: 960, height: 640 }, serviceWorkers: 'block' });
@@ -32,6 +32,12 @@ test('Factory standalone boots, renders frames and toggles help under production
     assert.ok(initial.frames >= 2 && initial.width > 0, JSON.stringify(initial));
     assert.equal(initial.engine, 'object', JSON.stringify(initial));
     await page.locator('#boot').waitFor({ state: 'hidden', timeout: 30000 });
+
+    // Mode selection modal should appear on launch
+    await page.locator('#mode-modal:not([hidden])').waitFor({ timeout: 10000 });
+    await page.locator('#btn-start-tour').click();
+    await page.locator('#mode-modal').waitFor({ state: 'hidden', timeout: 10000 });
+
     const helpHit = await page.evaluate(() => {
       const btn = document.querySelector('#btn-help');
       const rect = btn.getBoundingClientRect();
@@ -64,6 +70,23 @@ test('Factory standalone boots, renders frames and toggles help under production
     });
     assert.equal(qualityHit.ok, true, JSON.stringify(qualityHit));
     assert.ok(await page.evaluate(() => document.querySelector('#zone-name')?.textContent.length > 0), 'HUD zone readout renders');
+
+    // Switch to Battle Mode and verify Combat HUD activates
+    await page.locator('#btn-game-mode').click();
+    await page.locator('#mode-modal:not([hidden])').waitFor({ timeout: 10000 });
+    await page.locator('#btn-start-combat').click();
+    await page.locator('#combat-hud:not([hidden])').waitFor({ timeout: 10000 });
+    const combatState = await page.evaluate(() => ({
+      mode: window.__factory?.getMode(),
+      bodyClass: document.body.classList.contains('mode-combat'),
+      ammo: document.querySelector('#combat-ammo')?.textContent,
+      hp: document.querySelector('#combat-hp')?.textContent,
+    }));
+    assert.equal(combatState.mode, 'combat');
+    assert.equal(combatState.bodyClass, true);
+    assert.ok(Number(combatState.ammo) > 0, JSON.stringify(combatState));
+    assert.equal(combatState.hp, '100', JSON.stringify(combatState));
+
     assert.deepEqual(await page.evaluate(() => window.__violations || []), []);
     assert.deepEqual(errors, []);
     assert.deepEqual(failed, []);

@@ -7,7 +7,6 @@ Scope: public static arena pages, local bot workers and shared browser controls.
 - [AI Snake Royale](snake-royale/index.md) — simultaneous snake arena and shared shell renderer.
 - [Aizanoi Wars](aizanoi-wars/index.md) — cinematic first-person harbor-action game; standalone and desktop app.
 - [Aizanoi Factory](factory/index.md) — Ultra HD 3D glass-gilding factory and courtyard architectural free-roam space.
-- [Ev](daire/index.md) — walkable apartment reconstructed from the owner sketch. Room 4 is the balcony.
 - [Chess](chess/index.md) — legal moves, board and worker matches.
 - [Maze Chase](maze-chase/index.md) — maze, ghosts and human controls.
 - [Capture the Flag](capture-flag/index.md) — team arena and accessibility.
