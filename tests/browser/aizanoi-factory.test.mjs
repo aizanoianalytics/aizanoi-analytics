@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const csp = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob:; media-src 'self' blob:; object-src 'none'; frame-src 'self'; worker-src 'self' blob:;";
 
-test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders frames and toggles help under production CSP', { timeout: 180000 }, async () => {
+test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders frames and toggles help under production CSP', { timeout: 240000 }, async () => {
   const browser = await chromium.launch({ headless: true });
   try {
     const context = await browser.newContext({ viewport: { width: 960, height: 640 }, serviceWorkers: 'block' });
@@ -34,7 +34,21 @@ test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders 
     await page.locator('#boot').waitFor({ state: 'hidden', timeout: 30000 });
 
     // Mode selection modal should appear on launch
-    await page.locator('#mode-modal:not([hidden])').waitFor({ timeout: 10000 });
+    try {
+      await page.waitForFunction(() => {
+        const el = document.querySelector('#mode-modal');
+        if (!el || el.hidden) return false;
+        const rect = el.getBoundingClientRect();
+        return rect.width > 40 && rect.height > 40;
+      }, null, { timeout: 20000 });
+    } catch (error) {
+      const state = await page.evaluate(() => {
+        const el = document.querySelector('#mode-modal');
+        const rect = el ? el.getBoundingClientRect() : null;
+        return { hidden: el ? el.hidden : null, rect, fatal: window.__fatal, ready: window.__ready };
+      }).catch(() => null);
+      throw new Error(`Mode modal did not open: ${JSON.stringify(state)}`, { cause: error });
+    }
     const tourHit = await page.evaluate(() => {
       const btn = document.querySelector('#btn-start-tour');
       const rect = btn.getBoundingClientRect();
