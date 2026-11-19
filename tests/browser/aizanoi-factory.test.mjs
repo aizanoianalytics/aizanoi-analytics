@@ -35,7 +35,16 @@ test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders 
 
     // Mode selection modal should appear on launch
     await page.locator('#mode-modal:not([hidden])').waitFor({ timeout: 10000 });
-    await page.locator('#btn-start-tour').click();
+    const tourHit = await page.evaluate(() => {
+      const btn = document.querySelector('#btn-start-tour');
+      const rect = btn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const el = document.elementFromPoint(x, y);
+      return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
+    });
+    assert.equal(tourHit.ok, true, JSON.stringify(tourHit));
+    await page.mouse.click(tourHit.x, tourHit.y);
     await page.locator('#mode-modal').waitFor({ state: 'hidden', timeout: 10000 });
 
     const helpHit = await page.evaluate(() => {
@@ -72,9 +81,27 @@ test('Factory standalone boots, shows Free Tour / Battle Mode selector, renders 
     assert.ok(await page.evaluate(() => document.querySelector('#zone-name')?.textContent.length > 0), 'HUD zone readout renders');
 
     // Switch to Battle Mode and verify Combat HUD activates
-    await page.locator('#btn-game-mode').click();
+    const modeHit = await page.evaluate(() => {
+      const btn = document.querySelector('#btn-game-mode');
+      const rect = btn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const el = document.elementFromPoint(x, y);
+      return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
+    });
+    assert.equal(modeHit.ok, true, JSON.stringify(modeHit));
+    await page.mouse.click(modeHit.x, modeHit.y);
     await page.locator('#mode-modal:not([hidden])').waitFor({ timeout: 10000 });
-    await page.locator('#btn-start-combat').click();
+    const combatHit = await page.evaluate(() => {
+      const btn = document.querySelector('#btn-start-combat');
+      const rect = btn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const el = document.elementFromPoint(x, y);
+      return { x, y, ok: !!(el && btn.contains(el)), hit: el && (el.id || el.className) };
+    });
+    assert.equal(combatHit.ok, true, JSON.stringify(combatHit));
+    await page.mouse.click(combatHit.x, combatHit.y);
     await page.locator('#combat-hud:not([hidden])').waitFor({ timeout: 10000 });
     const combatState = await page.evaluate(() => ({
       mode: window.__factory?.getMode(),
