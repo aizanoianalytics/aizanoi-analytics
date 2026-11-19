@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-openai-models-amd-chip-design",
+  "title": "OpenAI says its models found up to 14% more headroom in AMD's flagship GPU designs",
+  "summary": "OpenAI reported on Wednesday that its models rewrote the SystemVerilog descriptions of AMD circuits to lift power, performance and area by as much as 14% against baselines the chipmaker's engineers had already tuned, work it calls roughly a year of progress in under five months. AMD has put some model-written edits into a design sent for manufacturing and verified single-digit gains on blocks of a next-generation CPU. On OpenAI's own Jalapeño inference chip, standard-cell area fell about 13% in the vector unit.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "amd",
+    "chip-design",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/advancing-chip-design-with-our-models/",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "AI Weekly",
+      "url": "https://aiweekly.co/alerts/openai-says-models-found-14-ppa-gains-in-amd-gpu-designs",
+      "publishedAt": "2026-11-18T19:59:00Z"
+    }
+  ],
+  "kind": "daily"
+}

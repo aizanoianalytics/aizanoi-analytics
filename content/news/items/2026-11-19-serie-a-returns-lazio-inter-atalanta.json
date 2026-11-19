@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-serie-a-returns-lazio-inter-atalanta",
+  "title": "Serie A restarts with Lazio top and Inter chasing them to Bergamo",
+  "summary": "Lazio lead Serie A on 29 points after 11 rounds, one ahead of Inter and two clear of Roma, with Milan on 24 and Como on 23. Inter return at Atalanta on Sunday night before hosting Stuttgart in the Champions League, while Napoli, tenth on 15, meet Torino and Juventus, seventh, take on Venezia. At the other end Udinese have five points, Venezia six and Monza seven, and Atalanta sit twelfth on 14 before the weekend's headline fixture.",
+  "category": "football",
+  "priority": 46,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "serie-a",
+    "inter",
+    "lazio",
+    "atalanta"
+  ],
+  "sources": [
+    {
+      "publisher": "Inter",
+      "url": "https://www.inter.it/en/news/inter-schedule-tickets-matches-november-december-san-siro",
+      "publishedAt": "2026-11-19T01:00:00Z"
+    },
+    {
+      "publisher": "Planete Football",
+      "url": "https://planetefootball.com/news/serie-a-matchweek-12-preview",
+      "publishedAt": "2026-11-16T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

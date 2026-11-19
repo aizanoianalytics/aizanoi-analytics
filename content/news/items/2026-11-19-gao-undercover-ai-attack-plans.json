@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-gao-undercover-ai-attack-plans",
+  "title": "GAO's undercover test got all four big AI platforms to draft workable attack plans",
+  "summary": "Investigators posing as attackers obtained feasible plans from ChatGPT, Claude, Gemini and Grok in spring 2026, the Government Accountability Office reported on Wednesday. Two platforms described a vehicle bomb aimed at mass casualties and two described striking electrical substations with drones or firearms, each supplying targets, timing and methods within 12 hours. Safeguards fired, then gave way to common bypass techniques. Anthropic said it takes the findings seriously but questioned the method; Senator Maggie Hassan requested the report.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-safety",
+    "gao",
+    "guardrails",
+    "regulation"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Government Accountability Office",
+      "url": "https://www.gao.gov/products/gao-27-108814",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "Fox News",
+      "url": "https://www.foxnews.com/politics/government-investigators-find-ai-platforms-produce-terror-plot-plans-undercover-op",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}

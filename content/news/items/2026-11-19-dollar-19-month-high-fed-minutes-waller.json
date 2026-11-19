@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-dollar-19-month-high-fed-minutes-waller",
+  "title": "A hawkish Fed and a half-point hint push the dollar to a 19-month high",
+  "summary": "The dollar held near its strongest level since April 2025 on Thursday, with the index around 103.8, after October's minutes showed officials still focused on inflation and Governor Christopher Waller told CNBC the Fed should either raise by half a point in December or signal a faster path for 2027. The euro sat near $1.0977 and sterling near a one-month low, and traders price roughly a 95% chance of a quarter-point December increase. The Australian dollar fell to a 10-month low on weak employment.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "dollar",
+    "federal-reserve",
+    "rates",
+    "currencies"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/19/us-dollar-currency-bonds-eu-asia-price.html",
+      "publishedAt": "2026-11-19T01:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Business Recorder)",
+      "url": "https://www.brecorder.com/news/40449680",
+      "publishedAt": "2026-11-19T02:31:00Z"
+    }
+  ],
+  "kind": "daily"
+}

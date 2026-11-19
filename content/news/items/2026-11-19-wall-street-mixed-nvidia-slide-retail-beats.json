@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-19-wall-street-mixed-nvidia-slide-retail-beats",
+  "title": "Nvidia's beat fails to lift the tape as discount retail carries the session",
+  "summary": "US stocks ended mixed on Wednesday: the Dow fell 1.11% to 50,198.17 and the S&P 500 slipped 0.23% to 7,323.63 while the Nasdaq added 0.42% to 24,429.89. Nvidia, up as much as 2.7% after guiding to $130bn, closed 2.9% lower and has lost more than a third of its value since early October. Target rose about 4% and TJX 8% on holiday outlooks, and hawkish Fed minutes kept the December rate debate at the centre of the tape.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-11-19T05:00:00Z",
+  "updatedAt": "2026-11-19T05:00:00Z",
+  "retrievedAt": "2026-11-19T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nvidia",
+    "retail",
+    "fed"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/nasdaq-futures-jump-nvidia-forecast-lifts-ai-trade-ahead-anthropic-pricing-2026-11-18/",
+      "publishedAt": "2026-11-18T21:00:00Z"
+    },
+    {
+      "publisher": "The Wall Street Journal",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-11-18-2026",
+      "publishedAt": "2026-11-18T23:54:00Z"
+    }
+  ],
+  "kind": "daily"
+}
