@@ -1,0 +1,36 @@
+{
+  "id": "2026-11-20-bsi-ai-headcount-survey",
+  "title": "BSI's survey finds 54% of business leaders using AI to cut headcount, up from 41%",
+  "summary": "A BSI poll of 1,287 business leaders across nine countries, published on 17 November, reports that 54% now say AI is helping reduce headcount, against 41% in 2025. Forty-nine per cent say AI has already reduced entry-level opportunities, and 42% say they would be less likely to promote someone who sends them AI-generated content. The same release reports 53% of leaders using AI to justify efficiencies or recruitment freezes, and notes separate BSI research in which 75% of firms reported at least one AI failure. BSI frames the risk as lost pathways to expertise rather than lost posts alone.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 50,
+  "publishedAt": "2026-11-20T05:00:00Z",
+  "updatedAt": "2026-11-20T05:00:00Z",
+  "retrievedAt": "2026-11-20T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "employment",
+    "research",
+    "bsi"
+  ],
+  "sources": [
+    {
+      "publisher": "BSI",
+      "url": "https://www.bsigroup.com/en-GB/insights-and-media/media-centre/press-releases/2026/november/job-poclaypse-deepens-as-businesses-rely-on-ai-over-human-talent/",
+      "publishedAt": "2026-11-17T09:00:00Z"
+    },
+    {
+      "publisher": "ITPro",
+      "url": "https://www.itpro.com/business/careers-and-training/businesses-cutting-jobs-for-ai-risk-undermining-future-talent",
+      "publishedAt": "2026-11-19T10:00:00Z"
+    }
+  ]
+}

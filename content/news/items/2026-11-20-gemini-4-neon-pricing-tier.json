@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-20-gemini-4-neon-pricing-tier",
+  "title": "Google slots Gemini 4 Neon between Hydrogen and Carbon at $3 in and $15 out",
+  "summary": "Gemini 4 Neon, released on 18 November, is a frontier model aimed at software engineering, knowledge work and science, priced at $3 per million input tokens and $15 per million output tokens with cached input at $0.15. It carries a million-token context window and four thinking levels. Google reports 61 on the Artificial Analysis Intelligence Index at the xhigh setting, third overall and behind larger models, and second on the Vals Index. Batch and flex run at half price, and Neon becomes 25% cheaper than Carbon and Argon when their promotional pricing ends on 30 November.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 65,
+  "publishedAt": "2026-11-20T05:00:00Z",
+  "updatedAt": "2026-11-20T05:00:00Z",
+  "retrievedAt": "2026-11-20T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "gemini",
+    "models",
+    "pricing"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon",
+      "publishedAt": "2026-11-18T17:00:00Z"
+    },
+    {
+      "publisher": "9to5Google",
+      "url": "https://9to5google.com/2026/11/18/gemini-4-neon-announcement",
+      "publishedAt": "2026-11-18T20:34:00Z"
+    },
+    {
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/model-garden/pricing",
+      "publishedAt": "2026-11-19T09:00:00Z"
+    }
+  ]
+}
