@@ -61,8 +61,8 @@
     <div id="combat-hud" class="combat-hud" hidden>
       <div class="combat-wave-strip">
         <div class="cw-cell">
-          <span class="cw-k">WAVE</span>
-          <strong id="combat-wave">1</strong>
+          <span class="cw-k">OBJECTIVES</span>
+          <strong id="combat-objectives">0 / 3</strong>
         </div>
         <div class="cw-cell">
           <span class="cw-k">HOSTILES</span>
@@ -72,6 +72,16 @@
           <span class="cw-k">KILLS</span>
           <strong id="combat-kills">0</strong>
         </div>
+        <div class="cw-cell">
+          <span class="cw-k">WAVE</span>
+          <strong id="combat-wave">1</strong>
+        </div>
+      </div>
+
+      <div id="combat-objective-bar" class="combat-objective-bar">
+        <span class="ob-tag" id="combat-obj-tag">MISSION</span>
+        <span class="ob-text" id="combat-obj-text">Override 3 Factory Terminals (A · B · C)</span>
+        <span class="ob-dist" id="combat-obj-dist">-- m</span>
       </div>
 
       <div id="wave-banner" class="wave-banner" aria-live="polite"></div>
@@ -154,26 +164,26 @@
           <button type="button" class="mode-option mode-option-combat" id="btn-start-combat" data-mode="combat">
             <span class="mode-badge">AIZANOI WARS COMBAT</span>
             <strong class="mode-name">Battle Mode</strong>
-            <span class="mode-desc">Deploy with the PAC-9 rifle, ADS, recoil, magazine &amp; reserve ammo. Fight escalating waves of flying Gull drones and Hound machines and resupply at factory crates.</span>
+            <span class="mode-desc">Deploy with the PAC-9 rifle against Cyborg Troopers, flying Gull drones, and Hound machines. Override 3 Factory Security Terminals (A, B, C) and reach the Garage Extraction Point!</span>
             <span class="mode-cta">Deploy to Battle</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- Combat Defeat / Debrief Modal -->
+    <!-- Combat Debrief Modal (Victory / Defeat) -->
     <section id="combat-over-modal" class="mode-modal" hidden>
-      <div class="mode-card combat-over-card">
+      <div class="mode-card combat-over-card" id="combat-over-card">
         <div class="mode-head">
-          <div class="mode-kicker">FACTORY COMBAT · BREACHER DOWN</div>
-          <h2>Unit Offline</h2>
-          <p class="mode-sub">The machines overran the factory floor. Review your run and redeploy.</p>
+          <div class="mode-kicker" id="over-kicker">FACTORY COMBAT · BREACHER DOWN</div>
+          <h2 id="over-title">Unit Offline</h2>
+          <p class="mode-sub" id="over-sub">The cyborgs and machines overran the factory floor. Review your run and redeploy.</p>
         </div>
         <dl class="debrief-stats">
-          <div><dt>Wave Reached</dt><dd id="over-wave">1</dd></div>
+          <div><dt>Terminals Overridden</dt><dd id="over-wave">0 / 3</dd></div>
           <div><dt>Hostiles Destroyed</dt><dd id="over-kills">0</dd></div>
           <div><dt>Accuracy</dt><dd id="over-acc">—</dd></div>
-          <div><dt>Survival Time</dt><dd id="over-time">00:00</dd></div>
+          <div><dt>Mission Time</dt><dd id="over-time">00:00</dd></div>
         </dl>
         <div class="over-actions">
           <button type="button" class="over-btn primary" id="btn-combat-retry">Redeploy Battle</button>
