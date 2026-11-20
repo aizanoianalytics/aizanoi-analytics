@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-20-house-panel-879868-ai-chip-licences-china",
+  "title": "A House panel published the licence ledger: 879,868 AI chips cleared for China",
+  "summary": "The House Foreign Affairs Committee released Bureau of Industry and Security data showing 3,444,160 covered chips requested for China between December 2025 and May 2026, with 879,868 approved across 21 licences: 150,000 for Tencent, 75,000 for Alibaba, 43,000 for Baidu and 4,000 for BYD, all on the Pentagon's 1260H list. Chairman Brian Mast said Nvidia applications named Maginfra and New Matrix as possible installers and called both suspected smuggling fronts. An approval is not a shipment: most lines read 'approved, not shipped', and Nvidia says it has stopped H200 shipments to China.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 78,
+  "publishedAt": "2026-11-20T05:00:00Z",
+  "updatedAt": "2026-11-20T05:00:00Z",
+  "retrievedAt": "2026-11-20T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "export-controls",
+    "nvidia",
+    "amd",
+    "congress"
+  ],
+  "sources": [
+    {
+      "publisher": "House Foreign Affairs Committee",
+      "url": "https://foreignaffairs.house.gov/news/press-releases/chairman-brian-mast-exercises-legislative-authority-to-publicly-release-ai-chip-license-information-for-china",
+      "publishedAt": "2026-11-19T21:00:00Z"
+    },
+    {
+      "publisher": "House Foreign Affairs Committee (disclosure summary)",
+      "url": "https://democrats-foreignaffairs.house.gov/wp-content/uploads/2026/11/11.19.26-ECRA-Information-Disclosure-HFAC-Summary.pdf",
+      "publishedAt": "2026-11-19T21:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.investing.com/news/stock-market-news/license-information-for-ai-chips-sent-to-china-released-by-us-house-committee-5039850",
+      "publishedAt": "2026-11-19T23:00:00Z"
+    }
+  ]
+}

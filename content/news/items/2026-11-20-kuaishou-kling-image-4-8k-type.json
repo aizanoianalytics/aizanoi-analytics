@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-20-kuaishou-kling-image-4-8k-type",
+  "title": "Kuaishou's Kling Image 4.0 renders 8K and 2,000 characters of type in one frame",
+  "summary": "Kuaishou released Kling Image 4.0 on 18 November with native 8K generation and up to ten coordinated images from a single prompt. The model combines visual understanding and image generation in one architecture and is available through an API for developers and enterprise customers. Kuaishou says it can render up to 2,000 characters inside a single image across seven languages and more than 70 preset commercial fonts, and that users can supply references to steer typography, lighting and colour. The target is production work: advertising, storyboards, product pages and long-form layouts.",
+  "category": "technology",
+  "kind": "daily",
+  "priority": 40,
+  "publishedAt": "2026-11-20T05:00:00Z",
+  "updatedAt": "2026-11-20T05:00:00Z",
+  "retrievedAt": "2026-11-20T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "kuaishou",
+    "image-models",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "TechNode",
+      "url": "https://technode.com/2026/11/18/kuaishou-launches-kling-image-4-0-with-native-8k-generation/",
+      "publishedAt": "2026-11-18T14:00:00Z"
+    }
+  ]
+}

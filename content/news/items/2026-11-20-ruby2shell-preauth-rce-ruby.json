@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-20-ruby2shell-preauth-rce-ruby",
+  "title": "Ruby2Shell turns a one-byte overflow into pre-auth RCE, and three big products still ship it",
+  "summary": "CVE-2026-132825, published as GHSA-34m4-m9fh-gqp5, is an off-by-one heap overflow in Ruby's case conversion for legacy single-byte encodings: upcasing the German sharp s writes two bytes where the loop reserves one. Veria Labs reports it is reachable without authentication in default Rails and classic Sinatra configurations; UTF-8 is not affected. Ruby fixed it on 18 November in 3.3.14, 3.4.13 and 4.0.10. As of 04:59 UTC on 20 November, GitLab, GitHub Enterprise Server and Chatwoot still bundle a vulnerable interpreter with no fixed release. No exploitation has been reported.",
+  "category": "technology",
+  "kind": "daily",
+  "priority": 62,
+  "publishedAt": "2026-11-20T05:00:00Z",
+  "updatedAt": "2026-11-20T05:00:00Z",
+  "retrievedAt": "2026-11-20T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "ruby",
+    "rails",
+    "cve"
+  ],
+  "sources": [
+    {
+      "publisher": "Veria Labs",
+      "url": "https://verialabs.com/ruby2shell",
+      "publishedAt": "2026-11-19T14:00:00Z"
+    },
+    {
+      "publisher": "Cloudflare Radar",
+      "url": "https://radar.cloudflare.com/zero-wire/ruby2shell",
+      "publishedAt": "2026-11-19T16:00:00Z"
+    },
+    {
+      "publisher": "Aikido Security",
+      "url": "https://www.aikido.dev/blog/ruby2shell",
+      "publishedAt": "2026-11-19T12:00:00Z"
+    }
+  ]
+}

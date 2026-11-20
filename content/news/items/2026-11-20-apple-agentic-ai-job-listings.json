@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-20-apple-agentic-ai-job-listings",
+  "title": "Apple's job listings describe an agent that uses the computer, not just the app",
+  "summary": "Job postings reported by Bloomberg and relayed by 9to5Mac show Apple recruiting a senior engineering manager for a 'proactive, agentic AI assistant' that browses the web, works across apps, runs commands, writes and debugs code and coordinates specialised sub-agents, while keeping the work private. The listings follow Apple's tighter macOS Full Disk Access controls for third-party agents in the 27.3 beta. Bloomberg's Mark Gurman has reported Apple wants Siri to behave more like an autonomous agent, possibly next year. The postings read as early-stage hiring.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 55,
+  "publishedAt": "2026-11-20T05:00:00Z",
+  "updatedAt": "2026-11-20T05:00:00Z",
+  "retrievedAt": "2026-11-20T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "agents",
+    "siri",
+    "hiring"
+  ],
+  "sources": [
+    {
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/11/19/report-apple-job-listings-detail-plans-for-autonomous-ai-agents/",
+      "publishedAt": "2026-11-19T22:21:00Z"
+    }
+  ]
+}
