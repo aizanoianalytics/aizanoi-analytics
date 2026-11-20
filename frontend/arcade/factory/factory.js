@@ -31,6 +31,11 @@
   const btnStartTour = document.getElementById('btn-start-tour');
   const btnStartCombat = document.getElementById('btn-start-combat');
   const combatHudEl = document.getElementById('combat-hud');
+  const combatObjectivesEl = document.getElementById('combat-objectives');
+  const combatObjectiveBarEl = document.getElementById('combat-objective-bar');
+  const combatObjTagEl = document.getElementById('combat-obj-tag');
+  const combatObjTextEl = document.getElementById('combat-obj-text');
+  const combatObjDistEl = document.getElementById('combat-obj-dist');
   const combatWaveEl = document.getElementById('combat-wave');
   const combatHostilesEl = document.getElementById('combat-hostiles');
   const combatKillsEl = document.getElementById('combat-kills');
@@ -45,6 +50,10 @@
   const damageFlashEl = document.getElementById('damage-flash');
   const hitmarkerEl = document.getElementById('hitmarker');
   const combatOverModal = document.getElementById('combat-over-modal');
+  const combatOverCard = document.getElementById('combat-over-card');
+  const overKickerEl = document.getElementById('over-kicker');
+  const overTitleEl = document.getElementById('over-title');
+  const overSubEl = document.getElementById('over-sub');
   const overWaveEl = document.getElementById('over-wave');
   const overKillsEl = document.getElementById('over-kills');
   const overAccEl = document.getElementById('over-acc');
@@ -823,7 +832,7 @@
     return 'Dirt Courtyard';
   }
 
-  function drawMinimap(px, pz, yaw, enemiesList) {
+  function drawMinimap(px, pz, yaw, enemiesList, missionMarkers) {
     if (!minimapCtx) return;
     const w = minimapCanvas.width;
     const h = minimapCanvas.height;
@@ -933,16 +942,36 @@
     ctx.fillText('DODGE', sx(-23.2), sz(-27.8));
     ctx.fillText('CR-V', sx(-3.2), sz(-21.2));
 
+    if (missionMarkers && missionMarkers.length) {
+      for (const mk of missionMarkers) {
+        const mx = sx(mk.x);
+        const mz = sz(mk.z);
+        ctx.save();
+        ctx.translate(mx, mz);
+        ctx.rotate(Math.PI / 4);
+        ctx.fillStyle = mk.kind === 'extract' ? '#3ee69a' : '#58c4b8';
+        ctx.strokeStyle = '#0b0d0f';
+        ctx.lineWidth = 1.5;
+        ctx.fillRect(-4.5, -4.5, 9, 9);
+        ctx.strokeRect(-4.5, -4.5, 9, 9);
+        ctx.restore();
+        ctx.fillStyle = '#0b0d0f';
+        ctx.font = 'bold 7px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(mk.short, mx, mz + 2.5);
+      }
+    }
+
     if (enemiesList && enemiesList.length) {
       for (const en of enemiesList) {
         if (!en || !en.alive || !en.pos) continue;
         const ex = sx(en.pos.x);
         const ez = sz(en.pos.z);
-        ctx.fillStyle = en.type === 'gull' ? '#ff9f43' : '#ff4d42';
+        ctx.fillStyle = en.type === 'cyborg' ? '#e85dff' : en.type === 'gull' ? '#ff9f43' : '#ff4d42';
         ctx.strokeStyle = '#0b0d0f';
         ctx.lineWidth = 1.2;
         ctx.beginPath();
-        ctx.arc(ex, ez, en.type === 'gull' ? 3.2 : 3.6, 0, Math.PI * 2);
+        ctx.arc(ex, ez, en.type === 'cyborg' ? 3.8 : en.type === 'gull' ? 3.0 : 3.4, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
       }
@@ -1016,6 +1045,572 @@
         if (mat.emissiveIntensity) mat.emissiveIntensity = Math.min(8, mat.emissiveIntensity * 1.12);
       }
     });
+  }
+
+  // --------------------------------------------------------------------------
+  // Half-Human / Half-Robot Cyborg Trooper Enemy System (Aizanoi Wars Compatible)
+  // --------------------------------------------------------------------------
+  function createCyborgSystem(G) {
+    const root = new THREE.Group();
+    root.name = 'factory-cyborgs';
+    G.scene.add(root);
+
+    const tracerRoot = new THREE.Group();
+    tracerRoot.name = 'factory-cyborg-tracers';
+    G.scene.add(tracerRoot);
+
+    // Procedural hex-weave ballistic fabric texture for tactical suit
+    function makeHexSuitTexture() {
+      const c = document.createElement('canvas');
+      c.width = 128;
+      c.height = 128;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#181e26';
+      ctx.fillRect(0, 0, 128, 128);
+      ctx.strokeStyle = '#28323e';
+      ctx.lineWidth = 1.5;
+      for (let y = 0; y < 128; y += 12) {
+        for (let x = 0; x < 128; x += 14) {
+          const ox = (Math.floor(y / 12) % 2) * 7;
+          ctx.strokeRect(x + ox, y, 10, 8);
+        }
+      }
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(3, 3);
+      return tex;
+    }
+
+    const suitTex = makeHexSuitTexture();
+    const suitMat = new THREE.MeshStandardMaterial({ map: suitTex, color: 0x262f3b, roughness: 0.68, metalness: 0.28 });
+    const darkRubberMat = new THREE.MeshStandardMaterial({ color: 0x101318, roughness: 0.82, metalness: 0.12 });
+    const armorMat = new THREE.MeshStandardMaterial({ color: 0x4b5563, roughness: 0.30, metalness: 0.82 });
+    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xb6c2ce, roughness: 0.16, metalness: 0.96 });
+    const skinMat = new THREE.MeshStandardMaterial({ color: 0xc99676, roughness: 0.64, metalness: 0.04 });
+    const hairMat = new THREE.MeshStandardMaterial({ color: 0x1a1715, roughness: 0.88, metalness: 0.05 });
+    const cyberMetalMat = new THREE.MeshStandardMaterial({ color: 0x7b8794, roughness: 0.22, metalness: 0.92 });
+    const rifleMat = new THREE.MeshStandardMaterial({ color: 0x15191f, roughness: 0.38, metalness: 0.72 });
+    const coreMat = new THREE.MeshStandardMaterial({ color: 0xffa63d, emissive: 0xff7718, emissiveIntensity: 3.2, roughness: 0.2 });
+    const tealLedMat = new THREE.MeshStandardMaterial({ color: 0x58c4b8, emissive: 0x32e0cc, emissiveIntensity: 2.6, roughness: 0.2 });
+    const visorBaseMat = new THREE.MeshStandardMaterial({ color: 0xff263c, emissive: 0xff162e, emissiveIntensity: 4.2, roughness: 0.1 });
+    const glassVisorMat = new THREE.MeshPhysicalMaterial({ color: 0x16090c, roughness: 0.08, metalness: 0.2, transparent: true, opacity: 0.72, clearcoat: 1.0 });
+    const laserMat = new THREE.MeshBasicMaterial({ color: 0xff2a38, transparent: true, opacity: 0.36, depthWrite: false });
+    const tracerMat = new THREE.MeshBasicMaterial({ color: 0xff5a45, transparent: true, opacity: 0.94 });
+
+    const list = [];
+    const tracers = [];
+    const tmpA = new THREE.Vector3();
+    const tmpB = new THREE.Vector3();
+    const tmpDir = new THREE.Vector3();
+    const tmpSide = new THREE.Vector3();
+    const upVec = new THREE.Vector3(0, 1, 0);
+
+    function raySphere(origin, dir, center, radius, maxDist) {
+      const ox = origin.x - center.x;
+      const oy = origin.y - center.y;
+      const oz = origin.z - center.z;
+      const b = ox * dir.x + oy * dir.y + oz * dir.z;
+      const c = ox * ox + oy * oy + oz * oz - radius * radius;
+      const disc = b * b - c;
+      if (disc < 0) return null;
+      const t = -b - Math.sqrt(disc);
+      if (t < 0 || t > maxDist) return null;
+      const pt = new THREE.Vector3(
+        origin.x + dir.x * t,
+        origin.y + dir.y * t,
+        origin.z + dir.z * t
+      );
+      const norm = pt.clone().sub(center).normalize();
+      return { dist: t, point: pt, normal: norm };
+    }
+
+    function spawnTracer(fromPos, toPos) {
+      const dist = fromPos.distanceTo(toPos);
+      if (dist < 0.2) return;
+      const geo = new THREE.CylinderGeometry(0.022, 0.022, Math.min(dist, 42), 5);
+      geo.rotateX(Math.PI / 2);
+      const mesh = new THREE.Mesh(geo, tracerMat);
+      mesh.position.copy(fromPos).lerp(toPos, 0.5);
+      mesh.lookAt(toPos);
+      tracerRoot.add(mesh);
+      tracers.push({ mesh, geo, life: 0.11 });
+    }
+
+    function buildCyborgMesh() {
+      const grp = new THREE.Group();
+      const visorMat = visorBaseMat.clone();
+
+      // --- LEFT LEG (Armored Human Tactical Leg with Knee Pivot & Boot) ---
+      const leftLeg = new THREE.Group();
+      leftLeg.position.set(-0.15, 0.92, 0);
+      const lHip = new THREE.Mesh(new THREE.SphereGeometry(0.105, 10, 8), darkRubberMat);
+      const lThigh = new THREE.Mesh(new THREE.CylinderGeometry(0.095, 0.082, 0.42, 10), suitMat);
+      lThigh.position.y = -0.22;
+      const lThighPlate = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.24, 0.16), armorMat);
+      lThighPlate.position.set(-0.02, -0.20, 0.03);
+      const leftKnee = new THREE.Group();
+      leftKnee.position.y = -0.44;
+      const lKneePad = new THREE.Mesh(new THREE.SphereGeometry(0.088, 10, 8), armorMat);
+      lKneePad.position.z = 0.03;
+      const lShin = new THREE.Mesh(new THREE.CylinderGeometry(0.078, 0.068, 0.38, 10), armorMat);
+      lShin.position.y = -0.20;
+      const lBoot = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.11, 0.25), darkRubberMat);
+      lBoot.position.set(0, -0.42, 0.05);
+      leftKnee.add(lKneePad, lShin, lBoot);
+      leftLeg.add(lHip, lThigh, lThighPlate, leftKnee);
+
+      // --- RIGHT LEG (Exposed Skeletal Robotic Cyber-Leg with Hydraulic Piston) ---
+      const rightLeg = new THREE.Group();
+      rightLeg.position.set(0.15, 0.92, 0);
+      const rHip = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.085, 0.12, 10), chromeMat);
+      rHip.rotation.z = Math.PI / 2;
+      const rThighCore = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.048, 0.42, 10), cyberMetalMat);
+      rThighCore.position.y = -0.22;
+      const rPiston = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.36, 8), chromeMat);
+      rPiston.position.set(0.055, -0.22, -0.04);
+      const rThighGuard = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.26, 0.11), armorMat);
+      rThighGuard.position.set(0.01, -0.19, 0.055);
+      const rightKnee = new THREE.Group();
+      rightKnee.position.y = -0.44;
+      const rKneeDrum = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.14, 12), darkRubberMat);
+      rKneeDrum.rotation.z = Math.PI / 2;
+      const rKneeGlow = new THREE.Mesh(new THREE.TorusGeometry(0.068, 0.014, 6, 14), coreMat);
+      rKneeGlow.rotation.y = Math.PI / 2;
+      rKneeGlow.position.x = 0.072;
+      const rShinStrut = new THREE.Mesh(new THREE.CylinderGeometry(0.046, 0.056, 0.38, 10), cyberMetalMat);
+      rShinStrut.position.y = -0.20;
+      const rShinPiston = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.32, 8), chromeMat);
+      rShinPiston.position.set(0, -0.20, -0.055);
+      const rFoot = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.09, 0.26), cyberMetalMat);
+      rFoot.position.set(0, -0.42, 0.05);
+      rightKnee.add(rKneeDrum, rKneeGlow, rShinStrut, rShinPiston, rFoot);
+      rightLeg.add(rHip, rThighCore, rPiston, rThighGuard, rightKnee);
+
+      // --- SCULPTED TORSO, BALLISTIC ARMOR & SPINE POWER-PACK ---
+      const body = new THREE.Group();
+      body.position.y = 0.92;
+
+      const pelvis = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.17, 0.18, 10), darkRubberMat);
+      pelvis.position.y = 0.06;
+      const belt = new THREE.Mesh(new THREE.BoxGeometry(0.43, 0.08, 0.27), armorMat);
+      belt.position.y = 0.15;
+      for (const px of [-0.15, 0.15]) {
+        const pouch = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.11, 0.07), suitMat);
+        pouch.position.set(px, 0.14, 0.15);
+        body.add(pouch);
+      }
+
+      const abdomen = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.16, 0.24, 10), suitMat);
+      abdomen.position.y = 0.27;
+      // Cybernetic rib cabling on right abdomen
+      for (let r = 0; r < 3; r++) {
+        const rib = new THREE.Mesh(new THREE.TorusGeometry(0.165, 0.014, 6, 14, Math.PI * 0.75), chromeMat);
+        rib.rotation.x = Math.PI / 2;
+        rib.rotation.z = -0.4;
+        rib.position.y = 0.22 + r * 0.055;
+        body.add(rib);
+      }
+
+      const chestCore = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.34, 0.26), suitMat);
+      chestCore.position.y = 0.50;
+      // Angled multi-plate ballistic breastplate
+      const chestUpper = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.22, 0.30), armorMat);
+      chestUpper.position.set(0, 0.55, 0.02);
+      chestUpper.rotation.x = -0.10;
+      const chestLower = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.14, 0.28), cyberMetalMat);
+      chestLower.position.set(0, 0.39, 0.015);
+      // Recessed glowing reactor core in sternum
+      const reactorBezel = new THREE.Mesh(new THREE.CylinderGeometry(0.072, 0.078, 0.05, 12), darkRubberMat);
+      reactorBezel.rotation.x = Math.PI / 2;
+      reactorBezel.position.set(0, 0.53, 0.165);
+      const reactorCore = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.048, 0.056, 12), coreMat);
+      reactorCore.rotation.x = Math.PI / 2;
+      reactorCore.position.set(0, 0.53, 0.168);
+
+      // Rear Cybernetic Spine Power-Pack with twin glowing cells
+      const backPack = new THREE.Mesh(new THREE.BoxGeometry(0.30, 0.36, 0.16), armorMat);
+      backPack.position.set(0, 0.49, -0.19);
+      for (const bx of [-0.08, 0.08]) {
+        const cell = new THREE.Mesh(new THREE.CylinderGeometry(0.036, 0.036, 0.24, 10), tealLedMat);
+        cell.position.set(bx, 0.50, -0.26);
+        body.add(cell);
+      }
+      const collar = new THREE.Mesh(new THREE.TorusGeometry(0.14, 0.036, 8, 14), armorMat);
+      collar.rotation.x = Math.PI / 2;
+      collar.position.set(0, 0.68, 0);
+
+      // Asymmetric Pauldrons (Tactical Left + Heavy Cyber-Right with Antenna)
+      const shoulderL = new THREE.Mesh(new THREE.SphereGeometry(0.135, 10, 8), armorMat);
+      shoulderL.scale.set(1.0, 0.85, 1.15);
+      shoulderL.position.set(-0.29, 0.60, 0);
+      const shoulderR = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.19, 0.24), cyberMetalMat);
+      shoulderR.position.set(0.30, 0.61, 0);
+      shoulderR.rotation.z = -0.18;
+      const antenna = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.012, 0.34, 6), chromeMat);
+      antenna.position.set(0.34, 0.84, -0.06);
+      const antennaTip = new THREE.Mesh(new THREE.SphereGeometry(0.024, 8, 6), visorMat);
+      antennaTip.position.set(0.34, 1.02, -0.06);
+
+      // --- HALF-HUMAN / HALF-TERMINATOR HEAD (WEAKSPOT) ---
+      const head = new THREE.Group();
+      head.position.set(0, 0.82, 0.01);
+      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.078, 0.14, 10), darkRubberMat);
+      neck.position.y = -0.10;
+      const neckCable = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.15, 6), chromeMat);
+      neckCable.position.set(0.06, -0.09, 0.02);
+      // Organic human skull & jawline
+      const cranium = new THREE.Mesh(new THREE.SphereGeometry(0.125, 14, 12), skinMat);
+      cranium.scale.set(0.92, 1.08, 1.0);
+      const hairCap = new THREE.Mesh(new THREE.SphereGeometry(0.128, 12, 10, 0, Math.PI * 2, 0, Math.PI * 0.48), hairMat);
+      hairCap.position.set(-0.01, 0.015, -0.01);
+      // Right-side chrome-titanium cybernetic skull plate + mechanical jaw
+      const cyberSkull = new THREE.Mesh(new THREE.SphereGeometry(0.132, 12, 10, -Math.PI * 0.25, Math.PI * 0.95), cyberMetalMat);
+      cyberSkull.scale.set(0.96, 1.08, 1.02);
+      const cyberJaw = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.09, 0.16), chromeMat);
+      cyberJaw.position.set(0.055, -0.065, 0.035);
+      // Glowing crimson bionic eye + translucent wrap-around tactical visor
+      const bionicEye = new THREE.Mesh(new THREE.SphereGeometry(0.024, 10, 8), visorMat);
+      bionicEye.position.set(0.048, 0.022, 0.112);
+      const visorBand = new THREE.Mesh(new THREE.CylinderGeometry(0.134, 0.134, 0.062, 14, 1, true, -Math.PI * 0.38, Math.PI * 0.76), glassVisorMat);
+      visorBand.position.set(0, 0.028, 0.008);
+      const visorGlow = new THREE.Mesh(new THREE.BoxGeometry(0.19, 0.018, 0.02), visorMat);
+      visorGlow.position.set(0.01, 0.026, 0.134);
+      head.add(neck, neckCable, cranium, hairCap, cyberSkull, cyberJaw, bionicEye, visorBand, visorGlow);
+
+      // --- ARMS & HIGH-DETAIL CYBER PULSE RIFLE ---
+      const leftArm = new THREE.Group();
+      leftArm.position.set(-0.29, 0.56, 0.02);
+      const lUpper = new THREE.Mesh(new THREE.CylinderGeometry(0.064, 0.056, 0.30, 10), suitMat);
+      lUpper.position.set(0.02, -0.14, 0.08);
+      lUpper.rotation.x = -0.45;
+      const lForearm = new THREE.Mesh(new THREE.CylinderGeometry(0.056, 0.048, 0.30, 10), armorMat);
+      lForearm.position.set(0.16, -0.22, 0.26);
+      lForearm.rotation.set(Math.PI / 2 - 0.15, 0, -0.58);
+      leftArm.add(lUpper, lForearm);
+
+      const rightArmGrp = new THREE.Group();
+      rightArmGrp.position.set(0.28, 0.54, 0.04);
+      const rUpper = new THREE.Mesh(new THREE.CylinderGeometry(0.052, 0.046, 0.28, 10), cyberMetalMat);
+      rUpper.position.set(0, -0.12, 0.06);
+      rUpper.rotation.x = -0.35;
+      const rElbow = new THREE.Mesh(new THREE.SphereGeometry(0.055, 8, 6), chromeMat);
+      rElbow.position.set(0, -0.23, 0.13);
+      const rForearm = new THREE.Mesh(new THREE.CylinderGeometry(0.048, 0.044, 0.28, 10), chromeMat);
+      rForearm.rotation.x = Math.PI / 2;
+      rForearm.position.set(-0.04, -0.21, 0.26);
+
+      // Multi-part Tactical Pulse Rifle
+      const rifleGrp = new THREE.Group();
+      rifleGrp.position.set(-0.08, -0.19, 0.34);
+      const receiver = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.12, 0.56), rifleMat);
+      const barrelShroud = new THREE.Mesh(new THREE.CylinderGeometry(0.032, 0.036, 0.36, 10), armorMat);
+      barrelShroud.rotation.x = Math.PI / 2;
+      barrelShroud.position.set(0, 0.015, 0.42);
+      const muzzleBrake = new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.026, 0.08, 8), chromeMat);
+      muzzleBrake.rotation.x = Math.PI / 2;
+      muzzleBrake.position.set(0, 0.015, 0.62);
+      const mag = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.18, 0.09), darkRubberMat);
+      mag.position.set(0, -0.13, 0.06);
+      mag.rotation.x = 0.22;
+      const optic = new THREE.Mesh(new THREE.BoxGeometry(0.045, 0.055, 0.16), armorMat);
+      optic.position.set(0, 0.085, -0.02);
+      const plasmaRail = new THREE.Mesh(new THREE.BoxGeometry(0.026, 0.022, 0.44), coreMat);
+      plasmaRail.position.set(0, 0.052, 0.24);
+      const muzzleFlash = new THREE.Mesh(new THREE.SphereGeometry(0.13, 8, 6), coreMat);
+      muzzleFlash.position.set(0, 0.015, 0.68);
+      muzzleFlash.visible = false;
+      const laserBeam = new THREE.Mesh(new THREE.CylinderGeometry(0.005, 0.005, 16, 4), laserMat);
+      laserBeam.rotation.x = Math.PI / 2;
+      laserBeam.position.set(0, -0.01, 8.6);
+      laserBeam.visible = false;
+      rifleGrp.add(receiver, barrelShroud, muzzleBrake, mag, optic, plasmaRail, muzzleFlash, laserBeam);
+      rightArmGrp.add(rUpper, rElbow, rForearm, rifleGrp);
+
+      body.add(pelvis, belt, abdomen, chestCore, chestUpper, chestLower, reactorBezel, reactorCore, backPack, collar, shoulderL, shoulderR, antenna, antennaTip, head, leftArm, rightArmGrp);
+      grp.add(leftLeg, rightLeg, body);
+
+      grp.traverse((o) => {
+        if (o.isMesh && o !== laserBeam) {
+          o.castShadow = true;
+          o.receiveShadow = true;
+        }
+      });
+
+      return { grp, leftLeg, rightLeg, leftKnee, rightKnee, body, head, rightArmGrp, rifleGrp, muzzleFlash, laserBeam, visorMat };
+    }
+
+    function spawn(pos) {
+      const parts = buildCyborgMesh();
+      const gy = G.physics && G.physics.groundHeight ? G.physics.groundHeight(pos.x, pos.z, Math.max(2.0, pos.y + 1.5)) : pos.y;
+      const p = new THREE.Vector3(pos.x, Math.max(0, gy), pos.z);
+      parts.grp.position.copy(p);
+      root.add(parts.grp);
+
+      const en = {
+        type: 'cyborg',
+        pos: p,
+        hp: 105,
+        maxHp: 105,
+        alive: true,
+        yaw: 0,
+        strafeDir: Math.random() < 0.5 ? -1 : 1,
+        strafeTimer: 1.5 + Math.random() * 2.0,
+        fireCd: 0.9 + Math.random() * 1.2,
+        burstLeft: 0,
+        burstGap: 0,
+        flashT: 0,
+        hurtT: 0,
+        walkPhase: Math.random() * Math.PI * 2,
+        deadT: 0,
+        fallDir: Math.random() < 0.5 ? 1 : -1,
+        parts,
+        damage(amount, hitPoint, hitDir, part) {
+          if (!en.alive) return false;
+          en.hp -= amount;
+          en.hurtT = 0.14;
+          if (G.fx && G.fx.sparks && hitPoint) {
+            G.fx.sparks(hitPoint, hitDir ? hitDir.clone().negate() : upVec, part === 'weak' ? 12 : 6);
+          }
+          if (en.hp <= 0) {
+            en.alive = false;
+            en.deadT = 0;
+            parts.muzzleFlash.visible = false;
+            parts.laserBeam.visible = false;
+            parts.visorMat.emissiveIntensity = 0.1;
+            if (G.fx && G.fx.smoke) {
+              G.fx.smoke(tmpA.set(en.pos.x, en.pos.y + 1.1, en.pos.z), { size: 0.75, life: 1.6, color: 0x22262b, rise: 1.2 });
+            }
+            if (G.fx && G.fx.sparks) {
+              G.fx.sparks(tmpA.set(en.pos.x, en.pos.y + 1.2, en.pos.z), upVec, 16);
+            }
+            G.audio && G.audio.play && G.audio.play('impact_metal', { pos: [en.pos.x, en.pos.y + 1.2, en.pos.z], gain: 0.65 });
+            G.events.emit('enemy:killed', { enemy: en, type: 'cyborg', part });
+            return true;
+          }
+          return false;
+        }
+      };
+      list.push(en);
+      return en;
+    }
+
+    function clear() {
+      for (const en of list) {
+        root.remove(en.parts.grp);
+      }
+      list.length = 0;
+      for (const tr of tracers) {
+        tracerRoot.remove(tr.mesh);
+        tr.geo.dispose();
+      }
+      tracers.length = 0;
+    }
+
+    function aliveCount() {
+      let c = 0;
+      for (const en of list) if (en.alive) c++;
+      return c;
+    }
+
+    function raycast(origin, dir, maxDist) {
+      let best = null;
+      let bestDist = maxDist;
+      for (const en of list) {
+        if (!en.alive) continue;
+        // Head weakspot sphere (2.2x headshot damage!)
+        tmpA.set(en.pos.x, en.pos.y + 1.64, en.pos.z);
+        const headHit = raySphere(origin, dir, tmpA, 0.26, bestDist);
+        if (headHit) {
+          bestDist = headHit.dist;
+          best = { enemy: en, part: 'weak', dist: headHit.dist, point: headHit.point, normal: headHit.normal };
+        }
+        // Upper torso sphere
+        tmpA.set(en.pos.x, en.pos.y + 1.18, en.pos.z);
+        const chestHit = raySphere(origin, dir, tmpA, 0.38, bestDist);
+        if (chestHit) {
+          bestDist = chestHit.dist;
+          best = { enemy: en, part: 'body', dist: chestHit.dist, point: chestHit.point, normal: chestHit.normal };
+        }
+        // Lower torso / legs sphere
+        tmpA.set(en.pos.x, en.pos.y + 0.56, en.pos.z);
+        const legHit = raySphere(origin, dir, tmpA, 0.34, bestDist);
+        if (legHit) {
+          bestDist = legHit.dist;
+          best = { enemy: en, part: 'body', dist: legHit.dist, point: legHit.point, normal: legHit.normal };
+        }
+      }
+      return best;
+    }
+
+    function update(dt) {
+      // Fade tracers
+      for (let i = tracers.length - 1; i >= 0; i--) {
+        tracers[i].life -= dt;
+        if (tracers[i].life <= 0) {
+          tracerRoot.remove(tracers[i].mesh);
+          tracers[i].geo.dispose();
+          tracers.splice(i, 1);
+        }
+      }
+
+      const player = G.player;
+      const pPos = player ? player.pos : null;
+
+      for (let i = list.length - 1; i >= 0; i--) {
+        const en = list[i];
+        if (!en.alive) {
+          en.deadT += dt;
+          const fall = Math.min(1, en.deadT * 3.4);
+          en.parts.grp.rotation.x = fall * (Math.PI / 2) * en.fallDir;
+          en.parts.grp.position.y = Math.max(0, en.pos.y + (1 - fall) * 0.08);
+          if (en.deadT > 14) {
+            root.remove(en.parts.grp);
+            list.splice(i, 1);
+          }
+          continue;
+        }
+
+        if (en.flashT > 0) {
+          en.flashT -= dt;
+          if (en.flashT <= 0) en.parts.muzzleFlash.visible = false;
+        }
+        if (en.hurtT > 0) {
+          en.hurtT -= dt;
+          en.parts.visorMat.emissiveIntensity = en.hurtT > 0 ? 7.5 : 3.4;
+        }
+
+        if (!pPos || !player.alive) continue;
+
+        const dx = pPos.x - en.pos.x;
+        const dz = pPos.z - en.pos.z;
+        const dist = Math.hypot(dx, dz) || 0.001;
+        const targetYaw = Math.atan2(dx, dz);
+        let diff = targetYaw - en.yaw;
+        while (diff > Math.PI) diff -= Math.PI * 2;
+        while (diff < -Math.PI) diff += Math.PI * 2;
+        en.yaw += diff * Math.min(1, dt * 6.5);
+        en.parts.grp.rotation.y = en.yaw;
+
+        // Tactical movement: advance toward player or strafe at medium range
+        en.strafeTimer -= dt;
+        if (en.strafeTimer <= 0) {
+          en.strafeDir = -en.strafeDir;
+          en.strafeTimer = 1.6 + Math.random() * 2.2;
+        }
+
+        const speed = dist > 16 ? 4.2 : dist > 8.5 ? 2.8 : 1.7;
+        tmpDir.set(dx / dist, 0, dz / dist);
+        tmpSide.set(-tmpDir.z * en.strafeDir, 0, tmpDir.x * en.strafeDir);
+
+        let moveX = 0;
+        let moveZ = 0;
+        if (dist > 11) {
+          moveX = tmpDir.x * 0.82 + tmpSide.x * 0.35;
+          moveZ = tmpDir.z * 0.82 + tmpSide.z * 0.35;
+        } else if (dist < 5.5) {
+          moveX = -tmpDir.x * 0.45 + tmpSide.x * 0.78;
+          moveZ = -tmpDir.z * 0.45 + tmpSide.z * 0.78;
+        } else {
+          moveX = tmpSide.x * 0.85 + tmpDir.x * 0.2;
+          moveZ = tmpSide.z * 0.85 + tmpDir.z * 0.2;
+        }
+
+        // Separation from other cyborgs
+        for (const other of list) {
+          if (other === en || !other.alive) continue;
+          const sx = en.pos.x - other.pos.x;
+          const sz = en.pos.z - other.pos.z;
+          const sd = Math.hypot(sx, sz);
+          if (sd > 0.01 && sd < 2.2) {
+            moveX += (sx / sd) * (2.2 - sd) * 0.8;
+            moveZ += (sz / sd) * (2.2 - sd) * 0.8;
+          }
+        }
+
+        const mLen = Math.hypot(moveX, moveZ);
+        let moved = false;
+        if (mLen > 0.05) {
+          const nx = moveX / mLen;
+          const nz = moveZ / mLen;
+          const step = speed * dt;
+          tmpA.set(en.pos.x, en.pos.y + 0.9, en.pos.z);
+          tmpB.set(nx, 0, nz);
+          const blocked = G.physics && G.physics.raycast ? G.physics.raycast(tmpA, tmpB, step + 0.75) : null;
+          if (!blocked) {
+            const nextX = Math.max(-28.0, Math.min(46.5, en.pos.x + nx * step));
+            const nextZ = Math.max(-46.5, Math.min(54.0, en.pos.z + nz * step));
+            const nextY = G.physics && G.physics.groundHeight ? G.physics.groundHeight(nextX, nextZ, en.pos.y + 1.2) : en.pos.y;
+            if (Math.abs(nextY - en.pos.y) < 1.2) {
+              en.pos.set(nextX, Math.max(0, nextY), nextZ);
+              en.parts.grp.position.copy(en.pos);
+              moved = true;
+            }
+          } else {
+            en.strafeDir = -en.strafeDir;
+          }
+        }
+
+        // Articulated stride, knee bend & torso bob animation
+        if (moved) {
+          en.walkPhase += dt * speed * 2.5;
+          const swing = Math.sin(en.walkPhase) * 0.56;
+          en.parts.leftLeg.rotation.x = swing;
+          en.parts.rightLeg.rotation.x = -swing;
+          en.parts.leftKnee.rotation.x = Math.max(0, -swing) * 0.85;
+          en.parts.rightKnee.rotation.x = Math.max(0, swing) * 0.85;
+          en.parts.body.position.y = 0.92 + Math.abs(Math.cos(en.walkPhase)) * 0.045;
+          en.parts.body.rotation.x = 0.08;
+        } else {
+          en.parts.leftLeg.rotation.x *= 0.85;
+          en.parts.rightLeg.rotation.x *= 0.85;
+          en.parts.leftKnee.rotation.x *= 0.85;
+          en.parts.rightKnee.rotation.x *= 0.85;
+          en.parts.body.position.y = 0.92 + Math.sin(G.time.t * 2.2 + en.walkPhase) * 0.012;
+          en.parts.body.rotation.x *= 0.85;
+        }
+        en.parts.rifleGrp.position.z += (0.34 - en.parts.rifleGrp.position.z) * Math.min(1, dt * 14);
+
+        // Line-of-sight pulse rifle bursts & tactical laser sight
+        let hasSight = false;
+        if (dist < 48) {
+          tmpA.set(en.pos.x, en.pos.y + 1.48, en.pos.z);
+          hasSight = G.physics && G.physics.lineOfSight ? G.physics.lineOfSight(tmpA, player.eye) : true;
+        }
+        en.parts.laserBeam.visible = hasSight && dist < 34;
+        if (hasSight) {
+          if (en.burstLeft > 0) {
+            en.burstGap -= dt;
+            if (en.burstGap <= 0) {
+              en.burstLeft--;
+              en.burstGap = 0.16;
+              const muzzle = tmpA.clone().addScaledVector(tmpDir, 0.78);
+              const aim = player.eye.clone();
+              aim.y -= 0.18;
+              aim.x += (Math.random() - 0.5) * (0.45 + dist * 0.025);
+              aim.y += (Math.random() - 0.5) * (0.35 + dist * 0.018);
+              aim.z += (Math.random() - 0.5) * (0.45 + dist * 0.025);
+              const shotDir = aim.clone().sub(muzzle).normalize();
+              en.parts.muzzleFlash.visible = true;
+              en.parts.rifleGrp.position.z = 0.25;
+              en.flashT = 0.06;
+              spawnTracer(muzzle, aim);
+              G.combat && G.combat.enemyShot && G.combat.enemyShot(muzzle, shotDir, { damage: 7, range: 110 });
+              G.audio && G.audio.play && G.audio.play('impact_metal', { pos: [muzzle.x, muzzle.y, muzzle.z], gain: 0.22 });
+            }
+          } else {
+            en.fireCd -= dt;
+            if (en.fireCd <= 0) {
+              en.burstLeft = 3;
+              en.burstGap = 0;
+              en.fireCd = 1.65 + Math.random() * 1.1;
+            }
+          }
+        }
+      }
+    }
+
+    return { list, spawn, clear, aliveCount, raycast, update };
   }
 
   async function boot() {
@@ -1159,8 +1754,8 @@
     G.player.enabled = true;
     G.input.setGameplay(true);
 
-    // Aizanoi Wars Combat Modules (Weapon, Combat Hitscan, Gull & Hound Enemies)
-    await setBoot('Arming PAC-9 rifle and combat units', 0.90);
+    // Aizanoi Wars Combat Modules (Weapon, Combat Hitscan, Gull & Hound + Cyborg Trooper Enemies)
+    await setBoot('Arming PAC-9 rifle, Cyborg Troopers, and combat units', 0.90);
     G.combat = E.createCombat ? E.createCombat(G) : { stats: { shots: 0, hits: 0, kills: 0 }, reset() {} };
     try {
       G.weapon = E.createWeapon ? await E.createWeapon(G) : null;
@@ -1170,12 +1765,127 @@
     }
     if (G.weapon && G.weapon.setVisible) G.weapon.setVisible(false);
 
+    let baseEnemies = null;
     try {
-      G.enemies = E.createEnemies ? await E.createEnemies(G) : null;
+      baseEnemies = E.createEnemies ? await E.createEnemies(G) : null;
     } catch (e) {
       console.warn('[factory] createEnemies:', e);
-      G.enemies = null;
+      baseEnemies = null;
     }
+    const cyborgs = createCyborgSystem(G);
+
+    // Unified enemy manager combining Aizanoi Wars Gulls/Hounds + Cyborg Troopers
+    G.enemies = {
+      get list() {
+        const baseList = (baseEnemies && baseEnemies.list) || [];
+        return baseList.concat(cyborgs.list);
+      },
+      spawn(type, pos, opts) {
+        if (type === 'cyborg') return cyborgs.spawn(pos);
+        return baseEnemies && baseEnemies.spawn ? baseEnemies.spawn(type, pos, opts) : null;
+      },
+      clear() {
+        baseEnemies && baseEnemies.clear && baseEnemies.clear();
+        cyborgs.clear();
+      },
+      alert(pos, radius) {
+        baseEnemies && baseEnemies.alert && baseEnemies.alert(pos, radius);
+      },
+      aliveCount() {
+        const b = baseEnemies && baseEnemies.aliveCount ? baseEnemies.aliveCount() : ((baseEnemies && baseEnemies.list) || []).filter((en) => en && en.alive).length;
+        return b + cyborgs.aliveCount();
+      },
+      raycast(origin, dir, maxDist) {
+        const bHit = baseEnemies && baseEnemies.raycast ? baseEnemies.raycast(origin, dir, maxDist) : null;
+        const limit = bHit ? bHit.dist : maxDist;
+        const cHit = cyborgs.raycast(origin, dir, limit);
+        if (cHit && (!bHit || cHit.dist < bHit.dist)) return cHit;
+        return bHit;
+      },
+      update(dt) {
+        baseEnemies && baseEnemies.update && baseEnemies.update(dt);
+        cyborgs.update(dt);
+      }
+    };
+
+    // Mission Objectives: 3 Factory Security Terminals (A, B, C) + Garage Extraction Zone (EX)
+    const missionGroup = new THREE.Group();
+    missionGroup.name = 'factory-mission-objectives';
+    missionGroup.visible = false;
+    G.scene.add(missionGroup);
+
+    const termBodyMat = new THREE.MeshStandardMaterial({ color: 0x1b252e, roughness: 0.45, metalness: 0.6 });
+    const termLiveMat = new THREE.MeshStandardMaterial({ color: 0x58c4b8, emissive: 0x32d6c4, emissiveIntensity: 2.6, roughness: 0.2 });
+    const termDoneMat = new THREE.MeshStandardMaterial({ color: 0x2f3b38, emissive: 0x11241f, emissiveIntensity: 0.3, roughness: 0.6 });
+    const termBeamMat = new THREE.MeshBasicMaterial({ color: 0x58c4b8, transparent: true, opacity: 0.22, depthWrite: false, side: THREE.DoubleSide });
+    const extractRingMat = new THREE.MeshBasicMaterial({ color: 0x3ee69a, transparent: true, opacity: 0.85, side: THREE.DoubleSide });
+    const extractBeamMat = new THREE.MeshBasicMaterial({ color: 0x3ee69a, transparent: true, opacity: 0.24, depthWrite: false, side: THREE.DoubleSide });
+
+    const terminalSpecs = [
+      { id: 'term_a', short: 'A', name: 'Terminal A · Shipping Hall', pos: [11.0, 0.06, -11.5] },
+      { id: 'term_b', short: 'B', name: 'Terminal B · Office 2 Command', pos: [9.2, 0.06, 23.8] },
+      { id: 'term_c', short: 'C', name: 'Terminal C · Kiln Control', pos: [23.2, 0.06, -13.0] }
+    ];
+
+    const missionTerminals = terminalSpecs.map((spec) => {
+      const grp = new THREE.Group();
+      grp.position.set(spec.pos[0], spec.pos[1], spec.pos[2]);
+      const base = new THREE.Mesh(new THREE.BoxGeometry(0.68, 1.32, 0.48), termBodyMat);
+      base.position.y = 0.66;
+      base.castShadow = true;
+      const screen = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.42, 0.52), termLiveMat);
+      screen.position.y = 1.06;
+      const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.42, 6.2, 12, 1, true), termBeamMat);
+      beam.position.y = 3.1;
+      grp.add(base, screen, beam);
+      missionGroup.add(grp);
+
+      const term = { ...spec, grp, screen, beam, done: false };
+      interactives.push({
+        id: spec.id,
+        combatOnly: true,
+        pos: new THREE.Vector3(spec.pos[0], spec.pos[1] + 1.1, spec.pos[2]),
+        range: 3.4,
+        getLabel: () => term.done ? `${spec.name} (Overridden)` : `Override ${spec.name} [E]`,
+        trigger: () => {
+          if (term.done) return `${spec.name} already overridden`;
+          term.done = true;
+          term.screen.material = termDoneMat;
+          term.beam.visible = false;
+          combatState.terminalsDone++;
+          G.audio && G.audio.play && G.audio.play('impact_metal', { pos: spec.pos, gain: 0.6 });
+          if (G.player && G.player.addShake) G.player.addShake(0.14);
+          if (G.weapon && G.weapon.addAmmo) G.weapon.addAmmo(60);
+          if (G.player && G.player.heal) G.player.heal(25);
+          if (combatState.terminalsDone >= missionTerminals.length) {
+            combatState.extractReady = true;
+            extractGroup.visible = true;
+            queueSquad(combatState.wave + 1, { cyborg: 5, hound: 3, gull: 3, banner: 'ALL TERMINALS OVERRIDDEN · EXTRACT AT GARAGE (PORSCHE 928S)!' });
+            return 'All 3 Terminals Overridden! Fight to the 4-Post Garage Extraction Point!';
+          }
+          queueSquad(combatState.wave + 1, {
+            cyborg: 4 + combatState.terminalsDone,
+            hound: 3,
+            gull: 3,
+            banner: `TERMINAL ${spec.short} OVERRIDDEN (${combatState.terminalsDone}/3) · CYBORG SQUAD INBOUND!`
+          });
+          return `${spec.name} overridden (+60 Ammo, +25 HP) — Reinforcements inbound!`;
+        }
+      });
+      return term;
+    });
+
+    const extractPos = new THREE.Vector3(7.85, 0.04, 33.4);
+    const extractGroup = new THREE.Group();
+    extractGroup.position.copy(extractPos);
+    extractGroup.visible = false;
+    const extractRing = new THREE.Mesh(new THREE.RingGeometry(1.4, 2.2, 28), extractRingMat);
+    extractRing.rotation.x = -Math.PI / 2;
+    extractRing.position.y = 0.08;
+    const extractBeam = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 1.8, 18.0, 16, 1, true), extractBeamMat);
+    extractBeam.position.y = 9.0;
+    extractGroup.add(extractRing, extractBeam);
+    missionGroup.add(extractGroup);
 
     // Tactical Ammo & Medkit Resupply Crates (visible & active only in Battle Mode)
     const resupplyGroup = new THREE.Group();
@@ -1269,14 +1979,89 @@
     let droneYaw = -1.10;
     let dronePitch = -0.15;
 
-    // Combat Wave & Feedback State
+    // 3D Tactical Ram-Air Parachute Canopy & Suspension Rig (Gazebo -> Opposite Lawn Insertion)
+    const parachuteRig = new THREE.Group();
+    parachuteRig.name = 'factory-parachute-rig';
+    parachuteRig.visible = false;
+    G.scene.add(parachuteRig);
+
+    {
+      const canopyMainMat = new THREE.MeshStandardMaterial({ color: 0x26342c, roughness: 0.78, metalness: 0.05, side: THREE.DoubleSide });
+      const canopyStripeMat = new THREE.MeshStandardMaterial({ color: 0xd98a2b, roughness: 0.72, metalness: 0.05, side: THREE.DoubleSide });
+      const cordMat = new THREE.MeshBasicMaterial({ color: 0xd6cfc2 });
+      const strapMat = new THREE.MeshStandardMaterial({ color: 0x1b1f24, roughness: 0.85 });
+
+      const canopyGrp = new THREE.Group();
+      canopyGrp.position.set(0, 4.4, -0.35);
+      const cells = 7;
+      for (let c = 0; c < cells; c++) {
+        const u = (c - (cells - 1) / 2) / ((cells - 1) / 2); // -1..1
+        const cellX = u * 3.1;
+        const cellY = -u * u * 0.72;
+        const roll = -u * 0.42;
+        const isStripe = c === 1 || c === cells - 2;
+        const cell = new THREE.Mesh(
+          new THREE.BoxGeometry(0.96, 0.28, 2.15),
+          isStripe ? canopyStripeMat : canopyMainMat
+        );
+        cell.position.set(cellX, cellY, 0);
+        cell.rotation.z = roll;
+        canopyGrp.add(cell);
+
+        // Suspension lines down to left/right shoulder risers
+        const riserX = u < 0 ? -0.38 : 0.38;
+        const topPt = new THREE.Vector3(cellX, cellY - 0.12, 0.75);
+        const botPt = new THREE.Vector3(riserX, -3.55, 0.15);
+        const len = topPt.distanceTo(botPt);
+        const lineGeo = new THREE.CylinderGeometry(0.008, 0.008, len, 4);
+        const line = new THREE.Mesh(lineGeo, cordMat);
+        line.position.copy(topPt).lerp(botPt, 0.5);
+        line.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), botPt.clone().sub(topPt).normalize());
+        canopyGrp.add(line);
+
+        const topBack = new THREE.Vector3(cellX, cellY - 0.12, -0.75);
+        const lenB = topBack.distanceTo(botPt);
+        const lineGeoB = new THREE.CylinderGeometry(0.008, 0.008, lenB, 4);
+        const lineB = new THREE.Mesh(lineGeoB, cordMat);
+        lineB.position.copy(topBack).lerp(botPt, 0.5);
+        lineB.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), botPt.clone().sub(topBack).normalize());
+        canopyGrp.add(lineB);
+      }
+      // Twin shoulder risers visible at top edges of player view
+      for (const rx of [-0.38, 0.38]) {
+        const riser = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.95, 0.025), strapMat);
+        riser.position.set(rx, 0.55, -0.2);
+        parachuteRig.add(riser);
+      }
+      parachuteRig.add(canopyGrp);
+      parachuteRig.userData.canopy = canopyGrp;
+    }
+
+    const parachuteDrop = {
+      active: false,
+      drifting: false,
+      driftT: 0,
+      t: 0,
+      duration: 5.8,
+      startPos: new THREE.Vector3(-25.4, 34.0, 21.8), // High above Gazebo (Çardak)
+      endPos: new THREE.Vector3(24.5, 0.12, 43.5),    // Opposite South-East Lawn (Yeşillik)
+      steerX: 0,
+      steerZ: 0,
+      yaw: -1.16,
+      pitch: -0.34
+    };
+
+    // Combat Wave, Mission & Feedback State
     const combatState = {
       wave: 0,
       time: 0,
       queue: [],
       nextWaveTimer: 0,
+      terminalsDone: 0,
+      extractReady: false,
+      victory: false,
       dead: false,
-      maxAlive: 9,
+      maxAlive: 16,
       hitTimer: null,
       dmgTimer: null,
       bannerTimer: null
@@ -1320,40 +2105,60 @@
       let bestScore = -1e9;
       for (const sp of candidates) {
         const d = Math.hypot(sp.pos.x - G.player.pos.x, sp.pos.z - G.player.pos.z);
-        const score = (d >= 18 ? 4 : -(18 - d)) + Math.random() * 3.5;
+        const score = (d >= 16 ? 4 : -(16 - d)) + Math.random() * 4.5;
         if (score > bestScore) {
           bestScore = score;
           best = sp;
         }
       }
       const p = best.pos.clone();
-      p.x += (Math.random() - 0.5) * 2.0;
-      p.z += (Math.random() - 0.5) * 2.0;
+      p.x += (Math.random() - 0.5) * 2.4;
+      p.z += (Math.random() - 0.5) * 2.4;
       return p;
     }
 
-    function queueWave(waveNum) {
+    function queueSquad(waveNum, { cyborg = 4, hound = 3, gull = 3, banner = '' } = {}) {
       combatState.wave = waveNum;
-      combatState.queue.length = 0;
-      const gulls = Math.min(7, 1 + waveNum);
-      const hounds = Math.min(7, 1 + Math.ceil(waveNum * 0.9));
       const order = [];
-      for (let i = 0; i < gulls; i++) order.push('gull');
-      for (let i = 0; i < hounds; i++) order.splice(Math.min(order.length, 1 + i * 2), 0, 'hound');
+      for (let i = 0; i < cyborg; i++) order.push('cyborg');
+      for (let i = 0; i < hound; i++) order.splice(Math.min(order.length, 1 + i * 2), 0, 'hound');
+      for (let i = 0; i < gull; i++) order.splice(Math.min(order.length, 2 + i * 2), 0, 'gull');
       order.forEach((type, idx) => {
         combatState.queue.push({
           type,
-          at: combatState.time + 1.0 + idx * 0.85
+          at: combatState.time + 0.5 + idx * 0.55
         });
       });
-      showWaveBanner(`WAVE ${waveNum} · ${gulls} GULLS · ${hounds} HOUNDS`, 3400);
-      G.audio && G.audio.setIntensity && G.audio.setIntensity(Math.min(1, 0.55 + waveNum * 0.12));
+      showWaveBanner(banner || `WAVE ${waveNum} · ${cyborg} CYBORGS · ${hound} HOUNDS · ${gull} GULLS`, 3800);
+      G.audio && G.audio.setIntensity && G.audio.setIntensity(Math.min(1, 0.65 + waveNum * 0.1));
     }
 
     function aliveEnemyCount() {
       if (!G.enemies) return 0;
       if (typeof G.enemies.aliveCount === 'function') return G.enemies.aliveCount();
       return (G.enemies.list || []).filter((en) => en && en.alive).length;
+    }
+
+    function showDebrief(isVictory) {
+      G.player.enabled = false;
+      G.input.setGameplay && G.input.setGameplay(false);
+      if (document.pointerLockElement) document.exitPointerLock();
+      const stats = (G.combat && G.combat.stats) || { shots: 0, hits: 0, kills: 0 };
+      const acc = stats.shots > 0 ? Math.round((stats.hits / stats.shots) * 100) + '%' : '—';
+      if (combatOverCard) combatOverCard.classList.toggle('victory', !!isVictory);
+      if (overKickerEl) overKickerEl.textContent = isVictory ? 'FACTORY COMBAT · MISSION COMPLETE' : 'FACTORY COMBAT · BREACHER DOWN';
+      if (overTitleEl) overTitleEl.textContent = isVictory ? 'Extracted Safely' : 'Unit Offline';
+      if (overSubEl) {
+        overSubEl.textContent = isVictory
+          ? 'All 3 security terminals overridden and Porsche 928S extraction reached. Outstanding breach!'
+          : 'The cyborgs and machines overran the factory floor. Review your run and redeploy.';
+      }
+      if (overWaveEl) overWaveEl.textContent = `${combatState.terminalsDone} / ${missionTerminals.length}`;
+      if (overKillsEl) overKillsEl.textContent = String(stats.kills || 0);
+      if (overAccEl) overAccEl.textContent = acc;
+      if (overTimeEl) overTimeEl.textContent = fmtTime(combatState.time);
+      if (combatOverModal) combatOverModal.hidden = false;
+      G.audio && G.audio.setIntensity && G.audio.setIntensity(0.15);
     }
 
     G.events.on('player:hitEnemy', ({ killed, weak }) => {
@@ -1367,19 +2172,9 @@
     });
 
     G.events.on('player:dead', () => {
-      if (gameMode !== 'combat' || combatState.dead) return;
+      if (gameMode !== 'combat' || combatState.dead || combatState.victory) return;
       combatState.dead = true;
-      G.player.enabled = false;
-      G.input.setGameplay && G.input.setGameplay(false);
-      if (document.pointerLockElement) document.exitPointerLock();
-      const stats = (G.combat && G.combat.stats) || { shots: 0, hits: 0, kills: 0 };
-      const acc = stats.shots > 0 ? Math.round((stats.hits / stats.shots) * 100) + '%' : '—';
-      if (overWaveEl) overWaveEl.textContent = String(combatState.wave || 1);
-      if (overKillsEl) overKillsEl.textContent = String(stats.kills || 0);
-      if (overAccEl) overAccEl.textContent = acc;
-      if (overTimeEl) overTimeEl.textContent = fmtTime(combatState.time);
-      if (combatOverModal) combatOverModal.hidden = false;
-      G.audio && G.audio.setIntensity && G.audio.setIntensity(0.15);
+      showDebrief(false);
     });
 
     function openModeModal() {
@@ -1393,6 +2188,7 @@
     function enterTourMode() {
       gameMode = 'tour';
       combatState.dead = false;
+      combatState.victory = false;
       combatState.queue.length = 0;
       combatState.nextWaveTimer = 0;
       document.body.classList.remove('mode-combat', 'is-ads');
@@ -1404,6 +2200,11 @@
       if (G.enemies && G.enemies.clear) G.enemies.clear();
       if (G.weapon && G.weapon.setVisible) G.weapon.setVisible(false);
       resupplyGroup.visible = false;
+      missionGroup.visible = false;
+      extractGroup.visible = false;
+      parachuteDrop.active = false;
+      parachuteDrop.drifting = false;
+      parachuteRig.visible = false;
       G.player.invulnerable = true;
       G.player.alive = true;
       G.player.health = G.player.maxHealth || 100;
@@ -1417,8 +2218,11 @@
       gameMode = 'combat';
       droneMode = false;
       combatState.dead = false;
+      combatState.victory = false;
       combatState.time = 0;
       combatState.nextWaveTimer = 0;
+      combatState.terminalsDone = 0;
+      combatState.extractReady = false;
       combatState.queue.length = 0;
       if (modeLabelEl) modeLabelEl.textContent = 'Walk Mode';
       btnMode && btnMode.classList.remove('active');
@@ -1428,29 +2232,49 @@
       if (combatOverModal) combatOverModal.hidden = true;
       if (helpModal) helpModal.hidden = true;
       if (combatHudEl) combatHudEl.hidden = false;
-      if (brandKickerEl) brandKickerEl.textContent = 'AIZANOI WARS COMBAT · FACTORY ARENA';
+      if (brandKickerEl) brandKickerEl.textContent = 'AIZANOI WARS COMBAT · FACTORY BREACH';
       if (gameModeLabelEl) gameModeLabelEl.textContent = 'Battle Mode';
 
       if (G.enemies && G.enemies.clear) G.enemies.clear();
       if (G.combat && G.combat.reset) G.combat.reset();
       if (G.weapon) {
         G.weapon.reset && G.weapon.reset();
-        G.weapon.setVisible && G.weapon.setVisible(true);
+        G.weapon.setVisible && G.weapon.setVisible(false);
         if (combatWeaponEl && G.weapon.name) combatWeaponEl.textContent = G.weapon.name.toUpperCase();
       }
       for (const crate of resupplyCrates) {
         crate.cooldown = 0;
         crate.strip.material = crateTrimReady;
       }
+      for (const term of missionTerminals) {
+        term.done = false;
+        term.screen.material = termLiveMat;
+        term.beam.visible = true;
+      }
       resupplyGroup.visible = true;
+      missionGroup.visible = true;
+      extractGroup.visible = false;
 
-      G.player.reset(G.level.playerStart);
-      G.player.invulnerable = false;
-      G.player.enabled = true;
+      // Start Parachute Drop from high above Gazebo -> Opposite South-East Lawn
+      parachuteDrop.active = true;
+      parachuteDrop.drifting = false;
+      parachuteDrop.driftT = 0;
+      parachuteDrop.t = 0;
+      parachuteDrop.steerX = 0;
+      parachuteDrop.steerZ = 0;
+      parachuteDrop.yaw = -1.16;
+      parachuteDrop.pitch = -0.34;
+      parachuteRig.visible = true;
+      parachuteRig.position.copy(parachuteDrop.startPos);
+      parachuteRig.rotation.set(0, parachuteDrop.yaw, 0);
+
+      G.player.reset({ pos: parachuteDrop.endPos.clone(), yaw: 0.38 });
+      G.player.invulnerable = true;
+      G.player.enabled = false;
       G.input.setGameplay && G.input.setGameplay(true);
       if (requestLock && G.input.requestLock) G.input.requestLock();
       try { G.audio && G.audio.resume && G.audio.resume(); } catch {}
-      queueWave(1);
+      showWaveBanner('PARACHUTE INSERTION · GAZEBO → SOUTH-EAST LAWN', 4200);
     }
 
     window.__factory = {
@@ -1659,7 +2483,84 @@
       }
 
       if (gameMode === 'combat') {
-        if (!combatState.dead && G.player.alive) {
+        if (parachuteDrop.drifting) {
+          parachuteDrop.driftT += dt;
+          parachuteRig.position.x += dt * 2.4;
+          parachuteRig.position.y += dt * 1.1;
+          parachuteRig.position.z += dt * 1.6;
+          parachuteRig.rotation.z += dt * 0.25;
+          if (parachuteDrop.driftT >= 3.2) {
+            parachuteDrop.drifting = false;
+            parachuteRig.visible = false;
+          }
+        }
+
+        if (parachuteDrop.active) {
+          parachuteDrop.t += dt;
+          const u = Math.min(1, parachuteDrop.t / parachuteDrop.duration);
+          // Smooth horizontal glide + flare-out descent curve
+          const hEase = u * u * (3 - 2 * u);
+          const vEase = 1 - Math.pow(1 - u, 1.45);
+
+          parachuteDrop.yaw -= G.input.look.dx;
+          parachuteDrop.pitch = Math.max(-1.45, Math.min(1.45, parachuteDrop.pitch - G.input.look.dy));
+
+          // Subtle WASD air-steering within safe lawn landing bounds
+          const steerSpeed = 4.2 * (1 - u * 0.65);
+          parachuteDrop.steerX = Math.max(-6.5, Math.min(6.5, parachuteDrop.steerX + G.input.move.x * steerSpeed * dt));
+          parachuteDrop.steerZ = Math.max(-5.5, Math.min(5.5, parachuteDrop.steerZ - G.input.move.y * steerSpeed * dt));
+
+          const swayX = Math.sin(parachuteDrop.t * 2.1) * 0.55 * (1 - u);
+          const swayRoll = Math.sin(parachuteDrop.t * 2.1) * 0.045 * (1 - u);
+
+          const px = parachuteDrop.startPos.x + (parachuteDrop.endPos.x - parachuteDrop.startPos.x) * hEase + parachuteDrop.steerX * hEase + swayX;
+          const pz = parachuteDrop.startPos.z + (parachuteDrop.endPos.z - parachuteDrop.startPos.z) * hEase + parachuteDrop.steerZ * hEase;
+          const py = parachuteDrop.startPos.y + (parachuteDrop.endPos.y + 1.72 - parachuteDrop.startPos.y) * vEase;
+
+          G.camera.position.set(px, py, pz);
+          G.camera.rotation.set(parachuteDrop.pitch, parachuteDrop.yaw, swayRoll, 'YXZ');
+
+          parachuteRig.position.set(px, py, pz);
+          parachuteRig.rotation.set(0.08 * (1 - u), parachuteDrop.yaw, swayRoll * 1.4);
+
+          if (combatObjectiveBarEl) {
+            combatObjectiveBarEl.classList.remove('extract');
+            if (combatObjTagEl) combatObjTagEl.textContent = 'AIRDROP';
+            if (combatObjTextEl) combatObjTextEl.textContent = 'Parachute Insertion · Gazebo → South-East Lawn';
+            if (combatObjDistEl) combatObjDistEl.textContent = `ALT ${Math.max(0, Math.round(py - 1.7))} m`;
+          }
+          if (combatHpEl) combatHpEl.textContent = '100';
+          if (combatHpFillEl) combatHpFillEl.style.width = '100%';
+          if (G.weapon) {
+            if (combatAmmoEl) combatAmmoEl.textContent = String(G.weapon.ammo ?? 30);
+            if (combatReserveEl) combatReserveEl.textContent = String(G.weapon.reserve ?? 120);
+            if (combatWeaponStateEl) combatWeaponStateEl.textContent = 'INBOUND · STEER [WASD] · LOOK AROUND';
+          }
+
+          if (u >= 1) {
+            parachuteDrop.active = false;
+            parachuteDrop.drifting = true;
+            parachuteDrop.driftT = 0;
+            const lx = Math.max(12.0, Math.min(44.0, px));
+            const lz = Math.max(38.5, Math.min(52.0, pz));
+            const ly = G.physics && G.physics.groundHeight ? G.physics.groundHeight(lx, lz, 3.0) : 0.12;
+            G.player.pos.set(lx, Math.max(0.05, ly), lz);
+            G.player.vel.set(0, 0, 0);
+            G.player.yaw = parachuteDrop.yaw;
+            G.player.pitch = Math.max(-0.5, Math.min(0.5, parachuteDrop.pitch));
+            G.player.invulnerable = false;
+            G.player.enabled = true;
+            G.player.addShake && G.player.addShake(0.24);
+            G.weapon && G.weapon.setVisible && G.weapon.setVisible(true);
+            G.audio && G.audio.play && G.audio.play('impact_concrete', { pos: [lx, ly, lz], gain: 0.55 });
+            queueSquad(1, {
+              cyborg: 5,
+              hound: 3,
+              gull: 3,
+              banner: 'BOOTS ON GROUND · OVERRIDE 3 TERMINALS (A · B · C) · 11 HOSTILES DETECTED'
+            });
+          }
+        } else if (!combatState.dead && !combatState.victory && G.player.alive) {
           combatState.time += dt;
           G.player.update(dt);
           G.weapon && G.weapon.update && G.weapon.update(dt);
@@ -1674,7 +2575,19 @@
             }
           }
 
-          // Staggered wave enemy spawner
+          // Animate extraction beacon & check mission extraction completion
+          if (combatState.extractReady) {
+            extractRing.rotation.z += dt * 1.4;
+            const pulse = 0.85 + Math.sin(combatState.time * 4.5) * 0.15;
+            extractRing.scale.set(pulse, pulse, 1);
+            const exDist = Math.hypot(G.player.pos.x - extractPos.x, G.player.pos.z - extractPos.z);
+            if (exDist <= 3.6 && Math.abs(G.player.pos.y - extractPos.y) < 3.0) {
+              combatState.victory = true;
+              showDebrief(true);
+            }
+          }
+
+          // Staggered wave enemy spawner (Cyborgs, Hounds, Gulls)
           const alive = aliveEnemyCount();
           if (combatState.queue.length > 0 && alive < combatState.maxAlive) {
             const next = combatState.queue[0];
@@ -1683,35 +2596,69 @@
               const pos = pickEnemySpawn(next.type);
               try {
                 G.enemies.spawn(next.type, pos, { state: 'alert', target: G.player.pos });
-                G.enemies.alert && G.enemies.alert(G.player.pos, 90);
+                G.enemies.alert && G.enemies.alert(G.player.pos, 95);
               } catch (e) {
                 console.warn('[factory] enemy spawn failed:', e);
               }
             }
-          } else if (combatState.queue.length === 0 && alive === 0) {
+          } else if (combatState.queue.length === 0 && alive <= 2) {
             if (combatState.nextWaveTimer <= 0) {
-              combatState.nextWaveTimer = 4.0;
-              if (G.player.heal) G.player.heal(30);
-              if (G.weapon && G.weapon.addAmmo) G.weapon.addAmmo(60);
-              showWaveBanner(`WAVE ${combatState.wave} CLEARED · +30 HP · +60 AMMO`, 2800);
+              combatState.nextWaveTimer = 5.0;
+              if (alive === 0) {
+                if (G.player.heal) G.player.heal(25);
+                if (G.weapon && G.weapon.addAmmo) G.weapon.addAmmo(60);
+                showWaveBanner(`SECTOR CLEAR · +25 HP · +60 AMMO · PUSH TO OBJECTIVE`, 2600);
+              }
             } else {
               combatState.nextWaveTimer -= dt;
               if (combatState.nextWaveTimer <= 0) {
-                queueWave(combatState.wave + 1);
+                queueSquad(combatState.wave + 1, {
+                  cyborg: 4 + Math.min(3, combatState.terminalsDone),
+                  hound: 3,
+                  gull: 3
+                });
               }
             }
           }
 
-          // Update Combat HUD
+          // Update Combat & Mission Objective HUD
           const remaining = alive + combatState.queue.length;
           const hp = Math.max(0, Math.round(G.player.health || 0));
           const maxHp = G.player.maxHealth || 100;
+          if (combatObjectivesEl) combatObjectivesEl.textContent = `${combatState.terminalsDone} / ${missionTerminals.length}`;
           if (combatWaveEl) combatWaveEl.textContent = String(combatState.wave || 1);
           if (combatHostilesEl) combatHostilesEl.textContent = String(remaining);
           if (combatKillsEl) combatKillsEl.textContent = String((G.combat && G.combat.stats && G.combat.stats.kills) || 0);
           if (combatHpEl) combatHpEl.textContent = String(hp);
           if (combatHpFillEl) combatHpFillEl.style.width = Math.round((hp / maxHp) * 100) + '%';
           if (combatHealthCardEl) combatHealthCardEl.classList.toggle('low', hp <= 30);
+
+          if (combatObjectiveBarEl) {
+            combatObjectiveBarEl.classList.toggle('extract', combatState.extractReady);
+            if (combatState.extractReady) {
+              const exDist = Math.hypot(G.player.pos.x - extractPos.x, G.player.pos.z - extractPos.z);
+              if (combatObjTagEl) combatObjTagEl.textContent = 'EXTRACT';
+              if (combatObjTextEl) combatObjTextEl.textContent = 'Reach 4-Post Garage · Porsche 928S';
+              if (combatObjDistEl) combatObjDistEl.textContent = `${Math.round(exDist)} m`;
+            } else {
+              let nearest = null;
+              let nearD = Infinity;
+              for (const term of missionTerminals) {
+                if (term.done) continue;
+                const d = Math.hypot(G.player.pos.x - term.pos[0], G.player.pos.z - term.pos[2]);
+                if (d < nearD) {
+                  nearD = d;
+                  nearest = term;
+                }
+              }
+              if (combatObjTagEl) combatObjTagEl.textContent = 'MISSION';
+              if (nearest) {
+                if (combatObjTextEl) combatObjTextEl.textContent = `Override ${nearest.name} [E]`;
+                if (combatObjDistEl) combatObjDistEl.textContent = `${Math.round(nearD)} m`;
+              }
+            }
+          }
+
           if (G.weapon) {
             if (combatAmmoEl) combatAmmoEl.textContent = String(G.weapon.ammo ?? 0);
             if (combatReserveEl) combatReserveEl.textContent = String(G.weapon.reserve ?? 0);
@@ -1774,7 +2721,7 @@
         G.input.setPrompt && G.input.setPrompt(false);
       }
 
-      const curYaw = droneMode ? droneYaw : G.player.yaw;
+      const curYaw = parachuteDrop.active ? parachuteDrop.yaw : droneMode ? droneYaw : G.player.yaw;
       if (zoneEl) zoneEl.textContent = getZoneName(camPos.x, camPos.y, camPos.z);
       if (coordsEl) coordsEl.textContent = `X ${camPos.x.toFixed(1)} · Z ${camPos.z.toFixed(1)}`;
       if (compassEl) {
@@ -1784,7 +2731,16 @@
         compassEl.textContent = `${dirs[Math.round(deg / 45) % 8]} ${deg}°`;
       }
       if (!minimapCard.classList.contains('hidden')) {
-        drawMinimap(camPos.x, camPos.z, curYaw, gameMode === 'combat' && G.enemies ? G.enemies.list : null);
+        let missionMarkers = null;
+        if (gameMode === 'combat') {
+          missionMarkers = missionTerminals
+            .filter((t) => !t.done)
+            .map((t) => ({ x: t.pos[0], z: t.pos[2], short: t.short, kind: 'terminal' }));
+          if (combatState.extractReady) {
+            missionMarkers.push({ x: extractPos.x, z: extractPos.z, short: 'EX', kind: 'extract' });
+          }
+        }
+        drawMinimap(camPos.x, camPos.z, curYaw, gameMode === 'combat' && G.enemies ? G.enemies.list : null, missionMarkers);
       }
 
       G.render.frame(dt);
