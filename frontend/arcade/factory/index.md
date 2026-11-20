@@ -2,7 +2,7 @@
 
 Standalone route `/arcade/factory/`. Ultra HD 3D glass-gilding factory (`Aizanoi Glass Gilding Factory`) with two playable modes: **Free Tour** architectural exploration and **Battle Mode** powered by Aizanoi Wars combat dynamics.
 
-- `index.html`: CSP-compatible English UI shell with Mode Selection overlay (`Free Tour` / `Battle Mode`), HUD controls, Combat HUD (objectives `0/3`, live objective distance bar, wave, hostiles, kills, health, PAC-9 ammo/reserve, hitmarker, damage flash, victory/defeat debrief), quality switch, touch dock, live 2D architectural/tactical minimap canvas, `[1]`–`[9]` quick-jump bookmarks, and `[H]` help modal.
+- `index.html`: CSP-compatible English UI shell with Mode Selection overlay (`Free Tour` / `Battle Mode`), HUD controls, Combat HUD (objectives counter at 0 of 3, live objective distance bar, wave, hostiles, kills, health, PAC-9 ammo/reserve, hitmarker, damage flash, victory/defeat debrief), quality switch, touch dock, live 2D architectural/tactical minimap canvas, `[1]`–`[9]` quick-jump bookmarks, and `[H]` help modal.
 - `factory.css`: Externalized HUD, mode selection modal, combat HUD, objective bar, crosshair, hitmarker, prompt pill, toast, minimap, bookmark bar, touch dock, and boot overlay styles (no inline style attributes).
 - `engine.js`: Vendored Three.js r180 and procedural PBR/post-processing + combat runtime adapted from Aizanoi Wars (`window.AZ_ENGINE`, including `createCombat`, `createWeapon`, and `createEnemies`), bundled without source maps; do not edit minified vendor symbols without a full rebuild.
 - `vehicles.js`: Courtyard 3D vehicles — black 2005 Honda CR-V, black Porsche 928S, and red Dodge truck with smooth steel cargo bed and ball-tipped front bumper guide poles.
