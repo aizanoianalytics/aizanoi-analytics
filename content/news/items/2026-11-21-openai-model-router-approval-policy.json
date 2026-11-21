@@ -1,0 +1,31 @@
+{
+  "id": "2026-11-21-openai-model-router-approval-policy",
+  "title": "Model routers and AI gateways now need OpenAI's approval",
+  "summary": "OpenAI's revised usage policies took effect on 20 November. They require any service that lets third parties reach OpenAI models directly, including model routers and AI gateways, to obtain prior review and approval, a requirement OpenAI says does not apply merely because an application integrates its models. The policy also bars using OpenAI models or outputs to build training material for competing models and adds national security and law-enforcement uses to those needing approval. OpenAI's changelog dates the update to 21 October; the policy does not say how approval is granted.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 64,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "policy",
+    "platforms"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/policies/usage-policies/",
+      "publishedAt": "2026-10-21T00:00:00Z"
+    }
+  ]
+}

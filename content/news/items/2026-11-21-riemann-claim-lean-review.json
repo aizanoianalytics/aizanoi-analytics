@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-21-riemann-claim-lean-review",
+  "title": "Anthropic mathematician posts a Lean proof claim for the Riemann hypothesis",
+  "summary": "Levent Alpöge, an Anthropic mathematician, said on 20 November that he and Claude had found a proof of the Riemann hypothesis and, in the same development, the generalized version covering Dirichlet L-functions. He released a four-page note and a Lean formalisation rather than a paper, leaving reviewers to confirm that the theorem statements and definitions match the standard ones. MIT's Andrew Sutherland, who compiled it himself, called it an historic moment; Scientific American reported that independent mathematicians consider the proof almost certainly correct while checks continued.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 86,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "mathematics",
+    "lean",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "Scientific American",
+      "url": "https://www.scientificamerican.com/article/anthropic-mathematician-claims-to-prove-riemann-hypothesis-most-famous-problem-in-all-of-math/",
+      "publishedAt": "2026-11-20T18:00:00Z"
+    },
+    {
+      "publisher": "Scientific American",
+      "url": "https://www.scientificamerican.com/article/the-ai-riemann-hypothesis-proof-is-almost-certainly-true-independent-mathematicians-attest/",
+      "publishedAt": "2026-11-20T21:00:00Z"
+    },
+    {
+      "publisher": "Levent Alpöge",
+      "url": "https://alpo.ge/remark.pdf",
+      "publishedAt": "2026-11-20T12:00:00Z"
+    }
+  ]
+}

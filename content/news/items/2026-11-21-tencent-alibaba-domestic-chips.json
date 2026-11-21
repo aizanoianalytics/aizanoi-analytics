@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-21-tencent-alibaba-domestic-chips",
+  "title": "Tencent and Alibaba lean on domestic chips as US curbs bite",
+  "summary": "Tencent and Alibaba told analysts this week that domestic chips can carry their inference workloads, while conceding that new US export controls will slow model development. Tencent's capital spending rose 527% to 81.4 billion yuan, and president Martin Lau said training the next Hunyuan model would take longer. Alibaba lifted AI and cloud revenue 53% to 61.0 billion yuan, but chief executive Eddie Wu said the rules will affect next year's products and cloud growth could slow to between 30% and 45%.",
+  "category": "economy-markets",
+  "kind": "daily",
+  "priority": 70,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "alibaba",
+    "tencent",
+    "export-controls",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/11/20/tencent-alibaba-us-chip-curbs-cloud-ai",
+      "publishedAt": "2026-11-20T12:44:00Z"
+    }
+  ]
+}

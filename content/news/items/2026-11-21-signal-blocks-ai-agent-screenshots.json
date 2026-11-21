@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-21-signal-blocks-ai-agent-screenshots",
+  "title": "Signal blocks screenshots to keep OS-level AI agents out of chats",
+  "summary": "Signal said on 20 November that it now prevents screenshots inside its iPhone app on iOS 27 and switches on screen security on Android when it detects an AI assistant reading the screen, extending the approach it took against Microsoft Recall on Windows. Users can turn the protection off, which Signal warns exposes conversations to on-screen agents and voids its privacy guarantee. The app cannot block capture on macOS. Signal called on Apple, Google and Microsoft to document how agents reach app data and to give developers a clear opt-out.",
+  "category": "technology",
+  "kind": "daily",
+  "priority": 66,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "signal",
+    "privacy",
+    "ai-agents",
+    "platforms"
+  ],
+  "sources": [
+    {
+      "publisher": "Signal",
+      "url": "https://signal.org/blog/protecting-your-privacy/",
+      "publishedAt": "2026-11-20T15:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1038390/signal-blocking-ai-agent-screenshots-mobile-app",
+      "publishedAt": "2026-11-20T12:30:00Z"
+    }
+  ]
+}

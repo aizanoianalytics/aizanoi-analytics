@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-21-openai-reasoning-extraction-defenses",
+  "title": "OpenAI says reasoning-trace theft collapsed on GPT-6.2",
+  "summary": "OpenAI reports that an internal adaptive red-team evaluation recovered protected reasoning from an earlier request 54.0% of the time against GPT-6 Astra, and 0.2% of the time against GPT-6.2 Astra. The company credits adversarial training, input and output classifiers that cover streamed text and tool-call arguments, and API rules that tie a model's reasoning to the conversation that produced it. Weekly enforcement against distillation campaigns has run from thousands to tens of thousands of accounts, with the rate rising sharply this summer, OpenAI said.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 72,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "safety",
+    "distillation",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/combatting-adversarial-distillation/",
+      "publishedAt": "2026-11-20T18:00:00Z"
+    }
+  ]
+}

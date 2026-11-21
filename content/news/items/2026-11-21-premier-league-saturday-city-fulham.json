@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-21-premier-league-saturday-city-fulham",
+  "title": "City open a full Premier League Saturday with little room to slip",
+  "summary": "Manchester City, third on 21 points from ten games, host Fulham in Saturday's early kick-off with Arsenal leading the table on 27 and Brighton on 22. Five 3pm fixtures follow, among them Aston Villa against Sunderland, Chelsea against Leeds and bottom club Crystal Palace at Coventry City, before Newcastle United, 12th, meet Arsenal at St James' Park in the evening. Liverpool, fourth on 18 points, face Manchester United on Sunday.",
+  "category": "football",
+  "kind": "daily",
+  "priority": 60,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-city",
+    "arsenal",
+    "fixtures"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/premier-league/scores-fixtures/2026-11",
+      "publishedAt": "2026-11-20T22:00:00Z"
+    },
+    {
+      "publisher": "Football Web Pages",
+      "url": "https://www.footballwebpages.co.uk/premier-league",
+      "publishedAt": "2026-11-20T22:00:00Z"
+    }
+  ]
+}

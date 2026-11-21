@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-21-nvidia-sec-accounting-probe-subpoena",
+  "title": "Nvidia's accounting draws SEC scrutiny as California subpoenas the chipmaker",
+  "summary": "Two people briefed on the matter told Reuters that SEC enforcement staff are examining potential accounting issues at Nvidia, after the Wall Street Journal reported a probe without identifying its focus. The SEC declined to comment and Nvidia did not immediately respond. The report landed a day after California attorney general Rob Bonta served an investigative subpoena asking whether Nvidia's advanced chips or confidential information reached China, and whether the company misled investors and the public, following reports about former chief executive Jensen Huang.",
+  "category": "economy-markets",
+  "kind": "daily",
+  "priority": 80,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "regulation",
+    "sec",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/5f374b32b07b/world/us-secs-nvidia-probe-is-examining-potential-accounting-issues-sources-say-2026-11-20/",
+      "publishedAt": "2026-11-20T19:13:00Z"
+    },
+    {
+      "publisher": "California Department of Justice",
+      "url": "https://oag.ca.gov/news/press-releases/attorney-general-bonta-serves-investigative-subpoena-nvidia",
+      "publishedAt": "2026-11-19T18:00:00Z"
+    }
+  ]
+}

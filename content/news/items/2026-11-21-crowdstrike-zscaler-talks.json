@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-21-crowdstrike-zscaler-talks",
+  "title": "CrowdStrike in talks to buy Zscaler in a cybersecurity mega-deal",
+  "summary": "CrowdStrike is in talks to acquire Zscaler, according to Bloomberg and Reuters, in a deal that would pair endpoint security with cloud-delivered network security and rank among the largest in the sector. Zscaler, valued at about $32 billion at Friday's close, rose roughly 17% after hours while CrowdStrike fell about 8%. Both reports cite people familiar with the matter and say no agreement is guaranteed; neither company commented. Any transaction would likely need the backing of Zscaler chief executive Jay Chaudhry, its largest shareholder.",
+  "category": "technology",
+  "kind": "daily",
+  "priority": 74,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "crowdstrike",
+    "zscaler",
+    "acquisitions",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.marketscreener.com/news/crowdstrike-in-talks-to-acquire-zscaler-source-says-ce785ed3dc88f323",
+      "publishedAt": "2026-11-20T21:31:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/20/zscaler-crowdstrike-deal.html",
+      "publishedAt": "2026-11-20T21:11:00Z"
+    }
+  ]
+}
