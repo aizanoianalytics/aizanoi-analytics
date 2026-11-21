@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-21-edge-aion-instruct-prompt-api",
+  "title": "Microsoft puts a 2.3B on-device model in Edge and opens the Prompt API",
+  "summary": "Microsoft made Aion Instruct generally available on 19 November as open weights on Hugging Face and as Edge's built-in small language model, replacing Phi-4-mini. At 2.3 billion parameters the company says it is smaller than Phi and available on more devices while matching it on summarization and structured output. An origin trial now lets live websites call the Prompt API, and a developer preview adds a Decisions API that returns labels, probabilities and confidence without generating text. Edge downloads the model only when a site needs it, and users can disable on-device AI.",
+  "category": "technology",
+  "kind": "daily",
+  "priority": 56,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "edge",
+    "on-device-ai",
+    "browsers"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft Edge Blog",
+      "url": "https://blogs.windows.com/msedgedev/2026/11/19/hybrid-intelligence-on-the-web-introducing-aion-instruct-and-prompt-api-in-microsoft-edge/",
+      "publishedAt": "2026-11-19T17:00:00Z"
+    }
+  ]
+}

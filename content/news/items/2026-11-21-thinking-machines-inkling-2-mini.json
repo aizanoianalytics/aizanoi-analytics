@@ -1,0 +1,36 @@
+{
+  "id": "2026-11-21-thinking-machines-inkling-2-mini",
+  "title": "Thinking Machines puts a looped 26B model on a laptop",
+  "summary": "Thinking Machines released Inkling 2 Mini on 20 November under Apache 2.0: a mixture-of-experts model with 26.4 billion total parameters, 3.4 billion active and 5.4 billion weight activations per token, because its middle layers run three times for every token. The company puts the memory footprint near 20GB, says it leads open models under 100 billion parameters on DeepSWE v1.1 at 48.2% and the Vals Index at 46.5%, and reports that looping shortens the model's written reasoning without making it illegible. Weights are on Hugging Face; hosted inference runs through Tinker.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 62,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "thinking-machines",
+    "open-weights",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "Thinking Machines Lab",
+      "url": "https://thinkingmachines.ai/news/inkling-2-mini/",
+      "publishedAt": "2026-11-20T16:00:00Z"
+    },
+    {
+      "publisher": "Hugging Face",
+      "url": "https://huggingface.co/thinkingmachines/Inkling-2-Mini",
+      "publishedAt": "2026-11-20T16:00:00Z"
+    }
+  ]
+}

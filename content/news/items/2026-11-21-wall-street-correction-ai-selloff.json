@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-21-wall-street-correction-ai-selloff",
+  "title": "Wall Street closes in correction as the AI trade cracks",
+  "summary": "The S&P 500 fell 3.70% to 6,910.39 and the Dow lost 1.93% to 48,147.33 on Friday, putting both in correction territory, while the Nasdaq dropped 5.28% to 22,617.73 and erased its gains for the year. Nvidia fell 14.01% and AMD, Broadcom and Micron all fell by double digits; all 20 chip stocks in the Nasdaq-100 were in a bear market. The VIX closed at 35.89, up 26.2%. For the week the S&P 500 lost 8.6%, its worst since April 2025, and the Nasdaq 10%.",
+  "category": "economy-markets",
+  "kind": "daily",
+  "priority": 88,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "nasdaq",
+    "nvidia",
+    "volatility"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-friday-november-19-dow-sp-500-nasdaq-anthropic-nvidia-141644188.html",
+      "publishedAt": "2026-11-20T21:00:00Z"
+    }
+  ]
+}

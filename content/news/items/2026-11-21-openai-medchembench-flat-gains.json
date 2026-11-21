@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-21-openai-medchembench-flat-gains",
+  "title": "OpenAI chemistry benchmark finds gains flattening between model generations",
+  "summary": "MedChemBench, published by OpenAI on 20 November, scores 99 medicinal-chemistry problems drawn from 117 papers and patents and 761 molecular structures. At the shared xhigh reasoning setting GPT-6.2 Astra earned 84.5% of available credit, against 83.3% for GPT-6 Astra, 82.0% for GPT-6.1 Sol and 58.2% for GPT-5.6 Sol. Astra reconstructed molecular structures well, taking 95.4% of structure credit, but only about half the credit for ranking compounds and predicting numerical properties. The jump from the 5.6 generation dwarfs the step to 6.2.",
+  "category": "ai",
+  "kind": "daily",
+  "priority": 58,
+  "publishedAt": "2026-11-21T05:00:00Z",
+  "updatedAt": "2026-11-21T05:00:00Z",
+  "retrievedAt": "2026-11-21T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "benchmarks",
+    "science",
+    "drug-discovery"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/introducing-medchembench/",
+      "publishedAt": "2026-11-20T16:00:00Z"
+    }
+  ]
+}
