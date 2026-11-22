@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-intel-first-18a-customer",
+  "title": "Intel signs its first outside customer for 18A chips",
+  "category": "technology",
+  "priority": 60,
+  "summary": "Intel has signed its first outside customer for its most advanced manufacturing process, chief executive Lip-Bu Tan said at the TomorrowX Summit in Austin on 18 November. Technology chief Pushkar Ranade later said the order covers 18A-P, which entered risk production in June. Intel did not name the customer, disclose volumes or give a production date. It also named Microsoft as the first public customer for its EMIB advanced packaging.",
+  "tags": [
+    "intel",
+    "semiconductors",
+    "foundry",
+    "18a"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/18/intel-first-18a-foundry-customer.html",
+      "publishedAt": "2026-11-19T01:05:00Z"
+    },
+    {
+      "publisher": "The Oregonian",
+      "url": "https://www.oregonlive.com/silicon-forest/2026/11/intel-has-its-first-customer-for-its-most-advanced-manufacturing-process.html",
+      "publishedAt": "2026-11-18T22:46:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

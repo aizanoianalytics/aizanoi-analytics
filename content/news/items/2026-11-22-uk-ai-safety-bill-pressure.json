@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-uk-ai-safety-bill-pressure",
+  "title": "UK committees say ministers are moving too slowly on AI rules",
+  "category": "ai",
+  "priority": 58,
+  "summary": "Britain’s Joint Committee on Human Rights published the government’s response to its AI report on 20 November, and its chair, Alex Sobel, said ministers showed no sense of urgency about the risks. The committee wants a risk-based AI bill and a single independent regulator. Two days earlier the Business, Innovation and Science Committee reported ten gaps in UK safeguards and called for an AI Safety and Security Bill in the next session.",
+  "tags": [
+    "regulation",
+    "united-kingdom",
+    "ai-safety",
+    "parliament"
+  ],
+  "sources": [
+    {
+      "publisher": "UK Parliament Joint Committee on Human Rights",
+      "url": "https://committees.parliament.uk/committee/93/human-rights-joint-committee/news/219105/government-response-to-human-rights-and-the-regulation-of-ai/",
+      "publishedAt": "2026-11-20T00:00:00Z"
+    },
+    {
+      "publisher": "UK Parliament Business, Innovation and Science Committee",
+      "url": "https://committees.parliament.uk/committee/365/business-innovation-science-and-trade-committee/news/219006/close-ai-safety-gaps-to-secure-britains-400-billion-ai-growth-opportunity-mps-urge/",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

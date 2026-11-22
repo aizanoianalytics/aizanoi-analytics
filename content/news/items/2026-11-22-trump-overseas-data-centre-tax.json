@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-trump-overseas-data-centre-tax",
+  "title": "Trump threatens a tax on US data centres built abroad",
+  "category": "ai",
+  "priority": 85,
+  "summary": "President Donald Trump said on Friday that US companies building AI data centres abroad would face a “tremendous tax,” and that his administration would not allow the buildout to move offshore. He offered no legal mechanism and said he had not told his own officials. The threat lands after midterm voters rejected new data centres in their communities, and a day after the Senate passed permitting reform for power and transmission projects.",
+  "tags": [
+    "data-centres",
+    "ai-infrastructure",
+    "trump",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/trump-artificial-intelligence-data-centers-f1ac03b73d13445400eeed8631d9d879",
+      "publishedAt": "2026-11-20T22:28:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/20/trump-data-centers-ai-companies-tax.html",
+      "publishedAt": "2026-11-20T17:30:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

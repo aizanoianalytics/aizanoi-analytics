@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-22-arsenal-newcastle-draw-raya",
+  "title": "Arsenal’s lead grows to six as Raya limps off at Newcastle",
+  "category": "football",
+  "priority": 70,
+  "summary": "Arsenal drew 2-2 at Newcastle United on Saturday, extending their lead at the top to six points but missing the chance to go eight clear. Eberechi Eze scored in the first half, Harvey Barnes and Malick Thiaw turned the match around after the break, and Noni Madueke equalised in the 78th minute. Goalkeeper David Raya went off injured, with Kepa Arrizabalaga replacing him.",
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "newcastle-united",
+    "title-race"
+  ],
+  "sources": [
+    {
+      "publisher": "Arsenal FC",
+      "url": "https://www.arsenal.com/news/report-newcastle-united-2-2-arsenal-aYrA33Z7yfW4",
+      "publishedAt": "2026-11-21T20:00:00Z"
+    },
+    {
+      "publisher": "Newcastle United",
+      "url": "https://www.newcastleunited.com/en/news/arsenal-h-report-26-27",
+      "publishedAt": "2026-11-21T19:45:00Z"
+    },
+    {
+      "publisher": "theScore / AFP",
+      "url": "https://www.thescore.com/epl/news/3662001/raya-injury-overshadows-arsenals-draw-at-newcastle",
+      "publishedAt": "2026-11-21T20:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
