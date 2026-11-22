@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-china-cryo-electron-microscope",
+  "title": "China builds a cryo-electron microscope without imported core parts",
+  "category": "technology",
+  "priority": 54,
+  "summary": "China unveiled the TH-F120C, its first domestically produced 120kV cryo-transmission electron microscope, in Guangzhou on 21 November. The instrument has an information resolution of 0.23 nanometres, runs control software on Huawei’s HarmonyOS and uses in-house field-emission, high-voltage, lens, camera and sample-handling components. Bioland Laboratory led the five-year project with Guangzhou Laboratory and the Guangzhou Institutes of Biomedicine and Health.",
+  "tags": [
+    "china",
+    "scientific-instruments",
+    "harmonyos",
+    "microscopy"
+  ],
+  "sources": [
+    {
+      "publisher": "Xinhua",
+      "url": "https://www.xinhuanet.com/tech/20261121/6ca9218a53be47df94fdfa36356cd93c/c.html",
+      "publishedAt": "2026-11-21T07:49:00Z"
+    },
+    {
+      "publisher": "Global Times",
+      "url": "https://www.globaltimes.cn/page/202611/1374781.shtml",
+      "publishedAt": "2026-11-22T03:21:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

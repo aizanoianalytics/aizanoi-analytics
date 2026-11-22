@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-palo-alto-applied-compute-deal",
+  "title": "Palo Alto Networks buys Applied Compute for $4.5bn",
+  "category": "technology",
+  "priority": 62,
+  "summary": "Palo Alto Networks agreed on 18 November to buy Applied Compute, a startup that helps companies post-train and run open-weight models, in an all-stock deal valued at $4.5 billion. The acquisition landed alongside fiscal first-quarter revenue of $3.44 billion, up 39%, and a raised full-year revenue forecast of $14.52–14.57 billion. Applied Compute chief executive Yash Patil will become co-chief AI officer; the deal is expected to close in fiscal 2027.",
+  "tags": [
+    "palo-alto-networks",
+    "acquisition",
+    "enterprise-ai",
+    "open-weight"
+  ],
+  "sources": [
+    {
+      "publisher": "Palo Alto Networks",
+      "url": "https://paloaltonetworks.com/company/press/2026/palo-alto-networks-to-acquire-applied-compute--bringing-secure-open-weight-ai-to-the-enterprise",
+      "publishedAt": "2026-11-18T13:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://investing.com/news/stock-market-news/palo-alto-raises-annual-forecast-signs-45-billion-deal-for-applied-compute-5037460",
+      "publishedAt": "2026-11-18T21:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

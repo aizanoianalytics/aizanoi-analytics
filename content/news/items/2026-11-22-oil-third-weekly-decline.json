@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-oil-third-weekly-decline",
+  "title": "Oil falls for a third week despite attacks on Riyadh and Hormuz",
+  "category": "economy-markets",
+  "priority": 50,
+  "summary": "Oil posted a third straight weekly decline despite Houthi attacks on Riyadh and reports of tanker disruption in the Strait of Hormuz. WTI settled at $83.98 a barrel, up 0.93% on Friday, and Brent at $92.57, up 0.64%, but both were down roughly 5% on the week as strong Middle East exports kept supply plentiful. A stronger dollar added pressure on dollar-priced commodities.",
+  "tags": [
+    "oil",
+    "energy",
+    "middle-east",
+    "commodities"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/energy/oil-prices-edge-higher-houthi-attacks-riyadh-raise-supply-concerns-2026-11-20",
+      "publishedAt": "2026-11-20T19:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/20/oil-wti-brent-hormuz.html",
+      "publishedAt": "2026-11-20T19:56:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

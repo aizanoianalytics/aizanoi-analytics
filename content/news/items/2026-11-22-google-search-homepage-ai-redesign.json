@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-22-google-search-homepage-ai-redesign",
+  "title": "Google drops the search button as AI takes the homepage",
+  "category": "technology",
+  "priority": 56,
+  "summary": "Google has made its AI-first desktop search homepage official after a test, removing the dedicated Search button and adding buttons for image generation, file analysis and brainstorming with Gemini. Users signed in to Google also get a sidebar of recent AI Mode conversations on the homepage and results page. Search vice-president Robby Stein confirmed the rollout; the “I’m Feeling Lucky” button remains.",
+  "tags": [
+    "google",
+    "search",
+    "gemini",
+    "product-design"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/11/googles-latest-search-page-redesign-drops-the-search-button-adds-ai-sidebar/",
+      "publishedAt": "2026-11-20T21:58:29Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

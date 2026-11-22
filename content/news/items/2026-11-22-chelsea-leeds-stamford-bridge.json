@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-22-chelsea-leeds-stamford-bridge",
+  "title": "Leeds hand Chelsea a 4-1 humiliation at Stamford Bridge",
+  "category": "football",
+  "priority": 72,
+  "summary": "Leeds United won 4-1 at Chelsea on Saturday, their first league victory at Stamford Bridge since 1999, as Noah Okafor scored twice and Dominic Calvert-Lewin converted a penalty. Emmanuel Emegha had given Chelsea an early lead on his full debut, but the home side were booed off at half-time and full-time. It was Chelsea’s third Premier League defeat in four games and left Xabi Alonso under renewed pressure.",
+  "tags": [
+    "premier-league",
+    "chelsea",
+    "leeds-united",
+    "xabi-alonso"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/report/559547",
+      "publishedAt": "2026-11-21T17:15:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/nov/21/chelsea-leeds-premier-league-match-report",
+      "publishedAt": "2026-11-21T18:00:00Z"
+    },
+    {
+      "publisher": "Chelsea FC",
+      "url": "https://www.chelseafc.com/en/news/article/match-report-chelsea-1-4-leeds",
+      "publishedAt": "2026-11-21T17:30:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-21T05:00:00.000Z",
+  "generatedAt": "2026-11-22T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-22",
+      "path": "/news/2026-11-22/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-21",
       "path": "/news/2026-11-21/",
@@ -534,6 +539,556 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-22-trump-overseas-data-centre-tax",
+      "kind": "daily",
+      "title": "Trump threatens a tax on US data centres built abroad",
+      "summary": "President Donald Trump said on Friday that US companies building AI data centres abroad would face a “tremendous tax,” and that his administration would not allow the buildout to move offshore. He offered no legal mechanism and said he had not told his own officials. The threat lands after midterm voters rejected new data centres in their communities, and a day after the Senate passed permitting reform for power and transmission projects.",
+      "category": "ai",
+      "priority": 85,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "data-centres",
+        "ai-infrastructure",
+        "trump",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/trump-artificial-intelligence-data-centers-f1ac03b73d13445400eeed8631d9d879",
+          "publishedAt": "2026-11-20T22:28:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/20/trump-data-centers-ai-companies-tax.html",
+          "publishedAt": "2026-11-20T17:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-liverpool-man-united-pochettino",
+      "kind": "daily",
+      "title": "Pochettino begins at Anfield with United in the bottom three",
+      "summary": "Mauricio Pochettino takes charge of Manchester United for the first time at Anfield on Sunday, with United 18th on eight points and Liverpool fourth on 18. Liverpool have won once in five home league games, while United are without Manuel Ugarte, Benjamin Šeško and Carlos Baleba; Lisandro Martínez returns from suspension. Pochettino has never lost his first match as a manager, with two wins and four draws.",
+      "category": "football",
+      "priority": 76,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "liverpool",
+        "manchester-united",
+        "pochettino"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/liverpool-vs-manchester-united/559550",
+          "publishedAt": "2026-11-20T12:00:00.000Z"
+        },
+        {
+          "publisher": "Manchester United",
+          "url": "https://www.manutd.com/en/news/liverpool-v-united-how-to-watch-and-follow-pochettinos-first-game-in-charge",
+          "publishedAt": "2026-11-19T12:00:00.000Z"
+        },
+        {
+          "publisher": "Football365",
+          "url": "https://football365.com/match-preview/liverpool-vs-man-utd-prediction-preview",
+          "publishedAt": "2026-11-20T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-kane-surgery-dortmund-top",
+      "kind": "daily",
+      "title": "Kane faces months out as Dortmund take the Bundesliga lead",
+      "summary": "Harry Kane tore the syndesmosis ligament in his left ankle in Bayern Munich’s 1-1 draw with Köln and had successful surgery on Saturday, with the club saying he will be out for months; German media expect about three. Borussia Dortmund took advantage, winning 1-0 at Borussia Mönchengladbach through Felix Nmecha’s 80th-minute goal to lead the Bundesliga on 24 points, two clear of Bayern and Freiburg.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "bayern-munich",
+        "borussia-dortmund",
+        "harry-kane"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/20/harry-kane-ankle-ligament-injury-bayern-munich-england",
+          "publishedAt": "2026-11-20T22:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/12040/13614655/harry-kane-england-and-bayern-munich-striker-vows-to-be-back-for-business-end-of-season-after-ankle-surgery",
+          "publishedAt": "2026-11-21T12:00:00.000Z"
+        },
+        {
+          "publisher": "Channels Television",
+          "url": "https://www.channelstv.com/2026/11/21/nmecha-helps-dortmund-beat-gladbach-to-top-bundesliga/",
+          "publishedAt": "2026-11-21T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-chelsea-leeds-stamford-bridge",
+      "kind": "daily",
+      "title": "Leeds hand Chelsea a 4-1 humiliation at Stamford Bridge",
+      "summary": "Leeds United won 4-1 at Chelsea on Saturday, their first league victory at Stamford Bridge since 1999, as Noah Okafor scored twice and Dominic Calvert-Lewin converted a penalty. Emmanuel Emegha had given Chelsea an early lead on his full debut, but the home side were booed off at half-time and full-time. It was Chelsea’s third Premier League defeat in four games and left Xabi Alonso under renewed pressure.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "chelsea",
+        "leeds-united",
+        "xabi-alonso"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/chelsea-vs-leeds-united/report/559547",
+          "publishedAt": "2026-11-21T17:15:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/nov/21/chelsea-leeds-premier-league-match-report",
+          "publishedAt": "2026-11-21T18:00:00.000Z"
+        },
+        {
+          "publisher": "Chelsea FC",
+          "url": "https://www.chelseafc.com/en/news/article/match-report-chelsea-1-4-leeds",
+          "publishedAt": "2026-11-21T17:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-arsenal-newcastle-draw-raya",
+      "kind": "daily",
+      "title": "Arsenal’s lead grows to six as Raya limps off at Newcastle",
+      "summary": "Arsenal drew 2-2 at Newcastle United on Saturday, extending their lead at the top to six points but missing the chance to go eight clear. Eberechi Eze scored in the first half, Harvey Barnes and Malick Thiaw turned the match around after the break, and Noni Madueke equalised in the 78th minute. Goalkeeper David Raya went off injured, with Kepa Arrizabalaga replacing him.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "arsenal",
+        "newcastle-united",
+        "title-race"
+      ],
+      "sources": [
+        {
+          "publisher": "Arsenal FC",
+          "url": "https://www.arsenal.com/news/report-newcastle-united-2-2-arsenal-aYrA33Z7yfW4",
+          "publishedAt": "2026-11-21T20:00:00.000Z"
+        },
+        {
+          "publisher": "Newcastle United",
+          "url": "https://www.newcastleunited.com/en/news/arsenal-h-report-26-27",
+          "publishedAt": "2026-11-21T19:45:00.000Z"
+        },
+        {
+          "publisher": "theScore / AFP",
+          "url": "https://www.thescore.com/epl/news/3662001/raya-injury-overshadows-arsenals-draw-at-newcastle",
+          "publishedAt": "2026-11-21T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-thanksgiving-week-market-preview",
+      "kind": "daily",
+      "title": "A short Thanksgiving week tests the AI trade",
+      "summary": "US stocks enter a Thanksgiving-shortened week after the S&P 500 fell 8.6%, its worst week since April 2025, with the index and the Dow in correction and the VIX near 36. Dell and HP report on Tuesday, HPE on Monday, and Wednesday brings the second estimate of third-quarter GDP with October PCE inflation, forecast at 0.3% on the month. Markets are closed on Thursday and close early on Friday.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "earnings",
+        "inflation",
+        "thanksgiving"
+      ],
+      "sources": [
+        {
+          "publisher": "Market Sunrise",
+          "url": "https://marketsunrise.com/stock-market-week-ahead",
+          "publishedAt": "2026-11-21T09:37:00.000Z"
+        },
+        {
+          "publisher": "Charles Schwab",
+          "url": "https://www.schwab.com/learn/story/weekly-traders-outlook",
+          "publishedAt": "2026-11-20T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-gold-worst-week-dollar-fed",
+      "kind": "daily",
+      "title": "Gold slides toward its worst week since March as the dollar firms",
+      "summary": "Spot gold fell 2.7% to $3,525 an ounce on Friday and was down about 9% for the week, its steepest weekly decline since March, as a firm dollar and expectations of a December Federal Reserve rate rise weighed on bullion. Markets priced a 96.8% chance of a quarter-point hike. Silver, platinum and palladium also fell, and analysts described forced liquidation as the AI-led equity selloff forced investors to raise cash.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "federal-reserve",
+        "dollar",
+        "commodities"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/india/gold-set-worst-week-eight-months-firm-dollar-fed-hike-bets-weigh-2026-11-20",
+          "publishedAt": "2026-11-20T03:24:00.000Z"
+        },
+        {
+          "publisher": "Kitco News",
+          "url": "https://www.kitco.com/news/off-the-wire/2026-11-20/gold-slides-toward-worst-week-eight-months-hawkish-fed-outlook",
+          "publishedAt": "2026-11-20T14:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-meta-net-zero-2030-rethink",
+      "kind": "daily",
+      "title": "Meta reopens its 2030 net-zero pledge as AI emissions climb",
+      "summary": "Meta’s 2026 sustainability report, published on 19 November, says the company is re-evaluating the 2030 timeframe for its net-zero goal and its near-term intensity targets, citing AI infrastructure demand that “has grown faster than almost anyone projected.” Total emissions rose from 15.6 million tonnes of CO2 equivalent in 2024 to more than 21.7 million in 2025, a jump of nearly 40% and the steepest among the four largest US technology companies.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "emissions",
+        "data-centres",
+        "climate"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/ai/2026/11/meta-reconsiders-2030-net-zero-goal-amid-record-emissions-from-ai-data-centers/",
+          "publishedAt": "2026-11-20T21:47:10.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-palo-alto-applied-compute-deal",
+      "kind": "daily",
+      "title": "Palo Alto Networks buys Applied Compute for $4.5bn",
+      "summary": "Palo Alto Networks agreed on 18 November to buy Applied Compute, a startup that helps companies post-train and run open-weight models, in an all-stock deal valued at $4.5 billion. The acquisition landed alongside fiscal first-quarter revenue of $3.44 billion, up 39%, and a raised full-year revenue forecast of $14.52–14.57 billion. Applied Compute chief executive Yash Patil will become co-chief AI officer; the deal is expected to close in fiscal 2027.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "palo-alto-networks",
+        "acquisition",
+        "enterprise-ai",
+        "open-weight"
+      ],
+      "sources": [
+        {
+          "publisher": "Palo Alto Networks",
+          "url": "https://paloaltonetworks.com/company/press/2026/palo-alto-networks-to-acquire-applied-compute--bringing-secure-open-weight-ai-to-the-enterprise",
+          "publishedAt": "2026-11-18T13:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://investing.com/news/stock-market-news/palo-alto-raises-annual-forecast-signs-45-billion-deal-for-applied-compute-5037460",
+          "publishedAt": "2026-11-18T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-intel-first-18a-customer",
+      "kind": "daily",
+      "title": "Intel signs its first outside customer for 18A chips",
+      "summary": "Intel has signed its first outside customer for its most advanced manufacturing process, chief executive Lip-Bu Tan said at the TomorrowX Summit in Austin on 18 November. Technology chief Pushkar Ranade later said the order covers 18A-P, which entered risk production in June. Intel did not name the customer, disclose volumes or give a production date. It also named Microsoft as the first public customer for its EMIB advanced packaging.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "intel",
+        "semiconductors",
+        "foundry",
+        "18a"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/18/intel-first-18a-foundry-customer.html",
+          "publishedAt": "2026-11-19T01:05:00.000Z"
+        },
+        {
+          "publisher": "The Oregonian",
+          "url": "https://www.oregonlive.com/silicon-forest/2026/11/intel-has-its-first-customer-for-its-most-advanced-manufacturing-process.html",
+          "publishedAt": "2026-11-18T22:46:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-uk-ai-safety-bill-pressure",
+      "kind": "daily",
+      "title": "UK committees say ministers are moving too slowly on AI rules",
+      "summary": "Britain’s Joint Committee on Human Rights published the government’s response to its AI report on 20 November, and its chair, Alex Sobel, said ministers showed no sense of urgency about the risks. The committee wants a risk-based AI bill and a single independent regulator. Two days earlier the Business, Innovation and Science Committee reported ten gaps in UK safeguards and called for an AI Safety and Security Bill in the next session.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "regulation",
+        "united-kingdom",
+        "ai-safety",
+        "parliament"
+      ],
+      "sources": [
+        {
+          "publisher": "UK Parliament Joint Committee on Human Rights",
+          "url": "https://committees.parliament.uk/committee/93/human-rights-joint-committee/news/219105/government-response-to-human-rights-and-the-regulation-of-ai/",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        },
+        {
+          "publisher": "UK Parliament Business, Innovation and Science Committee",
+          "url": "https://committees.parliament.uk/committee/365/business-innovation-science-and-trade-committee/news/219006/close-ai-safety-gaps-to-secure-britains-400-billion-ai-growth-opportunity-mps-urge/",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-google-search-homepage-ai-redesign",
+      "kind": "daily",
+      "title": "Google drops the search button as AI takes the homepage",
+      "summary": "Google has made its AI-first desktop search homepage official after a test, removing the dedicated Search button and adding buttons for image generation, file analysis and brainstorming with Gemini. Users signed in to Google also get a sidebar of recent AI Mode conversations on the homepage and results page. Search vice-president Robby Stein confirmed the rollout; the “I’m Feeling Lucky” button remains.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "search",
+        "gemini",
+        "product-design"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/ai/2026/11/googles-latest-search-page-redesign-drops-the-search-button-adds-ai-sidebar/",
+          "publishedAt": "2026-11-20T21:58:29.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-china-cryo-electron-microscope",
+      "kind": "daily",
+      "title": "China builds a cryo-electron microscope without imported core parts",
+      "summary": "China unveiled the TH-F120C, its first domestically produced 120kV cryo-transmission electron microscope, in Guangzhou on 21 November. The instrument has an information resolution of 0.23 nanometres, runs control software on Huawei’s HarmonyOS and uses in-house field-emission, high-voltage, lens, camera and sample-handling components. Bioland Laboratory led the five-year project with Guangzhou Laboratory and the Guangzhou Institutes of Biomedicine and Health.",
+      "category": "technology",
+      "priority": 54,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "scientific-instruments",
+        "harmonyos",
+        "microscopy"
+      ],
+      "sources": [
+        {
+          "publisher": "Xinhua",
+          "url": "https://www.xinhuanet.com/tech/20261121/6ca9218a53be47df94fdfa36356cd93c/c.html",
+          "publishedAt": "2026-11-21T07:49:00.000Z"
+        },
+        {
+          "publisher": "Global Times",
+          "url": "https://www.globaltimes.cn/page/202611/1374781.shtml",
+          "publishedAt": "2026-11-22T03:21:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-openai-gpt-live-voice-api",
+      "kind": "daily",
+      "title": "OpenAI puts its full-duplex voice model into the developer API",
+      "summary": "OpenAI added GPT-Live-1.1, its full-duplex voice model, to the Live API on 19 November, improving pronunciation, accent consistency and transcription across languages. Developers can reuse an existing Live session configuration, and a new standby option pauses inference after 5–60 seconds of silence and resumes when someone speaks. The model has powered ChatGPT’s voice mode since October, when OpenAI began retiring its older Advanced and Standard voices.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "voice",
+        "api",
+        "developers"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI API changelog",
+          "url": "https://developers.openai.com/api/docs/changelog",
+          "publishedAt": "2026-11-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "OpenAI Developer Community",
+          "url": "https://community.openai.com/t/gpt-live-1-1-has-arrived-in-the-api/1418537",
+          "publishedAt": "2026-11-19T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-22-oil-third-weekly-decline",
+      "kind": "daily",
+      "title": "Oil falls for a third week despite attacks on Riyadh and Hormuz",
+      "summary": "Oil posted a third straight weekly decline despite Houthi attacks on Riyadh and reports of tanker disruption in the Strait of Hormuz. WTI settled at $83.98 a barrel, up 0.93% on Friday, and Brent at $92.57, up 0.64%, but both were down roughly 5% on the week as strong Middle East exports kept supply plentiful. A stronger dollar added pressure on dollar-priced commodities.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-11-22T05:00:00.000Z",
+      "updatedAt": "2026-11-22T05:00:00.000Z",
+      "retrievedAt": "2026-11-22T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "energy",
+        "middle-east",
+        "commodities"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/energy/oil-prices-edge-higher-houthi-attacks-riyadh-raise-supply-concerns-2026-11-20",
+          "publishedAt": "2026-11-20T19:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/20/oil-wti-brent-hormuz.html",
+          "publishedAt": "2026-11-20T19:56:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-21-wall-street-correction-ai-selloff",
       "kind": "daily",

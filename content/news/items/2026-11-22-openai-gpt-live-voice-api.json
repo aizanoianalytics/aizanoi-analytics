@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22-openai-gpt-live-voice-api",
+  "title": "OpenAI puts its full-duplex voice model into the developer API",
+  "category": "ai",
+  "priority": 52,
+  "summary": "OpenAI added GPT-Live-1.1, its full-duplex voice model, to the Live API on 19 November, improving pronunciation, accent consistency and transcription across languages. Developers can reuse an existing Live session configuration, and a new standby option pauses inference after 5–60 seconds of silence and resumes when someone speaks. The model has powered ChatGPT’s voice mode since October, when OpenAI began retiring its older Advanced and Standard voices.",
+  "tags": [
+    "openai",
+    "voice",
+    "api",
+    "developers"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI API changelog",
+      "url": "https://developers.openai.com/api/docs/changelog",
+      "publishedAt": "2026-11-19T00:00:00Z"
+    },
+    {
+      "publisher": "OpenAI Developer Community",
+      "url": "https://community.openai.com/t/gpt-live-1-1-has-arrived-in-the-api/1418537",
+      "publishedAt": "2026-11-19T18:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

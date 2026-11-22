@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-22-meta-net-zero-2030-rethink",
+  "title": "Meta reopens its 2030 net-zero pledge as AI emissions climb",
+  "category": "ai",
+  "priority": 64,
+  "summary": "Meta’s 2026 sustainability report, published on 19 November, says the company is re-evaluating the 2030 timeframe for its net-zero goal and its near-term intensity targets, citing AI infrastructure demand that “has grown faster than almost anyone projected.” Total emissions rose from 15.6 million tonnes of CO2 equivalent in 2024 to more than 21.7 million in 2025, a jump of nearly 40% and the steepest among the four largest US technology companies.",
+  "tags": [
+    "meta",
+    "emissions",
+    "data-centres",
+    "climate"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/11/meta-reconsiders-2030-net-zero-goal-amid-record-emissions-from-ai-data-centers/",
+      "publishedAt": "2026-11-20T21:47:10Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-22T05:00:00Z",
+  "updatedAt": "2026-11-22T05:00:00Z",
+  "retrievedAt": "2026-11-22T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
