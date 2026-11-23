@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-23-weekly-fed-inflation-ai-credit",
+  "title": "The Fed's inflation problem has become an AI-credit problem",
+  "category": "economy-markets",
+  "priority": 78,
+  "summary": "Federal Reserve minutes from the October meeting describe an economy still short of the 2% target, with staff estimating September PCE inflation at 3.6% and core at 3.1%. Almost every participant saw further increases in the target range as likely, and futures price a quarter-point hike by year-end plus two more by summer 2027. The new element is financial stability: officials warned that AI-related debt has grown through complex, opaque structures that could amplify losses if returns disappoint. Wednesday's PCE print tests both stories.",
+  "tags": [
+    "weekly",
+    "fed",
+    "inflation",
+    "credit"
+  ],
+  "sources": [
+    {
+      "publisher": "Federal Reserve",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
+      "publishedAt": "2026-11-18T19:00:00Z"
+    },
+    {
+      "publisher": "Saxo",
+      "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+      "publishedAt": "2026-11-23T01:00:00Z"
+    },
+    {
+      "publisher": "CNA (Reuters)",
+      "url": "https://www.channelnewsasia.com/business/oracle-says-openai-infrastructure-deal-fully-funded-after-final-capital-raise-6570701",
+      "publishedAt": "2026-11-20T10:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W48",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

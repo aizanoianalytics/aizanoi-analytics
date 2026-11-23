@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-23-openai-perplexity-industry-limits",
+  "title": "OpenAI's chief scientist proposes a shared speed limit built on perplexity",
+  "category": "ai",
+  "priority": 63,
+  "summary": "Jakub Pachocki used a 22 November essay to argue that perplexity, or cross-entropy loss, should become a common yardstick across model developers and the basis for shared safety limits. He published OpenAI's internal numbers, placing GPT-3.5 near 0.99 and GPT-4 near 0.91 on its main evaluation set, with current models below 0.8 and a further capability window expected around 0.68 to 0.7. Pachocki proposed that labs commit not to cross agreed thresholds until monitoring improves.",
+  "tags": [
+    "openai",
+    "safety",
+    "benchmarks",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/perplexity-and-intelligence/",
+      "publishedAt": "2026-11-22T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

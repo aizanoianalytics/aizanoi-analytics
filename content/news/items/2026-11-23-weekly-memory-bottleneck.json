@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-23-weekly-memory-bottleneck",
+  "title": "Memory is the new bottleneck in the AI build-out, and buyers are locking it down",
+  "category": "technology",
+  "priority": 70,
+  "summary": "The AI trade's least glamorous constraint is now its most contested. TrendForce puts server DRAM at 43% of total demand this year, up from 38%, while mobile DRAM slips to 32% as capacity shifts to high-bandwidth memory. Suppliers have the leverage: SK Hynix says long-term deals cover more than half of its 2027-28 capacity, Samsung has signed with 10 major customers, and Apple is reportedly near a four-to-five-year DRAM agreement with Samsung. US export rules add another queue. When memory allocation decides model timelines, procurement becomes strategy.",
+  "tags": [
+    "weekly",
+    "memory",
+    "supply-chain",
+    "chips"
+  ],
+  "sources": [
+    {
+      "publisher": "TrendForce",
+      "url": "https://trendforce.com/news/2026/11/20/news-tsmc-samsung-reportedly-pause-china-consumer-chip-shipments-under-new-u-s-rules-16nm-orders-affected",
+      "publishedAt": "2026-11-20T00:00:00Z"
+    },
+    {
+      "publisher": "The Korea Herald (via News18)",
+      "url": "https://news18.com/agency-feeds/apple-moves-toward-multiyear-memory-deals-as-ai-boom-boosts-samsung-sk-hynix-10432689.html",
+      "publishedAt": "2026-11-19T09:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W48",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

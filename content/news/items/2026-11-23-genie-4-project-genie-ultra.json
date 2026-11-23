@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-23-genie-4-project-genie-ultra",
+  "title": "Google opens Genie 4 to AI Ultra subscribers with real-time world editing",
+  "category": "ai",
+  "priority": 51,
+  "summary": "Google rolled out Genie 4 inside Project Genie to eligible AI Ultra subscribers, letting them change weather, add characters and hear adaptive audio by typing prompts while a generated world runs. The update adds a Project Genie agent that builds environments through conversation, plus a community gallery for sharing and remixing worlds. AI Pro members can join a waitlist. Google first announced the world model in late October and had limited it to trusted testers before this wider release.",
+  "tags": [
+    "google",
+    "world-model",
+    "genie",
+    "simulation"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "publishedAt": "2026-10-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

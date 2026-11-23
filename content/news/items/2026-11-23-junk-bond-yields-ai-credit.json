@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-23-junk-bond-yields-ai-credit",
+  "title": "US junk-bond yields hit a 19-month high as AI credit doubts spread",
+  "category": "economy-markets",
+  "priority": 65,
+  "summary": "The yield on US high-yield debt rose to 8.51% on Friday, a 19-month high, with spreads widening to 344 basis points, the widest in 18 months, as investors reassessed the financing behind the AI build-out and priced further Fed hikes. Treasury yields fell as investors sought safety, leaving the 10-year at about 4.94% and the 30-year at 5.30%. Treasury Secretary Scott Bessent warned on Sunday that the Fed risks overtightening ahead of this week's PCE inflation release.",
+  "tags": [
+    "credit",
+    "bonds",
+    "fed",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Saxo",
+      "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+      "publishedAt": "2026-11-23T01:00:00Z"
+    },
+    {
+      "publisher": "Federal Reserve",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
+      "publishedAt": "2026-11-18T19:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

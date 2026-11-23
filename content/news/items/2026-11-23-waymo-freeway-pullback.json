@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-23-waymo-freeway-pullback",
+  "title": "Waymo pulls robotaxis off US freeways after California restriction",
+  "category": "technology",
+  "priority": 53,
+  "summary": "Waymo suspended freeway rides across all 15 US markets where it operates after California regulators barred it from freeways in the state, following incidents that included robotaxis entering an active construction zone. The retreat shows how quickly a safety finding can shrink a driverless service area. Tesla, meanwhile, has passed Waymo in robotaxis registered in Texas, 1,507 to 1,345, though Waymo still leads on commercial driverless miles and Zoox has begun carrying Uber passengers in Las Vegas.",
+  "tags": [
+    "waymo",
+    "robotaxi",
+    "tesla",
+    "regulation"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/22/techcrunch-mobility-a-b-testing-robots-vs-humans/",
+      "publishedAt": "2026-11-22T17:06:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

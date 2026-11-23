@@ -1,0 +1,43 @@
+{
+  "id": "2026-11-23-weekly-ai-trade-stress-test",
+  "title": "The AI trade has met its first genuine stress test, and the bill is coming due",
+  "category": "ai",
+  "priority": 85,
+  "summary": "A week meant to validate the artificial-intelligence boom instead repriced it. The S&P 500 fell 8.6% and closed in correction, the Nasdaq lost 10%, and roughly $4 trillion of market value disappeared as Nvidia dropped 14% on Friday and Anthropic slipped 8.5% from its debut close. The deeper signal is in credit: US high-yield spreads widened to an 18-month high, and Federal Reserve minutes flagged off-balance-sheet leases and circular financing among AI firms. Equity investors are now asking the question bond investors asked first: who pays for the compute if returns arrive late?",
+  "tags": [
+    "weekly",
+    "ai-trade",
+    "credit",
+    "valuation"
+  ],
+  "sources": [
+    {
+      "publisher": "Saxo",
+      "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+      "publishedAt": "2026-11-23T01:00:00Z"
+    },
+    {
+      "publisher": "Federal Reserve",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
+      "publishedAt": "2026-11-18T19:00:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/ipo-close",
+      "publishedAt": "2026-11-20T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W48",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

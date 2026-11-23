@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-23-openai-agents-jagged-frontier",
+  "title": "OpenAI says its agents now finish 46% of its own multi-hour research tasks",
+  "category": "ai",
+  "priority": 61,
+  "summary": "OpenAI's second research acceleration report puts autonomous agent success on tasks estimated at two to four hours of human work at 46% in October, up from 23% in March. For four-to-eight-hour tasks the rate rose from 13% to 35%. Results are uneven: agents succeeded 79% of the time at monitoring training runs but 25% at writing inference and serving code. Median agent spending reached $2,400 per researcher per day, and agent runtime rose elevenfold to 5.7 workdays a day.",
+  "tags": [
+    "openai",
+    "agents",
+    "research",
+    "productivity"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/research-acceleration-jagged-frontier/",
+      "publishedAt": "2026-11-18T00:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/openai-research-agents-46-percent-tasks-2400-a-day-jagged-frontier",
+      "publishedAt": "2026-11-19T09:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

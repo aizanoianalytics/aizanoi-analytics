@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-23-anthropic-30-day-disclosure-window",
+  "title": "Anthropic cuts its bug-disclosure window to 30 days as models find flaws faster",
+  "category": "ai",
+  "priority": 56,
+  "summary": "Anthropic's Frontier Red Team said it will shorten its coordinated vulnerability disclosure window from 90 days to 30 days for high and critical severity issues, and to 45 days for everything else. The policy applies to reports made on or after 1 January 2027; reports already in progress keep their old deadlines. It will escalate unanswered reports to an outside coordinator after 15 days and wait 30 days after a patch before publishing technical detail. The seven-day window for actively exploited flaws is unchanged.",
+  "tags": [
+    "anthropic",
+    "security",
+    "disclosure",
+    "open-source"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/research/coordinated-vulnerability-disclosure-timelines",
+      "publishedAt": "2026-11-16T00:00:00Z"
+    },
+    {
+      "publisher": "Help Net Security",
+      "url": "https://www.helpnetsecurity.com/2026/11/17/anthropic-vulnerability-disclosure-days/",
+      "publishedAt": "2026-11-17T06:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
