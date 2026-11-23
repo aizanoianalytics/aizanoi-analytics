@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-23-anthropic-ipo-close-greenshoe",
+  "title": "Anthropic closes its IPO at $93.5bn after underwriters take every extra share",
+  "category": "ai",
+  "priority": 82,
+  "summary": "Anthropic said its initial public offering closed on 20 November with gross proceeds of about $93.5 billion after underwriters fully exercised their option on 147 million extra shares. The deal sold 1.127 billion Class A shares at $83, and Anthropic itself received about $91.6 billion. A concurrent $26.0 billion private placement to AMD, Broadcom, Google, Micron, Microsoft, Nvidia and TSMC Partners lifted aggregate proceeds to roughly $119.5 billion. The stock trades on Nasdaq as ANT.",
+  "tags": [
+    "anthropic",
+    "ipo",
+    "nasdaq",
+    "funding"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/ipo-close",
+      "publishedAt": "2026-11-20T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/20/anthropic-ipo-greenshoe.html",
+      "publishedAt": "2026-11-20T21:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

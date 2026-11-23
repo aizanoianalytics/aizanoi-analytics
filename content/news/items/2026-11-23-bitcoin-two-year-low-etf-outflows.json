@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-23-bitcoin-two-year-low-etf-outflows",
+  "title": "Bitcoin's two-year low leaves a $1.25bn week of ETF outflows behind it",
+  "category": "economy-markets",
+  "priority": 58,
+  "summary": "Bitcoin slid to about $55,250 on Saturday, its lowest level in two years, before rebounding above $59,900. The move extended a seventh straight weekly decline and followed roughly $2.4 billion of crypto futures liquidations on Friday. US spot Bitcoin ETFs recorded about $1.25 billion of net outflows in the week to 20 November, including $582 million on 19 November alone. Traders cited higher real Treasury yields and renewed bets on Federal Reserve tightening as the main pressure.",
+  "tags": [
+    "bitcoin",
+    "crypto",
+    "etf",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Global Banking & Finance Review)",
+      "url": "https://www.globalbankingandfinance.com/bitcoin-falls-3-57-56-814/",
+      "publishedAt": "2026-11-21T15:00:00Z"
+    },
+    {
+      "publisher": "CoinDesk",
+      "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-tanks-below-usd57-000-for-the-first-time-in-two-years-and-its-not-alone",
+      "publishedAt": "2026-11-21T04:10:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-23T05:00:00Z",
+  "updatedAt": "2026-11-23T05:00:00Z",
+  "retrievedAt": "2026-11-23T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

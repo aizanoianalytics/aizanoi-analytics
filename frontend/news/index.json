@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-22T05:00:00.000Z",
+  "generatedAt": "2026-11-23T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-23",
+      "path": "/news/2026-11-23/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-22",
       "path": "/news/2026-11-22/",
@@ -466,6 +471,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-11-23",
+      "week": "2026-W48",
+      "path": "/news/weekly/2026-11-23/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-11-16",
       "week": "2026-W47",
       "path": "/news/weekly/2026-11-16/",
@@ -539,6 +550,726 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-23-weekly-ai-trade-stress-test",
+      "kind": "weekly",
+      "title": "The AI trade has met its first genuine stress test, and the bill is coming due",
+      "summary": "A week meant to validate the artificial-intelligence boom instead repriced it. The S&P 500 fell 8.6% and closed in correction, the Nasdaq lost 10%, and roughly $4 trillion of market value disappeared as Nvidia dropped 14% on Friday and Anthropic slipped 8.5% from its debut close. The deeper signal is in credit: US high-yield spreads widened to an 18-month high, and Federal Reserve minutes flagged off-balance-sheet leases and circular financing among AI firms. Equity investors are now asking the question bond investors asked first: who pays for the compute if returns arrive late?",
+      "category": "ai",
+      "priority": 85,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "week": "2026-W48",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "ai-trade",
+        "credit",
+        "valuation"
+      ],
+      "sources": [
+        {
+          "publisher": "Saxo",
+          "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+          "publishedAt": "2026-11-23T01:00:00.000Z"
+        },
+        {
+          "publisher": "Federal Reserve",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
+          "publishedAt": "2026-11-18T19:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/ipo-close",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-anthropic-ipo-close-greenshoe",
+      "kind": "daily",
+      "title": "Anthropic closes its IPO at $93.5bn after underwriters take every extra share",
+      "summary": "Anthropic said its initial public offering closed on 20 November with gross proceeds of about $93.5 billion after underwriters fully exercised their option on 147 million extra shares. The deal sold 1.127 billion Class A shares at $83, and Anthropic itself received about $91.6 billion. A concurrent $26.0 billion private placement to AMD, Broadcom, Google, Micron, Microsoft, Nvidia and TSMC Partners lifted aggregate proceeds to roughly $119.5 billion. The stock trades on Nasdaq as ANT.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "nasdaq",
+        "funding"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/ipo-close",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/20/anthropic-ipo-greenshoe.html",
+          "publishedAt": "2026-11-20T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-weekly-fed-inflation-ai-credit",
+      "kind": "weekly",
+      "title": "The Fed's inflation problem has become an AI-credit problem",
+      "summary": "Federal Reserve minutes from the October meeting describe an economy still short of the 2% target, with staff estimating September PCE inflation at 3.6% and core at 3.1%. Almost every participant saw further increases in the target range as likely, and futures price a quarter-point hike by year-end plus two more by summer 2027. The new element is financial stability: officials warned that AI-related debt has grown through complex, opaque structures that could amplify losses if returns disappoint. Wednesday's PCE print tests both stories.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "week": "2026-W48",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "fed",
+        "inflation",
+        "credit"
+      ],
+      "sources": [
+        {
+          "publisher": "Federal Reserve",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
+          "publishedAt": "2026-11-18T19:00:00.000Z"
+        },
+        {
+          "publisher": "Saxo",
+          "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+          "publishedAt": "2026-11-23T01:00:00.000Z"
+        },
+        {
+          "publisher": "CNA (Reuters)",
+          "url": "https://www.channelnewsasia.com/business/oracle-says-openai-infrastructure-deal-fully-funded-after-final-capital-raise-6570701",
+          "publishedAt": "2026-11-20T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-asia-monday-selloff-support",
+      "kind": "daily",
+      "title": "Seoul leads a fresh Asian sell-off as officials reach for market support",
+      "summary": "South Korea's Kospi fell as much as 5.8% on Monday before paring losses to about 3.2% by 04:30 GMT, with Samsung down 5.6% and SK Hynix 6% in pre-market trade. Hong Kong's Hang Seng and the CSI 300 were each about 0.6% lower. South Korea, Taiwan and China have rolled out stabilisation measures including short-selling curbs, buyback support and talk of a market stabilisation fund, while US equity futures rose roughly 2% after Friday's rout.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "asia",
+        "kospi",
+        "selloff",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/23/south-koreas-stock-market-tumbles-as-ai-bubble-fears-mount",
+          "publishedAt": "2026-11-23T04:40:00.000Z"
+        },
+        {
+          "publisher": "Saxo",
+          "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+          "publishedAt": "2026-11-23T01:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-weekly-agent-infrastructure-permissions",
+      "kind": "weekly",
+      "title": "Agents are turning into infrastructure, and the hard part is now permission",
+      "summary": "Three releases this month point the same way. OpenAI reports its agents finish 46% of two-to-four-hour internal research tasks unaided, up from 23% in March, at a median $2,400 of agent spend per researcher per day. Google's Agent Compute Engine gives each agent a hardware-isolated microVM with no credentials inside, and Gemini's Mac app clicks through local apps behind approval gates. Anthropic cut vulnerability disclosure to 30 days because models keep rediscovering flaws. Capability is arriving faster than the audit trail.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "week": "2026-W48",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "agents",
+        "security",
+        "infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/research-acceleration-jagged-frontier/",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Google Cloud",
+          "url": "https://cloud.google.com/blog/topics/ai-infrastructure/introducing-agent-compute-engine-and-expanded-agent-governance",
+          "publishedAt": "2026-10-22T00:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/coordinated-vulnerability-disclosure-timelines",
+          "publishedAt": "2026-11-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-oracle-openai-infrastructure-funded",
+      "kind": "daily",
+      "title": "Oracle says its OpenAI data-centre contract is fully funded after $20bn raise",
+      "summary": "Oracle said on 20 November that its infrastructure contract with OpenAI is fully funded after a final capital raise earlier in the month, and that any further talks with equipment vendors are options rather than necessities. The companies plan 4.5 gigawatts of additional US data-centre capacity beyond the Abilene, Texas site, which Oracle says is nearly complete and trained OpenAI's GPT-6 Astra. The next gigawatt-scale campus in Shackelford County is fully permitted, and Nvidia Vera Rubin rack handovers are on track.",
+      "category": "technology",
+      "priority": 71,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oracle",
+        "openai",
+        "data-centres",
+        "stargate"
+      ],
+      "sources": [
+        {
+          "publisher": "CNA (Reuters)",
+          "url": "https://www.channelnewsasia.com/business/oracle-says-openai-infrastructure-deal-fully-funded-after-final-capital-raise-6570701",
+          "publishedAt": "2026-11-20T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-weekly-memory-bottleneck",
+      "kind": "weekly",
+      "title": "Memory is the new bottleneck in the AI build-out, and buyers are locking it down",
+      "summary": "The AI trade's least glamorous constraint is now its most contested. TrendForce puts server DRAM at 43% of total demand this year, up from 38%, while mobile DRAM slips to 32% as capacity shifts to high-bandwidth memory. Suppliers have the leverage: SK Hynix says long-term deals cover more than half of its 2027-28 capacity, Samsung has signed with 10 major customers, and Apple is reportedly near a four-to-five-year DRAM agreement with Samsung. US export rules add another queue. When memory allocation decides model timelines, procurement becomes strategy.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "week": "2026-W48",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "memory",
+        "supply-chain",
+        "chips"
+      ],
+      "sources": [
+        {
+          "publisher": "TrendForce",
+          "url": "https://trendforce.com/news/2026/11/20/news-tsmc-samsung-reportedly-pause-china-consumer-chip-shipments-under-new-u-s-rules-16nm-orders-affected",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Korea Herald (via News18)",
+          "url": "https://news18.com/agency-feeds/apple-moves-toward-multiyear-memory-deals-as-ai-boom-boosts-samsung-sk-hynix-10432689.html",
+          "publishedAt": "2026-11-19T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-weekly-matchweek-eleven-title-race",
+      "kind": "weekly",
+      "title": "Matchweek 11 gives Arsenal a cushion and everyone else a set of questions",
+      "summary": "Arsenal's 2-2 draw at Newcastle was the sort of result that usually costs a leader momentum, yet it left them top on 28 points from 11 games. Brighton wasted the chance to close within three, losing 2-0 at Hull to stoppage-time goals, and stay second on 22. Liverpool's 4-0 win over Manchester United exposed Mauricio Pochettino's rebuild, while Manchester City's 1-1 draw with Fulham and Chelsea's 1-4 home defeat by Leeds compressed the pack. In Germany, Dortmund lead on 24, with Bayern and Freiburg on 22 and Leipzig 21.",
+      "category": "football",
+      "priority": 69,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "week": "2026-W48",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "weekly",
+        "premier-league",
+        "bundesliga",
+        "title-race"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cm62pqqw6d29t",
+          "publishedAt": "2026-11-22T18:30:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cky97ll8253wt",
+          "publishedAt": "2026-11-22T16:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/table",
+          "publishedAt": "2026-11-22T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-champions-league-matchday-five-preview",
+      "kind": "daily",
+      "title": "Arsenal and Dortmund headline a Champions League night with no margin",
+      "summary": "The Champions League league phase reaches matchday five on 24 and 25 November with 18 fixtures. Arsenal, third and having conceded only three goals in four European games, host Borussia Dortmund; Manchester City welcome Napoli and former midfielder Kevin De Bruyne; Real Madrid meet PSV; Paris Saint-Germain, perfect so far, face Roma. Liverpool travel to Club Brugge, Bayern Munich visit Lille, and Mauricio Pochettino takes Manchester United to Sporting CP after his losing start in the Premier League.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "arsenal",
+        "dortmund",
+        "fixtures"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/champions-league",
+          "publishedAt": "2026-11-22T22:00:00.000Z"
+        },
+        {
+          "publisher": "Paramount+",
+          "url": "https://www.paramountplus.com/sneak-peek/uefa-champions-league-matchday-5-2026-schedule",
+          "publishedAt": "2026-11-17T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-junk-bond-yields-ai-credit",
+      "kind": "daily",
+      "title": "US junk-bond yields hit a 19-month high as AI credit doubts spread",
+      "summary": "The yield on US high-yield debt rose to 8.51% on Friday, a 19-month high, with spreads widening to 344 basis points, the widest in 18 months, as investors reassessed the financing behind the AI build-out and priced further Fed hikes. Treasury yields fell as investors sought safety, leaving the 10-year at about 4.94% and the 30-year at 5.30%. Treasury Secretary Scott Bessent warned on Sunday that the Fed risks overtightening ahead of this week's PCE inflation release.",
+      "category": "economy-markets",
+      "priority": 65,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "credit",
+        "bonds",
+        "fed",
+        "ai-capex"
+      ],
+      "sources": [
+        {
+          "publisher": "Saxo",
+          "url": "https://www.home.saxo/en-sg/content/articles/macro/asia-market-quick-take--23-november-2026-23112026",
+          "publishedAt": "2026-11-23T01:00:00.000Z"
+        },
+        {
+          "publisher": "Federal Reserve",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
+          "publishedAt": "2026-11-18T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-openai-perplexity-industry-limits",
+      "kind": "daily",
+      "title": "OpenAI's chief scientist proposes a shared speed limit built on perplexity",
+      "summary": "Jakub Pachocki used a 22 November essay to argue that perplexity, or cross-entropy loss, should become a common yardstick across model developers and the basis for shared safety limits. He published OpenAI's internal numbers, placing GPT-3.5 near 0.99 and GPT-4 near 0.91 on its main evaluation set, with current models below 0.8 and a further capability window expected around 0.68 to 0.7. Pachocki proposed that labs commit not to cross agreed thresholds until monitoring improves.",
+      "category": "ai",
+      "priority": 63,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "safety",
+        "benchmarks",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/perplexity-and-intelligence/",
+          "publishedAt": "2026-11-22T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-openai-agents-jagged-frontier",
+      "kind": "daily",
+      "title": "OpenAI says its agents now finish 46% of its own multi-hour research tasks",
+      "summary": "OpenAI's second research acceleration report puts autonomous agent success on tasks estimated at two to four hours of human work at 46% in October, up from 23% in March. For four-to-eight-hour tasks the rate rose from 13% to 35%. Results are uneven: agents succeeded 79% of the time at monitoring training runs but 25% at writing inference and serving code. Median agent spending reached $2,400 per researcher per day, and agent runtime rose elevenfold to 5.7 workdays a day.",
+      "category": "ai",
+      "priority": 61,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "agents",
+        "research",
+        "productivity"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/research-acceleration-jagged-frontier/",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/openai-research-agents-46-percent-tasks-2400-a-day-jagged-frontier",
+          "publishedAt": "2026-11-19T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-hull-brighton-mcburnie-double",
+      "kind": "daily",
+      "title": "McBurnie's stoppage-time double punishes ten-man Brighton at Hull",
+      "summary": "Oli McBurnie scored in the 92nd and 95th minutes as Hull City beat Brighton 2-0 at the MKM Stadium after a match Brighton had controlled. Costinha was sent off for a second booking in the 89th minute, and Hull broke twice against ten men, McBurnie finishing passes from Lucas Gourna-Douath and Mohamed Belloumi. Goalkeeper Konstantinos Tzolakis made five first-half saves among a string of stops. Hull climbed to 11th on 14 points; Brighton stay second on 22, six behind Arsenal.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "hull-city",
+        "brighton",
+        "mcburnie"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cky97ll8253wt",
+          "publishedAt": "2026-11-22T16:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/hull-city-vs-brighton-and-hove-albion/report/559549",
+          "publishedAt": "2026-11-22T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-gemini-mac-computer-use",
+      "kind": "daily",
+      "title": "Gemini can now drive a Mac in the background, with approval gates",
+      "summary": "Google added computer use to the Gemini app for macOS, letting the assistant click, type and fill forms across local files, native apps and websites from an isolated background window with a live preview in the chat. Users can pause or stop it and must approve important actions such as purchases. The feature launched in English in the United States for personal accounts aged 18 and over on Google AI Plus, Pro or Ultra, and needs an Apple Silicon Mac running macOS Sequoia 15 or later.",
+      "category": "technology",
+      "priority": 59,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "macos",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/products/gemini-app/computer-use-mac/",
+          "publishedAt": "2026-11-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/",
+          "publishedAt": "2026-11-19T18:09:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-bitcoin-two-year-low-etf-outflows",
+      "kind": "daily",
+      "title": "Bitcoin's two-year low leaves a $1.25bn week of ETF outflows behind it",
+      "summary": "Bitcoin slid to about $55,250 on Saturday, its lowest level in two years, before rebounding above $59,900. The move extended a seventh straight weekly decline and followed roughly $2.4 billion of crypto futures liquidations on Friday. US spot Bitcoin ETFs recorded about $1.25 billion of net outflows in the week to 20 November, including $582 million on 19 November alone. Traders cited higher real Treasury yields and renewed bets on Federal Reserve tightening as the main pressure.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bitcoin",
+        "crypto",
+        "etf",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Global Banking & Finance Review)",
+          "url": "https://www.globalbankingandfinance.com/bitcoin-falls-3-57-56-814/",
+          "publishedAt": "2026-11-21T15:00:00.000Z"
+        },
+        {
+          "publisher": "CoinDesk",
+          "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-tanks-below-usd57-000-for-the-first-time-in-two-years-and-its-not-alone",
+          "publishedAt": "2026-11-21T04:10:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-samsung-memory-mobile-leadership",
+      "kind": "daily",
+      "title": "Samsung puts its HBM developer in charge of memory as AI demand sets the agenda",
+      "summary": "Samsung Electronics named Sang Joon Hwang, who led DRAM and high-bandwidth memory development, as president and head of its memory business, and made Won-Joon Choi head of the Mobile eXperience division. Sangyeun Cho took System LSI and Jong Myeong Lee became chief technology officer of the chip division, while co-chief executives Young Hyun Jun and TM Roh kept their roles. The reshuffle followed record earnings driven by AI memory demand and came in a week when Samsung reportedly paused some China shipments under new US rules.",
+      "category": "technology",
+      "priority": 57,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "memory",
+        "hbm",
+        "leadership"
+      ],
+      "sources": [
+        {
+          "publisher": "The Korea Herald",
+          "url": "https://koreaherald.com/article/10943786",
+          "publishedAt": "2026-11-20T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-anthropic-30-day-disclosure-window",
+      "kind": "daily",
+      "title": "Anthropic cuts its bug-disclosure window to 30 days as models find flaws faster",
+      "summary": "Anthropic's Frontier Red Team said it will shorten its coordinated vulnerability disclosure window from 90 days to 30 days for high and critical severity issues, and to 45 days for everything else. The policy applies to reports made on or after 1 January 2027; reports already in progress keep their old deadlines. It will escalate unanswered reports to an outside coordinator after 15 days and wait 30 days after a patch before publishing technical detail. The seven-day window for actively exploited flaws is unchanged.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "security",
+        "disclosure",
+        "open-source"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/coordinated-vulnerability-disclosure-timelines",
+          "publishedAt": "2026-11-16T00:00:00.000Z"
+        },
+        {
+          "publisher": "Help Net Security",
+          "url": "https://www.helpnetsecurity.com/2026/11/17/anthropic-vulnerability-disclosure-days/",
+          "publishedAt": "2026-11-17T06:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-bremen-nordderby-rout",
+      "kind": "daily",
+      "title": "Bremen's second-half burst settles the Nordderby in a 4-0 rout",
+      "summary": "Werder Bremen beat Hamburg 4-0 in the 111th Bundesliga Nordderby after a goalless first half at a sold-out Weserstadion. Captain Marco Friedl scored from a corner rebound in the 55th minute, Justin Njinmah added two more in the 66th and 70th on his first start since August, and Niclas Füllkrug completed the scoring in stoppage time with his 10th league goal of the season. The win lifted Bremen to within three points of the Champions League places.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "werder-bremen",
+        "hamburg",
+        "nordderby"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/news/werder-bremen-hamburg-match-report-highlights-matchday-10-40103",
+          "publishedAt": "2026-11-22T19:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-waymo-freeway-pullback",
+      "kind": "daily",
+      "title": "Waymo pulls robotaxis off US freeways after California restriction",
+      "summary": "Waymo suspended freeway rides across all 15 US markets where it operates after California regulators barred it from freeways in the state, following incidents that included robotaxis entering an active construction zone. The retreat shows how quickly a safety finding can shrink a driverless service area. Tesla, meanwhile, has passed Waymo in robotaxis registered in Texas, 1,507 to 1,345, though Waymo still leads on commercial driverless miles and Zoox has begun carrying Uber passengers in Las Vegas.",
+      "category": "technology",
+      "priority": 53,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "waymo",
+        "robotaxi",
+        "tesla",
+        "regulation"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/22/techcrunch-mobility-a-b-testing-robots-vs-humans/",
+          "publishedAt": "2026-11-22T17:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-23-genie-4-project-genie-ultra",
+      "kind": "daily",
+      "title": "Google opens Genie 4 to AI Ultra subscribers with real-time world editing",
+      "summary": "Google rolled out Genie 4 inside Project Genie to eligible AI Ultra subscribers, letting them change weather, add characters and hear adaptive audio by typing prompts while a generated world runs. The update adds a Project Genie agent that builds environments through conversation, plus a community gallery for sharing and remixing worlds. AI Pro members can join a waitlist. Google first announced the world model in late October and had limited it to trusted testers before this wider release.",
+      "category": "ai",
+      "priority": 51,
+      "publishedAt": "2026-11-23T05:00:00.000Z",
+      "updatedAt": "2026-11-23T05:00:00.000Z",
+      "retrievedAt": "2026-11-23T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "world-model",
+        "genie",
+        "simulation"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/",
+          "publishedAt": "2026-11-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Google DeepMind",
+          "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+          "publishedAt": "2026-10-27T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-22-trump-overseas-data-centre-tax",
       "kind": "daily",
