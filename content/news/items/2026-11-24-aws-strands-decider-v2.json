@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-aws-strands-decider-v2",
+  "title": "AWS ships five open decision models that score options instead of writing text",
+  "category": "technology",
+  "priority": 62,
+  "summary": "Strands Agents, the AWS-backed open-source project, released Strands Decider v2: five Gemma 4-based models from 2 billion to 31 billion parameters that return a probability for each option an agent supplies, in a single forward pass. The models were trained on 17.5 million decision examples, support up to 255 options, and ship under Apache 2.0 on Hugging Face. AWS also launched Box CLI, which runs coding agents such as Claude Code and Codex inside a sandbox with controlled access.",
+  "tags": [
+    "aws",
+    "agentic-ai",
+    "open-weights",
+    "gemma"
+  ],
+  "sources": [
+    {
+      "publisher": "Strands Agents",
+      "url": "https://strandsagents.com/blog/introducing-strands-decider-v2",
+      "publishedAt": "2026-11-23T00:00:00Z"
+    },
+    {
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/11/23/aws-is-making-ai-agents-more-decisive-and-secure-with-its-latest-strands-updates",
+      "publishedAt": "2026-11-23T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

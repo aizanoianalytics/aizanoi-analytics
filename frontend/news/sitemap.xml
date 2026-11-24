@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/nvidia-huang-reinstated-ceo/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Nvidia&#39;s board brings Jensen Huang back as CEO, and the stock jumps 31%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/asia-chip-rally-fed-bets/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Asian chip stocks surge as Huang&#39;s return revives the AI trade</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/arsenal-dortmund-injuries/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Arsenal meet Dortmund without Raya, Saka and Zubimendi</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/megaspeed-entity-list-singapore/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>US blacklists Megaspeed, and Singapore says its own investigation continues</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/deepmind-agents-quantum-lean/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>DeepMind&#39;s Gemini agents found cheaper quantum algorithms and proved them in Lean</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/openai-perplexity-disclosure/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI published its pretraining perplexity curve and proposed it as a shared safety gauge</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/anthropic-enterprise-frontier-safeguards/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic opens a zero-retention safety mode for enterprise Claude customers</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/man-city-napoli-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>City host Napoli with De Bruyne back at the Etihad and no room for another slip</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/galatasaray-aston-villa-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Galatasaray face Aston Villa without Osimhen and Leao</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/openai-cisco-shirudo-ebpf/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI and Cisco release Shirudo, an eBPF runtime that shields unpatched Linux hosts</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/marlowe-non-nvidia-inference-seed/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Marlowe raises a $277m seed to build inference factories around non-Nvidia chips</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/grok-virginia-oregon-lawsuits/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Virginia and Oregon sue SpaceX over Grok&#39;s image safeguards</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/aws-strands-decider-v2/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>AWS ships five open decision models that score options instead of writing text</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/oil-three-month-low-libya/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Oil settles at a three-month low as Libyan supply returns</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-24/gold-rebound-one-year-low/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
+      <news:title>Gold rebounds from a one-year low as the dollar rally pauses</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/weekly/2026-11-23/weekly-ai-trade-stress-test/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -278,126 +398,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-22T05:00:00.000Z</news:publication_date>
       <news:title>Oil falls for a third week despite attacks on Riyadh and Hormuz</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/wall-street-correction-ai-selloff/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Wall Street closes in correction as the AI trade cracks</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/riemann-claim-lean-review/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic mathematician posts a Lean proof claim for the Riemann hypothesis</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/nvidia-sec-accounting-probe-subpoena/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Nvidia&#39;s accounting draws SEC scrutiny as California subpoenas the chipmaker</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/tsmc-halts-16nm-china-orders/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>TSMC stops taking advanced orders from Chinese customers as the new rule bites</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/bayern-held-koln-kane-knock/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Bayern drop points at home as Köln hold on and Kane limps off</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/crowdstrike-zscaler-talks/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>CrowdStrike in talks to buy Zscaler in a cybersecurity mega-deal</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/openai-reasoning-extraction-defenses/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI says reasoning-trace theft collapsed on GPT-6.2</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/tencent-alibaba-domestic-chips/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Tencent and Alibaba lean on domestic chips as US curbs bite</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/signal-blocks-ai-agent-screenshots/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Signal blocks screenshots to keep OS-level AI agents out of chats</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/bundesliga-saturday-dortmund-glabbach/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Dortmund can go top at Gladbach as the Bundesliga fills Saturday</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/openai-model-router-approval-policy/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Model routers and AI gateways now need OpenAI&#39;s approval</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/thinking-machines-inkling-2-mini/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Thinking Machines puts a looped 26B model on a laptop</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/premier-league-saturday-city-fulham/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>City open a full Premier League Saturday with little room to slip</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/openai-medchembench-flat-gains/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI chemistry benchmark finds gains flattening between model generations</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-21/edge-aion-instruct-prompt-api/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-21T05:00:00.000Z</news:publication_date>
-      <news:title>Microsoft puts a 2.3B on-device model in Edge and opens the Prompt API</news:title>
     </news:news>
   </url>
 </urlset>

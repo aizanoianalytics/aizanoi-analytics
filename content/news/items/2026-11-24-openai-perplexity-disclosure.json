@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-openai-perplexity-disclosure",
+  "title": "OpenAI published its pretraining perplexity curve and proposed it as a shared safety gauge",
+  "category": "ai",
+  "priority": 72,
+  "summary": "OpenAI chief scientist Jakub Pachocki published the lab's internal log-perplexity scores, the measure it has used for years to track pretraining. GPT-3.5 sits at about 0.99, GPT-4 at about 0.91, and recent models fall below 0.8, where he says transformative capabilities emerged in cybersecurity and mathematics. At roughly 0.76, models began producing what he called groundbreaking results on open maths problems. Pachocki argued perplexity could become a common yardstick across developers and regulators, and said a similar jump in pretraining research could arrive as soon as 2027.",
+  "tags": [
+    "openai",
+    "research",
+    "safety",
+    "benchmarks"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/perplexity-and-intelligence/",
+      "publishedAt": "2026-11-22T00:00:00Z"
+    },
+    {
+      "publisher": "MLQ.ai",
+      "url": "https://mlq.ai/news/openai-publishes-its-models-perplexity-scores-and-proposes-industry-wide-limits-on-ai-development/",
+      "publishedAt": "2026-11-23T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-anthropic-enterprise-frontier-safeguards",
+  "title": "Anthropic opens a zero-retention safety mode for enterprise Claude customers",
+  "category": "ai",
+  "priority": 70,
+  "summary": "Anthropic moved Enterprise Frontier Safeguards into public beta on 23 November, pairing zero data retention with automated misuse monitoring that looks across requests rather than one at a time. Prompts, responses and model reasoning are written to storage the customer controls, encrypted with customer keys, and Anthropic says it keeps no copy; flags go to the customer's own reviewers. The system was developed with more than 100 customers. Batch API traffic and organisations with HIPAA readiness enabled are excluded from the beta, and Anthropic says it does not train on enterprise data.",
+  "tags": [
+    "anthropic",
+    "claude",
+    "enterprise",
+    "privacy"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://claude.com/resources/articles/zero-data-retention-with-enterprise-frontier-safeguards",
+      "publishedAt": "2026-11-23T00:00:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/enterprise-frontier-safeguards",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
