@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-megaspeed-entity-list-singapore",
+  "title": "US blacklists Megaspeed, and Singapore says its own investigation continues",
+  "category": "technology",
+  "priority": 76,
+  "summary": "The US Commerce Department added Singapore-based cloud company Megaspeed to its Entity List on 23 November, together with six other firms in Singapore, Malaysia and Thailand that a Commerce official linked to it. Megaspeed, an Nvidia partner under US investigation since 2024 over whether it diverted advanced AI chips to China, will now need export licences that are likely to be denied. Singapore Prime Minister Lawrence Wong said on 24 November that the city-state is still investigating whether Megaspeed broke Singapore law, and that its talks with US authorities continue.",
+  "tags": [
+    "megaspeed",
+    "export-controls",
+    "singapore",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://finance.yahoo.com/technology/ai/articles/singapore-investigating-nvidia-linked-megaspeed-023356234.html",
+      "publishedAt": "2026-11-24T02:33:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/24/us-adds-megaspeed-to-trade-blacklist-over-export-control-concerns-.html",
+      "publishedAt": "2026-11-24T00:30:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

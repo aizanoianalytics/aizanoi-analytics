@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-deepmind-agents-quantum-lean",
+  "title": "DeepMind's Gemini agents found cheaper quantum algorithms and proved them in Lean",
+  "category": "ai",
+  "priority": 74,
+  "summary": "Google DeepMind used independent teams of Gemini 4 agents to redesign quantum subroutines, then checked every result with the Lean theorem prover. The agents cut the spacetime cost of fixed-point arcsin, a routine that loads numbers into quantum states, by about 290 times, and found a 2.57x speedup for a parallel Grover search. They also reported reductions of 11.8x, 8.2x and 2.5x in simulations for fusion, photochemistry and a drug-metabolising enzyme. The library and verified solutions are on GitHub; the paper is a preprint, and the circuits still exceed early fault-tolerant machines.",
+  "tags": [
+    "deepmind",
+    "quantum-computing",
+    "lean",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/finding-faster-quantum-algorithms-with-agents-and-formal-verification/",
+      "publishedAt": "2026-11-23T00:00:00Z"
+    },
+    {
+      "publisher": "arXiv",
+      "url": "https://arxiv.org/abs/2611.09822v3",
+      "publishedAt": "2026-11-16T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-nvidia-huang-reinstated-ceo",
+  "title": "Nvidia's board brings Jensen Huang back as CEO, and the stock jumps 31%",
+  "category": "ai",
+  "priority": 88,
+  "summary": "Nvidia's board voted unanimously on 23 November to reinstate Jensen Huang as president, CEO and director, eleven days after accepting his resignation. The board said it had input from senior US government officials and concluded that his return poses no national security risk. Nvidia closed at $165.05, up 31.5%, its best session since 2003 and a gain of roughly $950bn in market value. The independent investigation into whether Huang was the target of a foreign intelligence effort will continue, and he is due to testify to Congress on 1 December.",
+  "tags": [
+    "nvidia",
+    "jensen-huang",
+    "semiconductors",
+    "governance"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-board-reinstates-jensen-huang-as-president-ceo-and-board-director",
+      "publishedAt": "2026-11-23T13:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-ceo.html",
+      "publishedAt": "2026-11-23T13:30:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

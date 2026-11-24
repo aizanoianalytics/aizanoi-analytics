@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-24-asia-chip-rally-fed-bets",
+  "title": "Asian chip stocks surge as Huang's return revives the AI trade",
+  "category": "economy-markets",
+  "priority": 80,
+  "summary": "Asian equities jumped on 24 November after Nvidia rose 31.5% in New York. MSCI's Asia-Pacific index outside Japan climbed about 4%, South Korea's KOSPI gained more than 6%, Taiwan's benchmark rose 9.1% with TSMC and Foxconn near their daily limits, and Japan's Nikkei added as much as 5% on its return from a holiday. The rebound revived bets on a December Federal Reserve rate increase, lifting front-end Treasury yields and the dollar, while Chinese shares lagged. S&P 500 futures were flat and Nasdaq futures slightly lower.",
+  "tags": [
+    "markets",
+    "asia",
+    "semiconductors",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "The Straits Times",
+      "url": "https://www.straitstimes.com/business/asian-stocks-rally-as-jensen-huangs-nvidia-return-revives-ai-trade",
+      "publishedAt": "2026-11-24T02:05:00Z"
+    },
+    {
+      "publisher": "Mettis Global",
+      "url": "https://www.mettisglobal.news/Asian-markets-rally-as-Nvidia-CEOs-return-sparks-chip-stock-surge-65194",
+      "publishedAt": "2026-11-24T04:13:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-24T05:00:00Z",
+  "updatedAt": "2026-11-24T05:00:00Z",
+  "retrievedAt": "2026-11-24T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
