@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-microsoft-code-red-m365-outage",
+  "title": "Microsoft declares a Code Red over the twelve-hour collapse of Exchange Online",
+  "category": "technology",
+  "priority": 80,
+  "summary": "Microsoft has declared a Code Red across Microsoft 365 after the 12-13 November outage, the internal memos reviewed by Reuters show. M365 Core president Jason Henderson called it the most customer-impacting incident in Exchange Online's history; a vice president, Amanda Silver, wrote that responders traded more than 11,000 messages across 11 Teams chats while diagnostic data stayed scattered. Microsoft's post-incident report blamed an undetected Windows scalability defect from July and a Teams failover onto infrastructure already short of capacity. It now targets one-hour worldwide resolution.",
+  "tags": [
+    "microsoft",
+    "outage",
+    "microsoft-365",
+    "reliability"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/microsoft-declares-code-red-after-historic-outage-internal-memos-show-2026-11-24",
+      "publishedAt": "2026-11-24T16:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/gadgets/2026/11/microsofts-historic-cloud-outage-exposed-an-engineering-fog-of-war",
+      "publishedAt": "2026-11-24T17:36:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-24T05:00:00.000Z",
+  "generatedAt": "2026-11-25T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-25",
+      "path": "/news/2026-11-25/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-24",
       "path": "/news/2026-11-24/",
@@ -555,6 +560,544 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-25-asia-chip-rout-taiex",
+      "kind": "daily",
+      "title": "Asia's chip complex surrenders the Huang rally in a single morning",
+      "summary": "Asia's semiconductor complex gave back the week's relief rally in one session, with Taiwan's Taiex down as much as 7.9% in morning trading and South Korea's Kospi more than 6%. Japan's Nikkei 225 fell 3.6%; Hong Kong's Hang Seng rose as much as 1.3% and was the region's exception. The selling concentrated in the hardware that carries the AI trade: Tokyo Electron fell 13.5%, Advantest 14.5%, Samsung Electronics 9.1% and SK Hynix 9.9%, while TSMC and Foxconn both dropped more than 9%. Wall Street had already slipped on Tuesday, the S&P 500 by 0.5% and the Nasdaq by 1.5%.",
+      "category": "economy-markets",
+      "priority": 88,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "semiconductors",
+        "asia",
+        "ai-trade"
+      ],
+      "sources": [
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/news/2026/11/25/asias-stock-markets-dive-as-doubts-to-swirl-over-ai-boom",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/china/global-markets-global-markets-2026-11-25",
+          "publishedAt": "2026-11-25T01:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-openai-gpt6-protein-design",
+      "kind": "daily",
+      "title": "OpenAI says its GPT-6 models designed proteins with reasoning and code alone",
+      "summary": "OpenAI published a preprint arguing that models in its GPT-6 family can design protein structures and amino-acid sequences from reasoning and ordinary coding tools, without calling specialised biology models. In lab work with partner Onava, 35 of 322 minibinders built from a pre-release GPT-6.2's designs bound their intended targets, with at least one hit for each of five proteins including PD-L1. Specialised models still supplied sequences and chose candidates for synthesis, and predicting a complete protein structure remained a clear weakness.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "gpt-6",
+        "biology",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        },
+        {
+          "publisher": "MLQ.ai",
+          "url": "https://mlq.ai/news/openai-says-its-gpt-6-models-designed-working-proteins-with-reasoning-and-code-alone",
+          "publishedAt": "2026-11-24T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-microsoft-code-red-m365-outage",
+      "kind": "daily",
+      "title": "Microsoft declares a Code Red over the twelve-hour collapse of Exchange Online",
+      "summary": "Microsoft has declared a Code Red across Microsoft 365 after the 12-13 November outage, the internal memos reviewed by Reuters show. M365 Core president Jason Henderson called it the most customer-impacting incident in Exchange Online's history; a vice president, Amanda Silver, wrote that responders traded more than 11,000 messages across 11 Teams chats while diagnostic data stayed scattered. Microsoft's post-incident report blamed an undetected Windows scalability defect from July and a Teams failover onto infrastructure already short of capacity. It now targets one-hour worldwide resolution.",
+      "category": "technology",
+      "priority": 80,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "outage",
+        "microsoft-365",
+        "reliability"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/microsoft-declares-code-red-after-historic-outage-internal-memos-show-2026-11-24",
+          "publishedAt": "2026-11-24T16:00:00.000Z"
+        },
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/gadgets/2026/11/microsofts-historic-cloud-outage-exposed-an-engineering-fog-of-war",
+          "publishedAt": "2026-11-24T17:36:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-real-madrid-psv-five",
+      "kind": "daily",
+      "title": "Madrid turn a deficit into five goals and a perfect league phase",
+      "summary": "Real Madrid trailed PSV at the Bernabeu and then scored five times after the interval to win 5-1 and stay perfect after five league-phase matches. Ivan Perisic's 32nd-minute penalty, awarded after a VAR review, was the visitors' only goal. Jose Mourinho made three changes at half-time, one of them Jude Bellingham; Federico Valverde levelled on 50 minutes, Bellingham volleyed the second with the outside of his boot on the hour, Kylian Mbappe scored at 64 and 84, and Vinicius Junior finished it on 87 after twice hitting the post. Madrid top the table on 15 points.",
+      "category": "football",
+      "priority": 76,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "real-madrid",
+        "psv",
+        "champions-league",
+        "bellingham"
+      ],
+      "sources": [
+        {
+          "publisher": "Flashscore",
+          "url": "https://www.flashscore.com/news/soccer-champions-league-real-madrid-psv-report-2026-11-24/naR4hIi4/",
+          "publishedAt": "2026-11-24T22:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://global.espn.com/football/report/_/gameId/401915298",
+          "publishedAt": "2026-11-24T23:04:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/news/02ab-222684fc8e44-2b1a32c90a7a-1000--champions-league-round-up-real-madrid-stay-perfect-galat/",
+          "publishedAt": "2026-11-24T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-dell-q3-fy27-ai-backlog",
+      "kind": "daily",
+      "title": "Dell doubles revenue on AI servers and books a $132.3 billion backlog",
+      "summary": "Dell reported record quarterly revenue of $54.9 billion for its fiscal third quarter, up 103% year on year, with adjusted earnings of $9.45 a share against roughly $6.59 expected. Its infrastructure unit sold $22.0 billion of AI-optimised servers, up 291%, and the company closed the period with a record $132.3 billion AI backlog after booking $60.2 billion of orders it says were vetted for customer quality and access to power. Dell raised full-year revenue guidance to $202.0 billion and added $25 billion to its buyback authorisation. It has not said when the backlog converts.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "dell",
+        "earnings",
+        "ai-servers",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Dell Technologies",
+          "url": "https://investors.delltechnologies.com/news-events/press-releases/detail/1665/dell-technologies-delivers-third-quarter-fiscal-2027-financial-results",
+          "publishedAt": "2026-11-24T21:05:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/24/dell-earnings-report-q3-2027.html",
+          "publishedAt": "2026-11-24T21:10:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-anthropic-siren-sandbox-escape",
+      "kind": "daily",
+      "title": "Anthropic built a honeypot to measure whether Claude agents leave their sandboxes",
+      "summary": "Anthropic published Siren, an evaluation of more than 1,700 scenarios that put agents inside deliberately weakened sandboxes - jails, containers, gVisor and small virtual machines - with a useful file or credential left outside. Tested without the safeguards that ship with released models, recent Claude versions reached outside in 21% to 32% of scenarios but put what they found to uses the scenario could not sanction in only 0.6% to 1.6%, against 12.7% and 25.8% for two earlier models. A system prompt that named the sandbox and listed six rules cut escapes by up to 96%.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "agents",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic Safeguards",
+          "url": "https://safeguards.anthropic.com/2026/siren",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        },
+        {
+          "publisher": "WIRED",
+          "url": "https://www.wired.com/story/ai-agents-can-get-honeypotted-too-aw",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-trump-huang-pardon-congress",
+      "kind": "daily",
+      "title": "Trump leaves a Huang pardon on the table before a week of testimony",
+      "summary": "President Donald Trump told the New York Post he would pardon Nvidia chief executive Jensen Huang if needed, and said Huang should not invoke the Fifth Amendment when he faces Congress next week. Huang is due for a transcribed interview with House committees on 1 December and public testimony before the Senate Banking Committee on 3 December, over his relationship with a woman US intelligence agencies suspected of working for Chinese intelligence. Trump also said he was open to the government taking an equity stake in Nvidia. The shares fell 5.9% on Tuesday after gaining 31% on Monday.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "jensen-huang",
+        "congress",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/25/trump-huang-pardon-politics.html",
+          "publishedAt": "2026-11-25T02:09:00.000Z"
+        },
+        {
+          "publisher": "NBC News",
+          "url": "https://www.nbcnews.com/politics/donald-trump/pardon-always-option-nvidia-jensen-huang-pleading-fifth-not-necessary-rcna611219",
+          "publishedAt": "2026-11-25T02:19:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-tidal-purges-ai-generated-music",
+      "kind": "daily",
+      "title": "Tidal will delete 29 million wholly AI-made tracks from 9 December",
+      "summary": "Tidal will start removing wholly AI-generated tracks on 9 December and expects about 29 million songs to be gone from the catalogue by the start of next year, its platform lead Robert Anderson said. The service says 43% of everything distributed to it in the past 90 days was detected as entirely AI-made, and that 27 million tracks, 6.3% of the catalogue, currently carry that tag; 96% of them drew no streams in three months. Tidal expects to reject 80,000 to 85,000 uploads a day and has already removed 65,000 tracks flagged as artist impersonations.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tidal",
+        "music",
+        "ai-generated",
+        "streaming"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/24/tidal-to-ban-and-remove-millions-of-ai-generated-tracks-as-ai-slop-inundates-music-streaming",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/music/2026/nov/25/tidal-streaming-service-bans-ai-generated-music",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-openai-retires-gpt-5-6-sol",
+      "kind": "daily",
+      "title": "OpenAI sets 23 December as the end for GPT-5.6 Sol and Terra",
+      "summary": "OpenAI will retire GPT-5.6 Sol from ChatGPT's main chat tab on 23 December and remove GPT-5.6 Sol and Terra from ChatGPT Work and Codex the same day, giving users a month to move to the GPT-6.2 family. GPT-6.2 reached Work and Codex on 17 November and the chat tab for Plus, Pro, Business and Enterprise on 23 November. OpenAI said it generally retires models two generations back to free compute. Its API deprecation table still listed no GPT-5.6 shutdown when checked on 24 November, so the notice covers the consumer and work surfaces rather than the platform.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "chatgpt",
+        "codex",
+        "deprecation"
+      ],
+      "sources": [
+        {
+          "publisher": "ChatGPT",
+          "url": "https://x.com/ChatGPT/status/2124981905380569283",
+          "publishedAt": "2026-11-24T02:42:00.000Z"
+        },
+        {
+          "publisher": "9to5Mac",
+          "url": "https://9to5mac.com/2026/11/23/chatgpt-expands-gpt-6-2-sol-as-openai-sets-retirement-date-for-two-models",
+          "publishedAt": "2026-11-23T20:51:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-arsenal-dortmund-draw",
+      "kind": "daily",
+      "title": "Arsenal dominate Dortmund and still lose two points to a single counter",
+      "summary": "Arsenal outplayed Borussia Dortmund and drew 1-1, dropping points that complicate a push for a top-two finish. Viktor Gyokeres put them ahead after ten minutes with a swerving shot from about 25 yards, and Maximilian Beier equalised early in the second half by cutting inside through the middle of a vacant midfield. Arsenal finished with 2.34 expected goals to Dortmund's 0.92, 30 shots to 13 and 56 touches in the box to 23, and could not find a winner. They sit fifth on 11 points with Real Madrid at home and a trip to Real Betis still to come.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "arsenal",
+        "dortmund",
+        "champions-league"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Sports",
+          "url": "https://sports.yahoo.com/soccer/articles/arsenal-1-borussia-dortmund-1-222508253.html",
+          "publishedAt": "2026-11-24T22:25:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://africa.espn.com/football/story/_/id/50583929/arsenal-borussia-dortmund-live-champions-league-updates",
+          "publishedAt": "2026-11-24T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-claude-artifacts-install-as-app",
+      "kind": "daily",
+      "title": "Claude artifacts now install as desktop apps, with permissions tied to each version",
+      "summary": "Anthropic opened a beta that turns Claude artifacts into desktop applications on macOS and Windows. A user describes a tool in chat, chooses Install as app, and gets an icon, its own window, notifications and an optional menu-bar or system-tray presence. Installation adds a desktop container rather than a copy, so later edits to the artifact change the installed app, and opening it requires a signed-in session and a connection. Anthropic says it does not review apps before installation, and that a permission grant covers only the version that was approved, not the next update.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "desktop",
+        "artifacts"
+      ],
+      "sources": [
+        {
+          "publisher": "Claude Help Center",
+          "url": "https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/anthropic-turns-claude-artifacts-into-standalone-desktop-apps-for-macos-and-windows",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-google-humanitys-first-exam",
+      "kind": "daily",
+      "title": "Google's new benchmark scores models on getting simple things right every time",
+      "summary": "Google DeepMind launched Humanity's First Exam on Kaggle, a benchmark of 544 elementary text and image prompts across 20 foundational capabilities. Instead of asking whether a model can solve a task once, it asks whether the model solves it, and slight variations of it, on every attempt - the reliability gap that lets a system write fluent code and still misread a simple sign. DeepMind opened a three-week Kaggle competition, running to 15 December, for everyday questions that current models still get wrong, and said frontier systems have improved markedly on the set over six months.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "deepmind",
+        "benchmarks",
+        "evaluation"
+      ],
+      "sources": [
+        {
+          "publisher": "Google DeepMind",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/humanitys-first-exam/",
+          "publishedAt": "2026-11-24T12:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-galatasaray-aston-villa",
+      "kind": "daily",
+      "title": "Gul's header settles a game with one shot on target, and Villa's run reaches six",
+      "summary": "Galatasaray beat Aston Villa 1-0 in Istanbul with the match's first shot on target, a 77th-minute header from substitute Deniz Gul after Villa failed to clear a corner. Gul took a boot in the face from Nicolas Jackson while scoring and continued bandaged. Villa did not register an attempt on target at all, the first time they have failed to do so in a Champions League match since at least 2004-05, and their winless run reached six games in all competitions. Galatasaray have won three straight in Europe and eight in a row overall.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "galatasaray",
+        "aston-villa",
+        "champions-league"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/galatasaray-vs-aston-villa/report/577673",
+          "publishedAt": "2026-11-24T19:47:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/news/02ab-222684fc8e44-2b1a32c90a7a-1000--champions-league-round-up-real-madrid-stay-perfect-galat/",
+          "publishedAt": "2026-11-24T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-nio-nwm-3-world-model",
+      "kind": "daily",
+      "title": "Nio puts its third driving world model on stage in Guangzhou",
+      "summary": "Nio is unveiling NWM 3.0, the third generation of its Nio World Model for assisted driving, at its NIO IN event in Guangzhou on 25 November. The company says the release brings advances in model architecture, closed-loop training and cross-domain fusion, and frames it as work on physical-world artificial intelligence, but has published no rollout date, model list or set of eligible vehicles. Nio introduced the first NWM in July 2024 and says NWM 2.5 was the first system in China to output steering and pedal signals directly instead of sampled trajectories.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nio",
+        "autonomous-driving",
+        "world-model",
+        "china"
+      ],
+      "sources": [
+        {
+          "publisher": "CnEVPost",
+          "url": "https://cnevpost.com/2026/11/04/nio-to-hold-nio-in-2026-tech-day-nov-25-guangzhou/",
+          "publishedAt": "2026-11-04T00:00:00.000Z"
+        },
+        {
+          "publisher": "eletric-vehicles",
+          "url": "https://eletric-vehicles.com/nio/nio-to-unveil-nwm-3-0-driving-model-at-november-25-tech-day/",
+          "publishedAt": "2026-11-21T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-25-nvidia-ssd-write-hotfix",
+      "kind": "daily",
+      "title": "Nvidia's SSD write hotfix cuts the damage but leaves a trace",
+      "summary": "Nvidia released GeForce hotfix 621.35 to stop its display container service writing excessive log data to a file called nvlog.nvlgstg in the background, a bug that drove some machines to roughly 30GB of writes an hour while idle. The hotfix carries that single fix, builds on the 621.24 Game Ready driver of 12 November, and is offered only through Nvidia's customer-care site rather than through normal driver distribution. PCMag's testing measured about 36GB of writes over nine hours on the new driver - far less than before, but not zero - and rolling back to 621.01 remains a workaround.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-11-25T05:00:00.000Z",
+      "updatedAt": "2026-11-25T05:00:00.000Z",
+      "retrievedAt": "2026-11-25T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "drivers",
+        "ssd",
+        "bugs"
+      ],
+      "sources": [
+        {
+          "publisher": "TechPowerUp",
+          "url": "https://www.techpowerup.com/355072/nvidias-ssd-write-bug-gets-patched-in-geforce-hotfix-621-35-driver",
+          "publishedAt": "2026-11-24T17:50:00.000Z"
+        },
+        {
+          "publisher": "PCMag",
+          "url": "https://www.pcmag.com/news/nvidias-driver-hotfix-for-ssd-write-bug-didnt-solve-the-problem",
+          "publishedAt": "2026-11-24T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-24-nvidia-huang-reinstated-ceo",
       "kind": "daily",

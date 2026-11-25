@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-openai-retires-gpt-5-6-sol",
+  "title": "OpenAI sets 23 December as the end for GPT-5.6 Sol and Terra",
+  "category": "ai",
+  "priority": 62,
+  "summary": "OpenAI will retire GPT-5.6 Sol from ChatGPT's main chat tab on 23 December and remove GPT-5.6 Sol and Terra from ChatGPT Work and Codex the same day, giving users a month to move to the GPT-6.2 family. GPT-6.2 reached Work and Codex on 17 November and the chat tab for Plus, Pro, Business and Enterprise on 23 November. OpenAI said it generally retires models two generations back to free compute. Its API deprecation table still listed no GPT-5.6 shutdown when checked on 24 November, so the notice covers the consumer and work surfaces rather than the platform.",
+  "tags": [
+    "openai",
+    "chatgpt",
+    "codex",
+    "deprecation"
+  ],
+  "sources": [
+    {
+      "publisher": "ChatGPT",
+      "url": "https://x.com/ChatGPT/status/2124981905380569283",
+      "publishedAt": "2026-11-24T02:42:00Z"
+    },
+    {
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/11/23/chatgpt-expands-gpt-6-2-sol-as-openai-sets-retirement-date-for-two-models",
+      "publishedAt": "2026-11-23T20:51:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

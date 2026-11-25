@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-25-google-humanitys-first-exam",
+  "title": "Google's new benchmark scores models on getting simple things right every time",
+  "category": "ai",
+  "priority": 56,
+  "summary": "Google DeepMind launched Humanity's First Exam on Kaggle, a benchmark of 544 elementary text and image prompts across 20 foundational capabilities. Instead of asking whether a model can solve a task once, it asks whether the model solves it, and slight variations of it, on every attempt - the reliability gap that lets a system write fluent code and still misread a simple sign. DeepMind opened a three-week Kaggle competition, running to 15 December, for everyday questions that current models still get wrong, and said frontier systems have improved markedly on the set over six months.",
+  "tags": [
+    "google",
+    "deepmind",
+    "benchmarks",
+    "evaluation"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/humanitys-first-exam/",
+      "publishedAt": "2026-11-24T12:45:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

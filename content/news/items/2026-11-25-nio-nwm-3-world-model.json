@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-nio-nwm-3-world-model",
+  "title": "Nio puts its third driving world model on stage in Guangzhou",
+  "category": "ai",
+  "priority": 52,
+  "summary": "Nio is unveiling NWM 3.0, the third generation of its Nio World Model for assisted driving, at its NIO IN event in Guangzhou on 25 November. The company says the release brings advances in model architecture, closed-loop training and cross-domain fusion, and frames it as work on physical-world artificial intelligence, but has published no rollout date, model list or set of eligible vehicles. Nio introduced the first NWM in July 2024 and says NWM 2.5 was the first system in China to output steering and pedal signals directly instead of sampled trajectories.",
+  "tags": [
+    "nio",
+    "autonomous-driving",
+    "world-model",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "CnEVPost",
+      "url": "https://cnevpost.com/2026/11/04/nio-to-hold-nio-in-2026-tech-day-nov-25-guangzhou/",
+      "publishedAt": "2026-11-04T00:00:00Z"
+    },
+    {
+      "publisher": "eletric-vehicles",
+      "url": "https://eletric-vehicles.com/nio/nio-to-unveil-nwm-3-0-driving-model-at-november-25-tech-day/",
+      "publishedAt": "2026-11-21T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

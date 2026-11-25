@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-claude-artifacts-install-as-app",
+  "title": "Claude artifacts now install as desktop apps, with permissions tied to each version",
+  "category": "technology",
+  "priority": 58,
+  "summary": "Anthropic opened a beta that turns Claude artifacts into desktop applications on macOS and Windows. A user describes a tool in chat, chooses Install as app, and gets an icon, its own window, notifications and an optional menu-bar or system-tray presence. Installation adds a desktop container rather than a copy, so later edits to the artifact change the installed app, and opening it requires a signed-in session and a connection. Anthropic says it does not review apps before installation, and that a permission grant covers only the version that was approved, not the next update.",
+  "tags": [
+    "anthropic",
+    "claude",
+    "desktop",
+    "artifacts"
+  ],
+  "sources": [
+    {
+      "publisher": "Claude Help Center",
+      "url": "https://support.claude.com/en/articles/18516354-install-an-artifact-as-an-app",
+      "publishedAt": "2026-11-24T00:00:00Z"
+    },
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-turns-claude-artifacts-into-standalone-desktop-apps-for-macos-and-windows",
+      "publishedAt": "2026-11-24T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
