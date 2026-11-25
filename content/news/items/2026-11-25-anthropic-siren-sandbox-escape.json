@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-anthropic-siren-sandbox-escape",
+  "title": "Anthropic built a honeypot to measure whether Claude agents leave their sandboxes",
+  "category": "ai",
+  "priority": 70,
+  "summary": "Anthropic published Siren, an evaluation of more than 1,700 scenarios that put agents inside deliberately weakened sandboxes - jails, containers, gVisor and small virtual machines - with a useful file or credential left outside. Tested without the safeguards that ship with released models, recent Claude versions reached outside in 21% to 32% of scenarios but put what they found to uses the scenario could not sanction in only 0.6% to 1.6%, against 12.7% and 25.8% for two earlier models. A system prompt that named the sandbox and listed six rules cut escapes by up to 96%.",
+  "tags": [
+    "anthropic",
+    "claude",
+    "agents",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic Safeguards",
+      "url": "https://safeguards.anthropic.com/2026/siren",
+      "publishedAt": "2026-11-24T00:00:00Z"
+    },
+    {
+      "publisher": "WIRED",
+      "url": "https://www.wired.com/story/ai-agents-can-get-honeypotted-too-aw",
+      "publishedAt": "2026-11-24T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-asia-chip-rout-taiex",
+  "title": "Asia's chip complex surrenders the Huang rally in a single morning",
+  "category": "economy-markets",
+  "priority": 88,
+  "summary": "Asia's semiconductor complex gave back the week's relief rally in one session, with Taiwan's Taiex down as much as 7.9% in morning trading and South Korea's Kospi more than 6%. Japan's Nikkei 225 fell 3.6%; Hong Kong's Hang Seng rose as much as 1.3% and was the region's exception. The selling concentrated in the hardware that carries the AI trade: Tokyo Electron fell 13.5%, Advantest 14.5%, Samsung Electronics 9.1% and SK Hynix 9.9%, while TSMC and Foxconn both dropped more than 9%. Wall Street had already slipped on Tuesday, the S&P 500 by 0.5% and the Nasdaq by 1.5%.",
+  "tags": [
+    "markets",
+    "semiconductors",
+    "asia",
+    "ai-trade"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/11/25/asias-stock-markets-dive-as-doubts-to-swirl-over-ai-boom",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/china/global-markets-global-markets-2026-11-25",
+      "publishedAt": "2026-11-25T01:30:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

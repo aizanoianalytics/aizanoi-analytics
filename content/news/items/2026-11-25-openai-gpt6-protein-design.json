@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-25-openai-gpt6-protein-design",
+  "title": "OpenAI says its GPT-6 models designed proteins with reasoning and code alone",
+  "category": "ai",
+  "priority": 84,
+  "summary": "OpenAI published a preprint arguing that models in its GPT-6 family can design protein structures and amino-acid sequences from reasoning and ordinary coding tools, without calling specialised biology models. In lab work with partner Onava, 35 of 322 minibinders built from a pre-release GPT-6.2's designs bound their intended targets, with at least one hit for each of five proteins including PD-L1. Specialised models still supplied sequences and chose candidates for synthesis, and predicting a complete protein structure remained a clear weakness.",
+  "tags": [
+    "openai",
+    "gpt-6",
+    "biology",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
+      "publishedAt": "2026-11-24T00:00:00Z"
+    },
+    {
+      "publisher": "MLQ.ai",
+      "url": "https://mlq.ai/news/openai-says-its-gpt-6-models-designed-working-proteins-with-reasoning-and-code-alone",
+      "publishedAt": "2026-11-24T12:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-25T05:00:00Z",
+  "updatedAt": "2026-11-25T05:00:00Z",
+  "retrievedAt": "2026-11-25T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
