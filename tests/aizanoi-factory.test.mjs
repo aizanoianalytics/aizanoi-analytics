@@ -63,9 +63,12 @@ test('Factory exposes English UI, Free Tour / Battle Mode selector, Aizanoi Wars
   assert.match(html, /id="combat-ammo"/);
   assert.match(html, /id="combat-hp"/);
   assert.match(html, /id="combat-wave"/);
+  assert.match(html, /id="combat-objectives"/);
+  assert.match(html, /id="combat-objective-bar"/);
   assert.match(html, /id="combat-over-modal"/);
 
   assert.match(factory, /function chooseFactoryQuality/);
+  assert.match(factory, /function createCyborgSystem/);
   assert.match(factory, /G\.render\.setQuality/);
   assert.match(factory, /aizanoi\.factory\.quality/);
   assert.match(factory, /shadow:\s*8192|shadow = Math\.max/);
@@ -78,6 +81,10 @@ test('Factory exposes English UI, Free Tour / Battle Mode selector, Aizanoi Wars
   assert.match(factory, /invulnerable = true/);
   assert.match(factory, /invulnerable = false/);
   assert.match(factory, /4\.2m/);
+  assert.match(factory, /maxAlive:\s*16/);
+  assert.match(factory, /extractReady/);
+  assert.match(factory, /factory-parachute-rig/);
+  assert.match(factory, /makeHexSuitTexture/);
 
   assert.match(css, /#coords-readout[\s\S]*width:\s*18ch/);
   assert.match(css, /\.hud-actions[\s\S]*z-index:\s*30/);

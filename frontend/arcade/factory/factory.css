@@ -851,6 +851,55 @@ body.mode-combat.is-ads #crosshair {
   color: var(--bone);
 }
 
+.combat-objective-bar {
+  position: absolute;
+  top: 66px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  background: var(--plate);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(88, 196, 184, 0.45);
+  border-left: 3px solid var(--teal);
+  font: 600 12px/1 var(--f-sans);
+  color: var(--bone);
+  white-space: nowrap;
+}
+
+.combat-objective-bar.extract {
+  border-color: rgba(255, 179, 71, 0.8);
+  border-left-color: var(--signal);
+  background: rgba(34, 24, 10, 0.82);
+}
+
+.ob-tag {
+  font: 700 10px/1 var(--f-mono);
+  letter-spacing: 0.14em;
+  color: var(--teal);
+}
+
+.combat-objective-bar.extract .ob-tag {
+  color: var(--signal);
+}
+
+.ob-dist {
+  font: 700 11px/1 var(--f-mono);
+  color: var(--signal-hot);
+  padding-left: 8px;
+  border-left: 1px solid rgba(235, 230, 220, 0.22);
+}
+
+.combat-over-card.victory {
+  border-top-color: var(--teal);
+}
+
+.combat-over-card.victory .mode-kicker {
+  color: var(--teal);
+}
+
 .wave-banner {
   position: absolute;
   left: 50%;
