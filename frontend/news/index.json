@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-25T05:00:00.000Z",
+  "generatedAt": "2026-11-26T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-26",
+      "path": "/news/2026-11-26/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-25",
       "path": "/news/2026-11-25/",
@@ -560,6 +565,496 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-26-fcc-spacex-starmind-orbital-data-centers",
+      "kind": "daily",
+      "title": "FCC authorizes SpaceX to deploy one million orbital data centers",
+      "summary": "The FCC authorized SpaceX on November 25 to deploy up to one million orbital compute modules for its Starmind constellation, the first U.S. authorization for a constellation of data centers in space. The order allows radiofrequency backup telemetry, tracking and command links, and optical inter-satellite links backed by 18.8-19.3 GHz downlink and 28.6-29.1 GHz uplink communications. Other orbital data center proposals remain under review.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "fcc",
+        "spacex",
+        "satellites",
+        "data-centers"
+      ],
+      "sources": [
+        {
+          "publisher": "Federal Communications Commission",
+          "url": "https://docs.fcc.gov/public/attachments/DOC-427572A1.pdf",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-us-q3-gdp-revised-4-3-percent",
+      "kind": "daily",
+      "title": "US third-quarter GDP revised up to 4.3% annualised, fastest in three years",
+      "summary": "The BEA raised its second estimate of third-quarter US GDP to 4.3 percent at an annualised rate from 3.4 percent, the fastest in three years, up from 2.2 percent in the second quarter. Real final sales to private domestic purchasers rose 5.8 percent. Real gross domestic income rose 4.4 percent and profits from current production increased $206.0 billion. The BEA cited stronger investment, especially software, and consumer spending on goods, partly offset by weaker health-care services.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gdp",
+        "bea",
+        "us-economy",
+        "growth"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Bureau of Economic Analysis",
+          "url": "https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-3rd-quarter-2026",
+          "publishedAt": "2026-11-25T13:30:00.000Z"
+        },
+        {
+          "publisher": "Fox Business",
+          "url": "https://www.foxbusiness.com/economy/us-economy-q3-2026-second-estimate",
+          "publishedAt": "2026-11-25T13:46:51.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-anthropic-messages-api-rust",
+      "kind": "daily",
+      "title": "Anthropic used Claude agents to port its Messages API to Rust and cut CPU use",
+      "summary": "Anthropic used Claude agents to port its Messages API from Python to Rust as traffic grew 1,800-fold from early 2024 to fall 2026. Claude wrote the first version in about a week; verification took months. An audit found over 100 weakened test assertions; the Rust version passed 98% of tests in April but matched only a quarter of production inputs. Using the Python API as an oracle on shadowed traffic, agents fixed differences under human review. Anthropic reports about 70% less CPU per request.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "rust",
+        "engineering"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/migrating-api-to-rust",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-bok-raises-base-rate-3-25-percent",
+      "kind": "daily",
+      "title": "Bank of Korea raises base rate to 3.25% and lifts 2027 growth forecast to 4.1%",
+      "summary": "The Bank of Korea raised its base rate by 25 basis points to 3.25 percent with five members in favour and two voting to hold at 3.00 percent. It lifted its 2026 growth forecast to 3.9 percent from 3.3 percent and its 2027 forecast to 4.1 percent from 2.9 percent, citing strong semiconductor exports and investment. Inflation was projected at 2.7 percent this year and 2.4 percent next, above the 2 percent target, with further hikes dependent on inflation, growth and financial stability.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bank-of-korea",
+        "rates",
+        "south-korea",
+        "inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "Bank of Korea",
+          "url": "https://www.bok.or.kr/eng/bbs/E0000634/view.do?depth=400423&menuNo=400423&nttId=11067086&programType=newsDataEng&relate=Y",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yonhap News Agency",
+          "url": "https://en.yna.co.kr/view/AEN20261126001200320",
+          "publishedAt": "2026-11-26T00:51:59.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-sporting-united-2-2",
+      "kind": "daily",
+      "title": "Fernandes scores twice as Sporting hold United to a 2-2 draw",
+      "summary": "Manchester United were held 2-2 by Sporting in Lisbon, denying Mauricio Pochettino a first win. Luis Suarez scored from the spot in the 33rd minute after Lammens saved his first penalty, and Bruno Fernandes levelled from a penalty on 48 minutes before going ahead two minutes later when a shot bounced off a divot over goalkeeper Kaique Pereira. Suarez equalised in the 80th minute after Lammens spilled a high ball, a late United goal was disallowed, and Tielemans was sent off late.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "manchester-united",
+        "sporting",
+        "champions-league",
+        "fernandes"
+      ],
+      "sources": [
+        {
+          "publisher": "Manchester United",
+          "url": "https://www.manutd.com/en/news/match-report-sporting-lisbon-manchester-united-25-november-2026",
+          "publishedAt": "2026-11-25T22:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/sporting-lisbon-vs-manchester-united/report/577686",
+          "publishedAt": "2026-11-25T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-cloudflare-search-for-agents",
+      "kind": "daily",
+      "title": "Cloudflare adds one-toggle searchable index for AI agents",
+      "summary": "Cloudflare launched Search for Agents on November 25, a toggle that automatically creates an AI Search instance for a website, crawls its pages and exposes a search API under the site's own domain. Enabled pages advertise the endpoint through metadata and YAML front matter so agents can find it without crawling each page. The feature is available on all plans, including Free, and returns results in Markdown.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cloudflare",
+        "infrastructure",
+        "agents",
+        "search"
+      ],
+      "sources": [
+        {
+          "publisher": "Cloudflare Blog",
+          "url": "https://blog.cloudflare.com/search-for-agents/",
+          "publishedAt": "2026-11-25T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-deepmind-mass-spec-skills",
+      "kind": "daily",
+      "title": "Google DeepMind ships Mass Spec Skills that interpret tandem mass spectra",
+      "summary": "Google DeepMind released Mass Spec Skills for Google Antigravity, skills pairing Gemini's chemical reasoning with mass-spectrometry tools and public chemical databases. The agent chains library searches, formula prediction, fragment matching and structure validation. On 100 compounds from MoNA, three tested models identified the exact molecule in around 97% of attempts with the skills, versus below 4% with no internet or skills. Token use fell nearly fourfold on Gemini 3.8 Flash.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepmind",
+        "gemini",
+        "chemistry",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Google DeepMind",
+          "url": "https://deepmind.google/blog/interpreting-mass-spectra-with-google-antigravity/",
+          "publishedAt": "2026-11-25T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-liverpool-brugge-isak-wirtz",
+      "kind": "daily",
+      "title": "Isak scores twice as Liverpool win 3-0 at Club Brugge",
+      "summary": "Liverpool beat Club Brugge 3-0 at Jan Breydel Stadium in the Champions League league phase. Alexander Isak opened the scoring after Dominik Szoboszlai, captain with Virgil van Dijk on the bench, cut the ball back from a pass intercepted from goalkeeper Yann Sommer. Florian Wirtz curled in from the edge of the box on 79 minutes after Rio Ngumoha switched play, and Isak dinked over Sommer to complete the scoring. Andoni Iraola's side moved to 12 points from 15 and host Porto next.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "liverpool",
+        "club-brugge",
+        "champions-league",
+        "isak"
+      ],
+      "sources": [
+        {
+          "publisher": "Liverpool FC",
+          "url": "https://www.liverpoolfc.com/news/match-report-liverpool-brugge-champions-league-isak-wirtz",
+          "publishedAt": "2026-11-25T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-ofgem-energy-price-cap-26-percent",
+      "kind": "daily",
+      "title": "Ofgem raises UK energy price cap 26% to £2,166 from January",
+      "summary": "Ofgem said the price cap on default tariffs will rise 26 percent for 1 January to 31 March 2027, lifting the annualised bill for a typical direct-debit gas and electricity household to £2,166 from £1,723. 20 million households on standard variable tariffs are affected; 10 million on fixed deals are shielded. Ofgem blamed Middle East conflict for higher wholesale gas prices, which rose faster than electricity. The government said 20 million households will get £100 towards bills from January.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ofgem",
+        "energy",
+        "uk-inflation",
+        "price-cap"
+      ],
+      "sources": [
+        {
+          "publisher": "Ofgem",
+          "url": "https://ofgem.gov.uk/press-release/energy-price-cap-rise-26-january-2027",
+          "publishedAt": "2026-11-25T12:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Euronext)",
+          "url": "https://live.euronext.com/en/financial-news/britons-face-soaring-energy-bills-after-26-price-cap-hike",
+          "publishedAt": "2026-11-25T12:35:06.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-xpeng-turing-physical-ai-iron",
+      "kind": "daily",
+      "title": "XPENG unveils Turing physical AI architecture and debuts IRON humanoid",
+      "summary": "XPENG unveiled its Turing Physical AI Architecture (VLA 3.0) at its eighth AI Day on November 25, linking cognition, real-time decisions and physical execution across vehicles and robots. Three layers run from body control to vision-language task planning. XPENG also debuted the IRON humanoid, with 76 degrees of freedom and more than 1,500 tactile sensing points. VLA 2.0 version 6.4.0 raises agent-driven closed-loop training speed by 10 to 12 times.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "xpeng",
+        "robotics",
+        "humanoid",
+        "physical-ai"
+      ],
+      "sources": [
+        {
+          "publisher": "XPENG",
+          "url": "https://www.xpeng.com/news/01a212b0d830a1e838d68a02a2110174",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-barcelona-sabah-gordon-double",
+      "kind": "daily",
+      "title": "Gordon scores twice as Barcelona beat Sabah 4-1 in Baku",
+      "summary": "Barcelona beat Sabah 4-1 in Baku as Anthony Gordon scored twice, with Adeyemi and Gabriel Jesus also scoring. Gordon broke the deadlock in the 31st minute when goalkeeper Stas Pokatilov failed to hold a cross, and struck again just after half-time from a rebound after Pokatilov denied Jesus. Alejandro Balde set up Adeyemi four minutes later, and Jesus converted on the hour after Pokatilov parried Kounde's header from a Gordon corner. It was a fourth win in five league-phase games.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "barcelona",
+        "sabah",
+        "champions-league",
+        "gordon"
+      ],
+      "sources": [
+        {
+          "publisher": "FC Barcelona",
+          "url": "https://www.fcbarcelona.com/en/football/first-team/news/4614625/sabah-1-4-fc-barcelona-gordon-strikes-again-in-baku",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "Barça Blaugranes",
+          "url": "https://www.barcablaugranes.com/barcelona-uefa-champions-league/139010/sabah-barcelona-champions-league-final-score-match-report-recap-reactions",
+          "publishedAt": "2026-11-25T19:38:23.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-google-research-social-reasoning",
+      "kind": "daily",
+      "title": "Google Research open-sources a social-reasoning benchmark with verifiable ground truth",
+      "summary": "Google Research published a framework that tests whether LLM assistants can infer a target's hidden motive from a user's subjective account. A target agent with a controlled motive interacts with other agents, including a user proxy that consults the assistant; the seeded motive provides verifiable ground truth. Across 12 models, assistants were less accurate than when observing events directly and adopted unfounded user suspicions. The framework and a dataset of more than 20,000 generated examples are open-sourced.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google-research",
+        "benchmark",
+        "social-reasoning",
+        "llms"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Research",
+          "url": "https://research.google/blog/verifiable-social-reasoning-for-llm-assistants/",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-kioxia-nvidia-hbm-ssd-memory",
+      "kind": "daily",
+      "title": "Kioxia and NVIDIA demo petabyte GPU memory expansion using SSDs",
+      "summary": "Kioxia America and NVIDIA announced a proof of concept on November 25 that uses NVMe SSDs to extend effective GPU memory capacity beyond one petabyte. Running NVIDIA's SCADA software on a GB200 NVL72 rack with 18 nodes and 144 Kioxia XD8 7.68 TB drives, the setup offered about 1.1 PB of raw flash and nearly 60 TB of extended memory per node. The companies say the configuration could process two trillion 512-byte vectors.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "kioxia",
+        "nvidia",
+        "storage",
+        "ssd"
+      ],
+      "sources": [
+        {
+          "publisher": "KIOXIA America",
+          "url": "https://americas.kioxia.com/en-us/business/news/2026/ssd-20261125-1.html",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-aws-transcribe-turbo-preview",
+      "kind": "daily",
+      "title": "Amazon puts Transcribe Turbo speech-to-text into public preview for voice agents",
+      "summary": "Amazon made Transcribe Turbo, its next-generation speech-to-text model available in public preview in US East (Ohio) for batch and streaming. Streaming covers six languages and cuts word error rate 14% in English and 11% elsewhere versus the current production model. Two features ship at no extra charge: semantic turn-taking, which responds in about 615 ms with a 5% interruption rate, and runtime ASR hints, which raised menu-routing accuracy from 87% to 97% on English customer-service data.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "amazon",
+        "aws",
+        "speech",
+        "voice-agents"
+      ],
+      "sources": [
+        {
+          "publisher": "AWS",
+          "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/transcribe-turbo-preview/",
+          "publishedAt": "2026-11-25T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-26-jetbrains-mellum21-instruct",
+      "kind": "daily",
+      "title": "JetBrains releases Mellum2.1 Instruct, a faster open coding model for sub-agents",
+      "summary": "JetBrains released Mellum2.1 Instruct, the non-reasoning sibling of its open 12B mixture-of-experts coding model. It answers directly, using reinforcement-learning post-training on repository-level tasks. JetBrains says it generates about half the tokens of the Thinking variant on agentic coding and doubled its score on SWE-bench Verified over the previous Instruct release. A multi-token prediction head makes generation up to 1.8 times faster. Weights are on Hugging Face under Apache 2.0.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-11-26T05:00:00.000Z",
+      "updatedAt": "2026-11-26T05:00:00.000Z",
+      "retrievedAt": "2026-11-26T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "jetbrains",
+        "mellum",
+        "open-weights",
+        "coding-agents"
+      ],
+      "sources": [
+        {
+          "publisher": "JetBrains Blog",
+          "url": "https://blog.jetbrains.com/ai/2026/11/mellum2-1-instruct-is-out-bringing-faster-answers-for-coding-agents/",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-25-asia-chip-rout-taiex",
       "kind": "daily",

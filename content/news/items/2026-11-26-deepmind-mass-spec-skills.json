@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-deepmind-mass-spec-skills",
+  "title": "Google DeepMind ships Mass Spec Skills that interpret tandem mass spectra",
+  "category": "ai",
+  "priority": 72,
+  "summary": "Google DeepMind released Mass Spec Skills for Google Antigravity, skills pairing Gemini's chemical reasoning with mass-spectrometry tools and public chemical databases. The agent chains library searches, formula prediction, fragment matching and structure validation. On 100 compounds from MoNA, three tested models identified the exact molecule in around 97% of attempts with the skills, versus below 4% with no internet or skills. Token use fell nearly fourfold on Gemini 3.8 Flash.",
+  "tags": [
+    "deepmind",
+    "gemini",
+    "chemistry",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Google DeepMind",
+      "url": "https://deepmind.google/blog/interpreting-mass-spectra-with-google-antigravity/",
+      "publishedAt": "2026-11-25T17:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

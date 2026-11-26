@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-ofgem-energy-price-cap-26-percent",
+  "title": "Ofgem raises UK energy price cap 26% to £2,166 from January",
+  "category": "economy-markets",
+  "priority": 72,
+  "summary": "Ofgem said the price cap on default tariffs will rise 26 percent for 1 January to 31 March 2027, lifting the annualised bill for a typical direct-debit gas and electricity household to £2,166 from £1,723. 20 million households on standard variable tariffs are affected; 10 million on fixed deals are shielded. Ofgem blamed Middle East conflict for higher wholesale gas prices, which rose faster than electricity. The government said 20 million households will get £100 towards bills from January.",
+  "tags": [
+    "ofgem",
+    "energy",
+    "uk-inflation",
+    "price-cap"
+  ],
+  "sources": [
+    {
+      "publisher": "Ofgem",
+      "url": "https://ofgem.gov.uk/press-release/energy-price-cap-rise-26-january-2027",
+      "publishedAt": "2026-11-25T12:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Euronext)",
+      "url": "https://live.euronext.com/en/financial-news/britons-face-soaring-energy-bills-after-26-price-cap-hike",
+      "publishedAt": "2026-11-25T12:35:06Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
