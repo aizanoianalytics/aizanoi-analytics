@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-kioxia-nvidia-hbm-ssd-memory",
+  "title": "Kioxia and NVIDIA demo petabyte GPU memory expansion using SSDs",
+  "category": "technology",
+  "priority": 68,
+  "summary": "Kioxia America and NVIDIA announced a proof of concept on November 25 that uses NVMe SSDs to extend effective GPU memory capacity beyond one petabyte. Running NVIDIA's SCADA software on a GB200 NVL72 rack with 18 nodes and 144 Kioxia XD8 7.68 TB drives, the setup offered about 1.1 PB of raw flash and nearly 60 TB of extended memory per node. The companies say the configuration could process two trillion 512-byte vectors.",
+  "tags": [
+    "kioxia",
+    "nvidia",
+    "storage",
+    "ssd"
+  ],
+  "sources": [
+    {
+      "publisher": "KIOXIA America",
+      "url": "https://americas.kioxia.com/en-us/business/news/2026/ssd-20261125-1.html",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

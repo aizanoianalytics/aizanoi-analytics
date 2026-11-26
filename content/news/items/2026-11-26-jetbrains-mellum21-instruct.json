@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-jetbrains-mellum21-instruct",
+  "title": "JetBrains releases Mellum2.1 Instruct, a faster open coding model for sub-agents",
+  "category": "ai",
+  "priority": 64,
+  "summary": "JetBrains released Mellum2.1 Instruct, the non-reasoning sibling of its open 12B mixture-of-experts coding model. It answers directly, using reinforcement-learning post-training on repository-level tasks. JetBrains says it generates about half the tokens of the Thinking variant on agentic coding and doubled its score on SWE-bench Verified over the previous Instruct release. A multi-token prediction head makes generation up to 1.8 times faster. Weights are on Hugging Face under Apache 2.0.",
+  "tags": [
+    "jetbrains",
+    "mellum",
+    "open-weights",
+    "coding-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "JetBrains Blog",
+      "url": "https://blog.jetbrains.com/ai/2026/11/mellum2-1-instruct-is-out-bringing-faster-answers-for-coding-agents/",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

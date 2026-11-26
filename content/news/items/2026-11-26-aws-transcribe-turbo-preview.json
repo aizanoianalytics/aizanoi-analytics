@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-aws-transcribe-turbo-preview",
+  "title": "Amazon puts Transcribe Turbo speech-to-text into public preview for voice agents",
+  "category": "ai",
+  "priority": 66,
+  "summary": "Amazon made Transcribe Turbo, its next-generation speech-to-text model available in public preview in US East (Ohio) for batch and streaming. Streaming covers six languages and cuts word error rate 14% in English and 11% elsewhere versus the current production model. Two features ship at no extra charge: semantic turn-taking, which responds in about 615 ms with a 5% interruption rate, and runtime ASR hints, which raised menu-routing accuracy from 87% to 97% on English customer-service data.",
+  "tags": [
+    "amazon",
+    "aws",
+    "speech",
+    "voice-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "AWS",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/11/transcribe-turbo-preview/",
+      "publishedAt": "2026-11-25T08:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

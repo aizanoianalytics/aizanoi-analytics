@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-cloudflare-search-for-agents",
+  "title": "Cloudflare adds one-toggle searchable index for AI agents",
+  "category": "technology",
+  "priority": 72,
+  "summary": "Cloudflare launched Search for Agents on November 25, a toggle that automatically creates an AI Search instance for a website, crawls its pages and exposes a search API under the site's own domain. Enabled pages advertise the endpoint through metadata and YAML front matter so agents can find it without crawling each page. The feature is available on all plans, including Free, and returns results in Markdown.",
+  "tags": [
+    "cloudflare",
+    "infrastructure",
+    "agents",
+    "search"
+  ],
+  "sources": [
+    {
+      "publisher": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/search-for-agents/",
+      "publishedAt": "2026-11-25T14:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

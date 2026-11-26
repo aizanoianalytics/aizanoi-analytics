@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/fcc-spacex-starmind-orbital-data-centers/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>FCC authorizes SpaceX to deploy one million orbital data centers</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/us-q3-gdp-revised-4-3-percent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>US third-quarter GDP revised up to 4.3% annualised, fastest in three years</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/anthropic-messages-api-rust/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic used Claude agents to port its Messages API to Rust and cut CPU use</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/bok-raises-base-rate-3-25-percent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Bank of Korea raises base rate to 3.25% and lifts 2027 growth forecast to 4.1%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/sporting-united-2-2/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Fernandes scores twice as Sporting hold United to a 2-2 draw</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/cloudflare-search-for-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Cloudflare adds one-toggle searchable index for AI agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/deepmind-mass-spec-skills/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Google DeepMind ships Mass Spec Skills that interpret tandem mass spectra</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/liverpool-brugge-isak-wirtz/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Isak scores twice as Liverpool win 3-0 at Club Brugge</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/ofgem-energy-price-cap-26-percent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Ofgem raises UK energy price cap 26% to £2,166 from January</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/xpeng-turing-physical-ai-iron/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>XPENG unveils Turing physical AI architecture and debuts IRON humanoid</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/barcelona-sabah-gordon-double/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Gordon scores twice as Barcelona beat Sabah 4-1 in Baku</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/google-research-social-reasoning/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Google Research open-sources a social-reasoning benchmark with verifiable ground truth</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/kioxia-nvidia-hbm-ssd-memory/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Kioxia and NVIDIA demo petabyte GPU memory expansion using SSDs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/aws-transcribe-turbo-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>Amazon puts Transcribe Turbo speech-to-text into public preview for voice agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-26/jetbrains-mellum21-instruct/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
+      <news:title>JetBrains releases Mellum2.1 Instruct, a faster open coding model for sub-agents</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-25/asia-chip-rout-taiex/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,166 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-24T05:00:00.000Z</news:publication_date>
       <news:title>Gold rebounds from a one-year low as the dollar rally pauses</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-11-23/weekly-ai-trade-stress-test/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>The AI trade has met its first genuine stress test, and the bill is coming due</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/anthropic-ipo-close-greenshoe/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic closes its IPO at $93.5bn after underwriters take every extra share</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-11-23/weekly-fed-inflation-ai-credit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>The Fed&#39;s inflation problem has become an AI-credit problem</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/asia-monday-selloff-support/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Seoul leads a fresh Asian sell-off as officials reach for market support</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-11-23/weekly-agent-infrastructure-permissions/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Agents are turning into infrastructure, and the hard part is now permission</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/oracle-openai-infrastructure-funded/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Oracle says its OpenAI data-centre contract is fully funded after $20bn raise</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-11-23/weekly-memory-bottleneck/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Memory is the new bottleneck in the AI build-out, and buyers are locking it down</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-11-23/weekly-matchweek-eleven-title-race/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Matchweek 11 gives Arsenal a cushion and everyone else a set of questions</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/champions-league-matchday-five-preview/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Arsenal and Dortmund headline a Champions League night with no margin</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/junk-bond-yields-ai-credit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>US junk-bond yields hit a 19-month high as AI credit doubts spread</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/openai-perplexity-industry-limits/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI&#39;s chief scientist proposes a shared speed limit built on perplexity</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/openai-agents-jagged-frontier/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI says its agents now finish 46% of its own multi-hour research tasks</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/hull-brighton-mcburnie-double/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>McBurnie&#39;s stoppage-time double punishes ten-man Brighton at Hull</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/gemini-mac-computer-use/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Gemini can now drive a Mac in the background, with approval gates</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/bitcoin-two-year-low-etf-outflows/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Bitcoin&#39;s two-year low leaves a $1.25bn week of ETF outflows behind it</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/samsung-memory-mobile-leadership/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Samsung puts its HBM developer in charge of memory as AI demand sets the agenda</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/anthropic-30-day-disclosure-window/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic cuts its bug-disclosure window to 30 days as models find flaws faster</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/bremen-nordderby-rout/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Bremen&#39;s second-half burst settles the Nordderby in a 4-0 rout</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/waymo-freeway-pullback/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Waymo pulls robotaxis off US freeways after California restriction</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-23/genie-4-project-genie-ultra/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-23T05:00:00.000Z</news:publication_date>
-      <news:title>Google opens Genie 4 to AI Ultra subscribers with real-time world editing</news:title>
     </news:news>
   </url>
 </urlset>

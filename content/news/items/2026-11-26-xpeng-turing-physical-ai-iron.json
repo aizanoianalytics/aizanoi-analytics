@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-xpeng-turing-physical-ai-iron",
+  "title": "XPENG unveils Turing physical AI architecture and debuts IRON humanoid",
+  "category": "technology",
+  "priority": 70,
+  "summary": "XPENG unveiled its Turing Physical AI Architecture (VLA 3.0) at its eighth AI Day on November 25, linking cognition, real-time decisions and physical execution across vehicles and robots. Three layers run from body control to vision-language task planning. XPENG also debuted the IRON humanoid, with 76 degrees of freedom and more than 1,500 tactile sensing points. VLA 2.0 version 6.4.0 raises agent-driven closed-loop training speed by 10 to 12 times.",
+  "tags": [
+    "xpeng",
+    "robotics",
+    "humanoid",
+    "physical-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "XPENG",
+      "url": "https://www.xpeng.com/news/01a212b0d830a1e838d68a02a2110174",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

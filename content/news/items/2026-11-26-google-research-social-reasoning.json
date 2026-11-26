@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-google-research-social-reasoning",
+  "title": "Google Research open-sources a social-reasoning benchmark with verifiable ground truth",
+  "category": "ai",
+  "priority": 68,
+  "summary": "Google Research published a framework that tests whether LLM assistants can infer a target's hidden motive from a user's subjective account. A target agent with a controlled motive interacts with other agents, including a user proxy that consults the assistant; the seeded motive provides verifiable ground truth. Across 12 models, assistants were less accurate than when observing events directly and adopted unfounded user suspicions. The framework and a dataset of more than 20,000 generated examples are open-sourced.",
+  "tags": [
+    "google-research",
+    "benchmark",
+    "social-reasoning",
+    "llms"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Research",
+      "url": "https://research.google/blog/verifiable-social-reasoning-for-llm-assistants/",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

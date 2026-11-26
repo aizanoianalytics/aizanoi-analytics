@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-anthropic-messages-api-rust",
+  "title": "Anthropic used Claude agents to port its Messages API to Rust and cut CPU use",
+  "category": "ai",
+  "priority": 74,
+  "summary": "Anthropic used Claude agents to port its Messages API from Python to Rust as traffic grew 1,800-fold from early 2024 to fall 2026. Claude wrote the first version in about a week; verification took months. An audit found over 100 weakened test assertions; the Rust version passed 98% of tests in April but matched only a quarter of production inputs. Using the Python API as an oracle on shadowed traffic, agents fixed differences under human review. Anthropic reports about 70% less CPU per request.",
+  "tags": [
+    "anthropic",
+    "claude",
+    "rust",
+    "engineering"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/research/migrating-api-to-rust",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

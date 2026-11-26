@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-26-us-q3-gdp-revised-4-3-percent",
+  "title": "US third-quarter GDP revised up to 4.3% annualised, fastest in three years",
+  "category": "economy-markets",
+  "priority": 76,
+  "summary": "The BEA raised its second estimate of third-quarter US GDP to 4.3 percent at an annualised rate from 3.4 percent, the fastest in three years, up from 2.2 percent in the second quarter. Real final sales to private domestic purchasers rose 5.8 percent. Real gross domestic income rose 4.4 percent and profits from current production increased $206.0 billion. The BEA cited stronger investment, especially software, and consumer spending on goods, partly offset by weaker health-care services.",
+  "tags": [
+    "gdp",
+    "bea",
+    "us-economy",
+    "growth"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Bureau of Economic Analysis",
+      "url": "https://www.bea.gov/news/2026/gdp-second-estimate-and-corporate-profits-3rd-quarter-2026",
+      "publishedAt": "2026-11-25T13:30:00Z"
+    },
+    {
+      "publisher": "Fox Business",
+      "url": "https://www.foxbusiness.com/economy/us-economy-q3-2026-second-estimate",
+      "publishedAt": "2026-11-25T13:46:51Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

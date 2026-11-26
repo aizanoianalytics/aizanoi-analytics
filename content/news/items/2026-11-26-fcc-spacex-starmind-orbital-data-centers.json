@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-26-fcc-spacex-starmind-orbital-data-centers",
+  "title": "FCC authorizes SpaceX to deploy one million orbital data centers",
+  "category": "technology",
+  "priority": 78,
+  "summary": "The FCC authorized SpaceX on November 25 to deploy up to one million orbital compute modules for its Starmind constellation, the first U.S. authorization for a constellation of data centers in space. The order allows radiofrequency backup telemetry, tracking and command links, and optical inter-satellite links backed by 18.8-19.3 GHz downlink and 28.6-29.1 GHz uplink communications. Other orbital data center proposals remain under review.",
+  "tags": [
+    "fcc",
+    "spacex",
+    "satellites",
+    "data-centers"
+  ],
+  "sources": [
+    {
+      "publisher": "Federal Communications Commission",
+      "url": "https://docs.fcc.gov/public/attachments/DOC-427572A1.pdf",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-26T05:00:00Z",
+  "updatedAt": "2026-11-26T05:00:00Z",
+  "retrievedAt": "2026-11-26T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
