@@ -3,7 +3,7 @@
   "title": "BT lifts EE's London 5G speeds 26% with a remote AI scheduler upgrade",
   "category": "technology",
   "priority": 54,
-  "summary": "BT activated Ericsson's AI-native Scheduler for Link Adaptation across EE's London network, reporting a 26% rise in average download speed and more than 13% better spectral efficiency. The upgrade was pushed remotely to RAN Compute hardware already installed, with no new radios, site visits or added energy use, BT said. It follows a North London trial and makes BT the first UK operator to deploy the software commercially across a whole network area. Ericsson's model predicts the best downlink rate from live channel data instead of relying on fixed rules.",
+  "summary": "BT activated Ericsson's AI-native Scheduler for Link Adaptation across EE's London network, reporting a 26% rise in average download speed and more than 13% better spectral efficiency. The upgrade was pushed remotely to RAN Compute hardware already installed, with no new radios or site visits, BT said, and the companies reported no increase in energy consumption. It makes BT the first UK operator to deploy the software commercially across a whole network area. The model predicts the best downlink rate from live channel data instead of fixed rules.",
   "tags": [
     "bt",
     "ee",
