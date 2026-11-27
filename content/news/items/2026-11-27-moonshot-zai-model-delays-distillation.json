@@ -3,7 +3,7 @@
   "title": "Moonshot turns to Google and Meta models as US curbs push Chinese flagships back",
   "category": "ai",
   "priority": 68,
-  "summary": "Z.AI's GLM-5.5, a model of roughly three trillion parameters planned for November, is likely to slip into the first quarter of 2027 or later, Reuters reported, citing people familiar with the plans. Moonshot AI's next flagship, Kimi K4, could slide to around mid-2027, with its release cycle doubling from six months. The delays follow US rules effective 19 November that require licences for certain overseas computing arrangements, and stronger anti-distillation safeguards. Moonshot has begun distilling from Google and Meta models, one source said.",
+  "summary": "Z.AI's GLM-5.5, a roughly three-trillion-parameter model planned for November, is likely to slip into the first quarter of 2027 or later, Reuters reported. Moonshot AI's next flagship, Kimi K4, could slide to around mid-2027, and its six-month release gap could stretch to 12 months or more if overseas computing access is cut off. The delays follow US rules effective 19 November requiring licences for certain overseas computing arrangements, and stronger anti-distillation safeguards. Moonshot has begun distilling from Google and Meta models, one source said.",
   "tags": [
     "moonshot",
     "z-ai",
