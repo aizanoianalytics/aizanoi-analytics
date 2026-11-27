@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-27-moonshot-zai-model-delays-distillation",
+  "title": "Moonshot turns to Google and Meta models as US curbs push Chinese flagships back",
+  "category": "ai",
+  "priority": 68,
+  "summary": "Z.AI's GLM-5.5, a model of roughly three trillion parameters planned for November, is likely to slip into the first quarter of 2027 or later, Reuters reported, citing people familiar with the plans. Moonshot AI's next flagship, Kimi K4, could slide to around mid-2027, with its release cycle doubling from six months. The delays follow US rules effective 19 November that require licences for certain overseas computing arrangements, and stronger anti-distillation safeguards. Moonshot has begun distilling from Google and Meta models, one source said.",
+  "tags": [
+    "moonshot",
+    "z-ai",
+    "distillation",
+    "export-controls"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/after-openai-and-anthropic-shut-the-door-on-their-data-a-chinese-ai-developer-is-turning-to-google-and-meta-instead/",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/china/us-chip-curbs-distillation-crackdown-threaten-chinese-ai-model-development-2026-11-26/",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-27T05:00:00Z",
+  "updatedAt": "2026-11-27T05:00:00Z",
+  "retrievedAt": "2026-11-27T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
