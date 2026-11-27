@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-27-vscode-148-agent-host",
+  "title": "VS Code 1.148 makes Agent Host chat 30% faster and keeps machines awake for agents",
+  "category": "technology",
+  "priority": 48,
+  "summary": "Visual Studio Code 1.148 speeds up Agent Host chat, with responses beginning about 30% sooner than the previous Stable release and within roughly 5% of the older harness, Microsoft said. A preview setting can keep a machine awake while an agent works, including after the window closes. The release adds worktree cleanup for remote agent hosts, per-host sandbox profiles and one-click Ubuntu Dev Containers for isolated agent sessions. Microsoft also repeated that the Local harness is deprecated and will be removed in February 2027.",
+  "tags": [
+    "microsoft",
+    "vs-code",
+    "ai-agents",
+    "developer-tools"
+  ],
+  "sources": [
+    {
+      "publisher": "Visual Studio Code",
+      "url": "https://code.visualstudio.com/updates/v1_148",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-27T05:00:00Z",
+  "updatedAt": "2026-11-27T05:00:00Z",
+  "retrievedAt": "2026-11-27T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

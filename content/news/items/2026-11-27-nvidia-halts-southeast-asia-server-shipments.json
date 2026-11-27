@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-27-nvidia-halts-southeast-asia-server-shipments",
+  "title": "Nvidia tells partners to hold AI server shipments to four Southeast Asian countries",
+  "category": "technology",
+  "priority": 86,
+  "summary": "Manufacturing partners including Dell and Supermicro have told buyers in Malaysia, Singapore, Thailand and Indonesia that orders for servers built with Nvidia chips will not ship, the Financial Times reported. The pause follows US export controls that took effect on 19 November and require licences for advanced AI chips to those four countries plus Brazil. It was unclear whether the halt is temporary while compliance is worked out. Nvidia and its partners did not respond to requests for comment; revenue booked through Nvidia's Singapore subsidiary reached $104bn in 2025.",
+  "tags": [
+    "nvidia",
+    "export-controls",
+    "southeast-asia",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/nvidia-halts-server-shipments-southeast-asia",
+      "publishedAt": "2026-11-26T12:00:00Z"
+    },
+    {
+      "publisher": "New York Post",
+      "url": "https://nypost.com/2026/11/26/business/nvidia-halts-server-shipments-to-4-southeast-asian-countries-report/",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-27T05:00:00Z",
+  "updatedAt": "2026-11-27T05:00:00Z",
+  "retrievedAt": "2026-11-27T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

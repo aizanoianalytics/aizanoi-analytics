@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-27-google-workspace-mcp-agent-mandate",
+  "title": "Google sets February 2027 deadline for AI agents to reach Workspace through MCP",
+  "category": "technology",
+  "priority": 62,
+  "summary": "Google made its Workspace MCP servers and command-line interface generally available and set 1 February 2027 as the date AI agents must use them instead of Workspace REST APIs. The gateways cover Gmail, Drive, Docs, Sheets, Slides, Calendar, Chat and Tasks, with Keep planned, and check every request against permissions, data-loss rules and classification labels. Agents need dedicated OAuth client IDs and user confirmation before sending external email, changing Drive sharing or making bulk edits. Quota billing starts 1 April 2027.",
+  "tags": [
+    "google-workspace",
+    "mcp",
+    "ai-agents",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Workspace Blog",
+      "url": "https://workspace.google.com/blog/product-announcements/built-for-trust-and-control-new-ai-agent-protections-and-developer-tools-in-google-workspace",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    },
+    {
+      "publisher": "Help Net Security",
+      "url": "https://www.helpnetsecurity.com/2026/11/26/google-ai-agent-security-requirements/",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-27T05:00:00Z",
+  "updatedAt": "2026-11-27T05:00:00Z",
+  "retrievedAt": "2026-11-27T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

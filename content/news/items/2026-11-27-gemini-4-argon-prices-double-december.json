@@ -1,0 +1,32 @@
+{
+  "id": "2026-11-27-gemini-4-argon-prices-double-december",
+  "title": "Google will double Gemini 4 Argon API prices on 1 December",
+  "category": "ai",
+  "priority": 66,
+  "summary": "Google's published Gemini API pricing doubles Gemini 4 Argon from 1 December: input moves from $2.00 to $4.00 per million tokens, output from $10.00 to $20.00, and context caching from $0.10 to $0.20. The page lists the current rates as applying through 30 November. Argon, the cheaper Gemini 4 reasoning tier, is not available on the free tier and bills thinking tokens and internal tool instructions. Teams with Gemini-dependent workloads have four days to reprice them.",
+  "tags": [
+    "google",
+    "gemini",
+    "api-pricing",
+    "unit-economics"
+  ],
+  "sources": [
+    {
+      "publisher": "Google AI for Developers",
+      "url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "publishedAt": "2026-11-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-27T05:00:00Z",
+  "updatedAt": "2026-11-27T05:00:00Z",
+  "retrievedAt": "2026-11-27T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

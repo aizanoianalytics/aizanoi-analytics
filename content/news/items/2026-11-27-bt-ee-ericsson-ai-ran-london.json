@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-27-bt-ee-ericsson-ai-ran-london",
+  "title": "BT lifts EE's London 5G speeds 26% with a remote AI scheduler upgrade",
+  "category": "technology",
+  "priority": 54,
+  "summary": "BT activated Ericsson's AI-native Scheduler for Link Adaptation across EE's London network, reporting a 26% rise in average download speed and more than 13% better spectral efficiency. The upgrade was pushed remotely to RAN Compute hardware already installed, with no new radios, site visits or added energy use, BT said. It follows a North London trial and makes BT the first UK operator to deploy the software commercially across a whole network area. Ericsson's model predicts the best downlink rate from live channel data instead of relying on fixed rules.",
+  "tags": [
+    "bt",
+    "ee",
+    "5g",
+    "ericsson",
+    "ai-ran"
+  ],
+  "sources": [
+    {
+      "publisher": "BT Group",
+      "url": "https://newsroom.bt.com/bt-group-boosts-ee-5g-mobile-performance-across-london-with-ericsson-ai-powered-network-upgrade",
+      "publishedAt": "2026-11-26T09:15:00Z"
+    },
+    {
+      "publisher": "Light Reading",
+      "url": "https://www.lightreading.com/5g/ee-and-ericsson-enhance-london-5g-by-putting-ai-in-the-ran",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-27T05:00:00Z",
+  "updatedAt": "2026-11-27T05:00:00Z",
+  "retrievedAt": "2026-11-27T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

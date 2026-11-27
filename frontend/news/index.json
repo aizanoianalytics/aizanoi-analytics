@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-26T05:00:00.000Z",
+  "generatedAt": "2026-11-27T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-27",
+      "path": "/news/2026-11-27/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-26",
       "path": "/news/2026-11-26/",
@@ -565,6 +570,532 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-27-nvidia-halts-southeast-asia-server-shipments",
+      "kind": "daily",
+      "title": "Nvidia tells partners to hold AI server shipments to four Southeast Asian countries",
+      "summary": "Manufacturing partners including Dell and Supermicro have told buyers in Malaysia, Singapore, Thailand and Indonesia that orders for servers built with Nvidia chips will not ship, the Financial Times reported. The pause follows US export controls that took effect on 19 November and require licences for advanced AI chips to those four countries plus Brazil. It was unclear whether the halt is temporary while compliance is worked out. Nvidia and its partners did not respond to requests for comment; revenue booked through Nvidia's Singapore subsidiary reached $104bn in 2025.",
+      "category": "technology",
+      "priority": 86,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "export-controls",
+        "southeast-asia",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/nvidia-halts-server-shipments-southeast-asia",
+          "publishedAt": "2026-11-26T12:00:00.000Z"
+        },
+        {
+          "publisher": "New York Post",
+          "url": "https://nypost.com/2026/11/26/business/nvidia-halts-server-shipments-to-4-southeast-asian-countries-report/",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-openai-chat-work-shared-usage-allowance",
+      "kind": "daily",
+      "title": "OpenAI folds Chat and Work together and puts ChatGPT and Codex on one token allowance",
+      "summary": "OpenAI has begun moving a small group of Pro subscribers onto a single Chat and Work interface, product lead Thibault Sottiaux said, with a wider rollout planned for December. From December, Plus, Pro and Business plans will draw on one token allowance shared across ChatGPT and Codex, according to OpenAI's help centre. Instant conversations stay unlimited and do not count against the pool. OpenAI says most users will not see more frequent resets, but a share of the heaviest will hit limits sooner, drawing complaints from subscribers.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "chatgpt",
+        "codex",
+        "subscriptions"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/",
+          "publishedAt": "2026-11-25T20:03:00.000Z"
+        },
+        {
+          "publisher": "OpenAI Help Center",
+          "url": "https://help.openai.com/en/articles/20001625-understanding-chatgpt-and-codex-usage-limits",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-china-industrial-profits-october-electronics",
+      "kind": "daily",
+      "title": "China's industrial profits rise 16% as electronics carry the year and autos drag",
+      "summary": "China's industrial profits rose 16.0% year on year to 6.74 trillion yuan in January-October, up from 15.5% in the first nine months, the National Bureau of Statistics said. October alone was up 20.1%, from 14.4% in September. Electronics manufacturing profits doubled and contributed 9.7 percentage points of the headline growth, while high-tech manufacturing rose 50.9%. The split remained stark: auto profits fell 26.0% and furniture 52.4%. Revenue rose 6.7% to 118.41 trillion yuan and the margin improved to 5.69%.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "industrial-profits",
+        "electronics",
+        "autos"
+      ],
+      "sources": [
+        {
+          "publisher": "National Bureau of Statistics of China",
+          "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261127_1965949.html",
+          "publishedAt": "2026-11-27T01:30:00.000Z"
+        },
+        {
+          "publisher": "National Bureau of Statistics of China",
+          "url": "https://www.stats.gov.cn/zwfwck/sjfb/202611/t20261127_1965950.html",
+          "publishedAt": "2026-11-27T01:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-asia-markets-fed-hike-tokyo-inflation",
+      "kind": "daily",
+      "title": "Asian shares steady as Tokyo inflation firms a December BOJ case and the Fed stays hawkish",
+      "summary": "Asian equities steadied on Friday after a bruising month, with Seoul up about 2% and Tokyo 0.7% as chipmakers recovered. Tokyo core inflation hit a 16-month high of 2.9% in November, strengthening bets on a Bank of Japan hike in December, while futures imply a 99% chance the Federal Reserve raises rates by a quarter point next month. MSCI's Asia-Pacific ex-Japan gauge was still down 8.2% for November. Brent slipped to $96.14 a barrel but was up 3.9% on the week, and the dollar headed for a third monthly gain.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "asia-markets",
+        "federal-reserve",
+        "bank-of-japan",
+        "oil"
+      ],
+      "sources": [
+        {
+          "publisher": "The Straits Times (Reuters)",
+          "url": "https://www.straitstimes.com/business/asian-shares-find-footing-after-bruising-month-us-dollar-set-for-third-monthly-gain",
+          "publishedAt": "2026-11-27T02:35:00.000Z"
+        },
+        {
+          "publisher": "RTHK",
+          "url": "https://news.rthk.hk/rthk/en/component/k2/1879462-20261127.htm",
+          "publishedAt": "2026-11-27T03:03:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-milan-olympiacos-four-two-comeback",
+      "kind": "daily",
+      "title": "Hutchinson drives Milan from two down to a first away win in Greece",
+      "summary": "Milan recovered from two goals down to win 4-2 at Olympiacos, their first away victory against Greek opposition. A Mike Maignan own goal and a João Silva strike had Olympiacos 2-0 up and unbeaten in the league phase. Omari Hutchinson pulled one back with a solo run, then crossed for Alphadjo Cisse to head in and for Christian Pulišić to volley home. Diego Moreira sealed it on the break in stoppage time. The result ended Olympiacos' unbeaten start and gave Milan a second win in five league-phase matches.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ac-milan",
+        "olympiacos",
+        "europa-league",
+        "hutchinson"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefaeuropaleague/news/02ab-222a8b7281ee-613f6f283146-1000--europa-league-matchday-5-highlights-and-round-up-bournemouth-stay-perfect-milan-and-juventus-win-from-behind/",
+          "publishedAt": "2026-11-26T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-moonshot-zai-model-delays-distillation",
+      "kind": "daily",
+      "title": "Moonshot turns to Google and Meta models as US curbs push Chinese flagships back",
+      "summary": "Z.AI's GLM-5.5, a model of roughly three trillion parameters planned for November, is likely to slip into the first quarter of 2027 or later, Reuters reported, citing people familiar with the plans. Moonshot AI's next flagship, Kimi K4, could slide to around mid-2027, with its release cycle doubling from six months. The delays follow US rules effective 19 November that require licences for certain overseas computing arrangements, and stronger anti-distillation safeguards. Moonshot has begun distilling from Google and Meta models, one source said.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "moonshot",
+        "z-ai",
+        "distillation",
+        "export-controls"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/after-openai-and-anthropic-shut-the-door-on-their-data-a-chinese-ai-developer-is-turning-to-google-and-meta-instead/",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/china/us-chip-curbs-distillation-crackdown-threaten-chinese-ai-model-development-2026-11-26/",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-gemini-4-argon-prices-double-december",
+      "kind": "daily",
+      "title": "Google will double Gemini 4 Argon API prices on 1 December",
+      "summary": "Google's published Gemini API pricing doubles Gemini 4 Argon from 1 December: input moves from $2.00 to $4.00 per million tokens, output from $10.00 to $20.00, and context caching from $0.10 to $0.20. The page lists the current rates as applying through 30 November. Argon, the cheaper Gemini 4 reasoning tier, is not available on the free tier and bills thinking tokens and internal tool instructions. Teams with Gemini-dependent workloads have four days to reprice them.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "api-pricing",
+        "unit-economics"
+      ],
+      "sources": [
+        {
+          "publisher": "Google AI for Developers",
+          "url": "https://ai.google.dev/gemini-api/docs/pricing",
+          "publishedAt": "2026-11-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-nvidia-sp-creditwatch-governance",
+      "kind": "daily",
+      "title": "S&P puts Nvidia's AA rating on negative watch over governance and key-man risk",
+      "summary": "S&P Global Ratings placed Nvidia's AA issuer rating on CreditWatch negative on 25 November, citing rising management and governance risk after Jensen Huang's removal and reinstatement as chief executive. The agency said it could cut the rating by one notch to AA- within 90 days, pointing to weak executive oversight, absent succession planning and key-man risk. Nvidia would stay investment grade, but a cut could raise borrowing costs for the neoclouds whose debt it backstops, including under a $500bn financing plan announced in August.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "credit-rating",
+        "governance",
+        "ai-financing"
+      ],
+      "sources": [
+        {
+          "publisher": "S&P Global Ratings",
+          "url": "https://www.spglobal.com/ratings/en/regulatory/article/-/view/sourceId/101720856",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks/",
+          "publishedAt": "2026-11-25T22:44:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-google-workspace-mcp-agent-mandate",
+      "kind": "daily",
+      "title": "Google sets February 2027 deadline for AI agents to reach Workspace through MCP",
+      "summary": "Google made its Workspace MCP servers and command-line interface generally available and set 1 February 2027 as the date AI agents must use them instead of Workspace REST APIs. The gateways cover Gmail, Drive, Docs, Sheets, Slides, Calendar, Chat and Tasks, with Keep planned, and check every request against permissions, data-loss rules and classification labels. Agents need dedicated OAuth client IDs and user confirmation before sending external email, changing Drive sharing or making bulk edits. Quota billing starts 1 April 2027.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google-workspace",
+        "mcp",
+        "ai-agents",
+        "security"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Workspace Blog",
+          "url": "https://workspace.google.com/blog/product-announcements/built-for-trust-and-control-new-ai-agent-protections-and-developer-tools-in-google-workspace",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "Help Net Security",
+          "url": "https://www.helpnetsecurity.com/2026/11/26/google-ai-agent-security-requirements/",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-crystal-palace-real-sociedad-mcneil",
+      "kind": "daily",
+      "title": "McNeil completes Palace's late turnaround for Frank's first win",
+      "summary": "Crystal Palace beat Real Sociedad 2-1 at Selhurst Park for Thomas Frank's first win as manager, after Jon Martín's 71st-minute second booking turned the game. Mamadou Sarr had put the visitors ahead on 66 minutes; Jean-Philippe Mateta equalised from the penalty spot two minutes after the dismissal and substitute Dwight McNeil scored his first Palace goal on 82. Palace move to eight points from five league-phase games; Real Sociedad have five.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "crystal-palace",
+        "real-sociedad",
+        "europa-league",
+        "thomas-frank"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefaeuropaleague/news/02ab-222a8b7281ee-613f6f283146-1000--europa-league-matchday-5-highlights-and-round-up-bournemouth-stay-perfect-milan-and-juventus-win-from-behind/",
+          "publishedAt": "2026-11-26T23:00:00.000Z"
+        },
+        {
+          "publisher": "Crystal Palace FC",
+          "url": "https://www.cpfc.co.uk/news/match-reports/crystal-palace-2-1-real-sociedad/",
+          "publishedAt": "2026-11-26T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-bt-ee-ericsson-ai-ran-london",
+      "kind": "daily",
+      "title": "BT lifts EE's London 5G speeds 26% with a remote AI scheduler upgrade",
+      "summary": "BT activated Ericsson's AI-native Scheduler for Link Adaptation across EE's London network, reporting a 26% rise in average download speed and more than 13% better spectral efficiency. The upgrade was pushed remotely to RAN Compute hardware already installed, with no new radios, site visits or added energy use, BT said. It follows a North London trial and makes BT the first UK operator to deploy the software commercially across a whole network area. Ericsson's model predicts the best downlink rate from live channel data instead of relying on fixed rules.",
+      "category": "technology",
+      "priority": 54,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bt",
+        "ee",
+        "5g",
+        "ericsson",
+        "ai-ran"
+      ],
+      "sources": [
+        {
+          "publisher": "BT Group",
+          "url": "https://newsroom.bt.com/bt-group-boosts-ee-5g-mobile-performance-across-london-with-ericsson-ai-powered-network-upgrade",
+          "publishedAt": "2026-11-26T09:15:00.000Z"
+        },
+        {
+          "publisher": "Light Reading",
+          "url": "https://www.lightreading.com/5g/ee-and-ericsson-enhance-london-5g-by-putting-ai-in-the-ran",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-volvo-aeon-humanoids-ghent",
+      "kind": "daily",
+      "title": "Volvo starts training wheeled AEON humanoids at its Ghent plant",
+      "summary": "Volvo Cars has begun training Hexagon Robotics' AEON humanoids at its Ghent plant, the first Volvo factory to try them. Staff are teaching the 1.65-metre, 60-kilogram wheeled robot by imitation, starting with placing components into two fixtures; payload is 10 kilograms and top speed 2.4 metres per second. A larger pilot with more units follows in the first half of 2027, with the aim of using the robots in real production from mid-2027. Volvo frames the target as repetitive, ergonomically difficult work alongside existing automation.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "volvo",
+        "hexagon",
+        "humanoids",
+        "manufacturing"
+      ],
+      "sources": [
+        {
+          "publisher": "Volvo Cars",
+          "url": "https://news.cision.com/volvo-cars-global/r/volvo-cars-trains-hexagon-robotics--humanoids-for-manufacturing,c4429415",
+          "publishedAt": "2026-11-26T08:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/volvo-humanoid-robots-hexagon-aeon-ghent",
+          "publishedAt": "2026-11-26T18:01:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-google-cogentic-six-math-papers",
+      "kind": "daily",
+      "title": "Google's Cogentic agent posts six maths papers, led by a claimed factoring bound",
+      "summary": "Google Research added six mathematics papers to its public repository on 25 November, each attributed to Cogentic, a multi-agent proof system built on Gemini 4, with no human input beyond the initial prompt. The lead paper claims an unconditional integer-factorisation algorithm running in expected time L[1/3, 105], improving on the proven L[1/2] bound of Lenstra and Pomerance from 1992. Its constant of 105, against about 1.92 for the number field sieve, means no practical attack on RSA. None of the papers is peer reviewed and the promised Lean 4 proofs are unreleased.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google-research",
+        "cogentic",
+        "mathematics",
+        "lean"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Research (GitHub)",
+          "url": "https://github.com/google-research/google-research/tree/master/cogentic_research_papers",
+          "publishedAt": "2026-11-25T10:21:00.000Z"
+        },
+        {
+          "publisher": "arXiv",
+          "url": "https://arxiv.org/abs/2609.40324",
+          "publishedAt": "2026-09-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-vscode-148-agent-host",
+      "kind": "daily",
+      "title": "VS Code 1.148 makes Agent Host chat 30% faster and keeps machines awake for agents",
+      "summary": "Visual Studio Code 1.148 speeds up Agent Host chat, with responses beginning about 30% sooner than the previous Stable release and within roughly 5% of the older harness, Microsoft said. A preview setting can keep a machine awake while an agent works, including after the window closes. The release adds worktree cleanup for remote agent hosts, per-host sandbox profiles and one-click Ubuntu Dev Containers for isolated agent sessions. Microsoft also repeated that the Local harness is deprecated and will be removed in February 2027.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "vs-code",
+        "ai-agents",
+        "developer-tools"
+      ],
+      "sources": [
+        {
+          "publisher": "Visual Studio Code",
+          "url": "https://code.visualstudio.com/updates/v1_148",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-27-bremen-gladbach-friday-preview",
+      "kind": "daily",
+      "title": "Bremen can climb to fourth while bottom club Gladbach arrive at the Weserstadion",
+      "summary": "Werder Bremen host Borussia Mönchengladbach on Friday night with the table at its most lopsided: Bremen are sixth on 18 points from ten games, Gladbach last on four. A Bremen win would lift them to 21, level with Leipzig and one behind Bayern and Freiburg. Gladbach have one win, one draw and eight defeats, with 12 goals scored and 26 conceded. Bremen are without Grüll, Musah, Ndiaye, Stage and Topp; Gladbach miss Kleindienst, Leopold, Leszczyński and Ullrich. Kick-off is 20:30 CET at the Weserstadion.",
+      "category": "football",
+      "priority": 46,
+      "publishedAt": "2026-11-27T05:00:00.000Z",
+      "updatedAt": "2026-11-27T05:00:00.000Z",
+      "retrievedAt": "2026-11-27T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "werder-bremen",
+        "gladbach",
+        "matchday-11"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/11",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/table/2026-2027",
+          "publishedAt": "2026-11-27T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-26-fcc-spacex-starmind-orbital-data-centers",
       "kind": "daily",
