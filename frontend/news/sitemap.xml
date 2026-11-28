@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/openai-countersues-apple-suppliers/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI countersues Apple and accuses it of squeezing shared suppliers</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/wall-street-best-week-since-april-2025/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Wall Street closes a violent November with its best week since spring 2025</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/forest-chelsea-gibbs-white-double/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Gibbs-White&#39;s double deepens Chelsea&#39;s slump and ends a 29-year wait for Forest</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/microsoft-artex-agentic-attacks/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Microsoft says ARTEX agents now carry attackers from a GitHub search to Key Vault in minutes</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/character-ai-chat-auction-ags/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Forty-two attorneys general move to stop Character.AI auctioning its chat logs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/trainium3-agentx-cost-lead/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>SemiAnalysis puts Trainium3 at 2.28 times GB300&#39;s performance per dollar</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/anthropic-watermark-limits/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s watermark help page spells out where Claude&#39;s mark disappears</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/jera-behind-the-meter-data-centres/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>JERA courts Anthropic and Meta for data centres wired straight into its power plants</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/bayern-hamburg-without-kane/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Bayern go to Hamburg without Kane and on the back of a first defeat</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/qant-photonic-ionos-pilot/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Q.ANT&#39;s light-based coprocessor reaches an IONOS pilot while its energy claim stays simulated</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/bremen-gladbach-fuellkrug-late-draw/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Füllkrug rescues Bremen at the death after Gladbach let a two-goal lead go</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/os-omni-agent-benchmark-mobile-gap/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>OS-Omni scores computer agents across six platforms, and mobile is the weak leg</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/black-friday-online-spending-ai-referrals/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Black Friday online spending passes $9.7 billion by late afternoon</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/canada-ai-compute-fund-billion/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>Canada lifts its AI compute fund to C$1 billion and pays more for domestic clouds</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-11-28/pia-humanoid-siemens-amberg/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-11-28T05:00:00.000Z</news:publication_date>
+      <news:title>A humanoid robot takes over line feeding at Siemens&#39; Amberg plant</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-11-27/nvidia-halts-southeast-asia-server-shipments/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,126 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-11-26T05:00:00.000Z</news:publication_date>
       <news:title>JetBrains releases Mellum2.1 Instruct, a faster open coding model for sub-agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/asia-chip-rout-taiex/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Asia&#39;s chip complex surrenders the Huang rally in a single morning</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/openai-gpt6-protein-design/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI says its GPT-6 models designed proteins with reasoning and code alone</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/microsoft-code-red-m365-outage/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Microsoft declares a Code Red over the twelve-hour collapse of Exchange Online</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/real-madrid-psv-five/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Madrid turn a deficit into five goals and a perfect league phase</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/dell-q3-fy27-ai-backlog/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Dell doubles revenue on AI servers and books a $132.3 billion backlog</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/anthropic-siren-sandbox-escape/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic built a honeypot to measure whether Claude agents leave their sandboxes</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/trump-huang-pardon-congress/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Trump leaves a Huang pardon on the table before a week of testimony</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/tidal-purges-ai-generated-music/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Tidal will delete 29 million wholly AI-made tracks from 9 December</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/openai-retires-gpt-5-6-sol/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI sets 23 December as the end for GPT-5.6 Sol and Terra</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/arsenal-dortmund-draw/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Arsenal dominate Dortmund and still lose two points to a single counter</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/claude-artifacts-install-as-app/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Claude artifacts now install as desktop apps, with permissions tied to each version</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/google-humanitys-first-exam/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Google&#39;s new benchmark scores models on getting simple things right every time</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/galatasaray-aston-villa/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Gul&#39;s header settles a game with one shot on target, and Villa&#39;s run reaches six</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/nio-nwm-3-world-model/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Nio puts its third driving world model on stage in Guangzhou</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-11-25/nvidia-ssd-write-hotfix/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-11-25T05:00:00.000Z</news:publication_date>
-      <news:title>Nvidia&#39;s SSD write hotfix cuts the damage but leaves a trace</news:title>
     </news:news>
   </url>
 </urlset>

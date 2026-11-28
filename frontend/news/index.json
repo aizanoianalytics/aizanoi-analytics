@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-11-27T05:00:00.000Z",
+  "generatedAt": "2026-11-28T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-11-28",
+      "path": "/news/2026-11-28/",
+      "itemCount": 15
+    },
     {
       "date": "2026-11-27",
       "path": "/news/2026-11-27/",
@@ -570,6 +575,551 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-11-28-openai-countersues-apple-suppliers",
+      "kind": "daily",
+      "title": "OpenAI countersues Apple and accuses it of squeezing shared suppliers",
+      "summary": "OpenAI and its io Products hardware unit filed counterclaims against Apple in federal court in San Jose on 27 November, accusing the iPhone maker of misappropriating trade secrets and interfering with supplier contracts. The filing says a former employee sent device designs, manufacturing test data and supplier information to personal accounts before returning to Apple, and that one finishing supplier moved OpenAI parts to an overnight shift after Apple objected. OpenAI seeks damages, injunctions and a jury trial. Apple's original suit, filed in July, is set for trial in July 2027.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "apple",
+        "hardware",
+        "litigation",
+        "trade-secrets"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/11/27/openai-countersues-apple-for-stealing-trade-secrets-ft-reports.html",
+          "publishedAt": "2026-11-27T18:56:00.000Z"
+        },
+        {
+          "publisher": "CBS News",
+          "url": "https://www.cbsnews.com/news/openai-countersues-apple-trade-secrets-lawsuit",
+          "publishedAt": "2026-11-27T21:18:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-wall-street-best-week-since-april-2025",
+      "kind": "daily",
+      "title": "Wall Street closes a violent November with its best week since spring 2025",
+      "summary": "US stocks rose in Friday's holiday-shortened session, with the S&P 500 up 1.6% to 7,297.49, the Nasdaq Composite up 2.31% to 24,129.50 and the Dow up 1.18% to 50,774.94. For the week the S&P gained 5.6% and the Nasdaq 6.7%, their best runs since April 2025, while the Dow's 5.5% was its strongest week in four years. The rebound followed a slide of roughly 8% the week before. Gold rose 2.9% to $3,668.50 and Brent crude slipped to about $90 a barrel.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "wall-street",
+        "nasdaq",
+        "gold",
+        "volatility"
+      ],
+      "sources": [
+        {
+          "publisher": "Investopedia",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-major-indexes-140450439.html",
+          "publishedAt": "2026-11-27T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC markets",
+          "url": "https://www.cnbc.com/2026/11/26/stock-market-today-live-updates.html",
+          "publishedAt": "2026-11-27T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-forest-chelsea-gibbs-white-double",
+      "kind": "daily",
+      "title": "Gibbs-White's double deepens Chelsea's slump and ends a 29-year wait for Forest",
+      "summary": "Morgan Gibbs-White scored twice as Nottingham Forest beat Chelsea 3-2 at the City Ground, a first home league win over the London side since 1997. Igor Jesus volleyed Forest ahead after five minutes and Gibbs-White converted a penalty on 51 after Wesley Fofana fouled Liam Delap. Emmanuel Emegha pulled two goals back, either side of Gibbs-White's second on 72. It was Chelsea's third straight league defeat and a fourth loss in five, leaving Xabi Alonso's side eighth in the table.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "chelsea",
+        "nottingham-forest",
+        "alonso",
+        "results"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Rediff",
+          "url": "https://www.rediff.com/sports/report/chelsea-slump-to-third-straight-league-defeat-against-nottingham-forest/20261128.htm",
+          "publishedAt": "2026-11-27T23:05:00.000Z"
+        },
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/sport/football/chelsea-rocked-by-nottingham-forest-as-pressure-on-alonso-mounts",
+          "publishedAt": "2026-11-27T22:18:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-microsoft-artex-agentic-attacks",
+      "kind": "daily",
+      "title": "Microsoft says ARTEX agents now carry attackers from a GitHub search to Key Vault in minutes",
+      "summary": "Microsoft Threat Intelligence has published an analysis of ARTEX, an open-source framework that coordinates language-model agents through reconnaissance, exploitation and reporting with little human involvement. Since July, Microsoft says Salt Typhoon, Onyx Sleet, Pearl Sleet, Crystal Typhoon and financially motivated groups have adopted it. In one Storm-0940 campaign it recorded more than 151,000 failed sign-ins, peaking at 2,900 a minute; in another an agent moved from finding client secrets on GitHub to reading Azure Key Vault in five minutes.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "agentic-ai",
+        "microsoft",
+        "threat-intelligence",
+        "artex"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft Security Blog",
+          "url": "https://microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-character-ai-chat-auction-ags",
+      "kind": "daily",
+      "title": "Forty-two attorneys general move to stop Character.AI auctioning its chat logs",
+      "summary": "A bipartisan coalition of 42 state attorneys general has objected in Delaware bankruptcy court to Character.AI's plan to sell its platform and chat histories at a 1 December auction. The states say the data covers more than 21 million US accounts, over 2.1 million of them registered to minors, along with IP addresses and risk scores, and that the buyer would not have to honour Character.AI's privacy policy or users' deletion requests. The only disclosed bidder, Smirks and Pangs Acquisition LLC, was incorporated a day before it was chosen as the opening bid.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "character-ai",
+        "bankruptcy",
+        "privacy",
+        "regulation",
+        "minors"
+      ],
+      "sources": [
+        {
+          "publisher": "Minnesota Attorney General",
+          "url": "https://ag.state.mn.us/Office/Communications/2026/11/23_CharacterAI.asp",
+          "publishedAt": "2026-11-23T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/25/state-ags-fight-character-ais-plan-to-auction-off-users-private-chats",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-trainium3-agentx-cost-lead",
+      "kind": "daily",
+      "title": "SemiAnalysis puts Trainium3 at 2.28 times GB300's performance per dollar",
+      "summary": "Amazon submitted its first Trainium3 UltraServer results to SemiAnalysis's AgentX agentic inference benchmark, and the firm reported up to 2.28 times the performance per dollar of Nvidia's GB300 NVL72, B300 and AMD's MI355X. The gap is mostly cost: Trainium3 is modelled at $1.05 per chip-hour against $2.31 for GB300, while per-chip throughput at the chosen operating point was only about 4% higher. SemiAnalysis labels the result an official preview, and GB300 still leads on tail latency, at 1.8 seconds to first token against 4.5.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "aws",
+        "trainium",
+        "nvidia",
+        "inference",
+        "benchmarks"
+      ],
+      "sources": [
+        {
+          "publisher": "SemiAnalysis",
+          "url": "https://x.com/SemiAnalysis_/status/2125658708357128703",
+          "publishedAt": "2026-11-25T18:31:00.000Z"
+        },
+        {
+          "publisher": "Supercomputing News",
+          "url": "https://www.supercomputing.news/ai/trainium3-semianalysis-agentx-benchmark-preview",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-anthropic-watermark-limits",
+      "kind": "daily",
+      "title": "Anthropic's watermark help page spells out where Claude's mark disappears",
+      "summary": "Anthropic's help centre now sets out how Claude marks generated text and where the mark fails. The embedded watermark travels with copied text and may survive light editing, but the page says heavy paraphrasing, translation, short passages and stripped file metadata can defeat detection, and that non-default temperature, top_p or top_k settings may stop older models marking output at all. Detection remains a private preview for regulators, media, fact-checkers and researchers. Anthropic says a match shows Claude processed text, not that Claude wrote it.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "watermark",
+        "eu-ai-act",
+        "provenance"
+      ],
+      "sources": [
+        {
+          "publisher": "Claude Help Center",
+          "url": "https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Claude Platform release notes",
+          "url": "https://platform.claude.com/docs/en/release-notes/overview",
+          "publishedAt": "2026-11-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-jera-behind-the-meter-data-centres",
+      "kind": "daily",
+      "title": "JERA courts Anthropic and Meta for data centres wired straight into its power plants",
+      "summary": "JERA, Japan's largest power producer, is in talks with Anthropic, Meta, Amazon, Microsoft and Google about placing data centres beside its thermal plants around Tokyo, chairman Yukio Kani told Nikkei. The behind-the-meter model draws power directly from the plant, skipping grid connection queues that can run for years. The template is an October memorandum with Dell and RHAELM for a site at the Chiba plant, planned at up to 400MW and more than $15 billion, with operations from 2028. None of the five companies had commented when Reuters reported the talks.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "jera",
+        "data-centres",
+        "japan",
+        "energy",
+        "anthropic"
+      ],
+      "sources": [
+        {
+          "publisher": "Nikkei",
+          "url": "https://www.nikkei.com/article/DGXZQOUC218DJ0R21C26A0000000",
+          "publishedAt": "2026-11-26T20:00:00.000Z"
+        },
+        {
+          "publisher": "CNA (Reuters)",
+          "url": "https://www.channelnewsasia.com/business/japans-jera-enters-talks-anthropic-meta-build-data-centres-nikkei-reports-6586021",
+          "publishedAt": "2026-11-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-bayern-hamburg-without-kane",
+      "kind": "daily",
+      "title": "Bayern go to Hamburg without Kane and on the back of a first defeat",
+      "summary": "Bayern Munich visit Hamburger SV on Saturday second in the Bundesliga on 22 points, two behind Borussia Dortmund, after a 2-1 loss at Lille ended their unbeaten season. Vincent Kompany's side are without Harry Kane, Jamal Musiala, Manuel Neuer, Ismaël Saibari and Michael Olise, and were held 1-1 by Köln in their last league game. Hamburg are 12th with 12 points and conceded four at Werder Bremen last week. Bayern are unbeaten in 31 away Bundesliga matches.",
+      "category": "football",
+      "priority": 57,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "bayern-munich",
+        "hamburger-sv",
+        "kompany",
+        "preview"
+      ],
+      "sources": [
+        {
+          "publisher": "FC Bayern",
+          "url": "https://fcbayern.com/en/news/matchpreviews/2026/11/preview-hamburg-bayern-bundesliga-matchday-11",
+          "publishedAt": "2026-11-27T16:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/11/hamburger-sv-vs-fc-bayern-munchen",
+          "publishedAt": "2026-11-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-qant-photonic-ionos-pilot",
+      "kind": "daily",
+      "title": "Q.ANT's light-based coprocessor reaches an IONOS pilot while its energy claim stays simulated",
+      "summary": "Q.ANT has put its second-generation photonic processor, which performs discrete Fourier transforms in light rather than electrons, into a pilot with cloud provider IONOS in Germany. The Stuttgart company showed the chip paired with an AMD GPU running a language model at SC26 and says more than 30 engineering teams are writing models for it. Chief executive Michael Förtsch told WIRED that simulations point to four or five times lower energy use alongside CPUs and GPUs, but that real hardware has not yet demonstrated it.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "photonic-computing",
+        "qant",
+        "ionos",
+        "inference",
+        "energy"
+      ],
+      "sources": [
+        {
+          "publisher": "Q.ANT",
+          "url": "https://qant.com/news/q-ant-unveils-npu-gen-2-plus-photonic-fourier-transforms-power-large-language-model",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "WIRED",
+          "url": "https://www.wired.com/story/a-new-breed-of-chip-runs-ai-models-using-waves-of-light",
+          "publishedAt": "2026-11-27T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-bremen-gladbach-fuellkrug-late-draw",
+      "kind": "daily",
+      "title": "Füllkrug rescues Bremen at the death after Gladbach let a two-goal lead go",
+      "summary": "Niclas Füllkrug equalised in the second minute of stoppage time to give Werder Bremen a 3-3 draw with Borussia Mönchengladbach and leave the visitors still bottom of the Bundesliga. Gladbach led through Kevin Diks's 27th-minute penalty and a Franck Honorat double either side of Eren Dinkçi's first goal, and were 3-1 up with 12 minutes left. Dinkçi scored again on 85 before Füllkrug, now on 11 league goals, rescued a point. Gladbach remain 18th on four points.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "werder-bremen",
+        "gladbach",
+        "fuellkrug",
+        "results"
+      ],
+      "sources": [
+        {
+          "publisher": "Sportschau",
+          "url": "https://www.sportschau.de/fussball/bundesliga/gladbach-und-bremen-mit-spektakulaerem-remis,spielbericht-werder-bremen-borussia-moenchengladbach-114.html",
+          "publishedAt": "2026-11-27T21:36:00.000Z"
+        },
+        {
+          "publisher": "kicker",
+          "url": "https://www.kicker.de/bremen-gegen-mgladbach-2026-bundesliga-5226906/spielbericht",
+          "publishedAt": "2026-11-27T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-os-omni-agent-benchmark-mobile-gap",
+      "kind": "daily",
+      "title": "OS-Omni scores computer agents across six platforms, and mobile is the weak leg",
+      "summary": "A 300-task benchmark published on arXiv tested nine agents on Windows, Ubuntu, macOS, iOS, Android and the web, plus twelve workflows that pair a desktop with a phone. Claude Opus 5.5 led at 68.5% average success against a 77.3% human reference, with GPT-6 Astra at 66.1% and Gemini 4 Argon at 58.6%. Every frontier model beat humans on Linux, while the best iOS score was 41.7%, 33.5 points behind people. Tasks are graded on final application state rather than on screen appearance.",
+      "category": "ai",
+      "priority": 54,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "benchmark",
+        "computer-use",
+        "agents",
+        "research",
+        "mobile"
+      ],
+      "sources": [
+        {
+          "publisher": "arXiv",
+          "url": "https://arxiv.org/abs/2611.34232",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "OS-Copilot GitHub",
+          "url": "https://github.com/os-copilot/os-omni",
+          "publishedAt": "2026-11-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-black-friday-online-spending-ai-referrals",
+      "kind": "daily",
+      "title": "Black Friday online spending passes $9.7 billion by late afternoon",
+      "summary": "US shoppers spent $9.7 billion online on Black Friday by 6:30 p.m. Eastern, according to Adobe data reported by Reuters, putting the day on course to exceed $13 billion. Thanksgiving Day set a record $7.1 billion, up 10.4% year on year, Adobe Analytics said, with traffic referred by AI assistants up 162% and converting 74% better than other traffic. Adobe projects $275.1 billion of online spending across November and December, a 6.7% increase, as retailers discount more deeply than expected.",
+      "category": "economy-markets",
+      "priority": 52,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "retail",
+        "black-friday",
+        "ecommerce",
+        "adobe",
+        "consumer"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/retail-consumer/us-black-friday-online-sales-cross-13-billion-adobe-says-2026-11-28",
+          "publishedAt": "2026-11-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "Digital Commerce 360",
+          "url": "https://www.digitalcommerce360.com/article/thanksgiving-ecommerce-sales",
+          "publishedAt": "2026-11-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-canada-ai-compute-fund-billion",
+      "kind": "daily",
+      "title": "Canada lifts its AI compute fund to C$1 billion and pays more for domestic clouds",
+      "summary": "Canada's AI minister, Evan Solomon, added C$700 million to the AI Compute Access Fund, taking it from C$300 million to C$1 billion, and raised the share of eligible compute costs that small and medium firms can recover to 80% when they buy from a Canadian-owned provider, or 50% elsewhere. The announcement came with more than C$52 million for 45 companies, bringing commitments to over C$118 million across 89 firms. Officials had expected a few hundred applicants and received about 1,500 requests.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "canada",
+        "ai-policy",
+        "compute",
+        "subsidies",
+        "sovereign-ai"
+      ],
+      "sources": [
+        {
+          "publisher": "Government of Canada",
+          "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/11/government-of-canada-boosts-the-ai-compute-access-fund-with-700-million-expansion.html",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "HRD Canada",
+          "url": "https://www.hcamag.com/ca/specialization/transformation/ai-compute-access-fund-hits-1-billion-as-ottawa-backs-45-more-firms/599119",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-28-pia-humanoid-siemens-amberg",
+      "kind": "daily",
+      "title": "A humanoid robot takes over line feeding at Siemens' Amberg plant",
+      "summary": "PIA Automation is testing an I-Bot 2.0 humanoid on a working relay production line at Siemens' Amberg site in Germany, where it now carries bins of connector contacts and plastic housings to a feeder and returns them empty, work operators previously did by hand. PIA, the system integrator, allows six minutes per cycle and says process stability matters more than throughput. AGIBOT supplies the hardware. The next step is connecting the robot to the line's control system, with deployment targeted for the first half of 2027.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-11-28T05:00:00.000Z",
+      "updatedAt": "2026-11-28T05:00:00.000Z",
+      "retrievedAt": "2026-11-28T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "robotics",
+        "humanoids",
+        "siemens",
+        "manufacturing",
+        "automation"
+      ],
+      "sources": [
+        {
+          "publisher": "PIA Group",
+          "url": "https://www.piagroup.com/en/news/2026-11-26-humanoid-robots-make-their-way-onto-the-factory-floor",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-11-27-nvidia-halts-southeast-asia-server-shipments",
       "kind": "daily",

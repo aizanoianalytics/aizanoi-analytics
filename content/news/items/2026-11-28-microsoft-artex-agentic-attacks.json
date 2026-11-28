@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-28-microsoft-artex-agentic-attacks",
+  "title": "Microsoft says ARTEX agents now carry attackers from a GitHub search to Key Vault in minutes",
+  "category": "ai",
+  "priority": 68,
+  "summary": "Microsoft Threat Intelligence has published an analysis of ARTEX, an open-source framework that coordinates language-model agents through reconnaissance, exploitation and reporting with little human involvement. Since July, Microsoft says Salt Typhoon, Onyx Sleet, Pearl Sleet, Crystal Typhoon and financially motivated groups have adopted it. In one Storm-0940 campaign it recorded more than 151,000 failed sign-ins, peaking at 2,900 a minute; in another an agent moved from finding client secrets on GitHub to reading Azure Key Vault in five minutes.",
+  "tags": [
+    "security",
+    "agentic-ai",
+    "microsoft",
+    "threat-intelligence",
+    "artex"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft Security Blog",
+      "url": "https://microsoft.com/en-us/security/blog/2026/11/25/what-defenders-need-to-know-artex-agentic-ai-framework-threat-actors-abuse",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

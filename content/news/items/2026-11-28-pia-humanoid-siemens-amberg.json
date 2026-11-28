@@ -1,0 +1,33 @@
+{
+  "id": "2026-11-28-pia-humanoid-siemens-amberg",
+  "title": "A humanoid robot takes over line feeding at Siemens' Amberg plant",
+  "category": "technology",
+  "priority": 48,
+  "summary": "PIA Automation is testing an I-Bot 2.0 humanoid on a working relay production line at Siemens' Amberg site in Germany, where it now carries bins of connector contacts and plastic housings to a feeder and returns them empty, work operators previously did by hand. PIA, the system integrator, allows six minutes per cycle and says process stability matters more than throughput. AGIBOT supplies the hardware. The next step is connecting the robot to the line's control system, with deployment targeted for the first half of 2027.",
+  "tags": [
+    "robotics",
+    "humanoids",
+    "siemens",
+    "manufacturing",
+    "automation"
+  ],
+  "sources": [
+    {
+      "publisher": "PIA Group",
+      "url": "https://www.piagroup.com/en/news/2026-11-26-humanoid-robots-make-their-way-onto-the-factory-floor",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

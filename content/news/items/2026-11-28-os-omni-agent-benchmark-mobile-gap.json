@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-28-os-omni-agent-benchmark-mobile-gap",
+  "title": "OS-Omni scores computer agents across six platforms, and mobile is the weak leg",
+  "category": "ai",
+  "priority": 54,
+  "summary": "A 300-task benchmark published on arXiv tested nine agents on Windows, Ubuntu, macOS, iOS, Android and the web, plus twelve workflows that pair a desktop with a phone. Claude Opus 5.5 led at 68.5% average success against a 77.3% human reference, with GPT-6 Astra at 66.1% and Gemini 4 Argon at 58.6%. Every frontier model beat humans on Linux, while the best iOS score was 41.7%, 33.5 points behind people. Tasks are graded on final application state rather than on screen appearance.",
+  "tags": [
+    "benchmark",
+    "computer-use",
+    "agents",
+    "research",
+    "mobile"
+  ],
+  "sources": [
+    {
+      "publisher": "arXiv",
+      "url": "https://arxiv.org/abs/2611.34232",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    },
+    {
+      "publisher": "OS-Copilot GitHub",
+      "url": "https://github.com/os-copilot/os-omni",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

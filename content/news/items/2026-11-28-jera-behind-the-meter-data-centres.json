@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-28-jera-behind-the-meter-data-centres",
+  "title": "JERA courts Anthropic and Meta for data centres wired straight into its power plants",
+  "category": "technology",
+  "priority": 58,
+  "summary": "JERA, Japan's largest power producer, is in talks with Anthropic, Meta, Amazon, Microsoft and Google about placing data centres beside its thermal plants around Tokyo, chairman Yukio Kani told Nikkei. The behind-the-meter model draws power directly from the plant, skipping grid connection queues that can run for years. The template is an October memorandum with Dell and RHAELM for a site at the Chiba plant, planned at up to 400MW and more than $15 billion, with operations from 2028. None of the five companies had commented when Reuters reported the talks.",
+  "tags": [
+    "jera",
+    "data-centres",
+    "japan",
+    "energy",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "Nikkei",
+      "url": "https://www.nikkei.com/article/DGXZQOUC218DJ0R21C26A0000000",
+      "publishedAt": "2026-11-26T20:00:00Z"
+    },
+    {
+      "publisher": "CNA (Reuters)",
+      "url": "https://www.channelnewsasia.com/business/japans-jera-enters-talks-anthropic-meta-build-data-centres-nikkei-reports-6586021",
+      "publishedAt": "2026-11-27T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

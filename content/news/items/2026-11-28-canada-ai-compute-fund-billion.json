@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-28-canada-ai-compute-fund-billion",
+  "title": "Canada lifts its AI compute fund to C$1 billion and pays more for domestic clouds",
+  "category": "economy-markets",
+  "priority": 50,
+  "summary": "Canada's AI minister, Evan Solomon, added C$700 million to the AI Compute Access Fund, taking it from C$300 million to C$1 billion, and raised the share of eligible compute costs that small and medium firms can recover to 80% when they buy from a Canadian-owned provider, or 50% elsewhere. The announcement came with more than C$52 million for 45 companies, bringing commitments to over C$118 million across 89 firms. Officials had expected a few hundred applicants and received about 1,500 requests.",
+  "tags": [
+    "canada",
+    "ai-policy",
+    "compute",
+    "subsidies",
+    "sovereign-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "Government of Canada",
+      "url": "https://www.canada.ca/en/innovation-science-economic-development/news/2026/11/government-of-canada-boosts-the-ai-compute-access-fund-with-700-million-expansion.html",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    },
+    {
+      "publisher": "HRD Canada",
+      "url": "https://www.hcamag.com/ca/specialization/transformation/ai-compute-access-fund-hits-1-billion-as-ottawa-backs-45-more-firms/599119",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-28-anthropic-watermark-limits",
+  "title": "Anthropic's watermark help page spells out where Claude's mark disappears",
+  "category": "ai",
+  "priority": 62,
+  "summary": "Anthropic's help centre now sets out how Claude marks generated text and where the mark fails. The embedded watermark travels with copied text and may survive light editing, but the page says heavy paraphrasing, translation, short passages and stripped file metadata can defeat detection, and that non-default temperature, top_p or top_k settings may stop older models marking output at all. Detection remains a private preview for regulators, media, fact-checkers and researchers. Anthropic says a match shows Claude processed text, not that Claude wrote it.",
+  "tags": [
+    "anthropic",
+    "claude",
+    "watermark",
+    "eu-ai-act",
+    "provenance"
+  ],
+  "sources": [
+    {
+      "publisher": "Claude Help Center",
+      "url": "https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content",
+      "publishedAt": "2026-11-26T00:00:00Z"
+    },
+    {
+      "publisher": "Claude Platform release notes",
+      "url": "https://platform.claude.com/docs/en/release-notes/overview",
+      "publishedAt": "2026-11-03T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
