@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-28-trainium3-agentx-cost-lead",
+  "title": "SemiAnalysis puts Trainium3 at 2.28 times GB300's performance per dollar",
+  "category": "technology",
+  "priority": 64,
+  "summary": "Amazon submitted its first Trainium3 UltraServer results to SemiAnalysis's AgentX agentic inference benchmark, and the firm reported up to 2.28 times the performance per dollar of Nvidia's GB300 NVL72, B300 and AMD's MI355X. The gap is mostly cost: Trainium3 is modelled at $1.05 per chip-hour against $2.31 for GB300, while per-chip throughput at the chosen operating point was only about 4% higher. SemiAnalysis labels the result an official preview, and GB300 still leads on tail latency, at 1.8 seconds to first token against 4.5.",
+  "tags": [
+    "aws",
+    "trainium",
+    "nvidia",
+    "inference",
+    "benchmarks"
+  ],
+  "sources": [
+    {
+      "publisher": "SemiAnalysis",
+      "url": "https://x.com/SemiAnalysis_/status/2125658708357128703",
+      "publishedAt": "2026-11-25T18:31:00Z"
+    },
+    {
+      "publisher": "Supercomputing News",
+      "url": "https://www.supercomputing.news/ai/trainium3-semianalysis-agentx-benchmark-preview",
+      "publishedAt": "2026-11-25T00:00:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}

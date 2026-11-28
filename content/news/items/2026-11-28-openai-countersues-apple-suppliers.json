@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-28-openai-countersues-apple-suppliers",
+  "title": "OpenAI countersues Apple and accuses it of squeezing shared suppliers",
+  "category": "ai",
+  "priority": 80,
+  "summary": "OpenAI and its io Products hardware unit filed counterclaims against Apple in federal court in San Jose on 27 November, accusing the iPhone maker of misappropriating trade secrets and interfering with supplier contracts. The filing says a former employee sent device designs, manufacturing test data and supplier information to personal accounts before returning to Apple, and that one finishing supplier moved OpenAI parts to an overnight shift after Apple objected. OpenAI seeks damages, injunctions and a jury trial. Apple's original suit, filed in July, is set for trial in July 2027.",
+  "tags": [
+    "openai",
+    "apple",
+    "hardware",
+    "litigation",
+    "trade-secrets"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/11/27/openai-countersues-apple-for-stealing-trade-secrets-ft-reports.html",
+      "publishedAt": "2026-11-27T18:56:00Z"
+    },
+    {
+      "publisher": "CBS News",
+      "url": "https://www.cbsnews.com/news/openai-countersues-apple-trade-secrets-lawsuit",
+      "publishedAt": "2026-11-27T21:18:00Z"
+    }
+  ],
+  "kind": "daily",
+  "publishedAt": "2026-11-28T05:00:00Z",
+  "updatedAt": "2026-11-28T05:00:00Z",
+  "retrievedAt": "2026-11-28T05:00:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": []
+}
